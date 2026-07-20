@@ -1,0 +1,169 @@
+{
+  "experiment": "SGCC customer-profile sanity audit; not exact paper reproduction",
+  "input": "data/raw/sgcc-verified/data.csv",
+  "input_sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7",
+  "seed": 20260720,
+  "target_validation_false_alarm_rate": 0.05,
+  "chronologically_sorted": true,
+  "dropped_fully_missing_customers": 5,
+  "pca_input_dates_after_train_only_filter": 1033,
+  "split": {
+    "train_customers": 25420,
+    "validation_customers": 8473,
+    "test_customers": 8474,
+    "test_positives": 723,
+    "test_negatives": 7751
+  },
+  "environment": {
+    "python": "3.12.13",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scikit_learn": "1.9.0"
+  },
+  "duration_seconds": 13.028354792011669,
+  "results": [
+    {
+      "model": "univariate:mean",
+      "orientation": 1.0,
+      "threshold": 20.238544464111328,
+      "roc_auc": 0.656535461537734,
+      "detection_rate": 0.18948824343015214,
+      "false_alarm_rate": 0.04980002580312218,
+      "precision": 0.26195028680688337,
+      "balanced_accuracy": 0.569844108813515,
+      "f1": 0.21990369181380418
+    },
+    {
+      "model": "univariate:median",
+      "orientation": 1.0,
+      "threshold": 17.869998931884766,
+      "roc_auc": 0.6183266764490121,
+      "detection_rate": 0.17842323651452283,
+      "false_alarm_rate": 0.050832150690233516,
+      "precision": 0.24665391969407266,
+      "balanced_accuracy": 0.5637955429121446,
+      "f1": 0.20706260032102727
+    },
+    {
+      "model": "univariate:std",
+      "orientation": 1.0,
+      "threshold": 12.923649787902832,
+      "roc_auc": 0.7149450934185444,
+      "detection_rate": 0.2033195020746888,
+      "false_alarm_rate": 0.04876790091601084,
+      "precision": 0.28,
+      "balanced_accuracy": 0.577275800579339,
+      "f1": 0.23557692307692307
+    },
+    {
+      "model": "univariate:maximum",
+      "orientation": 1.0,
+      "threshold": 79.80500030517578,
+      "roc_auc": 0.7057487607452784,
+      "detection_rate": 0.20470262793914246,
+      "false_alarm_rate": 0.04760676041801058,
+      "precision": 0.2862669245647969,
+      "balanced_accuracy": 0.5785479337605659,
+      "f1": 0.23870967741935484
+    },
+    {
+      "model": "univariate:q25",
+      "orientation": 1.0,
+      "threshold": 13.602499961853027,
+      "roc_auc": 0.5640556262494484,
+      "detection_rate": 0.1355463347164592,
+      "false_alarm_rate": 0.04812282286156625,
+      "precision": 0.208067940552017,
+      "balanced_accuracy": 0.5437117559274465,
+      "f1": 0.16415410385259632
+    },
+    {
+      "model": "univariate:q75",
+      "orientation": 1.0,
+      "threshold": 25.217498779296875,
+      "roc_auc": 0.6617908401771386,
+      "detection_rate": 0.1991701244813278,
+      "false_alarm_rate": 0.050961166301122435,
+      "precision": 0.26716141001855287,
+      "balanced_accuracy": 0.5741044790901026,
+      "f1": 0.22820919175911253
+    },
+    {
+      "model": "univariate:zero_fraction",
+      "orientation": -1.0,
+      "threshold": -0.0,
+      "roc_auc": 0.5262216645226521,
+      "detection_rate": 0.0,
+      "false_alarm_rate": 0.0,
+      "precision": 0.0,
+      "balanced_accuracy": 0.5,
+      "f1": 0.0
+    },
+    {
+      "model": "univariate:missing_fraction",
+      "orientation": 1.0,
+      "threshold": 0.709864616394043,
+      "roc_auc": 0.5634225039985025,
+      "detection_rate": 0.08852005532503458,
+      "false_alarm_rate": 0.051477228744678104,
+      "precision": 0.13822894168466524,
+      "balanced_accuracy": 0.5185214132901782,
+      "f1": 0.10792580101180438
+    },
+    {
+      "model": "univariate:positive_fraction",
+      "orientation": 1.0,
+      "threshold": 1.0,
+      "roc_auc": 0.5262216645226521,
+      "detection_rate": 0.0,
+      "false_alarm_rate": 0.0,
+      "precision": 0.0,
+      "balanced_accuracy": 0.5,
+      "f1": 0.0
+    },
+    {
+      "model": "supervised:logistic_profile_features",
+      "orientation": 1.0,
+      "threshold": 0.6568720936775208,
+      "roc_auc": 0.7141835801136087,
+      "detection_rate": 0.23651452282157676,
+      "false_alarm_rate": 0.05160624435556702,
+      "precision": 0.29947460595446584,
+      "balanced_accuracy": 0.5924541392330048,
+      "f1": 0.2642967542503864
+    },
+    {
+      "model": "supervised:linear_1034_days",
+      "orientation": 1.0,
+      "threshold": 0.9998756276331123,
+      "roc_auc": 0.6390932825693485,
+      "detection_rate": 0.1991701244813278,
+      "false_alarm_rate": 0.047348729196232744,
+      "precision": 0.28180039138943247,
+      "balanced_accuracy": 0.5759106976425475,
+      "f1": 0.233387358184765
+    },
+    {
+      "model": "anomaly:isolation_forest_profile_features",
+      "orientation": 1.0,
+      "threshold": -0.048876143210863504,
+      "roc_auc": 0.6146956810819753,
+      "detection_rate": 0.18672199170124482,
+      "false_alarm_rate": 0.05547671268223455,
+      "precision": 0.23893805309734514,
+      "balanced_accuracy": 0.5656226395095052,
+      "f1": 0.2096273291925466
+    },
+    {
+      "model": "anomaly:pca_32_reconstruction",
+      "orientation": 1.0,
+      "threshold": 0.16821955144405365,
+      "roc_auc": 0.6839148761066479,
+      "detection_rate": 0.20470262793914246,
+      "false_alarm_rate": 0.048509869694233,
+      "precision": 0.2824427480916031,
+      "balanced_accuracy": 0.5780963791224547,
+      "f1": 0.23736968724939855
+    }
+  ]
+}

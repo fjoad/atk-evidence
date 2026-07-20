@@ -1,0 +1,48 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# Secrets and local configuration
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Raw or access-controlled research inputs
+/data/
+/papers/
+/tmp/
+*.zip
+
+# Large generated score arrays; publish separately with checksums if needed
+replication/results/*.npz
+
+# Generated LaTeX artifacts
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+

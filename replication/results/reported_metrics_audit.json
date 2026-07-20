@@ -1,0 +1,222 @@
+[
+  {
+    "dataset": "SGCC",
+    "model": "FC-SAE",
+    "reported_dr_pct": 83.0,
+    "reported_fa_pct": 14.0,
+    "reported_precision_pct": 83.0,
+    "balanced_expected_precision_pct": 85.56701030927834,
+    "precision_gap_pp": -2.567010309278345,
+    "implied_positive_prevalence_pct": 45.16129032258064
+  },
+  {
+    "dataset": "SGCC",
+    "model": "LSTM-SAE",
+    "reported_dr_pct": 86.0,
+    "reported_fa_pct": 12.0,
+    "reported_precision_pct": 87.0,
+    "balanced_expected_precision_pct": 87.75510204081633,
+    "precision_gap_pp": -0.7551020408163254,
+    "implied_positive_prevalence_pct": 48.28862164662349
+  },
+  {
+    "dataset": "SGCC",
+    "model": "FC-VAE",
+    "reported_dr_pct": 90.0,
+    "reported_fa_pct": 9.0,
+    "reported_precision_pct": 91.0,
+    "balanced_expected_precision_pct": 90.90909090909092,
+    "precision_gap_pp": 0.09090909090907928,
+    "implied_positive_prevalence_pct": 50.27624309392266
+  },
+  {
+    "dataset": "SGCC",
+    "model": "LSTM-VAE",
+    "reported_dr_pct": 93.0,
+    "reported_fa_pct": 6.0,
+    "reported_precision_pct": 93.0,
+    "balanced_expected_precision_pct": 93.93939393939394,
+    "precision_gap_pp": -0.9393939393939377,
+    "implied_positive_prevalence_pct": 46.15384615384617
+  },
+  {
+    "dataset": "SGCC",
+    "model": "LSTM-AEA",
+    "reported_dr_pct": 96.0,
+    "reported_fa_pct": 4.0,
+    "reported_precision_pct": 95.0,
+    "balanced_expected_precision_pct": 96.0,
+    "precision_gap_pp": -1.0,
+    "implied_positive_prevalence_pct": 44.18604651162788
+  },
+  {
+    "dataset": "SGCC",
+    "model": "Naive Bayes",
+    "reported_dr_pct": 75.0,
+    "reported_fa_pct": 16.0,
+    "reported_precision_pct": 75.0,
+    "balanced_expected_precision_pct": 82.41758241758241,
+    "precision_gap_pp": -7.417582417582409,
+    "implied_positive_prevalence_pct": 39.02439024390244
+  },
+  {
+    "dataset": "SGCC",
+    "model": "ARIMA",
+    "reported_dr_pct": 88.0,
+    "reported_fa_pct": 10.0,
+    "reported_precision_pct": 87.0,
+    "balanced_expected_precision_pct": 89.79591836734694,
+    "precision_gap_pp": -2.7959183673469425,
+    "implied_positive_prevalence_pct": 43.197616683217475
+  },
+  {
+    "dataset": "SGCC",
+    "model": "Single-class SVM",
+    "reported_dr_pct": 91.0,
+    "reported_fa_pct": 8.5,
+    "reported_precision_pct": 90.0,
+    "balanced_expected_precision_pct": 91.45728643216081,
+    "precision_gap_pp": -1.4572864321608137,
+    "implied_positive_prevalence_pct": 45.671641791044784
+  },
+  {
+    "dataset": "SGCC",
+    "model": "Feed forward",
+    "reported_dr_pct": 91.0,
+    "reported_fa_pct": 9.5,
+    "reported_precision_pct": 90.0,
+    "balanced_expected_precision_pct": 90.54726368159203,
+    "precision_gap_pp": -0.5472636815920282,
+    "implied_positive_prevalence_pct": 48.44192634560907
+  },
+  {
+    "dataset": "SGCC",
+    "model": "LSTM",
+    "reported_dr_pct": 91.5,
+    "reported_fa_pct": 9.0,
+    "reported_precision_pct": 90.5,
+    "balanced_expected_precision_pct": 91.04477611940298,
+    "precision_gap_pp": -0.5447761194029823,
+    "implied_positive_prevalence_pct": 48.37416481069043
+  },
+  {
+    "dataset": "SGCC",
+    "model": "Multi-class SVM",
+    "reported_dr_pct": 92.0,
+    "reported_fa_pct": 7.5,
+    "reported_precision_pct": 91.0,
+    "balanced_expected_precision_pct": 92.46231155778895,
+    "precision_gap_pp": -1.4623115577889507,
+    "implied_positive_prevalence_pct": 45.18371400198611
+  },
+  {
+    "dataset": "ISET",
+    "model": "FC-SAE",
+    "reported_dr_pct": 81.0,
+    "reported_fa_pct": 15.0,
+    "reported_precision_pct": 81.0,
+    "balanced_expected_precision_pct": 84.375,
+    "precision_gap_pp": -3.375,
+    "implied_positive_prevalence_pct": 44.117647058823536
+  },
+  {
+    "dataset": "ISET",
+    "model": "LSTM-SAE",
+    "reported_dr_pct": 85.0,
+    "reported_fa_pct": 13.0,
+    "reported_precision_pct": 85.0,
+    "balanced_expected_precision_pct": 86.73469387755102,
+    "precision_gap_pp": -1.7346938775510239,
+    "implied_positive_prevalence_pct": 46.42857142857143
+  },
+  {
+    "dataset": "ISET",
+    "model": "FC-VAE",
+    "reported_dr_pct": 88.0,
+    "reported_fa_pct": 11.0,
+    "reported_precision_pct": 89.0,
+    "balanced_expected_precision_pct": 88.8888888888889,
+    "precision_gap_pp": 0.11111111111110006,
+    "implied_positive_prevalence_pct": 50.282485875706215
+  },
+  {
+    "dataset": "ISET",
+    "model": "LSTM-VAE",
+    "reported_dr_pct": 91.0,
+    "reported_fa_pct": 7.0,
+    "reported_precision_pct": 91.0,
+    "balanced_expected_precision_pct": 92.85714285714286,
+    "precision_gap_pp": -1.8571428571428612,
+    "implied_positive_prevalence_pct": 43.750000000000014
+  },
+  {
+    "dataset": "ISET",
+    "model": "LSTM-AEA",
+    "reported_dr_pct": 94.0,
+    "reported_fa_pct": 5.0,
+    "reported_precision_pct": 93.0,
+    "balanced_expected_precision_pct": 94.94949494949495,
+    "precision_gap_pp": -1.949494949494948,
+    "implied_positive_prevalence_pct": 41.40694568121106
+  },
+  {
+    "dataset": "ISET",
+    "model": "Naive Bayes",
+    "reported_dr_pct": 73.0,
+    "reported_fa_pct": 18.0,
+    "reported_precision_pct": 73.0,
+    "balanced_expected_precision_pct": 80.21978021978022,
+    "precision_gap_pp": -7.219780219780219,
+    "implied_positive_prevalence_pct": 40.0
+  },
+  {
+    "dataset": "ISET",
+    "model": "ARIMA",
+    "reported_dr_pct": 86.0,
+    "reported_fa_pct": 12.0,
+    "reported_precision_pct": 86.0,
+    "balanced_expected_precision_pct": 87.75510204081633,
+    "precision_gap_pp": -1.7551020408163254,
+    "implied_positive_prevalence_pct": 46.15384615384615
+  },
+  {
+    "dataset": "ISET",
+    "model": "Single-class SVM",
+    "reported_dr_pct": 90.0,
+    "reported_fa_pct": 9.0,
+    "reported_precision_pct": 89.0,
+    "balanced_expected_precision_pct": 90.90909090909092,
+    "precision_gap_pp": -1.9090909090909207,
+    "implied_positive_prevalence_pct": 44.72361809045226
+  },
+  {
+    "dataset": "ISET",
+    "model": "Feed forward",
+    "reported_dr_pct": 90.0,
+    "reported_fa_pct": 11.0,
+    "reported_precision_pct": 89.0,
+    "balanced_expected_precision_pct": 89.10891089108911,
+    "precision_gap_pp": -0.1089108910891099,
+    "implied_positive_prevalence_pct": 49.720670391061454
+  },
+  {
+    "dataset": "ISET",
+    "model": "LSTM",
+    "reported_dr_pct": 90.5,
+    "reported_fa_pct": 10.0,
+    "reported_precision_pct": 89.5,
+    "balanced_expected_precision_pct": 90.04975124378109,
+    "precision_gap_pp": -0.5497512437810883,
+    "implied_positive_prevalence_pct": 48.50291288443301
+  },
+  {
+    "dataset": "ISET",
+    "model": "Multi-class SVM",
+    "reported_dr_pct": 91.0,
+    "reported_fa_pct": 8.0,
+    "reported_precision_pct": 90.0,
+    "balanced_expected_precision_pct": 91.91919191919192,
+    "precision_gap_pp": -1.919191919191917,
+    "implied_positive_prevalence_pct": 44.17177914110431
+  }
+]
