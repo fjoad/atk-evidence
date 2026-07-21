@@ -5,8 +5,8 @@
 - Publisher-linked repository: https://github.com/henryRDlab/ElectricityTheftDetection/
 - Corresponding-author dataset page: https://www.henrylab.net/pubs/wide-deep-convolutional-neural-networks-for-electricity-theft-detection-to-secure-smart-grids/
 - Repository commit downloaded: `8db682e65422d24689a61bd044eab7235121c5df`
-- Raw multipart archive location: `../data/raw/sgcc-source/`
-- Verified extraction: `../data/raw/sgcc-verified/data.csv`
+- Raw multipart archive location: `../../data/raw/sgcc-source/`
+- Verified extraction: `../../data/raw/sgcc-verified/data.csv`
 - Extracted CSV SHA-256: `99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7`
 - Shape: 42,372 customers x 1,036 columns.
 - Contents: customer identifier, binary `FLAG`, and 1,034 daily readings from 2014-01-01 through 2016-10-31.
@@ -26,6 +26,12 @@ Multipart archive SHA-256 values:
 
 The archive was tested successfully with 7-Zip 26.02 before extraction. The built-in macOS `unzip` utility cannot correctly process this multipart archive.
 
+From a fresh repository clone, acquire and verify SGCC with:
+
+```bash
+bash scripts/acquire_sgcc.sh
+```
+
 ## Irish CER Smart Metering Project (ISET in the paper)
 
 - Official record: https://doi.org/10.7929/ISSDA/BX59EU
@@ -33,7 +39,7 @@ The archive was tested successfully with 7-Zip 26.02 before extraction. The buil
 - Dataset title: `CER Smart Metering Project - Electricity Customer Behaviour Trial, 2009-2010`.
 - Version: V1.
 - Access: restricted for research/educational use; an ISSDA account and approved request are required.
-- Official manifest and unrestricted documentation: `../data/raw/cer-issda-docs/`.
+- Official manifest and unrestricted documentation: `../../data/raw/cer-issda-docs/`.
 
 Restricted consumption archives listed by the official API:
 
@@ -54,3 +60,16 @@ Manifest format:
 
 No unofficial mirror will be silently substituted for the restricted official files. If an authorized copy is supplied, every archive will be checked against the official MD5 before use.
 
+After an ISSDA access request has been approved, use the token-safe command in
+`docs/GETTING_STARTED.md` and run the authorized downloader:
+
+```bash
+./.venv/bin/python studies/atk-2022-deep-autoencoder/src/download_cer.py
+```
+
+Whether the files arrive through the script or an institutional browser
+session, verify the complete data gate with:
+
+```bash
+./.venv/bin/python scripts/verify_data.py --strict
+```

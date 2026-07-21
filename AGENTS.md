@@ -1,4 +1,4 @@
-# Electricity-Theft Paper Reproducibility Audit — Shared Agent Operational Guide
+# ATK Evidence — Shared Agent Operational Guide
 
 > Canonical bootstrap for Claude, Codex, and other assistants. `CLAUDE.md`
 > imports this file; `.claude/rules/` automates Claude-specific rituals. No
@@ -6,10 +6,11 @@
 
 ## What this project is
 
-This is a rigorous, paper-by-paper audit of whether selected published
-electricity-theft detection results can be reproduced from the methods as
-written. The current target is Takiddin et al., "Deep Autoencoder-Based Anomaly
-Detection of Electricity Theft Cyberattacks in Smart Grids." See
+This is a rigorous, extensible, paper-by-paper audit of whether selected
+published numerical results can be reproduced from the methods as written. The
+initial corpus is by Abdulrahman Takiddin and coauthors; the current target is
+"Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in
+Smart Grids." See
 [`docs/VISION.md`](docs/VISION.md) for the full thesis.
 
 ## Non-negotiable scientific mandate
@@ -95,17 +96,17 @@ work, and report tests, docs, commits, and the next step.
 
 ## Project-specific commands and constraints
 
-- Python environment: `replication/.venv`.
-- Deterministic tests:
-  `cd replication/src && ../.venv/bin/python -m unittest -v test_attacks.py test_cer_parser.py`
-- Compile check: `replication/.venv/bin/python -m compileall -q replication/src`.
+- Python environment: root `.venv` created by `bash scripts/bootstrap.sh`.
+- Deterministic tests: `bash scripts/test.sh`.
+- Data verification: `.venv/bin/python scripts/verify_data.py --strict`.
 - Never modify raw downloaded files in place.
 - Never commit `data/`, `papers/`, access tokens, or restricted archives.
 - Do not resume the SGCC 48-day proxy as though it were Paper 1 reproduction.
 - The exact CER data is a hard gate for the relevant paper-literal experiment.
+- Each paper belongs under `studies/<study-id>/`; register it in
+  `studies/registry.toml` before implementation.
 
 ## Decision records
 
 Create `docs/decisions/YYYY-MM-DD-short-title.md` for a choice that changes the
 evidence contract, architecture, dependency boundary, or interpretation policy.
-

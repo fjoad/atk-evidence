@@ -1,15 +1,16 @@
-# Electricity-Theft Paper Reproducibility Audit — Vision
+# ATK Evidence — Vision
 
-**Last updated:** 2026-07-20
+**Last updated:** 2026-07-21
 
 ## Thesis
 
 Published numerical claims should be reproducible from the data, algorithms,
-and procedures the paper describes. This project tests, one paper at a time,
-the hypothesis that selected electricity-theft detection results by Abdulrahman
-Takiddin and coauthors cannot be reproduced reliably within a predeclared,
-scientifically reasonable space of paper-consistent implementations and
-unspecified hyperparameters. The hypothesis is pursued rigorously and may be
+and procedures the paper describes. ATK Evidence builds the strongest
+independently rerunnable evidence available for or against such claims, one
+paper at a time. It begins by testing the hypothesis that selected results by
+Abdulrahman Takiddin and coauthors cannot be reproduced reliably within a
+predeclared, scientifically reasonable space of paper-consistent
+implementations and unspecified hyperparameters. The hypothesis may be
 falsified: a stable, legitimate reproduction is a valid and welcome outcome.
 
 ## Primary hypothesis
@@ -38,6 +39,8 @@ increasingly implausible, never a claim of logical impossibility.
   and statistical tests without selecting favorable runs after the fact.
 - Preserves code, configurations, raw scores, logs, and both supporting and
   disconfirming evidence.
+- Publishes scripts and explicit authorized-access instructions so an
+  independent researcher can recreate every non-redistributed input.
 - Produces a standalone LaTeX reproduction/rebuttal report for each paper and a
   combined synthesis across the selected corpus.
 
@@ -75,6 +78,8 @@ or match to one isolated number is not a complete reproduction.
 - Cherry-picking seeds, branches, metrics, or attacks that favor the hypothesis.
 - Generalizing one paper's verdict to another without independently testing it.
 - Redistributing restricted datasets or copyrighted publication PDFs.
+- Treating a written argument alone as proof; substantive claims require
+  rerunnable artifacts and appropriately powered statistical evidence.
 
 ## Success criteria
 
@@ -90,6 +95,8 @@ or match to one isolated number is not a complete reproduction.
       recurring findings without overstating them.
 - [ ] A new Claude or Codex session can recover the exact state and next action
       from Charter documents without relying on chat history.
+- [ ] A fresh public clone can bootstrap its environment, acquire or request all
+      named data, verify every available checksum, and rerun the published audit.
 
 ## Key domain concepts
 
@@ -112,7 +119,7 @@ OBSERVED, INFERRED, HYPOTHESIS, INVALIDATED, or OPEN.
 ## Future scope
 
 - Extend the same protocol from the initial three-paper corpus to additional
-  same-author papers only after each current paper receives its own verdict.
+  same-author papers, other domains, and eventually other corpora only after
+  each current paper receives its own independent verdict.
 - Publish reusable reproduction tooling once the paper-specific pipelines have
   stabilized.
-

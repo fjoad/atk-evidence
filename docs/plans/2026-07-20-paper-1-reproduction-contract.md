@@ -17,17 +17,17 @@ from influencing confirmatory branch or hyperparameter selection.
 
 **Create:**
 
-- `replication/PAPER_LITERAL_CONTRACT.md` — frozen human-readable contract.
-- `replication/config/paper_literal_matrix.yaml` — executable experiment matrix.
-- `replication/REPORTED_TARGETS.csv` — transcription of every target number.
-- `replication/AMBIGUITY_REGISTER.md` — explicit statements, omissions,
+- `studies/atk-2022-deep-autoencoder/PAPER_LITERAL_CONTRACT.md` — frozen human-readable contract.
+- `studies/atk-2022-deep-autoencoder/config/paper_literal_matrix.yaml` — executable experiment matrix.
+- `studies/atk-2022-deep-autoencoder/REPORTED_TARGETS.csv` — transcription of every target number.
+- `studies/atk-2022-deep-autoencoder/AMBIGUITY_REGISTER.md` — explicit statements, omissions,
   contradictions, branches, and rationale.
-- `replication/ACCEPTANCE_CRITERIA.md` — tolerances and statistical decision rule.
+- `studies/atk-2022-deep-autoencoder/ACCEPTANCE_CRITERIA.md` — tolerances and statistical decision rule.
 
 **Modify:**
 
-- `replication/README.md` — make the literal track primary and controlled track secondary.
-- `replication/EXPERIMENT_SPEC.md` — reorganize existing audit into contract inputs.
+- `studies/atk-2022-deep-autoencoder/README.md` — make the literal track primary and controlled track secondary.
+- `studies/atk-2022-deep-autoencoder/EXPERIMENT_SPEC.md` — reorganize existing audit into contract inputs.
 - `docs/STATUS.md` and `docs/EVIDENCE-AND-LEARNINGS.md` — record frozen state.
 
 ## Tasks
@@ -85,4 +85,3 @@ and the frozen contract is committed.
 - [ ] Acceptance criteria can both confirm and reject reproduction.
 - [ ] No confirmatory command is runnable without verified exact data.
 - [ ] Tests pass; STATUS, CONTEXT, and evidence ledger are current; contract committed.
-

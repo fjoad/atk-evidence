@@ -14,7 +14,5 @@
 Current deterministic suite:
 
 ```bash
-cd replication/src
-../.venv/bin/python -m unittest -v test_attacks.py test_cer_parser.py
+bash scripts/test.sh
 ```
-
