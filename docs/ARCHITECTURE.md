@@ -1,34 +1,37 @@
-# Electricity-Theft Paper Reproducibility Audit — Architecture
+# ATK Evidence — Architecture
 
-**Last updated:** 2026-07-20
+**Last updated:** 2026-07-21
 
 ## Overview
 
-The repository is an evidence pipeline organized around independent target
-papers. Local source PDFs and raw datasets feed versioned paper specifications,
-literal implementations, immutable run outputs, statistical assessments, and
-per-paper LaTeX reports. Charter documents preserve project intent, state, and
-causal evidence across Claude and Codex sessions.
+The repository is a domain-neutral evidence pipeline organized around
+independent target papers. Local source PDFs and raw datasets feed versioned
+paper specifications, literal implementations, immutable run outputs,
+statistical assessments, and per-paper LaTeX reports. Charter preserves intent,
+state, and causal evidence across Claude and Codex sessions.
 
 ## Structure
 
 ```text
-evidence/
+atk-evidence/
   docs/                       # Charter vision, status, memory, evidence, plans
   papers/                     # Local source PDFs; ignored by Git
   data/                       # Local raw/derived datasets; ignored by Git
-  replication/               # Paper 1 specifications, code, locks, and results
-    src/                      # Parsers, attacks, audits, and experiment runners
-    results/                  # Machine-readable summaries; large arrays ignored
+  scripts/                    # Environment, data acquisition/verification, tests
+  studies/
+    registry.toml             # Stable cross-domain paper registry
+    atk-2022-deep-autoencoder/
+      src/                    # Study 1 parsers, audits, and runners
+      results/                # Machine-readable summaries; large arrays ignored
   reports/
-    paper-01/                 # Planned standalone LaTeX report
+    atk-2022-deep-autoencoder/# Planned standalone LaTeX report
     synthesis/                # Planned cross-paper LaTeX report
   .claude/rules/              # Claude automation; canonical facts stay shared
   AGENTS.md                   # Cross-agent operating contract
 ```
 
-Later papers should receive their own self-contained reproduction directory or
-clearly isolated subdirectory before implementation begins.
+Every later paper receives a registered, self-contained study directory before
+implementation begins.
 
 ## Evidence layers
 
@@ -52,6 +55,10 @@ Each dataset record must identify the authoritative source, access status,
 version, expected files, official checksum when available, local checksum, and
 transform provenance. Code consumes verified local paths, never an unrecorded
 substitute.
+
+Acquisition scripts may download only openly available data or files for which
+the invoking researcher already has authorization. Restricted datasets include
+explicit access instructions and checksum verification, never embedded tokens.
 
 ### Reproduction contract
 
@@ -101,4 +108,3 @@ reported separately and do not become reproduction verdicts.
 - Add a methodological correction only under a clearly named controlled track.
 - Add a report by committing LaTeX source and reproducible build instructions;
   generated build intermediates remain ignored.
-

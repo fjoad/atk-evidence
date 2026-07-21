@@ -292,8 +292,16 @@ def evaluate_scores(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--input", type=Path, default=Path("data/raw/sgcc-verified/data.csv"))
-    parser.add_argument("--output", type=Path, default=Path("replication/results/sgcc_attack_pilot.json"))
-    parser.add_argument("--scores-output", type=Path, default=Path("replication/results/sgcc_attack_pilot_scores.npz"))
+    parser.add_argument(
+        "--output",
+        type=Path,
+        default=Path("studies/atk-2022-deep-autoencoder/results/sgcc_attack_pilot.json"),
+    )
+    parser.add_argument(
+        "--scores-output",
+        type=Path,
+        default=Path("studies/atk-2022-deep-autoencoder/results/sgcc_attack_pilot_scores.npz"),
+    )
     parser.add_argument("--data-seed", type=int, default=20260720)
     parser.add_argument("--seeds", type=int, nargs="+", default=[11, 22, 33])
     parser.add_argument("--train-windows", type=int, default=12000)

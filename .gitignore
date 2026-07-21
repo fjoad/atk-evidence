@@ -25,13 +25,16 @@ dist/
 *.key
 
 # Raw or access-controlled research inputs
-/data/
+/data/*
+!/data/README.md
 /papers/
 /tmp/
+# Pre-publication local environment/cache after study migration
+/replication/
 *.zip
 
 # Large generated score arrays; publish separately with checksums if needed
-replication/results/*.npz
+studies/*/results/*.npz
 
 # Generated LaTeX artifacts
 *.aux
@@ -45,4 +48,3 @@ replication/results/*.npz
 *.run.xml
 *.synctex.gz
 *.toc
-

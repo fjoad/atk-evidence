@@ -1,6 +1,6 @@
-# Electricity-Theft Paper Reproducibility Audit — Evidence and Causal Learnings
+# ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-07-20
+**Last updated:** 2026-07-21
 
 ## Purpose
 
@@ -32,7 +32,7 @@ and repeated experiments determine technical conclusions.
 - **Root cause:** Not yet investigated experimentally.
 - **Current conclusion + label:** **HYPOTHESIS** — selected papers' complete numerical result patterns will not reproduce reliably within predeclared paper-consistent implementation spaces.
 - **Remaining uncertainty / blast radius:** Entire claim remains open; each paper requires an independent verdict and may falsify the hypothesis.
-- **Source artifacts:** `docs/VISION.md`, target PDFs kept locally, `replication/EXPERIMENT_SPEC.md`.
+- **Source artifacts:** `docs/VISION.md`, target PDFs kept locally, `studies/atk-2022-deep-autoencoder/EXPERIMENT_SPEC.md`.
 
 ### SGCC-derived 48-value proxy experiment
 
@@ -41,7 +41,7 @@ and repeated experiments determine technical conclusions.
 - **Root cause:** Work continued with a substitute representation instead of stopping at the exact-data gate.
 - **Current conclusion + label:** **INVALIDATED as reproduction evidence** — preserve its artifacts for transparency, but it cannot support or refute the Paper 1 hypothesis.
 - **Remaining uncertainty / blast radius:** It may have exploratory value only if explicitly requested later.
-- **Source artifacts:** `replication/src/sgcc_attack_pilot.py`, `replication/results/sgcc_attack_pilot.json`.
+- **Source artifacts:** `studies/atk-2022-deep-autoencoder/src/sgcc_attack_pilot.py`, `studies/atk-2022-deep-autoencoder/results/sgcc_attack_pilot.json`.
 
 ### Paper 1 dataset availability
 
@@ -50,11 +50,10 @@ and repeated experiments determine technical conclusions.
 - **Root cause:** CER access requires an approved institutional account rather than an anonymous public download.
 - **Current conclusion + label:** **VERIFIED** for current local availability; CER acquisition is **OPEN**.
 - **Remaining uncertainty / blast radius:** Exact CER reproduction cannot run until authorized archives are supplied and match official MD5 values.
-- **Source artifacts:** `replication/DATA_SOURCES.md`, `data/raw/sgcc-verified/data.csv` (local, ignored by Git).
+- **Source artifacts:** `studies/atk-2022-deep-autoencoder/DATA_SOURCES.md`, `data/raw/sgcc-verified/data.csv` (local, ignored by Git).
 
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
 with label; remaining uncertainty; and source artifacts. Preserve invalidated
 beliefs rather than deleting them.
-

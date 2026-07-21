@@ -42,35 +42,51 @@ def main() -> int:
         )
         return 2
 
-    destination = Path(__file__).resolve().parents[2] / "data" / "raw" / "cer-authorized"
+    repository_root = Path(__file__).resolve().parents[3]
+    destination = repository_root / "data" / "raw" / "cer-authorized"
     destination.mkdir(parents=True, exist_ok=True)
     for file_id, (filename, expected_md5) in FILES.items():
         target = destination / filename
         if target.exists() and md5(target) == expected_md5:
             print(f"verified existing {filename}")
             continue
+        if target.exists():
+            print(
+                f"checksum mismatch for existing {filename}; refusing to overwrite it",
+                file=sys.stderr,
+            )
+            return 1
+        partial = target.with_suffix(target.suffix + ".part")
+        partial.unlink(missing_ok=True)
         request = urllib.request.Request(
             f"https://issda.ucd.ie/api/access/datafile/{file_id}",
             headers={"X-Dataverse-key": token},
         )
         try:
-            with urllib.request.urlopen(request) as response, target.open("wb") as handle:
+            with urllib.request.urlopen(request) as response, partial.open("wb") as handle:
                 while chunk := response.read(1024 * 1024):
                     handle.write(chunk)
         except urllib.error.HTTPError as exc:
+            partial.unlink(missing_ok=True)
             print(f"failed {filename}: HTTP {exc.code}", file=sys.stderr)
+            if exc.code in (401, 403):
+                print(
+                    "Confirm that the ISSDA access request is approved and the API token is current.",
+                    file=sys.stderr,
+                )
             return 1
-        actual_md5 = md5(target)
+        actual_md5 = md5(partial)
         if actual_md5 != expected_md5:
+            partial.unlink(missing_ok=True)
             print(
                 f"checksum mismatch for {filename}: {actual_md5} != {expected_md5}",
                 file=sys.stderr,
             )
             return 1
+        partial.replace(target)
         print(f"downloaded and verified {filename}")
     return 0
 
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

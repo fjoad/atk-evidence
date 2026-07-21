@@ -1,6 +1,8 @@
-# Deep Autoencoder Electricity-Theft Replication
+# Study 1 — Deep Autoencoder Electricity-Theft Reproduction
 
-This directory contains a neutral, auditable reproduction of:
+**Study ID:** `atk-2022-deep-autoencoder`
+
+This self-contained study directory contains a neutral, auditable reproduction of:
 
 > A. Takiddin, M. Ismail, U. Zafar, and E. Serpedin, "Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids," IEEE Systems Journal, 16(3), 4106-4117, 2022. DOI: 10.1109/JSYST.2021.3136683.
 
@@ -48,7 +50,10 @@ Those experiments cannot substitute for the primary reproduction.
 - `REPRODUCIBILITY_LOG.md`: chronological audit trail and environment details.
 - `src/`: executable analysis and model code.
 - `results/`: machine-readable metrics and run metadata.
-- `../data/raw/`: downloaded raw data; never modified in place.
+- `../../data/raw/`: downloaded raw data; never modified in place.
+
+Repository-wide setup and data acquisition are documented in
+[`../../docs/GETTING_STARTED.md`](../../docs/GETTING_STARTED.md).
 
 ## Evidence principles
 

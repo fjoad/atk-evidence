@@ -1,0 +1,14 @@
+schema_version = 1
+
+[[studies]]
+id = "atk-2022-deep-autoencoder"
+sequence = 1
+status = "contract-draft"
+primary = true
+title = "Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids"
+authors = ["Abdulrahman Takiddin", "Mohamed Ismail", "Usman Zafar", "Erchin Serpedin"]
+year = 2022
+doi = "10.1109/JSYST.2021.3136683"
+path = "studies/atk-2022-deep-autoencoder"
+report_path = "reports/atk-2022-deep-autoencoder"
+

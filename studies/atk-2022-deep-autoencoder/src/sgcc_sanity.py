@@ -113,7 +113,7 @@ def main() -> None:
     parser.add_argument(
         "--output",
         type=Path,
-        default=Path("replication/results/sgcc_sanity_seed_20260720.json"),
+        default=Path("studies/atk-2022-deep-autoencoder/results/sgcc_sanity_seed_20260720.json"),
     )
     parser.add_argument("--seed", type=int, default=20260720)
     parser.add_argument("--target-fa", type=float, default=0.05)
