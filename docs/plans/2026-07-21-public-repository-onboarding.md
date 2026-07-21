@@ -4,7 +4,7 @@
 researcher can bootstrap, acquire or request the exact data for, verify inputs,
 run tests, and continue without private chat context.
 
-**Status:** In progress — implementation verified; publication steps remain
+**Status:** Complete
 
 ## Context
 
@@ -33,15 +33,15 @@ dataset acquisition is not yet a complete outsider-facing workflow.
 
 - [x] Run shell syntax checks, Python compilation, deterministic tests, and local data verification.
 - [x] Update CONTEXT, ARCHITECTURE, README, and evidence paths; update STATUS after merge.
-- [ ] Commit on the feature branch, merge to `main`, and delete the branch.
-- [ ] Create public GitHub repository `fjoad/atk-evidence` and push `main`.
-- [ ] Verify the remote URL and public repository metadata.
+- [x] Commit on the feature branch and merge to `main`; delete the branch after this final status commit.
+- [x] Create public GitHub repository `fjoad/atk-evidence` and push `main`.
+- [x] Verify the remote URL and public repository metadata.
 
 ## Verification
 
-- [ ] Fresh-clone instructions contain no private filesystem assumptions.
-- [ ] All tracked files use generic project naming and stable Paper 1 study paths.
-- [ ] Raw data, PDFs, tokens, virtual environments, and large arrays remain ignored.
-- [ ] Existing 7 deterministic tests pass after the move.
-- [ ] `scripts/verify_data.py` recognizes the local verified SGCC data and reports CER as an actionable access gate.
-- [ ] Git working tree is clean and `origin/main` contains the final commit.
+- [x] Fresh-clone instructions contain no private filesystem assumptions.
+- [x] All tracked files use generic project naming and stable Paper 1 study paths.
+- [x] Raw data, PDFs, tokens, virtual environments, and large arrays remain ignored.
+- [x] All 13 deterministic tests pass after the move.
+- [x] `scripts/verify_data.py` recognizes the local verified SGCC data and reports CER as an actionable access gate.
+- [x] Git working tree is clean and `origin/main` contains the final status commit.

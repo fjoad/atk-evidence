@@ -26,7 +26,7 @@
 - Exact membership and order of the three-paper core corpus after Paper 1.
 - Reproduction tolerances, finite hyperparameter envelope, seed count, split policy, and computational stopping rule must be frozen before confirmatory runs.
 - Authorized acquisition path for the six CER/ISET consumption archives.
-- GitHub repository is explicitly authorized as public under `fjoad/atk-evidence`.
+- Public canonical repository: <https://github.com/fjoad/atk-evidence>, default branch `main`.
 
 ## User emphases
 
