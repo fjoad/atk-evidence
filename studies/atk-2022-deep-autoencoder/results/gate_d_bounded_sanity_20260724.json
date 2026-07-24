@@ -1,0 +1,80 @@
+{
+  "date": "2026-07-24",
+  "evidence_class": "STRUCTURAL_SANITY_ONLY",
+  "gate": "D-bounded-local",
+  "status": "partial_pass",
+  "results": [
+    {
+      "cell": "complete_study_suite",
+      "command": "python -m unittest [15 Paper 1 modules]",
+      "tests": 137,
+      "runner_seconds": 14.633,
+      "status": "passed"
+    },
+    {
+      "cell": "repository_suite",
+      "command": "python -m unittest discover -s tests",
+      "tests": 10,
+      "runner_seconds": 0.017,
+      "status": "passed"
+    },
+    {
+      "cell": "neural_source_topologies_and_one-step-updates",
+      "command": "python -m unittest test_paper_literal_models.py test_paper_source_models.py",
+      "tests": 27,
+      "runner_seconds": 3.855,
+      "wall_seconds": 7.72,
+      "status": "passed",
+      "coverage": [
+        "FC/LSTM SAE",
+        "FC/LSTM VAE",
+        "LSTM AEA",
+        "feed-forward classifier",
+        "supervised LSTM",
+        "both supervised heads",
+        "all frozen decoder/attention/VAE-score structures"
+      ]
+    },
+    {
+      "cell": "data_classical_metrics_ordinary_iset_and_ddp_structure",
+      "command": "python -m unittest test_paper_literal_data.py test_paper_literal_iset.py test_paper_literal_benchmarks.py test_paper_literal_metrics.py test_paper_literal_runner.py test_paper_literal_iset_runner.py test_paper_literal_ddp.py",
+      "tests": 71,
+      "runner_seconds": 4.595,
+      "wall_seconds": 7.16,
+      "status": "passed",
+      "coverage": [
+        "SGCC and ISET preparation branches",
+        "16 ARIMA completions",
+        "capped and full-data SVM paths",
+        "binary and ISET seven-class SVM paths",
+        "threshold and refit policies",
+        "Table III/IV/V dispatch",
+        "distributed-runner structural parity"
+      ]
+    },
+    {
+      "cell": "real_sgcc_printed_anchor_preflight",
+      "branch_id": "sgcc_fc_sae-19b26c8cdff2",
+      "data_sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7",
+      "features": 1034,
+      "retained_customers": 42367,
+      "data_preparation_seconds": 6.806246708001709,
+      "wall_seconds": 9.55,
+      "status": "ready"
+    },
+    {
+      "cell": "exact_iset_printed_anchor_cache_gate",
+      "branch_id": "iset_fc_sae-7868f40a6e09",
+      "preparation_id": "prep-20792e1602ac8e5d",
+      "wall_seconds": 3.31,
+      "status": "expected_gate_failure",
+      "reason": "The content-addressed source-v2 cache has not been built. The historical 3.2-GiB implementation-v1 cache is not silently relabeled."
+    }
+  ],
+  "open_before_scaled_compute": [
+    "Build and verify the exact ISET content-addressed cache for each promoted preparation identity.",
+    "Run one real multi-GPU DDP smoke on the cluster from the pushed commit.",
+    "Do not start the 921-branch screening matrix before those checks and the Gate-E checkpoint."
+  ],
+  "scientific_conclusion": "None. These cells establish executable structure and fail-closed data identity only; they do not measure reproduction."
+}

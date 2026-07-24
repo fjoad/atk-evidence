@@ -24,11 +24,20 @@
 
 ### Models
 
-- FC-SAE encoder widths: 400, 300, 200, 100; mirrored decoder; Softmax output; dropout 0.4.
-- LSTM-SAE encoder widths: 500, 300; mirrored decoder; sigmoid output; dropout 0.2.
-- FC-VAE encoder widths: 500, 400, 300, 100; mirrored decoder; Softmax output; dropout 0.4.
-- LSTM-VAE encoder widths: 400, 300; mirrored decoder; sigmoid output; dropout 0.
-- LSTM-AEA encoder widths: 500, 300, 200; mirrored decoder; attention between encoder and decoder; sigmoid output; dropout 0.
+- FC-SAE encoder hidden widths: 400, 300, 200, 100; full mirrored decoder 100,
+  200, 300, 400; both a distinct unspecified-width latent projection and a
+  last-hidden bottleneck reading; Softmax output; dropout 0.4.
+- LSTM-SAE encoder hidden widths: 500, 300; mirrored decoder 300, 500; both a
+  distinct unspecified-width latent projection and the Algorithm-2 terminal
+  state bottleneck; sigmoid output; dropout 0.2.
+- FC-VAE encoder hidden widths: 500, 400, 300, 100; a distinct
+  unspecified-width latent distribution; mirrored decoder 100, 300, 400, 500;
+  Softmax output; dropout 0.4.
+- LSTM-VAE encoder hidden widths: 400, 300; a distinct unspecified-width latent
+  distribution; mirrored decoder 300, 400; sigmoid output; dropout 0.
+- LSTM-AEA encoder hidden widths: 500, 300, 200; attention; mirrored decoder
+  200, 300, 500; both a distinct post-attention latent projection and the
+  Algorithm-5 attention-context bottleneck; sigmoid output; dropout 0.
 - Hyperparameters are selected by sequential grid search over depth, width, optimizer, dropout, hidden activation, and output activation.
 
 ### Thresholds and metrics
@@ -77,6 +86,26 @@ The journal article says its reported test set is different from the ROC validat
 14. The exact thresholds and point estimates recur from precursor papers whose written protocols place malicious examples only in the test set (ISSCS) or identify no separate labeled validation set (EUSIPCO). The journal's later validation/test distinction is therefore not independently reconstructable.
 15. The journal says cross-validation is over `X_TR`, which it elsewhere defines as the benign anomaly-detector training subset, yet says hyperparameters improve DR on a validation set and uses ROC curves to set thresholds. DR and ROC cannot be computed from benign-only data; the labeled validation construction is not given.
 16. Table IV describes full ISET `|X_TR|` as 60 million. That is plausibly a count of scalar meter readings, whereas a model input is a vector of 48 readings. The number of training examples, and therefore the reported time per example or epoch, cannot be recovered.
+
+## Non-blocking internal inconsistencies (recorded for the report)
+
+These do not change any implementation branch; the reproduction targets remain
+the printed table cells. Registered 2026-07-21, before any Table III--V
+execution.
+
+1. The paper's headline improvement ranges disagree across sections: the
+   abstract and conclusion state DR 4--21% and FA 4--13%; the contributions
+   list states DR 4--8% and FA 4--7%; Section IV states 4--21% and 3.5--12%
+   for SGCC and 3--21% and 3--13% for ISET.
+2. SGCC malicious behavior is described as reporting "an energy consumption
+   value of zero at specified hours," but SGCC has one reading per day. The
+   description cannot be executed against the provided data; SGCC labels are
+   taken as given and no attack synthesis is applied to SGCC.
+3. The paper claims "around 3000 residential units" for ISET, but the official
+   allocation table assigns 4,225 residential (Code = 1) meters, all present in
+   the consumption archives. No subselection procedure is described; the
+   paper-literal branch uses all official residential meters (A03) and records
+   the count discrepancy (A27).
 
 ## Controlled replication protocol
 

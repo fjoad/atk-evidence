@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "status": "observed_exploratory_environment_sensitivity",
+  "date": "2026-07-21",
+  "input_sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7",
+  "config_sha256": "1d8fdf573bfce65cc3f93d704d71f5426bc2530002948d5f5f769830eea21179",
+  "software": {
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "scikit_learn": "1.9.0",
+    "imbalanced_learn": "0.14.2"
+  },
+  "fixed_counts": {
+    "retained_customers": 42367,
+    "benign": 38755,
+    "malicious": 3612,
+    "anomaly_test_after_adasyn": 25906
+  },
+  "observations": [
+    {
+      "environment": "local_apple_m1_max",
+      "omp_threads": 1,
+      "mkl_threads": 1,
+      "supervised_after_adasyn": 77712,
+      "supervised_train": 51808,
+      "supervised_test": 25904
+    },
+    {
+      "environment": "local_apple_m1_max",
+      "omp_threads": 2,
+      "mkl_threads": 2,
+      "supervised_after_adasyn": 77712,
+      "supervised_train": 51808,
+      "supervised_test": 25904
+    },
+    {
+      "environment": "local_apple_m1_max",
+      "omp_threads": 4,
+      "mkl_threads": 4,
+      "supervised_after_adasyn": 77708,
+      "supervised_train": 51805,
+      "supervised_test": 25903
+    },
+    {
+      "environment": "local_apple_m1_max",
+      "omp_threads": null,
+      "mkl_threads": null,
+      "supervised_after_adasyn": 77710,
+      "supervised_train": 51806,
+      "supervised_test": 25904
+    },
+    {
+      "environment": "panther_x86_64",
+      "omp_threads": 2,
+      "mkl_threads": 2,
+      "supervised_after_adasyn": 77712,
+      "supervised_train": 51808,
+      "supervised_test": 25904,
+      "source": "job 348262 resource-probe artifact"
+    },
+    {
+      "environment": "panther_x86_64",
+      "omp_threads": 8,
+      "mkl_threads": 8,
+      "supervised_after_adasyn": 77710,
+      "supervised_train": 51806,
+      "supervised_test": 25904,
+      "source": "job 348223 preflight artifact"
+    },
+    {
+      "environment": "panther_x86_64",
+      "omp_threads": 16,
+      "mkl_threads": 16,
+      "supervised_after_adasyn": 77712,
+      "supervised_train": 51808,
+      "supervised_test": 25904,
+      "source": "job 348195 preflight artifact"
+    }
+  ],
+  "bounded_interpretation": "Thread/runtime settings alter ADASYN by at most four rows in these observations. This must be recorded as an execution ambiguity but cannot explain large metric discrepancies by itself."
+}

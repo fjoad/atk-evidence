@@ -1,6 +1,6 @@
 # ATK Evidence — Architecture
 
-**Last updated:** 2026-07-21
+**Last updated:** 2026-07-24
 
 ## Overview
 
@@ -14,6 +14,7 @@ state, and causal evidence across Claude and Codex sessions.
 
 ```text
 atk-evidence/
+  RUNBOOK.md                 # Canonical end-to-end paper implementation guide
   docs/                       # Charter vision, status, memory, evidence, plans
   papers/                     # Local source PDFs; ignored by Git
   data/                       # Local raw/derived datasets; ignored by Git
@@ -21,17 +22,47 @@ atk-evidence/
   studies/
     registry.toml             # Stable cross-domain paper registry
     atk-2022-deep-autoencoder/
+      METHOD.md               # Fresh PDF-derived executable specification
+      reproduction/           # Primary five-file scientific implementation
+        download_data.py
+        prepare_data.py
+        models.py
+        run_experiment.py
+        analyze_results.py
+      download_data.py        # Historical forensic command wrapper
+      prepare_data.py         # Historical forensic command wrapper
+      run_experiment.py       # Historical forensic command wrapper
+      analyze_results.py      # Historical forensic command wrapper
       src/                    # Study 1 parsers, audits, and runners
       results/                # Machine-readable summaries; large arrays ignored
   reports/
-    atk-2022-deep-autoencoder/# Planned standalone LaTeX report
+    atk-2022-deep-autoencoder/# Standalone LaTeX report source
     synthesis/                # Planned cross-paper LaTeX report
+  site/
+    index.html                # Multi-paper public landing page
+    papers/<study-id>/        # Self-contained readable paper maps
   .claude/rules/              # Claude automation; canonical facts stay shared
   AGENTS.md                   # Cross-agent operating contract
 ```
 
 Every later paper receives a registered, self-contained study directory before
 implementation begins.
+
+The four current study-root programs are a small command surface over `src/`.
+They are not, by themselves, a compact reference implementation: the Paper 1
+`src/` tree contains a large forensic branch engine, evidence verifier, tests,
+and the cluster adapter.
+
+The target public architecture separates two code products:
+
+1. a real five-file reference track (`download`, `prepare`, `models`, `run`,
+   `analyze`) for one frozen source-faithful anchor; and
+2. the larger forensic harness for ambiguity coverage, corrected controls,
+   cluster execution, and evidence verification.
+
+The extraction is the active Paper 1 plan and must preserve existing
+fingerprints and result eligibility. Small wrappers over the forensic harness
+do not satisfy it.
 
 ## Evidence layers
 
@@ -62,15 +93,22 @@ explicit access instructions and checksum verification, never embedded tokens.
 
 ### Reproduction contract
 
-The Paper 1 contract will define a machine-readable experiment matrix plus a
-human-readable rationale. Each row binds a paper claim to one explicit or
-ambiguity-resolving implementation branch and its acceptance criteria.
+Each paper begins with a concise source-located `METHOD.md` and one declared
+straight-through experiment. Before confirmatory runs, its active plan freezes
+targets, eligible material interpretations, tolerances, seeds, statistics,
+budget, and stopping rules. A machine-readable branch matrix is optional later
+support, not a prerequisite for the first full anchor.
 
 ### Run record
 
 Every run must be reconstructable from: source revision, data hash, branch id,
 hyperparameters, seed, split id, environment, raw scores/predictions, metrics,
 duration, and completion/failure status. Failed runs remain part of the record.
+
+Historical the cluster/DDP attempts retain their existing detailed fingerprints
+inside the forensic layer. New primary runs use the same five-file scientific
+path locally and on the cluster; a short Slurm wrapper may select resources but
+must not introduce a second scientific implementation.
 
 ### Verdict
 
@@ -81,14 +119,26 @@ reported separately and do not become reproduction verdicts.
 ## Data flow
 
 1. Register paper and exact claimed results.
-2. Acquire and checksum named datasets.
-3. Translate paper text into explicit steps and ambiguity branches.
-4. Freeze the reproduction contract before confirmatory search.
-5. Test deterministic transformations and model interfaces.
-6. Execute pilots, then confirmatory repeated runs without post-hoc selection.
-7. Compute uncertainty and compare with the acceptance criteria.
-8. Update the evidence ledger and generate the paper report.
-9. Begin the next paper with a fresh independent contract.
+2. Read the complete PDF and freeze a source-located `METHOD.md`.
+3. Acquire and checksum named datasets.
+4. Implement the straight-through paper reading in five real scientific files.
+5. Run tiny deterministic and one-step checks.
+6. Obtain one eligible full anchor before generalized infrastructure.
+7. Complete the reported tables and repeated exploratory seeds.
+8. Test material ambiguity branches and separate corrected controls.
+9. Freeze the reproduction contract before confirmatory search.
+10. Execute confirmatory runs without post-hoc selection.
+11. Compute uncertainty and compare with the acceptance criteria.
+12. Update the evidence ledger and generate the paper report.
+13. Freeze the paper-level reproduction report and verdict.
+14. If authorized, execute the separately contracted controlled solution and
+    publish it as an addendum that cannot alter the reproduction verdict.
+15. Begin the next paper with a fresh independent contract.
+
+The public `site/` is a separate static publication surface. It contains no raw
+data, paper PDFs, credentials, or internal build state. GitHub Pages deploys
+only this directory; rendered report PDFs are copied into it only after their
+paper-level evidence is frozen.
 
 ## Key design decisions
 

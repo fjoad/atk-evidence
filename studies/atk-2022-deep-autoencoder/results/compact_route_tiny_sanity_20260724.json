@@ -1,0 +1,67 @@
+{
+  "status": "OBSERVED_FIXTURE_SANITY",
+  "method": "P0-ISET-FCSAE",
+  "eligibility": "tiny fixture only; not a paper reproduction result",
+  "data": {
+    "meters": 12,
+    "benign_profiles": 240,
+    "B1_profiles": 160,
+    "B2_profiles": 80,
+    "malicious_profiles": 1440,
+    "test_original_profiles": 1520,
+    "test_after_adasyn": 2867,
+    "test_synthetic_profiles": 1347,
+    "test_benign": 1427,
+    "test_malicious": 1440,
+    "metadata_sha256": "a7fc859215fcee38df5b8b99b534eba0e282a503ce53b4efc4c3e861bf9d37b6"
+  },
+  "attack_checks": {
+    "attack_1_one_fixed_factor_per_customer_matrix": true,
+    "attack_2_factor_range": [0.10000745034013724, 0.7999278744391384],
+    "attack_3_zero_hours_range": [4.0, 24.0],
+    "attack_4_constant_within_day": true,
+    "attack_5_factor_range": [0.10001538292414888, 0.7999967742922934],
+    "attack_6_exact_daily_reverse": true
+  },
+  "model": {
+    "parameters": 450448,
+    "dense_widths": [400, 300, 200, 100, 100, 200, 300, 400, 48],
+    "hidden_activation": "sigmoid",
+    "output_activation": "softmax",
+    "dropout_after_each_hidden_layer": 0.4,
+    "optimizer": "Adam",
+    "loss": "MSE",
+    "epochs": 2,
+    "finite_fit_and_update": true
+  },
+  "table_3_metrics_percent": {
+    "DR": 31.180555555555557,
+    "FA": 46.81149264190609,
+    "SP": 53.18850735809391,
+    "PR": 40.19695613249776,
+    "ACC": 42.18453145682473,
+    "F1": 35.11928040672663,
+    "AUC": 42.2277213267928
+  },
+  "baselines_percent": {
+    "untrained_ACC": 41.93894533987386,
+    "untrained_AUC": 41.599947442186405,
+    "zero_reconstruction_ACC": 41.27542727555867,
+    "zero_reconstruction_AUC": 40.499566884684256,
+    "logistic_positive_control_ACC": 59.548611111111114,
+    "logistic_positive_control_AUC": 76.77408854166666
+  },
+  "table_5_structural_check": {
+    "false_alarm_percent_for_attacks_1_through_6": [65.0, 65.0, 65.0, 65.0, 65.0, 65.0],
+    "conclusion": "A common model, threshold, and benign population necessarily produce invariant FA."
+  },
+  "timing_seconds": {
+    "profile_preparation_command_wall": 7.57,
+    "fit": 0.09613299999909941,
+    "score_table_3": 0.03322287499031518,
+    "score_table_5": 0.10165587499795947,
+    "model_pipeline_total_excluding_import_startup": 0.3286630829970818,
+    "model_command_wall_including_import_startup": 18.20
+  },
+  "result_json_sha256": "07d1934ede58b944feaa19e09dd68ca39a22b8e8a9f30eff6f566d07f9755b77"
+}

@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "evidentiary_scope": "resource_and_timing_sanity_checks_not_table_ii_results",
+  "generated_utc": "2026-07-21T14:50:00Z",
+  "cluster": "the cluster",
+  "gpu_allocation": {
+    "count": 4,
+    "model": "Tesla V100-PCIE-16GB",
+    "global_batch": 512,
+    "local_batch_per_rank": 128
+  },
+  "probe_shape": {
+    "input_features": 1034,
+    "train_samples": 2048,
+    "validation_samples": 512,
+    "timed_train_steps": 4,
+    "timed_validation_steps": 1
+  },
+  "paper_reported_table_iv_full_iset_minutes": {
+    "fc_sae": 137,
+    "lstm_sae": 183,
+    "fc_vae": 141,
+    "lstm_vae": 188,
+    "lstm_aea": 193,
+    "comparability": "These are ISET Table IV claims with unspecified hardware, epochs, batch size, timing protocol, and repetitions; they are not SGCC Table II timings."
+  },
+  "attempts": [
+    {
+      "job_id": 348249,
+      "model": "lstm_sae",
+      "status": "complete",
+      "slurm_elapsed_seconds": 305,
+      "code_commit": "79bfc96bd4da43fc83f81b5091a4239bf70a8a2b",
+      "loss_execution": "torch_native_mse_timing_only",
+      "optimizer_execution": "torch_native_adam_matched_defaults_not_algebraically_equivalent",
+      "trainable_parameters": 4288901,
+      "full_train_samples": 21960,
+      "full_validation_samples": 3876,
+      "warmup_step_seconds": 33.929996341466904,
+      "train_seconds_per_global_step": 19.483557438477874,
+      "validation_seconds_per_global_step": 0.8954542949795723,
+      "extrapolated_full_epoch_seconds": 844.9566042143852,
+      "estimated_10_to_30_epoch_seconds": [
+        8449.566042143852,
+        25348.698126431555
+      ],
+      "peak_memory_allocated_bytes_per_rank": 12375002112,
+      "peak_memory_reserved_bytes_per_rank": 14573109248,
+      "all_rank_parameter_sha256": "f924a25041c480f8db32047f8303002d32f3a88f7cc6b436a38bbc52478cec01",
+      "remote_artifact": "data/derived/atk-2022-deep-autoencoder/probes/20260721T141736.398931Z-lstm_sae-seed-11.json"
+    },
+    {
+      "job_id": 348251,
+      "model": "lstm_vae",
+      "status": "complete",
+      "slurm_elapsed_seconds": 216,
+      "code_commit": "79bfc96bd4da43fc83f81b5091a4239bf70a8a2b",
+      "loss_execution": "torch_native_registered_vae_loss_timing_only",
+      "optimizer_execution": "torch_native_sgd_matched_defaults",
+      "trainable_parameters": 3508201,
+      "full_train_samples": 21960,
+      "full_validation_samples": 3876,
+      "warmup_step_seconds": 4.064328625798225,
+      "train_seconds_per_global_step": 1.6856672950088978,
+      "validation_seconds_per_global_step": 0.32605643570423126,
+      "extrapolated_full_epoch_seconds": 75.09214517101645,
+      "estimated_10_to_30_epoch_seconds": [
+        750.9214517101645,
+        2252.7643551304934
+      ],
+      "peak_memory_allocated_bytes_per_rank": 6084976128,
+      "peak_memory_reserved_bytes_per_rank": 7279214592,
+      "all_rank_parameter_sha256": "90dd9834957a48e50bf9c3fd2644ff3d8f9dc0b067c808440e511334120860cb",
+      "remote_artifact": "data/derived/atk-2022-deep-autoencoder/probes/20260721T142232.182874Z-lstm_vae-seed-11.json"
+    },
+    {
+      "job_id": 348252,
+      "model": "lstm_aea",
+      "status": "failed_resource_gate",
+      "slurm_elapsed_seconds": 56,
+      "code_commit": "79bfc96bd4da43fc83f81b5091a4239bf70a8a2b",
+      "failure_type": "OutOfMemoryError",
+      "failure_stage": "first warmup forward pass",
+      "requested_allocation": "101.96 GiB per rank",
+      "tensor_shapes": [
+        [128, 1034, 200],
+        [128, 1034, 200]
+      ],
+      "bounded_conclusion": "The literal attention implementation is infeasible at global batch 512 split four ways across 16 GB GPUs. This does not establish infeasibility at a smaller unspecified batch or under a different attention interpretation.",
+      "remote_artifact": "data/derived/atk-2022-deep-autoencoder/probes/20260721T142608.710893Z-lstm_aea-seed-11.json"
+    },
+    {
+      "job_id": 348256,
+      "model": "supervised_lstm",
+      "status": "failed_invalidated_as_model_evidence",
+      "slurm_elapsed_seconds": 126,
+      "code_commit": "79bfc96bd4da43fc83f81b5091a4239bf70a8a2b",
+      "loss_execution": "torch_native_bce",
+      "optimizer_execution": "torch_native_adam_matched_defaults_not_algebraically_equivalent",
+      "failure_type": "CUDA binary-cross-entropy input assertion",
+      "causal_correction": "The compiled-Keras rerun in job 348262 completed with all numerical checks finite. Therefore this failure was caused by the approximate probe path and is not evidence that the paper-literal supervised model is numerically unstable.",
+      "remote_log": "slurm-348256.out"
+    },
+    {
+      "job_id": 348262,
+      "model": "supervised_lstm",
+      "status": "complete",
+      "slurm_elapsed_seconds": 135,
+      "code_commit": "6d403556c17a0a8cae7814eb218d64ed6bde6bcb",
+      "loss_execution": "compiled_keras_compute_loss",
+      "optimizer_execution": "compiled_keras_adam_after_ddp_gradient_reduction",
+      "numerical_diagnostics": "loss, gradients, parameters, and optimizer state synchronized and finite on all ranks",
+      "trainable_parameters": 2526301,
+      "full_train_samples": 44036,
+      "full_validation_samples": 7772,
+      "warmup_step_seconds": 27.279075771570206,
+      "train_seconds_per_global_step": 13.85450147651136,
+      "validation_seconds_per_global_step": 0.8487756624817848,
+      "extrapolated_full_epoch_seconds": 1218.9220390561968,
+      "estimated_10_to_30_epoch_seconds": [
+        12189.220390561969,
+        36567.661171685904
+      ],
+      "peak_memory_allocated_bytes_per_rank_max": 8797076480,
+      "peak_memory_reserved_bytes_per_rank": 9927917568,
+      "all_rank_parameter_sha256": "8e4a13d0eafced2a744d57321788de181c04415fa7545ad660b2cf2d60f6db56",
+      "remote_artifact": "data/derived/atk-2022-deep-autoencoder/probes/20260721T144359.819233Z-supervised_lstm-seed-11.json"
+    }
+  ],
+  "interpretation": {
+    "timing": "Four deterministic full-shape training steps provide rough per-epoch estimates only. Startup, full scoring, persistence, scheduler variation, and the unknown stopping epoch are excluded.",
+    "results": "No accuracy, detection, false-alarm, precision, AUC, or final-loss value from these probes is a Table II reproduction result.",
+    "stochasticity": "Per-rank random streams are not yet made equivalent to one single-device stochastic stream; production promotion remains blocked on that and exact stopping, validation, scoring, and persistence semantics."
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "checked_at_utc": "2026-07-21T18:58:58Z",
+  "status": "verified_with_semantic_allocation",
+  "source": {
+    "dataset_url": "https://doi.org/10.57760/sciencedb.17619",
+    "official_reference_url": "https://doi.org/10.7929/ISSDA/BX59EU",
+    "local_directory": "data/raw/cer-sciencedb",
+    "redistributed_by_project": false
+  },
+  "archives": [
+    {
+      "filename": "File1.txt.zip",
+      "bytes": 101978611,
+      "md5": "00203f66f3f5e5201b20ed160b787684",
+      "sha256": "6225f207304e92e3c2e2a580a45080ec5dd0fba0f156bd3aa281b0c7517d3c32",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    },
+    {
+      "filename": "File2.txt.zip",
+      "bytes": 102197028,
+      "md5": "5e3af1474d3c8976e2e1e0f8c1969507",
+      "sha256": "08526e96656806e1cf5a3051174eb3b52b9b996dd83268c631bc8f8a133dd123",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    },
+    {
+      "filename": "File3.txt.zip",
+      "bytes": 101624145,
+      "md5": "b537785f8b37cb3e89103600d39da8ff",
+      "sha256": "07062d9a6d356aa852e73cea0bfda07554a816e8e6305c44dfa664d8aee6b3ef",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    },
+    {
+      "filename": "File4.txt.zip",
+      "bytes": 102401577,
+      "md5": "53ec9e70c1610b74ae72417cc010a0c3",
+      "sha256": "86e826fc85b1eb11048f846935a71da893e63e2717f3a66b5098316eb1a32e03",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    },
+    {
+      "filename": "File5.txt.zip",
+      "bytes": 102257883,
+      "md5": "6f8c7c9dfba3bbfbff0e5f1703e122fc",
+      "sha256": "3efc1f56170de93c987655c2c5764cde64b924feb3dd810b658988f87138f678",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    },
+    {
+      "filename": "File6.txt.zip",
+      "bytes": 147826765,
+      "md5": "c0a435d0359974f23ce434b5e838e251",
+      "sha256": "064e0be33cdf56c17e345ba63b02f31bd9ba8ae221bdfc2146464bc04e13208d",
+      "official_md5_match": true,
+      "zip_integrity": "pass"
+    }
+  ],
+  "allocation": {
+    "filename": "SME_and_Residential_allocations.csv",
+    "bytes": 112589,
+    "md5": "89263f89253cf56b857079986ae73096",
+    "sha256": "96298be047f34ba91fe281c899b440d2b28747b4f102af6f239dbbd93dd354d4",
+    "binary_match_to_official_tab": false,
+    "rows": 6445,
+    "unique_meter_ids": 6445,
+    "duplicate_meter_ids": 0,
+    "allocation_counts": {
+      "residential_code_1": 4225,
+      "sme_code_2": 485,
+      "other_code_3": 1735
+    },
+    "second_copy_url": "https://github.com/wwzjustin/CER-Smart-Meter-Project-by-Irish-Social-Science-Data-Archive/blob/master/SME%20and%20Residential%20allocations.xlsx",
+    "second_copy_rows": 6445,
+    "id_code_mismatches": 0,
+    "normalized_first_five_column_mismatches": 0,
+    "canonical_first_five_columns_sha256": "b6e5ac79964c991d820e359c4413990e8bb60d8f051f4a7bb795d7bae60516c8",
+    "normalization": "Treat null, empty string, numeric zero, and string zero as the same blank allocation cell; preserve ID, Code, tariff, stimulus, and SME allocation otherwise."
+  },
+  "full_reading_scan": {
+    "rows": 157992996,
+    "bad_field_rows": 0,
+    "invalid_numeric_value_rows": 0,
+    "negative_value_rows": 0,
+    "zero_value_rows": 1557479,
+    "unique_meter_ids": 6435,
+    "meter_id_min": 1000,
+    "meter_id_max": 7444,
+    "day_code_min": 195,
+    "day_code_max": 730,
+    "readings_by_allocation_code": {
+      "residential_code_1_meters": 4225,
+      "sme_code_2_meters": 485,
+      "other_code_3_meters": 1725,
+      "meters_without_allocation": 0
+    },
+    "allocation_ids_without_readings": {
+      "total": 10,
+      "residential_code_1": 0,
+      "sme_code_2": 0,
+      "other_code_3": 10
+    },
+    "documented_dst_slot_49_50_rows": 24462,
+    "unexpected_slot_51_95_rows": 540,
+    "unexpected_slot_51_95_meter_count": 2,
+    "unexpected_slot_51_95_meter_ids": [
+      1208,
+      5221
+    ],
+    "unexpected_slot_51_95_allocation_code": 3,
+    "residential_rows_affected_by_unexpected_slots": 0
+  }
+}

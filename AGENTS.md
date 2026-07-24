@@ -13,6 +13,16 @@ initial corpus is by Abdulrahman Takiddin and coauthors; the current target is
 Smart Grids." See
 [`docs/VISION.md`](docs/VISION.md) for the full thesis.
 
+## Canonical implementation tutorial
+
+Read [`RUNBOOK.md`](RUNBOOK.md) first. It is the single end-to-end operational
+guide for implementing any paper: PDF reconstruction, exact data, the genuine
+five-file reproduction, sanity checks, full experiments, ambiguity branches,
+confirmation, reporting, and publication.
+
+If another document conflicts with its execution order, the paper remains the
+scientific authority and `RUNBOOK.md` remains the workflow authority.
+
 ## Non-negotiable scientific mandate
 
 1. **Paper-literal first.** The primary track implements only the named data,
@@ -38,13 +48,14 @@ Smart Grids." See
 
 ## Reading order every session
 
-1. [`docs/STATUS.md`](docs/STATUS.md) — current state and next action.
-2. [`docs/CONTEXT.md`](docs/CONTEXT.md) — compact working memory and don't-repeats.
-3. [`docs/EVIDENCE-AND-LEARNINGS.md`](docs/EVIDENCE-AND-LEARNINGS.md) when
+1. [`RUNBOOK.md`](RUNBOOK.md) — how to execute a paper end to end.
+2. [`docs/STATUS.md`](docs/STATUS.md) — current state and next action.
+3. [`docs/CONTEXT.md`](docs/CONTEXT.md) — compact working memory and don't-repeats.
+4. [`docs/EVIDENCE-AND-LEARNINGS.md`](docs/EVIDENCE-AND-LEARNINGS.md) when
    interpreting results, disputed claims, or corrected conclusions.
-4. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
-5. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
-6. The active plan under [`docs/plans/`](docs/plans/).
+5. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
+6. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
+7. The active plan under [`docs/plans/`](docs/plans/).
 
 If the current step has no plan, create one before experimental implementation.
 
@@ -63,7 +74,7 @@ If the current step has no plan, create one before experimental implementation.
 
 ## Session ritual
 
-1. Read the documents above.
+1. Read `RUNBOOK.md`, then the relevant documents above.
 2. Identify the current step from STATUS.
 3. Continue the active plan or draft one.
 4. Do not cross a `CHECKPOINT` without user approval.
@@ -87,6 +98,7 @@ work, and report tests, docs, commits, and the next step.
 | Question | Read |
 |---|---|
 | What and why? | `docs/VISION.md` |
+| How do I execute a paper? | `RUNBOOK.md` |
 | Where are we? | `docs/STATUS.md` |
 | What must survive compaction? | `docs/CONTEXT.md` |
 | Why did a conclusion change? | `docs/EVIDENCE-AND-LEARNINGS.md` |

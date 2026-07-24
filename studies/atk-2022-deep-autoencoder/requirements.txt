@@ -5,5 +5,7 @@ scikit-learn>=1.5,<2
 imbalanced-learn>=0.13,<1
 matplotlib>=3.9,<4
 pyarrow>=18,<25
-torch>=2.5,<3
-
+# the cluster's 570-series driver supports CUDA 12.6 but not CUDA 13. Pin the
+# official PyTorch release whose Linux wheel uses CUDA 12.6.
+torch==2.7.1
+keras>=3.15,<4

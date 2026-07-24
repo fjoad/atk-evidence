@@ -1,0 +1,130 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{evidenceblue}{HTML}{245B96}
+\newcommand{\status}[1]{\textsc{#1}}
+
+\title{A Reproduction Audit of\\
+\emph{Deep Autoencoder-Based Anomaly Detection of\\
+Electricity Theft Cyberattacks in Smart Grids}}
+\author{ATK Evidence}
+\date{Work in progress --- 24 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report tests whether the principal numerical results reported by
+Takiddin et al.\ can be reproduced from the named datasets and the experimental
+procedure described in the paper. The primary track preserves the printed
+method, including questionable operations; material omissions and
+contradictions are tested as predeclared branches; statistically corrected
+controls are reported separately. This document is a live report scaffold.
+No paper-level reproduction verdict has yet been issued.
+\end{abstract}
+
+\section{Scope and testable claim}
+
+The target is the complete result pattern in Tables II--V, not an isolated
+metric or a favorable random seed. A paper-consistent reproduction must recover
+the joint metric pattern within predeclared tolerances across repeated runs.
+Failure is bounded to the finite documented implementation, hyperparameter,
+seed, split, and compute space; it is not a claim of logical impossibility or
+author intent.
+
+\section{Source protocol reconstruction}
+
+The paper uses two different data paths. SGCC supplies real benign and
+malicious labels. ISET/CER supplies benign half-hourly electricity profiles,
+from which six malicious variants are synthesized using Equations (1)--(6).
+Anomaly detectors are trained on benign data only, whereas supervised models
+use benign and malicious classes. The printed anomaly protocol applies ADASYN
+to the test set; the supervised protocol applies ADASYN before splitting.
+
+\section{Reproduction methods}
+
+\subsection{Data provenance}
+
+Every input is identified by source, access conditions, version, byte size,
+and checksum. Raw datasets and the source paper remain local and are not
+redistributed.
+
+\subsection{Paper-consistent branches}
+
+Each material omission or contradiction receives a stable branch identifier
+before eligible results are examined. Non-executable printed expressions are
+preserved as findings and receive only explicitly labeled minimal repairs.
+
+\subsection{Corrected controls}
+
+Corrected experiments use customer-disjoint partitions, transformations fitted
+on training data only, untouched validation/test data, and valid
+validation-selected thresholds. They answer a different question and cannot
+substitute for the paper-literal reproduction.
+
+\section{Fidelity audit}
+
+The source-to-code audit covers data populations, attack equations, split
+identity, normalization and ADASYN order, every reported neural layer,
+training loss, anomaly score, threshold selection, metric definitions, and
+experiment identity for Tables II--V. Historical runs affected by a material
+mismatch are retained but excluded from paper-reproduction claims.
+
+\section{Results}
+
+\textcolor{evidenceblue}{\status{Open:}} Eligible source-faithful full-data
+results and confirmatory repeated-run statistics have not yet been completed.
+Exploratory and quarantined values will not be promoted into this section.
+
+\begin{table}[ht]
+\centering
+\caption{Final reproduction decisions will be populated only from eligible,
+fingerprinted attempts.}
+\begin{tabular}{lll}
+\toprule
+Published table & Reproduction state & Evidence status \\
+\midrule
+Table II & Pending eligible completion & Open \\
+Table III & Pending source-v2 runs & Open \\
+Table IV & Pending source-v2 runs & Open \\
+Table V & Pending explicit experiment identities & Open \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Statistical assessment}
+
+The final analysis will report all predeclared seeds and failures, uncertainty
+intervals, complete metric patterns, and the fraction of eligible branches
+meeting the frozen reproduction tolerance. No best-seed or best-branch result
+will stand in for the distribution.
+
+\section{Limitations}
+
+The paper omits hardware, software versions, epochs, batch size, seeds,
+repetitions, and several data/threshold details. Consequently, any verdict must
+remain conditional on the finite tested interpretations. Reported training
+minutes cannot be compared absolutely without the original timing boundary and
+hardware.
+
+\section{Verdict}
+
+\textcolor{evidenceblue}{\status{Not yet issued.}} The verdict will be frozen
+only after the eligible reproduction matrix and its statistical assessment are
+complete.
+
+\appendix
+\section{Reproducibility materials}
+
+Code, configurations, provenance records, checksums, run manifests, and
+machine-readable summaries are maintained at
+\url{https://github.com/fjoad/atk-evidence}. The public method map is intended
+to make the paper's experimental flow readable before the detailed evidence is
+examined.
+
+\end{document}

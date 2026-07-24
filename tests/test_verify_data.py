@@ -5,10 +5,18 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from scripts.verify_data import digest, verify
+from scripts.verify_data import CER_OFFICIAL_MD5, CER_SCIENCEDB_MD5, digest, verify
 
 
 class VerifyDataTests(unittest.TestCase):
+    def test_cer_gate_includes_consumption_and_residential_allocation(self) -> None:
+        self.assertEqual(len(CER_SCIENCEDB_MD5), 7)
+        self.assertIn(
+            "SME_and_Residential_allocations.csv", CER_SCIENCEDB_MD5
+        )
+        self.assertEqual(len(CER_OFFICIAL_MD5), 7)
+        self.assertIn("SME and Residential allocations.tab", CER_OFFICIAL_MD5)
+
     def test_digest_matches_standard_library(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:
             path = Path(temporary_directory) / "sample.bin"
@@ -34,4 +42,3 @@ class VerifyDataTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

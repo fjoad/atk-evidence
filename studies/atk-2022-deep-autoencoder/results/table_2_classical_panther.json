@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "status": "complete_exploratory_partial_table_ii",
+  "evidentiary_scope": "paper_literal_exploratory_result_not_confirmatory_verdict",
+  "job": {
+    "id": 348195,
+    "state": "COMPLETED",
+    "elapsed_seconds": 2735,
+    "code_commit": "a26bfc23636aec87c9689c2e1d68807f8c379a8e",
+    "cpu_count": 16,
+    "omp_threads": 16,
+    "mkl_threads": 16
+  },
+  "inputs": {
+    "sgcc_sha256": "99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7",
+    "config_sha256": "1d8fdf573bfce65cc3f93d704d71f5426bc2530002948d5f5f769830eea21179",
+    "features": 1034,
+    "supervised_after_adasyn": 77712,
+    "supervised_train": 51808,
+    "supervised_test": 25904,
+    "anomaly_test_after_adasyn": 25906,
+    "seeds": [11, 22, 33]
+  },
+  "integrity": {
+    "attempts_discovered": 12,
+    "attempts_selected": 12,
+    "artifact_status": "all declared hashes verified and fingerprints matched",
+    "aggregate_source": "the cluster data/derived/atk-2022-deep-autoencoder/aggregate"
+  },
+  "metrics_are_percent": true,
+  "results": [
+    {
+      "paper_model": "Naive Bayes",
+      "internal_model": "naive_bayes",
+      "score_branch": "positive_class_probability",
+      "selected_seed_count": 3,
+      "seed_sample_sd_all_metrics": 0.0,
+      "paper": {"DR": 75.0, "FA": 16.0, "SP": 84.0, "PR": 75.0, "ACC": 79.5, "F1": 77.0, "AUC": 73.0},
+      "reproduction_mean": {"DR": 7.97012166949, "FA": 1.91206069051, "SP": 98.0879393095, "PR": 80.7332293292, "ACC": 53.0290304895, "F1": 14.5079899075, "AUC": 54.5858665496},
+      "paper_minus_reproduction_dr_points": 67.02987833051,
+      "fit_seconds_mean": 0.911336019014,
+      "score_seconds_mean": 0.609660276212,
+      "aggregate_status": "NOT_CLOSE_MATCH"
+    },
+    {
+      "paper_model": "ARIMA",
+      "internal_model": "arima",
+      "score_branch": "residual_mse",
+      "selected_seed_count": 3,
+      "seed_sample_sd_all_metrics": 0.0,
+      "paper": {"DR": 88.0, "FA": 10.0, "SP": 90.0, "PR": 87.0, "ACC": 89.0, "F1": 87.0, "AUC": 88.0},
+      "reproduction_mean": {"DR": 2.1021021021, "FA": 0.998529297933, "SP": 99.0014707021, "PR": 67.9104477612, "ACC": 50.5517864021, "F1": 4.07797445664, "AUC": 49.3572090909},
+      "paper_minus_reproduction_dr_points": 85.8978978979,
+      "fit_seconds_mean": 0.527429353756,
+      "score_seconds_mean": 0.530198878609,
+      "aggregate_status": "NOT_CLOSE_MATCH"
+    },
+    {
+      "paper_model": "Single-class SVM",
+      "internal_model": "one_class_svm",
+      "score_branch": "negative_decision_function",
+      "selected_seed_count": 3,
+      "seed_sample_sd_all_metrics": 0.0,
+      "paper": {"DR": 91.0, "FA": 8.5, "SP": 91.5, "PR": 90.0, "ACC": 91.0, "F1": 90.0, "AUC": 89.0},
+      "reproduction_mean": {"DR": 61.7848617849, "FA": 48.6105735738, "SP": 51.3894264262, "PR": 56.096196868, "ACC": 56.5871441055, "F1": 58.8032684768, "AUC": 61.5782901099},
+      "paper_minus_reproduction_dr_points": 29.2151382151,
+      "fit_seconds_mean": 109.694630069,
+      "score_seconds_mean": 109.596593019,
+      "aggregate_status": "NOT_CLOSE_MATCH"
+    },
+    {
+      "paper_model": "Multi-class SVM",
+      "internal_model": "multiclass_svm",
+      "score_branch": "non_benign_margin",
+      "selected_seed_count": 3,
+      "seed_sample_sd_all_metrics": 0.0,
+      "paper": {"DR": 92.0, "FA": 7.5, "SP": 92.5, "PR": 91.0, "ACC": 92.0, "F1": 91.5, "AUC": 90.0},
+      "reproduction_mean": {"DR": 53.511473895, "FA": 45.6572224803, "SP": 54.3427775197, "PR": 54.0904491321, "ACC": 53.9271257074, "F1": 53.7994038633, "AUC": 56.9777432731},
+      "paper_minus_reproduction_dr_points": 38.488526105,
+      "fit_seconds_mean": 401.995337192,
+      "score_seconds_mean": 278.616718713,
+      "aggregate_status": "NOT_CLOSE_MATCH"
+    }
+  ],
+  "bounded_interpretation": "All four completed classical branches miss the reported complete metric pattern under this frozen exploratory implementation. This is substantive evidence for these registered branches, but it is not yet a confirmatory paper-level verdict and does not resolve untested ambiguity branches."
+}

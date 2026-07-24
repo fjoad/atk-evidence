@@ -1,0 +1,285 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{booktabs}
+\usepackage{microtype}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\definecolor{evidenceblue}{HTML}{245B96}
+\newcommand{\status}[1]{\textsc{#1}}
+
+\title{An Audit of\\
+\emph{Graph Transfer Learning-Based Attack Detection in\\
+Cyber-Physical Water Distribution Systems}}
+\author{ATK Evidence}
+\date{Work in progress --- 25 July 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This report audits the principal numerical and mechanistic claims of a
+graph-transformer attack detector for water distribution systems. It is not
+solely a reproduction attempt. Reproduction alone is a weak instrument: it
+invites the reply that the implementation was at fault, an objection that was
+correct at one point during this audit and is documented as such. The audit
+therefore proceeds in tiers, beginning with whether the reported numbers cohere
+internally, then whether the detection task is non-trivial at all, then whether
+each claimed component contributes, and only finally whether the headline
+pattern reproduces. Every experiment is designed so that its outcome is not
+controlled by the expected answer, and results that disconfirm the audit's own
+expectations are reported as such. Conclusions are bounded to the artefact: this
+report makes no claim about author intent.
+\end{abstract}
+
+\section{Scope and testable claims}
+
+The target paper reports F1, accuracy, and detection rate for nine detectors
+across three graph sizes (10, 20, 31 nodes) of the C-Town water network, and
+claims (i) a monotone improvement with graph size, (ii) a large margin for the
+proposed spatio-temporal graph transformer (STGT) over conventional baselines,
+(iii) a further gain from transfer learning across graph sizes, and (iv) a
+mechanism: that spatial and temporal dependencies are too difficult for a
+feed-forward network to capture, which is why a graph convolution and a
+transformer are required.
+
+Claim (iv) is testable independently of whether any number reproduces, and is
+treated here as the primary target. Claims (i)--(iii) are evaluated against
+distributions across seeds rather than point estimates, because measured
+run-to-run spread for these architectures is large relative to the margins
+claimed.
+
+\section{Source protocol reconstruction}
+
+Benign readings are the canonical DeepH2O C-Town SCADA series (31 sensors:
+7 tank levels, 11 pump flows, 1 valve flow, 12 junction pressures). Malicious
+samples are produced by modifying benign readings with three printed equations:
+replay ($X^m_t = X^b_{t-\Delta t}$), denial of service ($X^m_t = X^b_{t-1}$,
+sustained), and data manipulation ($X^m_t = X^b_t + \delta$,
+$-5 \le \delta \le 5$ in steps of $0.2$). Detection compares a one-step forecast
+against the observed reading, scores the residual by squared Mahalanobis
+distance against a benign Gaussian, averages over consecutive batches of size
+$S$, and thresholds using the validation set.
+
+The reduced 10- and 20-node graphs are transcribed verbatim from the paper's
+Figure~1 rather than recomputed. This matters: the paper names betweenness
+centrality as the reduction criterion, but a betweenness ranking retains node
+J422 and drops PU8, whereas Figure~1(a) retains PU8. The printed figure governs.
+Transcribed node sets are nested and their induced edges match the drawing
+exactly (12, 24, and 44 edges).
+
+\section{Method}
+
+All experiments run on a single cluster environment with fixed library versions;
+each job records SHA-256 of code and data and runs a regression suite as a
+preflight. Zero-parameter reference detectors are evaluated through the
+\emph{identical} scoring, threshold, and metric path as every trained model, so
+any difference is attributable to the model rather than to the evaluation.
+Comparisons between detectors are made at a matched false-alarm rate; an earlier
+draft of this audit compared detectors at different operating points and
+overstated the trained models' advantage as a result.
+
+Ambiguities in the printed method are enumerated and pre-registered before
+results are examined, covering training-set class balance, the units of
+$\delta$, the detection batch size, the threshold rule, the transformer
+placement, and the population used for the Mahalanobis fit.
+
+\section{Results}
+
+\subsection{Internal consistency of the reported table}
+
+On the paper's own stated balanced split, accuracy satisfies
+$\mathrm{ACC} = (\mathrm{DR} + \mathrm{SP})/2$ with $\mathrm{SP} \le 100\%$, so
+$\mathrm{ACC} \le (\mathrm{DR}+100)/2$. Twenty-four of twenty-seven reported
+cells exceed this ceiling. Applying the stricter joint check, which uses all
+three reported metrics, all twenty-seven fail.
+
+A stronger test asks whether each reported triple is attainable from \emph{any}
+integer confusion matrix on a balanced test set. Scanning per-class sizes from
+70 (the size implied by the paper's own description of 1{,}400 hours split
+80/10/10) to 700, no cell is attainable at any size. The checker was validated
+against fifteen constructed confusion matrices and accepted all fifteen.
+
+The deviation is systematic rather than random. Of the twenty-five cells where
+the joint identity is evaluable, twenty-five report an accuracy above what their
+own detection rate and F1 imply, and none below, with a mean inflation of
+$+30.6$ points (maximum $+54.7$). A sign test against chance gives
+$p = 6\times10^{-8}$. Isolated transcription errors and rounding are therefore
+excluded, as these would scatter in both directions.
+
+\subsection{Does any measurement protocol reproduce the table?}
+
+Showing that numbers are unattainable under the protocol a paper \emph{describes}
+is escapable: a defender may argue the description was inaccurate. The stronger
+test asks whether \emph{any} protocol reproduces them. Formally, under
+$H_0$: ``the reported triple arose from a real confusion matrix under some
+protocol'', we evaluate $P(\text{table} \mid H_0)$ across a pre-registered space
+of 67{,}326 protocols per cell --- every test-set size from 20 to 1{,}000, every
+class prevalence from 2\% to 98\%, and six metric-definition variants including
+balanced accuracy, detection-rate/precision swaps, negative-class and macro F1,
+and specificity reported in the detection-rate column.
+
+Twenty of the twenty-seven cells are unreachable under \emph{every} protocol
+searched. For those cells the likelihood under $H_0$ is exactly zero rather than
+small. Seven cells are individually reachable under some exotic setting, but the
+decisive constraint is joint: a paper has one protocol, not one per row. The best
+single protocol explains \textbf{one} cell of twenty-seven, and \textbf{no}
+protocol explains the table.
+
+The searcher was validated by constructing confusion matrices at several sizes
+and prevalences, rounding their metrics, and confirming recovery in every case.
+
+\subsection{Is the task non-trivial?}
+
+Two zero-parameter detectors were evaluated: a per-sensor $z$-score on the
+observed reading, and persistence (predict the next reading as the last observed
+reading). Both achieve F1 $\approx 45$ at a false-alarm rate below $8\%$. Every
+baseline the paper reports --- SVM (6.1), RF (17.5), LGBM (19.8), FFNN (20.9),
+AE (21.5), LSTM (26.0) at ten nodes --- falls \emph{below} a detector with no
+parameters.
+
+Decomposing by attack class reveals why. Table~\ref{tab:classes} shows that the
+task is not one problem but three, with sharply different difficulty.
+
+\begin{table}[t]
+\centering
+\begin{tabular}{lrrr}
+\toprule
+Attack class & Share & Best zero-parameter rule & Forecast-residual method \\
+\midrule
+Manipulation & 29\% & 100\% & 100\% \\
+Denial of service & 29\% & 93\% (AUC 0.987) & 0\% \\
+Replay & 43\% & 6\% & 0.6--6\% \\
+\bottomrule
+\end{tabular}
+\caption{Detection rate by attack class. The paper's residual-based detector is
+structurally blind to denial of service: a forecaster supplied with frozen
+history predicts the frozen value, so the residual vanishes. A two-line
+stuck-sensor test separates the same attack at AUC 0.987.}
+\label{tab:classes}
+\end{table}
+
+A composite of the two trivial rules ($z$-score or stuck-sensor) achieves
+F1 71.5, accuracy 76.9, and detection rate 60.5 at a false-alarm rate of 7.9\%,
+with zero parameters and no seed variance. Trained models reach F1 $\approx 70$
+at a \emph{higher} false-alarm rate when trained on benign windows only, and
+only 44--46 under the paper's own stated prescription that every split carry
+equal samples per class. Under the paper's literal training reading, every
+trained model scores below the zero-parameter composite.
+
+\subsection{Is replay detectable at all?}
+
+Replay reproduces genuine past readings, so a replayed window is itself a real
+benign window. Measuring nearest-neighbour distance from held-out test windows
+to a bank of attack-free training windows, replay is indistinguishable from
+normal data (AUC 0.455, median distance 9.75 versus 9.92 for normal), while
+denial of service (AUC 0.917) and manipulation (AUC 0.988) separate clearly.
+The replay ceiling is therefore a property of the data, not of any detector.
+
+With replay undetectable, the achievable detection rate is bounded near
+$1 - (\text{replay share})$, which is 57.1\% under the attack mix used here,
+against a reported 74.7\% for STGT and 76.8\% with transfer learning. The paper
+does not state its attack mix, so this bound is conditional on the mix rather
+than absolute.
+
+\subsection{Is the feed-forward network capacity-limited?}
+
+The paper attributes its architecture to the difficulty of spatio-temporal
+structure for a feed-forward network. Varying feed-forward capacity across a
+272-fold parameter range (19{,}681 to 5{,}347{,}031 parameters) leaves
+performance flat: AUC 0.790, 0.785, 0.761, 0.787 and detection rate 56.7, 56.9,
+41.9, 56.2 at a matched false-alarm rate. A two-layer network with fewer than
+twenty thousand parameters matches both the largest network and STGT.
+
+Structure does exist in the data --- mean cross-sensor correlation 0.18--0.24
+and lag-one temporal correlation 0.65--0.74 on attack-free windows --- so the
+premise that structure is present is not empty. What fails is the inference that
+capturing it requires the proposed architecture.
+
+\subsection{Where the paper's premise holds}
+
+Reported because it disconfirms this audit's expectation. Shuffling the C-Town
+adjacency, or removing its edges entirely, degrades performance by up to 18 F1
+points: STGT at ten nodes scores 57.9 with the real topology, 51.9 shuffled, and
+44.9 with no edges; TL-STGT at 31 nodes scores 63.6, 45.2, and 44.7 respectively.
+The graph is not decorative.
+
+Transfer learning likewise shows a large gain at 31 nodes, $+13.3$ to $+21.9$ F1
+over training from scratch. Two qualifications apply. The comparison is
+budget-confounded, since the transferred model is pretrained on the smaller
+graphs and sees roughly three times the total training. And under benign-only
+training the gain collapses to $+3.1$, indicating that transfer mainly buys
+robustness to the paper's attack-corrupted training prescription rather than
+better detection.
+
+\subsection{Configuration dominates model choice}
+
+The paper states that every split carries an equal number of samples per class,
+so half of the training data is attack-corrupted. Training instead on benign
+windows changes F1 at 31 nodes by roughly 25 points: 44.1 versus 70.3 for the
+feed-forward network, 46.0 versus 71.2 for the recurrent baseline, 44.6 versus
+70.8 for the graph baseline, 46.1 versus 67.8 for the proposed model, and 68.0
+versus 70.9 with transfer learning. Every figure in this report therefore states
+its configuration; an unattributed value is meaningless at that sensitivity.
+
+\subsection{Stability}
+
+Across five seeds on identical hardware, software, and data, TGCN spans 23.7 F1
+points and STGT 11.8, while feed-forward and recurrent baselines remain within
+2--8. STGT's denial-of-service detection alone swings from 5.8\% to 95.8\%. The
+paper reports single values to one decimal place with no dispersion.
+
+\section{Corrections to this audit}
+
+Two earlier conclusions of this audit were wrong and are retracted. First, a
+reported 46-point shortfall against the paper was substantially caused by a
+defect in our own threshold selection, which drew reference samples from
+validation windows contaminated by adjacent attacks and inflated the threshold
+by roughly four orders of magnitude; corrected, the shortfall is far smaller.
+Second, an identical-metrics collapse across architectures was attributed to the
+scale incoherence of $\delta$; the corrected runs show that the threshold defect
+alone produced it. Third, an earlier draft quoted benign-training results without
+stating the configuration, while the paper's literal reading trains on the
+balanced split; the two differ by roughly 25 F1. Fourth, this audit expected the
+graph topology to carry no signal, and it does. All are recorded in the evidence
+log rather than silently amended.
+
+\section{Limitations}
+
+The benign series is the canonical DeepH2O C-Town series rather than the paper's
+own unpublished 1{,}400-hour run. Attack duration, the replay offset
+$\Delta t$, the sliding-window length, and the detection rule for the shallow
+classifiers are not specified by the paper and are documented assumptions. The
+attack mix is ours, which conditions the detection-rate ceiling. The
+interpretation sweep over pre-registered ambiguity axes is incomplete.
+
+\section{Verdict}
+
+Bounded to the artefact and to the finite space tested: the reported table is
+not reproducible by any correct implementation. No confusion matrix on the
+described test set yields the printed numbers; the deviation from internal
+consistency is systematic rather than accidental; and an exhaustive search over
+67{,}326 measurement protocols per cell finds no single protocol that reproduces
+the table, with twenty of twenty-seven cells unreachable under every protocol
+searched. Independently of the
+numbers, the claimed mechanism does not hold: the detection task decomposes into
+one class requiring no model, one class that the paper's own detector cannot
+express but a two-line rule solves, and one class that is undetectable in
+principle. A composite of two zero-parameter rules matches the proposed
+architecture at a lower false-alarm rate and with no seed variance.
+
+This report does not assert how the reported numbers arose. Establishing that no
+measurement process in the searched space produces them does not distinguish
+deliberate fabrication from catastrophic process failure --- placeholder values
+never replaced, or a table carried over from a draft --- since both yield numbers
+that were never measured. That distinction requires evidence outside the paper,
+which this report does not have and does not claim.
+
+\section{Reproducibility materials}
+
+Code, pre-registered ambiguity register, evidence log with retractions, and job
+records with code and data checksums accompany this report.
+
+\end{document}

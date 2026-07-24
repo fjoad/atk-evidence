@@ -1,0 +1,6 @@
+model,layers_total,encoder_widths,optimizer,dropout,hidden_activation,output_activation,printed_page,pdf_page
+FC-SAE,8,"400;300;200;100",Adam,0.4,Sigmoid,Softmax,4115,10
+LSTM-SAE,4,"500;300",Adam,0.2,Sigmoid,Sigmoid,4115,10
+FC-VAE,8,"500;400;300;100",Adam,0.4,ReLU,Softmax,4115,10
+LSTM-VAE,4,"400;300",SGD,0,Tanh,Sigmoid,4115,10
+LSTM-AEA,6,"500;300;200",SGD,0,Sigmoid,Sigmoid,4115,10

@@ -1,0 +1,1399 @@
+{
+  "branch_inventory": {
+    "corrected": {
+      "count": 22,
+      "sha256": "f05a50e3b2ca18422fdded5642c23d92847b2a3e1e103c650b63e49ea2062f54"
+    },
+    "paper_consistent": {
+      "count": 921,
+      "sha256": "1a910c93c91301776e41cc482c4d0f6c5055a053b8bbac14c84c900ad3bc50b1"
+    }
+  },
+  "budget": {
+    "basis": "existing Paper 1 probes/results where available and conservative per-family estimates otherwise; update estimates, never outcomes, after bounded runtime calibration",
+    "conservative_upper": {
+      "all_promote_attempts": 281418,
+      "all_promote_cpu_hours": 119117.6,
+      "all_promote_gpu_hours": 4395977.0,
+      "all_promote_gpu_job_hours": 1140802.0,
+      "corrected_attempts": 555,
+      "corrected_cpu_hours": 576.0,
+      "corrected_gpu_hours": 9090.0,
+      "corrected_gpu_job_hours": 2347.5,
+      "screen_attempts": 2763,
+      "screen_cpu_hours": 114.8,
+      "screen_gpu_hours": 1117.4,
+      "screen_gpu_job_hours": 298.1,
+      "semantic_cases": 921
+    },
+    "point_estimate": {
+      "all_promote_attempts": 281418,
+      "all_promote_cpu_hours": 59558.8,
+      "all_promote_gpu_hours": 2197988.5,
+      "all_promote_gpu_job_hours": 570401.0,
+      "corrected_attempts": 555,
+      "corrected_cpu_hours": 288.0,
+      "corrected_gpu_hours": 4545.0,
+      "corrected_gpu_job_hours": 1173.75,
+      "screen_attempts": 2763,
+      "screen_cpu_hours": 57.4,
+      "screen_gpu_hours": 558.7,
+      "screen_gpu_job_hours": 149.05,
+      "semantic_cases": 921
+    },
+    "scheduler_projection": {
+      "max_simultaneous_jobs": 3,
+      "queue_time_included": false,
+      "screen_gpu_job_hours_ideal_three_way": 49.683,
+      "screen_gpu_job_hours_serial": 149.05
+    },
+    "uncertainty_multiplier": 2.0
+  },
+  "corrected_controls": {
+    "reported_separately": true,
+    "search_plus_confirmation_attempts": 555,
+    "semantic_cases": 22
+  },
+  "coverage": {
+    "criterion": "every option and every allowed option pair per family",
+    "higher_order_policy": "coupled blocks are represented in family dimensions; arbitrary higher-order Cartesian products are excluded with rationale",
+    "incompatible_pairs": [
+      {
+        "left_dimension": "threshold_rule",
+        "left_value": "roc_central_threshold_median",
+        "reason": "A ROC-derived threshold requires labeled benign and malicious validation scores.",
+        "right_dimension": "validation_labels",
+        "right_value": "printed_threshold_no_derivation"
+      },
+      {
+        "left_dimension": "threshold_rule",
+        "left_value": "threshold_iqr_midpoint",
+        "reason": "A ROC-derived threshold requires labeled benign and malicious validation scores.",
+        "right_dimension": "validation_labels",
+        "right_value": "printed_threshold_no_derivation"
+      },
+      {
+        "left_dimension": "threshold_rule",
+        "left_value": "threshold_iqr_median",
+        "reason": "A ROC-derived threshold requires labeled benign and malicious validation scores.",
+        "right_dimension": "validation_labels",
+        "right_value": "printed_threshold_no_derivation"
+      },
+      {
+        "left_dimension": "threshold_rule",
+        "left_value": "printed_constant",
+        "reason": "The paper supplies only the ISET-derived constants; no separate SGCC constants exist.",
+        "right_dimension": "threshold_scope",
+        "right_value": "dataset_specific"
+      }
+    ],
+    "items": {
+      "A01": [
+        "dimension:sgcc_representation"
+      ],
+      "A02": [
+        "dimension:sgcc_missing"
+      ],
+      "A03": [
+        "dimension:iset_meter_population"
+      ],
+      "A04": [
+        "dimension:iset_day"
+      ],
+      "A05": [
+        "dimension:split_unit"
+      ],
+      "A06": [
+        "dimension:attack_population"
+      ],
+      "A07": [
+        "dimension:scaling"
+      ],
+      "A08": [
+        "dimension:adasyn_neighbors",
+        "locked:requirements-lock.txt",
+        "global:model_seeds"
+      ],
+      "A09": [
+        "dimension:validation_labels"
+      ],
+      "A10": [
+        "dimension:threshold_rule",
+        "non_executable:threshold_median_of_iqr_of_roc"
+      ],
+      "A11": [
+        "dimension:vae_score"
+      ],
+      "A12": [
+        "dimension:latent_width"
+      ],
+      "A13": [
+        "fixed:full_printed_hidden_layer_mirror",
+        "dimension:latent_placement",
+        "dimension:latent_width"
+      ],
+      "A14": [
+        "dimension:decoder_schedule",
+        "dimension:decoder_state"
+      ],
+      "A15": [
+        "dimension:attention_merge",
+        "fixed:previous_decoder_state_query"
+      ],
+      "A16": [
+        "dimension:attack1_scope"
+      ],
+      "A17": [
+        "dimension:attack3_interval",
+        "non_executable:attack3_printed_subtraction"
+      ],
+      "A18": [
+        "global:hyperparameter_envelope"
+      ],
+      "A19": [
+        "dimension:dense_dropout_scope",
+        "dimension:lstm_dropout_placement"
+      ],
+      "A20": [
+        "global:model_seeds"
+      ],
+      "A21": [
+        "dimension:arima_completion"
+      ],
+      "A22": [
+        "non_executable:svm_literal_kernel_gamma_reversal"
+      ],
+      "A23": [
+        "dimension:table_v_identity"
+      ],
+      "A24": [
+        "recording:fit_and_end_to_end_wall_time"
+      ],
+      "A25": [
+        "dimension:threshold_rule",
+        "dimension:threshold_scope"
+      ],
+      "A26": [
+        "dimension:supervised_head",
+        "dimension:multiclass_labels"
+      ],
+      "A27": [
+        "dimension:iset_meter_population"
+      ],
+      "A28": [
+        "dimension:multiclass_labels"
+      ],
+      "A29": [
+        "dimension:table_v_size"
+      ],
+      "A30": [
+        "dimension:attack3_interval",
+        "non_executable:attack3_printed_subtraction"
+      ],
+      "A31": [
+        "dimension:vae_loss_reduction"
+      ],
+      "A32": [
+        "dimension:attack_population"
+      ],
+      "A33": [
+        "dimension:validation_policy"
+      ],
+      "A34": [
+        "dimension:lstm_input"
+      ],
+      "A35": [
+        "dimension:table_v_identity"
+      ],
+      "A36": [
+        "global:paper_hyperparameter_search"
+      ]
+    },
+    "required_ambiguity_ids": [
+      "A01",
+      "A02",
+      "A03",
+      "A04",
+      "A05",
+      "A06",
+      "A07",
+      "A08",
+      "A09",
+      "A10",
+      "A11",
+      "A12",
+      "A13",
+      "A14",
+      "A15",
+      "A16",
+      "A17",
+      "A18",
+      "A19",
+      "A20",
+      "A21",
+      "A22",
+      "A23",
+      "A24",
+      "A25",
+      "A26",
+      "A27",
+      "A28",
+      "A29",
+      "A30",
+      "A31",
+      "A32",
+      "A33",
+      "A34",
+      "A35",
+      "A36"
+    ],
+    "verified": true
+  },
+  "exclusions": [
+    {
+      "id": "full_semantic_cartesian_product",
+      "reason": "Arbitrary higher-order combinations are not distinct textual interpretations. Every option and every allowed option pair is covered; coupled blocks are fully crossed and promoted branches receive full treatment."
+    },
+    {
+      "id": "test_label_selected_threshold_as_paper_consistent",
+      "reason": "The paper explicitly says its test set differs from validation; test-label selection is retained only as an X-track leakage mechanism demonstration."
+    },
+    {
+      "id": "dot_product_attention_as_paper_consistent",
+      "reason": "The paper explicitly describes Gamma as a jointly trained feed-forward neural network; dot attention may be a corrected or X-track control only."
+    },
+    {
+      "id": "undocumented_dataset_subsets",
+      "reason": "No finite text-grounded enumeration exists beyond all Code=1 meters and repeated deterministic approximately-3000 subsets."
+    },
+    {
+      "id": "unbounded_backend_version_cartesian",
+      "reason": "The paper names Keras but gives no version or backend. The reproduction uses one locked Keras-compatible semantic implementation; version/backend perturbations are X-track sensitivities unless they change a paper-specified graph operation."
+    },
+    {
+      "id": "full_per_layer_width_cartesian_search",
+      "reason": "Algorithm 6 explicitly uses a sequential search to avoid exhaustive search. The literal scalar-width and per-layer coordinate interpretations are retained; a 5^L width-vector Cartesian search is not the printed algorithm."
+    }
+  ],
+  "families": [
+    {
+      "all_promote_attempts": 3738,
+      "all_promote_resource_hours": 7476.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 30.0,
+      "dataset": "sgcc",
+      "dimension_count": 13,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "latent_width",
+        "latent_placement",
+        "dense_dropout_scope",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_fc_sae",
+      "incompatible_pair_count": 4,
+      "model": "fc_sae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 42,
+      "printed_anchor_branch_id": "sgcc_fc_sae-19b26c8cdff2",
+      "raw_cartesian_cases": 1492992,
+      "resource": "gpu",
+      "screen_attempts": 126,
+      "screen_resource_hours": 8.4,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 3738,
+      "all_promote_resource_hours": 105910.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 425.0,
+      "dataset": "sgcc",
+      "dimension_count": 16,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "latent_width",
+        "latent_placement",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "lstm_dropout_placement",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_lstm_sae",
+      "incompatible_pair_count": 4,
+      "model": "lstm_sae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 42,
+      "printed_anchor_branch_id": "sgcc_lstm_sae-de775694e3e0",
+      "raw_cartesian_cases": 17915904,
+      "resource": "gpu",
+      "screen_attempts": 126,
+      "screen_resource_hours": 50.4,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 5162,
+      "all_promote_resource_hours": 20648.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 60.0,
+      "dataset": "sgcc",
+      "dimension_count": 14,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "latent_width",
+        "dense_dropout_scope",
+        "vae_loss_reduction",
+        "vae_score",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_fc_vae",
+      "incompatible_pair_count": 4,
+      "model": "fc_vae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 58,
+      "printed_anchor_branch_id": "sgcc_fc_vae-a8a1bce3f759",
+      "raw_cartesian_cases": 11943936,
+      "resource": "gpu",
+      "screen_attempts": 174,
+      "screen_resource_hours": 23.2,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 5429,
+      "all_promote_resource_hours": 21716.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 60.0,
+      "dataset": "sgcc",
+      "dimension_count": 16,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "latent_width",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "vae_loss_reduction",
+        "vae_score",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_lstm_vae",
+      "incompatible_pair_count": 4,
+      "model": "lstm_vae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 61,
+      "printed_anchor_branch_id": "sgcc_lstm_vae-dc0b2bf6dee7",
+      "raw_cartesian_cases": 47775744,
+      "resource": "gpu",
+      "screen_attempts": 183,
+      "screen_resource_hours": 36.6,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 3827,
+      "all_promote_resource_hours": 183696.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 720.0,
+      "dataset": "sgcc",
+      "dimension_count": 16,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "latent_width",
+        "latent_placement",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "attention_merge",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_lstm_aea",
+      "incompatible_pair_count": 4,
+      "model": "lstm_aea",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 43,
+      "printed_anchor_branch_id": "sgcc_lstm_aea-bbfa0f37269f",
+      "raw_cartesian_cases": 11943936,
+      "resource": "gpu",
+      "screen_attempts": 129,
+      "screen_resource_hours": 86.0,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 8900,
+      "all_promote_resource_hours": 4450.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 7.5,
+      "dataset": "sgcc",
+      "dimension_count": 10,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "arima_completion",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_arima",
+      "incompatible_pair_count": 4,
+      "model": "arima",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 100,
+      "printed_anchor_branch_id": "sgcc_arima-3c0a0c6ae890",
+      "raw_cartesian_cases": 165888,
+      "resource": "cpu",
+      "screen_attempts": 300,
+      "screen_resource_hours": 10.0,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2581,
+      "all_promote_resource_hours": 3871.5,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 22.5,
+      "dataset": "sgcc",
+      "dimension_count": 10,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "svm_training",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "sgcc_one_class_svm",
+      "incompatible_pair_count": 4,
+      "model": "one_class_svm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 29,
+      "printed_anchor_branch_id": "sgcc_one_class_svm-02c1b015648e",
+      "raw_cartesian_cases": 20736,
+      "resource": "cpu",
+      "screen_attempts": 87,
+      "screen_resource_hours": 5.8,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2314,
+      "all_promote_resource_hours": 77.13333333333334,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 0.5,
+      "dataset": "sgcc",
+      "dimension_count": 6,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors"
+      ],
+      "family": "sgcc_naive_bayes",
+      "incompatible_pair_count": 0,
+      "model": "naive_bayes",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 26,
+      "printed_anchor_branch_id": "sgcc_naive_bayes-716acc987a9e",
+      "raw_cartesian_cases": 864,
+      "resource": "cpu",
+      "screen_attempts": 78,
+      "screen_resource_hours": 0.65,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2314,
+      "all_promote_resource_hours": 4628.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 30.0,
+      "dataset": "sgcc",
+      "dimension_count": 7,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "svm_training"
+      ],
+      "family": "sgcc_multiclass_svm",
+      "incompatible_pair_count": 0,
+      "model": "multiclass_svm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 26,
+      "printed_anchor_branch_id": "sgcc_multiclass_svm-42e55d392009",
+      "raw_cartesian_cases": 1728,
+      "resource": "cpu",
+      "screen_attempts": 78,
+      "screen_resource_hours": 5.2,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2314,
+      "all_promote_resource_hours": 4628.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 30.0,
+      "dataset": "sgcc",
+      "dimension_count": 7,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "supervised_head"
+      ],
+      "family": "sgcc_supervised_feed_forward",
+      "incompatible_pair_count": 0,
+      "model": "supervised_feed_forward",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 26,
+      "printed_anchor_branch_id": "sgcc_supervised_feed_forward-86ab43ad7147",
+      "raw_cartesian_cases": 1728,
+      "resource": "gpu",
+      "screen_attempts": 78,
+      "screen_resource_hours": 5.2,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 2314,
+      "all_promote_resource_hours": 94102.66666666667,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 610.0,
+      "dataset": "sgcc",
+      "dimension_count": 9,
+      "dimensions": [
+        "sgcc_representation",
+        "sgcc_missing",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "supervised_head",
+        "lstm_input",
+        "lstm_dropout_placement"
+      ],
+      "family": "sgcc_supervised_lstm",
+      "incompatible_pair_count": 0,
+      "model": "supervised_lstm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 26,
+      "printed_anchor_branch_id": "sgcc_supervised_lstm-3b00ec111a25",
+      "raw_cartesian_cases": 10368,
+      "resource": "gpu",
+      "screen_attempts": 78,
+      "screen_resource_hours": 41.6,
+      "tables": [
+        "II"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 39160,
+      "all_promote_resource_hours": 13053.333333333334,
+      "corrected_attempts": 60,
+      "corrected_resource_hours": 20.0,
+      "dataset": "iset",
+      "dimension_count": 21,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "latent_width",
+        "latent_placement",
+        "dense_dropout_scope",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels",
+        "table_v_identity",
+        "table_v_size"
+      ],
+      "family": "iset_fc_sae",
+      "incompatible_pair_count": 4,
+      "model": "fc_sae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 44,
+      "printed_anchor_branch_id": "iset_fc_sae-7868f40a6e09",
+      "raw_cartesian_cases": 859963392,
+      "resource": "gpu",
+      "screen_attempts": 132,
+      "screen_resource_hours": 4.4,
+      "tables": [
+        "III",
+        "IV",
+        "V"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 38270,
+      "all_promote_resource_hours": 459240.0,
+      "corrected_attempts": 60,
+      "corrected_resource_hours": 720.0,
+      "dataset": "iset",
+      "dimension_count": 24,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "latent_width",
+        "latent_placement",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "lstm_dropout_placement",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels",
+        "table_v_identity",
+        "table_v_size"
+      ],
+      "family": "iset_lstm_sae",
+      "incompatible_pair_count": 4,
+      "model": "lstm_sae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 43,
+      "printed_anchor_branch_id": "iset_lstm_sae-12bdd804d25c",
+      "raw_cartesian_cases": 10319560704,
+      "resource": "gpu",
+      "screen_attempts": 129,
+      "screen_resource_hours": 68.8,
+      "tables": [
+        "III",
+        "IV",
+        "V"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 50730,
+      "all_promote_resource_hours": 12682.5,
+      "corrected_attempts": 60,
+      "corrected_resource_hours": 15.0,
+      "dataset": "iset",
+      "dimension_count": 22,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "latent_width",
+        "dense_dropout_scope",
+        "vae_loss_reduction",
+        "vae_score",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels",
+        "table_v_identity",
+        "table_v_size"
+      ],
+      "family": "iset_fc_vae",
+      "incompatible_pair_count": 4,
+      "model": "fc_vae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 57,
+      "printed_anchor_branch_id": "iset_fc_vae-34a32f233296",
+      "raw_cartesian_cases": 6879707136,
+      "resource": "gpu",
+      "screen_attempts": 171,
+      "screen_resource_hours": 5.7,
+      "tables": [
+        "III",
+        "IV",
+        "V"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 53400,
+      "all_promote_resource_hours": 676400.0,
+      "corrected_attempts": 60,
+      "corrected_resource_hours": 760.0,
+      "dataset": "iset",
+      "dimension_count": 24,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "latent_width",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "vae_loss_reduction",
+        "vae_score",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels",
+        "table_v_identity",
+        "table_v_size"
+      ],
+      "family": "iset_lstm_vae",
+      "incompatible_pair_count": 4,
+      "model": "lstm_vae",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 60,
+      "printed_anchor_branch_id": "iset_lstm_vae-1af29bc4043a",
+      "raw_cartesian_cases": 27518828544,
+      "resource": "gpu",
+      "screen_attempts": 180,
+      "screen_resource_hours": 96.0,
+      "tables": [
+        "III",
+        "IV",
+        "V"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 40050,
+      "all_promote_resource_hours": 560700.0,
+      "corrected_attempts": 60,
+      "corrected_resource_hours": 840.0,
+      "dataset": "iset",
+      "dimension_count": 24,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "latent_width",
+        "latent_placement",
+        "lstm_input",
+        "decoder_schedule",
+        "decoder_state",
+        "attention_merge",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels",
+        "table_v_identity",
+        "table_v_size"
+      ],
+      "family": "iset_lstm_aea",
+      "incompatible_pair_count": 4,
+      "model": "lstm_aea",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 45,
+      "printed_anchor_branch_id": "iset_lstm_aea-6d21a51982d8",
+      "raw_cartesian_cases": 6879707136,
+      "resource": "gpu",
+      "screen_attempts": 135,
+      "screen_resource_hours": 90.0,
+      "tables": [
+        "III",
+        "IV",
+        "V"
+      ],
+      "workers_per_attempt": 4
+    },
+    {
+      "all_promote_attempts": 6141,
+      "all_promote_resource_hours": 18423.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 45.0,
+      "dataset": "iset",
+      "dimension_count": 16,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "arima_completion",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "iset_arima",
+      "incompatible_pair_count": 4,
+      "model": "arima",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 69,
+      "printed_anchor_branch_id": "iset_arima-63336ecf5154",
+      "raw_cartesian_cases": 11943936,
+      "resource": "cpu",
+      "screen_attempts": 207,
+      "screen_resource_hours": 13.8,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2492,
+      "all_promote_resource_hours": 14952.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 90.0,
+      "dataset": "iset",
+      "dimension_count": 16,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "anomaly_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "svm_training",
+        "threshold_rule",
+        "threshold_scope",
+        "validation_labels"
+      ],
+      "family": "iset_one_class_svm",
+      "incompatible_pair_count": 4,
+      "model": "one_class_svm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 28,
+      "printed_anchor_branch_id": "iset_one_class_svm-be66fd098c97",
+      "raw_cartesian_cases": 1492992,
+      "resource": "cpu",
+      "screen_attempts": 84,
+      "screen_resource_hours": 11.2,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2047,
+      "all_promote_resource_hours": 341.1666666666667,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 2.5,
+      "dataset": "iset",
+      "dimension_count": 12,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration"
+      ],
+      "family": "iset_naive_bayes",
+      "incompatible_pair_count": 0,
+      "model": "naive_bayes",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 23,
+      "printed_anchor_branch_id": "iset_naive_bayes-54e3a2c016e8",
+      "raw_cartesian_cases": 62208,
+      "resource": "cpu",
+      "screen_attempts": 69,
+      "screen_resource_hours": 1.15,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2136,
+      "all_promote_resource_hours": 12816.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 90.0,
+      "dataset": "iset",
+      "dimension_count": 14,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "multiclass_labels",
+        "svm_training"
+      ],
+      "family": "iset_multiclass_svm",
+      "incompatible_pair_count": 0,
+      "model": "multiclass_svm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 24,
+      "printed_anchor_branch_id": "iset_multiclass_svm-483b343d33ee",
+      "raw_cartesian_cases": 248832,
+      "resource": "cpu",
+      "screen_attempts": 72,
+      "screen_resource_hours": 9.6,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2136,
+      "all_promote_resource_hours": 2136.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 15.0,
+      "dataset": "iset",
+      "dimension_count": 14,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "supervised_head"
+      ],
+      "family": "iset_supervised_feed_forward",
+      "incompatible_pair_count": 0,
+      "model": "supervised_feed_forward",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 24,
+      "printed_anchor_branch_id": "iset_supervised_feed_forward-dc945a9b77ce",
+      "raw_cartesian_cases": 497664,
+      "resource": "gpu",
+      "screen_attempts": 72,
+      "screen_resource_hours": 2.4,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 1
+    },
+    {
+      "all_promote_attempts": 2225,
+      "all_promote_resource_hours": 35600.0,
+      "corrected_attempts": 15,
+      "corrected_resource_hours": 240.0,
+      "dataset": "iset",
+      "dimension_count": 16,
+      "dimensions": [
+        "iset_day",
+        "iset_meter_population",
+        "attack_population",
+        "split_unit",
+        "scaling",
+        "validation_policy",
+        "supervised_adasyn",
+        "adasyn_neighbors",
+        "attack1_scope",
+        "attack2_granularity",
+        "attack3_interval",
+        "attack_hour_mapping",
+        "attack_regeneration",
+        "supervised_head",
+        "lstm_input",
+        "lstm_dropout_placement"
+      ],
+      "family": "iset_supervised_lstm",
+      "incompatible_pair_count": 0,
+      "model": "supervised_lstm",
+      "pairwise_coverage_verified": true,
+      "pairwise_semantic_cases": 25,
+      "printed_anchor_branch_id": "iset_supervised_lstm-c67814dbc8e6",
+      "raw_cartesian_cases": 2985984,
+      "resource": "gpu",
+      "screen_attempts": 75,
+      "screen_resource_hours": 40.0,
+      "tables": [
+        "III"
+      ],
+      "workers_per_attempt": 4
+    }
+  ],
+  "full_treatment": {
+    "budget_is_all_branches_promote_upper_bound": true,
+    "confirm_seed_count": 3,
+    "search_seed_count": 1,
+    "sequential_search_evaluations": 86
+  },
+  "hyperparameter_envelope": {
+    "batch_size": [
+      "32",
+      "512"
+    ],
+    "epochs": [
+      "10",
+      "30",
+      "100"
+    ],
+    "learning_rate_multiplier": [
+      "0.1",
+      "1.0",
+      "10.0"
+    ],
+    "mode": "sequential_one_dimension_at_a_time",
+    "note": "Table-I architecture/optimizer choices remain fixed inside a semantic branch; omitted training parameters use the finite sequential envelope.",
+    "stopping": [
+      "fixed",
+      "early_no_refit",
+      "early_refit"
+    ]
+  },
+  "non_executable": [
+    {
+      "id": "attack3_printed_subtraction",
+      "reason": "tf = ti - tl places the final point before the initial point for positive lengths",
+      "repairs": [
+        "valid_fit_addition",
+        "printed_start_truncate",
+        "printed_start_wrap"
+      ],
+      "source": "Eq. 3"
+    },
+    {
+      "id": "threshold_median_of_iqr_of_roc",
+      "reason": "ROC curve coordinates do not define a unique scalar threshold IQR operation",
+      "repairs": [
+        "printed_constant",
+        "roc_central_threshold_median",
+        "threshold_iqr_midpoint",
+        "threshold_iqr_median"
+      ],
+      "source": "Secs. III-D and IV-B"
+    },
+    {
+      "id": "svm_literal_kernel_gamma_reversal",
+      "reason": "kernel=scale and gamma=sigmoid is not a valid SVM API configuration",
+      "repairs": [
+        "kernel_sigmoid_gamma_scale"
+      ],
+      "source": "Sec. IV-C"
+    }
+  ],
+  "paper_sha256": "f3098e0c27ee19b27bea026aedc3d10e5dbb0c46f5cd01ed5bd5c05b7dcf850f",
+  "printed_anchor_branch_ids": [
+    "sgcc_fc_sae-19b26c8cdff2",
+    "sgcc_lstm_sae-de775694e3e0",
+    "sgcc_fc_vae-a8a1bce3f759",
+    "sgcc_lstm_vae-dc0b2bf6dee7",
+    "sgcc_lstm_aea-bbfa0f37269f",
+    "sgcc_arima-3c0a0c6ae890",
+    "sgcc_one_class_svm-02c1b015648e",
+    "sgcc_naive_bayes-716acc987a9e",
+    "sgcc_multiclass_svm-42e55d392009",
+    "sgcc_supervised_feed_forward-86ab43ad7147",
+    "sgcc_supervised_lstm-3b00ec111a25",
+    "iset_fc_sae-7868f40a6e09",
+    "iset_lstm_sae-12bdd804d25c",
+    "iset_fc_vae-34a32f233296",
+    "iset_lstm_vae-1af29bc4043a",
+    "iset_lstm_aea-6d21a51982d8",
+    "iset_arima-63336ecf5154",
+    "iset_one_class_svm-be66fd098c97",
+    "iset_naive_bayes-54e3a2c016e8",
+    "iset_multiclass_svm-483b343d33ee",
+    "iset_supervised_feed_forward-dc945a9b77ce",
+    "iset_supervised_lstm-c67814dbc8e6"
+  ],
+  "promotion": {
+    "borderline_margin": 0.05,
+    "corrected_control_bypasses_screen_rejection": true,
+    "printed_anchor_bypasses_screen_rejection": true,
+    "reported_auc_margin": 0.2,
+    "rule": "Promote an interpretive branch if any of three screening seeds reaches reported_point_auc_lower_bound minus 0.20; branches within 0.05 below rerun a 10-epoch screen before rejection.",
+    "targets": {
+      "iset_arima": {
+        "borderline_rerun_floor": 0.62,
+        "reported_dr": 0.86,
+        "reported_fa": 0.12,
+        "reported_point_auc_lower_bound": 0.87,
+        "screen_promotion_floor": 0.67
+      },
+      "iset_fc_sae": {
+        "borderline_rerun_floor": 0.58,
+        "reported_dr": 0.81,
+        "reported_fa": 0.15,
+        "reported_point_auc_lower_bound": 0.83,
+        "screen_promotion_floor": 0.63
+      },
+      "iset_fc_vae": {
+        "borderline_rerun_floor": 0.635,
+        "reported_dr": 0.88,
+        "reported_fa": 0.11,
+        "reported_point_auc_lower_bound": 0.885,
+        "screen_promotion_floor": 0.685
+      },
+      "iset_lstm_aea": {
+        "borderline_rerun_floor": 0.695,
+        "reported_dr": 0.94,
+        "reported_fa": 0.05,
+        "reported_point_auc_lower_bound": 0.945,
+        "screen_promotion_floor": 0.745
+      },
+      "iset_lstm_sae": {
+        "borderline_rerun_floor": 0.61,
+        "reported_dr": 0.85,
+        "reported_fa": 0.13,
+        "reported_point_auc_lower_bound": 0.86,
+        "screen_promotion_floor": 0.66
+      },
+      "iset_lstm_vae": {
+        "borderline_rerun_floor": 0.67,
+        "reported_dr": 0.91,
+        "reported_fa": 0.07,
+        "reported_point_auc_lower_bound": 0.92,
+        "screen_promotion_floor": 0.72
+      },
+      "iset_multiclass_svm": {
+        "borderline_rerun_floor": 0.665,
+        "reported_dr": 0.91,
+        "reported_fa": 0.08,
+        "reported_point_auc_lower_bound": 0.915,
+        "screen_promotion_floor": 0.715
+      },
+      "iset_naive_bayes": {
+        "borderline_rerun_floor": 0.525,
+        "reported_dr": 0.73,
+        "reported_fa": 0.18,
+        "reported_point_auc_lower_bound": 0.775,
+        "screen_promotion_floor": 0.575
+      },
+      "iset_one_class_svm": {
+        "borderline_rerun_floor": 0.655,
+        "reported_dr": 0.9,
+        "reported_fa": 0.09,
+        "reported_point_auc_lower_bound": 0.905,
+        "screen_promotion_floor": 0.705
+      },
+      "iset_supervised_feed_forward": {
+        "borderline_rerun_floor": 0.645,
+        "reported_dr": 0.9,
+        "reported_fa": 0.11,
+        "reported_point_auc_lower_bound": 0.895,
+        "screen_promotion_floor": 0.695
+      },
+      "iset_supervised_lstm": {
+        "borderline_rerun_floor": 0.6525,
+        "reported_dr": 0.905,
+        "reported_fa": 0.1,
+        "reported_point_auc_lower_bound": 0.9025,
+        "screen_promotion_floor": 0.7025
+      },
+      "sgcc_arima": {
+        "borderline_rerun_floor": 0.64,
+        "reported_dr": 0.88,
+        "reported_fa": 0.1,
+        "reported_point_auc_lower_bound": 0.89,
+        "screen_promotion_floor": 0.69
+      },
+      "sgcc_fc_sae": {
+        "borderline_rerun_floor": 0.595,
+        "reported_dr": 0.83,
+        "reported_fa": 0.14,
+        "reported_point_auc_lower_bound": 0.845,
+        "screen_promotion_floor": 0.645
+      },
+      "sgcc_fc_vae": {
+        "borderline_rerun_floor": 0.655,
+        "reported_dr": 0.9,
+        "reported_fa": 0.09,
+        "reported_point_auc_lower_bound": 0.905,
+        "screen_promotion_floor": 0.705
+      },
+      "sgcc_lstm_aea": {
+        "borderline_rerun_floor": 0.71,
+        "reported_dr": 0.96,
+        "reported_fa": 0.04,
+        "reported_point_auc_lower_bound": 0.96,
+        "screen_promotion_floor": 0.76
+      },
+      "sgcc_lstm_sae": {
+        "borderline_rerun_floor": 0.62,
+        "reported_dr": 0.86,
+        "reported_fa": 0.12,
+        "reported_point_auc_lower_bound": 0.87,
+        "screen_promotion_floor": 0.67
+      },
+      "sgcc_lstm_vae": {
+        "borderline_rerun_floor": 0.685,
+        "reported_dr": 0.93,
+        "reported_fa": 0.06,
+        "reported_point_auc_lower_bound": 0.935,
+        "screen_promotion_floor": 0.735
+      },
+      "sgcc_multiclass_svm": {
+        "borderline_rerun_floor": 0.6725,
+        "reported_dr": 0.92,
+        "reported_fa": 0.075,
+        "reported_point_auc_lower_bound": 0.9225,
+        "screen_promotion_floor": 0.7225
+      },
+      "sgcc_naive_bayes": {
+        "borderline_rerun_floor": 0.545,
+        "reported_dr": 0.75,
+        "reported_fa": 0.16,
+        "reported_point_auc_lower_bound": 0.795,
+        "screen_promotion_floor": 0.595
+      },
+      "sgcc_one_class_svm": {
+        "borderline_rerun_floor": 0.6625,
+        "reported_dr": 0.91,
+        "reported_fa": 0.085,
+        "reported_point_auc_lower_bound": 0.9125,
+        "screen_promotion_floor": 0.7125
+      },
+      "sgcc_supervised_feed_forward": {
+        "borderline_rerun_floor": 0.6575,
+        "reported_dr": 0.91,
+        "reported_fa": 0.095,
+        "reported_point_auc_lower_bound": 0.9075,
+        "screen_promotion_floor": 0.7075
+      },
+      "sgcc_supervised_lstm": {
+        "borderline_rerun_floor": 0.6625,
+        "reported_dr": 0.915,
+        "reported_fa": 0.09,
+        "reported_point_auc_lower_bound": 0.9125,
+        "screen_promotion_floor": 0.7125
+      }
+    }
+  },
+  "schema_version": 1,
+  "screen": {
+    "data_fraction": 0.1,
+    "epochs": 3,
+    "seed_count": 3
+  }
+}

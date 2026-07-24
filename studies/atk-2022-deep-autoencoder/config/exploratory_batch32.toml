@@ -1,0 +1,93 @@
+[run]
+mode = "exploratory_paper_literal_batch32_sensitivity"
+data_seed = 20260721
+model_seeds = [11, 22, 33]
+max_epochs = 30
+batch_size = 32
+batch_size_sensitivity = 32
+warmup_epochs = 5
+early_stopping_patience = 4
+early_stopping_min_delta = 0.0001
+validation_fraction_within_train = 0.15
+supervised_svm_max_samples = 30000
+one_class_svm_max_samples = 12000
+
+[data]
+split_ratio_train = 0.6666666666666666
+scaling = "joint_b_plus_m_featurewise_before_split"
+adasyn_neighbors = 5
+sgcc_representation = "full_customer_chronological_1034"
+sgcc_imputation = "within_customer_linear_then_train_benign_feature_median"
+iset_profile = "complete_slots_1_through_48"
+iset_residential_selector = "official_allocation_code_1"
+
+[thresholds]
+arima = 0.58
+one_class_svm = 0.45
+fc_sae = 0.58
+lstm_sae = 0.61
+fc_vae = 0.43
+lstm_vae = 0.47
+lstm_aea = 0.51
+
+[table_1.fc_sae]
+layers_total = 8
+encoder_widths = [400, 300, 200, 100]
+optimizer = "adam"
+dropout = 0.4
+hidden_activation = "sigmoid"
+output_activation = "softmax"
+
+[table_1.lstm_sae]
+layers_total = 4
+encoder_widths = [500, 300]
+optimizer = "adam"
+dropout = 0.2
+hidden_activation = "sigmoid"
+output_activation = "sigmoid"
+
+[table_1.fc_vae]
+layers_total = 8
+encoder_widths = [500, 400, 300, 100]
+optimizer = "adam"
+dropout = 0.4
+hidden_activation = "relu"
+output_activation = "softmax"
+
+[table_1.lstm_vae]
+layers_total = 4
+encoder_widths = [400, 300]
+optimizer = "sgd"
+dropout = 0.0
+hidden_activation = "tanh"
+output_activation = "sigmoid"
+
+[table_1.lstm_aea]
+layers_total = 6
+encoder_widths = [500, 300, 200]
+optimizer = "sgd"
+dropout = 0.0
+hidden_activation = "sigmoid"
+output_activation = "sigmoid"
+
+[table_1.supervised_feed_forward]
+layers_total = 5
+encoder_widths = [500, 500, 500, 500, 500]
+optimizer = "adamax"
+dropout = 0.0
+hidden_activation = "relu"
+output_activation = "softmax"
+output_units = 2
+loss = "sparse_categorical_crossentropy"
+decision_threshold = 0.5
+
+[table_1.supervised_lstm]
+layers_total = 4
+encoder_widths = [300, 300, 300, 300]
+optimizer = "adam"
+dropout = 0.2
+hidden_activation = "relu"
+output_activation = "sigmoid"
+output_units = 1
+loss = "binary_crossentropy"
+decision_threshold = 0.5

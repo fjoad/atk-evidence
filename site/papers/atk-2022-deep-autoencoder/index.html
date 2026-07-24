@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A source-first visual reconstruction of the experimental method in Takiddin et al.'s deep-autoencoder electricity-theft paper.">
+  <title>Paper 1 method map — ATK Evidence</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0c0e12;
+      --surface: #17191e;
+      --surface-2: #1d2026;
+      --line: #343840;
+      --text: #f3f4f6;
+      --muted: #b6bbc5;
+      --blue: #77adff;
+      --green: #77dda1;
+      --green-bg: #123a23;
+      --amber: #f3ca66;
+      --amber-bg: #453510;
+      --red: #ff9b95;
+      --red-bg: #4a201d;
+      --cyan: #86dfef;
+      --cyan-bg: #123941;
+      --mono-bg: #17243c;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% -8%, #17345e 0, transparent 32rem),
+        var(--bg);
+      color: var(--text);
+      font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1320px, calc(100% - 42px)); margin: 0 auto; padding: 38px 0 100px; }
+    a { color: var(--blue); }
+    .topline { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-bottom: 46px; color: var(--muted); font-size: .94rem; }
+    .topline a { text-decoration: none; font-weight: 750; }
+    .kicker { color: var(--blue); font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
+    h1 { max-width: 1050px; margin: 12px 0 16px; font-size: clamp(2.35rem, 5.8vw, 5.2rem); line-height: 1.04; letter-spacing: -.052em; }
+    .lede { max-width: 1000px; margin: 0 0 30px; color: #d4d7dd; font-size: clamp(1.04rem, 2vw, 1.3rem); }
+    .meta { color: var(--muted); font-size: .92rem; }
+    .legend { display: flex; flex-wrap: wrap; gap: 12px 26px; margin: 36px 0 34px; }
+    .legend > span { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+    .tag { display: inline-block; width: max-content; margin: 0 6px 4px 0; padding: 3px 10px; border-radius: 7px; font-size: .78rem; font-weight: 850; letter-spacing: .025em; white-space: nowrap; vertical-align: .08em; }
+    .paper { background: var(--green-bg); color: var(--green); }
+    .choice { background: var(--amber-bg); color: var(--amber); }
+    .impossible { background: var(--red-bg); color: var(--red); }
+    .alongside { background: var(--cyan-bg); color: var(--cyan); }
+    .overview {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+      align-items: stretch;
+      gap: 10px;
+      margin: 34px 0 56px;
+    }
+    .flowbox { min-height: 118px; padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); }
+    .flowbox strong { display: block; margin-bottom: 6px; font-size: 1.04rem; }
+    .flowbox span { color: var(--muted); font-size: .92rem; }
+    .arrow { display: grid; place-items: center; color: var(--blue); font-size: 1.8rem; font-weight: 900; }
+    .stage { margin: 30px 0; padding: 30px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(150deg, #191b20, #13151a); }
+    .stage-title { display: flex; gap: 18px; align-items: center; margin-bottom: 24px; }
+    .stage-number { flex: 0 0 auto; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--blue); color: #07101e; font-size: 1.35rem; font-weight: 900; }
+    h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; }
+    .block { margin: 18px 0 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); }
+    .block h3 { margin: 0 0 12px; font-size: 1.18rem; }
+    .block p { margin: 10px 0; }
+    .block ul, .block ol { margin: 10px 0 0; padding-left: 1.35rem; }
+    .block li + li { margin-top: 8px; }
+    .muted { color: var(--muted); }
+    .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+    .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+    .equations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .equation { padding: 12px 14px; border-radius: 10px; background: var(--mono-bg); font: .9rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+    .lane { position: relative; }
+    .lane::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: -1px; width: 3px; border-radius: 2px; background: var(--blue); opacity: .75; }
+    .lane > * { margin-left: 14px; }
+    .chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0 6px; }
+    .chain span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #12151a; }
+    .chain b { color: var(--blue); }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .92rem; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    th { color: var(--muted); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
+    td code { color: #d7e7ff; }
+    .callout { margin-top: 18px; padding: 17px 20px; border-left: 4px solid var(--amber); background: #241f12; }
+    .callout.red { border-color: var(--red); background: #271513; }
+    .track { min-height: 100%; padding: 18px; border-top: 3px solid var(--blue); border-radius: 10px; background: #11141a; }
+    .track strong { display: block; margin-bottom: 8px; }
+    .track p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .status { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .status > div { padding: 16px; border-radius: 12px; background: #11141a; }
+    .status b { display: block; margin-bottom: 4px; }
+    footer { margin-top: 46px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
+    @media (max-width: 900px) {
+      .overview { grid-template-columns: 1fr; }
+      .arrow { transform: rotate(90deg); }
+      .two, .three, .status, .equations { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      main { width: min(100% - 24px, 1320px); padding-top: 24px; }
+      .topline { align-items: flex-start; flex-direction: column; margin-bottom: 34px; }
+      .stage { padding: 20px 14px; border-radius: 16px; }
+      .stage-title { align-items: flex-start; }
+      .stage-number { width: 46px; height: 46px; font-size: 1.1rem; }
+      .block { padding: 18px 16px; }
+    }
+    @media print {
+      :root { color-scheme: light; --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #bbb; --text: #111; --muted: #444; --mono-bg: #eef3fa; }
+      body { background: #fff; }
+      main { width: 100%; padding: 0; }
+      .topline { display: none; }
+      .stage, .block, .flowbox { break-inside: avoid; box-shadow: none; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <div class="topline">
+    <a href="../../">← ATK Evidence</a>
+    <span>Study 1 · source-first reconstruction · 24 July 2026</span>
+  </div>
+
+  <div class="kicker">What the paper actually does</div>
+  <h1>From two electricity datasets to Tables I–V</h1>
+  <p class="lede">A compact reconstruction of “Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids.” This follows the paper’s order, including questionable operations. Where the text does not define one executable experiment, the ambiguity is shown rather than silently repaired.</p>
+  <p class="meta">Paper source: Sections II–IV, Equations (1)–(18), Algorithms 1–6, Figures 1–5, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
+
+  <div class="legend" aria-label="Legend">
+    <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
+    <span><b class="tag choice">OUR CHOICE</b> paper is silent; predeclared interpretation</span>
+    <span><b class="tag impossible">IMPOSSIBLE</b> printed step is not uniquely executable or is contradictory</span>
+    <span><b class="tag alongside">ALONGSIDE</b> scientifically corrected control, never paper reproduction</span>
+  </div>
+
+  <section class="overview" aria-label="Paper workflow overview">
+    <div class="flowbox"><strong>1 · Data</strong><span>SGCC supplied labels or ISET benign profiles plus six synthetic attacks</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="flowbox"><strong>2 · Prepare</strong><span>Separate anomaly and supervised pipelines, each with the paper’s ADASYN placement</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="flowbox"><strong>3–4 · Fit</strong><span>Benchmarks and five autoencoders; sequential search and ROC-derived thresholds on ISET</span></div>
+    <div class="arrow" aria-hidden="true">→</div>
+    <div class="flowbox"><strong>5 · Report</strong><span>SGCC and ISET metrics, ISET training time, and per-attack detection</span></div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">1</div><h2>Acquire the two named datasets</h2></div>
+
+    <div class="two">
+      <article class="block lane">
+        <h3>1a · SGCC — real labels already exist</h3>
+        <p><span class="tag paper">IN PAPER</span> About 40,000 customers, one daily reading over roughly three years, with benign/malicious labels supplied by the dataset.</p>
+        <p><span class="tag paper">IN PAPER</span> Use those labels directly. The paper does <strong>not</strong> apply the six synthetic ISET attacks to SGCC.</p>
+        <div class="callout red"><span class="tag impossible">CONTRADICTION</span> The source contains 1,034 daily features, while the model section specifies an input in <code>R^48</code>. No transformation from 1,034 to 48 is given.</div>
+      </article>
+
+      <article class="block lane">
+        <h3>1b · ISET/CER — benign data, attacks added</h3>
+        <p><span class="tag paper">IN PAPER</span> Roughly 3,000 residential meters, half-hour readings over about 1.5 years. Form one 48-value profile per meter-day.</p>
+        <p><span class="tag paper">IN PAPER</span> Apply all six attack functions to every customer’s benign matrix, producing six malicious matrices.</p>
+        <p><span class="tag choice">AMBIGUOUS</span> The official allocation contains 4,225 residential meters. The paper gives no rule for selecting “roughly 3,000,” so both all-residential and seeded-3,000 readings must be named.</p>
+      </article>
+    </div>
+
+    <article class="block">
+      <h3>1c · The six ISET attack transforms</h3>
+      <div class="equations">
+        <div class="equation"><b>f1</b> one factor α∈[0.1,0.8] scales a whole profile</div>
+        <div class="equation"><b>f2</b> independent αt∈[0.1,0.8] scales each reading</div>
+        <div class="equation"><b>f3</b> zero a randomly selected 4–24 hour interval</div>
+        <div class="equation"><b>f4</b> replace every reading by that day’s mean</div>
+        <div class="equation"><b>f5</b> multiply the day’s mean by independent αt</div>
+        <div class="equation"><b>f6</b> reverse the 48 readings in time</div>
+      </div>
+      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable; minimal repairs are separate named interpretations.</div>
+    </article>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">2</div><h2>Prepare two different learning problems</h2></div>
+
+    <div class="two">
+      <article class="block lane">
+        <h3>2a · Anomaly detectors</h3>
+        <div class="chain" aria-label="Anomaly preparation sequence">
+          <span>normalize B + M</span><b>→</b><span>split benign 2:1</span><b>→</b><span>train on B1 only</span><b>→</b><span>test = B2 + all M</span><b>→</b><span>ADASYN on test</span>
+        </div>
+        <p><span class="tag paper">IN PAPER</span> This is the paper’s order. In particular, it explicitly oversamples the <strong>test set</strong>, even though that is statistically questionable.</p>
+        <p><span class="tag choice">AMBIGUOUS</span> “Zero mean and unit variance” does not identify the fit population or axis: joint B+M, per class, per profile, or benign training only.</p>
+      </article>
+
+      <article class="block lane">
+        <h3>2b · Supervised detectors</h3>
+        <div class="chain" aria-label="Supervised preparation sequence">
+          <span>combine B + M for all customers</span><b>→</b><span>ADASYN</span><b>→</b><span>split 2:1</span><b>→</b><span>same feature scaling</span>
+        </div>
+        <p><span class="tag paper">IN PAPER</span> ADASYN appears before the supervised train/test split.</p>
+        <p><span class="tag impossible">CONTRADICTION</span> The paper first requires unseen test customers, but later describes row/sample splitting after synthesis. Both cannot be assumed true without an explicit identity policy.</p>
+      </article>
+    </div>
+
+    <article class="block">
+      <h3>2c · Corrected control run beside the reproduction</h3>
+      <p><span class="tag alongside">ALONGSIDE</span> Keep customers disjoint; fit imputation and scaling on training data only; synthesize/oversample training data only; never alter validation or test rows. This answers whether a conventional leakage-free detector works. It does <strong>not</strong> rescue or replace the paper-literal result.</p>
+    </article>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">3</div><h2>Build the benchmark and autoencoder families</h2></div>
+
+    <article class="block">
+      <h3>3a · Detector families</h3>
+      <div class="two">
+        <div>
+          <p><span class="tag paper">ANOMALY</span> ARIMA, one-class SVM, FC-SAE, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.</p>
+        </div>
+        <div>
+          <p><span class="tag paper">SUPERVISED</span> Naive Bayes, “multiclass” SVM, feed-forward neural network, and supervised LSTM.</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="block">
+      <h3>3b · Table I neural architectures</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Model</th><th>Encoder widths</th><th>Decoder widths</th><th>Output</th><th>Dropout</th><th>Anomaly score</th></tr></thead>
+          <tbody>
+            <tr><td>FC-SAE</td><td><code>400, 300, 200, 100</code></td><td><code>100, 200, 300, 400</code></td><td>Softmax</td><td>0.4</td><td>MSE</td></tr>
+            <tr><td>LSTM-SAE</td><td><code>500, 300</code></td><td><code>300, 500</code></td><td>Sigmoid</td><td>0.2</td><td>MSE</td></tr>
+            <tr><td>FC-VAE</td><td><code>500, 400, 300, 100</code></td><td><code>100, 300, 400, 500</code></td><td>Softmax</td><td>0.4</td><td>Reconstruction probability</td></tr>
+            <tr><td>LSTM-VAE</td><td><code>400, 300</code></td><td><code>300, 400</code></td><td>Sigmoid</td><td>0</td><td>Reconstruction probability</td></tr>
+            <tr><td>LSTM-AEA</td><td><code>500, 300, 200</code></td><td><code>200, 300, 500</code></td><td>Sigmoid</td><td>0</td><td>MSE</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p><span class="tag choice">AMBIGUOUS</span> Figures/prose show a distinct latent layer, while Algorithms 2 and 5 directly reuse the final encoder state or attention context. Latent width is not reported. These are separate model interpretations, not permission to choose whichever scores best.</p>
+    </article>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">4</div><h2>Select hyperparameters and anomaly thresholds</h2></div>
+
+    <div class="two">
+      <article class="block lane">
+        <h3>4a · Algorithm 6</h3>
+        <p><span class="tag paper">IN PAPER</span> On ISET training data, search sequentially over layer count, neuron count, optimizer, dropout, hidden activation, and output activation.</p>
+        <p><span class="tag impossible">INCOMPLETE</span> Epochs, batch size, learning rate, initialization, seeds, repetitions, final refit, and a usable convergence rule are absent. The scalar width loop also does not directly produce Table I’s unequal widths.</p>
+      </article>
+
+      <article class="block lane">
+        <h3>4b · Thresholds</h3>
+        <p><span class="tag paper">IN PAPER</span> The paper prints <code>0.58, 0.61, 0.43, 0.47, 0.51</code> for FC-SAE, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.</p>
+        <p><span class="tag impossible">NON-UNIQUE</span> It says thresholds come from the “median of the IQR of the ROC curve.” That phrase does not define one algorithm. ROC selection also requires attack labels, while <code>X_TR</code> is defined as benign-only.</p>
+      </article>
+    </div>
+
+    <div class="callout"><span class="tag choice">TIMING LIMIT</span> Table IV reports 137–193 minutes, but no hardware, software versions, epoch count, batch size, repetition count, or timing boundary. We can report our measured time; we cannot test equality to those minutes on an unknown machine/procedure.</div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">5</div><h2>Evaluate once, then populate Tables II–V</h2></div>
+
+    <article class="block">
+      <h3>5a · Metrics from one score vector and confusion matrix</h3>
+      <p><span class="tag paper">IN PAPER</span> Detection rate, false-alarm rate, specificity, precision, F1, ROC-AUC, and <strong>balanced accuracy</strong>—called “ACC” in the paper: <code>(DR + specificity) / 2</code>.</p>
+    </article>
+
+    <div class="two">
+      <article class="block">
+        <h3>Table II</h3>
+        <p><strong>SGCC performance.</strong> The unresolved 1,034-to-48 representation affects every row.</p>
+      </article>
+      <article class="block">
+        <h3>Table III</h3>
+        <p><strong>ISET performance.</strong> All models on benign daily profiles plus the six generated attacks.</p>
+      </article>
+      <article class="block">
+        <h3>Table IV</h3>
+        <p><strong>ISET training size and time.</strong> Half, three-quarter, and full <code>X_TR</code>; “60 million” most plausibly counts scalar readings, not 48-value examples.</p>
+      </article>
+      <article class="block">
+        <h3>Table V</h3>
+        <p><strong>Each ISET attack separately.</strong> Same stated hyperparameters and thresholds; balanced data; no ADASYN.</p>
+      </article>
+    </div>
+
+    <div class="callout red"><span class="tag impossible">TABLE V INVARIANT</span> With one fixed model, threshold, and benign test set, false alarms depend only on those benign rows and must be identical for all six attack columns. The paper reports different FA values. Therefore at least one experiment identity—model fit, benign sample, threshold, or another unreported element—must vary.</div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">→</div><h2>How the audit runs this without changing the question</h2></div>
+    <div class="three">
+      <div class="track"><strong><span class="tag paper">P</span> Printed track</strong><p>Execute every stated operation as printed, including test-set ADASYN. Keep truly invalid expressions visible as non-executable findings.</p></div>
+      <div class="track"><strong><span class="tag choice">I</span> Interpretation track</strong><p>Run each finite, defensible reading of omissions and contradictions under a stable ID fixed before outcomes.</p></div>
+      <div class="track"><strong><span class="tag alongside">C</span> Corrected track</strong><p>Use conventional leakage controls and valid selection as a separate scientific comparison, never as paper-reproduction evidence.</p></div>
+    </div>
+    <p class="muted">The compact map intentionally does not display the internal combinatorial audit matrix. Its purpose is to make the paper’s actual experimental story legible. The machine-readable branch inventory remains available for verification.</p>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">✓</div><h2>Current project position</h2></div>
+    <div class="status">
+      <div><b>Data</b><span class="muted">SGCC and exact CER consumption archives are verified locally.</span></div>
+      <div><b>Fidelity</b><span class="muted">The PDF-to-code crosswalk is structurally complete; old mismatched results remain quarantined.</span></div>
+      <div><b>Verdict</b><span class="muted">Not issued. Eligible full-data source-v2 runs and confirmatory statistics remain.</span></div>
+    </div>
+  </section>
+
+  <footer>
+    This page is a method reconstruction, not a final review verdict and not a claim about author intent. Detailed source locations and executable classifications are maintained in the repository’s Paper 1 traceability record.
+  </footer>
+</main>
+</body>
+</html>

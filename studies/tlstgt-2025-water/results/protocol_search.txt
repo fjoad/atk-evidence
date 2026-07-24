@@ -1,0 +1,59 @@
+==============================================================================
+EXHAUSTIVE PROTOCOL SEARCH
+==============================================================================
+test-set sizes N     : 229 values from 20 to 1000
+class prevalences    : 49 values from 0.02 to 0.98
+metric definitions   : 6 (standard, balanced_acc, dr_is_precision, f1_negative, f1_macro, dr_is_specificity)
+rounding tolerance   : +/-0.05
+protocols per cell   : 67,326
+
+  SVM      n=10  protocols that reproduce it:      2  e.g. ('standard', 792, 0.2)
+  SVM      n=20  protocols that reproduce it:      0
+  SVM      n=31  protocols that reproduce it:      0
+  RF       n=10  protocols that reproduce it:      0
+  RF       n=20  protocols that reproduce it:      0
+  RF       n=31  protocols that reproduce it:      0
+  LGBM     n=10  protocols that reproduce it:      0
+  LGBM     n=20  protocols that reproduce it:      0
+  LGBM     n=31  protocols that reproduce it:      0
+  FFNN     n=10  protocols that reproduce it:      0
+  FFNN     n=20  protocols that reproduce it:      4  e.g. ('dr_is_precision', 552, 0.12)
+  FFNN     n=31  protocols that reproduce it:      0
+  LSTM     n=10  protocols that reproduce it:      0
+  LSTM     n=20  protocols that reproduce it:      0
+  LSTM     n=31  protocols that reproduce it:      0
+  AE       n=10  protocols that reproduce it:      0
+  AE       n=20  protocols that reproduce it:      0
+  AE       n=31  protocols that reproduce it:      0
+  TGCN     n=10  protocols that reproduce it:      0
+  TGCN     n=20  protocols that reproduce it:      1  e.g. ('standard', 416, 0.28)
+  TGCN     n=31  protocols that reproduce it:      1  e.g. ('f1_macro', 520, 0.08)
+  STGT     n=10  protocols that reproduce it:      3  e.g. ('dr_is_precision', 384, 0.2)
+  STGT     n=20  protocols that reproduce it:      0
+  STGT     n=31  protocols that reproduce it:      0
+  TL-STGT  n=10  protocols that reproduce it:      0
+  TL-STGT  n=20  protocols that reproduce it:      5  e.g. ('dr_is_precision', 216, 0.18)
+  TL-STGT  n=31  protocols that reproduce it:      4  e.g. ('balanced_acc', 496, 0.14)
+
+--- PER-CELL ---
+cells reproducible by NO protocol in the space : 20/27
+    SVM n=20
+    SVM n=31
+    RF n=10
+    RF n=20
+    RF n=31
+    LGBM n=10
+    LGBM n=20
+    LGBM n=31
+
+--- JOINT (one protocol must explain the whole table) ---
+best single protocol explains 1/27 cells: ('standard', 416, 0.28)
+protocols explaining ALL 27 cells: 0
+
+==============================================================================
+INTERPRETATION
+==============================================================================
+7 of 27 cells are reproducible under SOME protocol, so
+per-cell impossibility does not hold across the board. The decisive question is
+then the joint one: whether a single protocol explains the entire table. A paper
+gets one protocol, not one per row.

@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="ATK Evidence: independent, paper-by-paper reproduction of published numerical claims.">
+  <title>ATK Evidence — Paper-by-paper reproduction</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0b0d12;
+      --panel: #141821;
+      --line: #2a303c;
+      --text: #f4f6f8;
+      --muted: #a9b1bf;
+      --blue: #79adff;
+      --green: #6ee7a2;
+      --amber: #f5c968;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% -10%, #16315a 0, transparent 30rem),
+        var(--bg);
+      color: var(--text);
+      font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { width: min(1080px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 100px; }
+    .eyebrow { color: var(--blue); font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { max-width: 850px; margin: 12px 0 18px; font-size: clamp(2.6rem, 7vw, 5.5rem); line-height: 1.02; letter-spacing: -.055em; }
+    .lede { max-width: 820px; color: #d3d8e0; font-size: clamp(1.1rem, 2.2vw, 1.35rem); }
+    .principle { margin: 42px 0; padding: 22px 26px; border-left: 4px solid var(--green); background: #101b18; color: #dff8e9; }
+    h2 { margin: 64px 0 20px; font-size: 1.65rem; }
+    .study {
+      display: grid;
+      grid-template-columns: 72px 1fr;
+      gap: 22px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      background: linear-gradient(145deg, #171c26, #11151c);
+    }
+    .number { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--blue); color: #07101e; font-size: 1.45rem; font-weight: 850; }
+    .study h3 { margin: 0 0 8px; font-size: 1.45rem; }
+    .study p { margin: 8px 0 20px; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    a.button { display: inline-block; padding: 10px 15px; border-radius: 10px; background: var(--blue); color: #07101e; font-weight: 800; text-decoration: none; }
+    a.secondary { border: 1px solid var(--line); background: transparent; color: var(--text); }
+    .coming { margin-top: 14px; color: var(--amber); font-size: .95rem; }
+    footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+    footer a { color: var(--blue); }
+    @media (max-width: 620px) {
+      main { width: min(100% - 26px, 1080px); padding-top: 42px; }
+      .study { grid-template-columns: 1fr; padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Independent reproducibility audit</div>
+    <h1>Published numbers should follow from published methods.</h1>
+    <p class="lede">ATK Evidence is an audit pipeline for published results that do not look right. Papers enter, get rebuilt from scratch against the printed method, and leave with a verdict — including harsh ones, where the evidence supports them.</p>
+
+    <div class="principle">
+      Most reproduction work asks “do the numbers come out?” That question is too weak: it invites the reply “you implemented it wrong” — and sometimes that reply is correct. We audit a paper the way a reviewer would who doubts every item in it and checks each one personally.
+    </div>
+
+    <div class="principle" style="border-left-color:var(--amber); background:#241f12; color:#f6e6c2">
+      <strong>Conflict of interest.</strong> A maintainer of this project is the second author of the 2025 water paper audited as study&nbsp;2. That verdict is held to pre-registered ambiguity branches, published corrections of the audit&rsquo;s own errors, and conclusions bounded strictly to what the artefact supports.
+    </div>
+
+    <h2>Studies</h2>
+    <article class="study">
+      <div class="number">1</div>
+      <div>
+        <h3>Deep autoencoder electricity-theft detection</h3>
+        <p>Takiddin et al., IEEE Systems Journal (2022). Source reconstruction, named datasets, Tables II–V, ambiguity branches, and corrected controls.</p>
+        <div class="actions">
+          <a class="button" href="papers/atk-2022-deep-autoencoder/">Open the method map</a>
+          <a class="button secondary" href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder">Study files on GitHub</a>
+        </div>
+        <div class="coming">Verdict: <strong>in progress</strong> — none issued.</div>
+      </div>
+    </article>
+
+    <article class="study" style="margin-top:22px">
+      <div class="number">2</div>
+      <div>
+        <h3>Graph transfer learning for water-network attack detection</h3>
+        <p>Ahasan et al., EUSIPCO (2025). Figure-exact graphs, pre-registered ambiguity branches, zero-parameter reference detectors, structure ablations, and forensics on the reported table.</p>
+        <div class="actions">
+          <a class="button" href="papers/tlstgt-2025-water/">Read the verdict</a>
+          <a class="button secondary" href="reports/tlstgt-2025-water.pdf">Report (PDF)</a>
+          <a class="button secondary" href="https://github.com/fjoad/atk-evidence/tree/main/studies/tlstgt-2025-water">Study files on GitHub</a>
+        </div>
+        <div class="coming" style="color:#ff9b8f">Verdict: <strong>no consistent protocol</strong> &mdash; an exhaustive search over 67,326 measurement protocols per cell finds none that reproduces the table; 20 of 27 cells are unreachable under <em>every</em> protocol tested.</div>
+      </div>
+    </article>
+
+    <h2>The pipeline</h2>
+    <p class="lede" style="font-size:1.05rem">Tiers are ordered so a failure low down makes everything above it moot. A project that only runs the last tier can spend months reproducing a result that never needed a model.</p>
+    <ol style="color:var(--muted); max-width:820px">
+      <li><strong style="color:var(--text)">Does the paper cohere with itself?</strong> No computation. Do the reported numbers satisfy the metric definitions they claim?</li>
+      <li><strong style="color:var(--text)">Is the problem non-trivial?</strong> Measure a zero-parameter rule through the identical evaluation path first. If it performs comparably, every downstream comparison is moot — including ours.</li>
+      <li><strong style="color:var(--text)">Is each claimed component doing work?</strong> Destroy one claimed structure at a time and see whether anything notices.</li>
+      <li><strong style="color:var(--text)">Are the comparisons fair?</strong> If our build of the paper’s own baseline beats the paper’s reported baseline, the margin was measured against something undertrained.</li>
+      <li><strong style="color:var(--text)">Is the evaluation sound?</strong> Per-class detectability, seed variance, threshold sensitivity.</li>
+      <li><strong style="color:var(--text)">Only now, the headline claims</strong> — with intervals, not point estimates.</li>
+    </ol>
+
+    <h2>The verdict ladder</h2>
+    <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:.97rem">
+      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Verdict</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Meaning</th></tr>
+      <tr><td style="padding:8px 10px"><code>reproduced</code></td><td style="padding:8px 10px">The complete reported result pattern was recovered.</td></tr>
+      <tr><td style="padding:8px 10px"><code>partially reproduced</code></td><td style="padding:8px 10px">Some reported results recovered, others not.</td></tr>
+      <tr><td style="padding:8px 10px"><code>not reproduced</code></td><td style="padding:8px 10px">Not recovered within the finite tested space. Bounded by that space — <em>not</em> a claim that reproduction is impossible.</td></tr>
+      <tr><td style="padding:8px 10px"><code>internally inconsistent</code></td><td style="padding:8px 10px">The reported numbers contradict each other or the paper’s own stated protocol, independent of any implementation.</td></tr>
+      <tr><td style="padding:8px 10px; color:#ff9b8f"><code>unattainable as printed</code></td><td style="padding:8px 10px">No valid confusion matrix on the described protocol yields the printed numbers, <strong>and</strong> the deviation is systematic rather than consistent with rounding or isolated transcription error.</td></tr>
+      <tr><td style="padding:8px 10px; color:#ff9b8f"><code>no consistent protocol</code></td><td style="padding:8px 10px"><strong>Strongest rung.</strong> An exhaustive pre-registered search over measurement protocols &mdash; any test-set size, any class prevalence, and the common metric-definition variants &mdash; finds <strong>no single protocol</strong> reproducing the reported table, and most cells are unreachable under <em>every</em> protocol searched. The likelihood of the table under &ldquo;these were measured&rdquo; is then zero rather than small.</td></tr>
+    </table>
+    <p style="color:var(--muted); max-width:820px; font-size:.95rem">Every rung is a statement about the artefact. Even the strongest does not distinguish deliberate fabrication from catastrophic process failure &mdash; placeholder values never replaced, a table carried from a draft &mdash; because both produce numbers that were never measured. That distinction requires evidence outside the paper, and this project does not assert it.</p>
+
+    <h2>Rules we hold ourselves to</h2>
+    <ol style="color:var(--muted); max-width:820px">
+      <li>Reconstruct the method from the paper before treating any prior implementation as authority.</li>
+      <li>Execute questionable printed steps rather than silently correcting them.</li>
+      <li>Enumerate every material ambiguity <em>before</em> results are seen.</li>
+      <li>Design experiments whose outcome we do not control. Results confirming a paper’s premise are reported as plainly as results that do not.</li>
+      <li>No cherry-picking: distributions and failures, never the best seed.</li>
+      <li><strong style="color:var(--text)">Publish our own errors.</strong> Each study page carries a corrections section. Two findings in study 2 were retracted as our own bugs.</li>
+    </ol>
+
+    <footer>
+      This project assesses reproducibility within documented finite experiment spaces. It does not infer author intent. Source code and evidence are at
+      <a href="https://github.com/fjoad/atk-evidence">github.com/fjoad/atk-evidence</a>.
+    </footer>
+  </main>
+</body>
+</html>

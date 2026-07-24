@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "study": "atk-2022-deep-autoencoder",
+  "track": "exploratory_paper_literal_score_sanity",
+  "generated_from": {
+    "command": ".venv/bin/python studies/atk-2022-deep-autoencoder/analyze_results.py",
+    "prepared_cache_sha256": "e46ea6c68b5a5967d545b44607f6ae61d7d8a250a6284b9b1fd6971064ead96b",
+    "panther_attempts": {
+      "fc_sae_seed_11": "20260721T152805.135614Z-5a80ee440b3d",
+      "fc_sae_seed_22": "20260721T153203.799885Z-9f443c9d0e06",
+      "fc_sae_seed_33": "20260721T153302.457539Z-f98b742ae01a",
+      "lstm_sae_seed_11": "20260722T141900.112739Z-e8c6c8e62b3c",
+      "lstm_vae_seed_11": "20260721T162958.629864Z-4bab98e6e060",
+      "supervised_feed_forward_seed_11": "20260721T153647.477276Z-413780212277",
+      "supervised_feed_forward_seed_22": "20260721T154830.337606Z-ebfc318cdea3",
+      "supervised_feed_forward_seed_33": "20260721T154942.505636Z-f0d37f41d0f9"
+    }
+  },
+  "input_domain": {
+    "standardized_anomaly_test_minimum": -0.47906261682510376,
+    "standardized_anomaly_test_maximum": 205.82521057128906,
+    "standardized_anomaly_test_negative_fraction": 0.7159596568519335
+  },
+  "lstm_sae_seed_11": {
+    "paper_target_percent": {
+      "dr": 86.0,
+      "fa": 12.0,
+      "auc": 85.0
+    },
+    "fixed_threshold_reproduction_percent": {
+      "dr": 6.776006776006777,
+      "fa": 2.2215341744717083,
+      "auc": 51.89311117401527,
+      "balanced_accuracy": 52.27723630076754,
+      "f1": 12.434647449484245
+    },
+    "all_rows_oracle_test_diagnostic_percent": {
+      "auc": 51.89311117401527,
+      "best_balanced_accuracy": 55.52483390164326,
+      "best_threshold": 0.04918339475989342
+    },
+    "original_rows_only_diagnostic_percent": {
+      "auc": 59.73450128867515,
+      "best_balanced_accuracy": 59.97511477296524
+    },
+    "reconstruction_mse_vs_standardized_input_energy": {
+      "correlation": 0.9999999999999962,
+      "mean_absolute_difference": 8.967836923375236e-07
+    },
+    "fc_sae_seed_11_score_comparison": {
+      "correlation": 0.9999999999851935,
+      "mean_absolute_difference": 0.00011358150105719505
+    },
+    "training": {
+      "epochs_completed": 10,
+      "fit_seconds": 8437.767552688718,
+      "first_loss": 0.24657994576700995,
+      "last_loss": 0.24026303901718776,
+      "first_validation_loss": 0.4958218369792505,
+      "last_validation_loss": 0.4958218372435577
+    }
+  },
+  "cross_model_checks": {
+    "fc_sae_three_seed_auc_percent": [
+      51.89500413975993,
+      51.89550658627212,
+      51.89568271076128
+    ],
+    "fc_sae_cross_seed_score_correlation_minimum": 0.9999999999977416,
+    "lstm_vae_seed_11_primary_auc_percent": 51.86029927108958,
+    "supervised_feed_forward_three_seed_auc_percent": [
+      92.01728512421119,
+      94.1268404691875,
+      94.64621730973417
+    ]
+  },
+  "interpretation_limits": [
+    "The oracle threshold uses test labels and is diagnostic only.",
+    "The paper-primary branch includes test-set ADASYN rows; original-only results are a controlled diagnostic.",
+    "The LSTM-SAE row has one completed seed, so its seed stability remains open.",
+    "These exploratory results strengthen but do not prove the program-level or Paper 1 confirmatory hypothesis."
+  ]
+}

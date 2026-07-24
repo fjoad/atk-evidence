@@ -1,0 +1,757 @@
+schema_version = 1
+paper_sha256 = "f3098e0c27ee19b27bea026aedc3d10e5dbb0c46f5cd01ed5bd5c05b7dcf850f"
+model_seeds = [11, 22, 33]
+screen_seed_count = 3
+search_seed_count = 1
+confirm_seed_count = 3
+paper_sequential_search_evaluations = 86
+corrected_nested_search_evaluations = 12
+screen_data_fraction = 0.10
+screen_epochs = 3
+budget_uncertainty_multiplier = 2.0
+
+[hyperparameter_envelope]
+mode = "sequential_one_dimension_at_a_time"
+batch_size = ["32", "512"]
+epochs = ["10", "30", "100"]
+stopping = ["fixed", "early_no_refit", "early_refit"]
+learning_rate_multiplier = ["0.1", "1.0", "10.0"]
+note = "Table-I architecture/optimizer choices remain fixed inside a semantic branch; omitted training parameters use the finite sequential envelope."
+
+[paper_hyperparameter_search]
+source = "Algorithm 6 and Sec. IV-C"
+initial_optimizer = "SGD"
+initial_dropout = "0"
+initial_hidden_activation = "relu"
+initial_output_activation = "softmax"
+depth = ["2", "3", "4", "5"]
+neurons = ["100", "200", "300", "400", "500"]
+optimizer = ["SGD", "Adam", "Adamax", "Rmsprop"]
+dropout = ["0", "0.2", "0.4", "0.5"]
+hidden_activation = ["relu", "sigmoid", "linear", "tanh"]
+output_activation = ["softmax", "sigmoid"]
+interpretations = [
+  "literal_uniform_width_36_evaluations",
+  "per_layer_coordinate_86_evaluations",
+  "direct_table_i_replay_for_tables_ii_v",
+]
+selection = ["maximum_dr_first_tie", "maximum_dr_then_minimum_fa"]
+budget_uses = "per_layer_coordinate_86_evaluations"
+
+[anchor_defaults]
+sgcc_representation = "full_1034"
+sgcc_missing = "interpolate_edge_median"
+iset_day = "complete_1_48"
+iset_meter_population = "all_4225"
+attack_population = "all_customer_m"
+split_unit = "customer_disjoint"
+scaling = "joint_featurewise"
+validation_policy = "crossval_refit_b1"
+anomaly_adasyn = "test_set_as_printed"
+supervised_adasyn = "before_row_split"
+adasyn_neighbors = "5"
+attack1_scope = "per_profile"
+attack2_granularity = "per_half_hour"
+attack3_interval = "valid_fit_addition"
+attack_hour_mapping = "two_slots_per_hour"
+attack_regeneration = "fixed_per_data_seed"
+latent_width = "100"
+latent_placement = "distinct_projection"
+lstm_input = "48_steps_1_feature"
+decoder_schedule = "first_latent_then_zero"
+decoder_state = "top_state_only"
+attention_merge = "additive_concat"
+vae_loss_reduction = "sum_squared_plus_kl"
+vae_score = "prob_learned_var_mc100"
+threshold_rule = "printed_constant"
+threshold_scope = "iset_transferred"
+validation_labels = "b1_generated_attacks"
+table_v_identity = "retrain_per_attack"
+table_v_size = "full_heldout"
+multiclass_labels = "benign_plus_six_attacks"
+arima_completion = "p1_profile_likelihood"
+svm_training = "full_data"
+supervised_head = "softmax2_categorical"
+dense_dropout_scope = "all_hidden_layers"
+lstm_dropout_placement = "input_only"
+
+[anchor_overrides.sgcc_supervised_lstm]
+supervised_head = "sigmoid1_binary"
+
+[anchor_overrides.iset_supervised_lstm]
+supervised_head = "sigmoid1_binary"
+
+[anchor_overrides.sgcc_lstm_sae]
+latent_placement = "existing_bottleneck_representation"
+
+[anchor_overrides.iset_lstm_sae]
+latent_placement = "existing_bottleneck_representation"
+
+[anchor_overrides.sgcc_lstm_aea]
+latent_placement = "existing_bottleneck_representation"
+
+[anchor_overrides.iset_lstm_aea]
+latent_placement = "existing_bottleneck_representation"
+
+[promotion]
+reported_auc_margin = 0.20
+borderline_margin = 0.05
+printed_anchor_bypasses_screen_rejection = true
+corrected_control_bypasses_screen_rejection = true
+rule = "Promote an interpretive branch if any of three screening seeds reaches reported_point_auc_lower_bound minus 0.20; branches within 0.05 below rerun a 10-epoch screen before rejection."
+
+[reported_roc_targets.sgcc_fc_sae]
+dr = 0.83
+fa = 0.14
+
+[reported_roc_targets.sgcc_lstm_sae]
+dr = 0.86
+fa = 0.12
+
+[reported_roc_targets.sgcc_fc_vae]
+dr = 0.90
+fa = 0.09
+
+[reported_roc_targets.sgcc_lstm_vae]
+dr = 0.93
+fa = 0.06
+
+[reported_roc_targets.sgcc_lstm_aea]
+dr = 0.96
+fa = 0.04
+
+[reported_roc_targets.sgcc_naive_bayes]
+dr = 0.75
+fa = 0.16
+
+[reported_roc_targets.sgcc_arima]
+dr = 0.88
+fa = 0.10
+
+[reported_roc_targets.sgcc_one_class_svm]
+dr = 0.91
+fa = 0.085
+
+[reported_roc_targets.sgcc_supervised_feed_forward]
+dr = 0.91
+fa = 0.095
+
+[reported_roc_targets.sgcc_supervised_lstm]
+dr = 0.915
+fa = 0.09
+
+[reported_roc_targets.sgcc_multiclass_svm]
+dr = 0.92
+fa = 0.075
+
+[reported_roc_targets.iset_fc_sae]
+dr = 0.81
+fa = 0.15
+
+[reported_roc_targets.iset_lstm_sae]
+dr = 0.85
+fa = 0.13
+
+[reported_roc_targets.iset_fc_vae]
+dr = 0.88
+fa = 0.11
+
+[reported_roc_targets.iset_lstm_vae]
+dr = 0.91
+fa = 0.07
+
+[reported_roc_targets.iset_lstm_aea]
+dr = 0.94
+fa = 0.05
+
+[reported_roc_targets.iset_naive_bayes]
+dr = 0.73
+fa = 0.18
+
+[reported_roc_targets.iset_arima]
+dr = 0.86
+fa = 0.12
+
+[reported_roc_targets.iset_one_class_svm]
+dr = 0.90
+fa = 0.09
+
+[reported_roc_targets.iset_supervised_feed_forward]
+dr = 0.90
+fa = 0.11
+
+[reported_roc_targets.iset_supervised_lstm]
+dr = 0.905
+fa = 0.10
+
+[reported_roc_targets.iset_multiclass_svm]
+dr = 0.91
+fa = 0.08
+
+[dimensions.sgcc_representation]
+source = "Sec. II-A versus Sec. III-A"
+options = ["full_1034", "windows_48_nonoverlap", "windows_48_rolling", "first_48", "last_48", "binned_mean_48"]
+
+[dimensions.sgcc_missing]
+source = "omitted"
+options = ["drop_incomplete", "zero_fill", "interpolate_edge_median", "customer_mean"]
+
+[dimensions.iset_day]
+source = "Sec. II-B; 48-value day"
+options = ["complete_1_48", "trim_extra", "aggregate_duplicate_slots", "interpolate_grid"]
+
+[dimensions.iset_meter_population]
+source = "around 3000 versus allocation Code=1"
+options = ["all_4225", "seeded_3000"]
+
+[dimensions.attack_population]
+source = "Sec. II-B all customers versus Sec. II-C unseen test customers"
+options = ["all_customer_m", "heldout_b2_m"]
+
+[dimensions.split_unit]
+source = "Sec. II-C rows/profiles/customers"
+options = ["customer_disjoint", "row_random"]
+
+[dimensions.scaling]
+source = "Sec. II-C normalize both classes"
+options = ["joint_featurewise", "per_class_featurewise", "per_profile"]
+
+[dimensions.validation_policy]
+source = "Secs. III-E and IV-B"
+options = ["none_fixed_epochs", "holdout_no_refit", "crossval_refit_b1", "holdout_refit_b1"]
+
+[dimensions.anomaly_adasyn]
+source = "Sec. II-C"
+options = ["test_set_as_printed"]
+
+[dimensions.supervised_adasyn]
+source = "Sec. II-C"
+options = ["before_row_split", "customer_split_then_train_only"]
+
+[dimensions.adasyn_neighbors]
+source = "omitted"
+options = ["3", "5", "10"]
+
+[dimensions.attack1_scope]
+source = "Eq. 1"
+options = ["per_profile", "per_customer_matrix", "per_generated_dataset"]
+
+[dimensions.attack2_granularity]
+source = "Eq. 2"
+options = ["per_half_hour", "per_hour_pair"]
+
+[dimensions.attack3_interval]
+source = "Eq. 3; subtraction is non-executable"
+options = ["valid_fit_addition", "printed_start_truncate", "printed_start_wrap"]
+
+[dimensions.attack_hour_mapping]
+source = "hourly equations versus 48 half-hours"
+options = ["two_slots_per_hour", "direct_48_index"]
+
+[dimensions.attack_regeneration]
+source = "randomness lifecycle omitted"
+options = ["fixed_per_data_seed", "per_model_seed", "per_experiment"]
+
+[dimensions.latent_width]
+source = "Figs. 3-5 show a separate latent layer/distribution but its width is omitted"
+options = ["2", "8", "16", "32", "48", "100"]
+
+[dimensions.latent_placement]
+source = "Figs./prose depict a latent layer while Algorithms 2/5 directly reuse the terminal state or attention context"
+options = ["distinct_projection", "existing_bottleneck_representation"]
+
+[dimensions.lstm_input]
+source = "48-neuron time series wording"
+options = ["48_steps_1_feature", "1_step_48_features"]
+
+[dimensions.decoder_schedule]
+source = "Algorithms 2, 4, and 5"
+options = ["repeat_latent", "first_latent_then_zero", "autoregressive_reconstruction"]
+
+[dimensions.decoder_state]
+source = "decoder initialization wording"
+options = ["mirrored_layer_states", "top_state_only"]
+
+[dimensions.attention_merge]
+source = "Sec. III-C and Algorithm 5"
+options = ["additive_concat", "literal_sum"]
+
+[dimensions.vae_loss_reduction]
+source = "Eq. 10"
+options = ["sum_squared_plus_kl", "mean_mse_plus_kl"]
+
+[dimensions.vae_score]
+source = "Sec. III-B versus Sec. III-C"
+options = [
+  "prob_learned_var_mc1",
+  "prob_learned_var_mc10",
+  "prob_learned_var_mc100",
+  "prob_fixed_var_mc1",
+  "prob_fixed_var_mc10",
+  "prob_fixed_var_mc100",
+  "reconstruction_mse_high",
+  "mse_plus_kl_high",
+]
+
+[dimensions.threshold_rule]
+source = "Secs. III-D and IV-B"
+options = ["printed_constant", "roc_central_threshold_median", "threshold_iqr_midpoint", "threshold_iqr_median"]
+
+[dimensions.threshold_scope]
+source = "Sec. IV-B derives on ISET; SGCC derivation is unstated"
+options = ["iset_transferred", "dataset_specific"]
+
+[dimensions.validation_labels]
+source = "benign XTR versus ROC/DR validation"
+options = ["b1_generated_attacks", "b2_validation_carveout", "printed_threshold_no_derivation"]
+
+[[incompatible_pairs]]
+left_dimension = "threshold_rule"
+left_value = "roc_central_threshold_median"
+right_dimension = "validation_labels"
+right_value = "printed_threshold_no_derivation"
+reason = "A ROC-derived threshold requires labeled benign and malicious validation scores."
+
+[[incompatible_pairs]]
+left_dimension = "threshold_rule"
+left_value = "threshold_iqr_midpoint"
+right_dimension = "validation_labels"
+right_value = "printed_threshold_no_derivation"
+reason = "A ROC-derived threshold requires labeled benign and malicious validation scores."
+
+[[incompatible_pairs]]
+left_dimension = "threshold_rule"
+left_value = "threshold_iqr_median"
+right_dimension = "validation_labels"
+right_value = "printed_threshold_no_derivation"
+reason = "A ROC-derived threshold requires labeled benign and malicious validation scores."
+
+[[incompatible_pairs]]
+left_dimension = "threshold_rule"
+left_value = "printed_constant"
+right_dimension = "threshold_scope"
+right_value = "dataset_specific"
+reason = "The paper supplies only the ISET-derived constants; no separate SGCC constants exist."
+
+[dimensions.table_v_identity]
+source = "Sec. IV-D multiple experiments and varying FA"
+options = ["common_model_common_benign", "retrain_per_attack", "resplit_per_attack", "retrain_and_resplit"]
+
+[dimensions.table_v_size]
+source = "omitted"
+options = ["full_heldout", "seeded_3000"]
+
+[dimensions.multiclass_labels]
+source = "Sec. IV-A"
+options = ["binary", "benign_plus_six_attacks"]
+
+[dimensions.arima_completion]
+source = "Sec. IV-C"
+options = [
+  "p0_pooled_mse", "p1_pooled_mse", "p2_pooled_mse", "p5_pooled_mse",
+  "p0_profile_mse", "p1_profile_mse", "p2_profile_mse", "p5_profile_mse",
+  "p0_pooled_likelihood", "p1_pooled_likelihood", "p2_pooled_likelihood", "p5_pooled_likelihood",
+  "p0_profile_likelihood", "p1_profile_likelihood", "p2_profile_likelihood", "p5_profile_likelihood",
+]
+
+[dimensions.svm_training]
+source = "full data implied; caps omitted"
+options = ["full_data", "resource_cap_diagnostic"]
+
+[dimensions.supervised_head]
+source = "output/loss/decision omitted"
+options = ["softmax2_categorical", "sigmoid1_binary"]
+
+[dimensions.dense_dropout_scope]
+source = "Table I gives D but not the Dense-layer placement"
+options = ["all_hidden_layers", "encoder_hidden_layers", "bottleneck_only"]
+
+[dimensions.lstm_dropout_placement]
+source = "Table I gives D but not whether it is input or recurrent dropout"
+options = ["input_only", "recurrent_only", "split_input_recurrent"]
+
+[coverage]
+required_ambiguity_ids = [
+  "A01", "A02", "A03", "A04", "A05", "A06", "A07", "A08", "A09",
+  "A10", "A11", "A12", "A13", "A14", "A15", "A16", "A17", "A18",
+  "A19", "A20", "A21", "A22", "A23", "A24", "A25", "A26", "A27",
+  "A28", "A29", "A30", "A31", "A32", "A33", "A34", "A35", "A36",
+]
+
+[coverage_items]
+A01 = ["dimension:sgcc_representation"]
+A02 = ["dimension:sgcc_missing"]
+A03 = ["dimension:iset_meter_population"]
+A04 = ["dimension:iset_day"]
+A05 = ["dimension:split_unit"]
+A06 = ["dimension:attack_population"]
+A07 = ["dimension:scaling"]
+A08 = ["dimension:adasyn_neighbors", "locked:requirements-lock.txt", "global:model_seeds"]
+A09 = ["dimension:validation_labels"]
+A10 = ["dimension:threshold_rule", "non_executable:threshold_median_of_iqr_of_roc"]
+A11 = ["dimension:vae_score"]
+A12 = ["dimension:latent_width"]
+A13 = ["fixed:full_printed_hidden_layer_mirror", "dimension:latent_placement", "dimension:latent_width"]
+A14 = ["dimension:decoder_schedule", "dimension:decoder_state"]
+A15 = ["dimension:attention_merge", "fixed:previous_decoder_state_query"]
+A16 = ["dimension:attack1_scope"]
+A17 = ["dimension:attack3_interval", "non_executable:attack3_printed_subtraction"]
+A18 = ["global:hyperparameter_envelope"]
+A19 = ["dimension:dense_dropout_scope", "dimension:lstm_dropout_placement"]
+A20 = ["global:model_seeds"]
+A21 = ["dimension:arima_completion"]
+A22 = ["non_executable:svm_literal_kernel_gamma_reversal"]
+A23 = ["dimension:table_v_identity"]
+A24 = ["recording:fit_and_end_to_end_wall_time"]
+A25 = ["dimension:threshold_rule", "dimension:threshold_scope"]
+A26 = ["dimension:supervised_head", "dimension:multiclass_labels"]
+A27 = ["dimension:iset_meter_population"]
+A28 = ["dimension:multiclass_labels"]
+A29 = ["dimension:table_v_size"]
+A30 = ["dimension:attack3_interval", "non_executable:attack3_printed_subtraction"]
+A31 = ["dimension:vae_loss_reduction"]
+A32 = ["dimension:attack_population"]
+A33 = ["dimension:validation_policy"]
+A34 = ["dimension:lstm_input"]
+A35 = ["dimension:table_v_identity"]
+A36 = ["global:paper_hyperparameter_search"]
+
+[corrected_defaults]
+split = "customer_disjoint_train_validation_test"
+imputation = "train_derived"
+scaling = "train_benign_only"
+anomaly_resampling = "none"
+supervised_resampling = "training_only"
+threshold_selection = "validation_only_frozen"
+model_selection = "validation_selected_epochs_no_test_access"
+test_policy = "untouched"
+uncertainty = "seed_distribution_and_customer_cluster_bootstrap"
+
+[corrected_dataset_defaults.sgcc]
+representation = "chronological_48_day_windows"
+
+[corrected_dataset_defaults.iset]
+representation = "calendar_aware_48_slot_days_all_eligible_meters"
+attack_generation = "partition_local_frozen_attack_seeds"
+
+[corrected_model_defaults.fc_sae]
+score = "reconstruction_mse"
+
+[corrected_model_defaults.lstm_sae]
+score = "reconstruction_mse"
+
+[corrected_model_defaults.fc_vae]
+score = "monte_carlo_gaussian_reconstruction_probability_learned_variance_mc100"
+
+[corrected_model_defaults.lstm_vae]
+score = "monte_carlo_gaussian_reconstruction_probability_learned_variance_mc100"
+
+[corrected_model_defaults.lstm_aea]
+score = "reconstruction_mse"
+
+[corrected_model_defaults.arima]
+score = "pooled_p1_gaussian_residual_negative_log_likelihood"
+
+[corrected_model_defaults.one_class_svm]
+score = "negative_decision_function"
+
+[corrected_model_defaults.naive_bayes]
+score = "positive_class_probability"
+
+[corrected_model_defaults.multiclass_svm]
+score = "non_benign_decision_margin"
+
+[corrected_model_defaults.supervised_feed_forward]
+score = "binary_network_probability"
+
+[corrected_model_defaults.supervised_lstm]
+score = "binary_network_probability"
+
+[[families]]
+id = "sgcc_fc_sae"
+dataset = "sgcc"
+model = "fc_sae"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "latent_width", "latent_placement", "dense_dropout_scope", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 1.0
+full_minutes = 30.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_lstm_sae"
+dataset = "sgcc"
+model = "lstm_sae"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "latent_width", "latent_placement", "lstm_input", "decoder_schedule", "decoder_state", "lstm_dropout_placement", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 6.0
+full_minutes = 425.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_fc_vae"
+dataset = "sgcc"
+model = "fc_vae"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "latent_width", "dense_dropout_scope", "vae_loss_reduction", "vae_score", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 2.0
+full_minutes = 60.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_lstm_vae"
+dataset = "sgcc"
+model = "lstm_vae"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "latent_width", "lstm_input", "decoder_schedule", "decoder_state", "vae_loss_reduction", "vae_score", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 3.0
+full_minutes = 60.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_lstm_aea"
+dataset = "sgcc"
+model = "lstm_aea"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "latent_width", "latent_placement", "lstm_input", "decoder_schedule", "decoder_state", "attention_merge", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 10.0
+full_minutes = 720.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_arima"
+dataset = "sgcc"
+model = "arima"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "anomaly_adasyn", "adasyn_neighbors", "arima_completion", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 2.0
+full_minutes = 30.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_one_class_svm"
+dataset = "sgcc"
+model = "one_class_svm"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "anomaly_adasyn", "adasyn_neighbors", "svm_training", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 4.0
+full_minutes = 90.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_naive_bayes"
+dataset = "sgcc"
+model = "naive_bayes"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors"]
+screen_minutes = 0.5
+full_minutes = 2.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_multiclass_svm"
+dataset = "sgcc"
+model = "multiclass_svm"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors", "svm_training"]
+screen_minutes = 4.0
+full_minutes = 120.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_supervised_feed_forward"
+dataset = "sgcc"
+model = "supervised_feed_forward"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors", "supervised_head"]
+screen_minutes = 1.0
+full_minutes = 30.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "sgcc_supervised_lstm"
+dataset = "sgcc"
+model = "supervised_lstm"
+tables = ["II"]
+dimensions = ["sgcc_representation", "sgcc_missing", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors", "supervised_head", "lstm_input", "lstm_dropout_placement"]
+screen_minutes = 8.0
+full_minutes = 610.0
+gpus = 4
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_fc_sae"
+dataset = "iset"
+model = "fc_sae"
+tables = ["III", "IV", "V"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "latent_width", "latent_placement", "dense_dropout_scope", "threshold_rule", "threshold_scope", "validation_labels", "table_v_identity", "table_v_size"]
+screen_minutes = 2.0
+full_minutes = 20.0
+gpus = 1
+full_table_multiplier = 10
+corrected_table_multiplier = 4
+
+[[families]]
+id = "iset_lstm_sae"
+dataset = "iset"
+model = "lstm_sae"
+tables = ["III", "IV", "V"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "latent_width", "latent_placement", "lstm_input", "decoder_schedule", "decoder_state", "lstm_dropout_placement", "threshold_rule", "threshold_scope", "validation_labels", "table_v_identity", "table_v_size"]
+screen_minutes = 8.0
+full_minutes = 180.0
+gpus = 4
+full_table_multiplier = 10
+corrected_table_multiplier = 4
+
+[[families]]
+id = "iset_fc_vae"
+dataset = "iset"
+model = "fc_vae"
+tables = ["III", "IV", "V"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "latent_width", "dense_dropout_scope", "vae_loss_reduction", "vae_score", "threshold_rule", "threshold_scope", "validation_labels", "table_v_identity", "table_v_size"]
+screen_minutes = 2.0
+full_minutes = 15.0
+gpus = 1
+full_table_multiplier = 10
+corrected_table_multiplier = 4
+
+[[families]]
+id = "iset_lstm_vae"
+dataset = "iset"
+model = "lstm_vae"
+tables = ["III", "IV", "V"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "latent_width", "lstm_input", "decoder_schedule", "decoder_state", "vae_loss_reduction", "vae_score", "threshold_rule", "threshold_scope", "validation_labels", "table_v_identity", "table_v_size"]
+screen_minutes = 8.0
+full_minutes = 190.0
+gpus = 4
+full_table_multiplier = 10
+corrected_table_multiplier = 4
+
+[[families]]
+id = "iset_lstm_aea"
+dataset = "iset"
+model = "lstm_aea"
+tables = ["III", "IV", "V"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "latent_width", "latent_placement", "lstm_input", "decoder_schedule", "decoder_state", "attention_merge", "threshold_rule", "threshold_scope", "validation_labels", "table_v_identity", "table_v_size"]
+screen_minutes = 10.0
+full_minutes = 210.0
+gpus = 4
+full_table_multiplier = 10
+corrected_table_multiplier = 4
+
+[[families]]
+id = "iset_arima"
+dataset = "iset"
+model = "arima"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "arima_completion", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 4.0
+full_minutes = 180.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_one_class_svm"
+dataset = "iset"
+model = "one_class_svm"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "anomaly_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "svm_training", "threshold_rule", "threshold_scope", "validation_labels"]
+screen_minutes = 8.0
+full_minutes = 360.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_naive_bayes"
+dataset = "iset"
+model = "naive_bayes"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration"]
+screen_minutes = 1.0
+full_minutes = 10.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_multiclass_svm"
+dataset = "iset"
+model = "multiclass_svm"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "supervised_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "multiclass_labels", "svm_training"]
+screen_minutes = 8.0
+full_minutes = 360.0
+gpus = 0
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_supervised_feed_forward"
+dataset = "iset"
+model = "supervised_feed_forward"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "supervised_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "supervised_head"]
+screen_minutes = 2.0
+full_minutes = 60.0
+gpus = 1
+full_table_multiplier = 1
+
+[[families]]
+id = "iset_supervised_lstm"
+dataset = "iset"
+model = "supervised_lstm"
+tables = ["III"]
+dimensions = ["iset_day", "iset_meter_population", "attack_population", "split_unit", "scaling", "validation_policy", "supervised_adasyn", "adasyn_neighbors", "attack1_scope", "attack2_granularity", "attack3_interval", "attack_hour_mapping", "attack_regeneration", "supervised_head", "lstm_input", "lstm_dropout_placement"]
+screen_minutes = 8.0
+full_minutes = 240.0
+gpus = 4
+full_table_multiplier = 1
+
+[[non_executable]]
+id = "attack3_printed_subtraction"
+source = "Eq. 3"
+reason = "tf = ti - tl places the final point before the initial point for positive lengths"
+repairs = ["valid_fit_addition", "printed_start_truncate", "printed_start_wrap"]
+
+[[non_executable]]
+id = "threshold_median_of_iqr_of_roc"
+source = "Secs. III-D and IV-B"
+reason = "ROC curve coordinates do not define a unique scalar threshold IQR operation"
+repairs = ["printed_constant", "roc_central_threshold_median", "threshold_iqr_midpoint", "threshold_iqr_median"]
+
+[[non_executable]]
+id = "svm_literal_kernel_gamma_reversal"
+source = "Sec. IV-C"
+reason = "kernel=scale and gamma=sigmoid is not a valid SVM API configuration"
+repairs = ["kernel_sigmoid_gamma_scale"]
+
+[[exclusions]]
+id = "full_semantic_cartesian_product"
+reason = "Arbitrary higher-order combinations are not distinct textual interpretations. Every option and every allowed option pair is covered; coupled blocks are fully crossed and promoted branches receive full treatment."
+
+[[exclusions]]
+id = "test_label_selected_threshold_as_paper_consistent"
+reason = "The paper explicitly says its test set differs from validation; test-label selection is retained only as an X-track leakage mechanism demonstration."
+
+[[exclusions]]
+id = "dot_product_attention_as_paper_consistent"
+reason = "The paper explicitly describes Gamma as a jointly trained feed-forward neural network; dot attention may be a corrected or X-track control only."
+
+[[exclusions]]
+id = "undocumented_dataset_subsets"
+reason = "No finite text-grounded enumeration exists beyond all Code=1 meters and repeated deterministic approximately-3000 subsets."
+
+[[exclusions]]
+id = "unbounded_backend_version_cartesian"
+reason = "The paper names Keras but gives no version or backend. The reproduction uses one locked Keras-compatible semantic implementation; version/backend perturbations are X-track sensitivities unless they change a paper-specified graph operation."
+
+[[exclusions]]
+id = "full_per_layer_width_cartesian_search"
+reason = "Algorithm 6 explicitly uses a sequential search to avoid exhaustive search. The literal scalar-width and per-layer coordinate interpretations are retained; a 5^L width-vector Cartesian search is not the printed algorithm."

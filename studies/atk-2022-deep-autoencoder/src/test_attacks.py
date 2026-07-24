@@ -4,7 +4,7 @@ import unittest
 
 import numpy as np
 
-from attacks import generate_all_attacks
+from attacks import generate_all_attacks, generate_attack
 
 
 class AttackTests(unittest.TestCase):
@@ -31,7 +31,55 @@ class AttackTests(unittest.TestCase):
         self.assertTrue(np.all(self.attacks[4] == np.mean(self.profile)))
         np.testing.assert_array_equal(self.attacks[6], self.profile[::-1])
 
+    def test_attack_one_accepts_frozen_scope_factor(self) -> None:
+        first = generate_attack(
+            self.profile,
+            1,
+            np.random.default_rng(1),
+            attack1_factor=0.25,
+        )
+        second = generate_attack(
+            self.profile * 2,
+            1,
+            np.random.default_rng(999),
+            attack1_factor=0.25,
+        )
+        np.testing.assert_allclose(first, self.profile * 0.25)
+        np.testing.assert_allclose(second, self.profile * 0.50)
+
+    def test_attack_two_hour_pair_reuses_each_draw(self) -> None:
+        attacked = generate_attack(
+            self.profile,
+            2,
+            np.random.default_rng(7),
+            attack2_granularity="per_hour_pair",
+        )
+        factors = attacked / self.profile
+        np.testing.assert_allclose(factors[0::2], factors[1::2])
+        self.assertGreater(np.unique(factors).size, 1)
+
+    def test_attack_three_repairs_and_hour_mappings_are_bounded(self) -> None:
+        for interval in (
+            "valid_fit_addition",
+            "printed_start_truncate",
+            "printed_start_wrap",
+        ):
+            for mapping, lower, upper in (
+                ("two_slots_per_hour", 8, 48),
+                ("direct_48_index", 4, 24),
+            ):
+                with self.subTest(interval=interval, mapping=mapping):
+                    attacked = generate_attack(
+                        self.profile,
+                        3,
+                        np.random.default_rng(13),
+                        attack3_interval=interval,
+                        attack_hour_mapping=mapping,
+                    )
+                    zero_count = int(np.count_nonzero(attacked == 0.0))
+                    self.assertGreaterEqual(zero_count, lower)
+                    self.assertLessEqual(zero_count, upper)
+
 
 if __name__ == "__main__":
     unittest.main()
-

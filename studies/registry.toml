@@ -1,14 +1,63 @@
-schema_version = 1
+schema_version = 2
+
+# Verdict vocabulary. A verdict is assigned only when the listed evidentiary bar
+# is met; it is never inferred from suspicion or from a failure to reproduce.
+#
+#   not-attempted            no work started
+#   in-progress              work under way, no verdict issued
+#   reproduced               the complete reported result pattern was recovered
+#   partially-reproduced     some reported results recovered, others not
+#   not-reproduced           not recovered within the finite tested space; this
+#                            is bounded by that space and is NOT a claim that
+#                            reproduction is impossible
+#   internally-inconsistent  the reported numbers contradict each other or the
+#                            paper's own stated protocol, independent of any
+#                            implementation
+#   unattainable-as-printed  stronger: no valid confusion matrix (or equivalent
+#                            construction) on the described protocol yields the
+#                            printed numbers, AND the deviation is systematic
+#                            rather than consistent with rounding or isolated
+#                            transcription error
+#   no-consistent-protocol   strongest rung. An exhaustive, pre-registered search
+#                            over measurement protocols -- any test-set size, any
+#                            class prevalence, and the common metric-definition
+#                            variants -- finds NO single protocol that reproduces
+#                            the reported table, and most individual cells are
+#                            unreachable under every protocol searched. The
+#                            likelihood of the table under "these were measured"
+#                            is then zero rather than small, for the whole
+#                            searched space. This is a statement about the
+#                            artefact. It does not distinguish deliberate
+#                            fabrication from catastrophic process failure (for
+#                            example placeholder values never replaced); that
+#                            distinction needs evidence outside the paper, and
+#                            this project does not assert it.
 
 [[studies]]
 id = "atk-2022-deep-autoencoder"
 sequence = 1
-status = "contract-draft"
+status = "in-progress"
+verdict = "in-progress"
 primary = true
 title = "Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids"
 authors = ["Abdulrahman Takiddin", "Mohamed Ismail", "Usman Zafar", "Erchin Serpedin"]
+venue = "IEEE Systems Journal 16(3), 4106-4117"
 year = 2022
 doi = "10.1109/JSYST.2021.3136683"
 path = "studies/atk-2022-deep-autoencoder"
 report_path = "reports/atk-2022-deep-autoencoder"
+page = "site/papers/atk-2022-deep-autoencoder/index.html"
 
+[[studies]]
+id = "tlstgt-2025-water"
+sequence = 2
+status = "verdict-issued"
+verdict = "no-consistent-protocol"
+primary = false
+title = "Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems"
+authors = ["Md Rakibul Ahasan", "Faaiz Joad", "Rachad Atat", "Coleman Thompson", "Erchin Serpedin", "Abdulrahman Takiddin"]
+venue = "EUSIPCO"
+year = 2025
+path = "studies/tlstgt-2025-water"
+report_path = "reports/tlstgt-2025-water"
+page = "site/papers/tlstgt-2025-water/index.html"

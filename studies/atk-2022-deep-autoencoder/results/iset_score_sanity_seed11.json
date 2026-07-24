@@ -1,0 +1,102 @@
+{
+  "aligned_score_similarities": [],
+  "dataset": "iset",
+  "interpretation_limits": [
+    "The oracle threshold uses test labels and is diagnostic only.",
+    "Original-only rows are diagnostic; the paper-primary branch includes test-set ADASYN rows.",
+    "These are exploratory results, not a confirmatory paper-level verdict."
+  ],
+  "schema_version": 1,
+  "score_records": [
+    {
+      "attempt_id": "20260723T154212.124442Z-97974bcd8ff3",
+      "execution_branch": "panther_single_gpu",
+      "fixed_threshold_metrics": {
+        "auc": 0.425887931312385,
+        "balanced_accuracy": 0.42689841747951823,
+        "dr": 0.22504953796386204,
+        "f1": 0.2838054517049578,
+        "fa": 0.3712527030048256,
+        "fn": 3490862,
+        "fp": 1625687,
+        "n": 8883549,
+        "negatives": 4378923,
+        "positive_if": "higher",
+        "positives": 4504626,
+        "precision": 0.3840813866216876,
+        "sp": 0.6287472969951744,
+        "threshold": 0.58,
+        "tn": 2753236,
+        "tp": 1013764
+      },
+      "input_energy_diagnostic": {
+        "correlation": 0.9994548537700325,
+        "definition": "mean(square(standardized_input))",
+        "mean_absolute_difference": 0.07753713727239964
+      },
+      "model": "fc_sae",
+      "score": "reconstruction_mse",
+      "seed": 11,
+      "subsets": {
+        "original_rows_only_diagnostic": {
+          "auc": 0.3436478846607366,
+          "cohen_d": -0.25107440714226537,
+          "ks_statistic": 0.2872111913397472,
+          "n": 5255397,
+          "negative_mean": 1.332381875491345,
+          "negative_n": 750771,
+          "negative_quantiles_10_50_90": [
+            0.17850296199321747,
+            0.5887075662612915,
+            3.0408053398132324
+          ],
+          "oracle_test_balanced_accuracy": 0.5000073258024085,
+          "oracle_test_threshold": 0.012864841148257256,
+          "positive_mean": 0.7478683644251636,
+          "positive_n": 4504626,
+          "positive_quantiles_10_50_90": [
+            0.10585837811231613,
+            0.33886009454727173,
+            1.5196621417999268
+          ],
+          "reversed_auc": 0.6563521153392634,
+          "reversed_oracle_test_balanced_accuracy": 0.6436055956698736,
+          "reversed_oracle_test_threshold_on_negated_score": -0.5325800180435181
+        },
+        "paper_primary_all_rows": {
+          "auc": 0.425887931312385,
+          "cohen_d": -0.07518709717459635,
+          "ks_statistic": 0.15435983455633961,
+          "n": 8883549,
+          "negative_mean": 0.9196153379945788,
+          "negative_n": 4378923,
+          "negative_quantiles_10_50_90": [
+            0.15111011862754822,
+            0.40158045291900635,
+            2.0695761203765874
+          ],
+          "oracle_test_balanced_accuracy": 0.5008330947159322,
+          "oracle_test_threshold": 6.761172294616699,
+          "positive_mean": 0.7478683644251636,
+          "positive_n": 4504626,
+          "positive_quantiles_10_50_90": [
+            0.10585837811231613,
+            0.33886009454727173,
+            1.5196621417999268
+          ],
+          "reversed_auc": 0.574112068687615,
+          "reversed_oracle_test_balanced_accuracy": 0.5771799172781698,
+          "reversed_oracle_test_threshold_on_negated_score": -0.5325120091438293
+        }
+      }
+    }
+  ],
+  "selected_attempt_count": 1,
+  "standardized_anomaly_test_input": {
+    "maximum": 31.917579650878906,
+    "minimum": -0.8662779927253723,
+    "negative_fraction": 0.7057850345059165
+  },
+  "study": "atk-2022-deep-autoencoder",
+  "track": "exploratory_paper_literal_score_sanity"
+}

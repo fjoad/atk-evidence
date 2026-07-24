@@ -1,0 +1,33 @@
+{
+  "status": "OBSERVED_PRETRAINING_SANITY",
+  "method": "P0-ISET-FCSAE",
+  "eligibility": "static full-data diagnostic; not a trained-model result",
+  "source": {
+    "source_rows": 157992996,
+    "residential_readings": 108678770,
+    "residential_meters": 4225,
+    "strict_48_slot_profiles": 2251290,
+    "base_profile_extraction_seconds": 71.36854266599403,
+    "benign_raw_sha256": "84242d77611eae988f649b98dfe96b014175e6cf69e03fb0b5c1264e9db98fd3"
+  },
+  "printed_path_counts_before_adasyn": {
+    "B1_profiles": 1500520,
+    "B1_scalar_readings": 72024960,
+    "B2_profiles": 750770,
+    "all_customer_six_attack_profiles": 13507740,
+    "test_original_profiles": 14258510
+  },
+  "diagnostic_sample": {
+    "seed": 11,
+    "benign_rows": 200000,
+    "malicious_rows": 200000,
+    "fraction_of_standardized_values_below_zero": 0.6528969791666667,
+    "zero_reconstruction_score_benign_median": 0.9397149085998535,
+    "zero_reconstruction_score_malicious_median": 0.3590201139450073,
+    "zero_reconstruction_auc_higher_is_attack_percent": 29.432556702499994,
+    "benign_above_paper_threshold_percent": 62.641000000000005,
+    "malicious_above_paper_threshold_percent": 28.8085
+  },
+  "interpretation": "The paper-selected Softmax decoder cannot reconstruct negative standardized targets. Before training, input energy is strongly ordered opposite to the paper's higher-MSE-is-attack rule. This predicts but does not establish the trained FC-SAE result.",
+  "table_iv_note": "Using all B1 profiles yields 72.025 million scalar readings, not the reported 60 million. The historical 15 percent validation carve-out produced approximately 61.2 million but is not stated by the paper and remains an interpretation branch."
+}

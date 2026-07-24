@@ -1,6 +1,6 @@
 # ATK Evidence — Vision
 
-**Last updated:** 2026-07-21
+**Last updated:** 2026-07-23
 
 ## Thesis
 
@@ -49,11 +49,25 @@ increasingly implausible, never a claim of logical impossibility.
 The **paper-literal track is primary**. It implements only what the paper says.
 It must not silently repair questionable preprocessing, change the evaluation,
 parameter-match architectures, or substitute a different dataset. When the
-paper is ambiguous, each reasonable interpretation is labeled and justified.
+paper is ambiguous, every materially defensible interpretation is labeled,
+justified, and executed within a frozen finite branch lattice. No favored
+interpretation may stand in for the family.
 
-A separate **controlled-analysis track** may later test corrected methodology
-or causal architectural questions. Its results must never be presented as the
-paper-literal reproduction.
+**Operational goal, stated plainly:** reproduce the paper's reported numbers by
+executing the methodology exactly as the paper describes it — nothing more,
+nothing less. Every stated procedure is retained, including statistically
+improper ones. Every omission is filled with a documented, sensible
+author-intent assumption chosen before outcomes are seen. The question each
+experiment answers is always: do the published numbers emerge when the
+described procedure is executed faithfully?
+
+A separate **controlled-analysis track is required** to test corrected
+methodology and causal architectural questions. Its results must never be
+presented as the paper-literal reproduction. For Paper 1, it is specified and
+frozen alongside the branch family but executed and interpreted separately
+after the paper-consistent reconstruction. It must include leakage-free
+preprocessing, untouched test data, and an honest attempt to exceed the
+paper's reported values on comparable data.
 
 ## Falsification and reproduction criteria
 

@@ -21,6 +21,10 @@ FILES = {
     802: ("File4.txt.zip", "53ec9e70c1610b74ae72417cc010a0c3"),
     803: ("File5.txt.zip", "6f8c7c9dfba3bbfbff0e5f1703e122fc"),
     807: ("File6.txt.zip", "c0a435d0359974f23ce434b5e838e251"),
+    808: (
+        "SME and Residential allocations.tab",
+        "124c10711ab1e7c52cb7317c8f69e42e",
+    ),
 }
 
 

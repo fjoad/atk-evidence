@@ -41,6 +41,38 @@ bash scripts/acquire_sgcc.sh
 - Access: restricted for research/educational use; an ISSDA account and approved request are required.
 - Official manifest and unrestricted documentation: `../../data/raw/cer-issda-docs/`.
 
+### Exact third-party archive candidate
+
+- ScienceDB record: https://doi.org/10.57760/sciencedb.17619
+- Depositor: Zehao Song, Zhejiang University; published 2024-11-28.
+- Record status shown by ScienceDB: public, CC BY 4.0, 26 files,
+  641.40 MB. This license label is the depositor's representation and does not
+  by itself establish that the original ISSDA redistribution conditions were
+  superseded.
+- The deposit exposes `File1.txt.zip` through `File6.txt.zip`. For all six,
+  filename, byte size, and MD5 exactly match the official ISSDA manifest below.
+- Anonymous one-byte range requests succeeded for all six direct download
+  endpoints on 2026-07-21 and returned the expected full object sizes.
+- The deposit includes `SME and Residential allocations.csv` (112,589 bytes,
+  MD5 `89263f89253cf56b857079986ae73096`), not the official
+  `SME and Residential allocations.tab`. The CSV therefore cannot silently
+  satisfy the current seven-file checksum gate even though it may be a faithful
+  format conversion.
+- Local ignored directory: `../../data/raw/cer-sciencedb/`. All six archives
+  were downloaded on 2026-07-21, passed the official size/MD5 checks and ZIP
+  integrity, and received local SHA-256 checksums recorded in
+  `results/cer_sciencedb_acquisition.json`. Do not commit or redistribute the
+  raw files through this repository.
+
+The allocation CSV parses to 6,445 unique meter IDs: 4,225 residential, 485
+SME, and 1,735 other. Its first five semantic columns match a second public CER
+allocation workbook for all 6,445 rows after normalizing workbook zeroes and
+CSV empty cells as blank. A full scan of the six archives found every
+residential and SME ID, no reading without an allocation, and ten absent IDs,
+all `other`. See decision
+`docs/decisions/2026-07-21-cer-sciencedb-semantic-allocation.md` for its explicit
+exploratory admission and limitations.
+
 Restricted consumption archives listed by the official API:
 
 | File | Bytes | Official MD5 |
@@ -52,19 +84,34 @@ Restricted consumption archives listed by the official API:
 | File5.txt.zip | 102,257,883 | `6f8c7c9dfba3bbfbff0e5f1703e122fc` |
 | File6.txt.zip | 147,826,765 | `c0a435d0359974f23ce434b5e838e251` |
 
+The paper limits ISET to residential meters, so the official allocation file is
+also part of the exact input gate:
+
+| File | Bytes | Official MD5 |
+|---|---:|---|
+| SME and Residential allocations.tab | 196,316 | `124c10711ab1e7c52cb7317c8f69e42e` |
+
 Manifest format:
 
-- Three columns: meter ID, five-digit day/time code, and half-hour kWh consumption.
+- Consumption files have three columns: meter ID, five-digit day/time code, and half-hour kWh consumption.
 - Day code occupies digits 1-3; day 1 is 2009-01-01.
 - Time code occupies digits 4-5; values 1-48 represent half-hour intervals.
+- The allocation table maps meter IDs to residential, SME, or other. Without
+  it, the paper's “around 3000 residential units” subset cannot be reconstructed.
+- The official FAQ documents daylight-saving days with slots 49 and 50; the
+  frozen primary branch retains only complete days containing slots 1-48.
 
-No unofficial mirror will be silently substituted for the restricted official files. If an authorized copy is supplied, every archive will be checked against the official MD5 before use.
+No unofficial mirror will be silently substituted for the restricted official
+files. The ScienceDB archives are admitted because they pass the official MD5;
+the CSV is admitted only under the named semantic-equivalence branch and may
+not be reported as the official `.tab`. Every local archive must still pass the
+official MD5 before use.
 
 After an ISSDA access request has been approved, use the token-safe command in
-`docs/GETTING_STARTED.md` and run the authorized downloader:
+`docs/GETTING_STARTED.md` and run the public study downloader:
 
 ```bash
-./.venv/bin/python studies/atk-2022-deep-autoencoder/src/download_cer.py
+.venv/bin/python studies/atk-2022-deep-autoencoder/download_data.py iset
 ```
 
 Whether the files arrive through the script or an institutional browser
@@ -73,3 +120,9 @@ session, verify the complete data gate with:
 ```bash
 ./.venv/bin/python scripts/verify_data.py --strict
 ```
+
+The strict verifier accepts either a complete official `.tab` branch or the
+complete named ScienceDB semantic-allocation branch; it prints which branch is
+ready. The current exploratory ISET cache was generated from the latter and has
+SHA-256
+`ab88f180feafb7351ef4530cba2e48a3cbc180af268f8b68016aefc50b98a987`.
