@@ -74,7 +74,7 @@ def figure_nodes(target: int):
     return sorted(_LABEL_IX[l] for l in FIGURE1_NODES[target])
 
 
-def _build_observed(Xb, rng, block, attack_frac=1.0, delta_scale="raw"):
+def _build_observed(Xb, rng, block, attack_frac=1.0, delta_scale="raw", replay_dt="random"):
     """Alternating normal/attack OPERATIONS (contiguous blocks), ~50/50 overall.
 
     Within an attack block the observed readings are corrupted per eqs 2-4 (so both
@@ -99,7 +99,8 @@ def _build_observed(Xb, rng, block, attack_frac=1.0, delta_scale="raw"):
         end = min(start + block, T)
         if toggle == 1:
             kind = kinds[ki % 3]; ki += 1
-            dt = int(rng.integers(1, WINDOW + 1))
+            # Axis 9: the paper gives no value for the replay offset.
+            dt = int(rng.integers(1, WINDOW + 1)) if replay_dt == "random" else int(replay_dt)
             cols = (np.arange(N) if attack_frac >= 1.0
                     else rng.choice(N, size=max(1, int(round(attack_frac * N))), replace=False))
             for t in range(start, end):
@@ -117,7 +118,7 @@ def _build_observed(Xb, rng, block, attack_frac=1.0, delta_scale="raw"):
 
 
 def make_datasets(node_idx, seed=0, block=60, attack_frac=1.0, delta_scale="raw",
-                  window=None, ablate="none"):
+                  window=None, ablate="none", replay_dt="random"):
     """Build the paper's 50/50 (normal/attack operations) dataset for one graph size.
 
     ``ablate`` destroys one kind of structure to test whether it was ever being
@@ -138,7 +139,7 @@ def make_datasets(node_idx, seed=0, block=60, attack_frac=1.0, delta_scale="raw"
     if ablate == "space":                                # decorrelate sensors
         shift_rng = np.random.default_rng(50_000 + seed)
         Xb = np.column_stack([np.roll(Xb[:, j], int(shift_rng.integers(1, T))) for j in range(N)])
-    Xobs, lab_t = _build_observed(Xb, rng, block, attack_frac, delta_scale)
+    Xobs, lab_t = _build_observed(Xb, rng, block, attack_frac, delta_scale, replay_dt)
 
     # Attack placement stays anchored at the module WINDOW so the schedule is
     # identical across window lengths and runs remain comparable.

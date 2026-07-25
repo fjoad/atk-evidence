@@ -26,7 +26,10 @@ GRAPH = {"tgcn", "stgt"}
 TRIVIAL = ["persist", "zscore"]
 NAME = {"svm":"SVM","rf":"RF","lgbm":"LGBM","ffnn":"FFNN","lstm":"LSTM","ae":"AE",
         "tgcn":"TGCN","stgt":"STGT","persist":"PERSIST*","zscore":"ZSCORE*"}
-ORDER = ["ZSCORE*","PERSIST*","SVM","RF","LGBM","FFNN","LSTM","AE","TGCN","STGT","TL-STGT"]
+# STGT trained from scratch for the same TOTAL epochs the transfer chain uses,
+# so a transfer "gain" cannot be explained by extra training budget alone.
+BUDGET_MATCH_NAME = "STGT-3x*"
+ORDER = ["ZSCORE*","PERSIST*","SVM","RF","LGBM","FFNN","LSTM","AE","TGCN","STGT","STGT-3x*","TL-STGT"]
 REPORTED = {
     "SVM": ([6.1,13.2,26.2],[80.7,78.4,77.7],[3.2,9.3,20.1]),
     "RF": ([17.5,22.7,28.9],[82.4,80.1,76.1],[9.5,12.4,30.1]),
@@ -103,7 +106,7 @@ def _train_view(ds, cfg):
     return ds["train_benign"], ds["target_true"]
 
 
-def eval_deep(name, ds, a, s_list, cfg):
+def eval_deep(name, ds, a, s_list, cfg, epochs=None):
     tr, tgt = _train_view(ds, cfg)
     if name == "ae":
         m = models.train(models.build("ae", cfg["window"], ds["n_nodes"]), tgt[tr], tgt[tr])
@@ -111,32 +114,44 @@ def eval_deep(name, ds, a, s_list, cfg):
     else:
         an = a if name in GRAPH else None
         mdl = models.build(name, cfg["window"], ds["n_nodes"], transformer=cfg["transformer"])
-        m = models.train(mdl, ds["hist"][tr], tgt[tr], an)
+        m = models.train(mdl, ds["hist"][tr], tgt[tr], an,
+                         **({"epochs": epochs} if epochs else {}))
         r = lambda idx: resid_forecaster(m, ds, idx, an)
     return _eval_at(r, ds, s_list, cfg)
 
 
 def run_size(A, size, delta_scale, s_list, seed, cfg):
     idx = data.figure_nodes(size)
-    ds = data.make_datasets(idx, seed=seed, delta_scale=delta_scale,
-                            window=cfg["window"], ablate=cfg["ablate"])
+    ds = data.make_datasets(idx, seed=seed, delta_scale=delta_scale, block=cfg["block"],
+                            window=cfg["window"], ablate=cfg["ablate"],
+                            replay_dt=cfg["replay_dt"])
     a = adjacency(A, idx, cfg["adj"], seed)
     out = {s: {} for s in s_list}
     for k in TRIVIAL:                                   # zero-parameter reference points
         per_s = _eval_at(lambda i, kk=k: resid_trivial(kk, ds, i), ds, s_list, cfg)
         for s in s_list:
             out[s][NAME[k]] = per_s[s]
+    # Axis 10: the paper never states how the shallow models decide. Two readings:
+    # classify the observed reading, or classify a persistence-residual feature.
+    if cfg["shallow"] == "residual":
+        feat = lambda i: ds["target_obs"][i] - ds["hist"][i][:, -1, :]
+    else:
+        feat = lambda i: ds["target_obs"][i]
     for k in ("svm", "rf", "lgbm"):                     # shallow: S-independent
         clf = models.shallow_classifier(k)
-        clf.fit(ds["target_obs"][ds["train"]], ds["labels"][ds["train"]])
+        clf.fit(feat(ds["train"]), ds["labels"][ds["train"]])
         met = detect.evaluate_classifier(ds["labels"][ds["test"]],
-                                         clf.predict(ds["target_obs"][ds["test"]]))
+                                         clf.predict(feat(ds["test"])))
         for s in s_list:
             out[s][NAME[k]] = met
     for k in FORE:
         per_s = eval_deep(k, ds, a, s_list, cfg)
         for s in s_list:
             out[s][NAME[k]] = per_s[s]
+    if cfg.get("tl_budget_match"):
+        per_s = eval_deep("stgt", ds, a, s_list, cfg, epochs=models.EPOCHS * len(SIZES))
+        for s in s_list:
+            out[s][BUDGET_MATCH_NAME] = per_s[s]
     return out
 
 
@@ -144,8 +159,9 @@ def run_tl(A, delta_scale, s_list, seed, cfg):
     res, prev = {s: {} for s in s_list}, None
     for size in SIZES:
         idx = data.figure_nodes(size)
-        ds = data.make_datasets(idx, seed=seed, delta_scale=delta_scale,
-                            window=cfg["window"], ablate=cfg["ablate"])
+        ds = data.make_datasets(idx, seed=seed, delta_scale=delta_scale, block=cfg["block"],
+                            window=cfg["window"], ablate=cfg["ablate"],
+                            replay_dt=cfg["replay_dt"])
         a = adjacency(A, idx, cfg["adj"], seed)
         m = models.build("stgt", cfg["window"], size, transformer=cfg["transformer"])
         if prev is not None:
@@ -203,15 +219,22 @@ def main():
     ap.add_argument("--adj", default="real", choices=["real", "shuffled", "identity"])
     ap.add_argument("--window", type=int, default=data.WINDOW)
     ap.add_argument("--ablate", default="none", choices=["none", "space", "time"])
+    ap.add_argument("--block", type=int, default=60)
+    ap.add_argument("--replay-dt", default="random")
+    ap.add_argument("--shallow", default="reading", choices=["reading", "residual"])
+    ap.add_argument("--tl-budget-match", action="store_true",
+                    help="also train scratch STGT for 3x epochs, matching the TL chain total")
     ap.add_argument("--out", default=None)
     args = ap.parse_args()
 
     cfg = dict(train=args.train, thresh=args.thresh, transformer=args.transformer,
                errfit=args.errfit, adj=args.adj, window=args.window,
-               ablate=args.ablate)
+               ablate=args.ablate, block=args.block, replay_dt=args.replay_dt,
+               shallow=args.shallow, tl_budget_match=args.tl_budget_match)
     tag = (f"delta={args.delta_scale} train={args.train} thr={args.thresh} "
            f"tf={args.transformer} fit={args.errfit} adj={args.adj} "
-           f"W={args.window} ablate={args.ablate} seed={args.seed}")
+           f"W={args.window} ablate={args.ablate} block={args.block} "
+           f"dt={args.replay_dt} shallow={args.shallow} seed={args.seed}")
 
     models.torch.manual_seed(args.seed)      # model init/shuffling; data seed passed separately
     A = data.graph()

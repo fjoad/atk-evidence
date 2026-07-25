@@ -26,23 +26,9 @@
   permission for a local fallback when the compute cluster is temporarily unreachable.
   Results produced locally are ineligible as experimental evidence and must be
   re-run on the compute cluster.
-- The cluster shell currently needs `source /etc/profile.d/modules.sh` followed by
-  `module load slurm`. The observed default umask was `0022`, so every project
-  clone, data transfer, and job uses process-local `umask 0077`.
-- Use at most three simultaneous scheduler jobs and request only 16 GB GPUs;
-  32 GB GPUs are too unreliable to schedule for this project. The cluster's T4 nodes
-  advertise three GPUs each, so a four-T4 request is invalid. For the primary
-  global batch of 512, use four `v100_16GB` GPUs (local batch 128) when
-  available; record GPU type/count and validate the global batch and model
-  procedure remain frozen.
 - The initial one-T4 batch-512 LSTM-SAE/LSTM-VAE OOMs and the cancelled V100
   attempt remain resource evidence. A one-T4 batch-32 run is a separately
   declared sensitivity, never a substitute for the primary batch-512 result.
-- Four-`v100_16GB` exact-shape probes measured rough full-epoch costs of 14.08
-  minutes for LSTM-SAE, 1.25 minutes for LSTM-VAE, and 20.32 minutes for the
-  supervised LSTM. Under the exploratory 10--30 epoch range these imply about
-  2.35--7.04, 0.21--0.63, and 3.39--10.16 hours per seed, respectively, before
-  startup/scoring. They are timing probes, not Table II results.
 - The primary-batch LSTM-AEA attention call receives two local
   `[128, 1034, 200]` tensors and attempts a 101.96-GiB allocation per rank;
   smaller unspecified batches remain an ambiguity branch rather than a silent
@@ -328,7 +314,7 @@
   method honestly exceeds the published results. Do not begin this early or
   blur it into reproduction evidence.
 - Claims should be supported by independently rerunnable proof-quality evidence; data acquisition and setup must be explicit from a fresh public clone.
-- Keep the compute cluster orchestration like the existing LLM-safety project: short
+- Keep cluster orchestration minimal: short
   `sbatch` wrappers around the Python programs, without a separate manifest,
   probe framework, packed-worker layer, or automatic scheduler.
 - Keep the public explanation and reference implementation proportionate. The
