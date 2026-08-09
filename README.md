@@ -11,6 +11,22 @@ weak: it invites the reply *"you implemented it wrong"*, and sometimes that
 reply is correct. This project instead audits a paper the way a reviewer would
 who doubts every item in it and checks each one personally.
 
+## Operating philosophy
+
+The difficult part is reconstructing the paper correctly. Every page, equation,
+algorithm, figure, table, and material omission is turned into a source-located
+executable specification before model code is written. If that reading is wrong,
+everything downstream is evidence about an experiment the paper never claimed.
+
+The software is deliberately small. Each paper uses five direct scientific files
+for download, preparation, models, execution, and analysis. Shared code performs
+mechanical work only; the meaning of the paper remains visible in its study. The
+project does not build a general experiment platform before producing eligible
+results.
+
+The full rationale and working rules are in the
+[`paper-first minimal-instrument decision`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md).
+
 ## Conflict of interest
 
 Faaiz Joad, a maintainer of this project, is the second author of the 2025 water
@@ -69,7 +85,7 @@ reproduction is a valid and welcome falsification.
 | Study | Paper | State |
 |---|---|---|
 | [`atk-2022-deep-autoencoder`](studies/atk-2022-deep-autoencoder/) | Takiddin et al., “Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids” | Active source reconstruction and reproduction |
-| Paper 2 | To be registered independently | Not started |
+| [`tlstgt-2025-water`](studies/tlstgt-2025-water/) | Ahasan et al., “Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems” | Artifact-level verdict recorded; execution frozen while Paper 1 is active |
 | Paper 3 | To be registered independently | Not started |
 
 Open the standalone
@@ -116,12 +132,11 @@ The current Paper 1 directory has two different concerns:
   verifies source-to-code fidelity, records immutable attempts, and supports
   cluster execution.
 
-Those wrappers are **not** the promised compact reference implementation. A
-genuine five-file reference track—download, prepare, models, run, and
-analyze—will be implemented afresh from the PDF-frozen `METHOD.md`. The larger
-harness will remain available as audit evidence, but it is neither an authority
-nor a dependency of the compact route and should not be presented as the amount
-of code needed to implement the paper once.
+The genuine five-file reference track—download, prepare, models, run, and
+analyze—now exists independently of the forensic `src/` tree. The larger harness
+remains historical audit evidence, but it is neither an authority nor a
+dependency of the compact route and is not the amount of code needed to
+implement the paper.
 
 ## Reports and website
 

@@ -1,5 +1,9 @@
 # Paper 1 minimal reimplementation
 
+> **Historical plan.** Superseded on 2026-08-09 by
+> [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md).
+> Retained as causal history; do not use its stale next-action text.
+
 **Created:** 2026-07-24
 **Status:** CHECKPOINT 1 passed; compact tiny route complete; full route at the ADASYN executability branch
 **Canonical workflow:** [`../../RUNBOOK.md`](../../RUNBOOK.md)

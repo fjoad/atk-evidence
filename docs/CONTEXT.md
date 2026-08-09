@@ -260,6 +260,13 @@
 
 ## User emphases
 
+- 2026-08-09 reframe: extracting the paper's actual method is the most rigorous
+  and reasoning-intensive part of every study. Implementation should then be a
+  small transparent transcription. Keep global infrastructure minimal, prove the
+  measuring path cheaply, run one watched full anchor, and only then scale. The
+  shared Charter and human documentation must preserve this across compaction;
+  see `docs/decisions/2026-08-09-paper-first-minimal-instrument.md`.
+
 - The honest hypothesis is that the reported numbers will not be reproducible from the papers as written, but the project must be genuinely open to being wrong.
 - Exact paper-described algorithms and procedures are the highest priority; add nothing extra to the primary track.
 - 2026-07-23: a prior contract, passing test, or registered ambiguity is never

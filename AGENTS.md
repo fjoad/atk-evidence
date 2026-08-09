@@ -23,27 +23,41 @@ confirmation, reporting, and publication.
 If another document conflicts with its execution order, the paper remains the
 scientific authority and `RUNBOOK.md` remains the workflow authority.
 
+The durable reasoning behind the current project reframe is
+[`docs/decisions/2026-08-09-paper-first-minimal-instrument.md`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md).
+Its governing rule is: read the paper more carefully than we write the code,
+then build the smallest transparent instrument that can execute the frozen
+reading. Do not turn a paper reproduction into a platform.
+
 ## Non-negotiable scientific mandate
 
-1. **Paper-literal first.** The primary track implements only the named data,
+1. **Paper extraction dominates reasoning.** Read and visually inspect the
+   complete PDF and freeze a source-located executable specification before
+   scientific model code. Passing tests or prior contracts never compensate
+   for a wrong reading.
+2. **Paper-literal first.** The primary track implements only the named data,
    algorithms, preprocessing, models, and evaluation explicitly described by
    the paper.
-2. **No silent repairs or extras.** Corrected splits, parameter matching,
+3. **No silent repairs or extras.** Corrected splits, parameter matching,
    alternative anomaly scores, or other improvements belong only in a separate
    controlled-analysis track.
-3. **Branch ambiguities.** Every material omission or contradiction becomes one
+4. **Branch ambiguities.** Every material omission or contradiction becomes one
    or more documented reasonable interpretations. Never pick an interpretation
    after seeing that it produces a favorable result.
-4. **Freeze before confirmatory runs.** Record numerical targets, tolerances,
+5. **Use the minimal scientific instrument.** The five direct reproduction
+   files are the active implementation. Shared code performs mechanical work
+   only; paper meaning remains explicit. Hypothetical reuse never justifies new
+   infrastructure before eligible results.
+6. **Freeze before confirmatory runs.** Record numerical targets, tolerances,
    hyperparameter envelope, seeds, partitions, statistics, and stopping rules.
-5. **No cherry-picking.** Preserve all runs. Report distributions and failures,
+7. **No cherry-picking.** Preserve all runs. Report distributions and failures,
    not only the best seed or one matching metric.
-6. **Be open to falsification.** A stable paper-consistent reproduction is a
+8. **Be open to falsification.** A stable paper-consistent reproduction is a
    valid result and must be reported plainly.
-7. **Bound conclusions.** State what was not reproduced within the tested,
+9. **Bound conclusions.** State what was not reproduced within the tested,
    predeclared space. Do not infer intent or claim an infinite space was proven
    impossible.
-8. **Independent paper verdicts.** Do not generalize a finding from one paper to
+10. **Independent paper verdicts.** Do not generalize a finding from one paper to
    another before independently testing the latter.
 
 ## Reading order every session
@@ -55,7 +69,8 @@ scientific authority and `RUNBOOK.md` remains the workflow authority.
    interpreting results, disputed claims, or corrected conclusions.
 5. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
 6. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
-7. The active plan under [`docs/plans/`](docs/plans/).
+7. The active plan, currently
+   [`docs/plans/2026-08-09-paper-1-minimal-finish.md`](docs/plans/2026-08-09-paper-1-minimal-finish.md).
 
 If the current step has no plan, create one before experimental implementation.
 
@@ -80,6 +95,10 @@ If the current step has no plan, create one before experimental implementation.
 4. Do not cross a `CHECKPOINT` without user approval.
 5. Update CONTEXT inline when a non-obvious fact or explicit user emphasis appears.
 6. Update the evidence record when a result changes a belief.
+7. Before any run, name the paper/table cell, interpretation, seed, exact
+   question, and report result it feeds.
+8. Stop if implementation or documentation is growing while no eligible result
+   is advancing.
 
 ## Charter rituals
 

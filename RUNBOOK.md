@@ -25,6 +25,30 @@ The intended balance is:
 If the codebase is growing while no eligible full experiment has run, stop and
 return to this runbook.
 
+## The governing reframe
+
+The durable rationale is recorded in
+[`docs/decisions/2026-08-09-paper-first-minimal-instrument.md`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md).
+
+This project is a scientific audit, not a software platform. Paper extraction is
+the thought-intensive work: read and visually inspect the complete source,
+reconcile its prose, equations, algorithms, figures, and tables, and freeze every
+material claim and uncertainty with source locators. Only then write code.
+
+Implementation should be mostly transcription of that frozen understanding. The
+global instrument stays boring; paper-specific meaning remains explicit. Reuse
+only stable mechanical operations such as file verification, parsing, standard
+metrics, and result serialization. A few duplicated lines are preferable to an
+abstraction that hides what a paper says.
+
+The operating test is:
+
+> If removing a component would not prevent or invalidate the next named
+> scientific result, that component is not needed yet.
+
+No run launches until it names the paper/table cell, model, `P`/`I`/`C`
+interpretation, seed, exact question, and report result it feeds.
+
 ## Scientific rules that never change
 
 1. **Paper first.** Reconstruct the method directly from the complete PDF before
@@ -171,6 +195,11 @@ Do not begin by reading old code. Begin with the PDF and `METHOD.md`.
 
 Read and visually inspect every page, including equations, algorithms, figure
 captions, footnotes, and tables. Build `METHOD.md` directly from the PDF.
+
+This stage should consume most of the project's reasoning. Do not optimize for a
+quick summary. The required product is an executable reconstruction precise
+enough that implementation becomes straightforward and a reviewer can identify
+the source of every consequential line of scientific code.
 
 `METHOD.md` must contain:
 
