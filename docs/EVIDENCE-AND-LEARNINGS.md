@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-07-24
+**Last updated:** 2026-08-11
 
 ## Purpose
 
@@ -237,6 +237,48 @@ and repeated experiments determine technical conclusions.
   `docs/plans/2026-07-23-paper-1-zero-trust-fidelity-audit.md`, PDF SHA-256
   `f3098e0c27ee19b27bea026aedc3d10e5dbb0c46f5cd01ed5bd5c05b7dcf850f`,
   and the Keras runtime layer inventory recorded in the audit session.
+
+### Paper 1 independent source re-audit
+
+- **Former belief/status:** The 2026-07-24 `METHOD.md` was treated as the
+  complete source freeze and the project had already crossed its checkpoint.
+- **Evidence:** On 2026-08-11 the exact 12-page PDF was independently
+  fingerprinted (`f3098e…f850f`), text-extracted, and visually inspected page by
+  page before the existing reconstruction was opened. Every reported table was
+  re-transcribed and the prose, equations, algorithms, figures, and tables were
+  reconciled. The prior reconstruction was largely accurate, but the fresh pass
+  found an incorrect statement that Tables II/III had seven rather than six
+  benchmark rows and several omitted source problems: Eq. (9)'s KL arguments
+  and bound use incompatible variables; Algorithms 3/4 do not guarantee a
+  positive Gaussian variance; Algorithm 5 defines a decoder input using the
+  reconstruction before decoding; and the precision prose describes recall
+  while its formula defines precision. A renewed calculation also confirmed
+  that Table-II Naive Bayes `DR=PR=75` cannot yield `F1=77`, and that the
+  DR/FA/PR rows in neither Table II nor Table III admit one common class
+  prevalence even with ±0.5-percentage-point rounding allowance.
+- **Root cause:** **INFERRED** — the July source freeze focused correctly on
+  executable data/model ambiguities but did not make the paper's mathematical
+  derivation and full reported-metric identities first-class source checks.
+  It also described `P0` too loosely as preserving every printed step even
+  though the non-executable Attack 3 necessarily uses a declared repair.
+- **Current conclusion + label:** **VERIFIED** — the high-level paper flow,
+  reported table transcriptions, primary model widths/settings, preprocessing
+  order, and previously identified contradictions remain source-accurate.
+  **VERIFIED CORRECTION** — `P0-ISET-FCSAE` is an executable paper-primary
+  `P+I` completion, not a fully literal program; the unmodified printed Attack
+  3 is retained as a non-executable result. **VERIFIED** — the added
+  mathematical and reported-metric inconsistencies are internal properties of
+  the source, not experimental non-reproduction evidence and not evidence of
+  intent.
+- **Remaining uncertainty / blast radius:** The five-file implementation has
+  not yet been re-audited against the corrected 2026-08-11 source table. No
+  earlier run becomes eligible merely because most of `METHOD.md` was
+  confirmed. Existing code and experiments remain frozen until the renewed
+  source-freeze checkpoint is accepted.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/METHOD.md`,
+  `studies/atk-2022-deep-autoencoder/PAPER_WORKFLOW.md`, the local ignored PDF,
+  and `studies/atk-2022-deep-autoencoder/results/reported_metrics_audit.{csv,json}`.
 
 ### Paper 1 exhaustive-interpretation and corrected-control mandate
 

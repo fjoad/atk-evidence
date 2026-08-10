@@ -46,92 +46,50 @@ implementation until the Paper 1 reproduction verdict is frozen.
 
 ## Current status
 
-- A source-first visual reconstruction of the complete paper workflow is a
-  self-contained file at
-  [`../../site/papers/atk-2022-deep-autoencoder/index.html`](../../site/papers/atk-2022-deep-autoencoder/index.html).
-  [`PAPER_WORKFLOW.md`](PAPER_WORKFLOW.md) provides the durable study-local
-  pointer.
-- SGCC: official author-linked dataset downloaded, archive-tested, extracted, and checksummed.
-- Irish CER/ISET: six consumption archives match the official ISSDA MD5s; the
-  allocation CSV is admitted only as the named exploratory semantic branch.
-- Paper specification: extracted, with missing and contradictory details recorded in `EXPERIMENT_SPEC.md`.
-- Exploratory SGCC proxy experiments exist but are invalid as Paper 1 reproduction evidence because their 48 inputs are days rather than CER half-hours.
-- Exploratory paper-literal runner: implemented with immutable attempts, frozen
-  seeds, timing, and raw-score persistence; 20/33 Table II cells have successful
-  outcomes.
-- Exact CER/ISET preparation is complete. Tables III--V are data-ready; their
-  model-execution path is implemented and smoke-tested; full the cluster result
-  cells remain.
-- Paper-literal confirmatory experiments: not started; exploratory results do
-  not retroactively become preregistered evidence.
-- Gate C is structurally complete: all 921 paper-consistent branches and 22
-  corrected controls resolve by stable ID through the public runner. Gate D is
-  partial: local cells and real SGCC preflight pass; a source-v2 exact-ISET
-  cache and one real the cluster DDP smoke remain.
+- The exact 12-page PDF was independently re-audited on 2026-08-11. Read the
+  corrected [`METHOD.md`](METHOD.md) first and the compact
+  [`PAPER_WORKFLOW.md`](PAPER_WORKFLOW.md) for the one-page flow.
+- The exact CER/ISET consumption archives are verified. The allocation CSV is
+  admitted only as the documented semantic-equivalence branch.
+- The five direct scientific files exist under [`reproduction/`](reproduction/)
+  and do not import the historical `src/` harness.
+- Full preparation reached the paper-printed `B2+M` population. Default ADASYN
+  on that 14.26-million-row test population did not complete and is preserved
+  as an executability finding, not silently relabeled.
+- One full no-test-ADASYN FC-SAE seed-11 cluster result exists, but its score and
+  eligibility audit is unfinished. It is not a paper-level verdict.
+- No experimental job is running. Work is stopped at the renewed source-freeze
+  checkpoint before the five-file source-to-code audit.
 
 ## Current command surface
 
-Normal use starts with four short study-root entry points. They are wrappers
-over the larger tested audit implementation in `src/`; they are **not** yet the
-promised compact reference implementation. A genuine five-file reference track
-will add a readable `models.py` and extract one frozen source-faithful route
-without depending on the full ambiguity/DDP/evidence engine.
+The primary implementation is exactly these five files:
 
-```bash
-# 1. Download one named dataset.
-.venv/bin/python studies/atk-2022-deep-autoencoder/download_data.py sgcc
-
-# 2. Verify it, apply the paper's preprocessing/attacks, and freeze splits.
-.venv/bin/python studies/atk-2022-deep-autoencoder/prepare_data.py sgcc
-
-# 3. Run model/seed cells (or add --preflight for a no-training check).
-.venv/bin/python studies/atk-2022-deep-autoencoder/run_experiment.py fc_sae --seeds 11
-
-# Frozen branches are run by stable ID; this also selects preparation/model/evaluation.
-.venv/bin/python studies/atk-2022-deep-autoencoder/run_experiment.py \
-  --preflight --branch-id sgcc_fc_sae-19b26c8cdff2
-
-# Exact ISET Table III also derives Table V from the same scores/threshold.
-.venv/bin/python studies/atk-2022-deep-autoencoder/run_experiment.py \
-  fc_sae --dataset iset --table 3 --seeds 11
-
-# Table IV retrains on one or more nested benign-training sizes.
-.venv/bin/python studies/atk-2022-deep-autoencoder/run_experiment.py \
-  fc_sae --dataset iset --table 4 --sizes half --seeds 11
-
-# Table V identities are independent, explicit experiment families.
-.venv/bin/python studies/atk-2022-deep-autoencoder/run_experiment.py \
-  fc_sae --dataset iset --table 5 --seeds 11 \
-  --table-v-identity retrain_per_attack --table-v-size full_heldout
-
-# 4. Verify artifacts and analyze score separation.
-.venv/bin/python studies/atk-2022-deep-autoencoder/analyze_results.py
+```text
+reproduction/download_data.py
+reproduction/prepare_data.py
+reproduction/models.py
+reproduction/run_experiment.py
+reproduction/analyze_results.py
 ```
 
-`download_data.py iset` uses the official token-safe ISSDA route.
-`prepare_data.py iset` also supports the explicitly approved local ScienceDB
-semantic-allocation branch. `run_experiment.py` covers SGCC Table II and exact
-ISET Tables III--V. Table III retains the historical fixed-model/fixed-3,000
-Table V derivation as a structural invariant-FA diagnostic. Direct
-`--table 5` runs cover every registered identity branch: common model/common
-benign rows, independent retraining, independent seeded benign resampling, and
-retraining plus resampling, each on the full heldout set or seeded
-3,000-per-class subsets. All six column-specific scores and identities are
-persisted.
-When `--branch-id` is used for ISET, the runner requires the matching
-content-addressed cache and verifies its embedded preparation ID. The old
-implementation-v1 cache is never silently accepted for a source-v2 branch.
+Do not begin with the study-root wrappers or `src/`; those belong to the
+historical forensic harness. No command should be run until the renewed source
+checkpoint and source-to-code audit are complete. Cluster execution remains a
+short resource wrapper around the same five-file scientific path.
 
 ## Directory map
 
 - `DATA_SOURCES.md`: provenance, access conditions, file sizes, and checksums.
-- `PAPER_WORKFLOW.md`: pointer to the standalone source-first visual map.
+- `METHOD.md`: current PDF-derived source authority and straight-through route.
+- `PAPER_WORKFLOW.md`: compact one-page source flow and pivotal breakpoints.
 - `EXPERIMENT_SPEC.md`: literal paper protocol versus controlled replication protocol.
 - `REPRODUCIBILITY_LOG.md`: chronological audit trail and environment details.
-- `download_data.py`, `prepare_data.py`, `run_experiment.py`,
-  `analyze_results.py`: current small command surface, not a compact codebase.
-- `src/`: large forensic harness: parsers, branch implementations, evidence
-  persistence, tests, and cluster adapter.
+- `reproduction/`: active five-file reference implementation, pending renewed
+  source-to-code audit.
+- study-root command files and `src/`: preserved historical forensic harness
+  with parsers, branch implementations, evidence persistence, tests, and the
+  cluster adapter.
 - `results/`: machine-readable metrics and run metadata.
 - `../../scripts/cluster/`: short setup, CPU, and one-GPU SLURM wrappers.
 - `../../data/raw/`: downloaded raw data; never modified in place.

@@ -11,9 +11,12 @@ Theft Cyberattacks in Smart Grids,” *IEEE Systems Journal*, 16(3), 4106–4117
 **Source identity:** 12 pages; SHA-256
 `f3098e0c27ee19b27bea026aedc3d10e5dbb0c46f5cd01ed5bd5c05b7dcf850f`.
 
-**Status:** Source-derived specification, written after rereading and visually
-checking all 12 pages on 2026-07-24. It does not treat the historical
-implementation, contracts, or earlier results as authorities.
+**Status:** Source-derived specification. A second independent audit on
+2026-08-11 fingerprinted the PDF, extracted its text, and visually inspected
+all 12 rendered pages before this file was opened. That pass confirmed the
+overall reconstruction, corrected the benchmark count, and added several
+previously omitted mathematical and reported-metric contradictions. Historical
+code, contracts, and results were not treated as source authorities.
 
 ## What the paper actually tests
 
@@ -33,6 +36,36 @@ The first executable reproduction lane is ISET with FC-SAE. ISET directly
 supports the stated 48-value daily input. SGCC has roughly three years of daily
 values per customer while the paper still specifies 48 input neurons and gives
 no conversion rule; Table II therefore requires separate interpretations.
+
+## Paper flow at a glance
+
+```text
+SGCC: labeled customer histories -----------------------------+
+                                                               |
+ISET: benign half-hour readings -> 48-value days -> attacks 1-6|
+                                                               v
+              merge customers -> normalize before splitting
+                                  |
+              +-------------------+--------------------+
+              |                                        |
+      anomaly detectors                         supervised detectors
+      train on benign B1                        B+M -> ADASYN -> split
+      test on B2+all M -> ADASYN                 train and test on labels
+              |                                        |
+              +-------------------+--------------------+
+                                  v
+             ISET cross-validation -> Table-I model/settings
+                                  |
+                       train -> score -> threshold
+                                  |
+        Table II (SGCC) | Table III (ISET) | Table IV (size/time)
+                                  |
+                    Table V (one attack at a time)
+```
+
+The arrows above are the paper's stated ordering, not an endorsement of it.
+The detailed source status of every consequential arrow is below. A compact
+human-readable companion is [`PAPER_WORKFLOW.md`](PAPER_WORKFLOW.md).
 
 ## Numerical targets
 
@@ -71,7 +104,7 @@ The complete proposed-model targets are:
 | ISET / III | LSTM-VAE | 91 | 7 | 93 | 91 | 92 | 91 | 86 |
 | ISET / III | LSTM-AEA | 94 | 5 | 95 | 93 | 94.5 | 93.5 | 90 |
 
-Tables II and III also contain seven benchmark rows apiece. Their complete
+Tables II and III also contain six benchmark rows apiece. Their complete
 values remain in the checked source transcriptions above.
 
 Table IV reports the following `(training minutes, ACC)` pairs:
@@ -101,6 +134,37 @@ Table V reports attack-specific DR and FA:
 | LSTM-VAE FA | 7.5 | 8 | 4.5 | 8 | 8.5 | 8.5 | 7.5 |
 | LSTM-AEA DR | 94 | 93 | 97 | 94 | 94 | 93 | 94 |
 | LSTM-AEA FA | 3.5 | 4 | 2.5 | 6.5 | 5.5 | 6.5 | 5 |
+
+### Static consistency of the reported metrics
+
+This is a source-level arithmetic audit, not a reproduction result. The
+paper's own definitions imply two identities:
+
+```text
+F1 = 2 * DR * PR / (DR + PR)
+p  = PR * FA / (DR * (1 - PR) + PR * FA)
+```
+
+Here `p` is the malicious-class prevalence implied by a row's reported DR, FA,
+and PR. If every row in a table uses the paper's single table-specific test
+label vector, all rows must imply the same `p`.
+
+- Table II reports Naive Bayes `DR=75`, `PR=75`, and `F1=77`. The first two
+  values force `F1=75`, not 77.
+- Table II rows imply prevalences from 39.02% to 50.28%; Table III rows imply
+  40.00% to 50.28%.
+- Even allowing each displayed DR, FA, and PR to differ from its underlying
+  value by a generous ±0.5 percentage point, there is no common prevalence.
+  In Table II, FC-VAE requires at least 47.22% while Naive Bayes permits at
+  most 40.56%. In Table III, the corresponding bounds are 47.73% and 41.44%.
+
+Therefore the complete DR/FA/PR patterns in Tables II and III cannot all arise
+from one common test-label population using the formulas printed in the paper
+and ordinary rounding. This establishes an internal numerical inconsistency;
+it does not establish its cause or imply intent. The row-level calculations
+are preserved in
+[`results/reported_metrics_audit.csv`](results/reported_metrics_audit.csv) and
+[`results/reported_metrics_audit.json`](results/reported_metrics_audit.json).
 
 ## ISET data and sample construction
 
@@ -145,6 +209,9 @@ customer has six malicious matrices.
 Eq. (3) is not executable as an interval with the stated meaning. Because
 `t_l > 0`, the printed `t_f = t_i - t_l` is before `t_i`. The variables are
 also defined in hours while the source and model use 30-minute values.
+The paper does not define whether `rand(a,b)` is continuous or integer-valued,
+whether endpoints are inclusive, or how a closed hourly interval maps to the
+48 half-hour slots. It reports no random seed or attack-regeneration policy.
 
 ## Printed anomaly-detector preparation order
 
@@ -244,6 +311,20 @@ variance parameterization, number of Monte Carlo samples, probability
 aggregation details, numerical scale, or how thresholds 0.43/0.47 correspond
 to that probability.
 
+The VAE derivation contains two additional source-level problems:
+
+- Eq. (9) places `q(k|x)` and `p(x)` inside a KL divergence even though they
+  are distributions over different variables, and the following sentence
+  compares the lower bound with `log p(k)` rather than `log p(x)`. This is not
+  the standard ELBO stated by Eq. (8).
+- Algorithms 3 and 4 call their second encoder output a variance `sigma_x^2`
+  but apply only a generic activation plus an unconstrained bias. No
+  exponential, Softplus, clipping, or other positivity rule is stated, so the
+  printed computation does not guarantee a valid variance.
+
+Eq. (10) still supplies a recognizable squared-reconstruction-plus-KL training
+objective, but it does not repair the missing executable probability score.
+
 ## Hyperparameter selection and validation
 
 Algorithm 6 prints a sequential, not Cartesian, search:
@@ -309,6 +390,11 @@ AUC = area under the ROC curve
 The paper reports percentages. We calculate fractions internally and multiply
 by 100 only for display.
 
+The prose defining precision is itself contradictory: it calls PR the fraction
+of correctly detected malicious readings among *all malicious readings*, which
+describes DR/recall, while the immediately printed formula is
+`TP/(FP+TP)`, the standard precision. The explicit formula governs the audit.
+
 ## Table IV and timing
 
 Table IV trains each proposed detector with nested 0.5, 0.75, and full
@@ -322,11 +408,13 @@ dispersion is reported. The 1–2 second claim also says detection is on an
 our own fit and scoring times but cannot directly reproduce hardware-dependent
 wall time or identify its unit from the paper alone.
 
-## Frozen straight-through experiment: `P0-ISET-FCSAE`
+## Frozen straight-through executable completion: `P0-ISET-FCSAE`
 
 This is the first declared, pre-outcome executable reading. It preserves every
-questionable printed step and fills only settings without which execution is
-impossible.
+*executable* printed step and fills only settings without which execution is
+impossible. It is therefore a paper-primary `P+I` completion, not a claim that
+the source contains a fully executable literal `P`: the unmodified Attack 3
+endpoint remains preserved as a `NON-EXECUTABLE` source outcome.
 
 ### Data
 
@@ -339,10 +427,14 @@ impossible.
 3. Generate attacks from raw, unnormalized profiles for every customer.
    Use seed 11 for all omitted random draws.
 4. Resolve attack randomness as follows:
-   - Attack 1: one alpha per customer’s complete malicious matrix.
-   - Attacks 2 and 5: one beta per half-hour reading.
-   - Attack 3: minimally repair subtraction to addition, express hours as pairs
-     of half-hour slots, and clip an endpoint past the end of the day.
+   - Attack 1: one `Uniform[0.1, 0.8]` alpha per customer’s complete malicious
+     matrix.
+   - Attacks 2 and 5: one independent `Uniform[0.1, 0.8]` beta per half-hour
+     reading.
+   - Attack 3: draw integer start hour 0--19 and integer duration 4--24,
+     inclusive; minimally repair subtraction to addition; map each hour to two
+     half-hour slots; zero the half-open slot interval; and clip an endpoint
+     past slot 48.
    - Attacks 4 and 6: apply directly by daily row.
 5. Concatenate the six attack matrices from all customers into `M_raw`.
 6. Fit one feature-wise standardizer to the concatenation of `B_raw` and
@@ -406,7 +498,8 @@ choice at a time.
 | I-A1 | fixed alpha “for all samples” | one per dataset; customer matrix; customer-day |
 | I-A2 | dynamic beta | independent half-hour; one beta shared by each hourly pair |
 | I-A3-END | impossible endpoint | printed subtraction as a documented failure; addition+clip; addition+wrap; redraw a valid end |
-| I-A3-SLOTS | hour variables on half-hours | convert hours to two slots; apply the printed integer range directly to 48 positions |
+| I-A3-SLOTS | hour variables and closed interval on half-hours | convert hours to two slots with half-open duration; closed endpoint; apply printed integer range directly to 48 positions |
+| I-RANDOM | undefined `rand(a,b)` and endpoints | continuous uniform for factors; integer uniform for time values; alternative endpoint conventions |
 | I-ATTACK-SEED | random attack reuse | fixed once per prepared data seed; regenerate per model seed; regenerate per experiment |
 | I-SPLIT | “rows (customers)” | customer-disjoint; daily-row-random |
 | I-MPOP | all `M` versus unseen customers | attacks from all customers; attacks from held-out customers only |
@@ -456,12 +549,14 @@ readings remain. `CONTRADICTORY` means two source statements cannot both hold.
 | ISET is half-hourly for ~1.5 years and ~3,000 residential units | §II-B1, p. 4108 | AMBIGUOUS | No exact meter selection |
 | One row is a daily profile | §II-C, p. 4109 | EXACT | Daily model samples |
 | Input has 48 neurons | §III-A1, p. 4109 | EXACT | 48 half-hour values |
+| SGCC has ~3 years of daily values but models take 48 inputs | §II-A/§III-A, pp. 4107–4110 | NON-EXECUTABLE | Table-II sample construction is absent |
 | Handle incomplete/DST days | not stated | NON-EXECUTABLE | Requires declared branch |
 | Generate six attacks for every customer | §II-B2, Eqs. 1–6, p. 4108 | EXACT | Six malicious matrices/customer |
 | Attack 1 alpha scope | Eq. 1 prose, p. 4108 | AMBIGUOUS | “Fixed … for all samples” has several scopes |
 | Attack 2/5 beta granularity | Eqs. 2/5, p. 4108 | AMBIGUOUS | Hour versus half-hour source mismatch |
 | Attack 3 endpoint is `t_i-t_l` | Eq. 3, p. 4108 | CONTRADICTORY | End precedes start |
 | Attack 3 uses hours on a 48-step input | Eq. 3 and §III-A, pp. 4108–4110 | AMBIGUOUS | Requires hour-to-slot rule |
+| `rand(a,b)` distribution and endpoint semantics | not stated | NON-EXECUTABLE | Factors and Attack-3 times require completion choices |
 | Attack random draws/reuse across runs | not stated | NON-EXECUTABLE | Seed and regeneration schedule required |
 | Normalize B and M before split | §II-C, p. 4109 | EXACT | Preserve pre-split scaling in `P` |
 | Normalization population/axis | §II-C, p. 4109 | AMBIGUOUS | Scaler fit and axes absent |
@@ -482,6 +577,8 @@ readings remain. `CONTRADICTORY` means two source statements cannot both hold.
 | VAE low reconstruction probability is anomalous | §III-B, p. 4111 | EXACT | Lower-is-anomalous |
 | Generic paragraph says probability above threshold is anomalous | §III-C, p. 4114 | CONTRADICTORY | Opposite VAE direction |
 | VAE reconstruction probability implementation | §III-B, p. 4111 | NON-EXECUTABLE | Variance/draw/aggregation details absent |
+| VAE ELBO uses `KL(q(k|x)||p(x))` and compares with `log p(k)` | Eq. 9, p. 4111 | CONTRADICTORY | Distributions/variables do not match the stated ELBO |
+| VAE variance output has no positivity parameterization | Algorithms 3–4, p. 4112 | NON-EXECUTABLE | A Gaussian variance is not guaranteed valid |
 | Algorithm 1 uses SGD; Table I selects Adam | Algorithm 1/Table I, pp. 4110, 4115 | AMBIGUOUS | Final table governs anchor optimizer |
 | Search layers from `{2,3,4,5}` | §IV-C, p. 4115 | CONTRADICTORY | Table I reports 6 and 8 |
 | Algorithm 6 searches one `N_l`; Table I gives unequal widths | Algorithm 6/§IV-C, pp. 4114–4115 | CONTRADICTORY | Search cannot yield printed layouts as written |
@@ -490,27 +587,35 @@ readings remain. `CONTRADICTORY` means two source statements cannot both hold.
 | Keras Sequential API | §IV, p. 4114 | AMBIGUOUS | Keras/backend/version absent |
 | LSTM input layout and decoder schedule/state transfer | Algorithms 2/4/5, pp. 4111–4113 | AMBIGUOUS | Several materially different seq2seq models |
 | AEA concatenates context/output; Algorithm 5 prints a sum | §III-C/Algorithm 5, pp. 4113–4114 | CONTRADICTORY | Merge and dimensional projection absent |
+| Algorithm 5 defines reconstructed input using itself before decoding | Algorithm 5, lines 21–23, p. 4113 | NON-EXECUTABLE | Initial/ongoing decoder input is undefined |
 | SVM “kernel and Gamma are scale and sigmoid” | §IV-C, p. 4115 | NON-EXECUTABLE | Values are reversed relative to the standard API domains |
 | ARIMA has differencing 1 and moving average 0 | §IV-C, p. 4115 | NON-EXECUTABLE | Autoregressive order, fit unit, and score absent |
 | Supervised output/loss/label cardinality | not stated | NON-EXECUTABLE | Benchmark classifier identity incomplete |
-| DR/FA/SP/PR/ACC/F1 formulas | §III-D, p. 4114 | EXACT | ACC is balanced accuracy |
+| DR/FA/SP/ACC/F1 formulas | §III-D, p. 4114 | EXACT | ACC is balanced accuracy |
+| Precision prose versus `TP/(FP+TP)` formula | §III-D, p. 4114 | CONTRADICTORY | Formula is used; prose describes recall |
+| Table-II Naive Bayes DR/PR/F1 | Table II, p. 4116 | CONTRADICTORY | DR=PR=75 forces F1=75, not 77 |
+| Common test prevalence implied by DR/FA/PR | Tables II–III, p. 4116 | CONTRADICTORY | Rows have no common prevalence even with generous rounding |
 | Table III reports unseen test results | §IV-D, p. 4115 | AMBIGUOUS | Test construction conflicts with unseen identity |
 | Table IV full size is 60m | Table IV/prose, p. 4116 | AMBIGUOUS | Likely scalar readings, not profile rows |
 | Table IV training time | Table IV, p. 4116 | NON-EXECUTABLE | Hardware and fit protocol absent |
 | Table V has no ADASYN because balanced | Table V prose, p. 4116 | AMBIGUOUS | Test identity not stated |
-| Same models/settings/thresholds in Table V | Table V prose, p. 4116 | CONTRADICTORY | Common benign scores imply fixed FA, but FA varies |
+| Table-V model/test identity with same settings/thresholds | Table V prose, p. 4116 | AMBIGUOUS | Fixed model/common benign implies invariant FA; varying FA requires unstated retraining or resampling |
 | Online decision takes 1–2 seconds per individual reading | §IV-D, p. 4116 | CONTRADICTORY | Model consumes a 48-reading profile |
 
 ## Source-freeze checkpoint
 
 The PDF supports the overall flow and the printed `P` operations above, but it
-does **not** uniquely specify one executable experiment. `P0-ISET-FCSAE` is the
-declared straight-through completion, not a claim that its omitted choices are
-the authors’ hidden implementation.
+does **not** uniquely specify one executable experiment. `P0-ISET-FCSAE` is a
+declared straight-through executable completion, not a claim that its `I`
+choices are the authors’ hidden implementation.
 
-Before model code is written, the checkpoint is:
+The independent 2026-08-11 source re-audit is complete. Before existing model
+code is trusted or experimental execution resumes, the checkpoint is:
 
-1. agree that `P0` is the first anchor;
+1. agree that `P0` is the first executable anchor while the unmodified printed
+   Attack 3 remains a documented non-executable result;
 2. confirm that the material branches above cover the reasonable readings that
    could change a reproduction conclusion; and
-3. keep later corrected controls separate from paper-consistent results.
+3. keep later corrected controls separate from paper-consistent results; and
+4. audit the five-file implementation against this source table before treating
+   any prior or future run as eligible.

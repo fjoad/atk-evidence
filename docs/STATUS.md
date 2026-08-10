@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-09
+**Last updated:** 2026-08-11
 
 **Branch:** `main`
 
@@ -21,12 +21,23 @@
   in `reproduction/analyze_results.py`. It must be finished and verified or
   discarded before another result is interpreted. It is not part of the current
   documentation commit.
+- Experimental execution remains frozen at a renewed source-freeze checkpoint.
+  No local or cluster job should start until the user accepts the corrected
+  source reconstruction and the five-file route is audited against it.
 
 ## Paper 1: verified foundation
 
-- The 12-page PDF was freshly read and visually inspected; the source-located
-  executable reconstruction is
+- The exact 12-page PDF was independently re-audited on 2026-08-11: SHA-256
+  verified, text extracted, and every rendered page visually inspected before
+  the prior reconstruction was opened. The corrected source-located executable
+  reconstruction is
   [`../studies/atk-2022-deep-autoencoder/METHOD.md`](../studies/atk-2022-deep-autoencoder/METHOD.md).
+- The re-audit confirmed the main flow and prior pivotal contradictions, fixed
+  the benchmark count (six, not seven), and added omitted VAE-derivation,
+  decoder, precision-definition, F1, and common-prevalence inconsistencies.
+- `P0-ISET-FCSAE` is now labeled precisely as a paper-primary `P+I` executable
+  completion. The printed Attack-3 subtraction remains a non-executable source
+  outcome rather than being silently called literal.
 - Exact CER/ISET consumption archives are verified. The allocation CSV is the
   explicitly labeled semantic-equivalence branch, not the official `.tab`
   serialization.
@@ -60,15 +71,17 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-Do not launch another model yet.
+Do not launch or interpret another model yet.
 
-1. Resolve the unfinished `analyze_results.py` score-audit change.
-2. Run the compact Paper 1 Step-0/eligibility gate on the cluster.
-3. Inspect the full seed-11 score arrays, directions, baselines, attack breakdown,
-   identities, and persistence.
-4. Classify that attempt explicitly.
-5. Discuss and freeze the minimal batch-512 primary resource probe, then run one
-   watched full primary anchor before parallel seeds.
+1. Present the pivotal 2026-08-11 source corrections and obtain the renewed
+   source-freeze checkpoint approval.
+2. Audit the five direct reproduction files line by line against the corrected
+   `METHOD.md`; remove or relabel any source mismatch without adding
+   infrastructure.
+3. Resolve the unfinished `analyze_results.py` score-audit change.
+4. Run the compact Paper 1 Step-0/eligibility gate on the cluster.
+5. Inspect and classify the existing full seed-11 attempt before choosing the
+   batch-512 primary probe.
 
 ## Not on the critical path
 

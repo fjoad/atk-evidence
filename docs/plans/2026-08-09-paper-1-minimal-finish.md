@@ -2,7 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; reframe frozen, experimental execution not resumed
+**Status:** Active; independent source re-audit complete, awaiting renewed
+source-freeze checkpoint
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -15,7 +16,11 @@ layer, or another paper while this plan is active.
 
 ## Current anchor state
 
-- The complete PDF-derived method freeze exists in `METHOD.md`.
+- The exact 12-page PDF was independently re-audited on 2026-08-11 before the
+  existing `METHOD.md` was opened. The corrected source reconstruction exists
+  in `METHOD.md`; its principal additions are recorded in the evidence ledger.
+- `P0-ISET-FCSAE` is an executable paper-primary `P+I` completion. Printed
+  Attack 3 remains a source-level non-executable outcome.
 - The five-file reproduction exists and is independent of `src/`.
 - Exact CER/ISET preparation is complete through the full pre-ADASYN `B2+M`
   population.
@@ -27,6 +32,16 @@ layer, or another paper while this plan is active.
 - Batch 512 remains the declared primary execution completion; batch 32 is a
   sensitivity.
 - No experimental job is currently running.
+
+## Phase 0 — renewed source freeze
+
+**Completed:** exact PDF identity, end-to-end visual inspection, full table
+transcription, line-by-line `METHOD.md` comparison, source corrections, compact
+paper flow, and Charter evidence/status updates.
+
+**Checkpoint:** present the pivotal interpretation and corrections to the user.
+Do not inspect the five-file implementation as evidence or resume computation
+until this checkpoint is accepted.
 
 ## Phase 1 — recover one trustworthy anchor
 

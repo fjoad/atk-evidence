@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-07-24
+**Last updated:** 2026-08-11
 
 ## Environment quirks
 
@@ -103,6 +103,17 @@
   `48-400-300-200-100-100-200-300-400-48` sigmoid/Softmax FC-SAE; and printed
   threshold 0.58. Batch/epoch/convergence/seed choices are visibly labeled
   execution completions, not paper facts.
+- Independent source re-audit 2026-08-11: the exact PDF hash and overall
+  `METHOD.md` flow were reconfirmed after all 12 pages were visually inspected
+  before opening the old reconstruction. Corrections/additions: Tables II/III
+  have six, not seven, benchmark rows; VAE Eq. (9) mixes incompatible
+  distributions/variables; VAE variance positivity and Algorithm-5 decoder
+  input are undefined; precision prose conflicts with its formula; Table-II
+  Naive Bayes F1 is arithmetically inconsistent; and neither Table II nor III
+  admits one common prevalence from its DR/FA/PR rows under generous rounding.
+  `P0` is explicitly a paper-primary `P+I` executable completion because
+  printed Attack 3 is non-executable. The renewed source-freeze checkpoint is
+  the next gate; do not audit code or resume compute before it is accepted.
 - The fresh source pass independently reconfirmed pivotal non-uniqueness:
   Eq. (3)'s endpoint is impossible; “rows (customers),” all-customer `M`, and
   unseen-test-customer claims conflict; Algorithm 6 cannot calculate DR/FA
