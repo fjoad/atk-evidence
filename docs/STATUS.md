@@ -17,13 +17,13 @@
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
-- The working tree contains an unfinished, uncommitted Paper 1 score-audit change
-  in `reproduction/analyze_results.py`. It must be finished and verified or
-  discarded before another result is interpreted. It is not part of the current
-  documentation commit.
-- Experimental execution remains frozen at a renewed source-freeze checkpoint.
-  No local or cluster job should start until the user accepts the corrected
-  source reconstruction and the five-file route is audited against it.
+- The renewed source freeze is accepted. The five direct files have now been
+  traced against the corrected `METHOD.md`; the unfinished score-audit work was
+  completed without importing the historical `src/` route.
+- The next experiment is frozen to the single baseline in
+  [`../studies/atk-2022-deep-autoencoder/reproduction/BASELINE.md`](../studies/atk-2022-deep-autoencoder/reproduction/BASELINE.md):
+  full ISET, FC-SAE, seed 11, batch 512, original `B2+M`, Tables III/full-IV/V.
+  No ambiguity sweep is authorized before this anchor is inspected.
 
 ## Paper 1: verified foundation
 
@@ -75,17 +75,13 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-Do not launch or interpret another model yet.
-
-1. Present the pivotal 2026-08-11 source corrections and obtain the renewed
-   source-freeze checkpoint approval.
-2. Audit the five direct reproduction files line by line against the corrected
-   `METHOD.md`; remove or relabel any source mismatch without adding
-   infrastructure.
-3. Resolve the unfinished `analyze_results.py` score-audit change.
-4. Run the compact Paper 1 Step-0/eligibility gate on the cluster.
-5. Inspect and classify the existing full seed-11 attempt before choosing the
-   batch-512 primary probe.
+1. Commit and push the audited compact baseline.
+2. Pull that exact commit on Panther and submit the one short
+   `run_baseline.sbatch` wrapper.
+3. Inspect the saved architecture, loss history, score distributions, zero and
+   untrained controls, hashes, metrics, and Table-V FA invariant before any
+   second seed or interpretation branch.
+4. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
 
 ## Not on the critical path
 

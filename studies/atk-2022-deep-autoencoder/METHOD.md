@@ -459,10 +459,11 @@ endpoint remains preserved as a `NON-EXECUTABLE` source outcome.
    and dropout 0.4 after every hidden activation during training.
 4. Optimize profile-level mean squared reconstruction error with Adam,
    learning rate 0.001, float32, and Keras-compatible Glorot/bias defaults.
-5. Use shuffled mini-batches of 32. Train for at most 100 epochs and define
-   “converged” as no training-loss improvement of at least `1e-4` for five
-   consecutive epochs. Keep the lowest-training-loss weights. These are
-   explicit completion choices, not paper statements.
+5. Use shuffled mini-batches of 512 for the previously frozen primary execution
+   completion; batch 32 is the Keras-default sensitivity. Train for at most 100
+   epochs and define “converged” as no training-loss improvement of at least
+   `1e-4` for five consecutive epochs. Keep the lowest-training-loss weights.
+   These are explicit completion choices, not paper statements.
 6. For every test profile, compute mean squared error over its 48 positions.
    Predict malicious iff MSE is strictly greater than 0.58.
 7. Save all scores, predictions, labels, original/synthetic flags, customer/day

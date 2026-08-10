@@ -2,8 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; independent source re-audit complete, awaiting renewed
-source-freeze checkpoint
+**Status:** Active; source freeze and five-file baseline audit complete,
+awaiting the single Panther baseline run
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -39,9 +39,8 @@ layer, or another paper while this plan is active.
 transcription, line-by-line `METHOD.md` comparison, source corrections, compact
 paper flow, and Charter evidence/status updates.
 
-**Checkpoint:** present the pivotal interpretation and corrections to the user.
-Do not inspect the five-file implementation as evidence or resume computation
-until this checkpoint is accepted.
+**Checkpoint completed 2026-08-11:** the user accepted the reframe and directed
+that the basic baseline be made runnable before any interpretation branches.
 
 **Reporting contract:** every literal non-executable node remains a visible
 source result. Predeclare the smallest repair and all materially distinct
@@ -50,14 +49,14 @@ the published target. A repair is never relabeled as the literal method.
 
 ## Phase 1 — recover one trustworthy anchor
 
-1. Finish or discard the currently uncommitted score-audit change; do not leave
-   the analysis boundary ambiguous.
-2. Run the Paper 1 Step-0 gate through the compact five-file route on the cluster.
-3. Audit the existing seed-11 artifacts: score distributions, direction, zero and
-   untrained controls, attack breakdown, identities, configuration, hashes, and
-   result reload.
+1. **Complete:** finish the score-audit code and trace the five direct files
+   against the renewed source reconstruction.
+2. Run the frozen FC-SAE seed-11/batch-512 baseline through the one-command
+   compact route on Panther.
+3. Audit its score distributions, direction, zero and untrained controls,
+   attack breakdown, identities, configuration, hashes, and result reload.
 4. Classify the attempt as eligible exploratory evidence, sensitivity-only, or
-   invalid, with one written reason.
+   invalid, with one written reason. Keep the old batch-32 result separate.
 
 **Finish condition:** the complete PDF → method → data → model → scores → metrics
 chain is inspectable and trusted for one full attempt.

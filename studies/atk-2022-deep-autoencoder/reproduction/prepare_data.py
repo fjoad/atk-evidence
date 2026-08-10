@@ -9,7 +9,8 @@ The order is intentionally the paper's order:
 4. split benign customers 2:1 into B1/B2;
 5. train on B1;
 6. test on B2 plus attacks from *all* customers; and
-7. apply ADASYN to that test set.
+7. either apply the printed ADASYN step or explicitly preserve the declared
+   no-test-resampling continuation when that full-scale step is unavailable.
 
 This is not recommended methodology. It is the declared printed-method anchor.
 Use ``--mode tiny`` first; ``--mode full`` processes the complete source.
@@ -20,9 +21,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import os
 import platform
-import shutil
 import sys
 import tempfile
 import time
@@ -38,12 +37,18 @@ import pyarrow.parquet as pq
 import sklearn
 from imblearn.over_sampling import ADASYN
 
+from download_data import (
+    CER_SCIENCEDB_DIR,
+    SCIENCEDB_ALLOCATION,
+    verify_cer_directory,
+)
+
 
 REPO = Path(__file__).resolve().parents[3]
-RAW = REPO / "data/raw/cer-sciencedb"
+RAW = CER_SCIENCEDB_DIR
 DEFAULT_ROOT = REPO / "data/derived/atk-2022-deep-autoencoder/reproduction"
 ARCHIVES = tuple(f"File{i}.txt.zip" for i in range(1, 7))
-ALLOCATION = "SME_and_Residential_allocations.csv"
+ALLOCATION = SCIENCEDB_ALLOCATION[0]
 FEATURES = 48
 DATA_SEED = 11
 CHUNK_ROWS = 1_000_000
@@ -62,6 +67,24 @@ def save_json(path: Path, payload: dict[str, object]) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     temporary.replace(path)
+
+
+def verified_source() -> dict[str, object]:
+    """Recheck the exact archives and frozen allocation branch before parsing."""
+
+    record = verify_cer_directory(
+        RAW,
+        allocation=SCIENCEDB_ALLOCATION,
+        branch="sciencedb-csv-semantic-equivalence-v1",
+    )
+    if not record["ready"]:
+        failed = [
+            name
+            for name, item in record["files"].items()
+            if item["status"] != "verified"
+        ]
+        raise ValueError(f"ISET/CER source verification failed: {failed}")
+    return record
 
 
 def allocation() -> tuple[pd.DataFrame, np.ndarray]:
@@ -262,6 +285,11 @@ def load_or_extract_profiles(
     record_path = output / "profiles.json"
     if all(path.is_file() for path in (values_path, meters_path, days_path, record_path)):
         record = json.loads(record_path.read_text())
+        if record.get("mode") != mode:
+            raise ValueError(
+                f"cached profiles were extracted in mode {record.get('mode')}, "
+                f"not requested mode {mode}"
+            )
         return (
             np.load(values_path, mmap_mode="r"),
             np.load(meters_path, mmap_mode="r"),
@@ -400,6 +428,9 @@ def prepare_p0(
     *,
     seed: int,
     adasyn_neighbors: int,
+    test_adasyn: str,
+    force_expensive_adasyn: bool,
+    source_record: dict[str, object],
 ) -> dict[str, object]:
     started = time.perf_counter()
     mean, scale = joint_scaler(benign_raw, meters, seed)
@@ -468,25 +499,39 @@ def prepare_p0(
     np.save(output / "test_original_source_row.npy", original_source)
     np.save(output / "test_original_attack_id.npy", original_attack)
 
-    adasyn_started = time.perf_counter()
-    sampler = ADASYN(random_state=seed, n_neighbors=adasyn_neighbors)
-    test_x, test_y = sampler.fit_resample(original_x, original_y)
-    adasyn_seconds = time.perf_counter() - adasyn_started
-    generated = test_y.size - original_y.size
-    test_source = np.concatenate(
-        [original_source, np.full(generated, -1, dtype=np.int64)]
+    adasyn_seconds: float | None = None
+    generated: int | None = None
+    test_y: np.ndarray | None = None
+    adasyn_distance_queries = int(
+        np.count_nonzero(original_y == 0) * original_y.size
     )
-    test_attack = np.concatenate(
-        [original_attack, np.full(generated, -1, dtype=np.int8)]
-    )
-    synthetic = np.concatenate(
-        [np.zeros(original_y.size, dtype=bool), np.ones(generated, dtype=bool)]
-    )
-    np.save(output / "x_test.npy", np.asarray(test_x, dtype=np.float32))
-    np.save(output / "y_test.npy", np.asarray(test_y, dtype=np.int8))
-    np.save(output / "test_source_row.npy", test_source)
-    np.save(output / "test_attack_id.npy", test_attack)
-    np.save(output / "test_is_synthetic.npy", synthetic)
+    if test_adasyn == "printed":
+        if adasyn_distance_queries > 100_000_000_000 and not force_expensive_adasyn:
+            raise RuntimeError(
+                "printed full-test ADASYN requires about "
+                f"{adasyn_distance_queries:,} first-pass query/reference pairs "
+                "under the selected exact library implementation; rerun with "
+                "--force-expensive-adasyn only for a deliberately budgeted attempt"
+            )
+        adasyn_started = time.perf_counter()
+        sampler = ADASYN(random_state=seed, n_neighbors=adasyn_neighbors)
+        test_x, test_y = sampler.fit_resample(original_x, original_y)
+        adasyn_seconds = time.perf_counter() - adasyn_started
+        generated = int(test_y.size - original_y.size)
+        test_source = np.concatenate(
+            [original_source, np.full(generated, -1, dtype=np.int64)]
+        )
+        test_attack = np.concatenate(
+            [original_attack, np.full(generated, -1, dtype=np.int8)]
+        )
+        synthetic = np.concatenate(
+            [np.zeros(original_y.size, dtype=bool), np.ones(generated, dtype=bool)]
+        )
+        np.save(output / "x_test.npy", np.asarray(test_x, dtype=np.float32))
+        np.save(output / "y_test.npy", np.asarray(test_y, dtype=np.int8))
+        np.save(output / "test_source_row.npy", test_source)
+        np.save(output / "test_attack_id.npy", test_attack)
+        np.save(output / "test_is_synthetic.npy", synthetic)
 
     files = [
         output / "benign_raw.npy",
@@ -497,13 +542,25 @@ def prepare_p0(
         output / "benign.npy",
         *attack_paths,
         output / "x_train.npy",
-        output / "x_test.npy",
-        output / "y_test.npy",
+        output / "test_original_x.npy",
+        output / "test_original_y.npy",
     ]
+    if test_adasyn == "printed":
+        files.extend([output / "x_test.npy", output / "y_test.npy"])
     metadata: dict[str, object] = {
         "status": "complete",
         "schema": 1,
-        "method": "P0-ISET-FCSAE",
+        "method": (
+            "P0-ISET-FCSAE"
+            if test_adasyn == "printed"
+            else "I-ADASYN-NONE-ISET-FCSAE"
+        ),
+        "configuration": {
+            "mode": profiles_record["mode"],
+            "seed": seed,
+            "test_adasyn": test_adasyn,
+            "adasyn_neighbors": adasyn_neighbors,
+        },
         "paper_order": [
             "strict_48_slot_profiles",
             "six_attacks_all_customers",
@@ -511,7 +568,11 @@ def prepare_p0(
             "customer_disjoint_2_to_1_B1_B2",
             "XTR_equals_B1",
             "XTST_original_equals_B2_plus_all_customer_M",
-            "ADASYN_inside_test",
+            (
+                "ADASYN_inside_test"
+                if test_adasyn == "printed"
+                else "declared_I-ADASYN-NONE_continuation"
+            ),
         ],
         "choices": {
             "population": "all_4225_residential",
@@ -522,7 +583,11 @@ def prepare_p0(
             "scaling": "joint_B_plus_all_M_featurewise_before_split",
             "split": "customer_disjoint_seeded",
             "malicious_test_population": "all_customers",
-            "anomaly_adasyn": "test_set_as_printed",
+            "anomaly_adasyn": (
+                "test_set_as_printed"
+                if test_adasyn == "printed"
+                else "omitted_in_explicit_I-ADASYN-NONE_branch"
+            ),
             "adasyn_neighbors": adasyn_neighbors,
             "seed": seed,
         },
@@ -533,10 +598,16 @@ def prepare_p0(
             "B2_profiles": int(b2_index.size),
             "malicious_profiles": int(6 * benign.shape[0]),
             "test_original_profiles": int(original_y.size),
-            "test_after_adasyn": int(test_y.size),
-            "test_synthetic_profiles": int(generated),
-            "test_benign": int(np.count_nonzero(test_y == 0)),
-            "test_malicious": int(np.count_nonzero(test_y == 1)),
+            "test_original_benign": int(np.count_nonzero(original_y == 0)),
+            "test_original_malicious": int(np.count_nonzero(original_y == 1)),
+            "test_after_adasyn": int(test_y.size) if test_y is not None else None,
+            "test_synthetic_profiles": generated,
+            "test_benign": (
+                int(np.count_nonzero(test_y == 0)) if test_y is not None else None
+            ),
+            "test_malicious": (
+                int(np.count_nonzero(test_y == 1)) if test_y is not None else None
+            ),
             "table_iv_full_scalar_readings": int(train_index.size * FEATURES),
         },
         "scaler": {"mean": mean.tolist(), "scale": scale.tolist()},
@@ -544,6 +615,33 @@ def prepare_p0(
             "profile_extraction": profiles_record["elapsed_seconds"],
             "adasyn": adasyn_seconds,
             "preparation_after_profile_load": time.perf_counter() - started,
+        },
+        "source": source_record,
+        "source_nodes": {
+            "attack_3_endpoint": {
+                "paper_claim": "t_f = t_i - t_l for a positive theft duration",
+                "literal_status": "non_executable_end_precedes_start",
+                "assumption": "t_f = t_i + t_l, clipped at hour 24",
+                "derived_operation": (
+                    "draw integer start 0..19 and duration 4..24 inclusive; "
+                    "zero the corresponding half-open two-slots-per-hour interval"
+                ),
+            },
+            "test_adasyn": {
+                "paper_claim": "apply ADASYN to B2 plus all-customer M",
+                "literal_status": (
+                    "executed"
+                    if test_adasyn == "printed"
+                    else "not_executed_in_this_interpretation"
+                ),
+                "assumption": (
+                    "imbalanced-learn default exact neighbors"
+                    if test_adasyn == "printed"
+                    else "evaluate the preserved original B2+M rows without resampling"
+                ),
+                "derived_operation": test_adasyn,
+                "first_pass_query_reference_pairs": adasyn_distance_queries,
+            },
         },
         "versions": {
             "python": sys.version.split()[0],
@@ -569,15 +667,43 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     parser.add_argument("--seed", type=int, default=DATA_SEED)
     parser.add_argument("--adasyn-neighbors", type=int, default=5)
+    parser.add_argument(
+        "--test-adasyn",
+        choices=("printed", "none"),
+        default="printed",
+        help=(
+            "printed executes the paper's test-set ADASYN; none records and "
+            "executes the separate I-ADASYN-NONE continuation"
+        ),
+    )
+    parser.add_argument(
+        "--force-expensive-adasyn",
+        action="store_true",
+        help="permit the known multi-trillion-pair full default-ADASYN call",
+    )
     args = parser.parse_args()
     if args.adasyn_neighbors < 1:
         parser.error("--adasyn-neighbors must be positive")
-    output = args.output or DEFAULT_ROOT / f"p0-{args.mode}"
+    output = args.output or DEFAULT_ROOT / f"p0-{args.mode}-{args.test_adasyn}"
     output.mkdir(parents=True, exist_ok=True)
     metadata_path = output / "metadata.json"
+    requested = {
+        "mode": args.mode,
+        "seed": args.seed,
+        "test_adasyn": args.test_adasyn,
+        "adasyn_neighbors": args.adasyn_neighbors,
+    }
+    source_record = verified_source()
     if metadata_path.is_file():
         metadata = json.loads(metadata_path.read_text())
         if metadata.get("status") == "complete":
+            if metadata.get("configuration") != requested:
+                raise ValueError(
+                    "existing prepared cache has a different configuration: "
+                    f"{metadata.get('configuration')} != {requested}"
+                )
+            if metadata.get("source") != source_record:
+                raise ValueError("prepared cache source provenance no longer matches")
             print(json.dumps(metadata["counts"], indent=2))
             print(f"already complete: {output}")
             return 0
@@ -593,6 +719,9 @@ def main() -> int:
             profiles_record,
             seed=args.seed,
             adasyn_neighbors=args.adasyn_neighbors,
+            test_adasyn=args.test_adasyn,
+            force_expensive_adasyn=args.force_expensive_adasyn,
+            source_record=source_record,
         )
     except Exception as exc:
         save_json(
@@ -602,6 +731,7 @@ def main() -> int:
                 "error_type": type(exc).__name__,
                 "error": str(exc),
                 "mode": args.mode,
+                "configuration": requested,
             },
         )
         raise

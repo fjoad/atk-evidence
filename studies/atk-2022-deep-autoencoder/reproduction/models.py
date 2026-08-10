@@ -89,7 +89,29 @@ def build_fc_sae(*, seed: int, learning_rate: float = 0.001) -> keras.Model:
         optimizer=optimizer(spec.optimizer, learning_rate),
         loss="mean_squared_error",
     )
+    validate_fc_sae(model)
     return model
+
+
+def validate_fc_sae(model: keras.Model) -> None:
+    """Fail if the runtime model drifts from the frozen Table-I replay."""
+
+    dense = [layer for layer in model.layers if isinstance(layer, layers.Dense)]
+    dropout = [
+        layer for layer in model.layers if isinstance(layer, layers.Dropout)
+    ]
+    units = [int(layer.units) for layer in dense]
+    activations = [layer.activation.__name__ for layer in dense]
+    expected_units = [400, 300, 200, 100, 100, 200, 300, 400, 48]
+    expected_activations = ["sigmoid"] * 8 + ["softmax"]
+    if units != expected_units:
+        raise AssertionError(f"FC-SAE widths drifted: {units}")
+    if activations != expected_activations:
+        raise AssertionError(f"FC-SAE activations drifted: {activations}")
+    if len(dropout) != 8 or any(float(layer.rate) != 0.4 for layer in dropout):
+        raise AssertionError("FC-SAE must apply dropout 0.4 after all 8 hidden layers")
+    if int(model.count_params()) != 450_448:
+        raise AssertionError(f"FC-SAE parameter count drifted: {model.count_params()}")
 
 
 def build_lstm_sae(*, seed: int, learning_rate: float = 0.001) -> keras.Model:

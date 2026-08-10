@@ -271,6 +271,13 @@
 
 ## User emphases
 
+- 2026-08-11 baseline-first execution: before testing alternative assumptions,
+  run one frozen straight-through Paper-1 anchor end to end. The current runnable
+  lane is full ISET, FC-SAE, seed 11, batch 512, original `B2+M`, producing the
+  Table III row, full-data Table IV cell/timing, and Table V attack rows from one
+  model. It is explicitly `I-ADASYN-NONE`, not completed printed `P0`; the
+  multi-trillion-pair default test-ADASYN failure remains visible. Do not start
+  an ambiguity sweep before inspecting this result.
 - 2026-08-11 non-executable reporting rule: every paper statement that cannot
   exist or run must be visibly identified on the study site and in the LaTeX
   report. Preserve the literal failure, predeclare all materially reasonable

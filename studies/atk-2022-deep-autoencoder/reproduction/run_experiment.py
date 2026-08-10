@@ -27,7 +27,7 @@ from models import SPECS, build_model, layer_inventory
 
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_DATA = (
-    REPO / "data/derived/atk-2022-deep-autoencoder/reproduction/p0-tiny-v1"
+    REPO / "data/derived/atk-2022-deep-autoencoder/reproduction/p0-full-none"
 )
 DEFAULT_RESULTS = (
     REPO
@@ -39,6 +39,26 @@ REPORTED = {
     "fc_vae": {"DR": 88, "FA": 11, "SP": 89, "PR": 89, "ACC": 88.5, "F1": 88.5, "AUC": 85},
     "lstm_vae": {"DR": 91, "FA": 7, "SP": 93, "PR": 91, "ACC": 92, "F1": 91, "AUC": 86},
     "lstm_aea": {"DR": 94, "FA": 5, "SP": 95, "PR": 93, "ACC": 94.5, "F1": 93.5, "AUC": 90},
+}
+REPORTED_TABLE_4 = {
+    "fc_sae": {
+        "half": {"training_minutes": 72, "ACC": 70},
+        "three_quarter": {"training_minutes": 97, "ACC": 78.5},
+        "full": {"training_minutes": 137, "ACC": 83},
+    },
+    "lstm_sae": {
+        "half": {"training_minutes": 90, "ACC": 75},
+        "three_quarter": {"training_minutes": 127, "ACC": 83},
+        "full": {"training_minutes": 183, "ACC": 86},
+    },
+}
+REPORTED_TABLE_5_FC_SAE = {
+    1: {"DR": 82.5, "FA": 15},
+    2: {"DR": 81, "FA": 16},
+    3: {"DR": 83, "FA": 10},
+    4: {"DR": 80, "FA": 17},
+    5: {"DR": 80, "FA": 17},
+    6: {"DR": 80, "FA": 19},
 }
 
 
@@ -54,6 +74,11 @@ def save_json(path: Path, payload: dict[str, object]) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     temporary.replace(path)
+
+
+def stable_id(payload: dict[str, object]) -> str:
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    return hashlib.sha256(encoded).hexdigest()[:12]
 
 
 def git_commit() -> str:
@@ -200,7 +225,7 @@ def main() -> int:
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
     parser.add_argument("--output", type=Path, default=DEFAULT_RESULTS)
     parser.add_argument("--epochs", type=int, default=100)
-    parser.add_argument("--batch-size", type=int, default=32)
+    parser.add_argument("--batch-size", type=int, default=512)
     parser.add_argument("--score-batch", type=int, default=8_192)
     parser.add_argument("--patience", type=int, default=5)
     parser.add_argument("--min-delta", type=float, default=1e-4)
@@ -209,7 +234,7 @@ def main() -> int:
     parser.add_argument(
         "--test-view",
         choices=("adasyn", "original"),
-        default="adasyn",
+        default="original",
         help=(
             "adasyn uses the paper-printed resampled test cache; original uses "
             "the exact B2+M population before ADASYN (I-ADASYN/no-resampling)"
@@ -220,7 +245,58 @@ def main() -> int:
 
     if min(args.epochs, args.batch_size, args.score_batch) < 1:
         parser.error("epochs and batch sizes must be positive")
-    attempt = f"seed_{args.seed}_{args.train_fraction}_{args.test_view}"
+    if args.table_v and args.train_fraction != "full":
+        parser.error("Table V is evaluated only from the full-training model")
+
+    metadata_path = args.data / "metadata.json"
+    if not metadata_path.is_file():
+        raise ValueError(f"prepared-data metadata is missing: {metadata_path}")
+    metadata = json.loads(metadata_path.read_text())
+    if metadata.get("status") != "complete":
+        raise ValueError("prepared data are not complete")
+    if metadata.get("configuration", {}).get("mode") == "full" and not os.environ.get(
+        "SLURM_JOB_ID"
+    ):
+        raise RuntimeError("full preparation, training, and scoring must run in Slurm")
+    if args.test_view == "adasyn" and metadata.get("configuration", {}).get(
+        "test_adasyn"
+    ) != "printed":
+        raise ValueError("the selected cache does not contain printed ADASYN rows")
+
+    resolved_learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
+    method = (
+        f"P0-ISET-{SPECS[args.model].name}"
+        if args.test_view == "adasyn"
+        else f"I-ADASYN-NONE-ISET-{SPECS[args.model].name}"
+    )
+    paper_tables = ["IV"] if args.train_fraction != "full" else ["III", "IV"]
+    if args.table_v:
+        paper_tables.append("V")
+    configuration = {
+        "method": method,
+        "paper_tables": paper_tables,
+        "scientific_question": (
+            f"Does the frozen {SPECS[args.model].name} completion reproduce "
+            "the reported ISET row?"
+        ),
+        "model": args.model,
+        "seed": args.seed,
+        "epochs_max": args.epochs,
+        "batch_size": args.batch_size,
+        "score_batch": args.score_batch,
+        "patience": args.patience,
+        "min_delta": args.min_delta,
+        "learning_rate": resolved_learning_rate,
+        "train_fraction": args.train_fraction,
+        "test_view": args.test_view,
+        "table_v": args.table_v,
+        "threshold": SPECS[args.model].threshold,
+        "anomaly_direction": SPECS[args.model].anomaly_direction,
+        "data_metadata_sha256": sha256(metadata_path),
+    }
+    configuration_id = stable_id({**configuration, "seed": "<seed>"})
+    attempt_id = stable_id(configuration)
+    attempt = f"seed_{args.seed}_{attempt_id}"
     if args.table_v:
         attempt += "_table_v"
     run = (
@@ -237,36 +313,19 @@ def main() -> int:
             print(json.dumps(existing["metrics"], indent=2))
             print(f"immutable attempt already complete: {run}")
             return 0
+    failure_path = run / "failure.json"
+    if failure_path.is_file():
+        raise RuntimeError(
+            f"immutable attempt already failed: {failure_path}; preserve it and "
+            "change an execution setting to create a new attempt"
+        )
 
     total_started = time.perf_counter()
-    configuration = {
-        "method": (
-            f"P0-ISET-{SPECS[args.model].name}"
-            if args.test_view == "adasyn"
-            else f"I-ADASYN-NONE-ISET-{SPECS[args.model].name}"
-        ),
-        "model": args.model,
-        "seed": args.seed,
-        "epochs_max": args.epochs,
-        "batch_size": args.batch_size,
-        "score_batch": args.score_batch,
-        "patience": args.patience,
-        "min_delta": args.min_delta,
-        "learning_rate": args.learning_rate,
-        "train_fraction": args.train_fraction,
-        "test_view": args.test_view,
-        "table_v": args.table_v,
-        "threshold": SPECS[args.model].threshold,
-    }
+    configuration["configuration_id"] = configuration_id
+    configuration["attempt_id"] = attempt_id
     save_json(run / "config.json", configuration)
     try:
         load_started = time.perf_counter()
-        metadata_path = args.data / "metadata.json"
-        metadata = json.loads(metadata_path.read_text()) if metadata_path.is_file() else None
-        if args.test_view == "adasyn" and (
-            metadata is None or metadata.get("status") != "complete"
-        ):
-            raise ValueError("prepared ADASYN data are not complete")
         x_train_all = np.load(args.data / "x_train.npy", mmap_mode="r")
         order = np.load(args.data / "table_iv_order.npy", mmap_mode="r")
         fractions = {"half": 0.5, "three_quarter": 0.75, "full": 1.0}
@@ -292,7 +351,7 @@ def main() -> int:
 
         build_started = time.perf_counter()
         model = build_model(
-            args.model, seed=args.seed, learning_rate=args.learning_rate
+            args.model, seed=args.seed, learning_rate=resolved_learning_rate
         )
         inventory = layer_inventory(model)
         build_seconds = time.perf_counter() - build_started
@@ -353,6 +412,14 @@ def main() -> int:
                 threshold=SPECS[args.model].threshold,
                 score_batch=args.score_batch,
             )
+            if args.model == "fc_sae":
+                for row in table_v_rows:
+                    reported = REPORTED_TABLE_5_FC_SAE[int(row["attack"])]
+                    row["reported"] = reported
+                    row["difference_reproduced_minus_reported"] = {
+                        key: float(row["metrics"][key]) - float(value)
+                        for key, value in reported.items()
+                    }
 
         history_payload = {
             key: [float(value) for value in values]
@@ -370,7 +437,7 @@ def main() -> int:
         result: dict[str, object] = {
             "status": "success",
             "eligibility": (
-                "exploratory_paper_literal_P0"
+                "exploratory_paper_primary_P0"
                 if args.test_view == "adasyn"
                 else "exploratory_interpretation_I-ADASYN-NONE"
             ),
@@ -381,11 +448,8 @@ def main() -> int:
                 "metadata_sha256": (
                     sha256(metadata_path) if metadata_path.is_file() else None
                 ),
-                "method": (
-                    metadata["method"]
-                    if metadata is not None
-                    else "P0 preparation through exact B2+M, ADASYN pending"
-                ),
+                "method": metadata["method"],
+                "source_nodes": metadata.get("source_nodes", {}),
                 "counts": {
                     "B1_profiles": int(x_train_all.shape[0]),
                     "test_profiles": int(x_test.shape[0]),
@@ -413,10 +477,20 @@ def main() -> int:
             },
             "metrics": metrics,
             "reported_table_3": REPORTED[args.model],
-            "difference_reproduced_minus_reported": {
-                key: float(metrics[key]) - float(REPORTED[args.model][key])
-                for key in REPORTED[args.model]
-            },
+            "reported_table_4": (
+                REPORTED_TABLE_4.get(args.model, {}).get(args.train_fraction)
+            ),
+            "difference_reproduced_minus_reported": (
+                {
+                    key: float(metrics[key]) - float(REPORTED[args.model][key])
+                    for key in REPORTED[args.model]
+                }
+                if args.train_fraction == "full"
+                else {
+                    "ACC": float(metrics["ACC"])
+                    - float(REPORTED_TABLE_4[args.model][args.train_fraction]["ACC"])
+                }
+            ),
             "baselines": {
                 "untrained_stratified_sample": untrained,
                 "zero_reconstruction_full_test": zero_metrics,
@@ -447,7 +521,7 @@ def main() -> int:
         save_json(result_path, result)
     except Exception as exc:
         save_json(
-            run / "failure.json",
+            failure_path,
             {
                 "status": "failed",
                 "configuration": configuration,
