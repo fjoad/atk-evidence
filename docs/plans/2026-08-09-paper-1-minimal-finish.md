@@ -43,6 +43,11 @@ paper flow, and Charter evidence/status updates.
 Do not inspect the five-file implementation as evidence or resume computation
 until this checkpoint is accepted.
 
+**Reporting contract:** every literal non-executable node remains a visible
+source result. Predeclare the smallest repair and all materially distinct
+reasonable repairs, execute every one, and report their complete outcomes beside
+the published target. A repair is never relabeled as the literal method.
+
 ## Phase 1 — recover one trustworthy anchor
 
 1. Finish or discard the currently uncommitted score-audit change; do not leave

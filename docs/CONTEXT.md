@@ -271,6 +271,12 @@
 
 ## User emphases
 
+- 2026-08-11 non-executable reporting rule: every paper statement that cannot
+  exist or run must be visibly identified on the study site and in the LaTeX
+  report. Preserve the literal failure, predeclare all materially reasonable
+  executable repairs, run them under separate `I` IDs, and show every result
+  beside the reported target. A repair is never relabeled as the literal method;
+  a matching repair must be reported as readily as a non-match.
 - 2026-08-09 reframe: extracting the paper's actual method is the most rigorous
   and reasoning-intensive part of every study. Implementation should then be a
   small transparent transcription. Keep global infrastructure minimal, prove the

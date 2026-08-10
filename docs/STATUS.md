@@ -38,6 +38,10 @@
 - `P0-ISET-FCSAE` is now labeled precisely as a paper-primary `P+I` executable
   completion. The printed Attack-3 subtraction remains a non-executable source
   outcome rather than being silently called literal.
+- The accepted non-executable-source contract requires the literal failure and
+  every predeclared reasonable repair to be executed and reported side by side
+  with the published target; see
+  [`decisions/2026-08-11-non-executable-source-ladder.md`](decisions/2026-08-11-non-executable-source-ladder.md).
 - Exact CER/ISET consumption archives are verified. The allocation CSV is the
   explicitly labeled semantic-equivalence branch, not the official `.tab`
   serialization.

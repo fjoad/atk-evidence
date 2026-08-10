@@ -224,6 +224,28 @@ the source of every consequential line of scientific code.
 10. **Open branches:** each material alternative reading, listed but not yet
     expanded into a combinatorial system.
 
+#### From impossible wording to executable evidence
+
+A `NON-EXECUTABLE` or genuinely contradictory instruction is not the end of
+the audit and must not be silently skipped:
+
+1. preserve the exact printed wording, locator, and reason it cannot execute;
+2. record the literal branch as a failure/non-executable outcome;
+3. predeclare the smallest reasonable repair and every other materially
+   defensible interpretation before seeing results;
+4. execute each repaired interpretation under its own stable `I` identifier;
+5. show reported values, literal failure, every repair's results, seeds,
+   timings, and eligibility side by side on the study site and in the LaTeX
+   report; and
+6. report a match if one occurs and a bounded non-match if none occurs.
+
+No repaired branch may be described as what the authors secretly used. It only
+answers whether a reasonable executable completion of their text reproduces
+the claim.
+
+The durable evidence contract and its boundaries are recorded in
+[`docs/decisions/2026-08-11-non-executable-source-ladder.md`](docs/decisions/2026-08-11-non-executable-source-ladder.md).
+
 #### Source-freeze checkpoint
 
 Before writing model code, confirm:

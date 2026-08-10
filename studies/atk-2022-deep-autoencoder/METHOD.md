@@ -537,6 +537,23 @@ customer-disjoint malicious test identities, no synthetic test rows, validation
 chosen without using final test labels, an output activation compatible with
 standardized targets, and uncertainty over repeated seeds.
 
+## Non-executable execution and reporting rule
+
+Every `NON-EXECUTABLE` or contradictory source instruction has two distinct
+evidence products:
+
+1. the literal source node, preserved as a failed/non-executable result with
+   its exact locator and reason; and
+2. one or more predeclared `I` branches containing the smallest reasonable
+   executable repairs and every other materially defensible reading.
+
+All such `I` branches are executed, not merely discussed. The site and final
+LaTeX report must place the reported target, literal failure, each repair's
+configuration, all seeds/failures/timings, and reproduced values side by side.
+If a repair reproduces the claim, that is reported plainly; if none does, the
+conclusion remains bounded to the tested repairs. No repair is described as the
+authors' hidden implementation.
+
 ## Source instruction table
 
 `EXACT` means directly executable as stated. `AMBIGUOUS` means multiple material

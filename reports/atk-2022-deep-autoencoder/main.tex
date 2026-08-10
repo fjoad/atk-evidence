@@ -2,18 +2,21 @@
 
 \usepackage[margin=1in]{geometry}
 \usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
 
 \definecolor{evidenceblue}{HTML}{245B96}
 \newcommand{\status}[1]{\textsc{#1}}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
 
 \title{A Reproduction Audit of\\
 \emph{Deep Autoencoder-Based Anomaly Detection of\\
 Electricity Theft Cyberattacks in Smart Grids}}
 \author{ATK Evidence}
-\date{Work in progress --- 24 July 2026}
+\date{Work in progress --- 11 August 2026}
 
 \begin{document}
 \maketitle
@@ -40,7 +43,7 @@ author intent.
 \section{Source protocol reconstruction}
 
 The paper uses two different data paths. SGCC supplies real benign and
-malicious labels. ISET/CER supplies benign half-hourly electricity profiles,
+malicious labels. ISET, drawn from CER, supplies benign half-hourly profiles,
 from which six malicious variants are synthesized using Equations (1)--(6).
 Anomaly detectors are trained on benign data only, whereas supervised models
 use benign and malicious classes. The printed anomaly protocol applies ADASYN
@@ -60,16 +63,82 @@ Each material omission or contradiction receives a stable branch identifier
 before eligible results are examined. Non-executable printed expressions are
 preserved as findings and receive only explicitly labeled minimal repairs.
 
+\subsection{From impossible wording to executable evidence}
+
+When a printed operation cannot exist or execute, the audit does not silently
+repair it and does not stop at criticism. First, the exact wording and source
+locator are preserved as a literal non-executable outcome. Second, the smallest
+reasonable executable repair and every other materially defensible reading are
+predeclared under separate interpretation identifiers. Third, every such repair
+is executed over all declared seeds. The results section and public study site
+will place the reported target, literal failure, every repair's configuration,
+failures, timings, and metric distribution side by side. A repair that matches
+the paper is reported as plainly as a non-match. No repair is represented as
+the authors' unobserved implementation. The working hypothesis is non-match,
+but it cannot determine branch selection, stopping, or display.
+
+\subsection{Source failures and planned executable interpretations}
+
+{\small
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{longtable}{L{0.17\textwidth}L{0.24\textwidth}L{0.50\textwidth}}
+\toprule
+Source issue & Literal status & Executable evidence path \\
+\midrule
+\endfirsthead
+\toprule
+Source issue & Literal status & Executable evidence path \\
+\midrule
+\endhead
+SGCC length versus input & Roughly 1,034 daily values are supplied but the
+model consumes 48 inputs; no mapping is stated. & Separately named crop,
+window, resampling, and aggregation interpretations; no proxy may be called the
+literal result. \\
+Attack 3 endpoint & $t_f=t_i-t_l$ puts the final time before the start; hours
+are also mapped to 48 half-hour positions without a rule. & Preserve the
+literal failure; execute addition-plus-clipping, addition-plus-wraparound, and
+valid-endpoint redraw with declared slot mappings. \\
+Customer identity & The text requires unseen test customers but constructs the
+test population as $B_2+M$, where $M$ was generated from every customer. & Run
+all-customer versus held-out-customer attacks and customer-disjoint versus
+daily-row splits as distinct interpretations. \\
+VAE definition & Equation (9) mixes incompatible distribution variables;
+variance positivity and reconstruction probability are undefined; two passages
+give opposite score directions. & Execute finite declared loss reductions,
+positive variance parameterizations, probability estimators, draw counts, and
+both printed score directions. \\
+AEA decoder & Algorithm 5 uses the reconstruction before it has been decoded
+and disagrees with the prose over summation versus concatenation. & Execute
+repeat-latent, first-step/zero, and autoregressive schedules with both merge
+readings under separate identifiers. \\
+Search and threshold & Benign-only $X_{TR}$ cannot provide DR/FA or an ROC;
+the layer loop cannot yield the unequal Table-I widths; ``median of IQR of ROC''
+is not an algorithm. & Preserve the failures; execute direct Table-I replay and
+predeclared staged-search, validation-population, and deterministic threshold
+interpretations. \\
+Reported metric identities & Table-II Naive Bayes has DR=PR=75 but F1=77, and
+Tables II--III admit no common prevalence from their DR/FA/PR rows under the
+printed formulas. & This is a static source contradiction, not something to
+repair by changing the target. Experimental rows remain reported separately
+against the exact published values. \\
+Table-V identity & A fixed model, threshold, and benign set imply one FA, but
+six FAs are reported per model. & Execute common-model/common-benign,
+per-attack retraining, per-attack benign resampling, and their combination. \\
+\bottomrule
+\end{longtable}
+}
+
 \subsection{Corrected controls}
 
 Corrected experiments use customer-disjoint partitions, transformations fitted
 on training data only, untouched validation/test data, and valid
 validation-selected thresholds. They answer a different question and cannot
-substitute for the paper-literal reproduction.
+substitute for the paper-consistent reproduction.
 
 \section{Fidelity audit}
 
-The source-to-code audit covers data populations, attack equations, split
+The source-to-code audit will cover data populations, attack equations, split
 identity, normalization and ADASYN order, every reported neural layer,
 training loss, anomaly score, threshold selection, metric definitions, and
 experiment identity for Tables II--V. Historical runs affected by a material
@@ -80,6 +149,9 @@ mismatch are retained but excluded from paper-reproduction claims.
 \textcolor{evidenceblue}{\status{Open:}} Eligible source-faithful full-data
 results and confirmatory repeated-run statistics have not yet been completed.
 Exploratory and quarantined values will not be promoted into this section.
+Each non-executable source item above will receive a reported-versus-literal-
+failure-versus-repair result block; no closest repair will be selected in place
+of the full predeclared family.
 
 \begin{table}[ht]
 \centering
@@ -90,8 +162,8 @@ fingerprinted attempts.}
 Published table & Reproduction state & Evidence status \\
 \midrule
 Table II & Pending eligible completion & Open \\
-Table III & Pending source-v2 runs & Open \\
-Table IV & Pending source-v2 runs & Open \\
+Table III & Pending eligible completion & Open \\
+Table IV & Pending eligible completion & Open \\
 Table V & Pending explicit experiment identities & Open \\
 \bottomrule
 \end{tabular}

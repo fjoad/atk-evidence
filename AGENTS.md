@@ -29,6 +29,9 @@ Its governing rule is: read the paper more carefully than we write the code,
 then build the smallest transparent instrument that can execute the frozen
 reading. Do not turn a paper reproduction into a platform.
 
+The reporting contract for source wording that cannot execute is
+[`docs/decisions/2026-08-11-non-executable-source-ladder.md`](docs/decisions/2026-08-11-non-executable-source-ladder.md).
+
 ## Non-negotiable scientific mandate
 
 1. **Paper extraction dominates reasoning.** Read and visually inspect the
@@ -42,8 +45,12 @@ reading. Do not turn a paper reproduction into a platform.
    alternative anomaly scores, or other improvements belong only in a separate
    controlled-analysis track.
 4. **Branch ambiguities.** Every material omission or contradiction becomes one
-   or more documented reasonable interpretations. Never pick an interpretation
-   after seeing that it produces a favorable result.
+   or more documented reasonable interpretations. If the printed operation
+   cannot exist or execute, preserve that literal failure, predeclare the
+   smallest reasonable executable repairs, run every materially distinct
+   repair, and show each result beside the reported target on the site and in
+   the paper report. Never pick an interpretation after seeing that it produces
+   a favorable result or relabel a repair as the literal method.
 5. **Use the minimal scientific instrument.** The five direct reproduction
    files are the active implementation. Shared code performs mechanical work
    only; paper meaning remains explicit. Hypothetical reuse never justifies new

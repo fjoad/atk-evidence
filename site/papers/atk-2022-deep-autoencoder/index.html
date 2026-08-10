@@ -121,13 +121,13 @@
 <main>
   <div class="topline">
     <a href="../../">← ATK Evidence</a>
-    <span>Study 1 · source-first reconstruction · 24 July 2026</span>
+    <span>Study 1 · source-first reconstruction · 11 August 2026</span>
   </div>
 
   <div class="kicker">What the paper actually does</div>
   <h1>From two electricity datasets to Tables I–V</h1>
   <p class="lede">A compact reconstruction of “Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids.” This follows the paper’s order, including questionable operations. Where the text does not define one executable experiment, the ambiguity is shown rather than silently repaired.</p>
-  <p class="meta">Paper source: Sections II–IV, Equations (1)–(18), Algorithms 1–6, Figures 1–5, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
+  <p class="meta">Paper source: Sections II–IV, Equations (1)–(13), Algorithms 1–6, Figures 1–8, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
 
   <div class="legend" aria-label="Legend">
     <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
@@ -144,6 +144,17 @@
     <div class="flowbox"><strong>3–4 · Fit</strong><span>Benchmarks and five autoencoders; sequential search and ROC-derived thresholds on ISET</span></div>
     <div class="arrow" aria-hidden="true">→</div>
     <div class="flowbox"><strong>5 · Report</strong><span>SGCC and ISET metrics, ISET training time, and per-attack detection</span></div>
+  </section>
+
+  <section class="stage">
+    <div class="stage-title"><div class="stage-number">!</div><h2>When the printed method cannot execute</h2></div>
+    <p>The audit does not quietly fix impossible wording and does not stop after pointing it out. Every such item follows the same visible evidence ladder:</p>
+    <div class="three">
+      <div class="track"><strong><span class="tag impossible">1 · LITERAL FAILURE</span></strong><p>Quote and locate the printed operation; preserve exactly why it cannot exist, calculate, or run.</p></div>
+      <div class="track"><strong><span class="tag choice">2 · REASONABLE REPAIRS</span></strong><p>Predeclare the smallest executable repair and every other materially defensible reading under separate stable IDs.</p></div>
+      <div class="track"><strong><span class="tag alongside">3 · EXECUTE + REPORT</span></strong><p>Run every repair and show all seeds, failures, timings, and metrics beside the paper's target here and in the scientific PDF.</p></div>
+    </div>
+    <div class="callout"><strong>Interpretation rule:</strong> a repair is evidence about a reasonable executable completion of the text. It is never described as the authors' hidden implementation. The working hypothesis is that reasonable completions will not reproduce the paper, but that expectation cannot select the branches or the displayed results. A successful repair is reported as plainly as a non-match.</div>
   </section>
 
   <section class="stage">
@@ -168,14 +179,14 @@
     <article class="block">
       <h3>1c · The six ISET attack transforms</h3>
       <div class="equations">
-        <div class="equation"><b>f1</b> one factor α∈[0.1,0.8] scales a whole profile</div>
-        <div class="equation"><b>f2</b> independent αt∈[0.1,0.8] scales each reading</div>
+        <div class="equation"><b>f1</b> one fixed α∈[0.1,0.8] scales readings; the scope of “all samples” is undefined</div>
+        <div class="equation"><b>f2</b> independent β(d,t)∈[0.1,0.8] scales each reading</div>
         <div class="equation"><b>f3</b> zero a randomly selected 4–24 hour interval</div>
         <div class="equation"><b>f4</b> replace every reading by that day’s mean</div>
-        <div class="equation"><b>f5</b> multiply the day’s mean by independent αt</div>
+        <div class="equation"><b>f5</b> multiply the day’s mean by independent β(d,t)</div>
         <div class="equation"><b>f6</b> reverse the 48 readings in time</div>
       </div>
-      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable; minimal repairs are separate named interpretations.</div>
+      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable. Executable interpretation branches use addition plus clipping, addition plus wraparound, or redraw to a valid endpoint, crossed with declared hour-to-half-hour mappings; every branch is run and reported separately.</div>
     </article>
   </section>
 
@@ -238,6 +249,8 @@
         </table>
       </div>
       <p><span class="tag choice">AMBIGUOUS</span> Figures/prose show a distinct latent layer, while Algorithms 2 and 5 directly reuse the final encoder state or attention context. Latent width is not reported. These are separate model interpretations, not permission to choose whichever scores best.</p>
+      <div class="callout red"><span class="tag impossible">VAE DEFINITION</span> Equation (9) places distributions over incompatible variables inside one KL divergence and compares the lower bound with <code>log p(k)</code> rather than <code>log p(x)</code>. Algorithms 3–4 call an unconstrained activation-plus-bias output a variance, so it need not be positive. The VAE prose says low reconstruction probability is anomalous, while the generic decision paragraph says probability above the threshold is anomalous. Literal failures and finite loss/variance/score-direction completions remain separate results.</div>
+      <div class="callout red"><span class="tag impossible">AEA DECODER</span> Algorithm 5 defines the reconstructed decoder input using that reconstruction before decoding, and the prose calls the context/reconstruction merge concatenation while the algorithm prints a sum. Repeat-latent, zero-after-first-step, and autoregressive decoder completions—and both merge readings—must remain named executable interpretations.</div>
     </article>
   </section>
 
@@ -267,6 +280,7 @@
     <article class="block">
       <h3>5a · Metrics from one score vector and confusion matrix</h3>
       <p><span class="tag paper">IN PAPER</span> Detection rate, false-alarm rate, specificity, precision, F1, ROC-AUC, and <strong>balanced accuracy</strong>—called “ACC” in the paper: <code>(DR + specificity) / 2</code>.</p>
+      <div class="callout red"><span class="tag impossible">REPORTED-METRIC ARITHMETIC</span> The precision prose describes recall although the printed formula is <code>TP/(TP+FP)</code>. Table-II Naive Bayes reports <code>DR=75</code>, <code>PR=75</code>, and <code>F1=77</code>, although the stated harmonic-mean formula forces <code>F1=75</code>. More broadly, the DR/FA/PR rows in neither Table II nor Table III admit one common test prevalence even with generous rounding. These static contradictions are shown beside, but are not substituted for, experimental reproduction results.</div>
     </article>
 
     <div class="two">
@@ -288,7 +302,7 @@
       </article>
     </div>
 
-    <div class="callout red"><span class="tag impossible">TABLE V INVARIANT</span> With one fixed model, threshold, and benign test set, false alarms depend only on those benign rows and must be identical for all six attack columns. The paper reports different FA values. Therefore at least one experiment identity—model fit, benign sample, threshold, or another unreported element—must vary.</div>
+    <div class="callout red"><span class="tag impossible">TABLE V IDENTITY IS UNSTATED</span> With one fixed model, threshold, and benign test set, false alarms depend only on those benign rows and must be identical for all six attack columns. The paper reports different FA values. Therefore at least one experiment identity—model fit, benign sample, threshold, or another unreported element—must vary. Common-model/common-benign, per-attack retraining, per-attack benign resampling, and their combination are separate declared readings.</div>
   </section>
 
   <section class="stage">
@@ -298,6 +312,7 @@
       <div class="track"><strong><span class="tag choice">I</span> Interpretation track</strong><p>Run each finite, defensible reading of omissions and contradictions under a stable ID fixed before outcomes.</p></div>
       <div class="track"><strong><span class="tag alongside">C</span> Corrected track</strong><p>Use conventional leakage controls and valid selection as a separate scientific comparison, never as paper-reproduction evidence.</p></div>
     </div>
+    <div class="callout"><strong>Result display contract:</strong> for every impossible source node, the final results view and scientific PDF will show the paper's number, the literal non-executable status, and every reasonable repair's full result distribution side by side—not only the repair that comes closest.</div>
     <p class="muted">The compact map intentionally does not display the internal combinatorial audit matrix. Its purpose is to make the paper’s actual experimental story legible. The machine-readable branch inventory remains available for verification.</p>
   </section>
 
@@ -305,8 +320,8 @@
     <div class="stage-title"><div class="stage-number">✓</div><h2>Current project position</h2></div>
     <div class="status">
       <div><b>Data</b><span class="muted">SGCC and exact CER consumption archives are verified locally.</span></div>
-      <div><b>Fidelity</b><span class="muted">The PDF-to-code crosswalk is structurally complete; old mismatched results remain quarantined.</span></div>
-      <div><b>Verdict</b><span class="muted">Not issued. Eligible full-data source-v2 runs and confirmatory statistics remain.</span></div>
+      <div><b>Fidelity</b><span class="muted">The independent PDF re-audit is complete; the renewed five-file source-to-code audit is the next checkpoint. Old mismatched results remain quarantined.</span></div>
+      <div><b>Verdict</b><span class="muted">Not issued. Eligible full-data paper-consistent runs and confirmatory statistics remain.</span></div>
     </div>
   </section>
 
