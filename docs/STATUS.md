@@ -13,7 +13,10 @@
   [`decisions/2026-08-09-paper-first-minimal-instrument.md`](decisions/2026-08-09-paper-first-minimal-instrument.md).
 - Paper 1 is the only active execution target. Paper 2's existing artifact-level
   audit remains preserved but frozen; cross-paper synthesis has not started.
-- No local or cluster experimental job is running.
+- Panther job `373789` is running the frozen baseline from commit `c8c136f` on
+  one 16-GB V100. Source verification and full no-resampling preparation passed;
+  training began with the expected 1,500,520 B1 profiles. No other project job
+  is queued or running.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -75,13 +78,11 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Commit and push the audited compact baseline.
-2. Pull that exact commit on Panther and submit the one short
-   `run_baseline.sbatch` wrapper.
-3. Inspect the saved architecture, loss history, score distributions, zero and
+1. Monitor Panther job `373789` without changing its frozen configuration.
+2. Inspect the saved architecture, loss history, score distributions, zero and
    untrained controls, hashes, metrics, and Table-V FA invariant before any
    second seed or interpretation branch.
-4. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
+3. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
 
 ## Not on the critical path
 
