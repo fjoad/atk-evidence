@@ -19,7 +19,8 @@
   artifacts. Panther CPU job `373799` measured the selected exact ADASYN
   neighbor implementation, and score-audit job `373800` completed. Premature
   repeated-seed jobs `373803` and `373804` were cancelled before execution
-  after the breadth-first correction.
+  after the breadth-first correction. One-factor linear-output job `373805`
+  is queued with an eight-CPU/one-V100 request.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -104,8 +105,9 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Run one seed of the separately labeled linear-output FC-SAE control prompted
-   by the standardized-input/Softmax-output incompatibility.
+1. Await one seed of the separately labeled linear-output FC-SAE control in
+   Panther job `373805`; it tests the standardized-input/Softmax-output
+   incompatibility and nothing else.
 2. Continue breadth-first with one watched seed for each remaining proposed
    architecture and one-factor material interpretation; use each contrast to
    locate divergence before adding repetitions.

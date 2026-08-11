@@ -23,6 +23,10 @@
   found three V100s free, but only ten CPU cores free on their node while each
   job requested sixteen; the delay was resource shape/priority, not exhaustion
   of every 16-GB GPU.
+- Breadth-first job 373805 is the seed-11
+  `C-OUTPUT-LINEAR-ISET-FC-SAE` one-factor control. It requests eight CPU cores
+  and one 16-GB V100, preserves all other baseline settings, and was pending for
+  scheduler priority at submission.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
