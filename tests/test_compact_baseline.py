@@ -155,6 +155,16 @@ class CompactBaselineTests(unittest.TestCase):
                 analyze_results.effective_eligibility(result),
                 "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
             )
+            audit = analyze_results.audit_scores(results[0])
+            self.assertIsNone(audit["trained_vs_zero_reconstruction"])
+            self.assertEqual(
+                sum(
+                    row["profiles"]
+                    for row in audit["table_v_heldout_benign_interpretation"]
+                ),
+                int(np.count_nonzero(np.load(results[0].parent / "labels.npy"))),
+            )
+            self.assertIn("closest_reported_operating_point", audit)
 
     def test_every_remaining_table_iii_model_builds_and_scores(self) -> None:
         rng = np.random.default_rng(11)

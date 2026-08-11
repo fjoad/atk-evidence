@@ -145,6 +145,75 @@ def best_balanced_threshold(
     }
 
 
+def closest_reported_operating_point(
+    labels: np.ndarray,
+    scores: np.ndarray,
+    *,
+    direction: str,
+    reported_dr: float,
+    reported_fa: float,
+) -> dict[str, float]:
+    """Return the threshold whose ROC point is closest to printed DR and FA."""
+
+    oriented = scores if direction == "higher" else -scores
+    false_positive_rate, true_positive_rate, thresholds = roc_curve(
+        labels, oriented, drop_intermediate=True
+    )
+    dr = 100 * true_positive_rate
+    fa = 100 * false_positive_rate
+    distance = np.maximum(np.abs(dr - reported_dr), np.abs(fa - reported_fa))
+    index = int(np.argmin(distance))
+    oriented_threshold = float(thresholds[index])
+    return {
+        "direction": direction,
+        "threshold": (
+            oriented_threshold if direction == "higher" else -oriented_threshold
+        ),
+        "DR": float(dr[index]),
+        "FA": float(fa[index]),
+        "ACC": 50 * float(true_positive_rate[index] + 1 - false_positive_rate[index]),
+        "maximum_absolute_DR_FA_gap": float(distance[index]),
+    }
+
+
+def audit_attempt_arrays(
+    run: Path, data: Path, config: dict[str, object]
+) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
+    """Load aligned labels/attacks/scores for anomaly and supervised attempts."""
+
+    scores = np.load(run / "scores.npy", mmap_mode="r")
+    zero_path = run / "zero_reconstruction_scores.npy"
+    zero_scores = np.load(zero_path, mmap_mode="r") if zero_path.is_file() else None
+    saved_labels = run / "labels.npy"
+    if saved_labels.is_file():
+        labels = np.load(saved_labels, mmap_mode="r")
+        indices = np.load(run / "test_global_row.npy", mmap_mode="r")
+        if config.get("task") == "supervised":
+            block_size = int(np.load(data / "benign.npy", mmap_mode="r").shape[0])
+            attack_ids = np.asarray(indices // block_size, dtype=np.uint8)
+        else:
+            full_attacks = np.load(
+                data / "test_original_attack_id.npy", mmap_mode="r"
+            )
+            attack_ids = np.asarray(full_attacks[indices], dtype=np.uint8)
+    else:
+        test_view = str(config["test_view"])
+        labels_name = "y_test.npy" if test_view == "adasyn" else "test_original_y.npy"
+        attack_name = (
+            "test_attack_id.npy"
+            if test_view == "adasyn"
+            else "test_original_attack_id.npy"
+        )
+        labels = np.load(data / labels_name, mmap_mode="r")
+        attack_ids = np.load(data / attack_name, mmap_mode="r")
+    expected = (labels.shape, attack_ids.shape, scores.shape)
+    if len(set(expected)) != 1 or (
+        zero_scores is not None and zero_scores.shape != scores.shape
+    ):
+        raise ValueError(f"audit arrays must align, observed shapes: {expected}")
+    return labels, attack_ids, scores, zero_scores
+
+
 def audit_scores(attempt_path: Path) -> dict[str, object]:
     attempt_path = attempt_path.resolve()
     attempt = json.loads(attempt_path.read_text())
@@ -154,20 +223,9 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
     if not data.is_absolute():
         data = REPO / data
     test_view = str(config["test_view"])
-    labels_name = "y_test.npy" if test_view == "adasyn" else "test_original_y.npy"
-    attack_name = (
-        "test_attack_id.npy"
-        if test_view == "adasyn"
-        else "test_original_attack_id.npy"
+    labels, attack_ids, scores, zero_scores = audit_attempt_arrays(
+        run, data, config
     )
-    labels = np.load(data / labels_name, mmap_mode="r")
-    attack_ids = np.load(data / attack_name, mmap_mode="r")
-    scores = np.load(run / "scores.npy", mmap_mode="r")
-    zero_scores = np.load(run / "zero_reconstruction_scores.npy", mmap_mode="r")
-    if not (labels.shape == attack_ids.shape == scores.shape == zero_scores.shape):
-        raise ValueError(
-            "labels, attack identities, trained scores, and zero scores must align"
-        )
 
     benign = np.asarray(scores[labels == 0])
     malicious = np.asarray(scores[labels == 1])
@@ -193,7 +251,7 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
             }
         )
 
-    return {
+    result = {
         "status": "success",
         "source_result": str(attempt_path),
         "method": config["method"],
@@ -207,7 +265,11 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
             "benign": array_summary(benign),
             "malicious": array_summary(malicious),
         },
-        "trained_vs_zero_reconstruction": chunked_pair_summary(scores, zero_scores),
+        "trained_vs_zero_reconstruction": (
+            chunked_pair_summary(scores, zero_scores)
+            if zero_scores is not None
+            else None
+        ),
         "reported_direction": best_balanced_threshold(
             labels, scores, direction=direction
         ),
@@ -218,6 +280,16 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
         ),
         "table_v_heldout_benign_interpretation": by_attack,
     }
+    reported = attempt.get("reported_table_3")
+    if reported:
+        result["closest_reported_operating_point"] = closest_reported_operating_point(
+            labels,
+            scores,
+            direction=direction,
+            reported_dr=float(reported["DR"]),
+            reported_fa=float(reported["FA"]),
+        )
+    return result
 
 
 def load_attempts(root: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
