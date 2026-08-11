@@ -21,8 +21,11 @@
   repeated-seed jobs `373803` and `373804` were cancelled before execution
   after the breadth-first correction. One-factor linear-output job `373805`
   completed successfully in 1:05:43 on one 16-GB V100; audit job `373824`
-  completed in 24 seconds. No Panther jobs are currently running. Future
-  wrappers request only the GPU so CPU shape cannot delay them.
+  completed in 24 seconds. Naive Bayes job `373833` completed in 1m36s. The
+  remaining Table-III breadth rows are queued sequentially as jobs
+  `373836`--`373844`: ARIMA, one-class SVM, supervised feed-forward,
+  supervised LSTM, multiclass SVM, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.
+  Future wrappers request only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -113,10 +116,13 @@ The committed summary is
 The benchmark reuse check found no preserved ISET/Table-III benchmark attempt
 in either the committed summaries or Panther's attempt manifests. Existing
 benchmark results are SGCC/Table II and cannot fill the current ISET breadth
-rows. Minimal ISET Naive Bayes job `373833` is submitted on Panther. It uses
+rows. Minimal ISET Naive Bayes job `373833` completed on Panther. It uses
 Gaussian Naive Bayes, all original all-customer `B+M`, and an exact seeded 2:1
 row split. The omitted supervised ADASYN step is explicit in method
 `I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES`; this is not the printed branch.
+It reproduced DR/FA/ACC/F1/AUC = 88.78/44.53/72.12/90.50/79.17%, versus
+73/18/77.5/73/70% reported. This completion does not reproduce the reported
+operating point.
 
 One full compact-route cluster result exists:
 
@@ -137,8 +143,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Continue breadth-first, one watched result at a time: the six benchmark
-   rows first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
+2. Harvest the sequential breadth queue: the remaining five benchmark rows
+   first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the
    renewed source/provenance/score gates.
