@@ -28,6 +28,19 @@ METRICS = ("DR", "FA", "SP", "PR", "ACC", "F1", "AUC")
 QUANTILES = (0.0, 0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 1.0)
 
 
+def strict_runtime_threshold(
+    oriented_threshold: float, scores: np.ndarray, *, direction: str
+) -> float:
+    """Translate sklearn's inclusive ROC boundary to this runner's strict rule."""
+
+    dtype = np.asarray(scores).dtype
+    if direction == "higher":
+        value = np.asarray(oriented_threshold, dtype=dtype)
+        return float(np.nextafter(value, np.asarray(-np.inf, dtype=dtype)))
+    value = np.asarray(-oriented_threshold, dtype=dtype)
+    return float(np.nextafter(value, np.asarray(np.inf, dtype=dtype)))
+
+
 def effective_eligibility(attempt: dict[str, object]) -> str:
     config = attempt["configuration"]
     if config.get("output_activation") == "linear":
@@ -131,12 +144,12 @@ def best_balanced_threshold(
         labels, oriented, drop_intermediate=True
     )
     index = int(np.argmax(true_positive_rate - false_positive_rate))
-    oriented_threshold = float(thresholds[index])
     return {
         "direction": direction,
-        "threshold": (
-            oriented_threshold if direction == "higher" else -oriented_threshold
+        "threshold": strict_runtime_threshold(
+            float(thresholds[index]), scores, direction=direction
         ),
+        "comparison": ">" if direction == "higher" else "<",
         "DR": 100 * float(true_positive_rate[index]),
         "FA": 100 * float(false_positive_rate[index]),
         "ACC": 50
@@ -163,12 +176,12 @@ def closest_reported_operating_point(
     fa = 100 * false_positive_rate
     distance = np.maximum(np.abs(dr - reported_dr), np.abs(fa - reported_fa))
     index = int(np.argmin(distance))
-    oriented_threshold = float(thresholds[index])
     return {
         "direction": direction,
-        "threshold": (
-            oriented_threshold if direction == "higher" else -oriented_threshold
+        "threshold": strict_runtime_threshold(
+            float(thresholds[index]), scores, direction=direction
         ),
+        "comparison": ">" if direction == "higher" else "<",
         "DR": float(dr[index]),
         "FA": float(fa[index]),
         "ACC": 50 * float(true_positive_rate[index] + 1 - false_positive_rate[index]),
