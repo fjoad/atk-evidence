@@ -15,6 +15,9 @@
   66.26%, and the learned score ranking is 0.99946-correlated with the
   zero-reconstruction control. This is an eligible exploratory interpretation,
   not completed printed ADASYN or a paper-wide verdict.
+- Unchanged batch-512 Softmax repetition jobs 373803 (seed 22) and 373804
+  (seed 33) were submitted on 2026-08-11. They must remain identical to the
+  seed-11 baseline and be aggregated with it without selecting a favorite.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.

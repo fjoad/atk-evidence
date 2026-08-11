@@ -30,8 +30,8 @@ layer, or another paper while this plan is active.
   and one frozen batch-512 anchor exist. Their close agreement is recorded.
 - Batch 512 remains the declared primary execution completion; batch 32 is a
   sensitivity.
-- Compact batch-512 job 373789 completed successfully in 53:12; no experimental
-  job is currently running.
+- Compact batch-512 job 373789 completed successfully in 53:12; unchanged
+  repetition jobs 373803 (seed 22) and 373804 (seed 33) are queued.
 
 ## Phase 0 — renewed source freeze
 
