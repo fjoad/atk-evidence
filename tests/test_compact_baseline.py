@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+import json
 import sys
 import tempfile
 import unittest
@@ -99,6 +101,60 @@ class CompactBaselineTests(unittest.TestCase):
         self.assertEqual(result["ACC"], 50)
         self.assertEqual(result["PR"], 50)
         self.assertEqual(result["F1"], 50)
+
+    def test_supervised_split_is_exact_seeded_and_deterministic(self) -> None:
+        left = run_experiment.exact_random_train_mask(101, seed=11)
+        repeated = run_experiment.exact_random_train_mask(101, seed=11)
+        other = run_experiment.exact_random_train_mask(101, seed=22)
+        self.assertEqual(int(left.sum()), (2 * 101) // 3)
+        self.assertTrue(np.array_equal(left, repeated))
+        self.assertFalse(np.array_equal(left, other))
+
+    def test_naive_bayes_route_uses_complete_b_plus_m(self) -> None:
+        rng = np.random.default_rng(11)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = root / "data"
+            output = root / "results"
+            data.mkdir()
+            np.save(data / "benign.npy", rng.normal(0, 1, (12, 48)).astype("float32"))
+            for attack_id in range(1, 7):
+                np.save(
+                    data / f"attack_{attack_id}.npy",
+                    rng.normal(attack_id, 1, (12, 48)).astype("float32"),
+                )
+            metadata = {"status": "complete", "files": {}}
+            metadata_path = data / "metadata.json"
+            metadata_path.write_text(json.dumps(metadata))
+            args = argparse.Namespace(
+                data=data,
+                output=output,
+                seed=11,
+                score_batch=7,
+            )
+            self.assertEqual(
+                run_experiment.run_naive_bayes(
+                    args, metadata=metadata, metadata_path=metadata_path
+                ),
+                0,
+            )
+            results = list(output.rglob("result.json"))
+            self.assertEqual(len(results), 1)
+            result = json.loads(results[0].read_text())
+            self.assertEqual(result["configuration"]["task"], "supervised")
+            self.assertEqual(result["data"]["counts"]["total"], 84)
+            self.assertEqual(result["data"]["counts"]["train"], 56)
+            self.assertEqual(result["data"]["counts"]["test"], 28)
+            self.assertEqual(
+                sum(result["data"]["counts"]["train_by_class"]), 56
+            )
+            self.assertEqual(
+                sum(result["data"]["counts"]["test_by_class"]), 28
+            )
+            self.assertEqual(
+                analyze_results.effective_eligibility(result),
+                "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+            )
 
     def test_analysis_never_merges_different_execution_configs(self) -> None:
         def attempt(seed: int, batch: int, group: str) -> dict[str, object]:

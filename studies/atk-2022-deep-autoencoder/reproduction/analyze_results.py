@@ -32,6 +32,12 @@ def effective_eligibility(attempt: dict[str, object]) -> str:
     config = attempt["configuration"]
     if config.get("output_activation") == "linear":
         return "exploratory_control_C-OUTPUT-LINEAR"
+    if config.get("task") == "supervised":
+        return (
+            "exploratory_paper_primary_supervised"
+            if config.get("supervised_adasyn") == "printed"
+            else "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE"
+        )
     return (
         "exploratory_paper_primary_P0"
         if config["test_view"] == "adasyn"
@@ -46,6 +52,7 @@ def analysis_group(config: dict[str, object]) -> str:
         key: config.get(key)
         for key in (
             "method",
+            "task",
             "model",
             "epochs_max",
             "batch_size",
@@ -56,6 +63,8 @@ def analysis_group(config: dict[str, object]) -> str:
             "test_view",
             "table_v",
             "threshold",
+            "supervised_adasyn",
+            "split",
         )
     }
     return json.dumps(fields, sort_keys=True, separators=(",", ":"))

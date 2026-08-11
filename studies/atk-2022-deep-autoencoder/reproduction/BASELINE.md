@@ -44,6 +44,20 @@ The breadth-first Softmax/standardization diagnostic uses the same wrapper with
 records method `C-OUTPUT-LINEAR-ISET-FC-SAE`, and remains a corrected control;
 it never replaces the paper-consistent Softmax result.
 
+The first benchmark breadth row uses `MODEL=naive_bayes`. The paper names
+Naive Bayes but supplies no variant or hyperparameters; the minimal completion
+is scikit-learn Gaussian Naive Bayes with its default `var_smoothing=1e-9` and
+the ordinary positive-class probability threshold 0.5. It uses every benign
+profile plus all six attacks for all customers and an exact seeded 2:1 random
+row split. The paper requires ADASYN before that split, but this fast first row
+does not execute the full-scale resampling step and is therefore labeled
+`I-SUPERVISED-ADASYN-NONE`, never paper-literal. Run it with:
+
+```bash
+sbatch --export=ALL,MODEL=naive_bayes \
+  studies/atk-2022-deep-autoencoder/reproduction/run_baseline.sbatch
+```
+
 That job verifies the named source files, prepares the exact runnable baseline,
 trains FC-SAE, scores Tables III and V, saves raw scores/predictions/weights and
 timings, and regenerates the reported-versus-reproduced CSV/JSON summaries.

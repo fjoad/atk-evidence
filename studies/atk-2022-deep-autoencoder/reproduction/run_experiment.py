@@ -21,6 +21,7 @@ import numpy as np
 import sklearn
 import torch
 from sklearn.metrics import roc_auc_score
+from sklearn.naive_bayes import GaussianNB
 
 from models import SPECS, build_model, layer_inventory
 
@@ -39,6 +40,7 @@ REPORTED = {
     "fc_vae": {"DR": 88, "FA": 11, "SP": 89, "PR": 89, "ACC": 88.5, "F1": 88.5, "AUC": 85},
     "lstm_vae": {"DR": 91, "FA": 7, "SP": 93, "PR": 91, "ACC": 92, "F1": 91, "AUC": 86},
     "lstm_aea": {"DR": 94, "FA": 5, "SP": 95, "PR": 93, "ACC": 94.5, "F1": 93.5, "AUC": 90},
+    "naive_bayes": {"DR": 73, "FA": 18, "SP": 82, "PR": 73, "ACC": 77.5, "F1": 73, "AUC": 70},
 }
 REPORTED_TABLE_4 = {
     "fc_sae": {
@@ -60,6 +62,7 @@ REPORTED_TABLE_5_FC_SAE = {
     5: {"DR": 80, "FA": 17},
     6: {"DR": 80, "FA": 19},
 }
+BENCHMARKS = ("naive_bayes",)
 
 
 def sha256(path: Path) -> str:
@@ -218,9 +221,202 @@ def table_v(
     return rows, time.perf_counter() - started
 
 
+def supervised_source_blocks(data: Path) -> list[tuple[Path, int]]:
+    """Return the paper's complete all-customer B+M population."""
+
+    blocks = [(data / "benign.npy", 0)] + [
+        (data / f"attack_{attack_id}.npy", 1) for attack_id in range(1, 7)
+    ]
+    for path, _ in blocks:
+        if not path.is_file():
+            raise ValueError(f"supervised source block is missing: {path}")
+        values = np.load(path, mmap_mode="r")
+        if values.ndim != 2 or values.shape[1] != 48:
+            raise ValueError(f"invalid supervised source shape {path}: {values.shape}")
+    return blocks
+
+
+def exact_random_train_mask(total_rows: int, *, seed: int) -> np.ndarray:
+    """Select exactly floor(2N/3) rows using one seeded random permutation."""
+
+    if total_rows < 2:
+        raise ValueError("supervised split requires at least two rows")
+    order = np.random.default_rng(seed).permutation(total_rows)
+    mask = np.zeros(total_rows, dtype=bool)
+    mask[order[: (2 * total_rows) // 3]] = True
+    return mask
+
+
+def run_naive_bayes(
+    args: argparse.Namespace,
+    *,
+    metadata: dict[str, object],
+    metadata_path: Path,
+) -> int:
+    """Execute the smallest documented completion of the paper's NB row."""
+
+    blocks = supervised_source_blocks(args.data)
+    arrays = [np.load(path, mmap_mode="r") for path, _ in blocks]
+    features = np.concatenate(arrays).astype(np.float32, copy=False)
+    labels = np.concatenate(
+        [np.full(values.shape[0], label, dtype=np.int8)
+         for values, (_, label) in zip(arrays, blocks, strict=True)]
+    )
+    split_started = time.perf_counter()
+    train_mask = exact_random_train_mask(features.shape[0], seed=args.seed)
+    train_index = np.flatnonzero(train_mask)
+    test_index = np.flatnonzero(~train_mask)
+    split_seconds = time.perf_counter() - split_started
+    configuration = {
+        "method": "I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES",
+        "paper_tables": ["III"],
+        "scientific_question": "Does the Gaussian-NB completion reproduce Table III without the printed full-scale ADASYN step?",
+        "task": "supervised",
+        "model": "naive_bayes",
+        "seed": args.seed,
+        "train_fraction": "full",
+        "test_view": "supervised_original",
+        "table_v": False,
+        "threshold": 0.5,
+        "anomaly_direction": "higher",
+        "supervised_adasyn": "none",
+        "split": "seeded_exact_row_random_2_to_1",
+        "data_metadata_sha256": sha256(metadata_path),
+    }
+    configuration_id = stable_id({**configuration, "seed": "<seed>"})
+    attempt_id = stable_id(configuration)
+    configuration["configuration_id"] = configuration_id
+    configuration["attempt_id"] = attempt_id
+    run = args.output / "table_3" / "naive_bayes" / f"seed_{args.seed}_{attempt_id}"
+    run.mkdir(parents=True, exist_ok=True)
+    result_path = run / "result.json"
+    if result_path.is_file():
+        existing = json.loads(result_path.read_text())
+        if existing.get("status") == "success":
+            print(json.dumps(existing["metrics"], indent=2))
+            print(f"immutable attempt already complete: {run}")
+            return 0
+    failure_path = run / "failure.json"
+    if failure_path.is_file():
+        raise RuntimeError(
+            f"immutable attempt already failed: {failure_path}; preserve it and "
+            "change an execution setting to create a new attempt"
+        )
+
+    save_json(run / "config.json", configuration)
+    total_started = time.perf_counter()
+    try:
+        model = GaussianNB(var_smoothing=1e-9)
+        fit_started = time.perf_counter()
+        model.fit(features[train_index], labels[train_index])
+        fit_seconds = time.perf_counter() - fit_started
+        positive_column = int(np.flatnonzero(model.classes_ == 1)[0])
+        score_started = time.perf_counter()
+        scores = model.predict_proba(features[test_index])[:, positive_column]
+        score_seconds = time.perf_counter() - score_started
+        predictions = (scores > 0.5).astype(np.int8)
+        np.save(run / "scores.npy", scores.astype(np.float32))
+        np.save(run / "labels.npy", labels[test_index])
+        np.save(run / "predictions.npy", predictions)
+        np.save(run / "test_global_row.npy", test_index.astype(np.int64))
+        metrics = confusion_metrics(labels[test_index], scores, threshold=0.5)
+        model_payload = {
+            "classes": model.classes_.tolist(),
+            "class_count": model.class_count_.tolist(),
+            "class_prior": model.class_prior_.tolist(),
+            "theta": model.theta_.tolist(),
+            "var": model.var_.tolist(),
+            "var_smoothing": 1e-9,
+        }
+        save_json(run / "model.json", model_payload)
+        timing = {
+            "split": split_seconds,
+            "fit": fit_seconds,
+            "score_table_3": score_seconds,
+            "total": time.perf_counter() - total_started,
+        }
+        source_file_records = metadata.get("files", {})
+        result = {
+            "status": "success",
+            "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+            "configuration": configuration,
+            "git_commit": git_commit(),
+            "data": {
+                "path": str(args.data),
+                "metadata_sha256": sha256(metadata_path),
+                "population": "all benign plus all six attacks for all customers",
+                "counts": {
+                    "total": int(features.shape[0]),
+                    "train": int(train_index.size),
+                    "test": int(test_index.size),
+                    "train_by_class": np.bincount(labels[train_index], minlength=2).tolist(),
+                    "test_by_class": np.bincount(labels[test_index], minlength=2).tolist(),
+                },
+                "files": {
+                    path.name: source_file_records.get(path.name)
+                    for path, _ in blocks
+                },
+                "source_nodes": {
+                    "supervised_adasyn": {
+                        "paper_claim": "apply ADASYN to B+M before the 2:1 split",
+                        "literal_status": "not_executed_in_this_interpretation",
+                        "assumption": "split and evaluate the preserved original B+M rows",
+                    }
+                },
+            },
+            "model": {
+                "name": "Gaussian Naive Bayes",
+                "paper_detail": "the paper names Naive Bayes but gives no variant or hyperparameters",
+                "completion": model_payload,
+            },
+            "metrics": metrics,
+            "reported_table_3": REPORTED["naive_bayes"],
+            "reported_table_4": None,
+            "difference_reproduced_minus_reported": {
+                key: float(metrics[key]) - float(value)
+                for key, value in REPORTED["naive_bayes"].items()
+            },
+            "table_v": None,
+            "timing_seconds": timing,
+            "runtime": {
+                "python": sys.version.split()[0],
+                "platform": platform.platform(),
+                "sklearn": sklearn.__version__,
+                "max_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+            },
+            "artifacts": {
+                "scores": "scores.npy",
+                "labels": "labels.npy",
+                "predictions": "predictions.npy",
+                "test_global_row": "test_global_row.npy",
+                "model": "model.json",
+            },
+        }
+        save_json(result_path, result)
+    except Exception as exc:
+        save_json(
+            failure_path,
+            {
+                "status": "failed",
+                "configuration": configuration,
+                "git_commit": git_commit(),
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "elapsed_seconds": time.perf_counter() - total_started,
+            },
+        )
+        raise
+    print(json.dumps(result["metrics"], indent=2))
+    print(json.dumps(result["timing_seconds"], indent=2))
+    print(f"saved immutable attempt: {run}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--model", choices=tuple(SPECS), default="fc_sae")
+    parser.add_argument(
+        "--model", choices=(*tuple(SPECS), *BENCHMARKS), default="fc_sae"
+    )
     parser.add_argument("--seed", type=int, default=11)
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
     parser.add_argument("--output", type=Path, default=DEFAULT_RESULTS)
@@ -255,6 +451,14 @@ def main() -> int:
         parser.error("Table V is evaluated only from the full-training model")
     if args.output_activation != "paper" and args.model != "fc_sae":
         parser.error("output-activation controls are currently FC-SAE only")
+    if args.model in BENCHMARKS and args.table_v:
+        parser.error("Table V contains only the five proposed models")
+    if args.model in BENCHMARKS and args.train_fraction != "full":
+        parser.error("Table IV contains only the five proposed models")
+    if args.model in BENCHMARKS and args.test_view != "original":
+        parser.error(
+            "the first benchmark breadth row is the explicit no-ADASYN continuation"
+        )
 
     metadata_path = args.data / "metadata.json"
     if not metadata_path.is_file():
@@ -270,6 +474,13 @@ def main() -> int:
         "test_adasyn"
     ) != "printed":
         raise ValueError("the selected cache does not contain printed ADASYN rows")
+
+    if args.model == "naive_bayes":
+        return run_naive_bayes(
+            args,
+            metadata=metadata,
+            metadata_path=metadata_path,
+        )
 
     resolved_learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
     resolved_output_activation = (
