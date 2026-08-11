@@ -2,8 +2,6 @@
 #SBATCH -J atk_p1_base
 #SBATCH -p gpu-all
 #SBATCH --gres=gpu:v100_16GB:1
-#SBATCH -c 16
-#SBATCH --mem=128G
 #SBATCH -t 2-00:00:00
 #SBATCH --chdir=/export/home/fjoad/atk-evidence
 
@@ -11,7 +9,7 @@ set -euo pipefail
 source /etc/profile.d/modules.sh
 module load slurm
 export KERAS_BACKEND=torch
-export OMP_NUM_THREADS="${SLURM_CPUS_PER_TASK:-16}"
+export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS="$OMP_NUM_THREADS"
 
 python=.venv/bin/python

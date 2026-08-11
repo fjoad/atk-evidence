@@ -76,10 +76,38 @@ chain is inspectable and trusted for one full attempt.
    an already-large gap before identifying its source.
 5. Run one seed of the one-factor linear-output control while preserving every
    other FC-SAE setting and the original score audit. Job 373805 is running.
-6. Run one watched seed for each remaining proposed architecture, followed by
-   one-factor material data/evaluation readings in descending diagnostic value:
-   scaling/output compatibility, model identity, attack population/split, and
-   threshold selection. Do not launch a Cartesian sweep.
+6. When job 373805 finishes, harvest and validate it before submitting anything
+   else: verify commit/config/data identities, training history, saved scores,
+   reload equivalence, fixed-threshold metrics, oracle threshold in both score
+   directions, zero-reconstruction correlation, per-attack DR/FA, and wall time.
+   Compare it directly with the frozen Softmax anchor. Record whether changing
+   only the output activation materially changes separation. It identifies a
+   divergence point; it does not by itself establish reproduction or failure.
+7. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
+   FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
+   preserved result already satisfies the renewed source, data, provenance,
+   and score-audit contract. Reuse it only if all gates pass; otherwise run one
+   watched seed through the five-file route. Inspect each result before coding
+   or submitting the next row.
+8. Cover the six named benchmark rows once each in paper-table order: Naive
+   Bayes, ARIMA, one-class SVM, supervised feed-forward, supervised LSTM, and
+   multiclass SVM. Again, admit an existing result only after the renewed
+   contract check; do not repeat seeds yet.
+9. After model breadth, run one-factor material data/evaluation contrasts in
+   this order: residential population (all eligible versus deterministic
+   3,000), attack/test population and split, scaling fit population, printed
+   threshold versus validation-derived threshold, and each materially distinct
+   executable Attack-3 repair. Hold every non-target choice fixed. Do not launch
+   a Cartesian sweep.
+10. Write the breadth map as a table with one row per attempted model or
+    interpretation: source claim, exact completion, execution status, observed
+    metrics, reported target, divergence, and next implication. Only then choose
+    which branches merit repeated seeds.
+
+Future Panther submissions request only the required 16-GB V100 in the Slurm
+header. They do not reserve a CPU or memory shape. One job is submitted at a
+time during this diagnostic phase, even when more GPUs are idle, because every
+result determines what should be run next.
 
 **Finish condition:** every major model family and material interpretation axis
 has one trustworthy anchor or explicit failure, and likely divergence points
@@ -87,18 +115,11 @@ are identified without claiming statistical finality.
 
 ## Phase 3 — depth on the frozen breadth map
 
-Add one model at a time:
-
-1. LSTM-SAE
-2. FC-VAE
-3. LSTM-VAE
-4. LSTM-AEA
-5. supervised and classical baselines
-
-For each branch retained by the breadth map: source inventory → one watched
-full seed already complete → predeclare repetitions → remaining seeds in
-parallel. Then complete the Table IV size/timing cells and the explicit Table V
-experiment-identity readings.
+For each branch retained by the completed breadth map: source inventory → one
+watched full seed already complete → predeclare repetitions → remaining
+seeds in parallel. Then complete the Table IV size/timing cells and the explicit
+Table V experiment-identity readings. This phase adds depth; it must not be used
+to finish breadth work deferred from Phase 2.
 
 **Finish condition:** every Tables III--V cell has eligible repeated evidence or
 an explicit non-executable/failure record.

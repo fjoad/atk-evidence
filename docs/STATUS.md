@@ -20,7 +20,8 @@
   neighbor implementation, and score-audit job `373800` completed. Premature
   repeated-seed jobs `373803` and `373804` were cancelled before execution
   after the breadth-first correction. One-factor linear-output job `373805`
-  is running with an eight-CPU/one-V100 request.
+  is running on one 16-GB V100. It had already been submitted with an eight-CPU
+  request; future wrappers request only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -107,12 +108,14 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. Complete one seed of the separately labeled linear-output FC-SAE control in
    Panther job `373805`; it tests the standardized-input/Softmax-output
-   incompatibility and nothing else.
-2. Continue breadth-first with one watched seed for each remaining proposed
-   architecture and one-factor material interpretation; use each contrast to
-   locate divergence before adding repetitions.
-3. Only after the breadth map is complete, freeze the finite surviving branches
-   and deepen them with repeated seeds and confirmatory intervals.
+   incompatibility and nothing else. On completion, validate and compare its
+   saved scores before submitting another job.
+2. Continue breadth-first, one watched result at a time: LSTM-SAE, FC-VAE,
+   LSTM-VAE, LSTM-AEA; the six benchmark rows; then the one-factor population,
+   split, scaling, threshold, and Attack-3 interpretations. Existing historical
+   results count only if they pass the renewed source/provenance/score gates.
+3. Record the complete breadth map. Only then freeze the finite surviving
+   branches and deepen them with repeated seeds and confirmatory intervals.
 
 ## Not on the critical path
 

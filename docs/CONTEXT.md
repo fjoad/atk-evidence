@@ -26,7 +26,14 @@
 - Breadth-first job 373805 is the seed-11
   `C-OUTPUT-LINEAR-ISET-FC-SAE` one-factor control. It requests eight CPU cores
   and one 16-GB V100, preserves all other baseline settings, and began running
-  on `crimv3mgpu026` after a short scheduler-priority wait.
+  on `crimv3mgpu026` after a short scheduler-priority wait. Do not restart it
+  merely to change its already-granted resource request. Future short Slurm
+  wrappers request only one 16-GB V100 and leave CPU/memory shape unspecified.
+- After job 373805, validate and contrast its saved scores first. Then continue
+  breadth-first with one eligible result per remaining proposed model, all six
+  benchmark rows, and finally one-factor data/evaluation interpretations. Do
+  not add seeds until that breadth map is written; this sequence is explicit in
+  the active plan.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
