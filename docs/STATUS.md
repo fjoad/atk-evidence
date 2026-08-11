@@ -21,11 +21,11 @@
   repeated-seed jobs `373803` and `373804` were cancelled before execution
   after the breadth-first correction. One-factor linear-output job `373805`
   completed successfully in 1:05:43 on one 16-GB V100; audit job `373824`
-  completed in 24 seconds. Naive Bayes job `373833` completed in 1m36s. The
-  remaining Table-III breadth rows are queued sequentially as jobs
-  `373836`--`373844`: ARIMA, one-class SVM, supervised feed-forward,
-  supervised LSTM, multiclass SVM, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.
-  Future wrappers request only the GPU so CPU shape cannot delay them.
+  completed in 24 seconds. Naive Bayes (`373833`), ARIMA (`373836`), one-class
+  SVM (`373837`), and supervised feed-forward (`373838`) are complete. The
+  supervised LSTM (`373839`) is running; multiclass SVM and the four remaining
+  proposed models (`373840`--`373844`) remain in the sequential dependency
+  chain. Future wrappers request only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -146,6 +146,18 @@ closest gap 56.56 points); capped one-class SVM has useful ranking but cannot
 reach the claimed high-DR/low-FA corner (oracle ACC 73.86%, closest gap 18.31
 points). These are exploratory score diagnostics, not repeated-seed inference.
 
+Supervised feed-forward job `373838` completed in 1:29:56 using the printed
+five 500-unit ReLU hidden layers and Adamax, with the predeclared two-class
+Softmax/categorical completion and no supervised ADASYN. At the ordinary 0.5
+cutoff it reproduced DR/FA/ACC/F1/AUC =
+96.41/23.72/86.35/96.24/97.05%, versus 90/11/89.5/89.5/88% reported. Score
+audit job `374255` found that a threshold of 0.824 reaches DR=91.83% and
+FA=9.17%, within 1.83 points of the reported pair; the best balanced threshold
+reaches 91.66% ACC. This is therefore a threshold-procedure ambiguity with a
+strong learned ranking, not a fundamental separation failure. The paper does
+not specify a supervised threshold-selection rule, and this branch still omits
+pre-split ADASYN.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -165,7 +177,7 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Harvest the sequential breadth queue: the remaining five benchmark rows
+2. Harvest the sequential breadth queue: supervised LSTM and multiclass SVM
    first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the

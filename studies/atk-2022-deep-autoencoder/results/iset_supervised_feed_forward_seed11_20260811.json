@@ -1,0 +1,79 @@
+{
+  "status": "success",
+  "job_id": 373838,
+  "audit_job_id": 374255,
+  "git_commit": "6a5baebfd20408a3da671c77726492eb5ba8a46d",
+  "method": "I-SUPERVISED-ADASYN-NONE-ISET-SUPERVISED_FEED_FORWARD",
+  "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "architecture": "48 -> 500 -> 500 -> 500 -> 500 -> 500 -> 2",
+    "hidden_activation": "relu",
+    "output_activation": "softmax",
+    "loss": "sparse categorical cross-entropy",
+    "optimizer": "Adamax",
+    "learning_rate": 0.001,
+    "epochs": 30,
+    "batch_size": 512,
+    "split": "seeded exact row-random 2:1",
+    "supervised_adasyn": "not executed",
+    "fixed_threshold": 0.5
+  },
+  "counts": {
+    "total": 15759030,
+    "train": 10506020,
+    "test": 5253010,
+    "test_benign": 749383,
+    "test_malicious": 4503627
+  },
+  "reported": {
+    "DR": 90,
+    "FA": 11,
+    "SP": 89,
+    "PR": 89,
+    "ACC": 89.5,
+    "F1": 89.5,
+    "AUC": 88
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 96.40627432067531,
+    "FA": 23.715776845751773,
+    "SP": 76.28422315424824,
+    "PR": 96.06766322211236,
+    "ACC": 86.34524873746176,
+    "F1": 96.23667091944168,
+    "AUC": 97.04708775017325
+  },
+  "score_audit": {
+    "best_balanced_threshold": {
+      "threshold": 0.8923273682594299,
+      "DR": 89.56481076252541,
+      "FA": 6.240066828310757,
+      "ACC": 91.66237196710732,
+      "AUC": 97.04708775017325
+    },
+    "closest_to_reported_DR_FA": {
+      "threshold": 0.8240353465080261,
+      "DR": 91.82689863081468,
+      "FA": 9.173012998693592,
+      "ACC": 91.32694281606054,
+      "maximum_absolute_gap": 1.8269870013064082
+    },
+    "attack_DR_at_fixed_threshold": [
+      83.06838092342649,
+      97.71356569735846,
+      99.87354190488487,
+      100.0,
+      99.95958290622835,
+      97.80707893582672
+    ]
+  },
+  "timing_seconds": {
+    "split": 1.523057572543621,
+    "fit": 5340.546962030232,
+    "score": 3.519613169133663,
+    "pipeline": 5346.48895188421,
+    "slurm_elapsed": 5396
+  },
+  "interpretation": "The ordinary 0.5 cutoff does not reproduce the reported operating point, but the learned ranking is stronger than reported and an oracle threshold reaches within 1.83 percentage points of both reported DR and FA. This makes the row plausibly recoverable through the paper's omitted supervised decision-threshold procedure; it is not evidence of a fundamental model-ranking failure. The branch still omits the paper's computationally expensive pre-split ADASYN operation."
+}

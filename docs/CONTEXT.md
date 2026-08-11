@@ -80,6 +80,16 @@
   18.31 points away. Do not use per-row p-values: meter/day and six attack
   siblings are correlated. Confirmation needs repeated seeds and meter-level
   clustered uncertainty.
+- Supervised feed-forward breadth job 373838 completed in 1:29:56 from commit
+  `6a5baeb`: printed five-by-500 ReLU/Adamax architecture, predeclared
+  two-Softmax categorical head, no supervised ADASYN, seed 11, batch 512.
+  Fixed-threshold DR/FA/ACC/F1/AUC =
+  96.41/23.72/86.35/96.24/97.05% versus 90/11/89.5/89.5/88% reported. Audit job
+  374255 shows that threshold 0.824 gives DR=91.83/FA=9.17 (1.83-point maximum
+  gap from the paper pair) and the best balanced threshold reaches 91.66% ACC.
+  Treat this as strong ranking plus an omitted supervised threshold procedure,
+  not as a fundamental model failure. Job 373839 is the running supervised
+  LSTM; jobs 373840--373844 remain dependency-queued.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

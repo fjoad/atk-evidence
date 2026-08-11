@@ -846,6 +846,37 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_benchmark_breadth_score_audit_20260811.json`.
 
+### Compact ISET supervised feed-forward benchmark breadth row
+
+- **Former belief/status:** The completed anomaly and classical rows did not
+  establish whether the exact ISET attack population itself contains an easily
+  learnable supervised signal under the paper's named deep benchmark.
+- **Evidence:** Panther job 373838 used all 15,759,030 original `B+M` profiles,
+  a seed-11 exact row-random 2:1 split, five 500-unit ReLU hidden layers,
+  Adamax, and the predeclared two-class Softmax/categorical completion. The
+  paper-positioned supervised ADASYN was explicitly omitted. The job completed
+  in 1:29:56. At the ordinary 0.5 probability cutoff it reproduced
+  DR/FA/ACC/F1/AUC = 96.41/23.72/86.35/96.24/97.05%, versus reported
+  90/11/89.5/89.5/88%. Panther audit job 374255 found a best balanced
+  threshold ACC of 91.66%; threshold 0.824 gives DR=91.83% and FA=9.17%, only
+  1.83 percentage points from both printed targets.
+- **Root cause:** **INFERRED** — the fixed-row difference is primarily an
+  operating-point choice, not inadequate ranking. The paper does not specify
+  how supervised probabilities are thresholded or whether their cutoff was
+  selected on validation data.
+- **Current conclusion + label:** **OBSERVED** — this completion learns stronger
+  class separation than the paper reports and can closely approach its DR/FA
+  pair through threshold selection. The supervised feed-forward row is
+  technically plausible and is a positive control against the claim that the
+  prepared attacks contain no learnable signal.
+- **Remaining uncertainty / blast radius:** The threshold was selected
+  retrospectively on the test ROC and is diagnostic, not an eligible
+  reproduction procedure. Pre-split ADASYN remains omitted, the paper's
+  head/loss and threshold rule remain unstated, and this is one seed. It does
+  not validate any proposed autoencoder row.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_supervised_feed_forward_seed11_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
