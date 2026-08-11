@@ -1,0 +1,576 @@
+{
+  "artifacts": {
+    "history": "history.json",
+    "predictions": "predictions.npy",
+    "scores": "scores.npy",
+    "weights": "model.weights.h5"
+  },
+  "baselines": {
+    "untrained_stratified_sample": {
+      "metrics": {
+        "ACC": 30.23,
+        "AUC": 33.274376,
+        "DR": 21.62,
+        "F1": 23.656855235802603,
+        "FA": 61.160000000000004,
+        "FN": 3919,
+        "FP": 3058,
+        "PR": 26.117419666586134,
+        "SP": 38.839999999999996,
+        "TN": 1942,
+        "TP": 1081
+      },
+      "rows": 10000,
+      "score": {
+        "maximum": 34.13789749145508,
+        "median": 0.4355188012123108,
+        "minimum": 0.014634539373219013
+      }
+    },
+    "zero_reconstruction_full_test": {
+      "ACC": 33.12399008215438,
+      "AUC": 29.528331377110273,
+      "DR": 28.893663928977016,
+      "F1": 43.65407736257354,
+      "FA": 62.64568376466827,
+      "FN": 9604859,
+      "FP": 470325,
+      "PR": 89.24530424590105,
+      "SP": 37.35431623533173,
+      "TN": 280445,
+      "TP": 3902881
+    }
+  },
+  "configuration": {
+    "anomaly_direction": "higher",
+    "attempt_id": "862d7176ef3f",
+    "batch_size": 512,
+    "configuration_id": "05079ed52c71",
+    "data_metadata_sha256": "44ad20b8daf4add28345f3d41cafeb428f6091930fa8c1d956ea9d420b11bd5d",
+    "epochs_max": 100,
+    "learning_rate": 0.001,
+    "method": "I-ADASYN-NONE-ISET-FC-SAE",
+    "min_delta": 0.0001,
+    "model": "fc_sae",
+    "paper_tables": [
+      "III",
+      "IV",
+      "V"
+    ],
+    "patience": 5,
+    "scientific_question": "Does the frozen FC-SAE completion reproduce the reported ISET row?",
+    "score_batch": 8192,
+    "seed": 11,
+    "table_v": true,
+    "test_view": "original",
+    "threshold": 0.58,
+    "train_fraction": "full"
+  },
+  "data": {
+    "counts": {
+      "B1_profiles": 1500520,
+      "test_benign": 750770,
+      "test_malicious": 13507740,
+      "test_profiles": 14258510
+    },
+    "files": {
+      "table_iv_order.npy": "03b099b12433fed9e0ca3a20339f0931f86cc227ede25744b801d90739e62b96",
+      "test_original_attack_id.npy": "5aca288833ad2ca9cc24695fa695205d86949939e9df34250fbcb29e285ad23e",
+      "test_original_source_row.npy": "fc2b15f2e14b37b9579879fb96823980b290ff2085eee91ee5e0d2587e442fd3",
+      "test_original_x.npy": "0d11b13782910e6450582deee718b585b1b39062bafc9e9f187a088e0539de52",
+      "test_original_y.npy": "0b3a69498a04c89bea02962d4ebd5c2c3904f90d1dc3468db2c95573635c50ae",
+      "train_day_numbers.npy": "fa8a6e62392290e4eccb9edf924cfc947e5c3919b5d9ebab8d29f979217aa472",
+      "train_meter_ids.npy": "9097e011065f77775dba8a86516e2c684787108a95ad747744d53b4c24c0a620",
+      "x_train.npy": "85c3ddfaf7d7aa852022faf870386724a2748d411cc8ca3fc8a5827121ce3f47"
+    },
+    "metadata_sha256": "44ad20b8daf4add28345f3d41cafeb428f6091930fa8c1d956ea9d420b11bd5d",
+    "method": "I-ADASYN-NONE-ISET-FCSAE",
+    "path": "data/derived/atk-2022-deep-autoencoder/reproduction/p0-full-none",
+    "source_nodes": {
+      "attack_3_endpoint": {
+        "assumption": "t_f = t_i + t_l, clipped at hour 24",
+        "derived_operation": "draw integer start 0..19 and duration 4..24 inclusive; zero the corresponding half-open two-slots-per-hour interval",
+        "literal_status": "non_executable_end_precedes_start",
+        "paper_claim": "t_f = t_i - t_l for a positive theft duration"
+      },
+      "test_adasyn": {
+        "assumption": "evaluate the preserved original B2+M rows without resampling",
+        "derived_operation": "none",
+        "first_pass_query_reference_pairs": 10704861552700,
+        "literal_status": "not_executed_in_this_interpretation",
+        "paper_claim": "apply ADASYN to B2 plus all-customer M"
+      }
+    },
+    "training_rows_used": 1500520
+  },
+  "difference_reproduced_minus_reported": {
+    "ACC": -49.02145036217214,
+    "AUC": -49.9561359464236,
+    "DR": -54.81934357634956,
+    "F1": -40.54054851818631,
+    "FA": 43.22355714799472,
+    "PR": 7.999104073445849,
+    "SP": -43.22355714799472
+  },
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "git_commit": "c8c136f432e2e227e77d49a9d0cf171928cc5ba3",
+  "history": {
+    "loss": [
+      1.800694465637207,
+      1.7649215459823608,
+      1.7573922872543335,
+      1.7509971857070923,
+      1.7466017007827759,
+      1.7438769340515137,
+      1.741241693496704,
+      1.7389591932296753,
+      1.7377017736434937,
+      1.7368344068527222,
+      1.735909104347229,
+      1.7349194288253784,
+      1.7341467142105103,
+      1.7331808805465698,
+      1.732459306716919,
+      1.7319785356521606,
+      1.7316135168075562,
+      1.7313460111618042,
+      1.7311631441116333,
+      1.7310302257537842,
+      1.730811595916748,
+      1.7305259704589844,
+      1.7299554347991943,
+      1.72942316532135,
+      1.729167103767395,
+      1.7289729118347168,
+      1.7288269996643066,
+      1.7286534309387207,
+      1.7285701036453247,
+      1.7282960414886475,
+      1.7280102968215942,
+      1.727662444114685,
+      1.7275059223175049,
+      1.727237343788147,
+      1.7272052764892578,
+      1.7271219491958618,
+      1.7270429134368896,
+      1.7269138097763062,
+      1.726641297340393,
+      1.726215124130249,
+      1.7258925437927246,
+      1.7256345748901367,
+      1.72547447681427,
+      1.725278377532959,
+      1.725095272064209,
+      1.7249501943588257,
+      1.7248865365982056,
+      1.724815845489502,
+      1.7247182130813599,
+      1.7246509790420532,
+      1.7245895862579346,
+      1.7246010303497314,
+      1.7245311737060547,
+      1.7244842052459717,
+      1.724462866783142,
+      1.7244200706481934,
+      1.7243728637695312,
+      1.7243833541870117,
+      1.7243313789367676,
+      1.7243067026138306,
+      1.7243006229400635,
+      1.724289059638977,
+      1.7242650985717773,
+      1.7242015600204468,
+      1.7241909503936768,
+      1.724191427230835,
+      1.7241532802581787,
+      1.7241402864456177,
+      1.7240674495697021,
+      1.7240543365478516,
+      1.724056601524353,
+      1.7240124940872192,
+      1.724043607711792,
+      1.7240192890167236
+    ]
+  },
+  "metrics": {
+    "ACC": 33.97854963782786,
+    "AUC": 31.0438640535764,
+    "DR": 26.18065642365044,
+    "F1": 40.45945148181369,
+    "FA": 58.22355714799472,
+    "FN": 9971325,
+    "FP": 437125,
+    "PR": 88.99910407344585,
+    "SP": 41.77644285200528,
+    "TN": 313645,
+    "TP": 3536415
+  },
+  "model": {
+    "inventory": [
+      {
+        "activation": null,
+        "class": "InputLayer",
+        "name": "daily_profile",
+        "output_shape": "(None, 48)",
+        "parameters": 0,
+        "rate": null,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_1_400",
+        "output_shape": "(None, 400)",
+        "parameters": 19600,
+        "rate": null,
+        "units": 400
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_1",
+        "output_shape": "(None, 400)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_2_300",
+        "output_shape": "(None, 300)",
+        "parameters": 120300,
+        "rate": null,
+        "units": 300
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_2",
+        "output_shape": "(None, 300)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_3_200",
+        "output_shape": "(None, 200)",
+        "parameters": 60200,
+        "rate": null,
+        "units": 200
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_3",
+        "output_shape": "(None, 200)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_4_100",
+        "output_shape": "(None, 100)",
+        "parameters": 20100,
+        "rate": null,
+        "units": 100
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_4",
+        "output_shape": "(None, 100)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_1_100",
+        "output_shape": "(None, 100)",
+        "parameters": 10100,
+        "rate": null,
+        "units": 100
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_1",
+        "output_shape": "(None, 100)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_2_200",
+        "output_shape": "(None, 200)",
+        "parameters": 20200,
+        "rate": null,
+        "units": 200
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_2",
+        "output_shape": "(None, 200)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_3_300",
+        "output_shape": "(None, 300)",
+        "parameters": 60300,
+        "rate": null,
+        "units": 300
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_3",
+        "output_shape": "(None, 300)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_4_400",
+        "output_shape": "(None, 400)",
+        "parameters": 120400,
+        "rate": null,
+        "units": 400
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_4",
+        "output_shape": "(None, 400)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "softmax",
+        "class": "Dense",
+        "name": "reconstruction",
+        "output_shape": "(None, 48)",
+        "parameters": 19248,
+        "rate": null,
+        "units": 48
+      }
+    ],
+    "parameters": 450448,
+    "specification": {
+      "anomaly_direction": "higher",
+      "anomaly_score": "mse",
+      "decoder": [
+        100,
+        200,
+        300,
+        400
+      ],
+      "dropout": 0.4,
+      "encoder": [
+        400,
+        300,
+        200,
+        100
+      ],
+      "hidden_activation": "sigmoid",
+      "name": "FC-SAE",
+      "optimizer": "Adam",
+      "output_activation": "softmax",
+      "threshold": 0.58
+    }
+  },
+  "reported_table_3": {
+    "ACC": 83,
+    "AUC": 81,
+    "DR": 81,
+    "F1": 81,
+    "FA": 15,
+    "PR": 81,
+    "SP": 85
+  },
+  "reported_table_4": {
+    "ACC": 83,
+    "training_minutes": 137
+  },
+  "runtime": {
+    "backend": "torch",
+    "cuda_available": true,
+    "cuda_device": "Tesla V100-PCIE-16GB",
+    "keras": "3.15.0",
+    "max_rss_kib": 5889964,
+    "platform": "Linux-5.15.0-50-generic-x86_64-with-glibc2.31",
+    "python": "3.12.2",
+    "sklearn": "1.9.0",
+    "torch": "2.7.1+cu126"
+  },
+  "status": "success",
+  "table_v": [
+    {
+      "attack": 1,
+      "difference_reproduced_minus_reported": {
+        "DR": -67.6410524632544,
+        "FA": 42.91519528803486
+      },
+      "metrics": {
+        "ACC": 28.471876124355365,
+        "AUC": 28.1940210507516,
+        "DR": 14.858947536745598,
+        "F1": 17.200429756222093,
+        "FA": 57.91519528803486,
+        "FN": 1916772,
+        "FP": 1303839,
+        "PR": 20.417894268465297,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 334518
+      },
+      "reported": {
+        "DR": 82.5,
+        "FA": 15
+      }
+    },
+    {
+      "attack": 2,
+      "difference_reproduced_minus_reported": {
+        "DR": -63.7597954950273,
+        "FA": 41.91519528803486
+      },
+      "metrics": {
+        "ACC": 29.66250460846892,
+        "AUC": 29.440733446926632,
+        "DR": 17.240204504972702,
+        "F1": 19.685610064373197,
+        "FA": 57.91519528803486,
+        "FN": 1863163,
+        "FP": 1303839,
+        "PR": 22.93940894793394,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 388127
+      },
+      "reported": {
+        "DR": 81,
+        "FA": 16
+      }
+    },
+    {
+      "attack": 3,
+      "difference_reproduced_minus_reported": {
+        "DR": -44.304540952076366,
+        "FA": 47.91519528803486
+      },
+      "metrics": {
+        "ACC": 40.39013187994439,
+        "AUC": 43.41890616760401,
+        "DR": 38.695459047923634,
+        "F1": 39.3625250662182,
+        "FA": 57.91519528803486,
+        "FN": 1380143,
+        "FP": 1303839,
+        "PR": 40.052993444555504,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 871147
+      },
+      "reported": {
+        "DR": 83,
+        "FA": 10
+      }
+    },
+    {
+      "attack": 4,
+      "difference_reproduced_minus_reported": {
+        "DR": -59.68391455565476,
+        "FA": 40.91519528803486
+      },
+      "metrics": {
+        "ACC": 31.20044507815519,
+        "AUC": 19.88273771095784,
+        "DR": 20.31608544434524,
+        "F1": 22.79744089910961,
+        "FA": 57.91519528803486,
+        "FN": 1793916,
+        "FP": 1303839,
+        "PR": 25.969260958214598,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 457374
+      },
+      "reported": {
+        "DR": 80,
+        "FA": 17
+      }
+    },
+    {
+      "attack": 5,
+      "difference_reproduced_minus_reported": {
+        "DR": -78.01762545029739,
+        "FA": 40.91519528803486
+      },
+      "metrics": {
+        "ACC": 22.033589630833877,
+        "AUC": 12.199565035323214,
+        "DR": 1.982374549702615,
+        "F1": 2.479555570124436,
+        "FA": 57.91519528803486,
+        "FN": 2206661,
+        "FP": 1303839,
+        "PR": 3.3096076436370754,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 44629
+      },
+      "reported": {
+        "DR": 80,
+        "FA": 17
+      }
+    },
+    {
+      "attack": 6,
+      "difference_reproduced_minus_reported": {
+        "DR": -16.009132541787146,
+        "FA": 38.91519528803486
+      },
+      "metrics": {
+        "ACC": 53.037836085089,
+        "AUC": 54.934034127084665,
+        "DR": 63.990867458212854,
+        "F1": 57.67383429391669,
+        "FA": 57.91519528803486,
+        "FN": 810670,
+        "FP": 1303839,
+        "PR": 52.49194832205546,
+        "SP": 42.08480471196514,
+        "TN": 947451,
+        "TP": 1440620
+      },
+      "reported": {
+        "DR": 80,
+        "FA": 19
+      }
+    }
+  ],
+  "timing_seconds": {
+    "fit": 2707.4601852297783,
+    "load": 0.6009826809167862,
+    "model_build": 0.3661128729581833,
+    "score_table_3": 61.45009111613035,
+    "score_table_5": 78.32435319572687,
+    "total": 2861.1533219367266
+  }
+}

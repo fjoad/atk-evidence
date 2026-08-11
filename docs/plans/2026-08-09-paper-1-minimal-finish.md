@@ -2,8 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; source freeze and five-file baseline audit complete,
-awaiting the single Panther baseline run
+**Status:** Active; source freeze, five-file audit, and single Panther baseline
+run complete; awaiting result audit/classification
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -31,7 +31,8 @@ layer, or another paper while this plan is active.
   further runs.
 - Batch 512 remains the declared primary execution completion; batch 32 is a
   sensitivity.
-- No experimental job is currently running.
+- Compact batch-512 job 373789 completed successfully in 53:12; no experimental
+  job is currently running.
 
 ## Phase 0 — renewed source freeze
 
@@ -51,8 +52,8 @@ the published target. A repair is never relabeled as the literal method.
 
 1. **Complete:** finish the score-audit code and trace the five direct files
    against the renewed source reconstruction.
-2. Run the frozen FC-SAE seed-11/batch-512 baseline through the one-command
-   compact route on Panther.
+2. **Complete:** run the frozen FC-SAE seed-11/batch-512 baseline through the
+   one-command compact route on Panther (job 373789).
 3. Audit its score distributions, direction, zero and untrained controls,
    attack breakdown, identities, configuration, hashes, and result reload.
 4. Classify the attempt as eligible exploratory evidence, sensitivity-only, or

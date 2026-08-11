@@ -4,6 +4,14 @@
 
 ## Environment quirks
 
+- Compact batch-512 Paper-1 anchor job 373789 completed 2026-08-11 in 53:12 on
+  one V100. `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, reproduced
+  DR/FA/ACC/AUC/F1 = 26.18/58.22/33.98/31.04/40.46% versus
+  81/15/83/81/81% reported. It closely repeats the batch-32 sensitivity rather
+  than rescuing it. Since printed ISET ADASYN adds benign rows only, it cannot
+  change the observed malicious DR; even FA=0 would cap balanced ACC at 63.09%
+  for this trained model. Full score/reload audit remains the next gate.
+
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
 - Official CER/ISET consumption archives are restricted by ISSDA. Exact

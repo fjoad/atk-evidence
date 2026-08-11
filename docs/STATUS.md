@@ -13,10 +13,10 @@
   [`decisions/2026-08-09-paper-first-minimal-instrument.md`](decisions/2026-08-09-paper-first-minimal-instrument.md).
 - Paper 1 is the only active execution target. Paper 2's existing artifact-level
   audit remains preserved but frozen; cross-paper synthesis has not started.
-- Panther job `373789` is running the frozen baseline from commit `c8c136f` on
-  one 16-GB V100. Source verification and full no-resampling preparation passed;
-  training began with the expected 1,500,520 B1 profiles. No other project job
-  is queued or running.
+- Panther job `373789` completed successfully in 53:12 from commit `c8c136f`
+  on one 16-GB V100. It passed source/preparation gates, trained the frozen
+  batch-512 FC-SAE for 74 epochs (best epoch 69), and saved Tables III/full-IV/V
+  artifacts. No project job is queued or running.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -61,6 +61,21 @@
 
 ## Paper 1: current experimental evidence
 
+The new compact batch-512 anchor completed:
+
+- method: `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, batch 512;
+- reproduced DR/FA/ACC/AUC/F1:
+  26.18 / 58.22 / 33.98 / 31.04 / 40.46%;
+- reported DR/FA/ACC/AUC/F1: 81 / 15 / 83 / 81 / 81%;
+- fit/total time: 45:07 / 47:41 inside the pipeline; and
+- Table-V FA is exactly 57.9152% for all six attacks, as required by the frozen
+  common-model/common-benign interpretation but unlike the paper's varying FA.
+
+This is a completed exploratory no-resampling anchor, not printed-ADASYN `P0`
+and not yet a confirmatory verdict. Its score-distribution/reload audit is the
+next gate. The committed result record is
+[`../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`](../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json).
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -78,11 +93,11 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Monitor Panther job `373789` without changing its frozen configuration.
-2. Inspect the saved architecture, loss history, score distributions, zero and
+1. Inspect the saved architecture, loss history, score distributions, zero and
    untrained controls, hashes, metrics, and Table-V FA invariant before any
    second seed or interpretation branch.
-3. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
+2. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
+3. Do not launch another experiment until that audit is recorded.
 
 ## Not on the critical path
 

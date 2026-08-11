@@ -646,6 +646,44 @@ and repeated experiments determine technical conclusions.
   The the cluster seed-11 attempt must start fresh from the pushed commit and
   verified data hashes.
 
+### Compact batch-512 ISET FC-SAE baseline
+
+- **Former belief/status:** The renewed five-file implementation had one
+  batch-32 sensitivity far from the paper, but the frozen batch-512 primary
+  execution completion had not run. It remained possible that the earlier
+  result was materially caused by the different batch size or incomplete
+  execution contract.
+- **Evidence:** Panther job 373789 ran commit `c8c136f` on one 16-GB V100 and
+  completed successfully in 53:12. Source verification and exact preparation
+  yielded 2,251,290 benign profiles, 1,500,520 B1 profiles, 750,770 B2 profiles,
+  and 13,507,740 malicious profiles. The 450,448-parameter FC-SAE trained for
+  74 epochs, restoring epoch 69. It reproduced DR 26.18%, FA 58.22%, balanced
+  ACC 33.98%, AUC 31.04%, and F1 40.46%, versus reported 81%, 15%, 83%, 81%,
+  and 81%. Table-V FA was invariant at 57.9152% for all six attacks. These
+  values closely repeat the earlier batch-32 sensitivity
+  (26.44/58.51/33.97/31.03/40.78%).
+- **Root cause:** **OPEN for the full numerical gap. VERIFIED arithmetic for
+  the ADASYN boundary** — printed ISET ADASYN oversamples benign test rows and
+  therefore cannot alter this trained model's predictions or DR on the
+  preserved malicious rows. With DR fixed at 26.18%, even a hypothetical
+  perfect FA of 0% would yield only 63.09% balanced ACC, below the reported
+  83%. ADASYN can still change FA, AUC, precision, and other distribution-
+  dependent metrics, so this no-resampling run is not the completed printed
+  evaluation.
+- **Current conclusion + label:** **OBSERVED** — changing from batch 32 to the
+  frozen batch 512 does not rescue the seed-11 result, and the completed compact
+  anchor is far from the reported Table-III and Table-V patterns. **VERIFIED
+  structural consequence** — a common model, common benign set, and fixed
+  threshold require common Table-V FA, contrary to the attack-varying values
+  printed by the paper.
+- **Remaining uncertainty / blast radius:** The full score-distribution,
+  artifact-reload, and hash audit is still pending; this is one primary seed and
+  an explicitly no-resampling interpretation, not confirmatory `P0` and not a
+  paper-level verdict. A scalable separately labeled ADASYN implementation may
+  resolve the remaining benign-side metrics but cannot repair the observed DR.
+- **Source artifacts:** Panther job 373789 and
+  `studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
