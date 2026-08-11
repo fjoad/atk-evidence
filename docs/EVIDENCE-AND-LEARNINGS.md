@@ -764,6 +764,29 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_naive_bayes_seed11_20260811.json`.
 
+### Compact ISET ARIMA benchmark breadth row
+
+- **Former belief/status:** The ISET ARIMA row had no renewed compact-route
+  result; the paper fixes only `d=1` and `q=0` and leaves the autoregressive
+  order, fit unit, and anomaly score unspecified.
+- **Evidence:** Panther job 373836 ran the predeclared smallest completion:
+  pooled ARIMA(1,1,0)-style OLS over first-difference transitions, residual MSE
+  per 48-slot profile, threshold 0.58, all 1,500,520 B1 rows, and all
+  14,258,510 original B2+M rows. It completed in 1m02s. Reproduced
+  DR/FA/ACC/F1/AUC were 21.48/57.20/32.14/34.46/24.72%, versus reported
+  86/12/87/86/87%.
+- **Root cause:** **OPEN** — this score ranks the selected attacked profiles
+  below benign profiles (AUC 24.72%), but the missing ARIMA definitions prevent
+  attributing the paper-level gap to one unique implementation.
+- **Current conclusion + label:** **OBSERVED** — the smallest registered pooled
+  ARIMA completion does not reproduce the Table-III row and is qualitatively
+  opposite its reported separation.
+- **Remaining uncertainty / blast radius:** Other predeclared `p`, per-profile
+  fit, and likelihood-score interpretations remain unexecuted. No intent or
+  infinite-space claim follows.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_arima_p110_pooled_mse_seed11_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

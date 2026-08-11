@@ -1,0 +1,45 @@
+{
+  "status": "success",
+  "job_id": 373836,
+  "git_commit": "210f8cff7017cd9fe1ed51e211fdc1e48f4a95b4",
+  "method": "I-ADASYN-NONE-ISET-ARIMA",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "order": [1, 1, 0],
+    "fit": "pooled OLS over within-profile first-difference transitions",
+    "score": "profile residual MSE",
+    "threshold": 0.58,
+    "intercept": 0.010039993519519287,
+    "phi": -0.25589307322706056
+  },
+  "counts": {
+    "train": 1500520,
+    "test": 14258510
+  },
+  "reported": {
+    "DR": 86,
+    "FA": 12,
+    "SP": 88,
+    "PR": 86,
+    "ACC": 87,
+    "F1": 86,
+    "AUC": 87
+  },
+  "reproduced": {
+    "DR": 21.4762128971982,
+    "FA": 57.1956791027878,
+    "SP": 42.8043208972122,
+    "PR": 87.10625491125732,
+    "ACC": 32.1402668972052,
+    "F1": 34.456989473692964,
+    "AUC": 24.72093025968819
+  },
+  "timing_seconds": {
+    "fit": 2.9924258664250374,
+    "score": 3.681996889412403,
+    "pipeline": 18.93808924406767,
+    "slurm_elapsed": 62
+  },
+  "interpretation": "This smallest pooled ARIMA completion does not reproduce the reported row and ranks the classes in the wrong direction (AUC below 0.5). The paper omits autoregressive order, fit unit, and anomaly-score construction, so this one completion is not a verdict over every possible ARIMA interpretation."
+}

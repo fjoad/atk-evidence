@@ -59,6 +59,11 @@
   one-submission-at-a-time rule for this already source-frozen breadth set.
   Use `afterany`, not `afterok`, so an executable failure is preserved without
   preventing later independent breadth rows from running.
+- ARIMA breadth job 373836 completed in 1m02s using pooled ARIMA(1,1,0)
+  residual MSE on full B1/original B2+M. DR/FA/ACC/F1/AUC =
+  21.48/57.20/32.14/34.46/24.72% versus 86/12/87/86/87% reported. This is a
+  strong non-match for the named completion, not closure of the paper's omitted
+  autoregressive order, fit unit, or score branches.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

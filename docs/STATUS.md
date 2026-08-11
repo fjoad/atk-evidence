@@ -124,6 +124,13 @@ It reproduced DR/FA/ACC/F1/AUC = 88.78/44.53/72.12/90.50/79.17%, versus
 73/18/77.5/73/70% reported. This completion does not reproduce the reported
 operating point.
 
+ARIMA job `373836` then completed in 1m02s using the predeclared smallest
+pooled `(1,1,0)` residual-MSE completion on all B1 and original `B2+M` rows.
+It reproduced DR/FA/ACC/F1/AUC = 21.48/57.20/32.14/34.46/24.72%, versus
+86/12/87/86/87% reported. It is a large non-match with reversed/worse-than-
+chance ranking, but the paper omits `p`, fit unit, and score, so it is not a
+claim over all ARIMA implementations.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
