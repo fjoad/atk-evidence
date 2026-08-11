@@ -181,6 +181,9 @@ class CompactBaselineTests(unittest.TestCase):
             with self.subTest(model=name):
                 model = models.build_model(name, seed=11)
                 self.assertEqual(tuple(model(values, training=False).shape), shape)
+                inventory = models.layer_inventory(model)
+                self.assertEqual(len(inventory), len(model.layers))
+                self.assertTrue(all("output_shape" in row for row in inventory))
 
     def test_vae_probability_completion_is_low_when_error_is_large(self) -> None:
         class ZeroModel:

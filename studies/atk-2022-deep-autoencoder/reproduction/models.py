@@ -454,6 +454,12 @@ def layer_inventory(model: keras.Model) -> list[dict[str, object]]:
     inventory: list[dict[str, object]] = []
     for layer in model.layers:
         config = layer.get_config()
+        output = getattr(layer, "output", None)
+        output_shape = (
+            [str(item.shape) for item in output]
+            if isinstance(output, (list, tuple))
+            else str(getattr(output, "shape", None))
+        )
         inventory.append(
             {
                 "name": layer.name,
@@ -461,7 +467,7 @@ def layer_inventory(model: keras.Model) -> list[dict[str, object]]:
                 "units": config.get("units"),
                 "rate": config.get("rate"),
                 "activation": config.get("activation"),
-                "output_shape": str(getattr(layer, "output", None).shape),
+                "output_shape": output_shape,
                 "parameters": int(layer.count_params()),
             }
         )

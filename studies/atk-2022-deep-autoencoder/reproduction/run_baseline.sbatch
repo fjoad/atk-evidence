@@ -19,6 +19,11 @@ seed="${SEED:-11}"
 model="${MODEL:-fc_sae}"
 output_activation="${OUTPUT_ACTIVATION:-paper}"
 epochs="${EPOCHS:-}"
+score_batch=8192
+if [[ "$model" == supervised_lstm || "$model" == lstm_sae || \
+      "$model" == lstm_vae || "$model" == lstm_aea ]]; then
+  score_batch=512
+fi
 
 git rev-parse HEAD
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
@@ -34,11 +39,13 @@ elif [[ "$model" == "supervised_feed_forward" || \
         "$model" == "supervised_lstm" ]]; then
   "$python" "$study/run_experiment.py" \
     --model "$model" --seed "$seed" --data "$data" \
-    --epochs "${epochs:-30}" --batch-size 512 --test-view original
+    --epochs "${epochs:-30}" --batch-size 512 --score-batch "$score_batch" \
+    --test-view original
 else
   "$python" "$study/run_experiment.py" \
     --model "$model" --seed "$seed" --data "$data" \
-    --epochs "${epochs:-100}" --batch-size 512 --test-view original \
+    --epochs "${epochs:-100}" --batch-size 512 --score-batch "$score_batch" \
+    --test-view original \
     --output-activation "$output_activation"
 fi
 "$python" "$study/analyze_results.py"
