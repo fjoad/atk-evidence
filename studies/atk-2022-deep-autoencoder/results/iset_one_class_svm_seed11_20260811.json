@@ -1,0 +1,44 @@
+{
+  "status": "success",
+  "job_id": 373837,
+  "git_commit": "210f8cff7017cd9fe1ed51e211fdc1e48f4a95b4",
+  "method": "I-ADASYN-NONE-ISET-ONE_CLASS_SVM",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "resource_bound": "train and test are deterministically capped",
+  "seed": 11,
+  "completion": {
+    "kernel": "sigmoid",
+    "gamma": "scale",
+    "nu": 0.5,
+    "score": "negative decision function",
+    "threshold": 0.45,
+    "train_cap": 12000,
+    "test_cap": 30000,
+    "support_vectors": 6003
+  },
+  "reported": {
+    "DR": 90,
+    "FA": 9,
+    "SP": 91,
+    "PR": 89,
+    "ACC": 90.5,
+    "F1": 89.5,
+    "AUC": 87
+  },
+  "reproduced": {
+    "DR": 91.86857303845612,
+    "FA": 50.935162094763086,
+    "SP": 49.064837905236914,
+    "PR": 96.9632768361582,
+    "ACC": 70.46670547184652,
+    "F1": 94.34719710669079,
+    "AUC": 79.67439216439813
+  },
+  "timing_seconds": {
+    "fit": 12.141953401267529,
+    "score": 9.458156771957874,
+    "pipeline": 21.671470522880554,
+    "slurm_elapsed": 64
+  },
+  "interpretation": "Detection rate is near the paper value only at a false-alarm rate above 50%, not the reported 9%. This is an explicitly resource-capped diagnostic and cannot fill the full paper cell."
+}

@@ -131,6 +131,13 @@ It reproduced DR/FA/ACC/F1/AUC = 21.48/57.20/32.14/34.46/24.72%, versus
 chance ranking, but the paper omits `p`, fit unit, and score, so it is not a
 claim over all ARIMA implementations.
 
+One-class SVM job `373837` completed in 1m04s using the explicit
+`kernel=sigmoid, gamma=scale, nu=0.5` repair with a 12,000-row training cap and
+30,000-row test cap. It reproduced DR/FA/ACC/F1/AUC =
+91.87/50.94/70.47/94.35/79.67%, versus 90/9/90.5/89.5/87% reported. Its DR is
+near the paper only at a false-alarm rate above 50%; this bounded diagnostic
+does not reproduce the reported operating point and cannot fill the full cell.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;

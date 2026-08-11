@@ -64,6 +64,12 @@
   21.48/57.20/32.14/34.46/24.72% versus 86/12/87/86/87% reported. This is a
   strong non-match for the named completion, not closure of the paper's omitted
   autoregressive order, fit unit, or score branches.
+- One-class SVM breadth job 373837 completed in 1m04s using the named
+  sigmoid/scale repair, `nu=0.5`, 12k train rows, and 30k test rows. It produced
+  DR/FA/ACC/F1/AUC = 91.87/50.94/70.47/94.35/79.67% versus
+  90/9/90.5/89.5/87% reported. The close DR comes with >50% FA, so the fixed
+  operating point is a non-match. The caps make this diagnostic rather than a
+  full-cell result.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

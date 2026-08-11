@@ -787,6 +787,29 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_arima_p110_pooled_mse_seed11_20260811.json`.
 
+### Compact ISET one-class SVM benchmark breadth row
+
+- **Former belief/status:** The paper's one-class SVM row could not execute
+  directly because its kernel/Gamma wording is not a valid API pair, and a
+  full kernel fit/score is resource-prohibitive at the paper-derived scale.
+- **Evidence:** Panther job 373837 ran the registered repair
+  `kernel=sigmoid, gamma=scale, nu=0.5`, trained on a deterministic 12,000-row
+  B1 cap, and evaluated a deterministic 30,000-row original B2+M cap. It used
+  6,003 support vectors and completed in 1m04s. Reproduced
+  DR/FA/ACC/F1/AUC were 91.87/50.94/70.47/94.35/79.67%, versus reported
+  90/9/90.5/89.5/87%.
+- **Root cause:** **OPEN** — this repaired fixed threshold labels about half of
+  benign profiles anomalous. The source's invalid SVM wording and full-scale
+  kernel cost prevent treating the bounded result as a unique literal row.
+- **Current conclusion + label:** **OBSERVED** — detection rate alone is near
+  the paper value, but the reported low-FA operating point is not reproduced;
+  the full metric pattern is a non-match for this bounded completion.
+- **Remaining uncertainty / blast radius:** Training and test caps are explicit
+  resource assumptions. Full-data or other predeclared SVM interpretations
+  remain outside this diagnostic.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_one_class_svm_seed11_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
