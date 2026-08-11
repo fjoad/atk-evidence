@@ -88,8 +88,24 @@
   374255 shows that threshold 0.824 gives DR=91.83/FA=9.17 (1.83-point maximum
   gap from the paper pair) and the best balanced threshold reaches 91.66% ACC.
   Treat this as strong ranking plus an omitted supervised threshold procedure,
-  not as a fundamental model failure. Job 373839 is the running supervised
-  LSTM; jobs 373840--373844 remain dependency-queued.
+  not as a fundamental model failure.
+- Multiclass SVM job 373840 completed in 2m27s with deterministic 30k/30k caps:
+  fixed DR/FA/ACC/F1/AUC = 85.94/55.67/65.14/88.04/73.06% versus
+  91/8/91.5/90.5/89%. Audit 374302 gives oracle ACC 71.14% and a minimum
+  23.44-point joint DR/FA gap. FC-VAE job 373842 completed in 6m14s:
+  DR/FA/ACC/F1/AUC = 11.51/32.62/39.45/20.32/30.13% versus
+  88/11/88.5/88.5/85%. Audit 374303 gives paper-direction oracle ACC 50.00%,
+  reversed ACC 66.70%, and 0.99957 correlation with zero reconstruction.
+- Recurrent operational failures are preserved in
+  `results/recurrent_breadth_operational_failures_20260811.json`. Supervised
+  LSTM job 373839 completed training but OOMed scoring at batch 8192. LSTM-SAE,
+  LSTM-VAE, and LSTM-AEA jobs 373841/373843/373844 failed before training
+  because diagnostic inventory assumed one output tensor. Commit `c735dd9`
+  changes no scientific model: it records lists of output shapes and uses
+  recurrent score batch 512. Replacement jobs 374310--374313 are sequentially
+  queued from that commit. Jobs 374306--374309 were cancelled while still
+  pending because Panther initially targeted a stale deleted upstream branch;
+  no stale-code job ran.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

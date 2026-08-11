@@ -1,0 +1,72 @@
+{
+  "status": "success",
+  "job_id": 373840,
+  "audit_job_id": 374302,
+  "git_commit": "6a5baebfd20408a3da671c77726492eb5ba8a46d",
+  "method": "I-ADASYN-NONE-ISET-MULTICLASS_SVM",
+  "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "model": "SVC",
+    "classes": [0, 1, 2, 3, 4, 5, 6],
+    "kernel": "sigmoid",
+    "gamma": "scale",
+    "C": 1.0,
+    "support_vectors": 23234,
+    "train_cap": 30000,
+    "test_cap": 30000,
+    "split": "seeded exact row-random 2:1",
+    "supervised_adasyn": "not executed",
+    "fixed_threshold": 0.0
+  },
+  "reported": {
+    "DR": 91,
+    "FA": 8,
+    "SP": 92,
+    "PR": 90,
+    "ACC": 91.5,
+    "F1": 90.5,
+    "AUC": 89
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 85.94041692594897,
+    "FA": 55.6669776119403,
+    "SP": 44.3330223880597,
+    "PR": 90.25077601699068,
+    "ACC": 65.13671965700433,
+    "F1": 88.04287194198741,
+    "AUC": 73.05877398990192
+  },
+  "score_audit": {
+    "best_balanced_threshold": {
+      "threshold": 2.0002100467681885,
+      "DR": 76.92517112632234,
+      "FA": 34.65485074626866,
+      "ACC": 71.13516019002685,
+      "AUC": 73.05878850197132
+    },
+    "closest_to_reported_DR_FA": {
+      "threshold": 2.00229549407959,
+      "DR": 67.61823273179837,
+      "FA": 31.436567164179102,
+      "ACC": 68.09083278380963,
+      "maximum_absolute_gap": 23.436567164179102
+    },
+    "attack_DR_at_fixed_threshold": [
+      72.9508,
+      68.7165,
+      82.8221,
+      95.2721,
+      99.6601,
+      96.3968
+    ]
+  },
+  "timing_seconds": {
+    "load": 5.607659183442593,
+    "fit": 47.49089244008064,
+    "score": 45.058901242911816,
+    "pipeline": 98.1962363049388,
+    "slurm_elapsed": 147
+  },
+  "interpretation": "The repaired seven-class sigmoid SVM does not reproduce the paper's high-detection/low-false-alarm operating point. Threshold adjustment cannot close the gap in this deterministic 30,000-row train/test capped diagnostic. The paper's malformed kernel/gamma wording, the caps, and omitted supervised ADASYN prevent treating this as a full paper cell."
+}

@@ -1,0 +1,91 @@
+{
+  "status": "success",
+  "job_id": 373842,
+  "audit_job_id": 374303,
+  "git_commit": "6a5baebfd20408a3da671c77726492eb5ba8a46d",
+  "method": "I-ADASYN-NONE-ISET-FC-VAE",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "encoder": [500, 400, 300, 100],
+    "decoder": [100, 300, 400, 500],
+    "latent_width": 100,
+    "hidden_activation": "relu",
+    "output_activation": "softmax",
+    "dropout": 0.4,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "loss": "mean reconstruction MSE plus mean analytic KL",
+    "score": "exp(-0.5 * profile MSE)",
+    "score_variance": "fixed unit",
+    "score_samples": 1,
+    "epochs_completed": 7,
+    "best_epoch": 2,
+    "batch_size": 512,
+    "fixed_threshold": 0.43,
+    "anomaly_direction": "lower probability"
+  },
+  "reported": {
+    "DR": 88,
+    "FA": 11,
+    "SP": 89,
+    "PR": 89,
+    "ACC": 88.5,
+    "F1": 88.5,
+    "AUC": 85
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 11.513139873879716,
+    "FA": 32.6198436272094,
+    "SP": 67.3801563727906,
+    "PR": 86.39493573843167,
+    "ACC": 39.44664812333516,
+    "F1": 20.318589111894227,
+    "AUC": 30.134401846215624
+  },
+  "score_audit": {
+    "best_paper_direction_threshold": {
+      "threshold": 1.5238862220572486e-17,
+      "DR": 0.005367293122313577,
+      "FA": 0.0015983590180747764,
+      "ACC": 50.001884467052115,
+      "AUC": 30.134401846215624
+    },
+    "best_reversed_direction_threshold": {
+      "threshold": 0.7666991949081421,
+      "DR": 68.79751164887686,
+      "FA": 35.39392889966301,
+      "ACC": 66.70179137460693,
+      "AUC": 69.86559815378438
+    },
+    "closest_to_reported_DR_FA": {
+      "threshold": 0.7762121558189392,
+      "DR": 32.9643448867094,
+      "FA": 66.03553684883519,
+      "ACC": 33.4644040189371,
+      "maximum_absolute_gap": 55.0356551132906
+    },
+    "benign_mean_probability": 0.566889478834603,
+    "malicious_mean_probability": 0.7504060141486345,
+    "trained_vs_zero_reconstruction": {
+      "pearson_correlation": 0.9995678732284491,
+      "mean_absolute_difference": 0.0071380507814298765,
+      "root_mean_squared_difference": 0.008271468879495019
+    },
+    "attack_DR_at_fixed_threshold": [
+      4.0253,
+      3.1091,
+      15.5856,
+      7.5871,
+      0.4198,
+      38.352
+    ]
+  },
+  "timing_seconds": {
+    "fit": 292.0712825283408,
+    "score": 15.55920808762312,
+    "pipeline": 320.67189641296864,
+    "slurm_elapsed": 374
+  },
+  "interpretation": "The predeclared fixed-unit one-sample reconstruction-probability completion fails in the paper's low-probability anomaly direction. Malicious profiles receive higher, not lower, probability than benign profiles, and no paper-direction threshold approaches the reported operating point. The score is again almost identical to the zero-reconstruction control. The paper omits the probability variance, sampling, aggregation, and numerical scale, so this is a strong failure of the named completion rather than closure of every VAE interpretation."
+}

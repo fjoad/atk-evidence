@@ -1,0 +1,47 @@
+{
+  "status": "superseded_operational_failures_preserved",
+  "git_commit": "6a5baebfd20408a3da671c77726492eb5ba8a46d",
+  "failures": [
+    {
+      "job_id": 373839,
+      "model": "supervised_lstm",
+      "stage": "scoring after completed training",
+      "elapsed_seconds": 24410,
+      "error": "CUDA OOM on score batch 8192",
+      "preserved_artifacts": ["config", "failure", "trained weights", "partial score array"],
+      "replacement": "job 374310 uses the same scientific settings and score batch 512"
+    },
+    {
+      "job_id": 373841,
+      "model": "lstm_sae",
+      "stage": "diagnostic layer inventory before training",
+      "elapsed_seconds": 40,
+      "error": "multi-output recurrent layer represented output as a list, but the inventory assumed one tensor",
+      "replacement": "job 374311 after the output-shape-only inventory repair"
+    },
+    {
+      "job_id": 373843,
+      "model": "lstm_vae",
+      "stage": "diagnostic layer inventory before training",
+      "elapsed_seconds": 40,
+      "error": "multi-output recurrent layer represented output as a list, but the inventory assumed one tensor",
+      "replacement": "job 374312 after the output-shape-only inventory repair"
+    },
+    {
+      "job_id": 373844,
+      "model": "lstm_aea",
+      "stage": "diagnostic layer inventory before training",
+      "elapsed_seconds": 41,
+      "error": "multi-output recurrent layer represented output as a list, but the inventory assumed one tensor",
+      "replacement": "job 374313 after the output-shape-only inventory repair"
+    }
+  ],
+  "repair_commit": "c735dd9",
+  "repair_scope": {
+    "scientific_model_change": false,
+    "inventory": "record a list of shapes for a layer with multiple output tensors",
+    "recurrent_score_batch": "512 instead of 8192; predictions are otherwise identical"
+  },
+  "cancelled_before_execution": [374306, 374307, 374308, 374309],
+  "cancellation_reason": "The Panther checkout initially targeted a stale deleted upstream branch; all four jobs were still pending and were cancelled before any job started. Panther was then fast-forwarded to main at c735dd9."
+}

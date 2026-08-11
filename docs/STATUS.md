@@ -22,10 +22,14 @@
   after the breadth-first correction. One-factor linear-output job `373805`
   completed successfully in 1:05:43 on one 16-GB V100; audit job `373824`
   completed in 24 seconds. Naive Bayes (`373833`), ARIMA (`373836`), one-class
-  SVM (`373837`), and supervised feed-forward (`373838`) are complete. The
-  supervised LSTM (`373839`) is running; multiclass SVM and the four remaining
-  proposed models (`373840`--`373844`) remain in the sequential dependency
-  chain. Future wrappers request only the GPU so CPU shape cannot delay them.
+  SVM (`373837`), supervised feed-forward (`373838`), multiclass SVM (`373840`),
+  and FC-VAE (`373842`) are complete. The first supervised-LSTM attempt
+  (`373839`) trained but failed during oversized-batch scoring; the first three
+  proposed recurrent attempts (`373841`, `373843`, `373844`) failed before
+  training in diagnostic layer inventory. Both operational defects are fixed
+  in `c735dd9`. Corrected jobs `374310`--`374313` are queued sequentially for
+  supervised LSTM, LSTM-SAE, LSTM-VAE, and LSTM-AEA. Future wrappers request
+  only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -158,6 +162,31 @@ strong learned ranking, not a fundamental separation failure. The paper does
 not specify a supervised threshold-selection rule, and this branch still omits
 pre-split ADASYN.
 
+Multiclass SVM job `373840` completed in 2m27s using the explicit seven-class
+sigmoid/scale repair and deterministic 30,000-row train/test caps. Fixed
+DR/FA/ACC/F1/AUC = 85.94/55.67/65.14/88.04/73.06%, versus
+91/8/91.5/90.5/89% reported. Audit job `374302` found a best balanced ACC of
+71.14%; the closest threshold remains 23.44 points from the reported DR/FA
+pair. This bounded completion does not reproduce the operating point.
+
+FC-VAE job `373842` completed in 6m14s and restored epoch-2 weights after seven
+epochs. Under the predeclared missing-score completion
+`exp(-0.5 * profile MSE)`, fixed DR/FA/ACC/F1/AUC =
+11.51/32.62/39.45/20.32/30.13%, versus 88/11/88.5/88.5/85% reported. Audit job
+`374303` found only 50.00% oracle ACC in the paper's low-probability direction;
+reversing direction reaches 66.70%. Malicious mean probability 0.750 exceeds
+benign 0.567, and the trained score correlates 0.99957 with the corresponding
+zero-reconstruction control. This is a strong failure of the registered VAE
+score completion, while the source's missing probability definition keeps
+other materially distinct completions open.
+
+The recurrent failures are preserved as evidence, not silently discarded.
+Job `373839` saved trained weights before its 8,192-row scoring batch exhausted
+the V100. Jobs `373841`, `373843`, and `373844` stopped before training because
+the diagnostic inventory assumed one tensor per layer output. The repair only
+records multi-output shapes and reduces recurrent inference batches to 512; it
+does not alter a model, optimizer, training batch, data row, score, or metric.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -177,8 +206,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Harvest the sequential breadth queue: supervised LSTM and multiclass SVM
-   first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
+2. Harvest corrected jobs `374310`--`374313`: supervised LSTM, LSTM-SAE,
+   LSTM-VAE, and LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the
    renewed source/provenance/score gates.

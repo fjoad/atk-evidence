@@ -877,6 +877,79 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_supervised_feed_forward_seed11_20260811.json`.
 
+### Compact ISET multiclass SVM benchmark breadth row
+
+- **Former belief/status:** The final named benchmark row had not been tested;
+  the source's kernel/Gamma wording and multiclass label scope both required an
+  executable completion.
+- **Evidence:** Panther job 373840 used the registered seven-class
+  `kernel=sigmoid, gamma=scale, C=1` repair and deterministic 30,000-row
+  train/test caps. It completed in 2m27s with 23,234 support vectors. Fixed
+  DR/FA/ACC/F1/AUC = 85.94/55.67/65.14/88.04/73.06%, versus reported
+  91/8/91.5/90.5/89%. Audit job 374302 gives best balanced ACC 71.14%; the
+  closest threshold has DR=67.62/FA=31.44, a 23.44-point maximum target gap.
+- **Root cause:** **OPEN** — this completion separates the classes somewhat but
+  cannot produce the claimed high-detection/low-FA corner. Source ambiguity,
+  omitted ADASYN, and deterministic caps remain material.
+- **Current conclusion + label:** **OBSERVED** — threshold adjustment does not
+  rescue this bounded multiclass-SVM completion to the reported row.
+- **Remaining uncertainty / blast radius:** This is not an uncapped full cell
+  and does not cover every repair of the malformed SVM prose.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_multiclass_svm_seed11_20260811.json`.
+
+### Compact ISET FC-VAE proposed-model breadth row
+
+- **Former belief/status:** The paper names reconstruction probability but
+  omits the variance, sampling, aggregation, scale, and a valid executable
+  variance parameterization; the first predeclared completion was untested.
+- **Evidence:** Panther job 373842 executed the Table-I FC-VAE with latent width
+  100, mean-MSE plus analytic-KL training, and deterministic fixed-unit score
+  `exp(-0.5 * profile MSE)`. It restored epoch-2 weights after seven epochs and
+  completed in 6m14s. Fixed DR/FA/ACC/F1/AUC =
+  11.51/32.62/39.45/20.32/30.13%, versus reported
+  88/11/88.5/88.5/85%. Audit job 374303 gives only 50.00% oracle ACC in the
+  paper's low-probability direction and 66.70% after reversing direction.
+  Malicious mean probability is 0.750 versus benign 0.567; the trained score
+  correlates 0.99957 with the zero-reconstruction score.
+- **Root cause:** **INFERRED for this completion** — standardized attacked rows
+  often have lower reconstruction error and therefore higher probability than
+  benign rows, opposite the paper's VAE direction; the trained reconstruction
+  again adds little beyond an input-energy/zero-output control.
+- **Current conclusion + label:** **OBSERVED** — this registered FC-VAE
+  completion fundamentally fails in the paper's score direction; no threshold
+  approaches the reported point.
+- **Remaining uncertainty / blast radius:** The source does not uniquely define
+  reconstruction probability, so materially distinct predeclared probability
+  completions remain open. This result cannot close an infinite VAE space.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_fc_vae_seed11_20260811.json`.
+
+### Recurrent breadth operational failures and bounded repair
+
+- **Former belief/status:** Jobs 373839/373841/373843/373844 were expected to
+  yield scientific breadth rows from the tested compact route.
+- **Evidence:** Supervised-LSTM job 373839 completed training and saved weights
+  but its 8,192-row inference batch exhausted the 16-GB V100. The other three
+  jobs stopped before training because diagnostic inventory called `.shape` on
+  a recurrent layer's list of output tensors. The exact failures and artifacts
+  are preserved. Commit `c735dd9` records a list of output shapes and sets
+  recurrent inference batch 512. Focused compact tests pass. Replacement jobs
+  374310--374313 are queued from that commit.
+- **Root cause:** **VERIFIED** — both are operational harness defects outside
+  model mathematics. Scoring batch size changes only memory partitioning;
+  inventory serialization changes only diagnostics.
+- **Current conclusion + label:** **INVALIDATED as scientific failures** — none
+  of these four failed attempts says whether the corresponding paper result is
+  reproducible. **VERIFIED** — the smallest repairs leave data, architecture,
+  optimizer, training batch, score definition, and metrics unchanged.
+- **Remaining uncertainty / blast radius:** Replacement runs must complete and
+  be audited before any recurrent-row conclusion. Four initial replacement
+  submissions 374306--374309 were cancelled while pending after a stale
+  upstream-branch configuration was discovered; no stale-code job executed.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/recurrent_breadth_operational_failures_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

@@ -93,12 +93,19 @@ chain is inspectable and trusted for one full attempt.
    fresh minimal Naive Bayes row. Historical SGCC/Table-II results remain
    separate evidence. Job 373833 is the first explicitly labeled
    no-supervised-ADASYN Naive Bayes attempt. **Completed:** job 373833 did not
-   reproduce its reported pattern; see the evidence ledger.
+   reproduce its reported pattern; see the evidence ledger. **Current:** Naive
+   Bayes, ARIMA, one-class SVM, supervised feed-forward, and multiclass SVM are
+   complete and score-audited. Supervised-LSTM job 373839 trained but failed in
+   oversized-batch scoring; scientifically unchanged replacement 374310 is
+   queued with recurrent score batch 512.
 8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,
    and score-audit contract. Reuse it only if all gates pass; otherwise run one
-   seed through the five-file route.
+   seed through the five-file route. **Current:** FC-VAE job 373842 is complete
+   and audited. Initial LSTM-SAE/LSTM-VAE/LSTM-AEA jobs failed before training
+   in diagnostic inventory; output-shape-only repair `c735dd9` is tested and
+   replacement jobs 374311--374313 are queued sequentially.
 9. **Execution-order update (user direction, 2026-08-11):** because the
    source specifications and named breadth completions are now frozen, finish
    and test all remaining benchmark/proposed code before waiting for another
