@@ -1,0 +1,37 @@
+{
+  "status": "success",
+  "analysis_job_ids": [373854, 373855],
+  "analysis_commit": "6a5baeb",
+  "scope": "completed ISET Table-III benchmark breadth rows",
+  "threshold_semantics": "strict greater-than/lower-than, matching the runtime",
+  "models": {
+    "naive_bayes": {
+      "fixed": {"DR": 88.7781, "FA": 44.5324, "ACC": 72.1229, "AUC": 79.1693},
+      "oracle_paper_direction": {"DR": 76.9340, "FA": 27.4526, "ACC": 74.7407, "AUC": 79.1693},
+      "closest_to_reported_DR_FA": {"DR": 71.8177, "FA": 22.9979, "ACC": 74.4099, "maximum_absolute_gap": 4.9979},
+      "reported": {"DR": 73, "FA": 18, "ACC": 77.5, "AUC": 70},
+      "attack_DR": [85.8448, 85.4594, 74.1456, 96.5454, 99.7656, 90.9098],
+      "interpretation": "Moderately useful ranking but a mismatched fixed operating point. Because the paper omits the Naive Bayes variant and decision procedure, this row does not support a strong impossibility conclusion."
+    },
+    "arima_pooled_110_residual_mse": {
+      "fixed": {"DR": 21.4762, "FA": 57.1957, "ACC": 32.1403, "AUC": 24.7209},
+      "oracle_paper_direction": {"DR": 99.9989, "FA": 99.9973, "ACC": 50.0008, "AUC": 24.7209},
+      "oracle_reversed_direction": {"DR": 66.6763, "FA": 27.1930, "ACC": 69.7416, "AUC": 75.2791},
+      "closest_to_reported_DR_FA": {"DR": 29.4367, "FA": 68.5632, "ACC": 30.4367, "maximum_absolute_gap": 56.5633},
+      "reported": {"DR": 86, "FA": 12, "ACC": 87, "AUC": 87},
+      "benign_mean_score": 1.143313,
+      "malicious_mean_score": 0.438993,
+      "attack_DR": [13.7643, 23.0584, 31.1003, 0.0, 1.4691, 59.4651],
+      "interpretation": "Fundamental score-direction failure for this completion. Several attacks flatten the profile and therefore reduce rather than increase residual MSE; no threshold in the paper direction approaches the reported operating point."
+    },
+    "one_class_svm_capped": {
+      "fixed": {"DR": 91.8686, "FA": 50.9352, "ACC": 70.4667, "AUC": 79.6744},
+      "oracle_paper_direction": {"DR": 88.1145, "FA": 40.3990, "ACC": 73.8578, "AUC": 79.6744},
+      "closest_to_reported_DR_FA": {"DR": 71.7636, "FA": 27.3067, "ACC": 72.2284, "maximum_absolute_gap": 18.3067},
+      "reported": {"DR": 90, "FA": 9, "ACC": 90.5, "AUC": 87},
+      "attack_DR": [82.4670, 84.8472, 84.8787, 100.0, 99.9160, 99.4911],
+      "interpretation": "Useful ranking but no threshold recovers the reported high-DR/low-FA point. This remains a 12k-train/30k-test resource-capped diagnostic."
+    }
+  },
+  "statistical_boundary": "Rows are correlated within meters and malicious siblings are deterministic transforms of the same benign profiles. Per-row binomial significance would be pseudo-replication; repeated model seeds and meter-level clustered uncertainty are required for confirmatory inference."
+}

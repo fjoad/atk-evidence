@@ -70,6 +70,16 @@
   90/9/90.5/89.5/87% reported. The close DR comes with >50% FA, so the fixed
   operating point is a non-match. The caps make this diagnostic rather than a
   full-cell result.
+- Score-audit jobs 373854/373855 analyzed the three completed benchmark score
+  vectors. NB oracle ACC is 74.74%; its closest ROC point to reported DR/FA is
+  71.82/23.00, a minimum 5.00-point max gap, so NB mainly exposes an omitted
+  operating-point choice rather than a catastrophic ranking failure. Pooled
+  ARIMA's paper-direction oracle ACC is only 50.00%; reversing its score reaches
+  69.74%, and its closest paper-direction DR/FA point remains 56.56 points away.
+  Capped one-class SVM oracle ACC is 73.86%; its closest DR/FA point remains
+  18.31 points away. Do not use per-row p-values: meter/day and six attack
+  siblings are correlated. Confirmation needs repeated seeds and meter-level
+  clustered uncertainty.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

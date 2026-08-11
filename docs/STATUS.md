@@ -138,6 +138,14 @@ One-class SVM job `373837` completed in 1m04s using the explicit
 near the paper only at a false-alarm rate above 50%; this bounded diagnostic
 does not reproduce the reported operating point and cannot fill the full cell.
 
+Score-audit jobs `373854` and `373855` completed. Oracle-threshold analysis
+separates the failures: Naive Bayes is primarily an omitted operating-point
+issue (oracle ACC 74.74%, closest reported DR/FA gap 5.00 points); pooled ARIMA
+is a fundamental paper-direction failure (oracle ACC 50.00%, reversed 69.74%,
+closest gap 56.56 points); capped one-class SVM has useful ranking but cannot
+reach the claimed high-DR/low-FA corner (oracle ACC 73.86%, closest gap 18.31
+points). These are exploratory score diagnostics, not repeated-seed inference.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;

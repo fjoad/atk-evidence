@@ -810,6 +810,42 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_one_class_svm_seed11_20260811.json`.
 
+### Completed ISET benchmark score-vector audit
+
+- **Former belief/status:** Fixed-threshold non-matches were known for Naive
+  Bayes, pooled ARIMA, and capped one-class SVM, but it was unclear whether each
+  was merely a poor threshold or a deeper ranking failure.
+- **Evidence:** Panther audit jobs 373854 and 373855 loaded the preserved score
+  vectors and computed paper-direction oracle thresholds, reversed-direction
+  controls, closest ROC points to the paper's DR/FA pair, score distributions,
+  and attack-specific DR. Naive Bayes reaches at most 74.74% oracle balanced
+  ACC; its closest point to reported DR=73/FA=18 is DR=71.82/FA=23.00, a 5.00
+  percentage-point maximum gap. Pooled ARIMA reaches only 50.00% oracle ACC in
+  the paper direction; reversed direction reaches 69.74%. Its closest
+  paper-direction point is DR=29.44/FA=68.56, 56.56 points from the target.
+  Benign mean residual MSE is 1.143 versus 0.439 for malicious rows, and attack
+  4 has 0% DR: profile-flattening attacks make this high-residual anomaly rule
+  point backward. Capped one-class SVM reaches 73.86% oracle ACC; its closest
+  target point is DR=71.76/FA=27.31, still 18.31 points away.
+- **Root cause:** **PARTLY INFERRED.** The pooled ARIMA failure follows
+  mechanistically from using residual magnitude against attacks that often
+  flatten or suppress variation. Naive Bayes instead has moderately useful
+  ranking and is sensitive to its unspecified model/decision completion.
+  One-class SVM separates scores somewhat but not enough to reach the claimed
+  high-DR/low-FA corner in its bounded branch.
+- **Current conclusion + label:** **OBSERVED** — threshold adjustment alone
+  cannot rescue pooled ARIMA or the capped one-class SVM to their reported
+  Table-III operating points. **OBSERVED/OPEN** — Naive Bayes is a weaker
+  non-match: its omitted decision procedure could materially change the row,
+  although this completion still misses the printed target.
+- **Statistical boundary:** The millions of profile rows are not independent.
+  Days share meters and the six malicious siblings are transforms of the same
+  benign profile. Treating rows as iid would manufacture tiny confidence
+  intervals through pseudo-replication. Confirmatory uncertainty must combine
+  repeated training seeds with meter-level clustered resampling or aggregation.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_benchmark_breadth_score_audit_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
