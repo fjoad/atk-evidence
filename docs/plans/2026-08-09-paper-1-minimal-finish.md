@@ -75,7 +75,7 @@ chain is inspectable and trusted for one full attempt.
 4. **Cancelled before execution:** seeds 22 and 33. Repetition would quantify
    an already-large gap before identifying its source.
 5. Run one seed of the one-factor linear-output control while preserving every
-   other FC-SAE setting and the original score audit. Job 373805 is queued.
+   other FC-SAE setting and the original score audit. Job 373805 is running.
 6. Run one watched seed for each remaining proposed architecture, followed by
    one-factor material data/evaluation readings in descending diagnostic value:
    scaling/output compatibility, model identity, attack population/split, and
