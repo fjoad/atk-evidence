@@ -74,19 +74,24 @@ chain is inspectable and trusted for one full attempt.
    scientific result of the frozen completion, not an artifact reload failure.
 4. **Cancelled before execution:** seeds 22 and 33. Repetition would quantify
    an already-large gap before identifying its source.
-5. Run one seed of the one-factor linear-output control while preserving every
-   other FC-SAE setting and the original score audit. Job 373805 is running.
-6. When job 373805 finishes, harvest and validate it before submitting anything
-   else: verify commit/config/data identities, training history, saved scores,
+5. **Complete:** run one seed of the one-factor linear-output control while
+   preserving every other FC-SAE setting and the original score audit. Job
+   373805 completed successfully in 1:05:43.
+6. **Complete:** harvest and validate it before submitting anything else:
+   verify commit/config/data identities, training history, saved scores,
    reload equivalence, fixed-threshold metrics, oracle threshold in both score
    directions, zero-reconstruction correlation, per-attack DR/FA, and wall time.
-   Compare it directly with the frozen Softmax anchor. Record whether changing
-   only the output activation materially changes separation. It identifies a
-   divergence point; it does not by itself establish reproduction or failure.
+   Compare it directly with the frozen Softmax anchor. Linear output materially
+   changed the score but did not rescue the reported direction or separation;
+   output activation alone is not a sufficient explanation. This is a bounded
+   negative contrast; it does not by itself establish a paper verdict.
 7. Cover the six named benchmark rows once each in paper-table order: Naive
    Bayes, ARIMA, one-class SVM, supervised feed-forward, supervised LSTM, and
    multiclass SVM. Again, admit an existing result only after the renewed
-   contract check; do not repeat seeds yet.
+   contract check; do not repeat seeds yet. **Reuse audit complete:** no
+   preserved ISET/Table-III benchmark attempt passes this gate, so begin with a
+   fresh minimal Naive Bayes row. Historical SGCC/Table-II results remain
+   separate evidence.
 8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,

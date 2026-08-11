@@ -23,18 +23,28 @@
   found three V100s free, but only ten CPU cores free on their node while each
   job requested sixteen; the delay was resource shape/priority, not exhaustion
   of every 16-GB GPU.
-- Breadth-first job 373805 is the seed-11
-  `C-OUTPUT-LINEAR-ISET-FC-SAE` one-factor control. It requests eight CPU cores
-  and one 16-GB V100, preserves all other baseline settings, and began running
-  on `crimv3mgpu026` after a short scheduler-priority wait. Do not restart it
-  merely to change its already-granted resource request. Future short Slurm
-  wrappers request only one 16-GB V100 and leave CPU/memory shape unspecified.
-- After job 373805, validate and contrast its saved scores first. Then continue
-  breadth-first with one eligible result for each of the six benchmark rows,
+- Breadth-first job 373805 completed the seed-11
+  `C-OUTPUT-LINEAR-ISET-FC-SAE` one-factor control in 1:05:43; audit job 373824
+  completed in 24 seconds. Linear output produced DR/FA/ACC/AUC/F1 =
+  12.32/30.78/40.77/28.14/21.61%. A paper-direction oracle reaches only
+  50.04% ACC; reversing direction reaches 67.56%. Benign mean error 0.537 is
+  above malicious 0.281. Correlation with zero reconstruction fell to 0.82089,
+  so the model changed materially but still did not yield the claimed score
+  behavior. Table-V FA is exactly 30.0696% for all attacks on the common
+  all-benign population. Output activation alone is therefore not a sufficient
+  explanation for the gap. This remains a one-seed corrected control, not a
+  paper-level verdict. Future short Slurm wrappers request only the needed GPU
+  type/count and leave CPU/memory shape unspecified.
+- Continue breadth-first with one eligible result for each of the six benchmark rows,
   followed by each remaining proposed model, and finally one-factor
   data/evaluation interpretations. Benchmarks come first because they provide
   cheaper shared-pipeline diagnostics. Do not add seeds until that breadth map
   is written; this sequence is explicit in the active plan.
+- The 2026-08-11 reuse audit found no preserved ISET/Table-III benchmark
+  attempt in committed results or Panther manifests. Historical benchmark
+  completions are SGCC/Table II and are ineligible for the current ISET rows.
+  Start benchmark breadth with the ISET Naive Bayes row; do not silently reuse
+  the SGCC numbers.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.

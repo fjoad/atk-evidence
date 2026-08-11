@@ -1,0 +1,92 @@
+{
+  "status": "success",
+  "evidence_label": "OBSERVED one-factor corrected-control diagnostic",
+  "cluster_jobs": {
+    "training_and_scoring": 373805,
+    "score_audit": 373824
+  },
+  "source_attempt": "seed_11_b4375c29b822_table_v",
+  "method": "C-OUTPUT-LINEAR-ISET-FC-SAE",
+  "controlled_change": "final FC-SAE output activation: Softmax to linear",
+  "unchanged": {
+    "data_metadata_sha256": "44ad20b8daf4add28345f3d41cafeb428f6091930fa8c1d956ea9d420b11bd5d",
+    "seed": 11,
+    "batch_size": 512,
+    "threshold": 0.58,
+    "anomaly_direction": "higher reconstruction error is malicious"
+  },
+  "fixed_paper_threshold": {
+    "DR": 12.319336913502925,
+    "FA": 30.776269696444984,
+    "ACC": 40.77153360852897,
+    "AUC": 28.144788457296944,
+    "F1": 21.607203803604566
+  },
+  "reported_table_3": {
+    "DR": 81,
+    "FA": 15,
+    "ACC": 83,
+    "AUC": 81,
+    "F1": 81
+  },
+  "oracle_threshold_diagnostics": {
+    "paper_direction": {
+      "threshold": 4.817342281341553,
+      "DR": 0.34284047516460936,
+      "FA": 0.25533785313744556,
+      "ACC": 50.04375131101359,
+      "AUC": 28.144788457296944
+    },
+    "reversed_direction": {
+      "threshold": 0.12408936768770218,
+      "DR": 63.40647658305535,
+      "FA": 28.27830094436379,
+      "ACC": 67.56408781934579,
+      "AUC": 71.85521154270306
+    }
+  },
+  "score_distribution": {
+    "benign_mean": 0.5373940855214027,
+    "malicious_mean": 0.2811198217303094,
+    "trained_vs_zero_reconstruction": {
+      "pearson_correlation": 0.8208906165223434,
+      "mean_absolute_difference": 0.6153433834168966,
+      "root_mean_squared_difference": 1.7261138831985645
+    }
+  },
+  "table_5": {
+    "common_all_benign_FA": 30.069604537842746,
+    "DR_by_attack": [
+      3.999484739860258,
+      5.446122001163777,
+      16.2805769136806,
+      0.026473710628128762,
+      0.4162502387520044,
+      47.74711387693278
+    ],
+    "note": "FA is exactly common across all attacks under one fixed model, threshold, and all-benign evaluation population. The Table III held-out-B2 FA is 30.776269696444984%."
+  },
+  "runtime": {
+    "slurm_elapsed_seconds": 3943,
+    "pipeline_total_seconds": 3785.9432724565268,
+    "fit_seconds": 3600.107699610293,
+    "epochs": 100,
+    "best_epoch": 100
+  },
+  "softmax_anchor_comparison": {
+    "linear_minus_softmax_percentage_points": {
+      "DR": -13.861319510147515,
+      "FA": -27.447287451549736,
+      "ACC": 6.79298397070111,
+      "AUC": -2.899075596279457,
+      "F1": -18.852247677191124
+    },
+    "interpretation": "The linear decoder changes the scores materially and lowers FA, but does not restore the reported score direction, separation, or metrics."
+  },
+  "interpretation": [
+    "Changing only Softmax to a linear output does not reproduce the reported Table III result.",
+    "No threshold in the paper direction rescues the same scores: oracle balanced ACC is 50.04%.",
+    "The score ordering is reversed on average; lower-error-as-malicious reaches 67.56% oracle balanced ACC but remains 15.44 points below the reported 83%.",
+    "This rejects output activation alone as a sufficient explanation for the baseline gap. It does not establish a paper-level verdict or make a claim about author intent."
+  ]
+}

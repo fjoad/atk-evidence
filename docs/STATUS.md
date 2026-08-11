@@ -20,8 +20,9 @@
   neighbor implementation, and score-audit job `373800` completed. Premature
   repeated-seed jobs `373803` and `373804` were cancelled before execution
   after the breadth-first correction. One-factor linear-output job `373805`
-  is running on one 16-GB V100. It had already been submitted with an eight-CPU
-  request; future wrappers request only the GPU so CPU shape cannot delay them.
+  completed successfully in 1:05:43 on one 16-GB V100; audit job `373824`
+  completed in 24 seconds. No Panther jobs are currently running. Future
+  wrappers request only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -89,6 +90,31 @@ result records are
 and
 [`../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json`](../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json).
 
+The one-factor linear-output control also completed:
+
+- method: `C-OUTPUT-LINEAR-ISET-FC-SAE`, seed 11, batch 512;
+- only change from the anchor: final output activation Softmax to linear;
+- reproduced DR/FA/ACC/AUC/F1:
+  12.32 / 30.78 / 40.77 / 28.14 / 21.61%;
+- paper-direction oracle ACC is only 50.04%; reversing direction reaches 67.56%;
+- benign mean error is 0.537 versus malicious 0.281, so the average ordering is
+  opposite the paper's decision rule;
+- trained versus zero-reconstruction score correlation falls from 0.99946 to
+  0.82089, showing that the activation changes the learned score materially but
+  still does not produce the reported separation; and
+- Table-V FA is exactly 30.0696% for every attack under the common all-benign
+  evaluation population, again unlike the paper's varying FA cells.
+
+This closes output activation *alone* as a sufficient explanation for the
+baseline gap. It remains a one-seed corrected control, not a paper-level verdict.
+The committed summary is
+[`../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_linear_seed11_score_audit_20260811.json`](../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_linear_seed11_score_audit_20260811.json).
+
+The benchmark reuse check found no preserved ISET/Table-III benchmark attempt
+in either the committed summaries or Panther's attempt manifests. Existing
+benchmark results are SGCC/Table II and cannot fill the current ISET breadth
+rows. The next implementation target is therefore the ISET Naive Bayes row.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -106,10 +132,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Complete one seed of the separately labeled linear-output FC-SAE control in
-   Panther job `373805`; it tests the standardized-input/Softmax-output
-   incompatibility and nothing else. On completion, validate and compare its
-   saved scores before submitting another job.
+1. **Complete:** validate the one-factor linear-output control and record that
+   output activation alone does not rescue the score separation.
 2. Continue breadth-first, one watched result at a time: the six benchmark
    rows first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3

@@ -512,6 +512,39 @@ and repeated experiments determine technical conclusions.
   `table_4/iset/half` attempts; committed
   `results/iset_score_sanity_seed11.json`.
 
+### Paper 1 FC-SAE output-activation control
+
+- **Former belief/status:** The near-zero-reconstruction Softmax anchor left
+  open whether incompatibility between standardized negative targets and a
+  nonnegative unit-sum decoder was sufficient to explain the large Table III
+  gap.
+- **Supporting evidence:** Panther job 373805 changed only the final FC-SAE
+  activation from Softmax to linear while preserving data hash, architecture,
+  seed 11, batch 512, optimizer, training rule, threshold, score, and test
+  population. It completed 100 epochs in 1:05:43. Reproduced
+  DR/FA/ACC/AUC/F1 were 12.32/30.78/40.77/28.14/21.61%, versus the paper's
+  81/15/83/81/81%. Audit job 373824 found a 50.04% best possible balanced ACC
+  in the printed score direction and 67.56% after reversing direction. Mean
+  error was 0.537 for benign and 0.281 for malicious profiles. Score
+  correlation with zero reconstruction fell from the Softmax anchor's 0.99946
+  to 0.82089. Table-V FA was exactly 30.0696% across all six attacks on its
+  common all-benign evaluation population.
+- **Root cause:** **OBSERVED bounded contrast** — the linear decoder changes
+  the learned score substantially and reduces fixed-threshold FA, but the
+  malicious/benign score ordering remains opposite the printed rule and
+  discrimination remains far below the reported result.
+- **Current conclusion + label:** **OBSERVED** — output activation alone is not
+  a sufficient explanation for the frozen baseline's non-reproduction. The
+  result strengthens the need to locate divergence in shared data/evaluation
+  choices or other model details before repeating seeds.
+- **Remaining uncertainty / blast radius:** This is one seed of a corrected
+  control and does not test the printed ADASYN operation, joint changes to
+  scaling and output, other architectures, or benchmark models. It is not a
+  paper-level verdict and says nothing about author intent.
+- **Source artifacts:** cluster jobs 373805 and 373824; immutable attempt
+  `seed_11_b4375c29b822_table_v`; committed
+  `results/iset_fc_sae_linear_seed11_score_audit_20260811.json`.
+
 ### FC-VAE DDP post-optimizer gate failure
 
 - **Former belief/status:** The production DDP path was expected to execute all
