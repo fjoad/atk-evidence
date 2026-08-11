@@ -1,0 +1,36 @@
+{
+  "status": "success",
+  "evidence_label": "OBSERVED benchmark plus linear extrapolation",
+  "cluster_job": 373799,
+  "question": "How long would the selected exact CPU nearest-neighbor searches inside printed-position ISET ADASYN take at the full frozen cardinalities?",
+  "implementation": {
+    "library_path": "sklearn.neighbors.NearestNeighbors",
+    "algorithm": "brute",
+    "cpu_cores": 16,
+    "features": 48,
+    "queries_benchmarked": 250,
+    "reference_rows": 14258510
+  },
+  "observation": {
+    "elapsed_seconds": 16.121654396876693,
+    "distance_pairs": 3564627500,
+    "pairs_per_second": 221108045.87713954
+  },
+  "full_scale": {
+    "first_pass_queries": 750770,
+    "first_pass_reference_rows": 14258510,
+    "first_pass_distance_pairs": 10704449752700,
+    "second_pass_queries": 750770,
+    "second_pass_reference_rows": 750770,
+    "second_pass_distance_pairs": 563655592900,
+    "estimated_first_pass_hours": 13.448504968381238,
+    "estimated_second_pass_hours": 0.7081198579032159,
+    "estimated_neighbor_search_total_hours": 14.156624826284455
+  },
+  "boundary": [
+    "The estimate is a linear extrapolation from the same exact CPU neighbor implementation on one Panther node.",
+    "It excludes synthetic-row generation, memory allocation, serialization, and any retries.",
+    "It is not an estimate of the authors' runtime because their library, search implementation, hardware, subsampling, and preprocessing boundary are not reported.",
+    "Exact GPU search or approximate-neighbor search could be materially faster."
+  ]
+}

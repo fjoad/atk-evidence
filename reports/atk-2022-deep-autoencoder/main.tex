@@ -28,7 +28,8 @@ procedure described in the paper. The primary track preserves the printed
 method, including questionable operations; material omissions and
 contradictions are tested as predeclared branches; statistically corrected
 controls are reported separately. This document is a live report scaffold.
-No paper-level reproduction verdict has yet been issued.
+One full compact FC-SAE interpretation has completed; no paper-level
+reproduction verdict has yet been issued.
 \end{abstract}
 
 \section{Scope and testable claim}
@@ -48,6 +49,25 @@ from which six malicious variants are synthesized using Equations (1)--(6).
 Anomaly detectors are trained on benign data only, whereas supervised models
 use benign and malicious classes. The printed anomaly protocol applies ADASYN
 to the test set; the supervised protocol applies ADASYN before splitting.
+
+In the frozen ISET construction, the anomaly test population before ADASYN has
+750,770 benign profiles and 13,507,740 malicious profiles. The selected exact
+imbalanced-learn/scikit-learn default therefore queries 750,770 minority rows
+against all 14,258,510 test rows in its first nearest-neighbor pass, or roughly
+$10.7\times10^{12}$ profile-pair distances, followed by a minority-only search
+and generation of approximately 12.8 million synthetic benign profiles. A
+bounded full attempt consumed 4,724.52 seconds wall time and 33,665.16
+CPU-seconds without completing the first query. This is an operational result
+for the declared default implementation, not a proof that ADASYN is impossible
+in principle: exact GPU search, approximate neighbors, or an unreported
+subsample may have different cost, and the paper specifies none of them. A
+same-machine 16-core benchmark of 250 queries against all 14,258,510 rows
+processed 3,564,627,500 distance pairs in 16.12 seconds. Linear extrapolation
+estimates 13.45 hours for the first full search and 0.71 hours for the
+minority-only search, or 14.16 wall-hours before synthesis and serialization.
+This makes the selected CPU default expensive but plainly possible as an
+overnight job; it provides no basis for claiming that the authors could not
+have run ADASYN.
 
 \section{Reproduction methods}
 
@@ -146,12 +166,62 @@ mismatch are retained but excluded from paper-reproduction claims.
 
 \section{Results}
 
-\textcolor{evidenceblue}{\status{Open:}} Eligible source-faithful full-data
-results and confirmatory repeated-run statistics have not yet been completed.
-Exploratory and quarantined values will not be promoted into this section.
-Each non-executable source item above will receive a reported-versus-literal-
-failure-versus-repair result block; no closest repair will be selected in place
-of the full predeclared family.
+\textcolor{evidenceblue}{\status{Exploratory:}} One full compact
+\texttt{I-ADASYN-NONE-ISET-FC-SAE} attempt has completed. It is the frozen
+seed-11, batch-512 executable completion without test-set resampling, not the
+completed printed-ADASYN result and not a confirmatory verdict. The model had
+450,448 parameters, trained for 74 epochs with epoch 69 restored, and completed
+in 53:12 of Slurm wall time.
+
+\begin{table}[ht]
+\centering
+\caption{Reported and reproduced full-ISET FC-SAE metrics (percent).}
+\begin{tabular}{lrrrrr}
+\toprule
+ & DR & FA & Balanced ACC & AUC & F1 \\
+\midrule
+Reported & 81.00 & 15.00 & 83.00 & 81.00 & 81.00 \\
+Reproduced, seed 11 & 26.18 & 58.22 & 33.98 & 31.04 & 40.46 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The result closely repeats the prior batch-32 sensitivity rather than being
+rescued by the frozen batch-512 primary completion. Under the common-model,
+common-benign Table-V interpretation, reproduced FA is exactly 57.9152\% for
+all six attack types, whereas the paper reports 15, 16, 10, 17, 17, and 19\%.
+An artifact-reload score audit gives additional diagnosis. With the paper's
+``larger reconstruction error is malicious'' direction, an oracle threshold
+selected on the test labels reaches only 50.0019\% balanced accuracy
+(AUC 31.0439\%). Reversing the score direction reaches 66.2554\% balanced
+accuracy (AUC 68.9561\%), still 16.7446 points below the reported 83\%.
+Moreover, trained reconstruction-error scores correlate at 0.999459 with the
+scores obtained by reconstructing every profile as zero. This is consistent
+with a structural tension in the printed method: joint zero-mean/unit-variance
+standardization produces negative inputs, while Table I's Softmax output is
+nonnegative and constrained to sum to one. The diagnostic motivates a
+separately labeled linear-output repair; it does not modify or invalidate the
+paper-consistent Softmax attempt.
+
+The additional-seed audit remains open. Each non-executable source item will
+ultimately receive a
+reported-versus-literal-failure-versus-repair block; no closest repair will be
+selected in place of the full predeclared family.
+
+\subsection{A conditional bound on what test-set ADASYN can repair}
+
+For ISET, ADASYN oversamples the benign test class after model fitting. It does
+not alter the fitted weights or predictions on the preserved malicious rows.
+Thus, for this trained model, DR remains 26.1807\% regardless of the added
+benign samples. From the paper's own balanced-accuracy definition,
+\[
+  \mathrm{ACC}=\frac{\mathrm{DR}+100-\mathrm{FA}}{2},
+\]
+even the unattainably favorable bound $\mathrm{FA}=0$ gives only 63.0903\%,
+below the reported 83\%. This is a mathematical impossibility result
+conditional on this trained model and the paper's ISET ADASYN placement. It is
+not a proof that every paper-consistent training completion has the same DR,
+nor evidence of fabrication or author intent.
 
 \begin{table}[ht]
 \centering
@@ -162,9 +232,9 @@ fingerprinted attempts.}
 Published table & Reproduction state & Evidence status \\
 \midrule
 Table II & Pending eligible completion & Open \\
-Table III & Pending eligible completion & Open \\
-Table IV & Pending eligible completion & Open \\
-Table V & Pending explicit experiment identities & Open \\
+Table III & One no-resampling FC-SAE seed & Exploratory \\
+Table IV & Full-size FC-SAE timing recorded & Exploratory \\
+Table V & Common-model FC-SAE identity recorded & Exploratory \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -174,7 +244,17 @@ Table V & Pending explicit experiment identities & Open \\
 The final analysis will report all predeclared seeds and failures, uncertainty
 intervals, complete metric patterns, and the fraction of eligible branches
 meeting the frozen reproduction tolerance. No best-seed or best-branch result
-will stand in for the distribution.
+will stand in for the distribution. The current 63.0903\% ceiling is an exact
+conditional bound, not a substitute for repeated seeds or the finite
+interpretation envelope. The first exploratory summary uses three frozen seeds
+without selecting the best. Confirmation will freeze a larger seed set and the
+finite source-supported interpretation envelope. A branch will be classified
+as a non-match only when its uncertainty interval remains outside the
+predeclared $\pm2$ percentage-point reproduction band. Because the paper
+reports rounded point estimates without repetitions or uncertainty, a
+two-sample test against the authors' run distribution is not possible.
+Conclusions therefore remain bounded to the tested envelope rather than an
+infinite space of unreported implementations.
 
 \section{Limitations}
 

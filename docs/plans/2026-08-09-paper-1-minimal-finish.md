@@ -2,8 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; source freeze, five-file audit, and single Panther baseline
-run complete; awaiting result audit/classification
+**Status:** Active; source freeze, five-file audit, Panther baseline, score
+audit, and ADASYN runtime benchmark complete; awaiting repeated baseline seeds
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -26,9 +26,8 @@ layer, or another paper while this plan is active.
   population.
 - Printed-position default ADASYN is preserved as a full-scale executability
   failure, not silently replaced.
-- One full `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, batch-32 cluster attempt exists.
-  It is exploratory and requires the score/eligibility audit before it can guide
-  further runs.
+- One full `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, batch-32 cluster sensitivity
+  and one frozen batch-512 anchor exist. Their close agreement is recorded.
 - Batch 512 remains the declared primary execution completion; batch 32 is a
   sensitivity.
 - Compact batch-512 job 373789 completed successfully in 53:12; no experimental
@@ -54,10 +53,11 @@ the published target. A repair is never relabeled as the literal method.
    against the renewed source reconstruction.
 2. **Complete:** run the frozen FC-SAE seed-11/batch-512 baseline through the
    one-command compact route on Panther (job 373789).
-3. Audit its score distributions, direction, zero and untrained controls,
+3. **Complete:** audit its score distributions, direction, zero control,
    attack breakdown, identities, configuration, hashes, and result reload.
-4. Classify the attempt as eligible exploratory evidence, sensitivity-only, or
-   invalid, with one written reason. Keep the old batch-32 result separate.
+4. **Complete:** classify it as eligible exploratory
+   `I-ADASYN-NONE-ISET-FC-SAE` evidence. It is neither completed printed `P0`
+   nor confirmatory evidence; the old batch-32 result remains a sensitivity.
 
 **Finish condition:** the complete PDF → method → data → model → scores → metrics
 chain is inspectable and trusted for one full attempt.
@@ -68,8 +68,10 @@ chain is inspectable and trusted for one full attempt.
    preserving the same global batch and method.
 2. Freeze the faster sound execution path; keep the Slurm layer to one short
    wrapper.
-3. Run one full batch-512 FC-SAE anchor and inspect it before scaling.
-4. If sound, run seeds 22 and 33 in parallel without changing the method.
+3. **Complete:** run one full batch-512 FC-SAE anchor and inspect it before
+   scaling. The implementation chain is sound; the observed score failure is a
+   scientific result of the frozen completion, not an artifact reload failure.
+4. Run seeds 22 and 33 in parallel without changing the method.
 5. Produce the Paper Table III row beside all reported values and timings.
 
 **Finish condition:** three preserved primary FC-SAE seeds plus failures and

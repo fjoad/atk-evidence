@@ -94,11 +94,20 @@
     .status { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
     .status > div { padding: 16px; border-radius: 12px; background: #11141a; }
     .status b { display: block; margin-bottom: 4px; }
+    .plain { margin: 0 0 22px; padding: 17px 20px; border-radius: 13px; background: #102038; color: #e5efff; font-size: 1.08rem; }
+    .plain strong { color: var(--blue); }
+    .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 18px 0; }
+    .metric-card { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #11141a; }
+    .metric-card span { display: block; color: var(--muted); font-size: .84rem; text-transform: uppercase; letter-spacing: .04em; }
+    .metric-card strong { display: block; margin: 7px 0 4px; font-size: 1.55rem; }
+    .metric-card small { color: var(--muted); }
+    .proof { border-color: #74524d; background: #211716; }
+    .proof code { color: #ffd4d0; }
     footer { margin-top: 46px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
     @media (max-width: 900px) {
       .overview { grid-template-columns: 1fr; }
       .arrow { transform: rotate(90deg); }
-      .two, .three, .status, .equations { grid-template-columns: 1fr; }
+      .two, .three, .status, .equations, .result-grid { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       main { width: min(100% - 24px, 1320px); padding-top: 24px; }
@@ -124,10 +133,11 @@
     <span>Study 1 · source-first reconstruction · 11 August 2026</span>
   </div>
 
-  <div class="kicker">What the paper actually does</div>
+  <div class="kicker">The paper, in plain English</div>
   <h1>From two electricity datasets to Tables I–V</h1>
-  <p class="lede">A compact reconstruction of “Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids.” This follows the paper’s order, including questionable operations. Where the text does not define one executable experiment, the ambiguity is shown rather than silently repaired.</p>
+  <p class="lede">The paper trains computer models to recognize electricity theft. This page first explains the idea as simply as possible, then shows the exact technical instructions, missing details, contradictions, and current reproduction evidence underneath. Nothing is silently fixed and no result is treated as proof of author intent.</p>
   <p class="meta">Paper source: Sections II–IV, Equations (1)–(13), Algorithms 1–6, Figures 1–8, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
+  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the work-in-progress scientific report (PDF)</a>. It is updated with the current evidence but does not yet contain a verdict.</p>
 
   <div class="legend" aria-label="Legend">
     <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
@@ -147,6 +157,50 @@
   </section>
 
   <section class="stage">
+    <div class="stage-title"><div class="stage-number">0</div><h2>What happened when we ran the basic experiment?</h2></div>
+    <p class="plain"><strong>Short version:</strong> using the named ISET/CER data and the printed FC-SAE architecture, our frozen seed-11 model missed nearly three quarters of the attacks and falsely accused more than half of the normal examples. This one run is strong evidence of a mismatch, but it is not yet a paper-wide verdict.</p>
+    <div class="result-grid" aria-label="Reported versus reproduced headline metrics">
+      <div class="metric-card"><span>Attacks detected</span><strong>81% → 26.18%</strong><small>paper → reproduced</small></div>
+      <div class="metric-card"><span>False alarms</span><strong>15% → 58.22%</strong><small>paper → reproduced</small></div>
+      <div class="metric-card"><span>Balanced accuracy</span><strong>83% → 33.98%</strong><small>paper → reproduced</small></div>
+    </div>
+    <div class="two">
+      <article class="block">
+        <h3>What this run does establish</h3>
+        <ul>
+          <li>The fully recorded no-test-resampling interpretation does not reproduce the paper’s FC-SAE result.</li>
+          <li>Changing the frozen batch size from 32 to 512 did not rescue it: the two runs are nearly identical.</li>
+          <li>For this trained model, adding synthetic benign test examples cannot change its 26.18% detection rate on the already scored attack rows.</li>
+          <li>With that detection rate fixed, even an impossible perfect 0% false-alarm rate would cap balanced accuracy at <strong>63.09%</strong>, below the paper’s 83%.</li>
+        </ul>
+      </article>
+      <article class="block">
+        <h3>What it does not establish</h3>
+        <ul>
+          <li>It is not the paper’s complete printed evaluation because full test-set ADASYN has not completed.</li>
+          <li>It does not prove every reasonable missing hyperparameter or interpretation must fail; those require predeclared repeated experiments.</li>
+          <li>It does not prove fabrication, adaptive sample construction, or what private code the authors used.</li>
+          <li>It is one primary seed. A statistical reproduction conclusion requires the remaining frozen seeds and ambiguity envelope.</li>
+        </ul>
+      </article>
+    </div>
+    <div class="callout proof"><strong>The exact conditional proof:</strong> the paper defines balanced accuracy as <code>(DR + 100 − FA) / 2</code>. Holding this model’s malicious predictions fixed gives <code>(26.1807 + 100 − 0) / 2 = 63.0903%</code> even under the best mathematically possible false-alarm rate. This proves what ADASYN cannot repair <em>for this trained model</em>; it does not prove that all other training completions are capped there.</div>
+    <div class="two">
+      <article class="block">
+        <h3>Could a better cutoff recover 83%?</h3>
+        <p class="plain"><strong>No, not for this score vector.</strong> We let the test labels choose the most favorable cutoff after the fact. In the paper’s score direction, the best balanced accuracy was only <strong>50.00%</strong>. Reversing the direction—treating lower error as more suspicious—raised it to <strong>66.26%</strong>, still far below 83%.</p>
+        <p>This is an intentionally optimistic diagnostic, not a valid evaluation protocol. It shows the gap is not merely that we copied <code>0.58</code> instead of a nearby threshold.</p>
+      </article>
+      <article class="block">
+        <h3>Why did the autoencoder behave this way?</h3>
+        <p class="plain"><strong>ELI5:</strong> the paper first turns the input into numbers above and below zero, then tells the final Softmax layer that it may output only positive numbers that add up to one. That is like asking a printer with no minus sign to copy a page full of negative numbers.</p>
+        <p>The trained model’s reconstruction-error ranking was <strong>0.99946 correlated</strong> with the ranking obtained by reconstructing every profile as zero. This directly motivates a separately labeled linear-output repair; it does not authorize changing the paper-consistent run.</p>
+      </article>
+    </div>
+    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim requires the frozen repeated-seed and interpretation program below.</div>
+  </section>
+
+  <section class="stage">
     <div class="stage-title"><div class="stage-number">!</div><h2>When the printed method cannot execute</h2></div>
     <p>The audit does not quietly fix impossible wording and does not stop after pointing it out. Every such item follows the same visible evidence ladder:</p>
     <div class="three">
@@ -159,6 +213,7 @@
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">1</div><h2>Acquire the two named datasets</h2></div>
+    <p class="plain"><strong>Plain English:</strong> one dataset already says which customers stole electricity. The other contains normal electricity days, so the paper manufactures six different kinds of fake theft from each normal day.</p>
 
     <div class="two">
       <article class="block lane">
@@ -192,6 +247,7 @@
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">2</div><h2>Prepare two different learning problems</h2></div>
+    <p class="plain"><strong>Plain English:</strong> the anomaly models study only normal days, like learning what a healthy heartbeat looks like. They are then tested on normal and altered days. The paper also changes the test set itself by inventing extra examples with ADASYN.</p>
 
     <div class="two">
       <article class="block lane">
@@ -214,13 +270,24 @@
     </div>
 
     <article class="block">
-      <h3>2c · Corrected control run beside the reproduction</h3>
+      <h3>2c · ADASYN — “invent more examples from the smaller group”</h3>
+      <p><span class="tag paper">IN PAPER</span> For ISET, the paper applies ADASYN after building the anomaly-detector test set. In our frozen construction that test set has <strong>750,770 benign</strong> profiles and <strong>13,507,740 attack</strong> profiles, so benign is the smaller group.</p>
+      <p class="plain"><strong>ELI5:</strong> ADASYN looks at each smaller-group example, finds its nearest neighbors, and draws new synthetic examples between nearby smaller-group points. It does not inspect which neural model failed, and it cannot manufacture examples specially chosen for the next model.</p>
+      <div class="callout"><strong>Scale and measured estimate:</strong> the selected exact default implementation must compare roughly <code>750,770 × 14,258,510 = 10.7 trillion</code> profile pairs in its first neighbor search, then another 0.56 trillion pairs in a smaller-group search and generate about 12.8 million synthetic benign profiles. A same-machine 16-core benchmark extrapolates to <strong>about 14.2 wall-hours for the two neighbor searches alone</strong>, before synthesis and disk output. A prior bounded attempt ran for 79 minutes and consumed 9.35 CPU-hours without completing the first search.</div>
+      <div class="callout red"><strong>What the paper does not tell us:</strong> it names ADASYN but gives no library, neighbor-search implementation, approximation rule, hardware, subsample, random seed, or preprocessing time. Exact GPU search or approximate neighbors could be much faster than our CPU default. Fourteen CPU hours is also entirely possible as an overnight preprocessing job. Therefore the audit can report that this declared default is expensive and unreconstructable from the paper; it cannot honestly claim the authors “could not have run ADASYN” or infer what they actually ran.</div>
+      <p><span class="tag alongside">STATISTICAL CAUTION</span> Applying oversampling to an evaluation set is unusual: it changes the exam after the model is trained. Here it adds benign rows only. It may change false alarms, AUC, precision, and balanced accuracy, but it cannot change detection on the existing malicious rows.</p>
+      <p class="plain"><strong>About model-tailored synthetic samples:</strong> standard ADASYN uses class labels and nearest neighbors, not the neural model’s successes or failures. With benign as the smaller class, it creates more synthetic benign profiles near places where attack profiles are common. Running it again may produce a slightly different random test set, but it does not automatically create examples specially chosen for FC-SAE, then LSTM-SAE, and so on. The paper reports no model-adaptive sampling procedure.</p>
+    </article>
+
+    <article class="block">
+      <h3>2d · Corrected control run beside the reproduction</h3>
       <p><span class="tag alongside">ALONGSIDE</span> Keep customers disjoint; fit imputation and scaling on training data only; synthesize/oversample training data only; never alter validation or test rows. This answers whether a conventional leakage-free detector works. It does <strong>not</strong> rescue or replace the paper-literal result.</p>
     </article>
   </section>
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">3</div><h2>Build the benchmark and autoencoder families</h2></div>
+    <p class="plain"><strong>Plain English:</strong> an autoencoder is a copy machine trained on normal days. If it struggles to copy a new day, the paper calls that day suspicious. The five models are different kinds of copy machines.</p>
 
     <article class="block">
       <h3>3a · Detector families</h3>
@@ -256,6 +323,7 @@
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">4</div><h2>Select hyperparameters and anomaly thresholds</h2></div>
+    <p class="plain"><strong>Plain English:</strong> the paper lists the winning machine settings and the score that triggers an alarm, but it omits much of the recipe needed to reproduce how those winners and alarm cutoffs were selected.</p>
 
     <div class="two">
       <article class="block lane">
@@ -276,6 +344,7 @@
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">5</div><h2>Evaluate once, then populate Tables II–V</h2></div>
+    <p class="plain"><strong>Plain English:</strong> every profile receives one suspiciousness score. A fixed cutoff turns that score into “normal” or “attack,” and all reported metrics should then come from the same predictions and test population.</p>
 
     <article class="block">
       <h3>5a · Metrics from one score vector and confusion matrix</h3>
@@ -306,6 +375,17 @@
   </section>
 
   <section class="stage">
+    <div class="stage-title"><div class="stage-number">6</div><h2>How the broader claim will be tested</h2></div>
+    <p class="plain"><strong>Plain English:</strong> one bad run is not enough. We first repeat the unchanged recipe with new random seeds. Then we change only one genuinely ambiguous or contradictory instruction at a time. Every result—including a successful reproduction—stays in the record.</p>
+    <div class="three">
+      <div class="track"><strong>1 · Repeat</strong><p>Complete seeds 22 and 33 for the frozen Softmax baseline and report all three, never the best one.</p></div>
+      <div class="track"><strong>2 · Repair visibly</strong><p>First test the smallest structural repair: linear output for standardized inputs. Then test only the finite source-supported scaling, split, threshold, and Attack-3 readings.</p></div>
+      <div class="track"><strong>3 · Confirm</strong><p>Freeze the finite envelope and a larger seed set. A branch is a non-match when its uncertainty interval remains outside the predeclared ±2-point reproduction band.</p></div>
+    </div>
+    <div class="callout"><strong>Statistical limit:</strong> because the paper reports rounded point estimates with no seeds, repetitions, or uncertainty, no ordinary two-sample test against the authors’ run distribution is possible. We can rigorously show non-reproduction within our finite, predeclared interpretation and hyperparameter envelope; we cannot prove failure over an infinite space of unreported private implementations.</div>
+  </section>
+
+  <section class="stage">
     <div class="stage-title"><div class="stage-number">→</div><h2>How the audit runs this without changing the question</h2></div>
     <div class="three">
       <div class="track"><strong><span class="tag paper">P</span> Printed track</strong><p>Execute every stated operation as printed, including test-set ADASYN. Keep truly invalid expressions visible as non-executable findings.</p></div>
@@ -319,9 +399,9 @@
   <section class="stage">
     <div class="stage-title"><div class="stage-number">✓</div><h2>Current project position</h2></div>
     <div class="status">
-      <div><b>Data</b><span class="muted">SGCC and exact CER consumption archives are verified locally.</span></div>
-      <div><b>Fidelity</b><span class="muted">The independent PDF re-audit is complete; the renewed five-file source-to-code audit is the next checkpoint. Old mismatched results remain quarantined.</span></div>
-      <div><b>Verdict</b><span class="muted">Not issued. Eligible full-data paper-consistent runs and confirmatory statistics remain.</span></div>
+      <div><b>Data</b><span class="muted">Exact CER consumption archives are verified and the full ISET baseline population is prepared.</span></div>
+      <div><b>Current evidence</b><span class="muted">One frozen batch-512 FC-SAE run and its score audit are complete. The result is far from the reported pattern and is not rescued by an oracle cutoff.</span></div>
+      <div><b>Verdict</b><span class="muted">Not issued. Repeated seeds, material interpretations, and the printed ADASYN boundary remain.</span></div>
     </div>
   </section>
 

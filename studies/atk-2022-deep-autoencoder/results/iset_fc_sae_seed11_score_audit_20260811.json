@@ -1,0 +1,46 @@
+{
+  "status": "success",
+  "evidence_label": "OBSERVED diagnostic audit",
+  "cluster_job": 373800,
+  "source_attempt": "seed_11_862d7176ef3f_table_v",
+  "method": "I-ADASYN-NONE-ISET-FC-SAE",
+  "fixed_paper_threshold": {
+    "threshold": 0.58,
+    "direction": "higher reconstruction error is malicious",
+    "DR": 26.18065642365044,
+    "FA": 58.22355714799472,
+    "ACC": 33.97854963782786,
+    "AUC": 31.0438640535764
+  },
+  "oracle_threshold_diagnostics": {
+    "paper_direction": {
+      "threshold": 77.44306182861328,
+      "DR": 0.005330277307676932,
+      "FA": 0.0015983590180747764,
+      "ACC": 50.001865959144794,
+      "AUC": 31.0438640535764
+    },
+    "reversed_direction": {
+      "threshold": 0.5272666811943054,
+      "DR": 71.75381670064719,
+      "FA": 39.24304380835675,
+      "ACC": 66.25538644614522,
+      "AUC": 68.9561359464236
+    }
+  },
+  "score_distribution": {
+    "benign_mean": 1.7184163758842408,
+    "malicious_mean": 0.8094724937103526,
+    "trained_vs_zero_reconstruction": {
+      "pearson_correlation": 0.9994588772660663,
+      "mean_absolute_difference": 0.06300023165905833,
+      "root_mean_squared_difference": 0.10141880333317542
+    }
+  },
+  "interpretation": [
+    "The paper-direction fixed-threshold failure is not rescued by an oracle threshold on the same test labels.",
+    "Reversing score direction improves the diagnostic but still remains 16.74 percentage points below the reported balanced accuracy.",
+    "The near-perfect correlation with zero-reconstruction scores shows that sample ranking is dominated by standardized input energy rather than learned reconstruction.",
+    "This is diagnostic evidence for this frozen trained model, not a paper-level verdict and not evidence about author intent."
+  ]
+}

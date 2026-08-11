@@ -16,7 +16,9 @@
 - Panther job `373789` completed successfully in 53:12 from commit `c8c136f`
   on one 16-GB V100. It passed source/preparation gates, trained the frozen
   batch-512 FC-SAE for 74 epochs (best epoch 69), and saved Tables III/full-IV/V
-  artifacts. No project job is queued or running.
+  artifacts. Panther CPU job `373799` measured the selected exact ADASYN
+  neighbor implementation, and score-audit job `373800` completed. No project
+  job is queued or running.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -55,9 +57,12 @@
   profiles, 1,500,520 B1 training profiles, and the 14,258,510-row `B2+M` test
   population.
 - Printed-position default ADASYN is not complete: its exact default full-scale
-  neighbor query entails roughly 10.7 trillion distances. Preserve this as an
-  executability finding. Do not relabel the no-resampling interpretation as the
-  printed result.
+  neighbor query entails roughly 10.7 trillion first-pass distances. A 16-core
+  same-machine benchmark estimates 14.16 wall-hours for both exact neighbor
+  searches alone, before synthesis and persistence. This is expensive but
+  feasible as an overnight job and gives no basis for claiming that the authors
+  could not have run ADASYN. Do not relabel the no-resampling interpretation as
+  the printed result.
 
 ## Paper 1: current experimental evidence
 
@@ -72,9 +77,14 @@ The new compact batch-512 anchor completed:
   common-model/common-benign interpretation but unlike the paper's varying FA.
 
 This is a completed exploratory no-resampling anchor, not printed-ADASYN `P0`
-and not yet a confirmatory verdict. Its score-distribution/reload audit is the
-next gate. The committed result record is
-[`../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`](../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json).
+and not yet a confirmatory verdict. Its score-distribution/reload audit is now
+complete: an oracle threshold in the paper direction reaches only 50.00%
+balanced ACC; reversing direction reaches 66.26%; and the trained score ranking
+is 0.99946-correlated with the zero-reconstruction control. The committed
+result records are
+[`../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`](../studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json)
+and
+[`../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json`](../studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json).
 
 One full compact-route cluster result exists:
 
@@ -93,11 +103,12 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Inspect the saved architecture, loss history, score distributions, zero and
-   untrained controls, hashes, metrics, and Table-V FA invariant before any
-   second seed or interpretation branch.
-2. Classify the batch-512 attempt independently of the old batch-32 sensitivity.
-3. Do not launch another experiment until that audit is recorded.
+1. Run unchanged batch-512 Softmax seeds 22 and 33 on Panther and report the
+   three-seed distribution without selecting a favorite.
+2. Then run the separately labeled linear-output repair prompted by the exact
+   standardized-input/Softmax-output incompatibility. Do not alter the baseline.
+3. Freeze the remaining finite source-supported scaling, split, threshold, and
+   Attack-3 interpretations before confirmatory repetition.
 
 ## Not on the critical path
 

@@ -603,18 +603,25 @@ and repeated experiments determine technical conclusions.
   comparisons. It then performs another minority-only neighbor search. The
   full attempt was interrupted after 4,724.52 seconds wall and 33,665.16
   CPU-seconds inside this first call without creating the resampled array.
+  Panther job 373799 then measured 250 exact 48-feature queries against all
+  14,258,510 references on 16 CPU cores: 3,564,627,500 distance pairs in
+  16.1217 seconds. Linear extrapolation gives 13.4485 hours for the first search
+  and 0.7081 hours for the minority-only search, or 14.1566 wall-hours before
+  synthesis, allocation, serialization, and retries.
 - **Root cause:** **VERIFIED algorithmically; OBSERVED operationally** —
   ADASYN is printed after construction of an unusually large all-customer
   malicious test population, and the frozen executable completion selected
-  imbalanced-learn defaults. Those defaults are exact but computationally
-  inappropriate for this cardinality/dimension. This is not a model-training
-  failure.
+  imbalanced-learn defaults. Those defaults are exact and expensive at this
+  cardinality/dimension. This is not a model-training failure.
 - **Current conclusion + label:** **OBSERVED** — exact pre-ADASYN Paper-1 data
   construction is complete and auditable. **OPEN** — the full default-ADASYN
   result has not completed and must not be silently represented as P0.
   The exact `B2+M` no-resampling interpretation is run separately as
   `I-ADASYN-NONE`; a scalable approximate-neighbor sensitivity will also be
-  labeled separately.
+  labeled separately. **OBSERVED/BOUNDARY** — 14.16 hours of neighbor search is
+  compatible with an overnight preprocessing job. The paper omits its library,
+  search method, hardware, and timing boundary, so this benchmark does not
+  support a claim that the authors could not have run ADASYN.
 - **Remaining uncertainty / blast radius:** ADASYN does not alter B1 or model
   fitting, nor malicious-class DR on the original rows. It can alter FA by
   adding synthetic benign rows. Thus the model may be trained and its
@@ -622,8 +629,9 @@ and repeated experiments determine technical conclusions.
   remains unresolved.
 - **Source artifacts:** fresh
   `data/derived/atk-2022-deep-autoencoder/reproduction/p0-full` cache (ignored),
-  `METHOD.md`, compact `prepare_data.py`, and the full preparation attempt of
-  2026-07-24.
+  `METHOD.md`, compact `prepare_data.py`, the full preparation attempt of
+  2026-07-24, and
+  `studies/atk-2022-deep-autoencoder/results/adasyn_default_runtime_estimate_20260811.json`.
 
 ### Local-execution policy correction
 
@@ -670,19 +678,31 @@ and repeated experiments determine technical conclusions.
   83%. ADASYN can still change FA, AUC, precision, and other distribution-
   dependent metrics, so this no-resampling run is not the completed printed
   evaluation.
+- **Score-audit evidence:** Panther job 373800 reloaded the saved attempt. An
+  oracle threshold chosen on the test labels reached only 50.0019% balanced ACC
+  in the printed high-error direction. Reversing the direction reached 66.2554%
+  ACC and 68.9561% AUC, still far from the reported row. The trained
+  reconstruction-error vector correlated 0.999459 with the zero-reconstruction
+  score vector. **INFERRED with strong mechanistic support** — ranking is
+  dominated by standardized input energy. This is consistent with the printed
+  combination of negative standardized inputs and a nonnegative sum-to-one
+  Softmax reconstruction layer; the latter cannot reconstruct the former.
 - **Current conclusion + label:** **OBSERVED** — changing from batch 32 to the
   frozen batch 512 does not rescue the seed-11 result, and the completed compact
   anchor is far from the reported Table-III and Table-V patterns. **VERIFIED
   structural consequence** — a common model, common benign set, and fixed
   threshold require common Table-V FA, contrary to the attack-varying values
   printed by the paper.
-- **Remaining uncertainty / blast radius:** The full score-distribution,
-  artifact-reload, and hash audit is still pending; this is one primary seed and
-  an explicitly no-resampling interpretation, not confirmatory `P0` and not a
+- **Remaining uncertainty / blast radius:** This is one primary seed and an
+  explicitly no-resampling interpretation, not confirmatory `P0` and not a
   paper-level verdict. A scalable separately labeled ADASYN implementation may
-  resolve the remaining benign-side metrics but cannot repair the observed DR.
-- **Source artifacts:** Panther job 373789 and
-  `studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`.
+  resolve the remaining benign-side metrics but cannot repair this model's
+  observed DR. Seeds 22 and 33 remain; a linear reconstruction output is the
+  first separately labeled structural repair and must not replace the Softmax
+  baseline.
+- **Source artifacts:** Panther jobs 373789 and 373800,
+  `studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`, and
+  `studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json`.
 
 ## How to add a learning
 

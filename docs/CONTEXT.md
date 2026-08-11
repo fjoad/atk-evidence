@@ -10,7 +10,11 @@
   81/15/83/81/81% reported. It closely repeats the batch-32 sensitivity rather
   than rescuing it. Since printed ISET ADASYN adds benign rows only, it cannot
   change the observed malicious DR; even FA=0 would cap balanced ACC at 63.09%
-  for this trained model. Full score/reload audit remains the next gate.
+  for this trained model. Score audit job 373800 found that an oracle threshold
+  in the paper direction reaches only 50.00% ACC, reversed direction reaches
+  66.26%, and the learned score ranking is 0.99946-correlated with the
+  zero-reconstruction control. This is an eligible exploratory interpretation,
+  not completed printed ADASYN or a paper-wide verdict.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
@@ -150,7 +154,11 @@
   second minority-only search. Preserve this as an exact-default
   executability result. The interrupted default call consumed 4,724.52 seconds
   wall time and 33,665.16 CPU-seconds (9.35 CPU-hours) without completing its
-  first `kneighbors` call or producing `x_test.npy`. Run the
+  first `kneighbors` call or producing `x_test.npy`. Job 373799 benchmarked 250
+  exact queries on 16 CPU cores and linearly estimates 14.16 wall-hours for the
+  two full neighbor searches alone. This is expensive but feasible overnight;
+  it is not evidence that the authors could not have run ADASYN, whose library,
+  hardware, and preprocessing boundary are unreported. Run the
   no-test-resampling interpretation explicitly
   as `I-ADASYN-NONE`, then a separately labeled scalable ADASYN sensitivity;
   never call either one the completed exact-default P0 cache.

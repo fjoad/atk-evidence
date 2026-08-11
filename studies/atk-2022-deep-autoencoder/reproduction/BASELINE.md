@@ -35,6 +35,10 @@ From `/export/home/fjoad/atk-evidence`:
 sbatch studies/atk-2022-deep-autoencoder/reproduction/run_baseline.sbatch
 ```
 
+The wrapper defaults to seed 11. Repeated frozen seeds use the same file, for
+example `sbatch --export=ALL,SEED=22 .../run_baseline.sbatch`; no scientific
+setting changes.
+
 That job verifies the named source files, prepares the exact runnable baseline,
 trains FC-SAE, scores Tables III and V, saves raw scores/predictions/weights and
 timings, and regenerates the reported-versus-reproduced CSV/JSON summaries.
