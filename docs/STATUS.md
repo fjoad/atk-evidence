@@ -110,10 +110,11 @@ and hashes are local. Its score/eligibility audit is unfinished.
    Panther job `373805`; it tests the standardized-input/Softmax-output
    incompatibility and nothing else. On completion, validate and compare its
    saved scores before submitting another job.
-2. Continue breadth-first, one watched result at a time: LSTM-SAE, FC-VAE,
-   LSTM-VAE, LSTM-AEA; the six benchmark rows; then the one-factor population,
-   split, scaling, threshold, and Attack-3 interpretations. Existing historical
-   results count only if they pass the renewed source/provenance/score gates.
+2. Continue breadth-first, one watched result at a time: the six benchmark
+   rows first; then LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA; then the
+   one-factor population, split, scaling, threshold, and Attack-3
+   interpretations. Existing historical results count only if they pass the
+   renewed source/provenance/score gates.
 3. Record the complete breadth map. Only then freeze the finite surviving
    branches and deepen them with repeated seeds and confirmatory intervals.
 

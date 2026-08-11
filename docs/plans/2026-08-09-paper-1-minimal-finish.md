@@ -83,16 +83,16 @@ chain is inspectable and trusted for one full attempt.
    Compare it directly with the frozen Softmax anchor. Record whether changing
    only the output activation materially changes separation. It identifies a
    divergence point; it does not by itself establish reproduction or failure.
-7. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
+7. Cover the six named benchmark rows once each in paper-table order: Naive
+   Bayes, ARIMA, one-class SVM, supervised feed-forward, supervised LSTM, and
+   multiclass SVM. Again, admit an existing result only after the renewed
+   contract check; do not repeat seeds yet.
+8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,
    and score-audit contract. Reuse it only if all gates pass; otherwise run one
    watched seed through the five-file route. Inspect each result before coding
    or submitting the next row.
-8. Cover the six named benchmark rows once each in paper-table order: Naive
-   Bayes, ARIMA, one-class SVM, supervised feed-forward, supervised LSTM, and
-   multiclass SVM. Again, admit an existing result only after the renewed
-   contract check; do not repeat seeds yet.
 9. After model breadth, run one-factor material data/evaluation contrasts in
    this order: residential population (all eligible versus deterministic
    3,000), attack/test population and split, scaling fit population, printed

@@ -30,10 +30,11 @@
   merely to change its already-granted resource request. Future short Slurm
   wrappers request only one 16-GB V100 and leave CPU/memory shape unspecified.
 - After job 373805, validate and contrast its saved scores first. Then continue
-  breadth-first with one eligible result per remaining proposed model, all six
-  benchmark rows, and finally one-factor data/evaluation interpretations. Do
-  not add seeds until that breadth map is written; this sequence is explicit in
-  the active plan.
+  breadth-first with one eligible result for each of the six benchmark rows,
+  followed by each remaining proposed model, and finally one-factor
+  data/evaluation interpretations. Benchmarks come first because they provide
+  cheaper shared-pipeline diagnostics. Do not add seeds until that breadth map
+  is written; this sequence is explicit in the active plan.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
