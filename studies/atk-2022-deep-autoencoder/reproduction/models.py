@@ -64,7 +64,12 @@ def optimizer(name: str, learning_rate: float | None = None) -> keras.optimizers
     raise ValueError(f"unsupported optimizer {name}")
 
 
-def build_fc_sae(*, seed: int, learning_rate: float = 0.001) -> keras.Model:
+def build_fc_sae(
+    *,
+    seed: int,
+    learning_rate: float = 0.001,
+    output_activation: str = "softmax",
+) -> keras.Model:
     """Full four-layer encoder and full four-layer mirror from Table I."""
 
     set_seed(seed)
@@ -81,20 +86,20 @@ def build_fc_sae(*, seed: int, learning_rate: float = 0.001) -> keras.Model:
             x = layers.Dropout(
                 spec.dropout, name=f"{side}_dropout_{index}"
             )(x)
-    outputs = layers.Dense(
-        48, activation=spec.output_activation, name="reconstruction"
-    )(x)
+    if output_activation not in {"softmax", "linear"}:
+        raise ValueError(f"unsupported FC-SAE output activation {output_activation}")
+    outputs = layers.Dense(48, activation=output_activation, name="reconstruction")(x)
     model = keras.Model(inputs, outputs, name="paper_fc_sae")
     model.compile(
         optimizer=optimizer(spec.optimizer, learning_rate),
         loss="mean_squared_error",
     )
-    validate_fc_sae(model)
+    validate_fc_sae(model, output_activation=output_activation)
     return model
 
 
-def validate_fc_sae(model: keras.Model) -> None:
-    """Fail if the runtime model drifts from the frozen Table-I replay."""
+def validate_fc_sae(model: keras.Model, *, output_activation: str = "softmax") -> None:
+    """Fail if the runtime model drifts beyond the named one-factor branch."""
 
     dense = [layer for layer in model.layers if isinstance(layer, layers.Dense)]
     dropout = [
@@ -103,7 +108,7 @@ def validate_fc_sae(model: keras.Model) -> None:
     units = [int(layer.units) for layer in dense]
     activations = [layer.activation.__name__ for layer in dense]
     expected_units = [400, 300, 200, 100, 100, 200, 300, 400, 48]
-    expected_activations = ["sigmoid"] * 8 + ["softmax"]
+    expected_activations = ["sigmoid"] * 8 + [output_activation]
     if units != expected_units:
         raise AssertionError(f"FC-SAE widths drifted: {units}")
     if activations != expected_activations:
@@ -163,11 +168,21 @@ def build_lstm_sae(*, seed: int, learning_rate: float = 0.001) -> keras.Model:
     return model
 
 
-def build_model(name: str, *, seed: int, learning_rate: float | None = None) -> keras.Model:
+def build_model(
+    name: str,
+    *,
+    seed: int,
+    learning_rate: float | None = None,
+    output_activation: str | None = None,
+) -> keras.Model:
     if name == "fc_sae":
         return build_fc_sae(
-            seed=seed, learning_rate=0.001 if learning_rate is None else learning_rate
+            seed=seed,
+            learning_rate=0.001 if learning_rate is None else learning_rate,
+            output_activation=output_activation or SPECS[name].output_activation,
         )
+    if output_activation is not None:
+        raise ValueError("output-activation override is currently FC-SAE only")
     if name == "lstm_sae":
         return build_lstm_sae(
             seed=seed, learning_rate=0.001 if learning_rate is None else learning_rate

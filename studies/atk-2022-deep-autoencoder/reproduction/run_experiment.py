@@ -230,6 +230,12 @@ def main() -> int:
     parser.add_argument("--patience", type=int, default=5)
     parser.add_argument("--min-delta", type=float, default=1e-4)
     parser.add_argument("--learning-rate", type=float)
+    parser.add_argument(
+        "--output-activation",
+        choices=("paper", "linear"),
+        default="paper",
+        help="paper preserves Table I; linear is the named one-factor control",
+    )
     parser.add_argument("--train-fraction", choices=("half", "three_quarter", "full"), default="full")
     parser.add_argument(
         "--test-view",
@@ -247,6 +253,8 @@ def main() -> int:
         parser.error("epochs and batch sizes must be positive")
     if args.table_v and args.train_fraction != "full":
         parser.error("Table V is evaluated only from the full-training model")
+    if args.output_activation != "paper" and args.model != "fc_sae":
+        parser.error("output-activation controls are currently FC-SAE only")
 
     metadata_path = args.data / "metadata.json"
     if not metadata_path.is_file():
@@ -264,11 +272,19 @@ def main() -> int:
         raise ValueError("the selected cache does not contain printed ADASYN rows")
 
     resolved_learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
-    method = (
-        f"P0-ISET-{SPECS[args.model].name}"
-        if args.test_view == "adasyn"
-        else f"I-ADASYN-NONE-ISET-{SPECS[args.model].name}"
+    resolved_output_activation = (
+        SPECS[args.model].output_activation
+        if args.output_activation == "paper"
+        else args.output_activation
     )
+    if args.output_activation != "paper":
+        method = f"C-OUTPUT-{resolved_output_activation.upper()}-ISET-{SPECS[args.model].name}"
+    else:
+        method = (
+            f"P0-ISET-{SPECS[args.model].name}"
+            if args.test_view == "adasyn"
+            else f"I-ADASYN-NONE-ISET-{SPECS[args.model].name}"
+        )
     paper_tables = ["IV"] if args.train_fraction != "full" else ["III", "IV"]
     if args.table_v:
         paper_tables.append("V")
@@ -294,6 +310,8 @@ def main() -> int:
         "anomaly_direction": SPECS[args.model].anomaly_direction,
         "data_metadata_sha256": sha256(metadata_path),
     }
+    if args.output_activation != "paper":
+        configuration["output_activation"] = resolved_output_activation
     configuration_id = stable_id({**configuration, "seed": "<seed>"})
     attempt_id = stable_id(configuration)
     attempt = f"seed_{args.seed}_{attempt_id}"
@@ -351,7 +369,14 @@ def main() -> int:
 
         build_started = time.perf_counter()
         model = build_model(
-            args.model, seed=args.seed, learning_rate=resolved_learning_rate
+            args.model,
+            seed=args.seed,
+            learning_rate=resolved_learning_rate,
+            output_activation=(
+                resolved_output_activation
+                if args.output_activation != "paper"
+                else None
+            ),
         )
         inventory = layer_inventory(model)
         build_seconds = time.perf_counter() - build_started
@@ -437,9 +462,13 @@ def main() -> int:
         result: dict[str, object] = {
             "status": "success",
             "eligibility": (
-                "exploratory_paper_primary_P0"
-                if args.test_view == "adasyn"
-                else "exploratory_interpretation_I-ADASYN-NONE"
+                "exploratory_control_C-OUTPUT-LINEAR"
+                if args.output_activation != "paper"
+                else (
+                    "exploratory_paper_primary_P0"
+                    if args.test_view == "adasyn"
+                    else "exploratory_interpretation_I-ADASYN-NONE"
+                )
             ),
             "configuration": configuration,
             "git_commit": git_commit(),
@@ -471,7 +500,10 @@ def main() -> int:
                 "training_rows_used": int(x_train.shape[0]),
             },
             "model": {
-                "specification": SPECS[args.model].__dict__,
+                "specification": {
+                    **SPECS[args.model].__dict__,
+                    "output_activation": resolved_output_activation,
+                },
                 "inventory": inventory,
                 "parameters": int(model.count_params()),
             },

@@ -197,7 +197,7 @@
         <p>The trained model’s reconstruction-error ranking was <strong>0.99946 correlated</strong> with the ranking obtained by reconstructing every profile as zero. This directly motivates a separately labeled linear-output repair; it does not authorize changing the paper-consistent run.</p>
       </article>
     </div>
-    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim requires the frozen repeated-seed and interpretation program below.</div>
+    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim requires the breadth map followed by the frozen repeated-seed program below.</div>
   </section>
 
   <section class="stage">
@@ -376,11 +376,11 @@
 
   <section class="stage">
     <div class="stage-title"><div class="stage-number">6</div><h2>How the broader claim will be tested</h2></div>
-    <p class="plain"><strong>Plain English:</strong> one bad run is not enough. We first repeat the unchanged recipe with new random seeds. Then we change only one genuinely ambiguous or contradictory instruction at a time. Every result—including a successful reproduction—stays in the record.</p>
+    <p class="plain"><strong>Plain English:</strong> one trustworthy run this far away is enough to stop polishing that same point and start asking <em>where the paths separate</em>. We now cover the major models and change one meaningful instruction at a time. Repeated seeds come later, after the scientific map exists.</p>
     <div class="three">
-      <div class="track"><strong>1 · Repeat</strong><p>Complete seeds 22 and 33 for the frozen Softmax baseline and report all three, never the best one.</p></div>
-      <div class="track"><strong>2 · Repair visibly</strong><p>First test the smallest structural repair: linear output for standardized inputs. Then test only the finite source-supported scaling, split, threshold, and Attack-3 readings.</p></div>
-      <div class="track"><strong>3 · Confirm</strong><p>Freeze the finite envelope and a larger seed set. A branch is a non-match when its uncertainty interval remains outside the predeclared ±2-point reproduction band.</p></div>
+      <div class="track"><strong>1 · Breadth</strong><p>Run one watched seed for each proposed model family and each high-information one-factor interpretation.</p></div>
+      <div class="track"><strong>2 · Locate divergence</strong><p>Start with linear output for standardized inputs, then inspect model identity, scaling, attack population/split, and threshold—never a blind Cartesian sweep.</p></div>
+      <div class="track"><strong>3 · Depth</strong><p>Only after the breadth map is frozen do we repeat seeds and calculate confirmatory intervals. No best-seed selection is permitted.</p></div>
     </div>
     <div class="callout"><strong>Statistical limit:</strong> because the paper reports rounded point estimates with no seeds, repetitions, or uncertainty, no ordinary two-sample test against the authors’ run distribution is possible. We can rigorously show non-reproduction within our finite, predeclared interpretation and hyperparameter envelope; we cannot prove failure over an infinite space of unreported private implementations.</div>
   </section>
@@ -401,7 +401,7 @@
     <div class="status">
       <div><b>Data</b><span class="muted">Exact CER consumption archives are verified and the full ISET baseline population is prepared.</span></div>
       <div><b>Current evidence</b><span class="muted">One frozen batch-512 FC-SAE run and its score audit are complete. The result is far from the reported pattern and is not rescued by an oracle cutoff.</span></div>
-      <div><b>Verdict</b><span class="muted">Not issued. Repeated seeds, material interpretations, and the printed ADASYN boundary remain.</span></div>
+      <div><b>Verdict</b><span class="muted">Not issued. The breadth-first model/interpretation map, later repeated seeds, and the printed ADASYN boundary remain.</span></div>
     </div>
   </section>
 

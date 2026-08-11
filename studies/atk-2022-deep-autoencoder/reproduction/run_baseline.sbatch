@@ -18,6 +18,7 @@ python=.venv/bin/python
 study=studies/atk-2022-deep-autoencoder/reproduction
 data=data/derived/atk-2022-deep-autoencoder/reproduction/p0-full-none
 seed="${SEED:-11}"
+output_activation="${OUTPUT_ACTIVATION:-paper}"
 
 git rev-parse HEAD
 nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
@@ -27,5 +28,6 @@ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader
   --mode full --test-adasyn none --output "$data"
 "$python" "$study/run_experiment.py" \
   --model fc_sae --seed "$seed" --data "$data" \
-  --epochs 100 --batch-size 512 --test-view original --table-v
+  --epochs 100 --batch-size 512 --test-view original --table-v \
+  --output-activation "$output_activation"
 "$python" "$study/analyze_results.py"

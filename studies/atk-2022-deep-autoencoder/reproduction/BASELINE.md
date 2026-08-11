@@ -39,6 +39,11 @@ The wrapper defaults to seed 11. Repeated frozen seeds use the same file, for
 example `sbatch --export=ALL,SEED=22 .../run_baseline.sbatch`; no scientific
 setting changes.
 
+The breadth-first Softmax/standardization diagnostic uses the same wrapper with
+`OUTPUT_ACTIVATION=linear`. That changes exactly the final FC-SAE activation,
+records method `C-OUTPUT-LINEAR-ISET-FC-SAE`, and remains a corrected control;
+it never replaces the paper-consistent Softmax result.
+
 That job verifies the named source files, prepares the exact runnable baseline,
 trains FC-SAE, scores Tables III and V, saves raw scores/predictions/weights and
 timings, and regenerates the reported-versus-reproduced CSV/JSON summaries.

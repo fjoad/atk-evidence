@@ -203,7 +203,9 @@ nonnegative and constrained to sum to one. The diagnostic motivates a
 separately labeled linear-output repair; it does not modify or invalidate the
 paper-consistent Softmax attempt.
 
-The additional-seed audit remains open. Each non-executable source item will
+Additional Softmax seeds are deliberately deferred while a breadth-first pass
+maps one seed per proposed model family and high-information one-factor
+interpretation. Each non-executable source item will
 ultimately receive a
 reported-versus-literal-failure-versus-repair block; no closest repair will be
 selected in place of the full predeclared family.
@@ -246,9 +248,10 @@ intervals, complete metric patterns, and the fraction of eligible branches
 meeting the frozen reproduction tolerance. No best-seed or best-branch result
 will stand in for the distribution. The current 63.0903\% ceiling is an exact
 conditional bound, not a substitute for repeated seeds or the finite
-interpretation envelope. The first exploratory summary uses three frozen seeds
-without selecting the best. Confirmation will freeze a larger seed set and the
-finite source-supported interpretation envelope. A branch will be classified
+interpretation envelope. The exploratory stage first maps model and
+interpretation breadth with one watched seed each; those anchors are not used
+for a statistical verdict. Confirmation will then freeze a larger seed set and
+the finite source-supported interpretation envelope. A branch will be classified
 as a non-match only when its uncertainty interval remains outside the
 predeclared $\pm2$ percentage-point reproduction band. Because the paper
 reports rounded point estimates without repetitions or uncertainty, a

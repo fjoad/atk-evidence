@@ -2,8 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; source freeze, five-file audit, Panther baseline, score
-audit, and ADASYN runtime benchmark complete; awaiting repeated baseline seeds
+**Status:** Active; trustworthy anchor complete; breadth-first divergence map
+in progress before repeated-seed depth
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -30,8 +30,9 @@ layer, or another paper while this plan is active.
   and one frozen batch-512 anchor exist. Their close agreement is recorded.
 - Batch 512 remains the declared primary execution completion; batch 32 is a
   sensitivity.
-- Compact batch-512 job 373789 completed successfully in 53:12; unchanged
-  repetition jobs 373803 (seed 22) and 373804 (seed 33) are queued.
+- Compact batch-512 job 373789 completed successfully in 53:12. Repetition jobs
+  373803 and 373804 were cancelled before execution when the plan was corrected
+  from premature depth to breadth-first divergence isolation.
 
 ## Phase 0 — renewed source freeze
 
@@ -62,7 +63,7 @@ the published target. A repair is never relabeled as the literal method.
 **Finish condition:** the complete PDF → method → data → model → scores → metrics
 chain is inspectable and trusted for one full attempt.
 
-## Phase 2 — primary FC-SAE result
+## Phase 2 — breadth-first divergence map
 
 1. Time one epoch under the smallest plausible primary resource choices while
    preserving the same global batch and method.
@@ -71,13 +72,20 @@ chain is inspectable and trusted for one full attempt.
 3. **Complete:** run one full batch-512 FC-SAE anchor and inspect it before
    scaling. The implementation chain is sound; the observed score failure is a
    scientific result of the frozen completion, not an artifact reload failure.
-4. Run seeds 22 and 33 in parallel without changing the method.
-5. Produce the Paper Table III row beside all reported values and timings.
+4. **Cancelled before execution:** seeds 22 and 33. Repetition would quantify
+   an already-large gap before identifying its source.
+5. Run one seed of the one-factor linear-output control while preserving every
+   other FC-SAE setting and the original score audit.
+6. Run one watched seed for each remaining proposed architecture, followed by
+   one-factor material data/evaluation readings in descending diagnostic value:
+   scaling/output compatibility, model identity, attack population/split, and
+   threshold selection. Do not launch a Cartesian sweep.
 
-**Finish condition:** three preserved primary FC-SAE seeds plus failures and
-timings, with no selected favorite.
+**Finish condition:** every major model family and material interpretation axis
+has one trustworthy anchor or explicit failure, and likely divergence points
+are identified without claiming statistical finality.
 
-## Phase 3 — Tables III--V
+## Phase 3 — depth on the frozen breadth map
 
 Add one model at a time:
 
@@ -87,9 +95,10 @@ Add one model at a time:
 4. LSTM-AEA
 5. supervised and classical baselines
 
-For each: source inventory → Step 0 → one watched full seed → score inspection →
-remaining seeds in parallel. Then complete the Table IV size/timing cells and the
-explicit Table V experiment-identity readings.
+For each branch retained by the breadth map: source inventory → one watched
+full seed already complete → predeclare repetitions → remaining seeds in
+parallel. Then complete the Table IV size/timing cells and the explicit Table V
+experiment-identity readings.
 
 **Finish condition:** every Tables III--V cell has eligible repeated evidence or
 an explicit non-executable/failure record.

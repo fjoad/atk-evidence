@@ -34,6 +34,30 @@ class CompactBaselineTests(unittest.TestCase):
         )
         self.assertEqual(model.count_params(), 450_448)
 
+    def test_linear_output_control_changes_only_the_final_activation(self) -> None:
+        paper = models.layer_inventory(models.build_fc_sae(seed=11))
+        control = models.layer_inventory(
+            models.build_fc_sae(seed=11, output_activation="linear")
+        )
+        paper_dense = [row for row in paper if row["class"] == "Dense"]
+        control_dense = [row for row in control if row["class"] == "Dense"]
+        self.assertEqual(
+            [row["units"] for row in paper_dense],
+            [row["units"] for row in control_dense],
+        )
+        self.assertEqual(
+            [row["activation"] for row in paper_dense[:-1]],
+            [row["activation"] for row in control_dense[:-1]],
+        )
+        self.assertEqual(paper_dense[-1]["activation"], "softmax")
+        self.assertEqual(control_dense[-1]["activation"], "linear")
+        self.assertEqual(
+            analyze_results.effective_eligibility(
+                {"configuration": {"output_activation": "linear"}}
+            ),
+            "exploratory_control_C-OUTPUT-LINEAR",
+        )
+
     def test_frozen_attack_repairs_and_scaler_are_direct(self) -> None:
         benign = np.arange(1, 1 + 4 * 48, dtype=np.float32).reshape(4, 48)
         meters = np.array([10, 10, 20, 20], dtype=np.int32)
@@ -120,8 +144,10 @@ class CompactBaselineTests(unittest.TestCase):
     def test_attempt_ids_include_every_recorded_execution_choice(self) -> None:
         left = {"model": "fc_sae", "batch_size": 512, "seed": 11}
         right = {"model": "fc_sae", "batch_size": 32, "seed": 11}
+        control = {**left, "output_activation": "linear"}
         self.assertEqual(run_experiment.stable_id(left), run_experiment.stable_id(left))
         self.assertNotEqual(run_experiment.stable_id(left), run_experiment.stable_id(right))
+        self.assertNotEqual(run_experiment.stable_id(left), run_experiment.stable_id(control))
 
     def test_csv_writer_preserves_fields_present_in_only_some_rows(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

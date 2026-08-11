@@ -15,9 +15,14 @@
   66.26%, and the learned score ranking is 0.99946-correlated with the
   zero-reconstruction control. This is an eligible exploratory interpretation,
   not completed printed ADASYN or a paper-wide verdict.
-- Unchanged batch-512 Softmax repetition jobs 373803 (seed 22) and 373804
-  (seed 33) were submitted on 2026-08-11. They must remain identical to the
-  seed-11 baseline and be aggregated with it without selecting a favorite.
+- Unchanged Softmax repetition jobs 373803 and 373804 were cancelled before
+  execution on 2026-08-11. The user corrected the sequence to breadth-first:
+  one sound anchor already establishes a large gap, so first locate which
+  one-factor data/model/evaluation choices cause divergence and cover the model
+  families; repeated seeds belong after that map exists. Queue diagnosis also
+  found three V100s free, but only ten CPU cores free on their node while each
+  job requested sixteen; the delay was resource shape/priority, not exhaustion
+  of every 16-GB GPU.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.

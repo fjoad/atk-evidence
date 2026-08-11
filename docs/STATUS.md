@@ -17,9 +17,9 @@
   on one 16-GB V100. It passed source/preparation gates, trained the frozen
   batch-512 FC-SAE for 74 epochs (best epoch 69), and saved Tables III/full-IV/V
   artifacts. Panther CPU job `373799` measured the selected exact ADASYN
-  neighbor implementation, and score-audit job `373800` completed. Unchanged
-  repeated-seed jobs `373803` (seed 22) and `373804` (seed 33) are queued on
-  Panther.
+  neighbor implementation, and score-audit job `373800` completed. Premature
+  repeated-seed jobs `373803` and `373804` were cancelled before execution
+  after the breadth-first correction.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -104,12 +104,13 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Await unchanged batch-512 Softmax jobs `373803` and `373804`, then report
-   the three-seed distribution without selecting a favorite.
-2. Then run the separately labeled linear-output repair prompted by the exact
-   standardized-input/Softmax-output incompatibility. Do not alter the baseline.
-3. Freeze the remaining finite source-supported scaling, split, threshold, and
-   Attack-3 interpretations before confirmatory repetition.
+1. Run one seed of the separately labeled linear-output FC-SAE control prompted
+   by the standardized-input/Softmax-output incompatibility.
+2. Continue breadth-first with one watched seed for each remaining proposed
+   architecture and one-factor material interpretation; use each contrast to
+   locate divergence before adding repetitions.
+3. Only after the breadth map is complete, freeze the finite surviving branches
+   and deepen them with repeated seeds and confirmatory intervals.
 
 ## Not on the critical path
 

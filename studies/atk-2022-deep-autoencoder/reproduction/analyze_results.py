@@ -30,6 +30,8 @@ QUANTILES = (0.0, 0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 1.0)
 
 def effective_eligibility(attempt: dict[str, object]) -> str:
     config = attempt["configuration"]
+    if config.get("output_activation") == "linear":
+        return "exploratory_control_C-OUTPUT-LINEAR"
     return (
         "exploratory_paper_primary_P0"
         if config["test_view"] == "adasyn"
