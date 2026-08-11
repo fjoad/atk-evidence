@@ -45,6 +45,13 @@
   completions are SGCC/Table II and are ineligible for the current ISET rows.
   Start benchmark breadth with the ISET Naive Bayes row; do not silently reuse
   the SGCC numbers.
+- ISET Naive Bayes job 373833 was submitted on 2026-08-11 from commit
+  `bee5420`. It is the explicitly labeled
+  `I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES` row: GaussianNB with default
+  `var_smoothing=1e-9`, positive probability threshold 0.5, all original
+  all-customer `B+M`, and an exact seed-11 2:1 random row split. It does not
+  execute the paper's pre-split supervised ADASYN and cannot fill the printed
+  cell; its purpose is fast benchmark breadth on the frozen original rows.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.

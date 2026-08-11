@@ -91,7 +91,8 @@ chain is inspectable and trusted for one full attempt.
    contract check; do not repeat seeds yet. **Reuse audit complete:** no
    preserved ISET/Table-III benchmark attempt passes this gate, so begin with a
    fresh minimal Naive Bayes row. Historical SGCC/Table-II results remain
-   separate evidence.
+   separate evidence. Job 373833 is the first explicitly labeled
+   no-supervised-ADASYN Naive Bayes attempt.
 8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,

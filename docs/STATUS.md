@@ -113,7 +113,10 @@ The committed summary is
 The benchmark reuse check found no preserved ISET/Table-III benchmark attempt
 in either the committed summaries or Panther's attempt manifests. Existing
 benchmark results are SGCC/Table II and cannot fill the current ISET breadth
-rows. The next implementation target is therefore the ISET Naive Bayes row.
+rows. Minimal ISET Naive Bayes job `373833` is submitted on Panther. It uses
+Gaussian Naive Bayes, all original all-customer `B+M`, and an exact seeded 2:1
+row split. The omitted supervised ADASYN step is explicit in method
+`I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES`; this is not the printed branch.
 
 One full compact-route cluster result exists:
 
