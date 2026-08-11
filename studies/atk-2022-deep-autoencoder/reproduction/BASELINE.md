@@ -59,8 +59,42 @@ sbatch --export=ALL,MODEL=naive_bayes \
 ```
 
 That job verifies the named source files, prepares the exact runnable baseline,
-trains FC-SAE, scores Tables III and V, saves raw scores/predictions/weights and
+executes the selected Table-III row, saves raw scores/predictions/weights and
 timings, and regenerates the reported-versus-reproduced CSV/JSON summaries.
+
+The seed-11 Naive Bayes job (`373833`) completed in 1m36s. It reproduced
+DR/FA/ACC/F1/AUC = 88.78/44.53/72.12/90.50/79.17%, versus the paper's
+73/18/77.5/73/70%. This is a clear non-match for this completion, especially
+its false-alarm operating point, but it remains only the explicitly labeled
+no-supervised-ADASYN branch.
+
+The same wrapper now exposes every remaining breadth row directly through
+`MODEL`: `arima`, `one_class_svm`, `supervised_feed_forward`,
+`supervised_lstm`, `multiclass_svm`, `lstm_sae`, `fc_vae`, `lstm_vae`, and
+`lstm_aea`. The first five are the remaining benchmarks; the last four are the
+remaining proposed models. Benchmark deep models use the predeclared 30-epoch
+maximum; proposed models retain the 100-epoch completion. Breadth jobs omit
+Table V because it is a later depth question.
+
+The paper's missing or contradictory details remain visible in each result:
+
+- ARIMA uses the smallest `(1,1,0)` pooled residual-MSE completion because `p`,
+  fit unit, and score are absent.
+- The printed SVM wording is not a valid kernel/gamma pair. The repair is
+  `kernel=sigmoid, gamma=scale`; SVM training and evaluation caps are explicitly
+  diagnostic resource bounds rather than full paper cells.
+- The supervised heads/losses are the predeclared two-Softmax categorical and
+  one-Sigmoid binary completions; pre-split ADASYN is still omitted.
+- Algorithms 2 and 4 transfer mirrored encoder hidden/cell states to the
+  decoder. Their missing ongoing decoder input is completed by repeating the
+  latent vector.
+- VAE latent width is the final encoder width; its otherwise undefined
+  reconstruction probability is completed as `exp(-0.5 * profile MSE)` with
+  fixed unit variance and one deterministic mean reconstruction.
+- Algorithm 5 is non-executable as written because it uses a reconstruction
+  before decoding. The first LSTM-AEA breadth branch uses additive attention,
+  previous decoder queries, context concatenation, repeat-latent input, and
+  mirrored state transfer.
 
 The scientific implementation remains the five Python files. The Slurm file is
 only a four-command resource wrapper and contains no scientific logic.

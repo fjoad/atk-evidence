@@ -737,6 +737,33 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/results/compact_route_fc_sae_seed11_batch512_20260811.json`, and
   `studies/atk-2022-deep-autoencoder/results/iset_fc_sae_seed11_score_audit_20260811.json`.
 
+### Compact ISET Naive Bayes benchmark breadth row
+
+- **Former belief/status:** No preserved ISET/Table-III benchmark attempt met
+  the renewed source, population, and provenance gates. The cheaper benchmark
+  rows were needed before spending additional depth on proposed models.
+- **Evidence:** Panther job 373833 ran the complete all-customer original
+  `B+M` population (15,759,030 profiles), an exact seed-11 row-random 2:1
+  split, Gaussian Naive Bayes with `var_smoothing=1e-9`, and a 0.5
+  positive-probability threshold. It completed in 1m36s (41.30s inside the
+  runner). Reproduced DR/FA/ACC/F1/AUC were
+  88.78/44.53/72.12/90.50/79.17%, versus reported
+  73/18/77.5/73/70%.
+- **Root cause:** **OPEN** — the paper does not identify the Naive Bayes
+  variant and requires ADASYN before the supervised split. This first
+  completion deliberately preserves original rows and therefore cannot isolate
+  model choice from resampling.
+- **Current conclusion + label:** **OBSERVED** — this explicit Gaussian-NB,
+  no-supervised-ADASYN completion does not reproduce the reported Table-III
+  metric pattern. Its fixed operating point has both much higher DR and much
+  higher FA than reported. It is breadth evidence, not the printed branch or a
+  paper-level verdict.
+- **Remaining uncertainty / blast radius:** A paper-consistent ADASYN
+  completion and other unspecified Naive Bayes variants remain outside this
+  single attempt. Repeated seeds wait until the breadth map is complete.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_naive_bayes_seed11_20260811.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

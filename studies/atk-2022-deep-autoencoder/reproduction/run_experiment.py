@@ -22,6 +22,7 @@ import sklearn
 import torch
 from sklearn.metrics import roc_auc_score
 from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import OneClassSVM, SVC
 
 from models import SPECS, build_model, layer_inventory
 
@@ -41,6 +42,11 @@ REPORTED = {
     "lstm_vae": {"DR": 91, "FA": 7, "SP": 93, "PR": 91, "ACC": 92, "F1": 91, "AUC": 86},
     "lstm_aea": {"DR": 94, "FA": 5, "SP": 95, "PR": 93, "ACC": 94.5, "F1": 93.5, "AUC": 90},
     "naive_bayes": {"DR": 73, "FA": 18, "SP": 82, "PR": 73, "ACC": 77.5, "F1": 73, "AUC": 70},
+    "arima": {"DR": 86, "FA": 12, "SP": 88, "PR": 86, "ACC": 87, "F1": 86, "AUC": 87},
+    "one_class_svm": {"DR": 90, "FA": 9, "SP": 91, "PR": 89, "ACC": 90.5, "F1": 89.5, "AUC": 87},
+    "supervised_feed_forward": {"DR": 90, "FA": 11, "SP": 89, "PR": 89, "ACC": 89.5, "F1": 89.5, "AUC": 88},
+    "supervised_lstm": {"DR": 90.5, "FA": 10, "SP": 90, "PR": 89.5, "ACC": 90, "F1": 90, "AUC": 89},
+    "multiclass_svm": {"DR": 91, "FA": 8, "SP": 92, "PR": 90, "ACC": 91.5, "F1": 90.5, "AUC": 89},
 }
 REPORTED_TABLE_4 = {
     "fc_sae": {
@@ -62,7 +68,9 @@ REPORTED_TABLE_5_FC_SAE = {
     5: {"DR": 80, "FA": 17},
     6: {"DR": 80, "FA": 19},
 }
-BENCHMARKS = ("naive_bayes",)
+CLASSICAL_BENCHMARKS = ("naive_bayes", "arima", "one_class_svm", "multiclass_svm")
+NEURAL_BENCHMARKS = ("supervised_feed_forward", "supervised_lstm")
+BENCHMARKS = (*CLASSICAL_BENCHMARKS, *NEURAL_BENCHMARKS)
 
 
 def sha256(path: Path) -> str:
@@ -131,6 +139,7 @@ def score_mse(
     target: Path,
     *,
     batch_size: int,
+    score_kind: str = "mse",
 ) -> tuple[np.memmap, float]:
     started = time.perf_counter()
     scores = np.lib.format.open_memmap(
@@ -140,7 +149,15 @@ def score_mse(
         stop = min(start + batch_size, values.shape[0])
         batch = np.asarray(values[start:stop], dtype=np.float32)
         reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
-        scores[start:stop] = np.mean(np.square(batch - reconstruction), axis=1)
+        mse = np.mean(np.square(batch - reconstruction), axis=1)
+        if score_kind == "mse":
+            scores[start:stop] = mse
+        elif score_kind == "reconstruction_probability":
+            # The paper omits the probability aggregation and output variance.
+            # This is the frozen fixed-unit-variance geometric-mean completion.
+            scores[start:stop] = np.exp(-0.5 * mse)
+        else:
+            raise ValueError(f"unsupported anomaly score {score_kind}")
     scores.flush()
     return scores, time.perf_counter() - started
 
@@ -150,6 +167,7 @@ def score_zero(
     target: Path,
     *,
     batch_size: int,
+    score_kind: str = "mse",
 ) -> np.memmap:
     scores = np.lib.format.open_memmap(
         target, mode="w+", dtype="float32", shape=(values.shape[0],)
@@ -157,7 +175,10 @@ def score_zero(
     for start in range(0, values.shape[0], batch_size):
         stop = min(start + batch_size, values.shape[0])
         batch = np.asarray(values[start:stop], dtype=np.float32)
-        scores[start:stop] = np.mean(np.square(batch), axis=1)
+        mse = np.mean(np.square(batch), axis=1)
+        scores[start:stop] = (
+            mse if score_kind == "mse" else np.exp(-0.5 * mse)
+        )
     scores.flush()
     return scores
 
@@ -168,16 +189,21 @@ def score_untrained_sample(
     labels: np.ndarray,
     *,
     threshold: float,
+    score_kind: str = "mse",
+    direction: str = "higher",
 ) -> dict[str, object]:
     benign = np.flatnonzero(labels == 0)[:5_000]
     malicious = np.flatnonzero(labels == 1)[:5_000]
     index = np.concatenate([benign, malicious])
     batch = np.asarray(values[index], dtype=np.float32)
     reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
-    scores = np.mean(np.square(batch - reconstruction), axis=1)
+    mse = np.mean(np.square(batch - reconstruction), axis=1)
+    scores = mse if score_kind == "mse" else np.exp(-0.5 * mse)
     return {
         "rows": int(index.size),
-        "metrics": confusion_metrics(labels[index], scores, threshold=threshold),
+        "metrics": confusion_metrics(
+            labels[index], scores, threshold=threshold, direction=direction
+        ),
         "score": {
             "minimum": float(scores.min()),
             "median": float(np.median(scores)),
@@ -193,11 +219,17 @@ def table_v(
     *,
     threshold: float,
     score_batch: int,
+    score_kind: str,
+    direction: str,
 ) -> tuple[list[dict[str, object]], float]:
     started = time.perf_counter()
     benign = np.load(data / "benign.npy", mmap_mode="r")
     benign_scores, _ = score_mse(
-        model, benign, run / "table_v_benign_scores.npy", batch_size=score_batch
+        model,
+        benign,
+        run / "table_v_benign_scores.npy",
+        batch_size=score_batch,
+        score_kind=score_kind,
     )
     rows: list[dict[str, object]] = []
     for attack_id in range(1, 7):
@@ -207,6 +239,7 @@ def table_v(
             attacked,
             run / f"table_v_attack_{attack_id}_scores.npy",
             batch_size=score_batch,
+            score_kind=score_kind,
         )
         labels = np.concatenate(
             [np.zeros(benign.shape[0], dtype=np.int8), np.ones(attacked.shape[0], dtype=np.int8)]
@@ -215,7 +248,9 @@ def table_v(
         rows.append(
             {
                 "attack": attack_id,
-                "metrics": confusion_metrics(labels, scores, threshold=threshold),
+                "metrics": confusion_metrics(
+                    labels, scores, threshold=threshold, direction=direction
+                ),
             }
         )
     return rows, time.perf_counter() - started
@@ -412,6 +447,469 @@ def run_naive_bayes(
     return 0
 
 
+def supervised_population(
+    data: Path, *, multiclass: bool = False
+) -> tuple[np.ndarray, np.ndarray]:
+    """Materialize the paper's all-customer B+M supervised population."""
+
+    blocks = supervised_source_blocks(data)
+    arrays = [np.load(path, mmap_mode="r") for path, _ in blocks]
+    features = np.concatenate(arrays).astype(np.float32, copy=False)
+    labels = np.concatenate(
+        [
+            np.full(
+                values.shape[0],
+                index if multiclass else int(index > 0),
+                dtype=np.int8,
+            )
+            for index, values in enumerate(arrays)
+        ]
+    )
+    return features, labels
+
+
+def capped_positions(total: int, cap: int | None, *, seed: int) -> np.ndarray:
+    """Deterministically cap an already-defined population without replacement."""
+
+    if cap is None or cap >= total:
+        return np.arange(total, dtype=np.int64)
+    if cap < 1:
+        raise ValueError("sample cap must be positive")
+    return np.sort(
+        np.random.default_rng(seed).choice(total, size=cap, replace=False)
+    ).astype(np.int64)
+
+
+def score_classifier(
+    model: keras.Model,
+    features: np.ndarray,
+    indices: np.ndarray,
+    target: Path,
+    *,
+    batch_size: int,
+    two_class_softmax: bool,
+) -> tuple[np.memmap, float]:
+    started = time.perf_counter()
+    scores = np.lib.format.open_memmap(
+        target, mode="w+", dtype="float32", shape=(indices.size,)
+    )
+    for start in range(0, indices.size, batch_size):
+        stop = min(start + batch_size, indices.size)
+        batch = np.asarray(features[indices[start:stop]], dtype=np.float32)
+        probability = keras.ops.convert_to_numpy(model(batch, training=False))
+        scores[start:stop] = (
+            probability[:, 1] if two_class_softmax else probability.reshape(-1)
+        )
+    scores.flush()
+    return scores, time.perf_counter() - started
+
+
+def run_classical_benchmark(
+    args: argparse.Namespace,
+    *,
+    metadata: dict[str, object],
+    metadata_path: Path,
+) -> int:
+    """Run ARIMA or either SVM through one explicit bounded completion."""
+
+    model_name = args.model
+    task = "supervised" if model_name == "multiclass_svm" else "anomaly"
+    threshold = {"arima": 0.58, "one_class_svm": 0.45, "multiclass_svm": 0.0}[
+        model_name
+    ]
+    configuration: dict[str, object] = {
+        "method": f"I-ADASYN-NONE-ISET-{model_name.upper()}",
+        "paper_tables": ["III"],
+        "scientific_question": f"Does the frozen {model_name} completion reproduce Table III?",
+        "task": task,
+        "model": model_name,
+        "seed": args.seed,
+        "test_view": "original",
+        "train_fraction": "full",
+        "table_v": False,
+        "threshold": threshold,
+        "anomaly_direction": "higher",
+        "supervised_adasyn": "none" if task == "supervised" else None,
+        "split": (
+            "seeded_exact_row_random_2_to_1" if task == "supervised" else "B1_vs_B2_plus_M"
+        ),
+        "data_metadata_sha256": sha256(metadata_path),
+    }
+    if model_name == "arima":
+        configuration["completion"] = {
+            "order": [1, 1, 0],
+            "fit_unit": "pooled_within_profile_transitions",
+            "score": "residual_mse",
+        }
+    else:
+        configuration["completion"] = {
+            "kernel": "sigmoid",
+            "gamma": "scale",
+            "train_cap": (
+                args.one_class_svm_train_cap
+                if model_name == "one_class_svm"
+                else args.multiclass_svm_train_cap
+            ),
+            "test_cap": args.svm_test_cap,
+        }
+    configuration_id = stable_id({**configuration, "seed": "<seed>"})
+    configuration["configuration_id"] = configuration_id
+    configuration["attempt_id"] = stable_id(configuration)
+    run = (
+        args.output
+        / "table_3"
+        / model_name
+        / f"seed_{args.seed}_{configuration['attempt_id']}"
+    )
+    run.mkdir(parents=True, exist_ok=True)
+    if (run / "result.json").is_file():
+        print(f"immutable attempt already complete: {run}")
+        return 0
+    save_json(run / "config.json", configuration)
+    total_started = time.perf_counter()
+    try:
+        load_started = time.perf_counter()
+        if model_name == "multiclass_svm":
+            features, multiclass_labels = supervised_population(
+                args.data, multiclass=True
+            )
+            binary_labels = (multiclass_labels > 0).astype(np.int8)
+            train_mask = exact_random_train_mask(features.shape[0], seed=args.seed)
+            train_available = np.flatnonzero(train_mask)
+            test_available = np.flatnonzero(~train_mask)
+            train_position = capped_positions(
+                train_available.size,
+                args.multiclass_svm_train_cap,
+                seed=args.seed,
+            )
+            test_position = capped_positions(
+                test_available.size, args.svm_test_cap, seed=args.seed + 1
+            )
+            train_index = train_available[train_position]
+            test_index = test_available[test_position]
+            test_labels = binary_labels[test_index]
+        else:
+            features = np.load(args.data / "x_train.npy", mmap_mode="r")
+            test_features = np.load(
+                args.data / "test_original_x.npy", mmap_mode="r"
+            )
+            all_test_labels = np.load(
+                args.data / "test_original_y.npy", mmap_mode="r"
+            )
+            if model_name == "one_class_svm":
+                train_index = capped_positions(
+                    features.shape[0], args.one_class_svm_train_cap, seed=args.seed
+                )
+                test_index = capped_positions(
+                    test_features.shape[0], args.svm_test_cap, seed=args.seed + 1
+                )
+            else:
+                train_index = np.arange(features.shape[0], dtype=np.int64)
+                test_index = np.arange(test_features.shape[0], dtype=np.int64)
+            test_labels = np.asarray(all_test_labels[test_index], dtype=np.int8)
+        load_seconds = time.perf_counter() - load_started
+
+        fit_started = time.perf_counter()
+        if model_name == "arima":
+            differences = np.diff(np.asarray(features, dtype=np.float32), axis=1)
+            lagged = differences[:, :-1].reshape(-1).astype(np.float64)
+            targets = differences[:, 1:].reshape(-1).astype(np.float64)
+            lag_mean = float(lagged.mean())
+            target_mean = float(targets.mean())
+            centered = lagged - lag_mean
+            denominator = float(np.dot(centered, centered))
+            phi = (
+                float(np.dot(centered, targets - target_mean) / denominator)
+                if denominator > np.finfo(np.float64).eps
+                else 0.0
+            )
+            intercept = target_mean - phi * lag_mean
+            estimator_detail = {"intercept": intercept, "phi": phi}
+        elif model_name == "one_class_svm":
+            estimator = OneClassSVM(kernel="sigmoid", gamma="scale", nu=0.5)
+            estimator.fit(np.asarray(features[train_index], dtype=np.float32))
+            estimator_detail = {
+                "support_vectors": int(estimator.support_.size), "nu": 0.5
+            }
+        else:
+            estimator = SVC(
+                C=1.0,
+                kernel="sigmoid",
+                gamma="scale",
+                decision_function_shape="ovr",
+            )
+            estimator.fit(features[train_index], multiclass_labels[train_index])
+            estimator_detail = {
+                "classes": estimator.classes_.tolist(),
+                "support_vectors": int(estimator.support_.size),
+                "C": 1.0,
+            }
+        fit_seconds = time.perf_counter() - fit_started
+
+        score_started = time.perf_counter()
+        if model_name == "arima":
+            scores = np.lib.format.open_memmap(
+                run / "scores.npy",
+                mode="w+",
+                dtype="float32",
+                shape=(test_index.size,),
+            )
+            for start in range(0, test_index.size, args.score_batch):
+                stop = min(start + args.score_batch, test_index.size)
+                batch = np.asarray(test_features[test_index[start:stop]], dtype=np.float32)
+                delta = np.diff(batch, axis=1)
+                residual = delta[:, 1:] - (intercept + phi * delta[:, :-1])
+                scores[start:stop] = np.mean(np.square(residual), axis=1)
+            scores.flush()
+        elif model_name == "one_class_svm":
+            scores = -estimator.decision_function(
+                np.asarray(test_features[test_index], dtype=np.float32)
+            ).reshape(-1)
+            np.save(run / "scores.npy", scores.astype(np.float32))
+        else:
+            margins = np.asarray(
+                estimator.decision_function(features[test_index]), dtype=np.float64
+            )
+            benign_index = int(np.flatnonzero(estimator.classes_ == 0)[0])
+            scores = np.max(np.delete(margins, benign_index, axis=1), axis=1) - margins[
+                :, benign_index
+            ]
+            np.save(run / "scores.npy", scores.astype(np.float32))
+        score_seconds = time.perf_counter() - score_started
+        metrics = confusion_metrics(test_labels, scores, threshold=threshold)
+        np.save(run / "labels.npy", test_labels)
+        np.save(run / "test_global_row.npy", test_index.astype(np.int64))
+        np.save(run / "predictions.npy", (scores > threshold).astype(np.int8))
+        save_json(run / "model.json", estimator_detail)
+        timing = {
+            "load": load_seconds,
+            "fit": fit_seconds,
+            "score_table_3": score_seconds,
+            "total": time.perf_counter() - total_started,
+        }
+        result = {
+            "status": "success",
+            "eligibility": (
+                "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE"
+                if task == "supervised"
+                else "exploratory_interpretation_I-ADASYN-NONE"
+            ),
+            "configuration": configuration,
+            "git_commit": git_commit(),
+            "data": {
+                "path": str(args.data),
+                "available_train_rows": int(features.shape[0]),
+                "train_rows_used": int(train_index.size),
+                "available_test_rows": int(
+                    test_features.shape[0]
+                    if model_name != "multiclass_svm"
+                    else test_available.size
+                ),
+                "test_rows_used": int(test_index.size),
+                "source_nodes": metadata.get("source_nodes", {}),
+            },
+            "model": estimator_detail,
+            "metrics": metrics,
+            "reported_table_3": REPORTED[model_name],
+            "reported_table_4": None,
+            "difference_reproduced_minus_reported": {
+                key: float(metrics[key]) - float(value)
+                for key, value in REPORTED[model_name].items()
+            },
+            "table_v": None,
+            "timing_seconds": timing,
+            "artifacts": {
+                "scores": "scores.npy",
+                "labels": "labels.npy",
+                "predictions": "predictions.npy",
+                "test_global_row": "test_global_row.npy",
+                "model": "model.json",
+            },
+        }
+        save_json(run / "result.json", result)
+    except Exception as exc:
+        save_json(
+            run / "failure.json",
+            {
+                "status": "failed",
+                "configuration": configuration,
+                "git_commit": git_commit(),
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "elapsed_seconds": time.perf_counter() - total_started,
+            },
+        )
+        raise
+    print(json.dumps(result["metrics"], indent=2))
+    print(json.dumps(result["timing_seconds"], indent=2))
+    print(f"saved immutable attempt: {run}")
+    return 0
+
+
+def run_supervised_neural(
+    args: argparse.Namespace,
+    *,
+    metadata: dict[str, object],
+    metadata_path: Path,
+) -> int:
+    """Run one paper-sized supervised deep benchmark without printed ADASYN."""
+
+    features, labels = supervised_population(args.data)
+    split_started = time.perf_counter()
+    train_mask = exact_random_train_mask(features.shape[0], seed=args.seed)
+    train_index = np.flatnonzero(train_mask)
+    test_index = np.flatnonzero(~train_mask)
+    split_seconds = time.perf_counter() - split_started
+    learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
+    configuration = {
+        "method": f"I-SUPERVISED-ADASYN-NONE-ISET-{args.model.upper()}",
+        "paper_tables": ["III"],
+        "scientific_question": f"Does the frozen {args.model} completion reproduce Table III?",
+        "task": "supervised",
+        "model": args.model,
+        "seed": args.seed,
+        "epochs_max": args.epochs,
+        "batch_size": args.batch_size,
+        "score_batch": args.score_batch,
+        "patience": args.patience,
+        "min_delta": args.min_delta,
+        "learning_rate": learning_rate,
+        "train_fraction": "full",
+        "test_view": "supervised_original",
+        "table_v": False,
+        "threshold": 0.5,
+        "anomaly_direction": "higher",
+        "supervised_adasyn": "none",
+        "split": "seeded_exact_row_random_2_to_1",
+        "head_completion": (
+            "softmax2_sparse_categorical"
+            if args.model == "supervised_feed_forward"
+            else "sigmoid1_binary"
+        ),
+        "data_metadata_sha256": sha256(metadata_path),
+    }
+    configuration_id = stable_id({**configuration, "seed": "<seed>"})
+    configuration["configuration_id"] = configuration_id
+    configuration["attempt_id"] = stable_id(configuration)
+    run = (
+        args.output
+        / "table_3"
+        / args.model
+        / f"seed_{args.seed}_{configuration['attempt_id']}"
+    )
+    run.mkdir(parents=True, exist_ok=True)
+    if (run / "result.json").is_file():
+        print(f"immutable attempt already complete: {run}")
+        return 0
+    save_json(run / "config.json", configuration)
+    total_started = time.perf_counter()
+    try:
+        model = build_model(
+            args.model, seed=args.seed, learning_rate=learning_rate
+        )
+        inventory = layer_inventory(model)
+        callbacks = [
+            keras.callbacks.EarlyStopping(
+                monitor="loss",
+                min_delta=args.min_delta,
+                patience=args.patience,
+                restore_best_weights=True,
+                verbose=1,
+            )
+        ]
+        fit_started = time.perf_counter()
+        history = model.fit(
+            np.asarray(features[train_index], dtype=np.float32),
+            labels[train_index],
+            epochs=args.epochs,
+            batch_size=args.batch_size,
+            shuffle=True,
+            callbacks=callbacks,
+            verbose=2,
+        )
+        fit_seconds = time.perf_counter() - fit_started
+        model.save_weights(run / "model.weights.h5")
+        scores, score_seconds = score_classifier(
+            model,
+            features,
+            test_index,
+            run / "scores.npy",
+            batch_size=args.score_batch,
+            two_class_softmax=args.model == "supervised_feed_forward",
+        )
+        test_labels = labels[test_index]
+        metrics = confusion_metrics(test_labels, scores, threshold=0.5)
+        np.save(run / "labels.npy", test_labels)
+        np.save(run / "test_global_row.npy", test_index.astype(np.int64))
+        np.save(run / "predictions.npy", (scores > 0.5).astype(np.int8))
+        history_payload = {
+            key: [float(value) for value in values]
+            for key, values in history.history.items()
+        }
+        save_json(run / "history.json", history_payload)
+        timing = {
+            "split": split_seconds,
+            "fit": fit_seconds,
+            "score_table_3": score_seconds,
+            "total": time.perf_counter() - total_started,
+        }
+        result = {
+            "status": "success",
+            "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+            "configuration": configuration,
+            "git_commit": git_commit(),
+            "data": {
+                "path": str(args.data),
+                "counts": {
+                    "total": int(features.shape[0]),
+                    "train": int(train_index.size),
+                    "test": int(test_index.size),
+                },
+                "source_nodes": metadata.get("source_nodes", {}),
+            },
+            "model": {
+                "inventory": inventory,
+                "parameters": int(model.count_params()),
+            },
+            "metrics": metrics,
+            "reported_table_3": REPORTED[args.model],
+            "reported_table_4": None,
+            "difference_reproduced_minus_reported": {
+                key: float(metrics[key]) - float(value)
+                for key, value in REPORTED[args.model].items()
+            },
+            "table_v": None,
+            "history": history_payload,
+            "timing_seconds": timing,
+            "artifacts": {
+                "scores": "scores.npy",
+                "labels": "labels.npy",
+                "predictions": "predictions.npy",
+                "test_global_row": "test_global_row.npy",
+                "weights": "model.weights.h5",
+                "history": "history.json",
+            },
+        }
+        save_json(run / "result.json", result)
+    except Exception as exc:
+        save_json(
+            run / "failure.json",
+            {
+                "status": "failed",
+                "configuration": configuration,
+                "git_commit": git_commit(),
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "elapsed_seconds": time.perf_counter() - total_started,
+            },
+        )
+        raise
+    print(json.dumps(result["metrics"], indent=2))
+    print(json.dumps(result["timing_seconds"], indent=2))
+    print(f"saved immutable attempt: {run}")
+    return 0
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
@@ -423,6 +921,9 @@ def main() -> int:
     parser.add_argument("--epochs", type=int, default=100)
     parser.add_argument("--batch-size", type=int, default=512)
     parser.add_argument("--score-batch", type=int, default=8_192)
+    parser.add_argument("--one-class-svm-train-cap", type=int, default=12_000)
+    parser.add_argument("--multiclass-svm-train-cap", type=int, default=30_000)
+    parser.add_argument("--svm-test-cap", type=int, default=30_000)
     parser.add_argument("--patience", type=int, default=5)
     parser.add_argument("--min-delta", type=float, default=1e-4)
     parser.add_argument("--learning-rate", type=float)
@@ -457,7 +958,7 @@ def main() -> int:
         parser.error("Table IV contains only the five proposed models")
     if args.model in BENCHMARKS and args.test_view != "original":
         parser.error(
-            "the first benchmark breadth row is the explicit no-ADASYN continuation"
+            "benchmark breadth uses the explicit no-ADASYN continuation"
         )
 
     metadata_path = args.data / "metadata.json"
@@ -481,8 +982,24 @@ def main() -> int:
             metadata=metadata,
             metadata_path=metadata_path,
         )
+    if args.model in ("arima", "one_class_svm", "multiclass_svm"):
+        return run_classical_benchmark(
+            args,
+            metadata=metadata,
+            metadata_path=metadata_path,
+        )
+    if args.model in NEURAL_BENCHMARKS:
+        return run_supervised_neural(
+            args,
+            metadata=metadata,
+            metadata_path=metadata_path,
+        )
 
-    resolved_learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
+    resolved_learning_rate = (
+        0.01
+        if args.learning_rate is None and SPECS[args.model].optimizer == "SGD"
+        else (0.001 if args.learning_rate is None else args.learning_rate)
+    )
     resolved_output_activation = (
         SPECS[args.model].output_activation
         if args.output_activation == "paper"
@@ -521,6 +1038,23 @@ def main() -> int:
         "anomaly_direction": SPECS[args.model].anomaly_direction,
         "data_metadata_sha256": sha256(metadata_path),
     }
+    if args.model in {"lstm_sae", "lstm_vae"}:
+        configuration["decoder_completion"] = (
+            "repeat_latent_with_mirrored_Algorithm_2_or_4_state_transfer"
+        )
+    if args.model == "lstm_aea":
+        configuration["attention_completion"] = (
+            "additive_attention_previous_decoder_queries_concat_context_"
+            "repeat_latent_mirrored_state_transfer"
+        )
+    if SPECS[args.model].anomaly_score == "reconstruction_probability":
+        configuration["vae_completion"] = {
+            "latent_width": SPECS[args.model].encoder[-1],
+            "loss": "mean_reconstruction_mse_plus_mean_analytic_kl",
+            "score": "exp(-0.5*profile_mse)",
+            "variance": "fixed_unit",
+            "samples": 1,
+        }
     if args.output_activation != "paper":
         configuration["output_activation"] = resolved_output_activation
     configuration_id = stable_id({**configuration, "seed": "<seed>"})
@@ -592,7 +1126,12 @@ def main() -> int:
         inventory = layer_inventory(model)
         build_seconds = time.perf_counter() - build_started
         untrained = score_untrained_sample(
-            model, x_test, y_test, threshold=SPECS[args.model].threshold
+            model,
+            x_test,
+            y_test,
+            threshold=SPECS[args.model].threshold,
+            score_kind=SPECS[args.model].anomaly_score,
+            direction=SPECS[args.model].anomaly_direction,
         )
 
         callbacks = [
@@ -618,7 +1157,11 @@ def main() -> int:
         model.save_weights(run / "model.weights.h5")
 
         scores, score_seconds = score_mse(
-            model, x_test, run / "scores.npy", batch_size=args.score_batch
+            model,
+            x_test,
+            run / "scores.npy",
+            batch_size=args.score_batch,
+            score_kind=SPECS[args.model].anomaly_score,
         )
         predictions = (
             scores > SPECS[args.model].threshold
@@ -633,10 +1176,16 @@ def main() -> int:
             direction=SPECS[args.model].anomaly_direction,
         )
         zero_scores = score_zero(
-            x_test, run / "zero_reconstruction_scores.npy", batch_size=args.score_batch
+            x_test,
+            run / "zero_reconstruction_scores.npy",
+            batch_size=args.score_batch,
+            score_kind=SPECS[args.model].anomaly_score,
         )
         zero_metrics = confusion_metrics(
-            y_test, zero_scores, threshold=SPECS[args.model].threshold
+            y_test,
+            zero_scores,
+            threshold=SPECS[args.model].threshold,
+            direction=SPECS[args.model].anomaly_direction,
         )
         table_v_rows: list[dict[str, object]] | None = None
         table_v_seconds = 0.0
@@ -647,6 +1196,8 @@ def main() -> int:
                 run,
                 threshold=SPECS[args.model].threshold,
                 score_batch=args.score_batch,
+                score_kind=SPECS[args.model].anomaly_score,
+                direction=SPECS[args.model].anomaly_direction,
             )
             if args.model == "fc_sae":
                 for row in table_v_rows:

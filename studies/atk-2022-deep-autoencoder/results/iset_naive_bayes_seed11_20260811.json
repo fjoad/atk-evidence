@@ -1,0 +1,50 @@
+{
+  "status": "success",
+  "job_id": 373833,
+  "git_commit": "3f9b73e3050f1f43ae3800cbccfafc4d1053ab54",
+  "method": "I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES",
+  "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "model": "GaussianNB",
+    "var_smoothing": 1e-09,
+    "split": "seeded exact row-random 2:1",
+    "supervised_adasyn": "not executed",
+    "threshold": 0.5
+  },
+  "counts": {
+    "total": 15759030,
+    "train": 10506020,
+    "test": 5253010,
+    "train_benign": 1501907,
+    "train_malicious": 9004113,
+    "test_benign": 749383,
+    "test_malicious": 4503627
+  },
+  "reported": {
+    "DR": 73,
+    "FA": 18,
+    "SP": 82,
+    "PR": 73,
+    "ACC": 77.5,
+    "F1": 73,
+    "AUC": 70
+  },
+  "reproduced": {
+    "DR": 88.77813371311612,
+    "FA": 44.53236862859179,
+    "SP": 55.46763137140821,
+    "PR": 92.29636325778159,
+    "ACC": 72.12288254226216,
+    "F1": 90.5030693510704,
+    "AUC": 79.16927427788181
+  },
+  "timing_seconds": {
+    "split": 1.6484320312738419,
+    "fit": 23.158779449760914,
+    "score": 16.341457337141037,
+    "pipeline": 41.30110237002373,
+    "slurm_elapsed": 96
+  },
+  "interpretation": "The completion does not reproduce the reported row: its fixed operating point has substantially higher detection and false-alarm rates. This is one no-ADASYN interpretation, not a paper-level verdict."
+}

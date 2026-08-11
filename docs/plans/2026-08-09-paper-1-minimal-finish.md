@@ -92,28 +92,37 @@ chain is inspectable and trusted for one full attempt.
    preserved ISET/Table-III benchmark attempt passes this gate, so begin with a
    fresh minimal Naive Bayes row. Historical SGCC/Table-II results remain
    separate evidence. Job 373833 is the first explicitly labeled
-   no-supervised-ADASYN Naive Bayes attempt.
+   no-supervised-ADASYN Naive Bayes attempt. **Completed:** job 373833 did not
+   reproduce its reported pattern; see the evidence ledger.
 8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,
    and score-audit contract. Reuse it only if all gates pass; otherwise run one
-   watched seed through the five-file route. Inspect each result before coding
-   or submitting the next row.
-9. After model breadth, run one-factor material data/evaluation contrasts in
+   seed through the five-file route.
+9. **Execution-order update (user direction, 2026-08-11):** because the
+   source specifications and named breadth completions are now frozen, finish
+   and test all remaining benchmark/proposed code before waiting for another
+   result. Submit the remaining benchmark rows first and proposed rows second
+   as one sequential `afterany` Slurm dependency chain. Harvest each completed
+   result, but do not let one independent row's executable failure suppress
+   later rows. This replaces the earlier one-submission-at-a-time rule for
+   this finite breadth set only; it does not authorize ambiguity sweeps or
+   repeated seeds.
+10. After model breadth, run one-factor material data/evaluation contrasts in
    this order: residential population (all eligible versus deterministic
    3,000), attack/test population and split, scaling fit population, printed
    threshold versus validation-derived threshold, and each materially distinct
    executable Attack-3 repair. Hold every non-target choice fixed. Do not launch
    a Cartesian sweep.
-10. Write the breadth map as a table with one row per attempted model or
+11. Write the breadth map as a table with one row per attempted model or
     interpretation: source claim, exact completion, execution status, observed
     metrics, reported target, divergence, and next implication. Only then choose
     which branches merit repeated seeds.
 
 Future Panther submissions request only the required 16-GB V100 in the Slurm
-header. They do not reserve a CPU or memory shape. One job is submitted at a
-time during this diagnostic phase, even when more GPUs are idle, because every
-result determines what should be run next.
+header. They do not reserve a CPU or memory shape. The finite source-frozen
+Table-III breadth set is queued sequentially; later interpretation work again
+depends on the completed breadth map.
 
 **Finish condition:** every major model family and material interpretation axis
 has one trustworthy anchor or explicit failure, and likely divergence points

@@ -45,13 +45,27 @@
   completions are SGCC/Table II and are ineligible for the current ISET rows.
   Start benchmark breadth with the ISET Naive Bayes row; do not silently reuse
   the SGCC numbers.
-- ISET Naive Bayes job 373833 was submitted on 2026-08-11 from commit
-  `bee5420`. It is the explicitly labeled
+- ISET Naive Bayes job 373833 completed on 2026-08-11 from commit
+  `3f9b73e` in 1m36s. It is the explicitly labeled
   `I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES` row: GaussianNB with default
   `var_smoothing=1e-9`, positive probability threshold 0.5, all original
   all-customer `B+M`, and an exact seed-11 2:1 random row split. It does not
   execute the paper's pre-split supervised ADASYN and cannot fill the printed
-  cell; its purpose is fast benchmark breadth on the frozen original rows.
+  cell. It reproduced DR/FA/ACC/F1/AUC =
+  88.78/44.53/72.12/90.50/79.17% versus 73/18/77.5/73/70% reported.
+- Latest execution-order instruction (2026-08-11): finish and test every
+  remaining benchmark and proposed-model code path first, then queue them as
+  one sequential Panther dependency chain. This supersedes the earlier
+  one-submission-at-a-time rule for this already source-frozen breadth set.
+  Use `afterany`, not `afterok`, so an executable failure is preserved without
+  preventing later independent breadth rows from running.
+- Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
+  repeated latent but omitted the printed encoder-to-decoder hidden/cell state
+  transfer. The compact recurrent builders now use mirrored state transfer.
+  The ongoing decoder input remains omitted by the source and the selected
+  breadth completion is explicitly repeat-latent. VAE reconstruction
+  probability and Algorithm-5 attention repairs are likewise named in each
+  configuration rather than silently called literal.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.

@@ -156,6 +156,90 @@ class CompactBaselineTests(unittest.TestCase):
                 "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
             )
 
+    def test_every_remaining_table_iii_model_builds_and_scores(self) -> None:
+        rng = np.random.default_rng(11)
+        values = rng.normal(size=(2, 48)).astype("float32")
+        expected_output = {
+            "lstm_sae": (2, 48),
+            "fc_vae": (2, 48),
+            "lstm_vae": (2, 48),
+            "lstm_aea": (2, 48),
+            "supervised_feed_forward": (2, 2),
+            "supervised_lstm": (2, 1),
+        }
+        for name, shape in expected_output.items():
+            with self.subTest(model=name):
+                model = models.build_model(name, seed=11)
+                self.assertEqual(tuple(model(values, training=False).shape), shape)
+
+    def test_vae_probability_completion_is_low_when_error_is_large(self) -> None:
+        class ZeroModel:
+            def __call__(self, values: np.ndarray, training: bool = False) -> np.ndarray:
+                del training
+                return np.zeros_like(values)
+
+        with tempfile.TemporaryDirectory() as temporary:
+            target = Path(temporary) / "scores.npy"
+            values = np.array([[0.0] * 48, [2.0] * 48], dtype=np.float32)
+            scores, _ = run_experiment.score_mse(
+                ZeroModel(),
+                values,
+                target,
+                batch_size=2,
+                score_kind="reconstruction_probability",
+            )
+            self.assertGreater(float(scores[0]), float(scores[1]))
+            self.assertAlmostEqual(float(scores[0]), 1.0)
+
+    def test_classical_breadth_routes_preserve_their_explicit_caps(self) -> None:
+        rng = np.random.default_rng(11)
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = root / "data"
+            data.mkdir()
+            benign = rng.normal(0, 1, (24, 48)).astype("float32")
+            np.save(data / "benign.npy", benign)
+            for attack_id in range(1, 7):
+                np.save(
+                    data / f"attack_{attack_id}.npy",
+                    rng.normal(attack_id / 4, 1, (24, 48)).astype("float32"),
+                )
+            np.save(data / "x_train.npy", benign[:16])
+            test_x = np.concatenate(
+                [benign[16:], np.load(data / "attack_1.npy")[:8]]
+            )
+            np.save(data / "test_original_x.npy", test_x)
+            np.save(
+                data / "test_original_y.npy",
+                np.array([0] * 8 + [1] * 8, dtype=np.int8),
+            )
+            metadata = {"status": "complete", "source_nodes": {}}
+            metadata_path = data / "metadata.json"
+            metadata_path.write_text(json.dumps(metadata))
+            for name in ("arima", "one_class_svm", "multiclass_svm"):
+                args = argparse.Namespace(
+                    model=name,
+                    data=data,
+                    output=root / "results",
+                    seed=11,
+                    score_batch=7,
+                    one_class_svm_train_cap=8,
+                    multiclass_svm_train_cap=21,
+                    svm_test_cap=12,
+                )
+                with self.subTest(model=name):
+                    self.assertEqual(
+                        run_experiment.run_classical_benchmark(
+                            args, metadata=metadata, metadata_path=metadata_path
+                        ),
+                        0,
+                    )
+            one_class = json.loads(
+                next((root / "results/table_3/one_class_svm").rglob("result.json")).read_text()
+            )
+            self.assertEqual(one_class["data"]["train_rows_used"], 8)
+            self.assertEqual(one_class["data"]["test_rows_used"], 12)
+
     def test_analysis_never_merges_different_execution_configs(self) -> None:
         def attempt(seed: int, batch: int, group: str) -> dict[str, object]:
             config = {
