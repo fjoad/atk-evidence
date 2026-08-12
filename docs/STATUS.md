@@ -32,9 +32,11 @@
   before training; it is fixed in `4469a53`. Jobs `374388`--`374390` were then
   rejected by the immutable-attempt guard before execution because their
   configuration still named score batch 512. Explicit score batch 256 makes
-  the preserved retry identity distinct; jobs `374391`--`374393` are queued
-  sequentially for LSTM-SAE, LSTM-VAE, and LSTM-AEA. Future wrappers request
-  only the GPU so CPU shape cannot delay them.
+  the preserved retry identity distinct. LSTM-SAE job `374391` remains
+  running; pending dependent jobs `374392`--`374393` were cancelled and
+  replaced by independent LSTM-VAE/LSTM-AEA jobs `374395`--`374396`. All three
+  now run concurrently on one generic GPU each. The Slurm wrapper is seven
+  lines and requests only `gpu-all` plus `gpu:1`.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -219,7 +221,7 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Harvest corrected jobs `374391`--`374393`: LSTM-SAE, LSTM-VAE, and
+2. Harvest corrected jobs `374391`, `374395`, and `374396`: LSTM-SAE, LSTM-VAE, and
    LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the

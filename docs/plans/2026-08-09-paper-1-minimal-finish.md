@@ -109,16 +109,16 @@ chain is inspectable and trusted for one full attempt.
    replacement jobs 374311--374313 exposed a second batching leak in the
    untrained sanity probe and failed before training. Repair `4469a53` is
    tested. Jobs 374388--374390 were rejected by the immutable-attempt guard;
-   distinct score-batch-256 jobs 374391--374393 are queued sequentially.
-9. **Execution-order update (user direction, 2026-08-11):** because the
+   LSTM-SAE job 374391 remains active. Dependent jobs 374392--374393 were
+   cancelled before execution and replaced by independent score-batch-256
+   LSTM-VAE/LSTM-AEA jobs 374395--374396.
+9. **Execution-order update (user direction, 2026-08-12):** because the
    source specifications and named breadth completions are now frozen, finish
    and test all remaining benchmark/proposed code before waiting for another
-   result. Submit the remaining benchmark rows first and proposed rows second
-   as one sequential `afterany` Slurm dependency chain. Harvest each completed
-   result, but do not let one independent row's executable failure suppress
-   later rows. This replaces the earlier one-submission-at-a-time rule for
-   this finite breadth set only; it does not authorize ambiguity sweeps or
-   repeated seeds.
+   result. Run independent frozen breadth rows concurrently, one generic GPU
+   per job, up to the established three-job limit. Do not add dependency chains
+   between independent models. This applies only to the finite breadth set; it
+   does not authorize ambiguity sweeps or repeated seeds.
 10. After model breadth, run one-factor material data/evaluation contrasts in
    this order: residential population (all eligible versus deterministic
    3,000), attack/test population and split, scaling fit population, printed

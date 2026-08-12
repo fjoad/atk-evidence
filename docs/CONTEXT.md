@@ -53,12 +53,9 @@
   execute the paper's pre-split supervised ADASYN and cannot fill the printed
   cell. It reproduced DR/FA/ACC/F1/AUC =
   88.78/44.53/72.12/90.50/79.17% versus 73/18/77.5/73/70% reported.
-- Latest execution-order instruction (2026-08-11): finish and test every
-  remaining benchmark and proposed-model code path first, then queue them as
-  one sequential Panther dependency chain. This supersedes the earlier
-  one-submission-at-a-time rule for this already source-frozen breadth set.
-  Use `afterany`, not `afterok`, so an executable failure is preserved without
-  preventing later independent breadth rows from running.
+- Latest execution-order instruction (2026-08-12): independent frozen breadth
+  rows run concurrently, one generic GPU per job, up to the established
+  three-job limit. Do not serialize independent models with Slurm dependencies.
 - ARIMA breadth job 373836 completed in 1m02s using pooled ARIMA(1,1,0)
   residual MSE on full B1/original B2+M. DR/FA/ACC/F1/AUC =
   21.48/57.20/32.14/34.46/24.72% versus 86/12/87/86/87% reported. This is a
@@ -116,8 +113,8 @@
   tests pass. Jobs 374388--374390 were safely rejected by the immutable-attempt
   guard because score batch 512 retained the same failed-attempt identity.
   Wrapper commit `f5b5623` accepts an explicit score batch; replacement
-  LSTM-SAE/LSTM-VAE/LSTM-AEA jobs 374391--374393 use 256 and are queued
-  sequentially.
+  LSTM-SAE job 374391 and independent replacement LSTM-VAE/LSTM-AEA jobs
+  374395--374396 use 256 and run concurrently.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.
