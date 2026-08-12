@@ -189,16 +189,22 @@ def score_untrained_sample(
     labels: np.ndarray,
     *,
     threshold: float,
+    batch_size: int,
     score_kind: str = "mse",
     direction: str = "higher",
 ) -> dict[str, object]:
     benign = np.flatnonzero(labels == 0)[:5_000]
     malicious = np.flatnonzero(labels == 1)[:5_000]
     index = np.concatenate([benign, malicious])
-    batch = np.asarray(values[index], dtype=np.float32)
-    reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
-    mse = np.mean(np.square(batch - reconstruction), axis=1)
-    scores = mse if score_kind == "mse" else np.exp(-0.5 * mse)
+    scores = np.empty(index.size, dtype=np.float32)
+    for start in range(0, index.size, batch_size):
+        stop = min(start + batch_size, index.size)
+        batch = np.asarray(values[index[start:stop]], dtype=np.float32)
+        reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
+        mse = np.mean(np.square(batch - reconstruction), axis=1)
+        scores[start:stop] = (
+            mse if score_kind == "mse" else np.exp(-0.5 * mse)
+        )
     return {
         "rows": int(index.size),
         "metrics": confusion_metrics(
@@ -1130,6 +1136,7 @@ def main() -> int:
             x_test,
             y_test,
             threshold=SPECS[args.model].threshold,
+            batch_size=args.score_batch,
             score_kind=SPECS[args.model].anomaly_score,
             direction=SPECS[args.model].anomaly_direction,
         )

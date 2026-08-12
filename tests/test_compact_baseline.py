@@ -204,6 +204,30 @@ class CompactBaselineTests(unittest.TestCase):
             self.assertGreater(float(scores[0]), float(scores[1]))
             self.assertAlmostEqual(float(scores[0]), 1.0)
 
+    def test_untrained_sanity_respects_scoring_batch(self) -> None:
+        class ZeroModel:
+            def __init__(self) -> None:
+                self.batch_sizes: list[int] = []
+
+            def __call__(self, values: np.ndarray, training: bool = False) -> np.ndarray:
+                del training
+                self.batch_sizes.append(values.shape[0])
+                return np.zeros_like(values)
+
+        model = ZeroModel()
+        values = np.ones((14, 48), dtype=np.float32)
+        labels = np.array([0] * 7 + [1] * 7, dtype=np.int8)
+        result = run_experiment.score_untrained_sample(
+            model,
+            values,
+            labels,
+            threshold=0.5,
+            batch_size=3,
+        )
+        self.assertEqual(result["rows"], 14)
+        self.assertEqual(sum(model.batch_sizes), 14)
+        self.assertLessEqual(max(model.batch_sizes), 3)
+
     def test_classical_breadth_routes_preserve_their_explicit_caps(self) -> None:
         rng = np.random.default_rng(11)
         with tempfile.TemporaryDirectory() as temporary:
