@@ -148,7 +148,8 @@ def score_mse(
     for start in range(0, values.shape[0], batch_size):
         stop = min(start + batch_size, values.shape[0])
         batch = np.asarray(values[start:stop], dtype=np.float32)
-        reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
+        with torch.no_grad():
+            reconstruction = keras.ops.convert_to_numpy(model(batch, training=False))
         mse = np.mean(np.square(batch - reconstruction), axis=1)
         if score_kind == "mse":
             scores[start:stop] = mse
