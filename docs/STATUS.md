@@ -32,11 +32,12 @@
   before training; it is fixed in `4469a53`. Jobs `374388`--`374390` were then
   rejected by the immutable-attempt guard before execution because their
   configuration still named score batch 512. Explicit score batch 256 makes
-  the preserved retry identity distinct. LSTM-SAE job `374391` remains
-  running; pending dependent jobs `374392`--`374393` were cancelled and
-  replaced by independent LSTM-VAE/LSTM-AEA jobs `374395`--`374396`. All three
-  now run concurrently on one generic GPU each. The Slurm wrapper is seven
-  lines and requests only `gpu-all` plus `gpu:1`.
+  the preserved retry identity distinct. LSTM-SAE job `374391` completed and
+  score-audit job `374433` closed its threshold question. LSTM-VAE job `374395`
+  completed training but exhausted 16-GB GPU memory during scoring; the weights
+  are preserved, and fresh-process scoring job `374435` is running at inference
+  batch 64 without retraining. LSTM-AEA job `374396` remains healthy. The Slurm
+  wrapper only requests `gpu-all` plus `gpu:1` and executes its arguments.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -202,6 +203,16 @@ directions have oracle ACC 50%; the closest threshold is 90 points from the
 reported DR/FA pair. This registered one-seed completion collapsed completely
 and is not a threshold-selection failure.
 
+LSTM-SAE job `374391` completed in 6:23:28 after 25 epochs, restoring epoch-20
+weights. Fixed DR/FA/ACC/F1/AUC =
+14.78/40.96/36.91/25.25/33.09%, versus 85/13/86/85/82% reported. Audit job
+`374433` found paper-direction oracle ACC 50.004%; its closest point to the
+reported DR/FA pair remains 47.11 points away. Reversing direction reaches
+64.38% ACC. Benign mean reconstruction error 1.087 exceeds malicious 0.519,
+and the trained score is 0.97495-correlated with zero reconstruction. This is a
+fundamental wrong-direction failure for the registered one-seed no-test-ADASYN
+completion, not a threshold mismatch.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -221,8 +232,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Harvest corrected jobs `374391`, `374395`, and `374396`: LSTM-SAE, LSTM-VAE, and
-   LSTM-AEA; then the
+2. Complete LSTM-VAE score recovery `374435` and harvest LSTM-AEA `374396`;
+   then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the
    renewed source/provenance/score gates.

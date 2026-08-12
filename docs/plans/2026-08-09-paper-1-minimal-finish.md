@@ -109,9 +109,12 @@ chain is inspectable and trusted for one full attempt.
    replacement jobs 374311--374313 exposed a second batching leak in the
    untrained sanity probe and failed before training. Repair `4469a53` is
    tested. Jobs 374388--374390 were rejected by the immutable-attempt guard;
-   LSTM-SAE job 374391 remains active. Dependent jobs 374392--374393 were
+   LSTM-SAE job 374391 completed and score audit 374433 shows a fundamental
+   wrong-direction ranking failure. Dependent jobs 374392--374393 were
    cancelled before execution and replaced by independent score-batch-256
-   LSTM-VAE/LSTM-AEA jobs 374395--374396.
+   LSTM-VAE/LSTM-AEA jobs 374395--374396. LSTM-VAE trained but its batch-256
+   scoring exhausted the allocated 16-GB GPU; preserved-weight recovery 374435
+   is running at inference batch 64 without retraining. LSTM-AEA remains active.
 9. **Execution-order update (user direction, 2026-08-12):** because the
    source specifications and named breadth completions are now frozen, finish
    and test all remaining benchmark/proposed code before waiting for another
@@ -130,10 +133,9 @@ chain is inspectable and trusted for one full attempt.
     metrics, reported target, divergence, and next implication. Only then choose
     which branches merit repeated seeds.
 
-Future Panther submissions request only the required 16-GB V100 in the Slurm
-header. They do not reserve a CPU or memory shape. The finite source-frozen
-Table-III breadth set is queued sequentially; later interpretation work again
-depends on the completed breadth map.
+Panther submissions request one generic GPU and no CPU or memory shape.
+Independent frozen breadth rows run concurrently up to the three-job limit;
+later interpretation work depends on the completed breadth map.
 
 **Finish condition:** every major model family and material interpretation axis
 has one trustworthy anchor or explicit failure, and likely divergence points

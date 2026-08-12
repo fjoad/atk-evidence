@@ -112,9 +112,12 @@
   Commit `4469a53` batches that unchanged diagnostic by `score_batch`; focused
   tests pass. Jobs 374388--374390 were safely rejected by the immutable-attempt
   guard because score batch 512 retained the same failed-attempt identity.
-  Wrapper commit `f5b5623` accepts an explicit score batch; replacement
-  LSTM-SAE job 374391 and independent replacement LSTM-VAE/LSTM-AEA jobs
-  374395--374396 use 256 and run concurrently.
+  Wrapper commit `f5b5623` accepts an explicit score batch. LSTM-SAE job 374391
+  completed and audit 374433 shows paper-direction oracle ACC 50.004%, reversed
+  ACC 64.38%, and a 47.11-point minimum DR/FA gap. LSTM-VAE job 374395 trained
+  through epoch 23 (best epoch 18) but OOMed during scoring at 256; its weights
+  are preserved and fresh-process score recovery 374435 uses batch 64 with no
+  retraining. LSTM-AEA job 374396 remains active.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

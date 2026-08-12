@@ -993,6 +993,29 @@ and repeated experiments determine technical conclusions.
 - **Remaining uncertainty / blast radius:** The three replacements must still
   complete before proposed recurrent breadth is closed.
 
+### Compact ISET LSTM-SAE breadth row
+
+- **Former belief/status:** The registered Algorithm-2 completion had not
+  completed a full train-and-score run.
+- **Evidence:** Panther job 374391 restored epoch-20 weights after 25 epochs and
+  produced fixed DR/FA/ACC/F1/AUC =
+  14.78/40.96/36.91/25.25/33.09%, versus reported
+  85/13/86/85/82%. Audit 374433 gives paper-direction oracle ACC 50.004%,
+  reversed-direction ACC 64.38%, and a 47.11-point minimum joint DR/FA gap.
+  Benign mean MSE is 1.087 versus malicious 0.519; trained scores correlate
+  0.97495 with the zero-reconstruction control.
+- **Root cause:** **INFERRED for this completion** — malicious transforms are
+  generally lower-error than benign rows under the learned reconstruction, so
+  the score order opposes the paper's higher-error-is-anomalous rule and remains
+  largely driven by input energy.
+- **Current conclusion + label:** **OBSERVED** — no paper-direction threshold
+  recovers the reported operating point for this one-seed completion.
+- **Remaining uncertainty / blast radius:** Test-set ADASYN is omitted, and the
+  source leaves materially different decoder-input completions open. This is
+  not a conclusion over those branches or repeated seeds.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_lstm_sae_seed11_20260812.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
