@@ -26,9 +26,14 @@
   and FC-VAE (`373842`) are complete. The first supervised-LSTM attempt
   (`373839`) trained but failed during oversized-batch scoring; the first three
   proposed recurrent attempts (`373841`, `373843`, `373844`) failed before
-  training in diagnostic layer inventory. Both operational defects are fixed
-  in `c735dd9`. Corrected jobs `374310`--`374313` are queued sequentially for
-  supervised LSTM, LSTM-SAE, LSTM-VAE, and LSTM-AEA. Future wrappers request
+  training in diagnostic layer inventory. Those defects were fixed in
+  `c735dd9`, and corrected supervised-LSTM job `374310` completed. A second
+  pre-training sanity-probe batch leak caused jobs `374311`--`374313` to fail
+  before training; it is fixed in `4469a53`. Jobs `374388`--`374390` were then
+  rejected by the immutable-attempt guard before execution because their
+  configuration still named score batch 512. Explicit score batch 256 makes
+  the preserved retry identity distinct; jobs `374391`--`374393` are queued
+  sequentially for LSTM-SAE, LSTM-VAE, and LSTM-AEA. Future wrappers request
   only the GPU so CPU shape cannot delay them.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
@@ -187,6 +192,14 @@ the diagnostic inventory assumed one tensor per layer output. The repair only
 records multi-output shapes and reduces recurrent inference batches to 512; it
 does not alter a model, optimizer, training batch, data row, score, or metric.
 
+Corrected supervised-LSTM job `374310` completed in 6:54:51 after six epochs,
+restoring epoch-1 weights. Every test score is exactly 1.0, yielding
+DR/FA/ACC/F1/AUC = 100/100/50/92.32/50%, versus
+90.5/10/90/90/89% reported. Audit job `374387` confirms that both score
+directions have oracle ACC 50%; the closest threshold is 90 points from the
+reported DR/FA pair. This registered one-seed completion collapsed completely
+and is not a threshold-selection failure.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -206,8 +219,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. **Complete:** validate the one-factor linear-output control and record that
    output activation alone does not rescue the score separation.
-2. Harvest corrected jobs `374310`--`374313`: supervised LSTM, LSTM-SAE,
-   LSTM-VAE, and LSTM-AEA; then the
+2. Harvest corrected jobs `374391`--`374393`: LSTM-SAE, LSTM-VAE, and
+   LSTM-AEA; then the
    one-factor population, split, scaling, threshold, and Attack-3
    interpretations. Existing historical results count only if they pass the
    renewed source/provenance/score gates.

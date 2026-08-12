@@ -42,6 +42,18 @@
     "inventory": "record a list of shapes for a layer with multiple output tensors",
     "recurrent_score_batch": "512 instead of 8192; predictions are otherwise identical"
   },
+  "second_failures": [
+    {"job_id": 374311, "model": "lstm_sae", "stage": "untrained sanity scoring before training", "error": "CUDA OOM on a separate 10,000-row diagnostic batch", "replacement": 374391},
+    {"job_id": 374312, "model": "lstm_vae", "stage": "untrained sanity scoring before training", "error": "CUDA OOM on a separate 10,000-row diagnostic batch", "replacement": 374392},
+    {"job_id": 374313, "model": "lstm_aea", "stage": "untrained sanity scoring before training", "error": "CUDA OOM on a separate 10,000-row diagnostic batch", "replacement": 374393}
+  ],
+  "second_repair": {
+    "commit": "4469a53",
+    "scientific_model_change": false,
+    "operation": "chunk the unchanged 10,000-row pre-training diagnostic by the recorded score_batch of 512"
+  },
+  "immutable_guard_rejections": [374388, 374389, 374390],
+  "immutable_guard_resolution": "No failed attempt was overwritten. Wrapper commit f5b5623 records explicit score batch 256, creating distinct attempt identities for jobs 374391--374393.",
   "cancelled_before_execution": [374306, 374307, 374308, 374309],
   "cancellation_reason": "The Panther checkout initially targeted a stale deleted upstream branch; all four jobs were still pending and were cancelled before any job started. Panther was then fast-forwarded to main at c735dd9."
 }

@@ -96,8 +96,9 @@ chain is inspectable and trusted for one full attempt.
    reproduce its reported pattern; see the evidence ledger. **Current:** Naive
    Bayes, ARIMA, one-class SVM, supervised feed-forward, and multiclass SVM are
    complete and score-audited. Supervised-LSTM job 373839 trained but failed in
-   oversized-batch scoring; scientifically unchanged replacement 374310 is
-   queued with recurrent score batch 512.
+   oversized-batch scoring; scientifically unchanged replacement 374310
+   completed and was audited. Every score is 1.0 and both directions have
+   oracle ACC 50%.
 8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,
@@ -105,7 +106,10 @@ chain is inspectable and trusted for one full attempt.
    seed through the five-file route. **Current:** FC-VAE job 373842 is complete
    and audited. Initial LSTM-SAE/LSTM-VAE/LSTM-AEA jobs failed before training
    in diagnostic inventory; output-shape-only repair `c735dd9` is tested and
-   replacement jobs 374311--374313 are queued sequentially.
+   replacement jobs 374311--374313 exposed a second batching leak in the
+   untrained sanity probe and failed before training. Repair `4469a53` is
+   tested. Jobs 374388--374390 were rejected by the immutable-attempt guard;
+   distinct score-batch-256 jobs 374391--374393 are queued sequentially.
 9. **Execution-order update (user direction, 2026-08-11):** because the
    source specifications and named breadth completions are now frozen, finish
    and test all remaining benchmark/proposed code before waiting for another

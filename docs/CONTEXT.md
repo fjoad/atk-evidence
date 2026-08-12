@@ -106,6 +106,18 @@
   queued from that commit. Jobs 374306--374309 were cancelled while still
   pending because Panther initially targeted a stale deleted upstream branch;
   no stale-code job ran.
+- Supervised-LSTM replacement 374310 completed in 6:54:51 from `c735dd9`, six
+  epochs with epoch-1 weights restored. Every test score is exactly 1.0:
+  DR/FA/ACC/F1/AUC = 100/100/50/92.32/50% versus 90.5/10/90/90/89% reported.
+  Audit 374387 gives oracle ACC 50% in either direction and a 90-point minimum
+  DR/FA gap. A second operational leak was then found: the proposed-model
+  pre-training sanity probe still materialized 10,000 recurrent rows at once.
+  Commit `4469a53` batches that unchanged diagnostic by `score_batch`; focused
+  tests pass. Jobs 374388--374390 were safely rejected by the immutable-attempt
+  guard because score batch 512 retained the same failed-attempt identity.
+  Wrapper commit `f5b5623` accepts an explicit score batch; replacement
+  LSTM-SAE/LSTM-VAE/LSTM-AEA jobs 374391--374393 use 256 and are queued
+  sequentially.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.

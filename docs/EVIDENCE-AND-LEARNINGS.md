@@ -950,6 +950,49 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/recurrent_breadth_operational_failures_20260811.json`.
 
+### Compact ISET supervised-LSTM benchmark breadth row
+
+- **Former belief/status:** The first attempt trained but its oversized scoring
+  batch failed, so no valid model result existed.
+- **Evidence:** Scientifically unchanged replacement job 374310 used recurrent
+  score batch 512, completed six epochs in 6:54:51, and restored epoch-1
+  weights. Every saved test probability is exactly 1.0. Fixed
+  DR/FA/ACC/F1/AUC = 100/100/50/92.32/50%, versus reported
+  90.5/10/90/90/89%. Audit job 374387 gives oracle ACC 50% in either score
+  direction and a minimum 90-point joint DR/FA gap.
+- **Root cause:** **OBSERVED, mechanism not yet isolated** — the registered
+  four-by-300 ReLU-LSTM, sigmoid/BCE completion saturates to a constant positive
+  prediction after its first epoch and never recovers.
+- **Current conclusion + label:** **OBSERVED** — this completion fundamentally
+  fails to rank benign and malicious profiles; threshold selection cannot
+  reproduce the paper row.
+- **Remaining uncertainty / blast radius:** This is one seed and omits the
+  paper-positioned supervised ADASYN. The paper also omits the supervised head,
+  loss, threshold rule, and training defaults, so materially distinct
+  completions remain open.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_supervised_lstm_seed11_20260812.json`.
+
+### Second recurrent pre-training batch leak
+
+- **Former belief/status:** Commit `c735dd9` bounded recurrent scoring at 512,
+  so replacement proposed-model jobs were expected to reach training.
+- **Evidence:** Jobs 374311--374313 failed before training because the separate
+  untrained sanity probe still passed all 10,000 sampled rows through each
+  recurrent model at once. Commit `4469a53` chunks the identical diagnostic by
+  the already-recorded `score_batch`; a regression test verifies the maximum
+  call size. Jobs 374388--374390 were subsequently rejected before execution
+  by the immutable-attempt guard because they retained the prior score-batch
+  identity. Jobs 374391--374393 use the numerically equivalent, lower-memory,
+  explicitly recorded score batch 256 and are queued.
+- **Root cause:** **VERIFIED** — a second inference path bypassed the common
+  batch-scoring loop.
+- **Current conclusion + label:** **INVALIDATED as scientific failures** — the
+  three attempts contain no evidence about model performance. The repair
+  changes memory partitioning only, not values or scientific settings.
+- **Remaining uncertainty / blast radius:** The three replacements must still
+  complete before proposed recurrent breadth is closed.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

@@ -1,0 +1,35 @@
+{
+  "status": "success",
+  "job_id": 374310,
+  "audit_job_id": 374387,
+  "git_commit": "c735dd9b8f39cc84ad163bc5674e30bfdb03f771",
+  "method": "I-SUPERVISED-ADASYN-NONE-ISET-SUPERVISED_LSTM",
+  "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "architecture": "48x1 -> LSTM(300) -> LSTM(300) -> LSTM(300) -> LSTM(300) -> sigmoid(1)",
+    "hidden_activation": "relu",
+    "dropout": 0.2,
+    "output_activation": "sigmoid",
+    "loss": "binary cross-entropy",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "epochs_completed": 6,
+    "best_epoch": 1,
+    "batch_size": 512,
+    "score_batch": 512,
+    "split": "seeded exact row-random 2:1",
+    "supervised_adasyn": "not executed",
+    "fixed_threshold": 0.5
+  },
+  "reported": {"DR": 90.5, "FA": 10, "SP": 90, "PR": 89.5, "ACC": 90, "F1": 90, "AUC": 89},
+  "reproduced_fixed_threshold": {"DR": 100.0, "FA": 100.0, "SP": 0.0, "PR": 85.7342171440755, "ACC": 50.0, "F1": 92.3192489379281, "AUC": 50.0},
+  "score_audit": {
+    "all_scores": 1.0,
+    "best_paper_direction_ACC": 50.0,
+    "best_reversed_direction_ACC": 50.0,
+    "closest_to_reported_DR_FA": {"DR": 100.0, "FA": 100.0, "ACC": 50.0, "maximum_absolute_gap": 90.0}
+  },
+  "timing_seconds": {"fit": 24351.10415881127, "score": 486.12584311515093, "pipeline": 24839.169345118105, "slurm_elapsed": 24891},
+  "interpretation": "The printed four-by-300 ReLU LSTM completion collapsed to the constant positive-class score 1.0. It therefore predicts every row malicious and contains no ranking information; neither threshold direction can exceed balanced ACC 50%. This is a fundamental one-seed failure for the registered head/loss and no-supervised-ADASYN completion, not a threshold-selection mismatch. The paper omits the supervised head, loss, threshold procedure, training duration, batch size, and ADASYN settings, so materially distinct completions remain open."
+}
