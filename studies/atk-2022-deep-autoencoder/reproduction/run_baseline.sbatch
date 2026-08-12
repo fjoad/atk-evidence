@@ -19,8 +19,9 @@ seed="${SEED:-11}"
 model="${MODEL:-fc_sae}"
 output_activation="${OUTPUT_ACTIVATION:-paper}"
 epochs="${EPOCHS:-}"
-score_batch=8192
-if [[ "$model" == supervised_lstm || "$model" == lstm_sae || \
+score_batch="${SCORE_BATCH:-8192}"
+if [[ -z "${SCORE_BATCH:-}" ]] && \
+   [[ "$model" == supervised_lstm || "$model" == lstm_sae || \
       "$model" == lstm_vae || "$model" == lstm_aea ]]; then
   score_batch=512
 fi
