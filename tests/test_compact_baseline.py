@@ -204,6 +204,51 @@ class CompactBaselineTests(unittest.TestCase):
             self.assertGreater(float(scores[0]), float(scores[1]))
             self.assertAlmostEqual(float(scores[0]), 1.0)
 
+    def test_failed_scoring_reuses_preserved_weights_without_training(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data = root / "data"
+            run = root / "run"
+            data.mkdir()
+            run.mkdir()
+            metadata_path = data / "metadata.json"
+            metadata_path.write_text(json.dumps({"status": "complete"}))
+            values = np.arange(4 * 48, dtype=np.float32).reshape(4, 48) / 100
+            np.save(data / "test_original_x.npy", values)
+            np.save(
+                data / "test_original_y.npy",
+                np.array([0, 0, 1, 1], dtype=np.int8),
+            )
+            model = models.build_lstm_vae(seed=11, learning_rate=0.01)
+            model.save_weights(run / "model.weights.h5")
+            configuration = {
+                "method": "I-ADASYN-NONE-ISET-LSTM-VAE",
+                "model": "lstm_vae",
+                "seed": 11,
+                "learning_rate": 0.01,
+                "score_batch": 2,
+                "test_view": "original",
+                "threshold": 0.47,
+                "anomaly_direction": "lower",
+                "data_metadata_sha256": run_experiment.sha256(metadata_path),
+            }
+            (run / "failure.json").write_text(
+                json.dumps(
+                    {
+                        "configuration": configuration,
+                        "git_commit": "training-commit",
+                        "elapsed_seconds": 10,
+                    }
+                )
+            )
+
+            self.assertEqual(run_experiment.recover_failed_scoring(run, data), 0)
+            recovery = json.loads((run / "score_recovery.json").read_text())
+            self.assertEqual(recovery["kind"], "operational_score_recovery")
+            self.assertEqual(recovery["training_git_commit"], "training-commit")
+            self.assertEqual(np.load(run / "scores.npy").shape, (4,))
+            self.assertFalse((run / "history.json").exists())
+
     def test_untrained_sanity_respects_scoring_batch(self) -> None:
         class ZeroModel:
             def __init__(self) -> None:

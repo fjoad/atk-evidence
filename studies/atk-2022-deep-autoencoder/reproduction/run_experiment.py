@@ -183,6 +183,124 @@ def score_zero(
     return scores
 
 
+def recover_failed_scoring(run: Path, data: Path) -> int:
+    """Score preserved weights in a fresh process after a post-fit failure."""
+
+    run = run.resolve()
+    failure_path = run / "failure.json"
+    weights_path = run / "model.weights.h5"
+    output_path = run / "score_recovery.json"
+    if output_path.is_file():
+        print(output_path.read_text())
+        return 0
+    if not failure_path.is_file() or not weights_path.is_file():
+        raise ValueError("recovery requires preserved failure.json and weights")
+
+    failure = json.loads(failure_path.read_text())
+    config = failure["configuration"]
+    model_name = str(config["model"])
+    if model_name not in SPECS:
+        raise ValueError("score recovery is only for proposed anomaly models")
+    metadata_path = data / "metadata.json"
+    if sha256(metadata_path) != config["data_metadata_sha256"]:
+        raise ValueError("recovery data do not match the failed training attempt")
+
+    started = time.perf_counter()
+    model = build_model(
+        model_name,
+        seed=int(config["seed"]),
+        learning_rate=float(config["learning_rate"]),
+    )
+    model.load_weights(weights_path)
+    test_view = str(config["test_view"])
+    x_name = "x_test.npy" if test_view == "adasyn" else "test_original_x.npy"
+    y_name = "y_test.npy" if test_view == "adasyn" else "test_original_y.npy"
+    x_test = np.load(data / x_name, mmap_mode="r")
+    y_test = np.load(data / y_name, mmap_mode="r")
+    score_batch = int(config["score_batch"])
+    scores, score_seconds = score_mse(
+        model,
+        x_test,
+        run / "scores.npy",
+        batch_size=score_batch,
+        score_kind=SPECS[model_name].anomaly_score,
+    )
+    predictions = (
+        scores > SPECS[model_name].threshold
+        if SPECS[model_name].anomaly_direction == "higher"
+        else scores < SPECS[model_name].threshold
+    )
+    np.save(run / "predictions.npy", np.asarray(predictions, dtype=np.int8))
+    metrics = confusion_metrics(
+        y_test,
+        scores,
+        threshold=SPECS[model_name].threshold,
+        direction=SPECS[model_name].anomaly_direction,
+    )
+    zero_scores = score_zero(
+        x_test,
+        run / "zero_reconstruction_scores.npy",
+        batch_size=score_batch,
+        score_kind=SPECS[model_name].anomaly_score,
+    )
+    recovery = {
+        "status": "success",
+        "kind": "operational_score_recovery",
+        "eligibility": (
+            "exploratory_paper_primary_P0"
+            if test_view == "adasyn"
+            else "exploratory_interpretation_I-ADASYN-NONE"
+        ),
+        "configuration": config,
+        "git_commit": git_commit(),
+        "training_git_commit": failure.get("git_commit"),
+        "source_failure": str(failure_path),
+        "data": {
+            "path": str(data.resolve()),
+            "metadata_sha256": sha256(metadata_path),
+            "counts": {
+                "test_profiles": int(x_test.shape[0]),
+                "test_benign": int(np.count_nonzero(y_test == 0)),
+                "test_malicious": int(np.count_nonzero(y_test == 1)),
+            },
+        },
+        "model": {
+            "inventory": layer_inventory(model),
+            "parameters": int(model.count_params()),
+        },
+        "metrics": metrics,
+        "zero_reconstruction_metrics": confusion_metrics(
+            y_test,
+            zero_scores,
+            threshold=SPECS[model_name].threshold,
+            direction=SPECS[model_name].anomaly_direction,
+        ),
+        "reported_table_3": REPORTED[model_name],
+        "timing_seconds": {
+            "failed_training_attempt_through_scoring_failure": float(
+                failure["elapsed_seconds"]
+            ),
+            "recovered_score_table_3": score_seconds,
+            "recovery_total": time.perf_counter() - started,
+        },
+        "recovery_note": (
+            "Weights were loaded in a fresh process and scored with the original "
+            "recorded inference batch. No fitting occurred; the failed record is "
+            "preserved. VAE inference uses the latent mean when training=False."
+        ),
+        "artifacts": {
+            "scores": "scores.npy",
+            "predictions": "predictions.npy",
+            "weights": "model.weights.h5",
+            "zero_reconstruction_scores": "zero_reconstruction_scores.npy",
+        },
+    }
+    save_json(output_path, recovery)
+    print(json.dumps(metrics, indent=2))
+    print(f"saved score recovery: {output_path}")
+    return 0
+
+
 def score_untrained_sample(
     model: keras.Model,
     values: np.ndarray,
@@ -950,6 +1068,11 @@ def main() -> int:
         ),
     )
     parser.add_argument("--table-v", action="store_true")
+    parser.add_argument(
+        "--recover-scoring",
+        type=Path,
+        help="score preserved weights from a failed run without retraining",
+    )
     args = parser.parse_args()
 
     if min(args.epochs, args.batch_size, args.score_batch) < 1:
@@ -977,6 +1100,8 @@ def main() -> int:
         "SLURM_JOB_ID"
     ):
         raise RuntimeError("full preparation, training, and scoring must run in Slurm")
+    if args.recover_scoring is not None:
+        return recover_failed_scoring(args.recover_scoring, args.data)
     if args.test_view == "adasyn" and metadata.get("configuration", {}).get(
         "test_adasyn"
     ) != "printed":
