@@ -183,7 +183,9 @@ def score_zero(
     return scores
 
 
-def recover_failed_scoring(run: Path, data: Path) -> int:
+def recover_failed_scoring(
+    run: Path, data: Path, *, score_batch_override: int | None = None
+) -> int:
     """Score preserved weights in a fresh process after a post-fit failure."""
 
     run = run.resolve()
@@ -217,7 +219,13 @@ def recover_failed_scoring(run: Path, data: Path) -> int:
     y_name = "y_test.npy" if test_view == "adasyn" else "test_original_y.npy"
     x_test = np.load(data / x_name, mmap_mode="r")
     y_test = np.load(data / y_name, mmap_mode="r")
-    score_batch = int(config["score_batch"])
+    score_batch = (
+        int(config["score_batch"])
+        if score_batch_override is None
+        else score_batch_override
+    )
+    if score_batch < 1:
+        raise ValueError("recovery score batch must be positive")
     scores, score_seconds = score_mse(
         model,
         x_test,
@@ -255,6 +263,7 @@ def recover_failed_scoring(run: Path, data: Path) -> int:
         "git_commit": git_commit(),
         "training_git_commit": failure.get("git_commit"),
         "source_failure": str(failure_path),
+        "recovery_score_batch": score_batch,
         "data": {
             "path": str(data.resolve()),
             "metadata_sha256": sha256(metadata_path),
@@ -1073,6 +1082,7 @@ def main() -> int:
         type=Path,
         help="score preserved weights from a failed run without retraining",
     )
+    parser.add_argument("--recovery-score-batch", type=int)
     args = parser.parse_args()
 
     if min(args.epochs, args.batch_size, args.score_batch) < 1:
@@ -1101,7 +1111,11 @@ def main() -> int:
     ):
         raise RuntimeError("full preparation, training, and scoring must run in Slurm")
     if args.recover_scoring is not None:
-        return recover_failed_scoring(args.recover_scoring, args.data)
+        return recover_failed_scoring(
+            args.recover_scoring,
+            args.data,
+            score_batch_override=args.recovery_score_batch,
+        )
     if args.test_view == "adasyn" and metadata.get("configuration", {}).get(
         "test_adasyn"
     ) != "printed":

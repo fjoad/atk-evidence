@@ -1,0 +1,70 @@
+{
+  "status": "success",
+  "job_id": 374391,
+  "audit_job_id": 374433,
+  "git_commit": "bcc2cbf751ca3f8233bcfd698153fff8ae688301",
+  "method": "I-ADASYN-NONE-ISET-LSTM-SAE",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "architecture": "LSTM encoder (500,300), repeated latent, LSTM decoder (300,500), mirrored Algorithm-2 state transfer",
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 512,
+    "score_batch": 256,
+    "epochs_completed": 25,
+    "best_epoch": 20,
+    "threshold": 0.61,
+    "score": "profile MSE; higher is anomalous",
+    "test_view": "original B2+M; no test-set ADASYN"
+  },
+  "reported": {
+    "DR": 85,
+    "FA": 13,
+    "SP": 87,
+    "PR": 85,
+    "ACC": 86,
+    "F1": 85,
+    "AUC": 82
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 14.781243938660355,
+    "FA": 40.96354409472941,
+    "SP": 59.03645590527059,
+    "PR": 86.6527150529001,
+    "ACC": 36.90884992196547,
+    "F1": 25.254558372324027,
+    "AUC": 33.087266804363125
+  },
+  "score_audit": {
+    "paper_direction_oracle": {
+      "DR": 99.99806037131303,
+      "FA": 99.99040984589155,
+      "ACC": 50.00382526271074,
+      "AUC": 33.087266804363125
+    },
+    "reversed_direction_oracle": {
+      "DR": 80.9531794363824,
+      "FA": 52.195212914740864,
+      "ACC": 64.37898326082076,
+      "AUC": 66.91273319563687
+    },
+    "closest_to_reported_DR_FA": {
+      "DR": 37.89398522624806,
+      "FA": 60.106024481532295,
+      "ACC": 38.89398037235788,
+      "maximum_absolute_gap": 47.106024481532295
+    },
+    "mean_score_benign": 1.087062213250908,
+    "mean_score_malicious": 0.5193742606182876,
+    "trained_vs_zero_reconstruction_correlation": 0.974952647372116
+  },
+  "timing_seconds": {
+    "fit": 19782.411554835737,
+    "score": 3152.9206974357367,
+    "pipeline": 22952.56473147124,
+    "slurm_elapsed": 23008,
+    "audit_slurm_elapsed": 67
+  },
+  "interpretation": "For this registered one-seed no-test-ADASYN completion, the trained LSTM-SAE score is ordered opposite the paper's anomaly rule: malicious profiles have lower mean reconstruction error than benign profiles. The best paper-direction threshold is essentially chance, and the closest attainable DR/FA pair remains 47.11 percentage points from the reported pair. Threshold choice cannot explain the gap. The high correlation with zero-reconstruction scores indicates that input energy still dominates the learned ranking. This does not close the omitted test-ADASYN branch, alternate decoder completions, or repeated seeds."
+}
