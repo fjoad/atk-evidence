@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare the frozen P0 ISET experiment directly from verified CER archives.
+"""Prepare Paper 1 data in the printed order from the verified sources.
 
 The order is intentionally the paper's order:
 
@@ -39,7 +39,10 @@ from imblearn.over_sampling import ADASYN
 
 from download_data import (
     CER_SCIENCEDB_DIR,
+    SGCC_PATH,
+    SGCC_SHA256,
     SCIENCEDB_ALLOCATION,
+    digest,
     verify_cer_directory,
 )
 
@@ -53,6 +56,187 @@ FEATURES = 48
 DATA_SEED = 11
 CHUNK_ROWS = 1_000_000
 ATTACK_CHUNK = 50_000
+
+
+def prepare_sgcc(
+    output: Path,
+    *,
+    seed: int,
+    mode: str,
+    adasyn_neighbors: int,
+) -> dict[str, object]:
+    """Execute the frozen I-SGCC-LAST48 continuation for Table II."""
+
+    started = time.perf_counter()
+    if digest(SGCC_PATH, "sha256") != SGCC_SHA256:
+        raise ValueError("verified SGCC source checksum mismatch")
+    frame = pd.read_csv(SGCC_PATH, low_memory=False)
+    required = {"CONS_NO", "FLAG"}
+    if not required.issubset(frame.columns):
+        raise ValueError("SGCC source is missing CONS_NO or FLAG")
+    date_columns = [column for column in frame.columns if column not in required]
+    if len(date_columns) != 1_034:
+        raise ValueError(f"expected 1,034 SGCC dates, found {len(date_columns)}")
+    dates = pd.to_datetime(date_columns, format="%Y/%m/%d", errors="raise")
+    order = np.argsort(dates.to_numpy(), kind="stable")
+    date_columns = [date_columns[index] for index in order]
+    dates = dates.to_numpy(dtype="datetime64[D]")[order]
+
+    labels = pd.to_numeric(frame["FLAG"], errors="raise").to_numpy(dtype=np.int8)
+    if not np.isin(labels, [0, 1]).all():
+        raise ValueError("SGCC FLAG must contain only zero and one")
+    customer_ids = frame["CONS_NO"].astype(str).to_numpy()
+    if pd.Series(customer_ids).duplicated().any():
+        raise ValueError("SGCC customer identifiers must be unique")
+    values = frame[date_columns].apply(pd.to_numeric, errors="raise").to_numpy(
+        dtype=np.float32
+    )
+    if np.isinf(values).any():
+        raise ValueError("SGCC readings contain infinity")
+    fully_missing = np.all(np.isnan(values), axis=1)
+    values, labels, customer_ids = (
+        values[~fully_missing], labels[~fully_missing], customer_ids[~fully_missing]
+    )
+    if mode == "tiny":
+        selected = np.concatenate(
+            [np.flatnonzero(labels == 0)[:300], np.flatnonzero(labels == 1)[:100]]
+        )
+        values, labels, customer_ids = (
+            values[selected], labels[selected], customer_ids[selected]
+        )
+
+    benign_index = np.flatnonzero(labels == 0)
+    malicious_index = np.flatnonzero(labels == 1)
+    rng = np.random.default_rng(seed)
+    shuffled_benign = rng.permutation(benign_index)
+    b1 = shuffled_benign[: (2 * shuffled_benign.size) // 3]
+    b2 = shuffled_benign[(2 * shuffled_benign.size) // 3 :]
+
+    # The paper is silent on missing SGCC cells. This is the frozen minimal
+    # completion: interpolate only bounded gaps, then use benign-B1 medians.
+    completed = pd.DataFrame(values).interpolate(
+        axis=1, limit_area="inside"
+    ).to_numpy(dtype=np.float32, copy=True)
+    fallback = np.nanmedian(completed[b1], axis=0)
+    global_fallback = float(np.nanmedian(completed[b1]))
+    if not np.isfinite(global_fallback):
+        raise ValueError("SGCC benign B1 has no finite readings")
+    fallback = np.where(np.isfinite(fallback), fallback, global_fallback)
+    missing = ~np.isfinite(completed)
+    completed[missing] = np.broadcast_to(fallback, completed.shape)[missing]
+
+    # Literal 1,034 -> 48 is undefined. I-SGCC-LAST48 preserves the printed
+    # input width while declaring that its 48 values are days, not half-hours.
+    raw = np.ascontiguousarray(completed[:, -FEATURES:], dtype=np.float32)
+    mean = raw.mean(axis=0, dtype=np.float64)
+    scale = raw.std(axis=0, dtype=np.float64)
+    scale[scale <= np.finfo(np.float32).eps] = 1.0
+    standardized = ((raw - mean) / scale).astype(np.float32)
+
+    x_train = standardized[b1]
+    original_index = np.concatenate([b2, malicious_index])
+    original_x = standardized[original_index]
+    original_y = labels[original_index]
+    anomaly_sampler = ADASYN(random_state=seed, n_neighbors=adasyn_neighbors)
+    x_test, y_test = anomaly_sampler.fit_resample(original_x, original_y)
+    anomaly_generated = int(y_test.size - original_y.size)
+
+    supervised_sampler = ADASYN(random_state=seed, n_neighbors=adasyn_neighbors)
+    supervised_x, supervised_y = supervised_sampler.fit_resample(
+        standardized, labels
+    )
+    supervised_generated = int(supervised_y.size - labels.size)
+
+    np.save(output / "x_train.npy", x_train)
+    np.save(output / "table_iv_order.npy", rng.permutation(x_train.shape[0]))
+    np.save(output / "train_meter_ids.npy", customer_ids[b1])
+    np.save(output / "train_day_numbers.npy", np.zeros(b1.size, dtype=np.int16))
+    np.save(output / "test_original_x.npy", original_x)
+    np.save(output / "test_original_y.npy", original_y)
+    np.save(output / "test_original_source_row.npy", original_index)
+    np.save(output / "test_original_attack_id.npy", np.zeros(original_y.size, dtype=np.int8))
+    np.save(output / "x_test.npy", np.asarray(x_test, dtype=np.float32))
+    np.save(output / "y_test.npy", np.asarray(y_test, dtype=np.int8))
+    np.save(
+        output / "test_source_row.npy",
+        np.concatenate([original_index, np.full(anomaly_generated, -1, dtype=np.int64)]),
+    )
+    np.save(output / "test_attack_id.npy", np.zeros(y_test.size, dtype=np.int8))
+    np.save(
+        output / "test_is_synthetic.npy",
+        np.concatenate(
+            [np.zeros(original_y.size, dtype=bool), np.ones(anomaly_generated, dtype=bool)]
+        ),
+    )
+    np.save(output / "supervised_x.npy", np.asarray(supervised_x, dtype=np.float32))
+    np.save(output / "supervised_y.npy", np.asarray(supervised_y, dtype=np.int8))
+    np.save(output / "scaler_mean.npy", mean)
+    np.save(output / "scaler_scale.npy", scale)
+
+    files = sorted(output.glob("*.npy"))
+    metadata: dict[str, object] = {
+        "status": "complete",
+        "schema": 1,
+        "method": "I-SGCC-LAST48",
+        "dataset": "SGCC",
+        "configuration": {
+            "mode": mode,
+            "seed": seed,
+            "representation": "last_48",
+            "missing": "interpolate_edge_median",
+            "test_adasyn": "printed",
+            "supervised_adasyn": "printed_before_split",
+            "adasyn_neighbors": adasyn_neighbors,
+        },
+        "paper_order": [
+            "joint_B_plus_M_featurewise_standardization",
+            "benign_2_to_1_B1_B2",
+            "anomaly_XTR_equals_B1",
+            "ADASYN_inside_anomaly_test",
+            "supervised_ADASYN_before_2_to_1_split",
+        ],
+        "source_nodes": {
+            "sgcc_input": {
+                "paper_claim": "SGCC is evaluated by architectures with 48 inputs",
+                "literal_status": "non_executable_no_1034_to_48_rule",
+                "assumption": "most recent 48 chronological daily readings",
+                "semantic_warning": "48 days are not the printed 48 half-hour daily readings",
+            },
+            "sgcc_missing": {
+                "paper_claim": "no missing-value operation stated",
+                "literal_status": "non_executable_with_missing_source_cells",
+                "assumption": "interior linear interpolation plus benign-B1 feature medians",
+            },
+        },
+        "counts": {
+            "source_rows": int(frame.shape[0]),
+            "dropped_fully_missing": int(fully_missing.sum()),
+            "retained": int(labels.size),
+            "benign": int(benign_index.size),
+            "malicious": int(malicious_index.size),
+            "B1": int(b1.size),
+            "B2": int(b2.size),
+            "anomaly_test_original": int(original_y.size),
+            "anomaly_test_after_adasyn": int(y_test.size),
+            "supervised_after_adasyn": int(supervised_y.size),
+            "anomaly_synthetic": anomaly_generated,
+            "supervised_synthetic": supervised_generated,
+        },
+        "source": {
+            "path": str(SGCC_PATH),
+            "sha256": SGCC_SHA256,
+            "features": 1_034,
+            "first_date": str(dates[0]),
+            "last_date": str(dates[-1]),
+        },
+        "timing_seconds": {"preparation": time.perf_counter() - started},
+        "files": {
+            path.name: {"bytes": path.stat().st_size, "sha256": sha256(path)}
+            for path in files
+        },
+    }
+    save_json(output / "metadata.json", metadata)
+    return metadata
 
 
 def sha256(path: Path) -> str:
@@ -663,6 +847,7 @@ def prepare_p0(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--dataset", choices=("iset", "sgcc"), default="iset")
     parser.add_argument("--mode", choices=("tiny", "full"), default="tiny")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--seed", type=int, default=DATA_SEED)
@@ -684,16 +869,31 @@ def main() -> int:
     args = parser.parse_args()
     if args.adasyn_neighbors < 1:
         parser.error("--adasyn-neighbors must be positive")
-    output = args.output or DEFAULT_ROOT / f"p0-{args.mode}-{args.test_adasyn}"
+    output = args.output or DEFAULT_ROOT / (
+        f"sgcc-last48-{args.mode}"
+        if args.dataset == "sgcc"
+        else f"p0-{args.mode}-{args.test_adasyn}"
+    )
     output.mkdir(parents=True, exist_ok=True)
     metadata_path = output / "metadata.json"
     requested = {
         "mode": args.mode,
         "seed": args.seed,
-        "test_adasyn": args.test_adasyn,
         "adasyn_neighbors": args.adasyn_neighbors,
     }
-    source_record = verified_source()
+    if args.dataset == "sgcc":
+        requested.update(
+            {
+                "representation": "last_48",
+                "missing": "interpolate_edge_median",
+                "test_adasyn": "printed",
+                "supervised_adasyn": "printed_before_split",
+            }
+        )
+        source_record: dict[str, object] | None = None
+    else:
+        requested["test_adasyn"] = args.test_adasyn
+        source_record = verified_source()
     if metadata_path.is_file():
         metadata = json.loads(metadata_path.read_text())
         if metadata.get("status") == "complete":
@@ -702,27 +902,36 @@ def main() -> int:
                     "existing prepared cache has a different configuration: "
                     f"{metadata.get('configuration')} != {requested}"
                 )
-            if metadata.get("source") != source_record:
+            if source_record is not None and metadata.get("source") != source_record:
                 raise ValueError("prepared cache source provenance no longer matches")
             print(json.dumps(metadata["counts"], indent=2))
             print(f"already complete: {output}")
             return 0
     try:
-        benign, meters, days, profiles_record = load_or_extract_profiles(
-            output, args.mode
-        )
-        metadata = prepare_p0(
-            output,
-            benign,
-            meters,
-            days,
-            profiles_record,
-            seed=args.seed,
-            adasyn_neighbors=args.adasyn_neighbors,
-            test_adasyn=args.test_adasyn,
-            force_expensive_adasyn=args.force_expensive_adasyn,
-            source_record=source_record,
-        )
+        if args.dataset == "sgcc":
+            metadata = prepare_sgcc(
+                output,
+                seed=args.seed,
+                mode=args.mode,
+                adasyn_neighbors=args.adasyn_neighbors,
+            )
+        else:
+            benign, meters, days, profiles_record = load_or_extract_profiles(
+                output, args.mode
+            )
+            assert source_record is not None
+            metadata = prepare_p0(
+                output,
+                benign,
+                meters,
+                days,
+                profiles_record,
+                seed=args.seed,
+                adasyn_neighbors=args.adasyn_neighbors,
+                test_adasyn=args.test_adasyn,
+                force_expensive_adasyn=args.force_expensive_adasyn,
+                source_record=source_record,
+            )
     except Exception as exc:
         save_json(
             output / "failure.json",
@@ -730,6 +939,7 @@ def main() -> int:
                 "status": "failed",
                 "error_type": type(exc).__name__,
                 "error": str(exc),
+                "dataset": args.dataset,
                 "mode": args.mode,
                 "configuration": requested,
             },

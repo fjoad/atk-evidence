@@ -166,6 +166,50 @@ are preserved in
 [`results/reported_metrics_audit.csv`](results/reported_metrics_audit.csv) and
 [`results/reported_metrics_audit.json`](results/reported_metrics_audit.json).
 
+## SGCC data and the non-executable 48-input step
+
+### Source statements and verified source
+
+Section II-A describes SGCC as roughly 40,000 labeled customers with daily
+readings over three years. The verified public file contains 42,372 customers,
+38,757 labeled benign and 3,615 labeled malicious, and 1,034 dated consumption
+columns from 2014-01-01 through 2016-10-31. Its SHA-256 is
+`99f8fd315626b1f729a9a03a97cb52ed097ab4d43e5771e21554c9e0c369b9b7`.
+
+Every proposed architecture in Section III instead begins with exactly 48
+input neurons, described as the 48 half-hour readings in one day. The paper
+does not state how an SGCC customer's 1,034 daily readings become those 48
+inputs. It also gives no SGCC missing-value policy, despite missing cells in
+the source. Therefore a literal Table II model input cannot be constructed.
+This is a preserved source-level failure, not an implementation choice.
+
+### Frozen first executable continuation: `I-SGCC-LAST48`
+
+The first breadth experiment makes only the following declared completions:
+
+1. Sort the 1,034 date columns chronologically.
+2. Drop customers whose complete histories are missing.
+3. Linearly interpolate gaps bounded by readings within each customer; fill
+   unresolved edges with the corresponding feature median fitted on benign
+   `B1` (falling back to the global `B1` median).
+4. Use the most recent 48 chronological daily readings as one sample per
+   customer. These are **48 days**, not the half-hourly day described for
+   ISET; the semantic mismatch remains explicit.
+5. Preserve the paper's printed preprocessing order: jointly standardize
+   retained benign and malicious rows before the 2:1 split; train anomaly
+   models on benign `B1`; construct anomaly test data from benign `B2` plus all
+   malicious rows and apply ADASYN there; for supervised models apply ADASYN to
+   all labeled rows before the 2:1 split.
+6. Transfer the thresholds printed after ISET cross-validation to SGCC because
+   the paper gives no separate SGCC threshold-fitting procedure.
+
+Seed 11 is the predeclared breadth seed. This continuation is not called
+paper-literal: `last_48`, imputation, ADASYN library defaults, supervised
+classifier heads, and unspecified benchmark hyperparameters are all explicit
+reasonable assumptions. `first_48`, `binned_mean_48`, and full-history or
+window interpretations remain later one-factor branches; none may replace the
+failed literal node or be selected after seeing a favorable result.
+
 ## ISET data and sample construction
 
 ### Source statements

@@ -6,8 +6,10 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import numpy as np
+import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -23,6 +25,35 @@ import run_experiment  # noqa: E402
 
 
 class CompactBaselineTests(unittest.TestCase):
+    def test_sgcc_last48_completion_preserves_printed_order_and_width(self) -> None:
+        rng = np.random.default_rng(11)
+        dates = pd.date_range("2014-01-01", periods=1_034, freq="D")
+        values = rng.lognormal(size=(30, dates.size)).astype(np.float32)
+        values[0, 10:12] = np.nan
+        values[1, :3] = np.nan
+        frame = pd.DataFrame(
+            values,
+            columns=[f"{date.year}/{date.month}/{date.day}" for date in dates],
+        )
+        frame.insert(0, "FLAG", np.array([0] * 20 + [1] * 10, dtype=np.int8))
+        frame.insert(0, "CONS_NO", [f"customer-{index}" for index in range(30)])
+        with tempfile.TemporaryDirectory() as temporary, patch.object(
+            prepare_data, "digest", return_value=prepare_data.SGCC_SHA256
+        ), patch.object(prepare_data.pd, "read_csv", return_value=frame):
+            output = Path(temporary)
+            metadata = prepare_data.prepare_sgcc(
+                output, seed=11, mode="tiny", adasyn_neighbors=1
+            )
+            self.assertEqual(metadata["method"], "I-SGCC-LAST48")
+            self.assertEqual(np.load(output / "x_train.npy").shape, (13, 48))
+            self.assertEqual(np.load(output / "test_original_x.npy").shape[1], 48)
+            self.assertEqual(np.load(output / "x_test.npy").shape[1], 48)
+            supervised_y = np.load(output / "supervised_y.npy")
+            class_counts = np.bincount(supervised_y)
+            self.assertEqual(int(class_counts[0]), 20)
+            self.assertGreater(int(class_counts[1]), 10)
+            self.assertTrue(np.isfinite(np.load(output / "x_train.npy")).all())
+
     def test_fc_sae_runtime_matches_frozen_table_i_replay(self) -> None:
         model = models.build_fc_sae(seed=11, learning_rate=0.001)
         dense = [

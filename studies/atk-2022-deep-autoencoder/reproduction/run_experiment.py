@@ -48,6 +48,19 @@ REPORTED = {
     "supervised_lstm": {"DR": 90.5, "FA": 10, "SP": 90, "PR": 89.5, "ACC": 90, "F1": 90, "AUC": 89},
     "multiclass_svm": {"DR": 91, "FA": 8, "SP": 92, "PR": 90, "ACC": 91.5, "F1": 90.5, "AUC": 89},
 }
+REPORTED_TABLE_2 = {
+    "fc_sae": {"DR": 83, "FA": 14, "SP": 86, "PR": 83, "ACC": 84.5, "F1": 83, "AUC": 83},
+    "lstm_sae": {"DR": 86, "FA": 12, "SP": 88, "PR": 87, "ACC": 87, "F1": 86.5, "AUC": 85},
+    "fc_vae": {"DR": 90, "FA": 9, "SP": 91, "PR": 91, "ACC": 90.5, "F1": 90.5, "AUC": 88},
+    "lstm_vae": {"DR": 93, "FA": 6, "SP": 94, "PR": 93, "ACC": 93.5, "F1": 93, "AUC": 90},
+    "lstm_aea": {"DR": 96, "FA": 4, "SP": 96, "PR": 95, "ACC": 96, "F1": 95.5, "AUC": 93},
+    "naive_bayes": {"DR": 75, "FA": 16, "SP": 84, "PR": 75, "ACC": 79.5, "F1": 77, "AUC": 73},
+    "arima": {"DR": 88, "FA": 10, "SP": 90, "PR": 87, "ACC": 89, "F1": 87.5, "AUC": 88},
+    "one_class_svm": {"DR": 91, "FA": 8.5, "SP": 91.5, "PR": 88, "ACC": 91, "F1": 89.5, "AUC": 89},
+    "supervised_feed_forward": {"DR": 90, "FA": 9.5, "SP": 90.5, "PR": 88.5, "ACC": 90.25, "F1": 89, "AUC": 89},
+    "supervised_lstm": {"DR": 91, "FA": 9, "SP": 91, "PR": 89, "ACC": 91, "F1": 90, "AUC": 90},
+    "multiclass_svm": {"DR": 92, "FA": 7.5, "SP": 92.5, "PR": 90, "ACC": 92.25, "F1": 91, "AUC": 90},
+}
 REPORTED_TABLE_4 = {
     "fc_sae": {
         "half": {"training_minutes": 72, "ACC": 70},
@@ -71,6 +84,20 @@ REPORTED_TABLE_5_FC_SAE = {
 CLASSICAL_BENCHMARKS = ("naive_bayes", "arima", "one_class_svm", "multiclass_svm")
 NEURAL_BENCHMARKS = ("supervised_feed_forward", "supervised_lstm")
 BENCHMARKS = (*CLASSICAL_BENCHMARKS, *NEURAL_BENCHMARKS)
+
+
+def table_context(metadata: dict[str, object]) -> tuple[int, str, dict[str, dict[str, float]]]:
+    """Return the one table/dataset target selected by prepared data."""
+
+    if str(metadata.get("dataset", "ISET")).upper() == "SGCC":
+        return 2, "SGCC", REPORTED_TABLE_2
+    return 3, "ISET", REPORTED
+
+
+def prepared_method(metadata: dict[str, object]) -> str:
+    """Read the cache method, retaining compatibility with tiny test fixtures."""
+
+    return str(metadata.get("method", "I-ADASYN-NONE-ISET"))
 
 
 def sha256(path: Path) -> str:
@@ -424,22 +451,18 @@ def run_naive_bayes(
 ) -> int:
     """Execute the smallest documented completion of the paper's NB row."""
 
-    blocks = supervised_source_blocks(args.data)
-    arrays = [np.load(path, mmap_mode="r") for path, _ in blocks]
-    features = np.concatenate(arrays).astype(np.float32, copy=False)
-    labels = np.concatenate(
-        [np.full(values.shape[0], label, dtype=np.int8)
-         for values, (_, label) in zip(arrays, blocks, strict=True)]
-    )
+    features, labels = supervised_population(args.data)
+    table_number, dataset_name, reported_rows = table_context(metadata)
+    reported = reported_rows["naive_bayes"]
     split_started = time.perf_counter()
     train_mask = exact_random_train_mask(features.shape[0], seed=args.seed)
     train_index = np.flatnonzero(train_mask)
     test_index = np.flatnonzero(~train_mask)
     split_seconds = time.perf_counter() - split_started
     configuration = {
-        "method": "I-SUPERVISED-ADASYN-NONE-ISET-NAIVE-BAYES",
-        "paper_tables": ["III"],
-        "scientific_question": "Does the Gaussian-NB completion reproduce Table III without the printed full-scale ADASYN step?",
+        "method": f"{prepared_method(metadata)}-NAIVE-BAYES",
+        "paper_tables": [str(table_number)],
+        "scientific_question": f"Does the Gaussian-NB completion reproduce Table {table_number}?",
         "task": "supervised",
         "model": "naive_bayes",
         "seed": args.seed,
@@ -448,7 +471,7 @@ def run_naive_bayes(
         "table_v": False,
         "threshold": 0.5,
         "anomaly_direction": "higher",
-        "supervised_adasyn": "none",
+        "supervised_adasyn": metadata.get("configuration", {}).get("supervised_adasyn", "none"),
         "split": "seeded_exact_row_random_2_to_1",
         "data_metadata_sha256": sha256(metadata_path),
     }
@@ -456,7 +479,7 @@ def run_naive_bayes(
     attempt_id = stable_id(configuration)
     configuration["configuration_id"] = configuration_id
     configuration["attempt_id"] = attempt_id
-    run = args.output / "table_3" / "naive_bayes" / f"seed_{args.seed}_{attempt_id}"
+    run = args.output / f"table_{table_number}" / "naive_bayes" / f"seed_{args.seed}_{attempt_id}"
     run.mkdir(parents=True, exist_ok=True)
     result_path = run / "result.json"
     if result_path.is_file():
@@ -507,13 +530,14 @@ def run_naive_bayes(
         source_file_records = metadata.get("files", {})
         result = {
             "status": "success",
-            "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+            "eligibility": f"exploratory_interpretation_{prepared_method(metadata)}",
             "configuration": configuration,
             "git_commit": git_commit(),
             "data": {
                 "path": str(args.data),
                 "metadata_sha256": sha256(metadata_path),
-                "population": "all benign plus all six attacks for all customers",
+                "dataset": dataset_name,
+                "population": "prepared supervised labeled population",
                 "counts": {
                     "total": int(features.shape[0]),
                     "train": int(train_index.size),
@@ -521,17 +545,8 @@ def run_naive_bayes(
                     "train_by_class": np.bincount(labels[train_index], minlength=2).tolist(),
                     "test_by_class": np.bincount(labels[test_index], minlength=2).tolist(),
                 },
-                "files": {
-                    path.name: source_file_records.get(path.name)
-                    for path, _ in blocks
-                },
-                "source_nodes": {
-                    "supervised_adasyn": {
-                        "paper_claim": "apply ADASYN to B+M before the 2:1 split",
-                        "literal_status": "not_executed_in_this_interpretation",
-                        "assumption": "split and evaluate the preserved original B+M rows",
-                    }
-                },
+                "files": source_file_records,
+                "source_nodes": metadata.get("source_nodes", {}),
             },
             "model": {
                 "name": "Gaussian Naive Bayes",
@@ -539,11 +554,11 @@ def run_naive_bayes(
                 "completion": model_payload,
             },
             "metrics": metrics,
-            "reported_table_3": REPORTED["naive_bayes"],
+            f"reported_table_{table_number}": reported,
             "reported_table_4": None,
             "difference_reproduced_minus_reported": {
                 key: float(metrics[key]) - float(value)
-                for key, value in REPORTED["naive_bayes"].items()
+                for key, value in reported.items()
             },
             "table_v": None,
             "timing_seconds": timing,
@@ -585,6 +600,15 @@ def supervised_population(
     data: Path, *, multiclass: bool = False
 ) -> tuple[np.ndarray, np.ndarray]:
     """Materialize the paper's all-customer B+M supervised population."""
+
+    prepared_x = data / "supervised_x.npy"
+    prepared_y = data / "supervised_y.npy"
+    if prepared_x.is_file() and prepared_y.is_file():
+        features = np.load(prepared_x, mmap_mode="r")
+        labels = np.asarray(np.load(prepared_y, mmap_mode="r"), dtype=np.int8)
+        if features.ndim != 2 or features.shape[0] != labels.size:
+            raise ValueError("invalid prepared supervised SGCC population")
+        return features, labels
 
     blocks = supervised_source_blocks(data)
     arrays = [np.load(path, mmap_mode="r") for path, _ in blocks]
@@ -647,23 +671,29 @@ def run_classical_benchmark(
     """Run ARIMA or either SVM through one explicit bounded completion."""
 
     model_name = args.model
+    table_number, dataset_name, reported_rows = table_context(metadata)
+    reported = reported_rows[model_name]
     task = "supervised" if model_name == "multiclass_svm" else "anomaly"
+    test_view = getattr(args, "test_view", "original")
     threshold = {"arima": 0.58, "one_class_svm": 0.45, "multiclass_svm": 0.0}[
         model_name
     ]
     configuration: dict[str, object] = {
-        "method": f"I-ADASYN-NONE-ISET-{model_name.upper()}",
-        "paper_tables": ["III"],
-        "scientific_question": f"Does the frozen {model_name} completion reproduce Table III?",
+        "method": f"{prepared_method(metadata)}-{model_name.upper()}",
+        "paper_tables": [str(table_number)],
+        "scientific_question": f"Does the frozen {model_name} completion reproduce Table {table_number}?",
         "task": task,
         "model": model_name,
         "seed": args.seed,
-        "test_view": "original",
+        "test_view": test_view if task == "anomaly" else "supervised",
         "train_fraction": "full",
         "table_v": False,
         "threshold": threshold,
         "anomaly_direction": "higher",
-        "supervised_adasyn": "none" if task == "supervised" else None,
+        "supervised_adasyn": (
+            metadata.get("configuration", {}).get("supervised_adasyn", "none")
+            if task == "supervised" else None
+        ),
         "split": (
             "seeded_exact_row_random_2_to_1" if task == "supervised" else "B1_vs_B2_plus_M"
         ),
@@ -691,7 +721,7 @@ def run_classical_benchmark(
     configuration["attempt_id"] = stable_id(configuration)
     run = (
         args.output
-        / "table_3"
+        / f"table_{table_number}"
         / model_name
         / f"seed_{args.seed}_{configuration['attempt_id']}"
     )
@@ -724,11 +754,17 @@ def run_classical_benchmark(
             test_labels = binary_labels[test_index]
         else:
             features = np.load(args.data / "x_train.npy", mmap_mode="r")
+            test_x_name = (
+                "x_test.npy" if test_view == "adasyn" else "test_original_x.npy"
+            )
+            test_y_name = (
+                "y_test.npy" if test_view == "adasyn" else "test_original_y.npy"
+            )
             test_features = np.load(
-                args.data / "test_original_x.npy", mmap_mode="r"
+                args.data / test_x_name, mmap_mode="r"
             )
             all_test_labels = np.load(
-                args.data / "test_original_y.npy", mmap_mode="r"
+                args.data / test_y_name, mmap_mode="r"
             )
             if model_name == "one_class_svm":
                 train_index = capped_positions(
@@ -823,15 +859,12 @@ def run_classical_benchmark(
         }
         result = {
             "status": "success",
-            "eligibility": (
-                "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE"
-                if task == "supervised"
-                else "exploratory_interpretation_I-ADASYN-NONE"
-            ),
+            "eligibility": f"exploratory_interpretation_{prepared_method(metadata)}",
             "configuration": configuration,
             "git_commit": git_commit(),
             "data": {
                 "path": str(args.data),
+                "dataset": dataset_name,
                 "available_train_rows": int(features.shape[0]),
                 "train_rows_used": int(train_index.size),
                 "available_test_rows": int(
@@ -844,11 +877,11 @@ def run_classical_benchmark(
             },
             "model": estimator_detail,
             "metrics": metrics,
-            "reported_table_3": REPORTED[model_name],
+            f"reported_table_{table_number}": reported,
             "reported_table_4": None,
             "difference_reproduced_minus_reported": {
                 key: float(metrics[key]) - float(value)
-                for key, value in REPORTED[model_name].items()
+                for key, value in reported.items()
             },
             "table_v": None,
             "timing_seconds": timing,
@@ -886,9 +919,11 @@ def run_supervised_neural(
     metadata: dict[str, object],
     metadata_path: Path,
 ) -> int:
-    """Run one paper-sized supervised deep benchmark without printed ADASYN."""
+    """Run one paper-sized supervised deep benchmark."""
 
     features, labels = supervised_population(args.data)
+    table_number, dataset_name, reported_rows = table_context(metadata)
+    reported = reported_rows[args.model]
     split_started = time.perf_counter()
     train_mask = exact_random_train_mask(features.shape[0], seed=args.seed)
     train_index = np.flatnonzero(train_mask)
@@ -896,9 +931,9 @@ def run_supervised_neural(
     split_seconds = time.perf_counter() - split_started
     learning_rate = 0.001 if args.learning_rate is None else args.learning_rate
     configuration = {
-        "method": f"I-SUPERVISED-ADASYN-NONE-ISET-{args.model.upper()}",
-        "paper_tables": ["III"],
-        "scientific_question": f"Does the frozen {args.model} completion reproduce Table III?",
+        "method": f"{prepared_method(metadata)}-{args.model.upper()}",
+        "paper_tables": [str(table_number)],
+        "scientific_question": f"Does the frozen {args.model} completion reproduce Table {table_number}?",
         "task": "supervised",
         "model": args.model,
         "seed": args.seed,
@@ -913,7 +948,7 @@ def run_supervised_neural(
         "table_v": False,
         "threshold": 0.5,
         "anomaly_direction": "higher",
-        "supervised_adasyn": "none",
+        "supervised_adasyn": metadata.get("configuration", {}).get("supervised_adasyn", "none"),
         "split": "seeded_exact_row_random_2_to_1",
         "head_completion": (
             "softmax2_sparse_categorical"
@@ -927,7 +962,7 @@ def run_supervised_neural(
     configuration["attempt_id"] = stable_id(configuration)
     run = (
         args.output
-        / "table_3"
+        / f"table_{table_number}"
         / args.model
         / f"seed_{args.seed}_{configuration['attempt_id']}"
     )
@@ -989,11 +1024,12 @@ def run_supervised_neural(
         }
         result = {
             "status": "success",
-            "eligibility": "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE",
+            "eligibility": f"exploratory_interpretation_{prepared_method(metadata)}",
             "configuration": configuration,
             "git_commit": git_commit(),
             "data": {
                 "path": str(args.data),
+                "dataset": dataset_name,
                 "counts": {
                     "total": int(features.shape[0]),
                     "train": int(train_index.size),
@@ -1006,11 +1042,11 @@ def run_supervised_neural(
                 "parameters": int(model.count_params()),
             },
             "metrics": metrics,
-            "reported_table_3": REPORTED[args.model],
+            f"reported_table_{table_number}": reported,
             "reported_table_4": None,
             "difference_reproduced_minus_reported": {
                 key: float(metrics[key]) - float(value)
-                for key, value in REPORTED[args.model].items()
+                for key, value in reported.items()
             },
             "table_v": None,
             "history": history_payload,
@@ -1096,9 +1132,9 @@ def main() -> int:
         parser.error("Table V contains only the five proposed models")
     if args.model in BENCHMARKS and args.train_fraction != "full":
         parser.error("Table IV contains only the five proposed models")
-    if args.model in BENCHMARKS and args.test_view != "original":
+    if args.model in ("naive_bayes", "multiclass_svm", *NEURAL_BENCHMARKS) and args.test_view != "original":
         parser.error(
-            "benchmark breadth uses the explicit no-ADASYN continuation"
+            "supervised benchmarks use the prepared supervised population"
         )
 
     metadata_path = args.data / "metadata.json"
@@ -1107,6 +1143,9 @@ def main() -> int:
     metadata = json.loads(metadata_path.read_text())
     if metadata.get("status") != "complete":
         raise ValueError("prepared data are not complete")
+    table_number, dataset_name, reported_rows = table_context(metadata)
+    if table_number == 2 and (args.table_v or args.train_fraction != "full"):
+        parser.error("Tables IV and V are ISET-only in the paper")
     if metadata.get("configuration", {}).get("mode") == "full" and not os.environ.get(
         "SLURM_JOB_ID"
     ):
@@ -1151,15 +1190,18 @@ def main() -> int:
         if args.output_activation == "paper"
         else args.output_activation
     )
+    reported = reported_rows[args.model]
     if args.output_activation != "paper":
-        method = f"C-OUTPUT-{resolved_output_activation.upper()}-ISET-{SPECS[args.model].name}"
+        method = f"C-OUTPUT-{resolved_output_activation.upper()}-{dataset_name}-{SPECS[args.model].name}"
     else:
-        method = (
-            f"P0-ISET-{SPECS[args.model].name}"
-            if args.test_view == "adasyn"
-            else f"I-ADASYN-NONE-ISET-{SPECS[args.model].name}"
-        )
-    paper_tables = ["IV"] if args.train_fraction != "full" else ["III", "IV"]
+        method = f"{prepared_method(metadata)}-{SPECS[args.model].name}"
+        if args.test_view == "original":
+            method += "-NO-TEST-ADASYN"
+    paper_tables = (
+        [str(table_number)]
+        if table_number == 2
+        else (["IV"] if args.train_fraction != "full" else ["III", "IV"])
+    )
     if args.table_v:
         paper_tables.append("V")
     configuration = {
@@ -1167,7 +1209,7 @@ def main() -> int:
         "paper_tables": paper_tables,
         "scientific_question": (
             f"Does the frozen {SPECS[args.model].name} completion reproduce "
-            "the reported ISET row?"
+            f"the reported Table {table_number} {dataset_name} row?"
         ),
         "model": args.model,
         "seed": args.seed,
@@ -1210,7 +1252,11 @@ def main() -> int:
         attempt += "_table_v"
     run = (
         args.output
-        / ("table_4" if args.train_fraction != "full" else "table_3")
+        / (
+            "table_2"
+            if table_number == 2
+            else ("table_4" if args.train_fraction != "full" else "table_3")
+        )
         / args.model
         / attempt
     )
@@ -1373,20 +1419,17 @@ def main() -> int:
             "eligibility": (
                 "exploratory_control_C-OUTPUT-LINEAR"
                 if args.output_activation != "paper"
-                else (
-                    "exploratory_paper_primary_P0"
-                    if args.test_view == "adasyn"
-                    else "exploratory_interpretation_I-ADASYN-NONE"
-                )
+                else f"exploratory_interpretation_{prepared_method(metadata)}"
             ),
             "configuration": configuration,
             "git_commit": git_commit(),
             "data": {
                 "path": str(args.data),
+                "dataset": dataset_name,
                 "metadata_sha256": (
                     sha256(metadata_path) if metadata_path.is_file() else None
                 ),
-                "method": metadata["method"],
+                "method": prepared_method(metadata),
                 "source_nodes": metadata.get("source_nodes", {}),
                 "counts": {
                     "B1_profiles": int(x_train_all.shape[0]),
@@ -1417,14 +1460,14 @@ def main() -> int:
                 "parameters": int(model.count_params()),
             },
             "metrics": metrics,
-            "reported_table_3": REPORTED[args.model],
+            f"reported_table_{table_number}": reported,
             "reported_table_4": (
                 REPORTED_TABLE_4.get(args.model, {}).get(args.train_fraction)
             ),
             "difference_reproduced_minus_reported": (
                 {
-                    key: float(metrics[key]) - float(REPORTED[args.model][key])
-                    for key in REPORTED[args.model]
+                    key: float(metrics[key]) - float(reported[key])
+                    for key in reported
                 }
                 if args.train_fraction == "full"
                 else {
