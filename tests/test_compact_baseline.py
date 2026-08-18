@@ -53,6 +53,23 @@ class CompactBaselineTests(unittest.TestCase):
             self.assertEqual(int(class_counts[0]), 20)
             self.assertGreater(int(class_counts[1]), 10)
             self.assertTrue(np.isfinite(np.load(output / "x_train.npy")).all())
+            args = argparse.Namespace(
+                data=output,
+                output=output / "results",
+                seed=11,
+                score_batch=8,
+            )
+            metadata_path = output / "metadata.json"
+            run_experiment.run_naive_bayes(
+                args, metadata=metadata, metadata_path=metadata_path
+            )
+            result_path = next((output / "results/table_2").rglob("result.json"))
+            audit = analyze_results.audit_scores(result_path)
+            self.assertIn("closest_reported_operating_point", audit)
+            successes, _ = analyze_results.load_attempts(output / "results")
+            tables = analyze_results.aggregate(successes)
+            self.assertEqual(len(tables["table_2_summary"]), 1)
+            self.assertEqual(tables["table_3_summary"], [])
 
     def test_fc_sae_runtime_matches_frozen_table_i_replay(self) -> None:
         model = models.build_fc_sae(seed=11, learning_rate=0.001)

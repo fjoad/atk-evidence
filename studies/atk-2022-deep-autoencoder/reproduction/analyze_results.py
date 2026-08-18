@@ -48,7 +48,7 @@ def effective_eligibility(attempt: dict[str, object]) -> str:
     if config.get("task") == "supervised":
         return (
             "exploratory_paper_primary_supervised"
-            if config.get("supervised_adasyn") == "printed"
+            if str(config.get("supervised_adasyn", "")).startswith("printed")
             else "exploratory_interpretation_I-SUPERVISED-ADASYN-NONE"
         )
     return (
@@ -202,8 +202,13 @@ def audit_attempt_arrays(
         labels = np.load(saved_labels, mmap_mode="r")
         indices = np.load(run / "test_global_row.npy", mmap_mode="r")
         if config.get("task") == "supervised":
-            block_size = int(np.load(data / "benign.npy", mmap_mode="r").shape[0])
-            attack_ids = np.asarray(indices // block_size, dtype=np.uint8)
+            benign_path = data / "benign.npy"
+            if benign_path.is_file():
+                block_size = int(np.load(benign_path, mmap_mode="r").shape[0])
+                attack_ids = np.asarray(indices // block_size, dtype=np.uint8)
+            else:
+                # SGCC has binary source labels, not the six synthetic ISET attacks.
+                attack_ids = np.zeros(indices.size, dtype=np.uint8)
         else:
             full_attacks = np.load(
                 data / "test_original_attack_id.npy", mmap_mode="r"
@@ -247,7 +252,8 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
     predicted_benign = benign > threshold if direction == "higher" else benign < threshold
     false_alarm = 100 * float(np.mean(predicted_benign))
     by_attack: list[dict[str, object]] = []
-    for attack_id in range(1, 7):
+    attack_range = range(1, 7) if np.any(attack_ids > 0) else ()
+    for attack_id in attack_range:
         attack_scores = np.asarray(scores[attack_ids == attack_id])
         predicted_attack = (
             attack_scores > threshold
@@ -293,7 +299,7 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
         ),
         "table_v_heldout_benign_interpretation": by_attack,
     }
-    reported = attempt.get("reported_table_3")
+    reported = attempt.get("reported_table_2") or attempt.get("reported_table_3")
     if reported:
         result["closest_reported_operating_point"] = closest_reported_operating_point(
             labels,
@@ -364,6 +370,7 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
         individual.append(row)
         grouped[analysis_group(config)].append(attempt)
 
+    table_2_summary: list[dict[str, object]] = []
     table_3_summary: list[dict[str, object]] = []
     table_4_summary: list[dict[str, object]] = []
     for group_id, attempts in sorted(grouped.items()):
@@ -387,7 +394,8 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
             ),
         }
         if config["train_fraction"] == "full":
-            reported = first["reported_table_3"]
+            reported_2 = first.get("reported_table_2")
+            reported = reported_2 or first["reported_table_3"]
             row = dict(base)
             for metric in METRICS:
                 values = [float(item["metrics"][metric]) for item in attempts]
@@ -396,7 +404,7 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
                 row[f"{metric}_sd"] = sd
                 row[f"{metric}_reported"] = reported[metric]
                 row[f"{metric}_difference"] = mean - float(reported[metric])
-            table_3_summary.append(row)
+            (table_2_summary if reported_2 else table_3_summary).append(row)
 
         reported_4 = first.get("reported_table_4")
         if reported_4:
@@ -447,6 +455,7 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
             table_v_rows.append(row)
     return {
         "individual": individual,
+        "table_2_summary": table_2_summary,
         "table_3_summary": table_3_summary,
         "table_4_summary": table_4_summary,
         "table_5_individual": table_v_rows,
@@ -479,6 +488,7 @@ def main() -> int:
     successes, failures = load_attempts(args.results)
     tables = aggregate(successes)
     write_csv(args.output / "attempts_individual.csv", tables["individual"])
+    write_csv(args.output / "table_2_summary.csv", tables["table_2_summary"])
     write_csv(args.output / "table_3_summary.csv", tables["table_3_summary"])
     write_csv(args.output / "table_4_summary.csv", tables["table_4_summary"])
     write_csv(args.output / "table_5_individual.csv", tables["table_5_individual"])
