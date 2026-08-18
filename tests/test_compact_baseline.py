@@ -74,6 +74,7 @@ class CompactBaselineTests(unittest.TestCase):
             tables = analyze_results.aggregate(successes)
             self.assertEqual(len(tables["table_2_summary"]), 1)
             self.assertEqual(tables["table_3_summary"], [])
+            self.assertEqual(tables["table_4_summary"], [])
 
     def test_fc_sae_runtime_matches_frozen_table_i_replay(self) -> None:
         model = models.build_fc_sae(seed=11, learning_rate=0.001)
@@ -197,6 +198,17 @@ class CompactBaselineTests(unittest.TestCase):
         self.assertEqual(target["DR"], 91)
         self.assertEqual(target["ACC"], 91)
         self.assertEqual(target["F1"], 90.5)
+
+    def test_runner_table_ii_targets_equal_source_transcription(self) -> None:
+        for model, expected in run_experiment.REPORTED_TABLE_2.items():
+            attempt = {
+                "configuration": {"model": model},
+                "reported_table_2": expected,
+            }
+            self.assertEqual(
+                analyze_results.canonical_reported(attempt),
+                {key: float(value) for key, value in expected.items()},
+            )
 
     def test_naive_bayes_route_uses_complete_b_plus_m(self) -> None:
         rng = np.random.default_rng(11)

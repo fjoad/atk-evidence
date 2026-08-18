@@ -55,7 +55,7 @@ REPORTED_TABLE_2 = {
     "lstm_vae": {"DR": 93, "FA": 6, "SP": 94, "PR": 93, "ACC": 93.5, "F1": 93, "AUC": 90},
     "lstm_aea": {"DR": 96, "FA": 4, "SP": 96, "PR": 95, "ACC": 96, "F1": 95.5, "AUC": 93},
     "naive_bayes": {"DR": 75, "FA": 16, "SP": 84, "PR": 75, "ACC": 79.5, "F1": 77, "AUC": 73},
-    "arima": {"DR": 88, "FA": 10, "SP": 90, "PR": 87, "ACC": 89, "F1": 87.5, "AUC": 88},
+    "arima": {"DR": 88, "FA": 10, "SP": 90, "PR": 87, "ACC": 89, "F1": 87, "AUC": 88},
     "one_class_svm": {"DR": 91, "FA": 8.5, "SP": 91.5, "PR": 90, "ACC": 91, "F1": 90, "AUC": 89},
     "supervised_feed_forward": {"DR": 91, "FA": 9.5, "SP": 90.5, "PR": 90, "ACC": 91, "F1": 90.5, "AUC": 89},
     "supervised_lstm": {"DR": 91.5, "FA": 9, "SP": 91, "PR": 90.5, "ACC": 91, "F1": 91, "AUC": 90},
@@ -1478,6 +1478,8 @@ def main() -> int:
             f"reported_table_{table_number}": reported,
             "reported_table_4": (
                 REPORTED_TABLE_4.get(args.model, {}).get(args.train_fraction)
+                if table_number == 3
+                else None
             ),
             "difference_reproduced_minus_reported": (
                 {

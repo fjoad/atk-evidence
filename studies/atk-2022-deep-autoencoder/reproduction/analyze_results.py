@@ -443,7 +443,7 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
             (table_2_summary if reported_2 else table_3_summary).append(row)
 
         reported_4 = first.get("reported_table_4")
-        if reported_4:
+        if reported_4 and first.get("reported_table_2") is None:
             row = dict(base)
             acc_mean, acc_sd = mean_sd(
                 [float(item["metrics"]["ACC"]) for item in attempts]

@@ -20,7 +20,7 @@ ADASYN. SVM rows are explicitly resource capped. Metrics are percentages in
 | Multiclass SVM | seven-class sigmoid/scale repair, 30k train and test caps | 85.94 / 55.67 / 65.14 / 73.06 | 91 / 8 / 91.5 / 89 | Best balanced ACC is 71.14%; closest threshold remains 23.44 points from the target pair. |
 | FC-SAE | printed widths and Softmax output, MSE, threshold 0.58 | 26.18 / 58.22 / 33.98 / 31.04 | 81 / 15 / 83 / 81 | Paper-direction oracle is 50.00% ACC; score correlation with zero reconstruction is 0.99946. |
 | LSTM-SAE | mirrored Algorithm-2 states, repeat-latent decoder, MSE, threshold 0.61 | 14.78 / 40.96 / 36.91 / 33.09 | 85 / 13 / 86 / 82 | Wrong-direction ranking; nearest paper-direction DR/FA point is 47.11 points away. |
-| FC-VAE | fixed-unit probability `exp(-0.5*MSE)`, threshold 0.61 | 11.51 / 32.62 / 39.45 / 30.13 | 88 / 11 / 88.5 / 85 | Wrong-direction ranking for this probability completion; paper-direction oracle is 50.00% ACC. |
+| FC-VAE | fixed-unit probability `exp(-0.5*MSE)`, threshold 0.43 | 11.51 / 32.62 / 39.45 / 30.13 | 88 / 11 / 88.5 / 85 | Wrong-direction ranking for this probability completion; paper-direction oracle is 50.00% ACC. |
 | LSTM-VAE | latent width 300, fixed-unit probability `exp(-0.5*MSE)`, mirrored states, threshold 0.47 | 10.02 / 25.79 / 42.11 / 29.83 | 91 / 7 / 92 / 86 | Wrong-direction ranking; nearest paper-direction DR/FA point is 58.48 points away and reversed-direction ACC is only 66.93%. |
 | LSTM-AEA | additive attention over prior queries, concatenated context, mirrored states, MSE, threshold 0.51 | 25.43 / 58.22 / 33.60 / 29.93 | 94 / 5 / 94.5 / 90 | Wrong-direction ranking; nearest paper-direction DR/FA point is 60.11 points away and reversed-direction ACC is only 66.52%. |
 
