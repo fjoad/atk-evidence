@@ -68,6 +68,32 @@ def balanced_precision_rounding_interval(
     return 100 * low, 100 * high
 
 
+def implied_prevalence_rounding_interval(
+    dr_pct: float,
+    fa_pct: float,
+    precision_pct: float,
+    *,
+    half_width: float = 0.5,
+) -> tuple[float, float]:
+    """Prevalence range allowed by rounded DR, FA, and precision.
+
+    The implied prevalence increases with precision and FA and decreases with
+    DR, so the two opposite corners give exact bounds over the rounding box.
+    """
+
+    low = implied_prevalence(
+        (dr_pct + half_width) / 100,
+        (fa_pct - half_width) / 100,
+        (precision_pct - half_width) / 100,
+    )
+    high = implied_prevalence(
+        (dr_pct - half_width) / 100,
+        (fa_pct + half_width) / 100,
+        (precision_pct + half_width) / 100,
+    )
+    return 100 * low, 100 * high
+
+
 def audit_rows() -> list[dict[str, float | str | bool]]:
     rows: list[dict[str, float | str | bool]] = []
     for dataset, metrics in TABLES.items():
@@ -79,6 +105,9 @@ def audit_rows() -> list[dict[str, float | str | bool]]:
             prevalence = implied_prevalence(dr, fa, precision)
             precision_low, precision_high = balanced_precision_rounding_interval(
                 dr_pct, fa_pct
+            )
+            prevalence_low, prevalence_high = implied_prevalence_rounding_interval(
+                dr_pct, fa_pct, precision_pct
             )
             printed_low, printed_high = precision_pct - 0.5, precision_pct + 0.5
             rows.append(
@@ -96,6 +125,8 @@ def audit_rows() -> list[dict[str, float | str | bool]]:
                         printed_high < precision_low or printed_low > precision_high
                     ),
                     "implied_positive_prevalence_pct": 100.0 * prevalence,
+                    "implied_positive_prevalence_min_pct": prevalence_low,
+                    "implied_positive_prevalence_max_pct": prevalence_high,
                 }
             )
     return rows

@@ -5,7 +5,12 @@ import unittest
 
 import numpy as np
 
-from audit_reported_metrics import balanced_precision_rounding_interval
+from audit_reported_metrics import (
+    TABLES,
+    audit_rows,
+    balanced_precision_rounding_interval,
+    implied_prevalence_rounding_interval,
+)
 from paper_literal_metrics import (
     aggregate_seed_metrics,
     evaluate_attack_columns,
@@ -15,6 +20,19 @@ from paper_literal_metrics import (
 
 
 class PaperLiteralMetricTests(unittest.TestCase):
+    def test_reported_tables_have_no_common_prevalence_even_with_rounding(self) -> None:
+        rows = audit_rows()
+        for dataset in TABLES:
+            selected = [row for row in rows if row["dataset"] == dataset]
+            lower = max(row["implied_positive_prevalence_min_pct"] for row in selected)
+            upper = min(row["implied_positive_prevalence_max_pct"] for row in selected)
+            self.assertGreater(lower, upper)
+
+    def test_implied_prevalence_rounding_interval_contains_center(self) -> None:
+        low, high = implied_prevalence_rounding_interval(83, 14, 83)
+        self.assertLess(low, 45.16129032258064)
+        self.assertGreater(high, 45.16129032258064)
+
     def test_balanced_table_rounding_can_be_mathematically_infeasible(self) -> None:
         low, high = balanced_precision_rounding_interval(83.0, 14.0)
         self.assertGreater(low, 83.5)

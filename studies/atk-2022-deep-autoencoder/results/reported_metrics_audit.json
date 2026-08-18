@@ -10,7 +10,9 @@
     "balanced_rounding_precision_min_pct": 85.05154639175258,
     "balanced_rounding_precision_max_pct": 86.08247422680412,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 45.16129032258064
+    "implied_positive_prevalence_pct": 45.16129032258064,
+    "implied_positive_prevalence_min_pct": 43.25242718446601,
+    "implied_positive_prevalence_max_pct": 47.074261275272164
   },
   {
     "dataset": "SGCC",
@@ -23,7 +25,9 @@
     "balanced_rounding_precision_min_pct": 87.24489795918367,
     "balanced_rounding_precision_max_pct": 88.26530612244898,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 48.28862164662349
+    "implied_positive_prevalence_pct": 48.28862164662349,
+    "implied_positive_prevalence_min_pct": 46.0,
+    "implied_positive_prevalence_max_pct": 50.57803468208093
   },
   {
     "dataset": "SGCC",
@@ -36,7 +40,9 @@
     "balanced_rounding_precision_min_pct": 90.40404040404042,
     "balanced_rounding_precision_max_pct": 91.41414141414141,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 50.27624309392266
+    "implied_positive_prevalence_pct": 50.27624309392266,
+    "implied_positive_prevalence_min_pct": 47.22222222222223,
+    "implied_positive_prevalence_max_pct": 53.32822085889571
   },
   {
     "dataset": "SGCC",
@@ -49,7 +55,9 @@
     "balanced_rounding_precision_min_pct": 93.43434343434343,
     "balanced_rounding_precision_max_pct": 94.44444444444444,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 46.15384615384617
+    "implied_positive_prevalence_pct": 46.15384615384617,
+    "implied_positive_prevalence_min_pct": 42.04545454545456,
+    "implied_positive_prevalence_max_pct": 50.2688172043011
   },
   {
     "dataset": "SGCC",
@@ -62,7 +70,9 @@
     "balanced_rounding_precision_min_pct": 95.5,
     "balanced_rounding_precision_max_pct": 96.5,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 44.18604651162788
+    "implied_positive_prevalence_pct": 44.18604651162788,
+    "implied_positive_prevalence_min_pct": 38.392338943702825,
+    "implied_positive_prevalence_max_pct": 49.999999999999986
   },
   {
     "dataset": "SGCC",
@@ -75,7 +85,9 @@
     "balanced_rounding_precision_min_pct": 81.86813186813187,
     "balanced_rounding_precision_max_pct": 82.96703296703296,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 39.02439024390244
+    "implied_positive_prevalence_pct": 39.02439024390244,
+    "implied_positive_prevalence_min_pct": 37.491883116883116,
+    "implied_positive_prevalence_max_pct": 40.564962552914366
   },
   {
     "dataset": "SGCC",
@@ -88,7 +100,9 @@
     "balanced_rounding_precision_min_pct": 89.28571428571429,
     "balanced_rounding_precision_max_pct": 90.3061224489796,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 43.197616683217475
+    "implied_positive_prevalence_pct": 43.197616683217475,
+    "implied_positive_prevalence_min_pct": 40.751301760476075,
+    "implied_positive_prevalence_max_pct": 45.652173913043484
   },
   {
     "dataset": "SGCC",
@@ -101,7 +115,9 @@
     "balanced_rounding_precision_min_pct": 90.95477386934674,
     "balanced_rounding_precision_max_pct": 91.95979899497488,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 45.671641791044784
+    "implied_positive_prevalence_pct": 45.671641791044784,
+    "implied_positive_prevalence_min_pct": 42.70165498732668,
+    "implied_positive_prevalence_max_pct": 48.648648648648646
   },
   {
     "dataset": "SGCC",
@@ -114,7 +130,9 @@
     "balanced_rounding_precision_min_pct": 90.04975124378109,
     "balanced_rounding_precision_max_pct": 91.04477611940298,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 48.44192634560907
+    "implied_positive_prevalence_pct": 48.44192634560907,
+    "implied_positive_prevalence_min_pct": 45.60509554140128,
+    "implied_positive_prevalence_max_pct": 51.28205128205129
   },
   {
     "dataset": "SGCC",
@@ -127,7 +145,9 @@
     "balanced_rounding_precision_min_pct": 90.54726368159203,
     "balanced_rounding_precision_max_pct": 91.54228855721392,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 48.37416481069043
+    "implied_positive_prevalence_pct": 48.37416481069043,
+    "implied_positive_prevalence_min_pct": 45.400593471810105,
+    "implied_positive_prevalence_max_pct": 51.35135135135136
   },
   {
     "dataset": "SGCC",
@@ -140,7 +160,9 @@
     "balanced_rounding_precision_min_pct": 91.95979899497488,
     "balanced_rounding_precision_max_pct": 92.96482412060301,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 45.18371400198611
+    "implied_positive_prevalence_pct": 45.18371400198611,
+    "implied_positive_prevalence_min_pct": 41.89122168953546,
+    "implied_positive_prevalence_max_pct": 48.4848484848485
   },
   {
     "dataset": "ISET",
@@ -153,7 +175,9 @@
     "balanced_rounding_precision_min_pct": 83.85416666666666,
     "balanced_rounding_precision_max_pct": 84.89583333333333,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 44.117647058823536
+    "implied_positive_prevalence_pct": 44.117647058823536,
+    "implied_positive_prevalence_min_pct": 42.34536549972792,
+    "implied_positive_prevalence_max_pct": 45.89464123524068
   },
   {
     "dataset": "ISET",
@@ -166,7 +190,9 @@
     "balanced_rounding_precision_min_pct": 86.22448979591837,
     "balanced_rounding_precision_max_pct": 87.24489795918367,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 46.42857142857143
+    "implied_positive_prevalence_pct": 46.42857142857143,
+    "implied_positive_prevalence_min_pct": 44.35229897123661,
+    "implied_positive_prevalence_max_pct": 48.508089934860266
   },
   {
     "dataset": "ISET",
@@ -179,7 +205,9 @@
     "balanced_rounding_precision_min_pct": 88.38383838383838,
     "balanced_rounding_precision_max_pct": 89.39393939393939,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 50.282485875706215
+    "implied_positive_prevalence_pct": 50.282485875706215,
+    "implied_positive_prevalence_min_pct": 47.72727272727273,
+    "implied_positive_prevalence_max_pct": 52.83624229979467
   },
   {
     "dataset": "ISET",
@@ -192,7 +220,9 @@
     "balanced_rounding_precision_min_pct": 92.34693877551021,
     "balanced_rounding_precision_max_pct": 93.36734693877553,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 43.750000000000014
+    "implied_positive_prevalence_pct": 43.750000000000014,
+    "implied_positive_prevalence_min_pct": 40.36020583190395,
+    "implied_positive_prevalence_max_pct": 47.148746135348695
   },
   {
     "dataset": "ISET",
@@ -205,7 +235,9 @@
     "balanced_rounding_precision_min_pct": 94.44444444444444,
     "balanced_rounding_precision_max_pct": 95.45454545454545,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 41.40694568121106
+    "implied_positive_prevalence_pct": 41.40694568121106,
+    "implied_positive_prevalence_min_pct": 37.000000000000014,
+    "implied_positive_prevalence_max_pct": 45.83333333333336
   },
   {
     "dataset": "ISET",
@@ -218,7 +250,9 @@
     "balanced_rounding_precision_min_pct": 79.67032967032968,
     "balanced_rounding_precision_max_pct": 80.76923076923077,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 40.0
+    "implied_positive_prevalence_pct": 40.0,
+    "implied_positive_prevalence_min_pct": 38.56382978723404,
+    "implied_positive_prevalence_max_pct": 41.4431575739104
   },
   {
     "dataset": "ISET",
@@ -231,7 +265,9 @@
     "balanced_rounding_precision_min_pct": 87.24489795918367,
     "balanced_rounding_precision_max_pct": 88.26530612244898,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 46.15384615384615
+    "implied_positive_prevalence_pct": 46.15384615384615,
+    "implied_positive_prevalence_min_pct": 43.94413407821229,
+    "implied_positive_prevalence_max_pct": 48.367255647506155
   },
   {
     "dataset": "ISET",
@@ -244,7 +280,9 @@
     "balanced_rounding_precision_min_pct": 90.40404040404042,
     "balanced_rounding_precision_max_pct": 91.41414141414141,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 44.72361809045226
+    "implied_positive_prevalence_pct": 44.72361809045226,
+    "implied_positive_prevalence_min_pct": 41.9548243167875,
+    "implied_positive_prevalence_max_pct": 47.5
   },
   {
     "dataset": "ISET",
@@ -257,7 +295,9 @@
     "balanced_rounding_precision_min_pct": 88.61386138613861,
     "balanced_rounding_precision_max_pct": 89.60396039603961,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 49.720670391061454
+    "implied_positive_prevalence_pct": 49.720670391061454,
+    "implied_positive_prevalence_min_pct": 47.170050761421315,
+    "implied_positive_prevalence_max_pct": 52.27272727272727
   },
   {
     "dataset": "ISET",
@@ -270,7 +310,9 @@
     "balanced_rounding_precision_min_pct": 89.55223880597015,
     "balanced_rounding_precision_max_pct": 90.54726368159203,
     "balanced_rounding_feasible": true,
-    "implied_positive_prevalence_pct": 48.50291288443301
+    "implied_positive_prevalence_pct": 48.50291288443301,
+    "implied_positive_prevalence_min_pct": 45.789331167072845,
+    "implied_positive_prevalence_max_pct": 51.21951219512195
   },
   {
     "dataset": "ISET",
@@ -283,6 +325,8 @@
     "balanced_rounding_precision_min_pct": 91.41414141414141,
     "balanced_rounding_precision_max_pct": 92.42424242424244,
     "balanced_rounding_feasible": false,
-    "implied_positive_prevalence_pct": 44.17177914110431
+    "implied_positive_prevalence_pct": 44.17177914110431,
+    "implied_positive_prevalence_min_pct": 41.130514705882355,
+    "implied_positive_prevalence_max_pct": 47.22222222222223
   }
 ]
