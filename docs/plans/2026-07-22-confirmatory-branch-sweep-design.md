@@ -69,17 +69,21 @@ of scope, not silently searched.
 
 ### 3. The AUC screening funnel
 
-The reported rows imply minimum threshold-free separability: a claimed ROC
-point (DR, FA) lower-bounds AUC at roughly (DR + (100 − FA))/2 — about 0.96
-for LSTM-AEA (96/4) and about 0.85 for the weakest row (FC-SAE 83/14).
+**2026-08-18 correction:** the former draft incorrectly used balanced accuracy
+as a lower bound on ROC-AUC. For a monotone ROC curve containing a point
+`(FPR=f, TPR=t)`, the general lower bound is `AUC >= t * (1-f)`: the curve may
+remain at zero until `f`, rise vertically to `t`, and remain at `t` until an
+endpoint jump at FPR 1. The reported Table-II points therefore imply lower
+bounds from 0.7138 (FC-SAE) to 0.9216 (LSTM-AEA), and their printed AUCs do not
+violate those bounds. This relationship is a useful necessary condition, not a
+source-level contradiction.
 
 - **Stage 1 (screen):** for every admissible branch: short training, reduced
-  sample, three seeds, measure anomaly-score AUC only. AUC is invariant to any
-  monotone rescaling and upper-bounds every possible threshold rule, so a
-  branch that screens far below the required bar is dead for *every*
-  threshold procedure, including improper ones. The screen is deliberately
-  generous to the paper; failing it is a stronger statement than failing the
-  literal protocol.
+  sample, three seeds, measure anomaly-score AUC. AUC is invariant to monotone
+  score rescaling. A branch whose full-run AUC is below the exact lower bound
+  required by the reported DR/FA point cannot contain that operating point in
+  the registered score direction. A short/reduced run is only a promotion
+  screen, however, and cannot by itself prove that the full branch is dead.
 - **Stage 2 (full treatment):** only branches whose screening AUC approaches
   the required bar (promotion rule frozen in advance, e.g., mean AUC ≥ 0.80)
   graduate to the complete paper-literal pipeline: full training, frozen

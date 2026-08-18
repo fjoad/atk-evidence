@@ -1099,6 +1099,29 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`.
 
+### Corrected ROC-point lower bound
+
+- **Former belief/status:** A historical sweep draft treated balanced accuracy,
+  `(TPR + 1 - FPR) / 2`, as a general lower bound on ROC-AUC and proposed using
+  it to reject branches.
+- **Evidence:** A monotone ROC curve can remain at TPR zero until the reported
+  FPR, rise vertically to the reported TPR, and then remain there until FPR 1.
+  The general bound from one ROC point is therefore
+  `AUC >= TPR * (1 - FPR)`, not balanced accuracy. The Table-II bounds range
+  from 0.7138 to 0.9216 and do not contradict the paper's AUC cells.
+- **Root cause:** **VERIFIED mathematical correction** — the earlier draft
+  conflated one operating point's balanced accuracy with area under the full
+  ROC curve.
+- **Current conclusion + label:** **INVALIDATED** — balanced accuracy is not an
+  AUC lower bound. Only the product bound may be used as a necessary condition;
+  full saved-score ROC enumeration remains the exact threshold-feasibility
+  audit for an executed attempt.
+- **Remaining uncertainty / blast radius:** This correction removes one
+  proposed rejection argument. It does not affect the independent F1 identity,
+  common-prevalence contradiction, or observed experimental results.
+- **Source artifact:**
+  `docs/plans/2026-07-22-confirmatory-branch-sweep-design.md`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
