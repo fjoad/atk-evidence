@@ -1,0 +1,82 @@
+{
+  "status": "success",
+  "job_id": 374396,
+  "audit_job_id": 378015,
+  "git_commit": "0c423edacb1c949c7a9e369733c303c6c7a31a97",
+  "method": "I-ADASYN-NONE-ISET-LSTM-AEA",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "architecture": "LSTM encoder (500,300,200), repeated latent, LSTM decoder (200,300,500), additive attention over previous decoder queries with concatenated context, mirrored state transfer",
+    "optimizer": "SGD",
+    "learning_rate": 0.01,
+    "batch_size": 512,
+    "score_batch": 256,
+    "epochs_completed": 100,
+    "best_epoch": 100,
+    "threshold": 0.51,
+    "score": "profile MSE; higher is anomalous",
+    "test_view": "original B2+M; no test-set ADASYN"
+  },
+  "reported": {
+    "DR": 94,
+    "FA": 5,
+    "SP": 95,
+    "PR": 93,
+    "ACC": 94.5,
+    "F1": 93.5,
+    "AUC": 90
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 25.427192113558593,
+    "FA": 58.21822928460114,
+    "SP": 41.78177071539886,
+    "PR": 88.71084302496769,
+    "ACC": 33.60448141447873,
+    "F1": 39.52525808621024,
+    "AUC": 29.929349933800765
+  },
+  "score_audit": {
+    "paper_direction_oracle": {
+      "threshold": 81.22591400146484,
+      "DR": 0.003997707980757699,
+      "FA": 0.00026639316967912944,
+      "ACC": 50.001865657405546,
+      "AUC": 29.929349933800765
+    },
+    "reversed_direction_oracle": {
+      "threshold": 0.48524799942970276,
+      "DR": 72.92693670443761,
+      "FA": 39.88212102241698,
+      "ACC": 66.5224078410103,
+      "AUC": 70.07065006619924
+    },
+    "closest_to_reported_DR_FA": {
+      "threshold": 0.42251166701316833,
+      "DR": 33.890221458215805,
+      "FA": 65.10982058420022,
+      "ACC": 34.39020043700779,
+      "maximum_absolute_gap": 60.10982058420022
+    },
+    "mean_score_benign": 1.2857664126274133,
+    "mean_score_malicious": 0.6448467980521898,
+    "trained_vs_zero_reconstruction_correlation": 0.9784301875912269,
+    "trained_vs_zero_reconstruction_mean_absolute_difference": 0.23197733214001395,
+    "trained_vs_zero_reconstruction_rmse_difference": 0.6618450373311318
+  },
+  "training_history": {
+    "first_epoch_loss": 1.7667663097381592,
+    "last_epoch_loss": 1.3005788326263428,
+    "minimum_epoch_loss": 1.3005788326263428
+  },
+  "timing_seconds": {
+    "load": 29.376828894019127,
+    "model_build": 4.478174492716789,
+    "fit": 152876.3693177849,
+    "score": 4250.490604832768,
+    "pipeline": 157180.56399966776,
+    "slurm_elapsed": 157310,
+    "audit_slurm_elapsed": 78
+  },
+  "interpretation": "For this registered one-seed no-test-ADASYN attention completion, malicious profiles have lower mean reconstruction error than benign profiles, opposite the paper's higher-error-is-anomalous rule. The paper-direction oracle is essentially chance and the nearest attainable paper-direction DR/FA pair remains 60.11 percentage points from the reported pair; reversing direction reaches only 66.52% balanced ACC. This is a fundamental direction/ranking failure for this completion, not a threshold-selection failure. The 0.978 correlation with zero-reconstruction scores indicates strong input-energy dominance. The result does not close test-set ADASYN, materially distinct attention/decoder completions, or repeated seeds."
+}

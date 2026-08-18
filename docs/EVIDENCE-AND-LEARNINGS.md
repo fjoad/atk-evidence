@@ -938,15 +938,17 @@ and repeated experiments determine technical conclusions.
   374310--374313 are queued from that commit.
 - **Root cause:** **VERIFIED** — both are operational harness defects outside
   model mathematics. Scoring batch size changes only memory partitioning;
-  inventory serialization changes only diagnostics.
+  inventory serialization changes only diagnostics. The replacement rows later
+  completed and are recorded separately below.
 - **Current conclusion + label:** **INVALIDATED as scientific failures** — none
   of these four failed attempts says whether the corresponding paper result is
   reproducible. **VERIFIED** — the smallest repairs leave data, architecture,
   optimizer, training batch, score definition, and metrics unchanged.
-- **Remaining uncertainty / blast radius:** Replacement runs must complete and
-  be audited before any recurrent-row conclusion. Four initial replacement
+- **Remaining uncertainty / blast radius:** Four initial replacement
   submissions 374306--374309 were cancelled while pending after a stale
   upstream-branch configuration was discovered; no stale-code job executed.
+  The operational question is now resolved by the audited replacement rows;
+  their scientific uncertainty is recorded in their own sections.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/recurrent_breadth_operational_failures_20260811.json`.
 
@@ -983,15 +985,18 @@ and repeated experiments determine technical conclusions.
   the already-recorded `score_batch`; a regression test verifies the maximum
   call size. Jobs 374388--374390 were subsequently rejected before execution
   by the immutable-attempt guard because they retained the prior score-batch
-  identity. Jobs 374391--374393 use the numerically equivalent, lower-memory,
-  explicitly recorded score batch 256 and are queued.
+  identity. Job 374391 used the numerically equivalent, lower-memory,
+  explicitly recorded score batch 256 and completed. Dependent jobs
+  374392--374393 were cancelled before execution and replaced by independent
+  jobs 374395--374396, which also completed.
 - **Root cause:** **VERIFIED** — a second inference path bypassed the common
   batch-scoring loop.
 - **Current conclusion + label:** **INVALIDATED as scientific failures** — the
   three attempts contain no evidence about model performance. The repair
   changes memory partitioning only, not values or scientific settings.
-- **Remaining uncertainty / blast radius:** The three replacements must still
-  complete before proposed recurrent breadth is closed.
+- **Remaining uncertainty / blast radius:** Proposed recurrent breadth is now
+  closed for the registered completions; the scientific limitations are
+  recorded in the LSTM-SAE, LSTM-VAE, and LSTM-AEA sections below.
 
 ### Compact ISET LSTM-SAE breadth row
 
@@ -1015,6 +1020,84 @@ and repeated experiments determine technical conclusions.
   not a conclusion over those branches or repeated seeds.
 - **Source artifact:**
   `studies/atk-2022-deep-autoencoder/results/iset_lstm_sae_seed11_20260812.json`.
+
+### Compact ISET LSTM-VAE breadth row
+
+- **Former belief/status:** The registered Algorithm-4/fixed-unit-probability
+  completion had trained, but GPU memory exhaustion during scoring left no
+  scientific result.
+- **Evidence:** Panther job 374395 trained 23 epochs and preserved epoch-18
+  weights. No-gradient recovery job 374441 loaded those exact weights in a
+  fresh process and scored the original 14,258,510 rows without retraining.
+  Fixed DR/FA/ACC/F1/AUC = 10.02/25.79/42.11/17.98/29.83%, versus reported
+  91/7/92/91/86%. Audit 378014 gives paper-direction oracle ACC 50.002%,
+  reversed-direction ACC 66.93%, and a 58.48-point minimum joint DR/FA gap.
+  Malicious mean reconstruction probability is 0.783 versus benign 0.630 even
+  though the paper declares lower probability anomalous. Trained scores
+  correlate 0.93379 with the zero-reconstruction control.
+- **Root cause:** **INFERRED for this completion** — the selected probability
+  transformation preserves an MSE ordering in which attacks generally appear
+  more probable than benign profiles, opposite the paper's decision rule; the
+  reconstruction remains strongly influenced by input energy.
+- **Current conclusion + label:** **OBSERVED** — threshold selection cannot
+  recover the reported operating point for this registered completion.
+- **Remaining uncertainty / blast radius:** Test-set ADASYN is omitted. The
+  source does not uniquely define reconstruction probability, variance,
+  sampling/aggregation, or decoder input, and this is one seed. Materially
+  distinct predeclared completions remain open.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_lstm_vae_seed11_20260818.json`.
+
+### Compact ISET LSTM-AEA breadth row
+
+- **Former belief/status:** The registered Algorithm-5 attention completion was
+  still training, so its Table-III row and score direction were unresolved.
+- **Evidence:** Panther job 374396 completed all 100 epochs in 43:41:50; its
+  lowest training loss occurred at epoch 100. Fixed DR/FA/ACC/F1/AUC =
+  25.43/58.22/33.60/39.53/29.93%, versus reported
+  94/5/94.5/93.5/90%. Audit 378015 gives paper-direction oracle ACC 50.002%,
+  reversed-direction ACC 66.52%, and a 60.11-point minimum joint DR/FA gap.
+  Benign mean MSE is 1.286 versus malicious 0.645 even though the paper
+  declares higher error anomalous. Trained scores correlate 0.97843 with the
+  zero-reconstruction control.
+- **Root cause:** **INFERRED for this completion** — attacks generally receive
+  less reconstruction error than benign profiles and input energy dominates
+  the score order; the registered attention layer does not reverse it.
+- **Current conclusion + label:** **OBSERVED** — threshold selection cannot
+  recover the reported operating point for this registered completion.
+- **Remaining uncertainty / blast radius:** Test-set ADASYN is omitted, the
+  paper leaves the attention query/key/value and decoder recurrence materially
+  underspecified, and this is one seed. Other predeclared completions remain
+  open.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_lstm_aea_seed11_20260818.json`.
+
+### Completed Table-III model-family breadth map
+
+- **Former belief/status:** The FC-SAE anchor had a large gap, but the project
+  did not yet know whether the same failure appeared across named benchmark and
+  proposed families or whether the prepared attacks were learnable at all.
+- **Evidence:** One registered seed-11 completion and score audit now exists for
+  all eleven Table-III rows. None of the registered fixed operating points
+  reproduces its complete printed metric pattern. Supervised feed-forward is
+  nevertheless a strong positive control (AUC 97.05%) and can approach the
+  paper's DR/FA pair after a retrospectively selected threshold. It and Naive
+  Bayes expose material threshold-rule omissions; the other nine score vectors
+  remain materially far from the reported DR/FA corner in their registered
+  direction.
+- **Root cause:** **PARTLY INFERRED, MOSTLY OPEN** — multiple unsupervised and
+  recurrent completions rank attacks backward or collapse, while the supervised
+  feed-forward result proves the generated attack population contains a strong
+  learnable signal. Printed ADASYN and several source ambiguities remain open.
+- **Current conclusion + label:** **OBSERVED** — model-family breadth is closed
+  for the registered one-seed no-test-ADASYN completions. It is premature to
+  add seeds before the predeclared one-factor data/evaluation interpretations
+  locate the reasonable divergence branches.
+- **Remaining uncertainty / blast radius:** These are not confirmatory
+  intervals, do not execute printed ADASYN, and do not establish intent or an
+  infinite-space impossibility claim.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`.
 
 ## How to add a learning
 

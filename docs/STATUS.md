@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-18
 
 **Branch:** `main`
 
@@ -34,20 +34,23 @@
   configuration still named score batch 512. Explicit score batch 256 makes
   the preserved retry identity distinct. LSTM-SAE job `374391` completed and
   score-audit job `374433` closed its threshold question. LSTM-VAE job `374395`
-  completed training but exhausted 16-GB GPU memory during scoring; the weights
-  are preserved, and fresh-process scoring job `374435` is running at inference
-  batch 64 without retraining. LSTM-AEA job `374396` remains healthy. The Slurm
-  wrapper only requests `gpu-all` plus `gpu:1` and executes its arguments.
+  completed training but exhausted 16-GB GPU memory during scoring; its weights
+  were preserved, and no-gradient fresh-process recovery `374441` scored them
+  without retraining. LSTM-AEA job `374396` completed all 100 epochs and full
+  scoring. Panther audit jobs `378014` and `378015` closed both score-direction
+  questions. No Paper-1 jobs are active. The Slurm wrapper only requests
+  `gpu-all` plus `gpu:1` and executes its arguments.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
 - The renewed source freeze is accepted. The five direct files have now been
   traced against the corrected `METHOD.md`; the unfinished score-audit work was
   completed without importing the historical `src/` route.
-- The next experiment is frozen to the single baseline in
-  [`../studies/atk-2022-deep-autoencoder/reproduction/BASELINE.md`](../studies/atk-2022-deep-autoencoder/reproduction/BASELINE.md):
-  full ISET, FC-SAE, seed 11, batch 512, original `B2+M`, Tables III/full-IV/V.
-  No ambiguity sweep is authorized before this anchor is inspected.
+- All eleven named Table-III model rows now have one registered seed-11 breadth
+  result and score audit. The compact model-family map is
+  [`../studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`](../studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md).
+  No repeated-seed depth is authorized before the predeclared one-factor
+  population, split, scaling, threshold, and Attack-3 interpretations.
 
 ## Paper 1: verified foundation
 
@@ -213,6 +216,37 @@ and the trained score is 0.97495-correlated with zero reconstruction. This is a
 fundamental wrong-direction failure for the registered one-seed no-test-ADASYN
 completion, not a threshold mismatch.
 
+LSTM-VAE job `374395` trained for 23 epochs and preserved its best epoch-18
+weights before inference exhausted the 16-GB allocation. Recovery job `374441`
+loaded those exact weights in a new no-gradient process and scored the original
+14,258,510-row test set in 37:03 without retraining. Fixed
+DR/FA/ACC/F1/AUC = 10.02/25.79/42.11/17.98/29.83%, versus
+91/7/92/91/86% reported. Audit `378014` found paper-direction oracle ACC
+50.002%; the closest paper-direction point remains 58.48 points from the
+reported DR/FA pair. Malicious mean reconstruction probability 0.783 exceeds
+benign 0.630 although the paper declares lower probability anomalous; reversing
+direction reaches only 66.93% ACC. The trained score is 0.93379-correlated with
+zero reconstruction. This is a wrong-direction failure for the registered
+fixed-unit-probability completion, not a threshold mismatch.
+
+LSTM-AEA job `374396` completed all 100 epochs in 43:41:50, with the minimum
+training loss at epoch 100. Fixed DR/FA/ACC/F1/AUC =
+25.43/58.22/33.60/39.53/29.93%, versus 94/5/94.5/93.5/90% reported. Audit
+`378015` found paper-direction oracle ACC 50.002%; its closest point remains
+60.11 points from the reported DR/FA pair. Benign mean MSE 1.286 exceeds
+malicious 0.645 although the paper declares higher error anomalous; reversing
+direction reaches only 66.52% ACC. The trained score is 0.97843-correlated with
+zero reconstruction. This is a wrong-direction failure for the registered
+attention completion, not a threshold mismatch.
+
+None of the eleven registered fixed operating points reproduces its complete
+printed metric pattern. Supervised feed-forward is nevertheless a strong
+positive control; it and Naive Bayes expose an omitted threshold-selection
+procedure. The other nine score vectors remain materially far from the
+reported DR/FA corner under threshold adjustment in their registered direction.
+These remain one-seed exploratory branches and
+do not execute printed ADASYN or eliminate every source-supported completion.
+
 One full compact-route cluster result exists:
 
 - table/model: Table III, FC-SAE;
@@ -230,15 +264,13 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. **Complete:** validate the one-factor linear-output control and record that
-   output activation alone does not rescue the score separation.
-2. Complete LSTM-VAE score recovery `374435` and harvest LSTM-AEA `374396`;
-   then the
-   one-factor population, split, scaling, threshold, and Attack-3
-   interpretations. Existing historical results count only if they pass the
-   renewed source/provenance/score gates.
-3. Record the complete breadth map. Only then freeze the finite surviving
-   branches and deepen them with repeated seeds and confirmatory intervals.
+1. **Complete:** close and record all eleven Table-III model-family breadth rows
+   and their score-direction audits.
+2. Run the predeclared one-factor population, split, scaling,
+   validation-threshold, and Attack-3 interpretations, one axis at a time.
+3. Add those interpretation rows to the breadth map, freeze the finite branches
+   that survive, and only then begin repeated seeds and clustered confirmatory
+   intervals.
 
 ## Not on the critical path
 

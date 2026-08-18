@@ -2,8 +2,8 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; trustworthy anchor complete; breadth-first divergence map
-in progress before repeated-seed depth
+**Status:** Active; trustworthy anchor and Table-III model-family breadth map
+complete; one-factor divergence isolation next before repeated-seed depth
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -99,7 +99,7 @@ chain is inspectable and trusted for one full attempt.
    oversized-batch scoring; scientifically unchanged replacement 374310
    completed and was audited. Every score is 1.0 and both directions have
    oracle ACC 50%.
-8. Cover the four remaining proposed-model rows in this order: LSTM-SAE,
+8. **Complete:** cover the four remaining proposed-model rows in this order: LSTM-SAE,
    FC-VAE, LSTM-VAE, then LSTM-AEA. Before rerunning a row, test whether a
    preserved result already satisfies the renewed source, data, provenance,
    and score-audit contract. Reuse it only if all gates pass; otherwise run one
@@ -112,9 +112,12 @@ chain is inspectable and trusted for one full attempt.
    LSTM-SAE job 374391 completed and score audit 374433 shows a fundamental
    wrong-direction ranking failure. Dependent jobs 374392--374393 were
    cancelled before execution and replaced by independent score-batch-256
-   LSTM-VAE/LSTM-AEA jobs 374395--374396. LSTM-VAE trained but its batch-256
-   scoring exhausted the allocated 16-GB GPU; preserved-weight recovery 374435
-   is running at inference batch 64 without retraining. LSTM-AEA remains active.
+   LSTM-VAE/LSTM-AEA jobs 374395--374396. LSTM-VAE trained but scoring
+   exhausted the allocated 16-GB GPU; no-gradient preserved-weight recovery
+   374441 completed without retraining and audit 378014 closed its score
+   direction. LSTM-AEA completed all 100 epochs and audit 378015 closed its
+   score direction. Both are fundamental wrong-direction failures for their
+   registered one-seed no-test-ADASYN completions.
 9. **Execution-order update (user direction, 2026-08-12):** because the
    source specifications and named breadth completions are now frozen, finish
    and test all remaining benchmark/proposed code before waiting for another
@@ -128,10 +131,12 @@ chain is inspectable and trusted for one full attempt.
    threshold versus validation-derived threshold, and each materially distinct
    executable Attack-3 repair. Hold every non-target choice fixed. Do not launch
    a Cartesian sweep.
-11. Write the breadth map as a table with one row per attempted model or
+11. **Model rows complete:** write the breadth map as a table with one row per attempted model or
     interpretation: source claim, exact completion, execution status, observed
     metrics, reported target, divergence, and next implication. Only then choose
-    which branches merit repeated seeds.
+    which branches merit repeated seeds. The eleven Table-III model rows are
+    recorded in `studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`; append
+    the one-factor interpretation rows from step 10 before freezing depth.
 
 Panther submissions request one generic GPU and no CPU or memory shape.
 Independent frozen breadth rows run concurrently up to the three-job limit;

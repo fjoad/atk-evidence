@@ -1,0 +1,79 @@
+{
+  "status": "success",
+  "training_job_id": 374395,
+  "score_recovery_job_id": 374441,
+  "audit_job_id": 378014,
+  "training_git_commit": "bcc2cbf751ca3f8233bcfd698153fff8ae688301",
+  "recovery_git_commit": "0c423edacb1c949c7a9e369733c303c6c7a31a97",
+  "method": "I-ADASYN-NONE-ISET-LSTM-VAE",
+  "eligibility": "exploratory_interpretation_I-ADASYN-NONE",
+  "seed": 11,
+  "completion": {
+    "architecture": "LSTM encoder (400,300), latent mean/log-variance width 300, repeated latent, LSTM decoder (300,400), mirrored Algorithm-4 state transfer",
+    "optimizer": "Adam",
+    "learning_rate": 0.01,
+    "batch_size": 512,
+    "score_batch": 256,
+    "epochs_completed": 23,
+    "best_epoch": 18,
+    "threshold": 0.47,
+    "score": "exp(-0.5 * profile MSE); lower is anomalous",
+    "vae_loss": "mean reconstruction MSE plus mean analytic KL; one sample; fixed unit reconstruction variance",
+    "test_view": "original B2+M; no test-set ADASYN",
+    "operational_recovery": "load preserved best weights in a fresh process, disable gradients, use latent mean at inference, and score without retraining"
+  },
+  "reported": {
+    "DR": 91,
+    "FA": 7,
+    "SP": 93,
+    "PR": 91,
+    "ACC": 92,
+    "F1": 91,
+    "AUC": 86
+  },
+  "reproduced_fixed_threshold": {
+    "DR": 10.017308594924096,
+    "FA": 25.79298586784235,
+    "SP": 74.20701413215764,
+    "PR": 87.48052377941475,
+    "ACC": 42.11216136354087,
+    "F1": 17.976182267917537,
+    "AUC": 29.8293888455763
+  },
+  "score_audit": {
+    "paper_direction_oracle": {
+      "threshold": 2.23118052922373e-18,
+      "DR": 0.003975498491975712,
+      "FA": 0.00026639316967912944,
+      "ACC": 50.00185455266115,
+      "AUC": 29.8293888455763
+    },
+    "reversed_direction_oracle": {
+      "threshold": 0.7847252488136292,
+      "DR": 71.36369962702865,
+      "FA": 37.50323001718236,
+      "ACC": 66.93023480492315,
+      "AUC": 70.17061115442371
+    },
+    "closest_to_reported_DR_FA": {
+      "threshold": 0.8004904389381409,
+      "DR": 32.52336808378011,
+      "FA": 65.47651078226355,
+      "ACC": 33.523428650758284,
+      "maximum_absolute_gap": 58.47663191621989
+    },
+    "mean_score_benign": 0.6304496632159537,
+    "mean_score_malicious": 0.7834285036656012,
+    "trained_vs_zero_reconstruction_correlation": 0.9337915016018417,
+    "trained_vs_zero_reconstruction_mean_absolute_difference": 0.03211114830526641,
+    "trained_vs_zero_reconstruction_rmse_difference": 0.09150487289969086
+  },
+  "timing_seconds": {
+    "training_attempt_through_scoring_failure": 14032.410893782973,
+    "recovered_score": 2176.5468414202332,
+    "recovery_pipeline": 2204.6877768412232,
+    "recovery_slurm_elapsed": 2223,
+    "audit_slurm_elapsed": 77
+  },
+  "interpretation": "For this registered one-seed no-test-ADASYN completion, malicious profiles have higher mean reconstruction probability than benign profiles, while the paper declares lower probability anomalous. The paper-direction oracle is essentially chance and the nearest attainable paper-direction DR/FA pair remains 58.48 percentage points from the reported pair; reversing direction reaches only 66.93% balanced ACC. This is a fundamental direction/ranking failure for this completion, not a threshold-selection failure. The 0.934 correlation with zero-reconstruction scores indicates substantial input-energy dominance. The result does not close test-set ADASYN, other probability definitions, alternate decoder completions, or repeated seeds."
+}

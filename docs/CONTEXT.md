@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-18
 
 ## Environment quirks
 
@@ -115,9 +115,18 @@
   Wrapper commit `f5b5623` accepts an explicit score batch. LSTM-SAE job 374391
   completed and audit 374433 shows paper-direction oracle ACC 50.004%, reversed
   ACC 64.38%, and a 47.11-point minimum DR/FA gap. LSTM-VAE job 374395 trained
-  through epoch 23 (best epoch 18) but OOMed during scoring at 256; its weights
-  are preserved and fresh-process score recovery 374435 uses batch 64 with no
-  retraining. LSTM-AEA job 374396 remains active.
+  through epoch 23 (best epoch 18) but OOMed during scoring; no-gradient
+  fresh-process recovery 374441 scored the preserved weights at the original
+  recorded inference batch without retraining. Fixed DR/FA/ACC/AUC =
+  10.02/25.79/42.11/29.83%; audit 378014 gives paper-direction oracle ACC
+  50.002%, reversed ACC 66.93%, a 58.48-point minimum DR/FA gap, and 0.93379
+  correlation with zero reconstruction. LSTM-AEA job 374396 completed 100
+  epochs in 43:41:50. Fixed DR/FA/ACC/AUC = 25.43/58.22/33.60/29.93%; audit
+  378015 gives paper-direction oracle ACC 50.002%, reversed ACC 66.52%, a
+  60.11-point minimum DR/FA gap, and 0.97843 correlation with zero
+  reconstruction. All eleven Table-III model-family breadth rows are now
+  closed for the registered one-seed no-test-ADASYN completions; no Paper-1
+  jobs are active.
 - Renewed Algorithm-2/4 check found that the earlier compact LSTM-SAE used a
   repeated latent but omitted the printed encoder-to-decoder hidden/cell state
   transfer. The compact recurrent builders now use mirrored state transfer.
@@ -125,6 +134,14 @@
   breadth completion is explicitly repeat-latent. VAE reconstruction
   probability and Algorithm-5 attention repairs are likewise named in each
   configuration rather than silently called literal.
+- The compact model-family breadth map is
+  `studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`. None of the eleven
+  fixed operating points reproduces its complete printed pattern. Supervised
+  feed-forward is nevertheless a strong positive control; it and Naive Bayes
+  expose an omitted operating-point rule. The other nine score vectors remain
+  materially far from their reported DR/FA corner in the registered direction.
+  Next: one-factor population, split,
+  scaling, validation-threshold, and Attack-3 interpretations before seeds.
 
 - Host is Apple M1 Max/macOS; public setup uses root `.venv` while the pre-publication workspace still has a legacy `replication/.venv`.
 - Paper 1 neural runs use Keras 3 with the Torch backend and available Apple MPS; the paper does not state its backend, software versions, hardware, epochs, or batch size.
