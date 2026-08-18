@@ -1,0 +1,155 @@
+{
+  "status": "complete_exploratory_breadth",
+  "date": "2026-08-18",
+  "seed": 11,
+  "literal_status": "non_executable_no_1034_daily_to_48_half_hour_rule",
+  "source": {
+    "customers_in_file": 42372,
+    "fully_missing_rows_removed": 5,
+    "customers_retained": 42367,
+    "benign": 38755,
+    "malicious": 3612,
+    "daily_features_in_source": 1034,
+    "printed_model_width": 48
+  },
+  "interpretations": [
+    "I-SGCC-FIRST48",
+    "I-SGCC-LAST48",
+    "I-SGCC-BINNED-MEAN48"
+  ],
+  "preparation_jobs": {
+    "last_48": 378079,
+    "first_48": 378121,
+    "binned_mean_48": 378122
+  },
+  "metric_order": ["DR", "FA", "ACC", "F1", "AUC"],
+  "last_48": {
+    "fc_sae": {
+      "job": 378086,
+      "reproduced": [3.7963412659867246, 0.7817942565214027, 51.50727350473265, 7.257814917982048, 48.892226935508035],
+      "reported": [83, 14, 84.5, 83, 83],
+      "closest_DR_FA_max_gap": 36.530226797739765,
+      "closest_complete_vector_max_gap": 36.530226797739765,
+      "fit_seconds": 7.801617383956909
+    },
+    "lstm_sae": {
+      "job": 378095,
+      "reproduced": [3.7963412659867246, 0.7817942565214027, 51.50727350473265, 7.257814917982048, 51.2253826763319],
+      "reported": [86, 12, 87, 86.5, 85],
+      "closest_DR_FA_max_gap": 37.67876770647883,
+      "closest_complete_vector_max_gap": 38.77521938652283,
+      "fit_seconds": 143.00750867277384
+    },
+    "fc_vae": {
+      "job": 378088,
+      "reproduced": [2.4607414602557878, 0.3792863224707794, 51.0407275688925, 4.784764303140002, 48.85969305793863],
+      "reported": [90, 9, 90.5, 90.5, 88],
+      "closest_DR_FA_max_gap": 42.74549113708491,
+      "closest_complete_vector_max_gap": 44.198268115350054,
+      "fit_seconds": 8.83518661558628
+    },
+    "lstm_vae": {
+      "job": 378096,
+      "reproduced": [2.59834871296746, 0.4025079340506231, 51.097920389458416, 5.044393808438753, 49.90095539682421],
+      "reported": [93, 6, 93.5, 93, 90],
+      "closest_DR_FA_max_gap": 45.04884278968961,
+      "closest_complete_vector_max_gap": 45.544292532966594,
+      "fit_seconds": 624.4827794730663
+    },
+    "lstm_aea": {
+      "job": 378093,
+      "reproduced": [4.047272138578598, 0.8359780168743711, 51.605647060852114, 7.71485881808363, 50.10963411419276],
+      "reported": [96, 4, 96, 95.5, 93],
+      "closest_DR_FA_max_gap": 47.38168588900069,
+      "closest_complete_vector_max_gap": 47.47457233532007,
+      "fit_seconds": 2440.374724663794
+    },
+    "naive_bayes": {
+      "job": 378080,
+      "reproduced": [7.859892224788299, 1.5589854960055844, 53.15045336439136, 14.368139600337745, 55.59514812717716],
+      "reported": [75, 16, 79.5, 77, 73],
+      "closest_complete_vector_max_gap": 27.040030792917626,
+      "fit_seconds": 0.06194962561130524
+    },
+    "arima": {
+      "job": 378084,
+      "reproduced": [1.3113161728994658, 0.19351342983203035, 50.558901371533715, 2.5835260346064906, 54.82550972038916],
+      "reported": [88, 10, 89, 87, 88],
+      "closest_complete_vector_max_gap": 33.8394042415412,
+      "fit_seconds": 0.07393734157085419
+    },
+    "one_class_svm": {
+      "job": 378085,
+      "reproduced": [62.279423668447464, 50.32123229352117, 55.97909568746316, 57.960751817394254, 60.797806905438854],
+      "reported": [91, 8.5, 91, 90, 89],
+      "closest_complete_vector_max_gap": 35.11018654694636,
+      "fit_seconds": 19.111052095890045
+    },
+    "supervised_feed_forward": {
+      "job": 378082,
+      "reproduced": [83.14087759815243, 6.499650973396416, 88.320613312378, 87.70505116127984, 95.31440875323256],
+      "reported": [91, 9.5, 91, 90.5, 89],
+      "closest_DR_FA_max_gap": 1.9391839876828385,
+      "closest_complete_vector_max_gap": 6.314408753232556,
+      "fit_seconds": 81.15079638361931
+    },
+    "supervised_lstm": {
+      "job": 378103,
+      "reproduced": [49.030023094688225, 23.136585744202282, 62.94671867524298, 57.013696177602725, 69.32477040402479],
+      "reported": [91.5, 9, 91, 91, 90],
+      "closest_complete_vector_max_gap": 28.260528969208096,
+      "fit_seconds": 1069.017027065158
+    },
+    "multiclass_svm": {
+      "job": 378100,
+      "reproduced": [20.785219399538107, 5.126812999301947, 57.82920320011809, 33.025503027337784, 69.51168786829382],
+      "reported": [92, 7.5, 92, 91.5, 90],
+      "closest_complete_vector_max_gap": 28.8437259430331,
+      "fit_seconds": 119.26493686437607
+    }
+  },
+  "proposed_model_auc": {
+    "model_order": ["fc_sae", "lstm_sae", "fc_vae", "lstm_vae", "lstm_aea"],
+    "first_48": [46.58735338693899, 46.32018622831778, 46.58610344291634, 46.30776919203172, 46.37206841340563],
+    "last_48": [48.892226935508035, 51.2253826763319, 48.85969305793863, 49.90095539682421, 50.10963411419276],
+    "binned_mean_48": [53.67842694489895, 54.051731403952544, 53.58983486557416, 54.14949231269753, 53.87001858618643],
+    "reported": [83, 85, 88, 90, 93]
+  },
+  "feed_forward_control": {
+    "first_48": {"job": 378124, "DR": 93.15068493150685, "FA": 9.617172969621823, "ACC": 91.7667559809425, "AUC": 96.91313546727014, "closest_DR_FA_max_gap": 1.4714817110973346},
+    "last_48": {"job": 378082, "DR": 83.14087759815243, "FA": 6.499650973396416, "ACC": 88.320613312378, "AUC": 95.31440875323256, "closest_DR_FA_max_gap": 1.9391839876828385},
+    "binned_mean_48": {"job": 378126, "DR": 92.07167025530606, "FA": 8.952676493405741, "ACC": 91.55949688095015, "AUC": 96.49982764746969, "closest_DR_FA_max_gap": 0.8033359193173002},
+    "reported": {"DR": 91, "FA": 9.5, "ACC": 91, "AUC": 89}
+  },
+  "proposed_score_rank_correlation": {
+    "job": 378177,
+    "measure": "Spearman correlation of anomaly-oriented saved scores",
+    "minimum_pairwise": {
+      "first_48": 0.9747386917429256,
+      "last_48": 0.9572355732028356,
+      "binned_mean_48": 0.98260906575773
+    },
+    "maximum_pairwise": {
+      "first_48": 0.9994581856809329,
+      "last_48": 0.9999351927567588,
+      "binned_mean_48": 0.9993705996567275
+    }
+  },
+  "exact_threshold_audit": {
+    "job": 378170,
+    "scope": "all deterministic thresholds for every saved score vector",
+    "close_match_tolerance_percentage_points": 2
+  },
+  "architecture_only_bounds": {
+    "jobs": [378094, 378165, 378166],
+    "interpretation": "Softmax-simplex and Sigmoid-unit-box distances are exact lower bounds on reconstruction MSE for any weights. They explain an irreducible domain mismatch but do not alone rule out the reported operating points."
+  },
+  "operational_failures": [
+    {"job": 378081, "model": "multiclass_svm", "reason": "binary SVM margin adapter expected two dimensions", "scientific_result": false},
+    {"job": 378083, "model": "supervised_lstm", "reason": "oversized inference batch after successful training", "scientific_result": false},
+    {"job": 378087, "model": "lstm_sae", "reason": "oversized pre-training scoring batch", "scientific_result": false},
+    {"job": 378089, "model": "lstm_vae", "reason": "oversized pre-training scoring batch", "scientific_result": false},
+    {"job": 378090, "model": "lstm_aea", "reason": "oversized pre-training scoring batch", "scientific_result": false}
+  ],
+  "bounded_conclusion": "For seed 11, none of the five proposed models reproduces its Table-II row under early, late, or whole-history 48-wide readings; exhaustive threshold selection cannot rescue any saved score vector. This does not quantify initialization uncertainty or cover unreported implementations."
+}

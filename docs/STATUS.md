@@ -51,6 +51,16 @@
   [`../studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`](../studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md).
   No repeated-seed depth is authorized before the predeclared one-factor
   population, split, scaling, threshold, and Attack-3 interpretations.
+- Table-II seed-11 breadth is now complete. Literal SGCC execution fails because
+  the source has 1,034 daily values per customer while the models require 48
+  half-hour inputs and no conversion is stated. The executable map covers all
+  eleven rows on `last_48`, and all five proposed models plus the feed-forward
+  control on `first_48` and `binned_mean_48`. Proposed-model AUC ranges are
+  46.31--46.59, 48.86--51.23, and 53.59--54.15 respectively, versus 83--93
+  reported. The control AUC is 95.31--96.91 and its closest DR/FA gap is only
+  0.80--1.94 points. Exact threshold enumeration leaves every proposed score
+  vector at least 33.18 points from its complete reported row. See
+  [`../studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md`](../studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md).
 
 ## Paper 1: verified foundation
 
@@ -62,6 +72,10 @@
 - The re-audit confirmed the main flow and prior pivotal contradictions, fixed
   the benchmark count (six, not seven), and added omitted VAE-derivation,
   decoder, precision-definition, F1, and common-prevalence inconsistencies.
+- A stronger balanced-test arithmetic check is now machine-readable: five
+  Table-II and eight Table-III rows cannot satisfy
+  `PR = DR / (DR + FA)` even with ±0.5-point rounding, although the paper calls
+  the ADASYN output balanced. This is independent of every reproduction choice.
 - `P0-ISET-FCSAE` is now labeled precisely as a paper-primary `P+I` executable
   completion. The printed Attack-3 subtraction remains a non-executable source
   outcome rather than being silently called literal.
@@ -87,6 +101,16 @@
   the printed result.
 
 ## Paper 1: current experimental evidence
+
+The SGCC breadth map provides a clean architecture-family contrast. Across all
+three one-customer/48-wide readings, proposed-model AUC stays between 46.31%
+and 54.15%, while the supervised feed-forward control stays between 95.31% and
+96.91%. Within each representation, all proposed score rankings have pairwise
+Spearman correlation at least 0.957. FC-SAE and LSTM-AEA raw MSE are almost
+identical (Pearson >0.99999998), as are the two VAE score transforms. For these
+executed branches, LSTM/VAE/attention changes do not generate the paper's model
+hierarchy; they preserve essentially the same weak ranking. These are one-seed
+exploratory observations, not initialization-level confidence intervals.
 
 The new compact batch-512 anchor completed:
 

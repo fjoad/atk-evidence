@@ -159,10 +159,16 @@ an explicit non-executable/failure record.
 
 ## Phase 4 — Table II and material interpretations
 
-1. Implement only the finite PDF-supported SGCC 1,034-to-48 readings in the same
-   compact route.
-2. Complete Table II.
-3. Vary material ambiguities one at a time after the straight-through anchors.
+1. **Complete for the one-sample-per-customer family:** implement the finite
+   early-48, late-48, and 48-bin whole-history SGCC readings in the compact
+   route while preserving the literal no-conversion failure.
+2. **Seed-11 breadth complete:** all eleven rows ran on `last_48`; all five
+   proposed rows and the feed-forward control ran on both surviving
+   representation contrasts. The frozen map is
+   `studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md`.
+3. Vary remaining material ambiguities one at a time after the straight-through
+   anchors. Windowed interpretations change the sample/split unit and remain a
+   distinct later branch rather than being silently mixed into this map.
 4. Use the old branch inventory only to check that no material PDF issue was
    forgotten.
 5. Run corrected controls separately after paper-consistent coverage.

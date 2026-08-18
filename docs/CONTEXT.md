@@ -4,6 +4,23 @@
 
 ## Environment quirks
 
+- Table-II seed-11 breadth completed on Panther on 2026-08-18. Literal SGCC is
+  non-executable because 1,034 daily inputs are never mapped to the printed 48
+  half-hour architecture. All eleven named rows ran on `last_48`; all five
+  proposed rows plus feed-forward ran on `first_48` and `binned_mean_48`.
+  Proposed AUC is 46.31--54.15 across the complete representation matrix versus
+  83--93 reported. Feed-forward AUC is 95.31--96.91 and its best DR/FA gaps are
+  only 0.80--1.94 points, so absent signal is not a sufficient explanation.
+  Exact all-threshold complete-vector gaps for proposed runs are 33.18--50.53
+  points. Pairwise proposed-model Spearman score correlation is at least 0.957
+  within every representation. Results:
+  `studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md`.
+- Static source arithmetic is stronger than before: because the paper calls
+  its ADASYN test output balanced, precision must equal `DR/(DR+FA)`. Five
+  Table-II rows and eight Table-III rows fail that identity even under generous
+  ±0.5-point rounding. The earlier draft claim that balanced accuracy lower-
+  bounds AUC was wrong and is explicitly invalidated; the correct one-point
+  bound is `AUC >= TPR*(1-FPR)`, which the printed rows satisfy.
 - Compact batch-512 Paper-1 anchor job 373789 completed 2026-08-11 in 53:12 on
   one V100. `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, reproduced
   DR/FA/ACC/AUC/F1 = 26.18/58.22/33.98/31.04/40.46% versus

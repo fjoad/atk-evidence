@@ -1122,6 +1122,39 @@ and repeated experiments determine technical conclusions.
 - **Source artifact:**
   `docs/plans/2026-07-22-confirmatory-branch-sweep-design.md`.
 
+### SGCC Table-II model and representation breadth
+
+- **Former belief/status:** The paper's Table-II numbers were suspected to be
+  far outside what its described reconstruction models could produce, but no
+  complete exact-source model-family map existed and a bad SGCC reduction could
+  still explain a single failed run.
+- **Evidence:** Panther seed-11 runs now cover all eleven models on `last_48`
+  and all five proposed models on `first_48` and `binned_mean_48`. Proposed AUC
+  is 46.31--54.15 versus 83--93 reported. The same prepared branches give the
+  feed-forward control AUC 95.31--96.91 and DR/FA gaps of only 0.80--1.94
+  points. Exact enumeration of all deterministic thresholds leaves every
+  proposed saved score vector 33.18--50.53 points from its complete reported
+  metric row. Within each representation all proposed-model score rankings
+  correlate at least 0.957 by Spearman; the SAE/AEA raw MSE pairs and VAE pairs
+  are nearly identical by Pearson within their score scales.
+- **Root cause:** **INFERRED for these completions** — the printed output-domain
+  constraints and standardized targets make the reconstructions track a common
+  representation-dependent energy ordering. LSTM, VAE, and attention layers do
+  not materially change that ordering in the executed branches.
+- **Current conclusion + label:** **OBSERVED** — the complete seed-11 proposed
+  family does not reproduce Table II under early, late, or whole-history
+  48-wide one-customer readings, and threshold selection cannot rescue the
+  saved scores. The user's architecture-level intuition is supported for this
+  finite map; the universal claim over all undisclosed implementations is not
+  established.
+- **Remaining uncertainty / blast radius:** Initialization uncertainty has not
+  been measured. Windowed SGCC samples change the sample and split identity;
+  alternate missing-value, scaling, latent, recurrent-input, and decoder
+  completions remain separate branches. No intent claim follows.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md` and
+  `studies/atk-2022-deep-autoencoder/results/sgcc_table_2_breadth_seed11_20260818.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

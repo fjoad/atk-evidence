@@ -28,6 +28,11 @@ could match it. That stronger question is addressed only after the breadth map
 by predeclared one-factor branches, repeated seeds, uncertainty intervals, and
 the already-frozen metric-identity checks.
 
+**Completed 2026-08-18:** the full seed-11 model map and the `first_48` and
+`binned_mean_48` representation contrasts are reported in
+[`../TABLE_II_BREADTH.md`](../TABLE_II_BREADTH.md). This file remains the
+pre-run contract; the linked map is the outcome.
+
 After the complete `last_48` model-family map, two one-factor representation
 contrasts are run without changing anything else: `first_48`, and
 `binned_mean_48` (48 contiguous chronological means spanning all 1,034 days).
