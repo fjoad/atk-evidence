@@ -307,6 +307,8 @@ def recover_failed_scoring(
         threshold=SPECS[model_name].threshold,
         direction=SPECS[model_name].anomaly_direction,
     )
+    train_fraction = str(config.get("train_fraction", "full"))
+    table_4_target = REPORTED_TABLE_4[model_name][train_fraction]
     zero_scores = score_zero(
         x_test,
         run / "zero_reconstruction_scores.npy",
@@ -347,6 +349,10 @@ def recover_failed_scoring(
             direction=SPECS[model_name].anomaly_direction,
         ),
         "reported_table_3": REPORTED[model_name],
+        "reported_table_4": table_4_target,
+        "difference_reproduced_minus_reported_table_4": {
+            "ACC": float(metrics["ACC"]) - float(table_4_target["ACC"]),
+        },
         "timing_seconds": {
             "failed_training_attempt_through_scoring_failure": float(
                 failure["elapsed_seconds"]

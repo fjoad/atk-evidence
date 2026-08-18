@@ -377,6 +377,7 @@ class CompactBaselineTests(unittest.TestCase):
                 "threshold": 0.47,
                 "anomaly_direction": "lower",
                 "data_metadata_sha256": run_experiment.sha256(metadata_path),
+                "train_fraction": "full",
             }
             (run / "failure.json").write_text(
                 json.dumps(
@@ -392,6 +393,7 @@ class CompactBaselineTests(unittest.TestCase):
             recovery = json.loads((run / "score_recovery.json").read_text())
             self.assertEqual(recovery["kind"], "operational_score_recovery")
             self.assertEqual(recovery["training_git_commit"], "training-commit")
+            self.assertEqual(recovery["reported_table_4"]["ACC"], 92)
             self.assertEqual(np.load(run / "scores.npy").shape, (4,))
             self.assertFalse((run / "history.json").exists())
 
