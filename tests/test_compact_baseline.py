@@ -25,6 +25,29 @@ import run_experiment  # noqa: E402
 
 
 class CompactBaselineTests(unittest.TestCase):
+    def test_complete_metric_audit_exactly_searches_all_thresholds(self) -> None:
+        labels = np.array([0, 0, 1, 1], dtype=np.int8)
+        scores = np.array([0.1, 0.2, 0.8, 0.9], dtype=np.float32)
+        reported = {
+            "DR": 100.0,
+            "FA": 0.0,
+            "SP": 100.0,
+            "PR": 100.0,
+            "ACC": 100.0,
+            "F1": 100.0,
+            "AUC": 100.0,
+        }
+        audit = analyze_results.closest_reported_metric_vector(
+            labels,
+            scores,
+            direction="higher",
+            reported=reported,
+        )
+        self.assertEqual(audit["minimum_maximum_absolute_gap"], 0.0)
+        self.assertEqual(audit["metrics"], reported)
+        # Four distinct scores plus sklearn's all-negative boundary.
+        self.assertEqual(audit["threshold_candidates"], 5)
+
     def test_sgcc_representation_contrasts_are_exactly_48_wide(self) -> None:
         values = np.arange(2 * 1_034, dtype=np.float32).reshape(2, 1_034)
         first = prepare_data.represent_sgcc(values, "first_48")

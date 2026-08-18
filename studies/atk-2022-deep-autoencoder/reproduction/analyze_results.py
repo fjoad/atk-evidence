@@ -221,6 +221,74 @@ def closest_reported_operating_point(
     }
 
 
+def closest_reported_metric_vector(
+    labels: np.ndarray,
+    scores: np.ndarray,
+    *,
+    direction: str,
+    reported: dict[str, float],
+) -> dict[str, object]:
+    """Exactly minimize the seven-metric gap over every score threshold.
+
+    A deterministic threshold can only change predictions when it crosses a
+    distinct saved score. ``roc_curve`` enumerates all such confusion matrices;
+    AUC is fixed by the ranking and is included in every candidate's gap.
+    """
+
+    oriented = scores if direction == "higher" else -scores
+    false_positive_rate, true_positive_rate, thresholds = roc_curve(
+        labels, oriented, drop_intermediate=False
+    )
+    positives = int(np.count_nonzero(labels))
+    negatives = int(labels.size - positives)
+    tp = true_positive_rate * positives
+    fp = false_positive_rate * negatives
+    precision = np.divide(
+        tp,
+        tp + fp,
+        out=np.full_like(tp, np.nan, dtype=np.float64),
+        where=(tp + fp) > 0,
+    )
+    f1 = np.divide(
+        2 * precision * true_positive_rate,
+        precision + true_positive_rate,
+        out=np.full_like(tp, np.nan, dtype=np.float64),
+        where=(precision + true_positive_rate) > 0,
+    )
+    auc = 100 * float(roc_auc_score(labels, oriented))
+    candidates = {
+        "DR": 100 * true_positive_rate,
+        "FA": 100 * false_positive_rate,
+        "SP": 100 * (1 - false_positive_rate),
+        "PR": 100 * precision,
+        "ACC": 50 * (true_positive_rate + 1 - false_positive_rate),
+        "F1": 100 * f1,
+        "AUC": np.full_like(true_positive_rate, auc, dtype=np.float64),
+    }
+    gaps = np.vstack(
+        [np.abs(candidates[metric] - float(reported[metric])) for metric in METRICS]
+    )
+    maximum_gap = np.max(gaps, axis=0)
+    maximum_gap[~np.isfinite(maximum_gap)] = np.inf
+    index = int(np.argmin(maximum_gap))
+    metrics = {metric: float(values[index]) for metric, values in candidates.items()}
+    return {
+        "scope": "all deterministic thresholds over this saved score vector",
+        "direction": direction,
+        "threshold": strict_runtime_threshold(
+            float(thresholds[index]), scores, direction=direction
+        ),
+        "comparison": ">" if direction == "higher" else "<",
+        "metrics": metrics,
+        "absolute_gap_by_metric": {
+            metric: abs(metrics[metric] - float(reported[metric]))
+            for metric in METRICS
+        },
+        "minimum_maximum_absolute_gap": float(maximum_gap[index]),
+        "threshold_candidates": int(thresholds.size),
+    }
+
+
 def audit_attempt_arrays(
     run: Path, data: Path, config: dict[str, object]
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray | None]:
@@ -347,6 +415,14 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
             direction=direction,
             reported_dr=float(reported["DR"]),
             reported_fa=float(reported["FA"]),
+        )
+        result["closest_reported_complete_metric_vector"] = (
+            closest_reported_metric_vector(
+                labels,
+                scores,
+                direction=direction,
+                reported={metric: float(reported[metric]) for metric in METRICS},
+            )
         )
     return result
 
