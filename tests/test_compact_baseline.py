@@ -66,6 +66,10 @@ class CompactBaselineTests(unittest.TestCase):
             result_path = next((output / "results/table_2").rglob("result.json"))
             audit = analyze_results.audit_scores(result_path)
             self.assertIn("closest_reported_operating_point", audit)
+            self.assertEqual(
+                audit["effective_eligibility"],
+                "exploratory_interpretation_I-SGCC-LAST48",
+            )
             successes, _ = analyze_results.load_attempts(output / "results")
             tables = analyze_results.aggregate(successes)
             self.assertEqual(len(tables["table_2_summary"]), 1)

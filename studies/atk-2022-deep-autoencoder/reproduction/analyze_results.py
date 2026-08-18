@@ -43,6 +43,8 @@ def strict_runtime_threshold(
 
 def effective_eligibility(attempt: dict[str, object]) -> str:
     config = attempt["configuration"]
+    if "I-SGCC-LAST48" in str(config.get("method", "")):
+        return "exploratory_interpretation_I-SGCC-LAST48"
     if config.get("output_activation") == "linear":
         return "exploratory_control_C-OUTPUT-LINEAR"
     if config.get("task") == "supervised":
