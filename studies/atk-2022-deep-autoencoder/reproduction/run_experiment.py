@@ -638,6 +638,19 @@ def capped_positions(total: int, cap: int | None, *, seed: int) -> np.ndarray:
     ).astype(np.int64)
 
 
+def svm_attack_margin(margins: np.ndarray, classes: np.ndarray) -> np.ndarray:
+    """Orient binary or multiclass SVM margins toward malicious classes."""
+
+    margins = np.asarray(margins, dtype=np.float64)
+    classes = np.asarray(classes)
+    if margins.ndim == 1:
+        return margins if int(classes[1]) == 1 else -margins
+    benign_index = int(np.flatnonzero(classes == 0)[0])
+    return np.max(np.delete(margins, benign_index, axis=1), axis=1) - margins[
+        :, benign_index
+    ]
+
+
 def score_classifier(
     model: keras.Model,
     features: np.ndarray,
@@ -840,10 +853,7 @@ def run_classical_benchmark(
             margins = np.asarray(
                 estimator.decision_function(features[test_index]), dtype=np.float64
             )
-            benign_index = int(np.flatnonzero(estimator.classes_ == 0)[0])
-            scores = np.max(np.delete(margins, benign_index, axis=1), axis=1) - margins[
-                :, benign_index
-            ]
+            scores = svm_attack_margin(margins, estimator.classes_)
             np.save(run / "scores.npy", scores.astype(np.float32))
         score_seconds = time.perf_counter() - score_started
         metrics = confusion_metrics(test_labels, scores, threshold=threshold)

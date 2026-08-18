@@ -158,6 +158,15 @@ class CompactBaselineTests(unittest.TestCase):
         self.assertTrue(np.array_equal(left, repeated))
         self.assertFalse(np.array_equal(left, other))
 
+    def test_binary_svm_margin_is_oriented_toward_malicious(self) -> None:
+        margins = np.array([-2.0, 0.5, 3.0])
+        self.assertTrue(
+            np.array_equal(
+                run_experiment.svm_attack_margin(margins, np.array([0, 1])),
+                margins,
+            )
+        )
+
     def test_naive_bayes_route_uses_complete_b_plus_m(self) -> None:
         rng = np.random.default_rng(11)
         with tempfile.TemporaryDirectory() as temporary:
