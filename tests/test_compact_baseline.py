@@ -320,6 +320,17 @@ class CompactBaselineTests(unittest.TestCase):
                 self.assertEqual(len(inventory), len(model.layers))
                 self.assertTrue(all("output_shape" in row for row in inventory))
 
+    def test_reported_targets_cover_every_proposed_model_and_table_cell(self) -> None:
+        proposed = {"fc_sae", "lstm_sae", "fc_vae", "lstm_vae", "lstm_aea"}
+        self.assertEqual(set(run_experiment.REPORTED_TABLE_4), proposed)
+        self.assertEqual(set(run_experiment.REPORTED_TABLE_5), proposed)
+        for model in proposed:
+            self.assertEqual(
+                set(run_experiment.REPORTED_TABLE_4[model]),
+                {"half", "three_quarter", "full"},
+            )
+            self.assertEqual(set(run_experiment.REPORTED_TABLE_5[model]), set(range(1, 7)))
+
     def test_vae_probability_completion_is_low_when_error_is_large(self) -> None:
         class ZeroModel:
             def __call__(self, values: np.ndarray, training: bool = False) -> np.ndarray:

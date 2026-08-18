@@ -72,14 +72,48 @@ REPORTED_TABLE_4 = {
         "three_quarter": {"training_minutes": 127, "ACC": 83},
         "full": {"training_minutes": 183, "ACC": 86},
     },
+    "fc_vae": {
+        "half": {"training_minutes": 81, "ACC": 79.5},
+        "three_quarter": {"training_minutes": 103, "ACC": 86},
+        "full": {"training_minutes": 141, "ACC": 88.5},
+    },
+    "lstm_vae": {
+        "half": {"training_minutes": 97, "ACC": 83},
+        "three_quarter": {"training_minutes": 132, "ACC": 90},
+        "full": {"training_minutes": 188, "ACC": 92},
+    },
+    "lstm_aea": {
+        "half": {"training_minutes": 102, "ACC": 86},
+        "three_quarter": {"training_minutes": 142, "ACC": 93},
+        "full": {"training_minutes": 193, "ACC": 94.5},
+    },
 }
-REPORTED_TABLE_5_FC_SAE = {
-    1: {"DR": 82.5, "FA": 15},
-    2: {"DR": 81, "FA": 16},
-    3: {"DR": 83, "FA": 10},
-    4: {"DR": 80, "FA": 17},
-    5: {"DR": 80, "FA": 17},
-    6: {"DR": 80, "FA": 19},
+REPORTED_TABLE_5 = {
+    "fc_sae": {
+        1: {"DR": 82.5, "FA": 15}, 2: {"DR": 81, "FA": 16},
+        3: {"DR": 83, "FA": 10}, 4: {"DR": 80, "FA": 17},
+        5: {"DR": 80, "FA": 17}, 6: {"DR": 80, "FA": 19},
+    },
+    "lstm_sae": {
+        1: {"DR": 84.5, "FA": 13}, 2: {"DR": 83, "FA": 15},
+        3: {"DR": 90, "FA": 9}, 4: {"DR": 82, "FA": 14},
+        5: {"DR": 84, "FA": 14}, 6: {"DR": 83, "FA": 14},
+    },
+    "fc_vae": {
+        1: {"DR": 86, "FA": 11}, 2: {"DR": 85, "FA": 12},
+        3: {"DR": 93, "FA": 8}, 4: {"DR": 88, "FA": 10},
+        5: {"DR": 88, "FA": 11}, 6: {"DR": 87, "FA": 12},
+    },
+    "lstm_vae": {
+        1: {"DR": 88.5, "FA": 7.5}, 2: {"DR": 88, "FA": 8},
+        3: {"DR": 95, "FA": 4.5}, 4: {"DR": 91, "FA": 8},
+        5: {"DR": 91, "FA": 8.5}, 6: {"DR": 90, "FA": 8.5},
+    },
+    "lstm_aea": {
+        1: {"DR": 94, "FA": 3.5}, 2: {"DR": 93, "FA": 4},
+        3: {"DR": 97, "FA": 2.5}, 4: {"DR": 94, "FA": 6.5},
+        5: {"DR": 94, "FA": 5.5}, 6: {"DR": 93, "FA": 6.5},
+    },
 }
 CLASSICAL_BENCHMARKS = ("naive_bayes", "arima", "one_class_svm", "multiclass_svm")
 NEURAL_BENCHMARKS = ("supervised_feed_forward", "supervised_lstm")
@@ -1407,14 +1441,13 @@ def main() -> int:
                 score_kind=SPECS[args.model].anomaly_score,
                 direction=SPECS[args.model].anomaly_direction,
             )
-            if args.model == "fc_sae":
-                for row in table_v_rows:
-                    reported = REPORTED_TABLE_5_FC_SAE[int(row["attack"])]
-                    row["reported"] = reported
-                    row["difference_reproduced_minus_reported"] = {
-                        key: float(row["metrics"][key]) - float(value)
-                        for key, value in reported.items()
-                    }
+            for row in table_v_rows:
+                reported = REPORTED_TABLE_5[args.model][int(row["attack"])]
+                row["reported"] = reported
+                row["difference_reproduced_minus_reported"] = {
+                    key: float(row["metrics"][key]) - float(value)
+                    for key, value in reported.items()
+                }
 
         history_payload = {
             key: [float(value) for value in values]
