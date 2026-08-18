@@ -728,6 +728,11 @@ def run_classical_benchmark(
                 else args.multiclass_svm_train_cap
             ),
             "test_cap": args.svm_test_cap,
+            "score": (
+                "binary_positive_class_margin"
+                if model_name == "multiclass_svm"
+                else "negative_one_class_decision_function"
+            ),
         }
     configuration_id = stable_id({**configuration, "seed": "<seed>"})
     configuration["configuration_id"] = configuration_id
