@@ -56,6 +56,28 @@ FEATURES = 48
 DATA_SEED = 11
 CHUNK_ROWS = 1_000_000
 ATTACK_CHUNK = 50_000
+SGCC_REPRESENTATIONS = ("last_48", "first_48", "binned_mean_48")
+SGCC_METHOD_SUFFIX = {
+    "last_48": "LAST48",
+    "first_48": "FIRST48",
+    "binned_mean_48": "BINNED-MEAN48",
+}
+
+
+def represent_sgcc(values: np.ndarray, representation: str) -> np.ndarray:
+    """Apply one frozen architecture-preserving 1,034-to-48 completion."""
+
+    if representation == "last_48":
+        represented = values[:, -FEATURES:]
+    elif representation == "first_48":
+        represented = values[:, :FEATURES]
+    elif representation == "binned_mean_48":
+        represented = np.column_stack(
+            [values[:, indices].mean(axis=1) for indices in np.array_split(np.arange(values.shape[1]), FEATURES)]
+        )
+    else:
+        raise ValueError(f"unsupported SGCC representation: {representation}")
+    return np.ascontiguousarray(represented, dtype=np.float32)
 
 
 def prepare_sgcc(
@@ -64,8 +86,9 @@ def prepare_sgcc(
     seed: int,
     mode: str,
     adasyn_neighbors: int,
+    representation: str = "last_48",
 ) -> dict[str, object]:
-    """Execute the frozen I-SGCC-LAST48 continuation for Table II."""
+    """Execute one frozen 48-wide SGCC continuation for Table II."""
 
     started = time.perf_counter()
     if digest(SGCC_PATH, "sha256") != SGCC_SHA256:
@@ -125,9 +148,10 @@ def prepare_sgcc(
     missing = ~np.isfinite(completed)
     completed[missing] = np.broadcast_to(fallback, completed.shape)[missing]
 
-    # Literal 1,034 -> 48 is undefined. I-SGCC-LAST48 preserves the printed
-    # input width while declaring that its 48 values are days, not half-hours.
-    raw = np.ascontiguousarray(completed[:, -FEATURES:], dtype=np.float32)
+    # Literal 1,034 -> 48 is undefined. Every registered continuation preserves
+    # the printed width while declaring that its features are days or day bins,
+    # not the half-hourly daily readings described for ISET.
+    raw = represent_sgcc(completed, representation)
     mean = raw.mean(axis=0, dtype=np.float64)
     scale = raw.std(axis=0, dtype=np.float64)
     scale[scale <= np.finfo(np.float32).eps] = 1.0
@@ -177,12 +201,12 @@ def prepare_sgcc(
     metadata: dict[str, object] = {
         "status": "complete",
         "schema": 1,
-        "method": "I-SGCC-LAST48",
+        "method": f"I-SGCC-{SGCC_METHOD_SUFFIX[representation]}",
         "dataset": "SGCC",
         "configuration": {
             "mode": mode,
             "seed": seed,
-            "representation": "last_48",
+            "representation": representation,
             "missing": "interpolate_edge_median",
             "test_adasyn": "printed",
             "supervised_adasyn": "printed_before_split",
@@ -199,7 +223,7 @@ def prepare_sgcc(
             "sgcc_input": {
                 "paper_claim": "SGCC is evaluated by architectures with 48 inputs",
                 "literal_status": "non_executable_no_1034_to_48_rule",
-                "assumption": "most recent 48 chronological daily readings",
+                "assumption": representation,
                 "semantic_warning": "48 days are not the printed 48 half-hour daily readings",
             },
             "sgcc_missing": {
@@ -848,6 +872,11 @@ def prepare_p0(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dataset", choices=("iset", "sgcc"), default="iset")
+    parser.add_argument(
+        "--sgcc-representation",
+        choices=SGCC_REPRESENTATIONS,
+        default="last_48",
+    )
     parser.add_argument("--mode", choices=("tiny", "full"), default="tiny")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--seed", type=int, default=DATA_SEED)
@@ -870,7 +899,7 @@ def main() -> int:
     if args.adasyn_neighbors < 1:
         parser.error("--adasyn-neighbors must be positive")
     output = args.output or DEFAULT_ROOT / (
-        f"sgcc-last48-{args.mode}"
+        f"sgcc-{args.sgcc_representation.replace('_', '')}-{args.mode}"
         if args.dataset == "sgcc"
         else f"p0-{args.mode}-{args.test_adasyn}"
     )
@@ -884,7 +913,7 @@ def main() -> int:
     if args.dataset == "sgcc":
         requested.update(
             {
-                "representation": "last_48",
+                "representation": args.sgcc_representation,
                 "missing": "interpolate_edge_median",
                 "test_adasyn": "printed",
                 "supervised_adasyn": "printed_before_split",
@@ -914,6 +943,7 @@ def main() -> int:
                 seed=args.seed,
                 mode=args.mode,
                 adasyn_neighbors=args.adasyn_neighbors,
+                representation=args.sgcc_representation,
             )
         else:
             benign, meters, days, profiles_record = load_or_extract_profiles(

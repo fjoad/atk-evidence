@@ -27,3 +27,10 @@ table. It cannot prove that no conceivable unreported preprocessing choice
 could match it. That stronger question is addressed only after the breadth map
 by predeclared one-factor branches, repeated seeds, uncertainty intervals, and
 the already-frozen metric-identity checks.
+
+After the complete `last_48` model-family map, two one-factor representation
+contrasts are run without changing anything else: `first_48`, and
+`binned_mean_48` (48 contiguous chronological means spanning all 1,034 days).
+Together they test early, late, and whole-history 48-wide readings. Windowed
+multi-sample interpretations change the sample unit and split semantics and
+remain a later distinct branch rather than being mixed into this contrast.

@@ -25,6 +25,18 @@ import run_experiment  # noqa: E402
 
 
 class CompactBaselineTests(unittest.TestCase):
+    def test_sgcc_representation_contrasts_are_exactly_48_wide(self) -> None:
+        values = np.arange(2 * 1_034, dtype=np.float32).reshape(2, 1_034)
+        first = prepare_data.represent_sgcc(values, "first_48")
+        last = prepare_data.represent_sgcc(values, "last_48")
+        binned = prepare_data.represent_sgcc(values, "binned_mean_48")
+        self.assertTrue(np.array_equal(first, values[:, :48]))
+        self.assertTrue(np.array_equal(last, values[:, -48:]))
+        self.assertEqual(binned.shape, (2, 48))
+        self.assertAlmostEqual(
+            float(binned[0, 0]), float(values[0, :22].mean())
+        )
+
     def test_sgcc_last48_completion_preserves_printed_order_and_width(self) -> None:
         rng = np.random.default_rng(11)
         dates = pd.date_range("2014-01-01", periods=1_034, freq="D")
