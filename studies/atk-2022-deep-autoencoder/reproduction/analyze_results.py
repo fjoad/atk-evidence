@@ -212,8 +212,13 @@ def audit_attempt_arrays(
                 # SGCC has binary source labels, not the six synthetic ISET attacks.
                 attack_ids = np.zeros(indices.size, dtype=np.uint8)
         else:
+            attack_name = (
+                "test_attack_id.npy"
+                if config.get("test_view") == "adasyn"
+                else "test_original_attack_id.npy"
+            )
             full_attacks = np.load(
-                data / "test_original_attack_id.npy", mmap_mode="r"
+                data / attack_name, mmap_mode="r"
             )
             attack_ids = np.asarray(full_attacks[indices], dtype=np.uint8)
     else:

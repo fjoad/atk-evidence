@@ -171,6 +171,22 @@ class CompactBaselineTests(unittest.TestCase):
             )
         )
 
+    def test_adasyn_audit_uses_resampled_attack_provenance(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            data, run = root / "data", root / "run"
+            data.mkdir()
+            run.mkdir()
+            np.save(run / "scores.npy", np.array([0.2, 0.8], dtype=np.float32))
+            np.save(run / "labels.npy", np.array([0, 1], dtype=np.int8))
+            np.save(run / "test_global_row.npy", np.array([2, 3], dtype=np.int64))
+            np.save(data / "test_attack_id.npy", np.array([0, 0, 1, 2], dtype=np.int8))
+            np.save(data / "test_original_attack_id.npy", np.array([0, 0], dtype=np.int8))
+            _, attacks, _, _ = analyze_results.audit_attempt_arrays(
+                run, data, {"task": "anomaly", "test_view": "adasyn"}
+            )
+            self.assertEqual(attacks.tolist(), [1, 2])
+
     def test_naive_bayes_route_uses_complete_b_plus_m(self) -> None:
         rng = np.random.default_rng(11)
         with tempfile.TemporaryDirectory() as temporary:
