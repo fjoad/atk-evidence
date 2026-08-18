@@ -26,6 +26,31 @@ DEFAULT_OUTPUT = (
 )
 METRICS = ("DR", "FA", "SP", "PR", "ACC", "F1", "AUC")
 QUANTILES = (0.0, 0.01, 0.1, 0.25, 0.5, 0.75, 0.9, 0.99, 1.0)
+TABLE_2_NAMES = {
+    "fc_sae": "FC-SAE",
+    "lstm_sae": "LSTM-SAE",
+    "fc_vae": "FC-VAE",
+    "lstm_vae": "LSTM-VAE",
+    "lstm_aea": "LSTM-AEA",
+    "naive_bayes": "Naive Bayes",
+    "arima": "ARIMA",
+    "one_class_svm": "Single-class SVM",
+    "supervised_feed_forward": "Feed forward",
+    "supervised_lstm": "LSTM",
+    "multiclass_svm": "Multi-class SVM",
+}
+
+
+def canonical_reported(attempt: dict[str, object]) -> dict[str, float] | None:
+    """Use the source-transcribed CSV rather than mutable runner constants."""
+
+    if attempt.get("reported_table_2") is None:
+        return attempt.get("reported_table_3")
+    target_name = TABLE_2_NAMES[str(attempt["configuration"]["model"])]
+    path = REPO / "studies/atk-2022-deep-autoencoder/reported/table_2.csv"
+    with path.open(newline="") as handle:
+        row = next(item for item in csv.DictReader(handle) if item["model"] == target_name)
+    return {metric: float(row[metric]) for metric in METRICS}
 
 
 def strict_runtime_threshold(
@@ -306,8 +331,11 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
         ),
         "table_v_heldout_benign_interpretation": by_attack,
     }
-    reported = attempt.get("reported_table_2") or attempt.get("reported_table_3")
+    reported = canonical_reported(attempt)
     if reported:
+        result["stored_reported_target_matches_canonical"] = (
+            attempt.get("reported_table_2") in (None, reported)
+        )
         result["closest_reported_operating_point"] = closest_reported_operating_point(
             labels,
             scores,
@@ -402,7 +430,8 @@ def aggregate(successes: list[dict[str, object]]) -> dict[str, object]:
         }
         if config["train_fraction"] == "full":
             reported_2 = first.get("reported_table_2")
-            reported = reported_2 or first["reported_table_3"]
+            reported = canonical_reported(first)
+            assert reported is not None
             row = dict(base)
             for metric in METRICS:
                 values = [float(item["metrics"][metric]) for item in attempts]

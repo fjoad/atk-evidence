@@ -187,6 +187,17 @@ class CompactBaselineTests(unittest.TestCase):
             )
             self.assertEqual(attacks.tolist(), [1, 2])
 
+    def test_table_ii_audit_uses_canonical_csv_after_metadata_correction(self) -> None:
+        attempt = {
+            "configuration": {"model": "supervised_feed_forward"},
+            "reported_table_2": {"ACC": 90.25},
+        }
+        target = analyze_results.canonical_reported(attempt)
+        self.assertIsNotNone(target)
+        self.assertEqual(target["DR"], 91)
+        self.assertEqual(target["ACC"], 91)
+        self.assertEqual(target["F1"], 90.5)
+
     def test_naive_bayes_route_uses_complete_b_plus_m(self) -> None:
         rng = np.random.default_rng(11)
         with tempfile.TemporaryDirectory() as temporary:

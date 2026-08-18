@@ -56,10 +56,10 @@ REPORTED_TABLE_2 = {
     "lstm_aea": {"DR": 96, "FA": 4, "SP": 96, "PR": 95, "ACC": 96, "F1": 95.5, "AUC": 93},
     "naive_bayes": {"DR": 75, "FA": 16, "SP": 84, "PR": 75, "ACC": 79.5, "F1": 77, "AUC": 73},
     "arima": {"DR": 88, "FA": 10, "SP": 90, "PR": 87, "ACC": 89, "F1": 87.5, "AUC": 88},
-    "one_class_svm": {"DR": 91, "FA": 8.5, "SP": 91.5, "PR": 88, "ACC": 91, "F1": 89.5, "AUC": 89},
-    "supervised_feed_forward": {"DR": 90, "FA": 9.5, "SP": 90.5, "PR": 88.5, "ACC": 90.25, "F1": 89, "AUC": 89},
-    "supervised_lstm": {"DR": 91, "FA": 9, "SP": 91, "PR": 89, "ACC": 91, "F1": 90, "AUC": 90},
-    "multiclass_svm": {"DR": 92, "FA": 7.5, "SP": 92.5, "PR": 90, "ACC": 92.25, "F1": 91, "AUC": 90},
+    "one_class_svm": {"DR": 91, "FA": 8.5, "SP": 91.5, "PR": 90, "ACC": 91, "F1": 90, "AUC": 89},
+    "supervised_feed_forward": {"DR": 91, "FA": 9.5, "SP": 90.5, "PR": 90, "ACC": 91, "F1": 90.5, "AUC": 89},
+    "supervised_lstm": {"DR": 91.5, "FA": 9, "SP": 91, "PR": 90.5, "ACC": 91, "F1": 91, "AUC": 90},
+    "multiclass_svm": {"DR": 92, "FA": 7.5, "SP": 92.5, "PR": 91, "ACC": 92, "F1": 91.5, "AUC": 90},
 }
 REPORTED_TABLE_4 = {
     "fc_sae": {
