@@ -1,0 +1,31 @@
+{
+  "status": "complete_exploratory_common_model_breadth",
+  "date": "2026-08-18",
+  "seed": 11,
+  "interpretation": "one Table-III model, printed threshold, common B2 benign identities, one attack population per column",
+  "metric": "percent",
+  "models": {
+    "fc_sae": {
+      "DR_by_attack": [14.858947536745598, 17.240204504972702, 38.695459047923634, 20.31608544434524, 1.982374549702615, 63.990867458212854],
+      "FA_by_attack": [58.22355714799472, 58.22355714799472, 58.22355714799472, 58.22355714799472, 58.22355714799472, 58.22355714799472]
+    },
+    "lstm_sae": {
+      "DR_by_attack": [6.1717059996713, 6.982663273056781, 25.666573386813784, 3.3431499273749714, 0.2676687588005099, 46.25570228624478],
+      "FA_by_attack": [40.96354409472941, 40.96354409472941, 40.96354409472941, 40.96354409472941, 40.96354409472941, 40.96354409472941]
+    },
+    "fc_vae": {
+      "DR_by_attack": [4.025336584802491, 3.109061915612826, 15.585597590714656, 7.587072300769782, 0.41980375695712235, 38.35196709442142],
+      "FA_by_attack": [32.6198436272094, 32.6198436272094, 32.6198436272094, 32.6198436272094, 32.6198436272094, 32.6198436272094]
+    },
+    "lstm_vae": {
+      "DR_by_attack": [2.4939923332844725, 2.3586032896694786, 14.522873552496568, 1.5685673547166292, 0.11717726281376456, 39.04263777656366],
+      "FA_by_attack": [25.79298586784235, 25.79298586784235, 25.79298586784235, 25.79298586784235, 25.79298586784235, 25.79298586784235]
+    },
+    "lstm_aea": {
+      "DR_by_attack": [15.035246458697014, 22.139795406189343, 44.00543688285383, 3.784985497203825, 0.9335980704396146, 66.66409036596795],
+      "FA_by_attack": [58.21822928460114, 58.21822928460114, 58.21822928460114, 58.21822928460114, 58.21822928460114, 58.21822928460114]
+    }
+  },
+  "structural_identity": "For fixed model, threshold, and benign identities, FP and TN do not depend on the malicious attack population; FA must be invariant across attack columns.",
+  "bounded_conclusion": "The common-model/common-benign interpretation does not reproduce Table V. Attack-varying printed FA requires an unstated change in model, threshold, benign identities, or their combination."
+}

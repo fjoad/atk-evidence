@@ -38,8 +38,9 @@
   were preserved, and no-gradient fresh-process recovery `374441` scored them
   without retraining. LSTM-AEA job `374396` completed all 100 epochs and full
   scoring. Panther audit jobs `378014` and `378015` closed both score-direction
-  questions. No Paper-1 jobs are active. The Slurm wrapper only requests
-  `gpu-all` plus `gpu:1` and executes its arguments.
+  questions. Those model-family breadth jobs are complete; Table-IV half and
+  three-quarter jobs `378182`--`378191` are active. The Slurm wrapper only
+  requests `gpu-all` plus `gpu:1` and executes its arguments.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -61,6 +62,12 @@
   0.80--1.94 points. Exact threshold enumeration leaves every proposed score
   vector at least 33.18 points from its complete reported row. See
   [`../studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md`](../studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md).
+- Table-V common-model/common-benign breadth is complete for all five proposed
+  models. Reproduced FA is exactly invariant across attacks for each model, as
+  required mathematically, while the paper varies it. Reproduced attack DRs are
+  also far below most printed cells. The retrain/resplit interpretations remain
+  open. Table-IV half and three-quarter jobs `378182`--`378191` are running;
+  full-size cells reuse the completed Table-III models.
 
 ## Paper 1: verified foundation
 

@@ -2,8 +2,9 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; trustworthy anchor and Table-III model-family breadth map
-complete; one-factor divergence isolation next before repeated-seed depth
+**Status:** Active; Table-II/III model-family breadth and the Table-V
+common-model reading are complete; Table-IV size breadth is running and
+one-factor divergence isolation remains required before repeated-seed depth
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -137,6 +138,12 @@ chain is inspectable and trusted for one full attempt.
     which branches merit repeated seeds. The eleven Table-III model rows are
     recorded in `studies/atk-2022-deep-autoencoder/TABLE_III_BREADTH.md`; append
     the one-factor interpretation rows from step 10 before freezing depth.
+12. **Cross-table breadth update:** Table-II model breadth is complete for the
+    three one-sample-per-customer interpretations; Table-V common-model/common-
+    benign breadth is complete for all five proposed models; and the ten missing
+    Table-IV half/three-quarter cells are running as jobs `378182`--`378191`.
+    These runs increase table-cell coverage but do not waive step 10 or authorize
+    repeated seeds.
 
 Panther submissions request one generic GPU and no CPU or memory shape.
 Independent frozen breadth rows run concurrently up to the three-job limit;

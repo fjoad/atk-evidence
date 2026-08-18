@@ -1155,6 +1155,31 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/TABLE_II_BREADTH.md` and
   `studies/atk-2022-deep-autoencoder/results/sgcc_table_2_breadth_seed11_20260818.json`.
 
+### ISET Table-V common-model breadth
+
+- **Former belief/status:** Fixed-model FC-SAE already showed invariant FA, but
+  the structural result had not been derived from all five proposed Table-III
+  score vectors.
+- **Evidence:** For every proposed model, applying its fixed threshold to the
+  same held-out benign scores and attacks 1--6 yields one exactly repeated FA:
+  58.22, 40.96, 32.62, 25.79, and 58.22% respectively. The paper instead
+  reports attack-varying FA ranges of 10--19, 9--15, 8--12, 4.5--8.5, and
+  2.5--6.5%. Most reproduced attack-specific DR cells are also far below the
+  printed values.
+- **Root cause:** **VERIFIED mathematical identity for this interpretation** —
+  with fixed model, threshold, and benign identities, FP and TN cannot depend
+  on which malicious attack population is paired with them; therefore FA
+  cannot vary.
+- **Current conclusion + label:** **OBSERVED** — the common-model/common-benign
+  interpretation does not reproduce Table V. The paper's pattern requires an
+  unstated change in model, threshold, benign identities, or their combination.
+- **Remaining uncertainty / blast radius:** “Multiple experiments” can support
+  retraining or resplitting interpretations. Those predeclared branches remain
+  open and must not be conflated with the common-model structural result.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/TABLE_V_BREADTH.md` and
+  `studies/atk-2022-deep-autoencoder/results/iset_table_5_common_model_seed11_20260818.json`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

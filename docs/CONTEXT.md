@@ -21,6 +21,13 @@
   ±0.5-point rounding. The earlier draft claim that balanced accuracy lower-
   bounds AUC was wrong and is explicitly invalidated; the correct one-point
   bound is `AUC >= TPR*(1-FPR)`, which the printed rows satisfy.
+- Table-V common-model/common-benign breadth is complete for all proposed ISET
+  models. Each reproduced FA is exactly constant over attacks 1--6 (FC-SAE
+  58.22, LSTM-SAE 40.96, FC-VAE 32.62, LSTM-VAE 25.79, LSTM-AEA 58.22), while
+  the paper varies FA by attack. This is a confusion-matrix identity, not a
+  stochastic observation. Alternative retrain/resplit experiment identities
+  remain open. Table-IV jobs 378182--378191 cover the ten missing half and
+  three-quarter cells and were all running when this context was updated.
 - Compact batch-512 Paper-1 anchor job 373789 completed 2026-08-11 in 53:12 on
   one V100. `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, reproduced
   DR/FA/ACC/AUC/F1 = 26.18/58.22/33.98/31.04/40.46% versus
