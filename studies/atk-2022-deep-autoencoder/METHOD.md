@@ -151,6 +151,12 @@ label vector, all rows must imply the same `p`.
 
 - Table II reports Naive Bayes `DR=75`, `PR=75`, and `F1=77`. The first two
   values force `F1=75`, not 77.
+- The paper calls the ADASYN test output balanced. On a balanced test set,
+  `PR = DR / (DR + FA)`. Even allowing ±0.5 percentage point around every
+  displayed DR, FA, and PR, that identity is impossible for Table-II FC-SAE,
+  Naive Bayes, ARIMA, single-class SVM, and multi-class SVM, and for Table-III
+  FC-SAE, LSTM-SAE, LSTM-VAE, LSTM-AEA, Naive Bayes, ARIMA, single-class SVM,
+  and multi-class SVM.
 - Table II rows imply prevalences from 39.02% to 50.28%; Table III rows imply
   40.00% to 50.28%.
 - Even allowing each displayed DR, FA, and PR to differ from its underlying

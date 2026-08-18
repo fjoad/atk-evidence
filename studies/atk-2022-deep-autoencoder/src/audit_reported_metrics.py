@@ -50,8 +50,26 @@ def implied_prevalence(tpr: float, fpr: float, precision: float) -> float:
     return numerator / denominator if denominator else float("nan")
 
 
-def audit_rows() -> list[dict[str, float | str]]:
-    rows: list[dict[str, float | str]] = []
+def balanced_precision_rounding_interval(
+    dr_pct: float, fa_pct: float, *, half_width: float = 0.5
+) -> tuple[float, float]:
+    """Precision range allowed by rounded DR/FA on a 50/50 test set."""
+
+    low = expected_precision(
+        (dr_pct - half_width) / 100,
+        (fa_pct + half_width) / 100,
+        0.5,
+    )
+    high = expected_precision(
+        (dr_pct + half_width) / 100,
+        (fa_pct - half_width) / 100,
+        0.5,
+    )
+    return 100 * low, 100 * high
+
+
+def audit_rows() -> list[dict[str, float | str | bool]]:
+    rows: list[dict[str, float | str | bool]] = []
     for dataset, metrics in TABLES.items():
         for model, dr_pct, fa_pct, precision_pct in metrics:
             dr = dr_pct / 100.0
@@ -59,6 +77,10 @@ def audit_rows() -> list[dict[str, float | str]]:
             precision = precision_pct / 100.0
             balanced_precision = expected_precision(dr, fa, 0.5)
             prevalence = implied_prevalence(dr, fa, precision)
+            precision_low, precision_high = balanced_precision_rounding_interval(
+                dr_pct, fa_pct
+            )
+            printed_low, printed_high = precision_pct - 0.5, precision_pct + 0.5
             rows.append(
                 {
                     "dataset": dataset,
@@ -68,6 +90,11 @@ def audit_rows() -> list[dict[str, float | str]]:
                     "reported_precision_pct": precision_pct,
                     "balanced_expected_precision_pct": 100.0 * balanced_precision,
                     "precision_gap_pp": precision_pct - 100.0 * balanced_precision,
+                    "balanced_rounding_precision_min_pct": precision_low,
+                    "balanced_rounding_precision_max_pct": precision_high,
+                    "balanced_rounding_feasible": not (
+                        printed_high < precision_low or printed_low > precision_high
+                    ),
                     "implied_positive_prevalence_pct": 100.0 * prevalence,
                 }
             )
@@ -87,7 +114,9 @@ def main() -> None:
     if args.csv:
         args.csv.parent.mkdir(parents=True, exist_ok=True)
         with args.csv.open("w", newline="") as handle:
-            writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+            writer = csv.DictWriter(
+                handle, fieldnames=list(rows[0]), lineterminator="\n"
+            )
             writer.writeheader()
             writer.writerows(rows)
 
@@ -103,4 +132,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

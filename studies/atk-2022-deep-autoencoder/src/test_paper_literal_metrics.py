@@ -5,6 +5,7 @@ import unittest
 
 import numpy as np
 
+from audit_reported_metrics import balanced_precision_rounding_interval
 from paper_literal_metrics import (
     aggregate_seed_metrics,
     evaluate_attack_columns,
@@ -14,6 +15,11 @@ from paper_literal_metrics import (
 
 
 class PaperLiteralMetricTests(unittest.TestCase):
+    def test_balanced_table_rounding_can_be_mathematically_infeasible(self) -> None:
+        low, high = balanced_precision_rounding_interval(83.0, 14.0)
+        self.assertGreater(low, 83.5)
+        self.assertGreater(high, low)
+
     def test_balanced_precision_identity_and_paper_accuracy(self) -> None:
         # Balanced classes: DR=3/4, FA=1/4, therefore PR=DR/(DR+FA)=3/4.
         labels = np.array([0, 0, 0, 0, 1, 1, 1, 1])
