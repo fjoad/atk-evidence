@@ -6,19 +6,19 @@
 
 ## What this project is
 
-This is a rigorous, extensible, paper-by-paper audit of whether selected
-published numerical results can be reproduced from the methods as written. The
-initial corpus is by Abdulrahman Takiddin and coauthors; the current target is
-"Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in
-Smart Grids." See
-[`docs/VISION.md`](docs/VISION.md) for the full thesis.
+This is a rigorous paper-by-paper audit of three distinct questions: whether
+published numerical results follow from the methods as written, whether the
+experiments identify the mechanism claimed to explain those results, and
+whether the reported targets lie inside a credible empirical performance
+envelope. See [`docs/VISION.md`](docs/VISION.md) for the full thesis.
 
 ## Canonical implementation tutorial
 
 Read [`RUNBOOK.md`](RUNBOOK.md) first. It is the single end-to-end operational
-guide for implementing any paper: PDF reconstruction, exact data, the genuine
-five-file reproduction, sanity checks, full experiments, ambiguity branches,
-confirmation, reporting, and publication.
+guide for auditing any paper: end-to-end reading, discovery sandbox, diagnostic
+breadth, source freeze, exact data, the genuine five-file reproduction,
+mechanism tests, attainability analysis, confirmation, three findings,
+reporting, and publication.
 
 If another document conflicts with its execution order, the paper remains the
 scientific authority and `RUNBOOK.md` remains the workflow authority.
@@ -32,51 +32,81 @@ reading. Do not turn a paper reproduction into a platform.
 The reporting contract for source wording that cannot execute is
 [`docs/decisions/2026-08-11-non-executable-source-ladder.md`](docs/decisions/2026-08-11-non-executable-source-ladder.md).
 
+The project-wide evidence frame is
+[`docs/decisions/2026-08-20-three-part-evidence-frame.md`](docs/decisions/2026-08-20-three-part-evidence-frame.md).
+It separates numerical reproduction, mechanism identification, and
+attainability; defines the discovery-sandbox boundary; and requires cheap
+diagnostic breadth before execution depth.
+
 ## Non-negotiable scientific mandate
 
-1. **Paper extraction dominates reasoning.** Read and visually inspect the
-   complete PDF and freeze a source-located executable specification before
-   scientific model code. Passing tests or prior contracts never compensate
-   for a wrong reading.
-2. **Paper-literal first.** The primary track implements only the named data,
-   algorithms, preprocessing, models, and evaluation explicitly described by
-   the paper.
-3. **No silent repairs or extras.** Corrected splits, parameter matching,
-   alternative anomaly scores, or other improvements belong only in a separate
-   controlled-analysis track.
-4. **Branch ambiguities.** Every material omission or contradiction becomes one
+1. **Read the complete paper before building a theory about it.** The first
+   end-to-end pass identifies numerical targets and writes every explanatory
+   claim as `B > A because Z exploits S`.
+2. **Use a discovery sandbox before a formal program.** Author code, when it
+   exists, is an artifact rather than the authority. With or without it, use
+   the smallest disposable script or notebook to find capability-discriminating
+   questions. Sandbox outputs are exploratory and never eligible reproduction
+   or confirmation.
+3. **Paper extraction dominates formal reasoning.** After discovery, return to
+   the complete PDF, visually inspect it, and freeze a source-located executable
+   specification and causal-claim map before eligible scientific model code.
+   Passing tests or prior contracts never compensate for a wrong reading.
+4. **Paper-literal first for numerical reproduction.** The primary numerical
+   track implements only the named data, algorithms, preprocessing, models, and
+   evaluation explicitly described by the paper.
+5. **No silent repairs or extras.** Corrected splits, parameter matching,
+   alternative scores, mechanism ablations, and improved methods remain visibly
+   separate from paper-consistent numerical evidence. A control can answer a
+   mechanism question without becoming reproduction.
+6. **Branch ambiguities.** Every material omission or contradiction becomes one
    or more documented reasonable interpretations. If the printed operation
    cannot exist or execute, preserve that literal failure, predeclare the
    smallest reasonable executable repairs, run every materially distinct
    repair, and show each result beside the reported target on the site and in
    the paper report. Never pick an interpretation after seeing that it produces
    a favorable result or relabel a repair as the literal method.
-5. **Use the minimal scientific instrument.** The five direct reproduction
+7. **Use the minimal scientific instrument.** The five direct reproduction
    files are the active implementation. Shared code performs mechanical work
    only; paper meaning remains explicit. Hypothetical reuse never justifies new
    infrastructure before eligible results.
-6. **Freeze before confirmatory runs.** Record numerical targets, tolerances,
-   hyperparameter envelope, seeds, partitions, statistics, and stopping rules.
-7. **No cherry-picking.** Preserve all runs. Report distributions and failures,
+8. **Establish the triviality floor.** Run zero-parameter and simple fair rules
+   through the identical evaluation path before attributing value to an
+   elaborate architecture.
+9. **Breadth means cheap questions, not expensive cells.** Run many small,
+   discriminating checks and interpret them before full data, long training,
+   repeated seeds, or branch expansion. One costly run per model family is
+   already depth.
+10. **Earn three findings separately.** Numerical non-reproduction does not
+    establish mechanism failure or unattainability. Mechanism tests must isolate
+    `S`, `Z`, and fair `A/B` comparisons. Attainability requires a declared
+    empirical envelope and stopping rule.
+11. **Freeze before confirmatory depth.** Record the evidence question,
+    competing predictions, eligible implementations, targets, tolerances,
+    hyperparameter envelope, statistical units, seeds, partitions, uncertainty
+    method, compute budget, promotion rule, and stopping rule.
+12. **No cherry-picking.** Preserve all runs. Report distributions and failures,
    not only the best seed or one matching metric.
-8. **Be open to falsification.** A stable paper-consistent reproduction is a
-   valid result and must be reported plainly.
-9. **Bound conclusions.** State what was not reproduced within the tested,
-   predeclared space. Do not infer intent or claim an infinite space was proven
-   impossible.
-10. **Independent paper verdicts.** Do not generalize a finding from one paper to
+13. **Be open to falsification.** A stable reproduction, a mechanism-confirming
+    ablation, or an attainable target is valid and must be reported plainly.
+14. **Bound conclusions.** State what was tested within the finite declared
+    space. Empirical saturation is not structural impossibility. Do not infer
+    intent, unpublished code, or undocumented history.
+15. **Independent paper findings.** Do not generalize a result from one paper to
    another before independently testing the latter.
 
 ## Reading order every session
 
 1. [`RUNBOOK.md`](RUNBOOK.md) — how to execute a paper end to end.
-2. [`docs/STATUS.md`](docs/STATUS.md) — current state and next action.
-3. [`docs/CONTEXT.md`](docs/CONTEXT.md) — compact working memory and don't-repeats.
-4. [`docs/EVIDENCE-AND-LEARNINGS.md`](docs/EVIDENCE-AND-LEARNINGS.md) when
+2. [`docs/decisions/2026-08-20-three-part-evidence-frame.md`](docs/decisions/2026-08-20-three-part-evidence-frame.md)
+   — the three questions, sandbox, and breadth/depth boundary.
+3. [`docs/STATUS.md`](docs/STATUS.md) — current state and next action.
+4. [`docs/CONTEXT.md`](docs/CONTEXT.md) — compact working memory and don't-repeats.
+5. [`docs/EVIDENCE-AND-LEARNINGS.md`](docs/EVIDENCE-AND-LEARNINGS.md) when
    interpreting results, disputed claims, or corrected conclusions.
-5. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
-6. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
-7. The active plan, currently
+6. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
+7. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
+8. The active plan, currently
    [`docs/plans/2026-08-09-paper-1-minimal-finish.md`](docs/plans/2026-08-09-paper-1-minimal-finish.md).
 
 If the current step has no plan, create one before experimental implementation.
@@ -87,6 +117,13 @@ If the current step has no plan, create one before experimental implementation.
   and **OPEN** consistently.
 - Separate paper statements, static audits, exploratory experiments, and
   confirmatory experiments; none substitutes for another.
+- Tag every scientific analysis as numerical (`N`), mechanism (`M`), or
+  attainability (`A`) when one of those questions applies. Tag implementation
+  semantics separately as `P`, `I`, `C`, or exploratory `X`; the two
+  classifications are orthogonal.
+- A sandbox result can motivate a formal question but cannot retrospectively
+  supply its preregistration, choose a favorable interpretation, or become an
+  eligible paper result.
 - Preserve causal corrections: former belief → evidence → root cause → current
   conclusion → confidence and uncertainty.
 - `STATUS.md` is current state, `CONTEXT.md` is prunable active memory, and
@@ -97,15 +134,21 @@ If the current step has no plan, create one before experimental implementation.
 ## Session ritual
 
 1. Read `RUNBOOK.md`, then the relevant documents above.
-2. Identify the current step from STATUS.
-3. Continue the active plan or draft one.
+2. Identify the current phase and evidence question from STATUS.
+3. Continue the active plan only if it names the discriminating question and
+   remains consistent with the three-part frame; otherwise stop and draft a
+   correction.
 4. Do not cross a `CHECKPOINT` without user approval.
 5. Update CONTEXT inline when a non-obvious fact or explicit user emphasis appears.
 6. Update the evidence record when a result changes a belief.
-7. Before any run, name the paper/table cell, interpretation, seed, exact
-   question, and report result it feeds.
-8. Stop if implementation or documentation is growing while no eligible result
-   is advancing.
+7. Before an adaptive `X` probe, record its question and minimal setup. Before
+   any eligible formal run, name the paper/table cell or causal claim,
+   `N`/`M`/`A` question, `P`/`I`/`C` track, seed, competing predictions, exact
+   question, and report finding it feeds.
+8. Before any expensive run, show which cheap diagnostic promoted it and what
+   uncertainty remains after that diagnostic.
+9. Stop if implementation or documentation is growing while no explanation is
+   being discriminated or eligible result is advancing.
 
 ## Charter rituals
 
@@ -125,6 +168,7 @@ work, and report tests, docs, commits, and the next step.
 |---|---|
 | What and why? | `docs/VISION.md` |
 | How do I execute a paper? | `RUNBOOK.md` |
+| What are the three findings and sandbox boundary? | `docs/decisions/2026-08-20-three-part-evidence-frame.md` |
 | Where are we? | `docs/STATUS.md` |
 | What must survive compaction? | `docs/CONTEXT.md` |
 | Why did a conclusion change? | `docs/EVIDENCE-AND-LEARNINGS.md` |

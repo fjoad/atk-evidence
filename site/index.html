@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ATK Evidence: independent, paper-by-paper reproduction of published numerical claims.">
-  <title>ATK Evidence — Paper-by-paper reproduction</title>
+  <meta name="description" content="ATK Evidence: independent paper-by-paper audits of numerical reproduction, claimed mechanisms, and empirical attainability.">
+  <title>ATK Evidence — Paper-by-paper evidence audits</title>
   <style>
     :root {
       color-scheme: dark;
@@ -58,16 +58,16 @@
 </head>
 <body>
   <main>
-    <div class="eyebrow">Independent reproducibility audit</div>
-    <h1>Published numbers should follow from published methods.</h1>
-    <p class="lede">ATK Evidence is an audit pipeline for published results that do not look right. Papers enter, get rebuilt from scratch against the printed method, and leave with a verdict — including harsh ones, where the evidence supports them.</p>
+    <div class="eyebrow">Independent paper-by-paper evidence audit</div>
+    <h1>Published numbers and explanations should follow from published methods.</h1>
+    <p class="lede">ATK Evidence rebuilds papers whose results do not look right and asks three separate questions: did the number reproduce, did the claimed mechanism explain the advantage, and does the target lie inside a credible empirical performance envelope?</p>
 
     <div class="principle">
-      Most reproduction work asks “do the numbers come out?” That question is too weak: it invites the reply “you implemented it wrong” — and sometimes that reply is correct. We audit a paper the way a reviewer would who doubts every item in it and checks each one personally.
+      “Do the numbers come out?” is necessary but not sufficient. A correct number can come from the wrong mechanism, and a failed reproduction does not prove that every possible implementation must fail. Numerical, mechanism, and attainability findings therefore have separate evidence bars.
     </div>
 
     <div class="principle" style="border-left-color:var(--amber); background:#241f12; color:#f6e6c2">
-      <strong>Conflict of interest.</strong> A maintainer of this project is the second author of the 2025 water paper audited as study&nbsp;2. That verdict is held to pre-registered ambiguity branches, published corrections of the audit&rsquo;s own errors, and conclusions bounded strictly to what the artefact supports.
+      <strong>Conflict of interest.</strong> A maintainer of this project is the second author of the 2025 water paper audited as study&nbsp;2. Those findings are held to pre-registered ambiguity branches, published corrections of the audit&rsquo;s own errors, and conclusions bounded strictly to what the artefact supports.
     </div>
 
     <h2>Studies</h2>
@@ -100,19 +100,29 @@
     </article>
 
     <h2>The pipeline</h2>
-    <p class="lede" style="font-size:1.05rem">Tiers are ordered so a failure low down makes everything above it moot. A project that only runs the last tier can spend months reproducing a result that never needed a model.</p>
+    <p class="lede" style="font-size:1.05rem">After one complete orientation read, we explore cheaply in a disposable sandbox, return to the paper to freeze the formal reading, and promote only questions that survive diagnostic breadth to expensive execution.</p>
     <ol style="color:var(--muted); max-width:820px">
-      <li><strong style="color:var(--text)">Does the paper cohere with itself?</strong> No computation. Do the reported numbers satisfy the metric definitions they claim?</li>
-      <li><strong style="color:var(--text)">Is the problem non-trivial?</strong> Measure a zero-parameter rule through the identical evaluation path first. If it performs comparably, every downstream comparison is moot — including ours.</li>
-      <li><strong style="color:var(--text)">Is each claimed component doing work?</strong> Destroy one claimed structure at a time and see whether anything notices.</li>
-      <li><strong style="color:var(--text)">Are the comparisons fair?</strong> If our build of the paper’s own baseline beats the paper’s reported baseline, the margin was measured against something undertrained.</li>
-      <li><strong style="color:var(--text)">Is the evaluation sound?</strong> Per-class detectability, seed variance, threshold sensitivity.</li>
-      <li><strong style="color:var(--text)">Only now, the headline claims</strong> — with intervals, not point estimates.</li>
+      <li><strong style="color:var(--text)">Read and map the claims.</strong> Record the numerical targets and causal story, such as “B beats A because component Z exploits structure S.”</li>
+      <li><strong style="color:var(--text)">Discover in a sandbox.</strong> Use toy witnesses, trivial rules, minimal models, static checks, and output inspection to find tests that distinguish competing explanations.</li>
+      <li><strong style="color:var(--text)">Freeze the source reading.</strong> Return to the complete paper and predeclare the executable method, reasonable interpretations, predictions, budget, and stopping rules.</li>
+      <li><strong style="color:var(--text)">Build the minimal instrument.</strong> Acquire the exact data, implement the paper-literal path, and prove the data, model, and metric routes on tiny cases.</li>
+      <li><strong style="color:var(--text)">Run diagnostic breadth.</strong> Check coherence, triviality, claimed structure, component necessity, fairness, evaluation soundness, and possible ceilings with the cheapest informative probe first.</li>
+      <li><strong style="color:var(--text)">Promote surviving questions.</strong> Only then spend deeply on numerical branches, capability-sensitive mechanism tests, or an empirical performance envelope.</li>
+      <li><strong style="color:var(--text)">Confirm and report.</strong> Preserve all attempts and issue three bounded findings rather than one overloaded verdict.</li>
     </ol>
 
-    <h2>The verdict ladder</h2>
+    <h2>The three findings</h2>
     <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:.97rem">
-      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Verdict</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Meaning</th></tr>
+      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Finding</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Question</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Required evidence</th></tr>
+      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Numerical</strong></td><td style="padding:8px 10px">Was the reported result recovered?</td><td style="padding:8px 10px">A source-faithful finite space, repeated runs, uncertainty, failures, and predeclared comparison criteria.</td></tr>
+      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Mechanism</strong></td><td style="padding:8px 10px">Did the claimed component or structure cause the advantage?</td><td style="padding:8px 10px">Capability witnesses, structure controls, ablations, trivial baselines, and behavior that discriminates the claim from alternatives.</td></tr>
+      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Attainability</strong></td><td style="padding:8px 10px">Where is the target relative to the observed performance envelope?</td><td style="padding:8px 10px">Declared search axes, distributions, response curves, plateaus, target gap, budget, and explicit untested space.</td></tr>
+    </table>
+    <p style="color:var(--muted); max-width:820px; font-size:.95rem">A numerical miss does not establish a mechanism failure or universal impossibility. A flat empirical curve supports bounded implausibility only inside its declared envelope. Literal impossibility is reserved for a proved constraint whose assumptions exactly match the printed protocol.</p>
+
+    <h2>Numerical and internal-consistency vocabulary</h2>
+    <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:.97rem">
+      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Finding</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Meaning</th></tr>
       <tr><td style="padding:8px 10px"><code>reproduced</code></td><td style="padding:8px 10px">The complete reported result pattern was recovered.</td></tr>
       <tr><td style="padding:8px 10px"><code>partially reproduced</code></td><td style="padding:8px 10px">Some reported results recovered, others not.</td></tr>
       <tr><td style="padding:8px 10px"><code>not reproduced</code></td><td style="padding:8px 10px">Not recovered within the finite tested space. Bounded by that space — <em>not</em> a claim that reproduction is impossible.</td></tr>
@@ -120,20 +130,23 @@
       <tr><td style="padding:8px 10px; color:#ff9b8f"><code>unattainable as printed</code></td><td style="padding:8px 10px">No valid confusion matrix on the described protocol yields the printed numbers, <strong>and</strong> the deviation is systematic rather than consistent with rounding or isolated transcription error.</td></tr>
       <tr><td style="padding:8px 10px; color:#ff9b8f"><code>no consistent protocol</code></td><td style="padding:8px 10px"><strong>Strongest rung.</strong> An exhaustive pre-registered search over measurement protocols &mdash; any test-set size, any class prevalence, and the common metric-definition variants &mdash; finds <strong>no single protocol</strong> reproducing the reported table, and most cells are unreachable under <em>every</em> protocol searched. The likelihood of the table under &ldquo;these were measured&rdquo; is then zero rather than small.</td></tr>
     </table>
-    <p style="color:var(--muted); max-width:820px; font-size:.95rem">Every rung is a statement about the artefact. Even the strongest does not distinguish deliberate fabrication from catastrophic process failure &mdash; placeholder values never replaced, a table carried from a draft &mdash; because both produce numbers that were never measured. That distinction requires evidence outside the paper, and this project does not assert it.</p>
+    <p style="color:var(--muted); max-width:820px; font-size:.95rem">Every label is a statement about the artefact and the declared evidence space. Even the strongest does not distinguish deliberate fabrication from catastrophic process failure. That distinction requires evidence outside the paper, and this project does not assert it.</p>
 
     <h2>Rules we hold ourselves to</h2>
     <ol style="color:var(--muted); max-width:820px">
-      <li>Reconstruct the method from the paper before treating any prior implementation as authority.</li>
+      <li>Read the complete paper once, explore adaptively in a visibly disposable sandbox, then return to the paper and freeze the formal method.</li>
+      <li>Treat author code as an artefact, not authority over unclear or contradictory printed wording.</li>
       <li>Execute questionable printed steps rather than silently correcting them.</li>
-      <li>Enumerate every material ambiguity <em>before</em> results are seen.</li>
+      <li>Enumerate every material formal interpretation <em>before</em> its eligible results are seen.</li>
+      <li>Test competing explanations cheaply before expanding model families or search spaces.</li>
       <li>Design experiments whose outcome we do not control. Results confirming a paper’s premise are reported as plainly as results that do not.</li>
       <li>No cherry-picking: distributions and failures, never the best seed.</li>
+      <li>Keep numerical, mechanism, and attainability conclusions separate and bounded to the evidence that earned them.</li>
       <li><strong style="color:var(--text)">Publish our own errors.</strong> Each study page carries a corrections section. Two findings in study 2 were retracted as our own bugs.</li>
     </ol>
 
     <footer>
-      This project assesses reproducibility within documented finite experiment spaces. It does not infer author intent. Source code and evidence are at
+      This project assesses numerical reproduction, claimed mechanisms, and empirical attainability within documented finite evidence spaces. It does not infer author intent or claim to exhaust undocumented procedures. Source code and evidence are at
       <a href="https://github.com/fjoad/atk-evidence">github.com/fjoad/atk-evidence</a>.
     </footer>
   </main>

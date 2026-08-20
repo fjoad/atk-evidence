@@ -1,22 +1,31 @@
 # ATK Evidence
 
-**→ [atk-evidence site: verdicts, reports, and method maps](https://fjoad.github.io/atk-evidence/)**
+**→ [atk-evidence site: findings, reports, and method maps](https://fjoad.github.io/atk-evidence/)**
 
-ATK Evidence is an audit pipeline for published results that do not look right.
-Papers enter, get rebuilt from scratch against the printed method, and leave
-with a verdict — including harsh ones, where the evidence supports them.
+ATK Evidence is a paper-by-paper audit of published results that do not look
+right. It rebuilds the printed method from scratch and asks three questions:
+did the reported number reproduce, did the claimed mechanism actually explain
+the advantage, and does the target lie inside a credible empirical performance
+envelope?
 
-Most reproduction work asks *"do the numbers come out?"* That question is too
-weak: it invites the reply *"you implemented it wrong"*, and sometimes that
-reply is correct. This project instead audits a paper the way a reviewer would
-who doubts every item in it and checks each one personally.
+Most reproduction work asks only *"do the numbers come out?"* That question is
+necessary but too weak. A number can be correct while the experiment fails to
+identify the explanation attached to it; a numerical miss can also be real
+without proving that every possible implementation must fail. This project
+therefore separates numerical, mechanistic, and attainability findings and
+earns each one with the evidence it requires.
 
 ## Operating philosophy
 
-The difficult part is reconstructing the paper correctly. Every page, equation,
-algorithm, figure, table, and material omission is turned into a source-located
-executable specification before model code is written. If that reading is wrong,
-everything downstream is evidence about an experiment the paper never claimed.
+The difficult part is reconstructing the paper correctly and discovering what
+would actually discriminate its story from simpler alternatives. After one
+end-to-end read, the researcher uses a disposable sandbox—tiny synthetic data,
+trivial rules, minimal versions of the compared systems, and output
+inspection—to find decisive questions cheaply. The researcher then returns to
+the complete source and freezes every material claim, operation, omission, and
+reasonable interpretation before formal model code is written. Sandbox results
+remain exploratory; they can motivate a test but cannot become confirmation
+after the fact.
 
 The software is deliberately small. Each paper uses five direct scientific files
 for download, preparation, models, execution, and analysis. Shared code performs
@@ -24,43 +33,55 @@ mechanical work only; the meaning of the paper remains visible in its study. The
 project does not build a general experiment platform before producing eligible
 results.
 
+Execution is breadth-first before it is deep. The first computational pass uses
+many cheap, question-specific probes across competing explanations. One costly
+full run for every named architecture is already depth, not diagnostic breadth.
+Only unresolved questions with a clear route to changing a report finding are
+promoted to expensive execution.
+
 The full rationale and working rules are in the
-[`paper-first minimal-instrument decision`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md).
+[`paper-first minimal-instrument decision`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md)
+and the
+[`three-part evidence-frame decision`](docs/decisions/2026-08-20-three-part-evidence-frame.md).
 
 ## Conflict of interest
 
 Faaiz Joad, a maintainer of this project, is the second author of the 2025 water
-paper audited as study 2. That study's verdict is therefore held to
+paper audited as study 2. That study's published findings are therefore held to
 pre-registered ambiguity branches, published corrections of the audit's own
 errors, and conclusions bounded strictly to what the artefact supports. The
 project does not assert how any reported numbers arose.
 
 ## Papers in the pipeline
 
-| # | Paper | Year | Verdict |
+| # | Paper | Year | Published state |
 |---|---|---|---|
 | 1 | Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids | 2022 | `in progress` |
 | 2 | Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems | 2025 | `no consistent protocol` |
 
 Each paper has a study directory (`studies/<id>/`), a report
-(`reports/<id>/main.tex`), and a verdict page on the site. The verdict
-vocabulary and its evidentiary bars are defined in `studies/registry.toml`.
+(`reports/<id>/main.tex`), and an evidence page on the site. Registry labels
+record publication state and existing numerical or internal-consistency
+findings; the report contract requires the three findings described here.
 
 ## The pipeline
 
-Tiers are ordered so a failure low down makes everything above it moot.
-
-0. **Does the paper cohere with itself?** No computation.
-1. **Is the problem non-trivial?** Measure a zero-parameter rule through the
-   identical evaluation path first. If it performs comparably, every downstream
-   comparison is moot — including ours.
-2. **Is each claimed component doing work?** Destroy one claimed structure at a
-   time and see whether anything notices.
-3. **Are the comparisons fair?** A margin over an undertrained baseline is not a
-   margin.
-4. **Is the evaluation sound?** Per-class detectability, seed variance,
-   threshold sensitivity.
-5. **Only now, the headline claims** — with intervals, not point estimates.
+1. **Read and map the claims.** Record both numerical targets and causal claims
+   such as “`B` beats `A` because component `Z` exploits structure `S`.”
+2. **Discover in a sandbox.** Use toy witnesses, trivial rules, minimal systems,
+   static checks, and output inspection to find discriminating questions.
+3. **Freeze the source reading.** Return to the complete paper and predeclare
+   the executable method, reasonable interpretations, predictions, budgets, and
+   stopping rules.
+4. **Build the minimal instrument.** Acquire the exact data, implement the
+   paper-literal route, and pass deterministic and one-step checks.
+5. **Run diagnostic breadth.** Test coherence, triviality, claimed structures,
+   component necessity, comparison fairness, evaluation soundness, and possible
+   ceilings with the cheapest informative probes first.
+6. **Promote surviving questions to depth.** Run only the numerical branches,
+   mechanism controls, or performance-envelope axes that remain material.
+7. **Confirm and report three findings.** Preserve all attempts and state
+   numerical, mechanism, and attainability conclusions separately.
 
 Full protocol: [`RUNBOOK.md`](RUNBOOK.md).
 
@@ -68,17 +89,22 @@ Full protocol: [`RUNBOOK.md`](RUNBOOK.md).
 
 For every paper:
 
-1. reconstruct the printed method before running experiments;
-2. execute questionable printed steps rather than silently correcting them;
-3. branch every material ambiguity before looking at outcomes;
-4. keep scientifically corrected controls separate from reproduction evidence;
-5. preserve every seed, failure, timing, configuration, and raw result; and
-6. state only what was or was not reproduced inside the tested finite space.
+1. orient with a complete read, then use a disposable discovery sandbox;
+2. return to the paper and freeze the printed method and causal claim map;
+3. execute questionable printed steps rather than silently correcting them;
+4. predeclare every material interpretation before formal outcomes are seen;
+5. keep exploratory work, reasonable repairs, and controlled analyses visibly
+   separate from paper-literal evidence;
+6. prefer cheap discriminating tests before expensive model-family coverage;
+7. preserve every seed, failure, timing, configuration, and raw result; and
+8. issue bounded numerical, mechanism, and attainability findings without
+   inferring intent or claiming an infinite space was exhausted.
 
-The working hypothesis is that the selected papers' complete numerical result
-patterns will not reproduce reliably under faithful, documented
-implementations. It is a hypothesis, not a verdict or an allegation. A stable
-reproduction is a valid and welcome falsification.
+The working hypotheses are paper-specific and genuinely falsifiable. A stable
+numerical reproduction, a component that passes capability-sensitive causal
+tests, or a target that falls inside the observed envelope must each be
+reported plainly. Suspicion chooses what to inspect; it does not determine the
+result.
 
 ## Studies
 
@@ -118,9 +144,10 @@ Acquisition instructions, access conditions, provenance, and checksums are
 recorded per study.
 
 Agents and researchers implementing a paper should begin with the single
-end-to-end [`RUNBOOK.md`](RUNBOOK.md). It defines the PDF-first method freeze,
-five-file reproduction, sanity runs, full experiments, ambiguity tests,
-confirmatory assessment, and reporting sequence.
+end-to-end [`RUNBOOK.md`](RUNBOOK.md). It defines the initial paper read,
+discovery sandbox, source freeze, five-file instrument, diagnostic breadth,
+promoted numerical/mechanism/attainability work, confirmation, and reporting
+sequence.
 
 ## About the implementation size
 
@@ -141,8 +168,9 @@ implement the paper.
 ## Reports and website
 
 Each completed paper will have a conventional LaTeX report under
-`reports/<study-id>/`. GitHub Pages can host the project landing page, the
-method maps, and rendered report PDFs at one project URL:
+`reports/<study-id>/` with separate numerical, mechanism, and attainability
+findings. GitHub Pages can host the project landing page, the method maps, and
+rendered report PDFs at one project URL:
 
 ```text
 https://fjoad.github.io/atk-evidence/

@@ -2,10 +2,11 @@
 
 **Date:** 2026-08-20
 
-**Status:** Accepted as the scientific direction; repository integration and
-current-work drift assessment remain pending
+**Status:** Accepted and integrated into the shared project vision, runbook,
+architecture, agent charter, public overview, report contract, and plan
+template. Study-specific execution contracts require separate reconciliation.
 
-**Scope:** Every audited paper; Paper 1 is the first application
+**Scope:** Every audited paper
 
 ## Why this decision exists
 
@@ -31,8 +32,9 @@ numerical reproduction stronger; they do not automatically establish or refute
 the claimed mechanism, and they do not by themselves show whether ordinary
 additional search could plausibly reach the target.
 
-This decision preserves that distinction before the existing repository,
-runbook, active plan, and evidence record are assessed for drift from it.
+This decision preserves that distinction as the governing project-wide frame.
+It does not, by itself, reclassify historical experiments or change an active
+study-specific execution contract.
 
 ## The three questions
 
@@ -508,14 +510,14 @@ conversation does not:
 11. The audit therefore needs three separately earned findings: numerical,
     mechanistic, and attainability.
 
-## Immediate direction and non-action
+## Integration boundary
 
-This decision preserves the new scientific direction. It does not yet assert
-that Paper 1 has earned any of the three findings, and it does not retroactively
-relabel exploratory results.
+This decision now governs the shared meta-project documentation and the design
+of future audits. It does not assert that any existing study has earned any of
+the three findings, retroactively relabel exploratory results, or silently
+alter a frozen study-specific execution contract.
 
-The next separate task is to audit the current repository documentation,
-active goal, plan, and experiments against this decision; identify what remains
-valid, what has drifted, and what evidence is missing; then propose a bounded
-documentation and goal correction for user approval before changing the
-scientific execution contract.
+Applying the frame to an existing study is a separate scientific task: map its
+preserved artifacts to `N`, `M`, and `A`; identify which evidence remains valid;
+declare what is missing; and obtain the required checkpoint before changing its
+active plan or confirmatory contract.

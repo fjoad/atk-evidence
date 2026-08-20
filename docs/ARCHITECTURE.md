@@ -1,160 +1,280 @@
-# ATK Evidence — Architecture
+# ATK Evidence — Scientific Architecture
 
-**Last updated:** 2026-07-24
+**Last updated:** 2026-08-20
 
-## Overview
+## Purpose
 
-The repository is a domain-neutral evidence pipeline organized around
-independent target papers. Local source PDFs and raw datasets feed versioned
-paper specifications, literal implementations, immutable run outputs,
-statistical assessments, and per-paper LaTeX reports. Charter preserves intent,
-state, and causal evidence across Claude and Codex sessions.
+The repository is a domain-neutral, paper-by-paper evidence system. It asks
+three questions that must be answered separately:
 
-## Structure
+1. **Numerical (`N`):** does the method as described recover the reported
+   numerical result?
+2. **Mechanistic (`M`):** does the evidence identify the claimed reason for an
+   advantage—for example, that model `B` beats model `A` because component `Z`
+   exploits structure `S`?
+3. **Attainability (`A`):** where does the reported target lie relative to the
+   declared empirical performance envelope, and does ordinary additional
+   search show a credible route to it?
+
+These are evidence questions, not three labels for the same experiment. A
+numerical miss does not establish mechanism failure or unattainability. A
+mechanism failure does not imply the reported number was never observed. An
+empirical plateau is not a proof over every possible implementation.
+
+## Scientific lifecycle
+
+The architecture has two broad modes separated by a source freeze.
+
+### Discovery mode
+
+After an initial end-to-end paper read, a disposable sandbox is used to learn
+what the decisive questions are. It may use toy or synthetic data, trivial
+rules, the smallest recognizable versions of `A`, `B`, and `B-Z`, output
+inspection, and static calculations. Its job is to expose competing
+explanations cheaply.
+
+Discovery proceeds breadth-first: many small probes that distinguish possible
+stories before one expensive implementation path. It is adaptive and may
+generate hypotheses, but its results are not confirmatory evidence and cannot
+silently redefine the paper.
+
+### Formal evidence mode
+
+The researcher returns to the complete source, freezes a source-located
+executable specification and causal claim map, acquires the exact data, and
+builds the smallest transparent instrument that can execute the frozen
+reading. Only questions that survive cheap diagnostics are promoted to costly
+depth. Formal evidence is then confirmed under predeclared targets, seeds,
+partitions, statistics, budgets, and stopping rules.
+
+## Two orthogonal classifications
+
+Every material run or static analysis carries two labels.
+
+### Implementation semantics
+
+- **`P` — paper-literal:** directly executes the printed operation, including
+  a literal failure when the operation cannot execute.
+- **`I` — reasonable interpretation:** a source-supported completion of a
+  material omission or contradiction.
+- **`C` — controlled analysis:** a deliberate correction, ablation, positive
+  control, synthetic witness, or alternative method used to test an
+  explanation.
+- **`X` — exploratory:** adaptive discovery whose question or procedure was
+  not frozen in advance.
+
+### Evidence question
+
+- **`N` — numerical reproduction**
+- **`M` — mechanism identification**
+- **`A` — empirical attainability**
+
+The classifications are independent. A run can be `P/N`, `C/M`, or `I/A`.
+One artifact can inform more than one question, but each inference must be
+stated and bounded separately. `X` work can motivate a formal question; it
+cannot be promoted retrospectively into confirmation.
+
+## Evidence layers
+
+1. **Source layer:** complete paper PDFs, official dataset metadata, raw files,
+   hashes, and source-located quotations or paraphrases.
+2. **Claim layer:** numerical targets, the causal claim map, required
+   structures and capabilities, omissions, contradictions, and material
+   competing explanations.
+3. **Discovery layer:** disposable sandbox code and outputs, toy witnesses,
+   trivial baselines, static checks, and the diagnostic breadth map.
+4. **Specification layer:** frozen executable reading, reasonable
+   interpretations, promoted `N/M/A` questions, and predicted discriminating
+   outcomes.
+5. **Contract layer:** targets, tolerances, independent units, partitions,
+   seeds, statistics, compute envelope, budgets, and stopping rules.
+6. **Implementation layer:** the minimal paper-literal instrument and clearly
+   separated interpretation and controlled-analysis tracks.
+7. **Run layer:** immutable configuration, environment, seed, scores,
+   predictions, timing, completion or failure status, and raw outputs.
+8. **Assessment layer:** separate numerical, mechanism, and attainability
+   analyses against their frozen contracts.
+9. **Report layer:** one bounded finding for each evidence question, followed
+   by limitations and the combined scientific interpretation.
+
+No layer can substitute for an earlier one. Passing software tests cannot fix
+a mistaken paper reading. A sandbox pattern cannot replace a formal run. A
+large sweep cannot establish a mechanism unless its outcomes discriminate that
+mechanism from alternatives.
+
+## Repository structure
 
 ```text
 atk-evidence/
-  RUNBOOK.md                 # Canonical end-to-end paper implementation guide
-  docs/                       # Charter vision, status, memory, evidence, plans
-  papers/                     # Local source PDFs; ignored by Git
-  data/                       # Local raw/derived datasets; ignored by Git
-  scripts/                    # Environment, data acquisition/verification, tests
+  RUNBOOK.md                 # Canonical end-to-end audit workflow
+  docs/                      # Vision, architecture, status, evidence, decisions
+  papers/                    # Local source PDFs; ignored by Git
+  data/                      # Local raw/derived datasets; ignored by Git
+  scripts/                   # Environment, verification, and deterministic tests
   studies/
-    registry.toml             # Stable cross-domain paper registry
-    atk-2022-deep-autoencoder/
-      METHOD.md               # Fresh PDF-derived executable specification
-      reproduction/           # Primary five-file scientific implementation
+    registry.toml            # Stable cross-domain paper registry
+    <study-id>/
+      METHOD.md              # Source freeze and executable claim map
+      reproduction/          # Minimal paper-facing scientific instrument
         download_data.py
         prepare_data.py
         models.py
         run_experiment.py
         analyze_results.py
-      download_data.py        # Historical forensic command wrapper
-      prepare_data.py         # Historical forensic command wrapper
-      run_experiment.py       # Historical forensic command wrapper
-      analyze_results.py      # Historical forensic command wrapper
-      src/                    # Study 1 parsers, audits, and runners
-      results/                # Machine-readable summaries; large arrays ignored
+      results/               # Machine-readable summaries; large arrays ignored
   reports/
-    atk-2022-deep-autoencoder/# Standalone LaTeX report source
-    synthesis/                # Planned cross-paper LaTeX report
+    <study-id>/              # Standalone report source
+    synthesis/               # Later cross-paper synthesis
   site/
-    index.html                # Multi-paper public landing page
-    papers/<study-id>/        # Self-contained readable paper maps
-  .claude/rules/              # Claude automation; canonical facts stay shared
-  AGENTS.md                   # Cross-agent operating contract
+    index.html               # Public project overview
+    papers/<study-id>/       # Self-contained readable paper maps
+  AGENTS.md                  # Shared operational contract
 ```
 
-Every later paper receives a registered, self-contained study directory before
-implementation begins.
-
-The four current study-root programs are a small command surface over `src/`.
-They are not, by themselves, a compact reference implementation: the Paper 1
-`src/` tree contains a large forensic branch engine, evidence verifier, tests,
-and the cluster adapter.
-
-The target public architecture separates two code products:
-
-1. a real five-file reference track (`download`, `prepare`, `models`, `run`,
-   `analyze`) for one frozen source-faithful anchor; and
-2. the larger forensic harness for ambiguity coverage, corrected controls,
-   cluster execution, and evidence verification.
-
-The extraction is the active Paper 1 plan and must preserve existing
-fingerprints and result eligibility. Small wrappers over the forensic harness
-do not satisfy it.
-
-## Evidence layers
-
-1. **Source layer:** paper PDFs, official dataset metadata, raw files, hashes.
-2. **Specification layer:** explicit paper statements, equations, target tables,
-   omissions, contradictions, and ambiguity branches.
-3. **Contract layer:** frozen reproduction tolerances, search space, seeds,
-   partitions, statistics, and stopping rules.
-4. **Implementation layer:** paper-literal code and tests; controlled variants
-   live separately and cannot overwrite the literal path.
-5. **Run layer:** configuration, environment, seed, scores, predictions, timing,
-   and summary metrics for every attempted run.
-6. **Assessment layer:** statistical comparison against the frozen contract.
-7. **Report layer:** per-paper and cross-paper LaTeX sources and rendered PDFs.
+Each paper receives a registered, self-contained study directory. Reuse is
+permitted for mechanical operations, never as a reason to hide paper meaning
+inside a general experiment platform. Historical or forensic machinery may be
+preserved as evidence, but it is neither scientific authority nor the default
+path for a new audit.
 
 ## Key interfaces
 
+### Source and claim map
+
+`METHOD.md` records both what was printed and what the audit will test. In
+addition to numerical cells, it expresses central explanatory claims in a form
+such as:
+
+> `B` outperforms `A` because additional component `Z` captures or exploits
+> structure `S`.
+
+The formal program then asks whether `S` exists and matters, whether `A` lacks
+the relevant capability, whether `Z` supplies it, whether trained `B` uses it,
+and whether that use causally explains the measured advantage. A headline
+metric alone cannot identify those links.
+
 ### Dataset manifest
 
-Each dataset record must identify the authoritative source, access status,
+Each dataset record identifies the authoritative source, access status,
 version, expected files, official checksum when available, local checksum, and
 transform provenance. Code consumes verified local paths, never an unrecorded
-substitute.
+substitute. Restricted datasets carry access instructions and checksum
+verification, never embedded credentials.
 
-Acquisition scripts may download only openly available data or files for which
-the invoking researcher already has authorization. Restricted datasets include
-explicit access instructions and checksum verification, never embedded tokens.
+### Discovery record
 
-### Reproduction contract
+The sandbox record is intentionally lightweight. It preserves the question,
+minimal setup, observation, competing explanations affected, and whether a
+formal test was promoted. Disposable code may remain ignored or under a clearly
+marked exploratory path. It must not become an undocumented second
+implementation or be cited as confirmatory evidence.
 
-Each paper begins with a concise source-located `METHOD.md` and one declared
-straight-through experiment. Before confirmatory runs, its active plan freezes
-targets, eligible material interpretations, tolerances, seeds, statistics,
-budget, and stopping rules. A machine-readable branch matrix is optional later
-support, not a prerequisite for the first full anchor.
+### Formal evidence contract
+
+Before confirmation, the active plan freezes:
+
+- the `N`, `M`, or `A` question;
+- the `P`, `I`, or `C` implementation semantics;
+- the paper claim or causal link at issue;
+- competing predictions and disconfirming outcomes;
+- exact data, independent unit, split, seeds, statistics, and tolerance;
+- the finite capacity/search/compute envelope;
+- promotion and stopping rules; and
+- the report finding the result will change.
 
 ### Run record
 
-Every run must be reconstructable from: source revision, data hash, branch id,
-hyperparameters, seed, split id, environment, raw scores/predictions, metrics,
-duration, and completion/failure status. Failed runs remain part of the record.
+Every formal run is reconstructable from source revision, data hash,
+interpretation, evidence question, hyperparameters, seed, split, environment,
+raw scores or predictions, metrics, duration, and completion or failure status.
+All attempts remain visible; no best-seed or favorable-branch selection is
+allowed.
 
-Historical the cluster/DDP attempts retain their existing detailed fingerprints
-inside the forensic layer. New primary runs use the same five-file scientific
-path locally and on the cluster; a short Slurm wrapper may select resources but
-must not introduce a second scientific implementation.
+### Mechanism assessment
 
-### Verdict
+Mechanism evidence uses capability-sensitive tests: synthetic witnesses,
+structure-preserving and structure-destroying controls, component ablations,
+trivial baselines, learned-behavior inspection, and paired effects where
+appropriate. These tests must distinguish the claimed explanation from simpler
+or incompatible explanations. Model-family coverage by itself is not
+mechanism identification.
 
-A verdict compares the complete principal result pattern against the frozen
-criteria over repeated runs. Static contradictions and proxy experiments are
-reported separately and do not become reproduction verdicts.
+### Attainability assessment
+
+Attainability is an empirical envelope over declared axes such as reasonable
+interpretations, seeds, partitions, capacity, optimization budget, thresholds,
+and mechanism-specific controls. The assessment reports best observed values,
+distributions, failures, response curves, plateaus, and distance to target.
+
+Static bounds can establish literal impossibility only when their assumptions
+exactly match the printed protocol. Otherwise the strongest ordinary result is
+bounded implausibility: the target lies far outside the tested envelope and no
+observed trend suggests that routine additional search would close the gap.
+Extrapolation and compute estimates are contextual evidence, not universal
+bounds or claims about what authors could have done.
+
+### Three findings
+
+Each report answers three questions independently:
+
+1. **Numerical finding:** reproduced, partially reproduced, not reproduced, or
+   not executable under the declared paper-consistent space.
+2. **Mechanism finding:** supported, not identified, contradicted by a
+   discriminating control, or not testable from the described experiment.
+3. **Attainability finding:** within the observed envelope, outside but
+   plausibly trending toward it, far outside with plateauing evidence, or
+   literally incompatible with a proved printed constraint.
+
+The combined interpretation states what follows from their intersection and
+what remains open. It never infers author intent or an undocumented
+implementation.
 
 ## Data flow
 
-1. Register paper and exact claimed results.
-2. Read the complete PDF and freeze a source-located `METHOD.md`.
-3. Acquire and checksum named datasets.
-4. Implement the straight-through paper reading in five real scientific files.
-5. Run tiny deterministic and one-step checks.
-6. Obtain one eligible full anchor before generalized infrastructure.
-7. Complete the reported tables and repeated exploratory seeds.
-8. Test material ambiguity branches and separate corrected controls.
-9. Freeze the reproduction contract before confirmatory search.
-10. Execute confirmatory runs without post-hoc selection.
-11. Compute uncertainty and compare with the acceptance criteria.
-12. Update the evidence ledger and generate the paper report.
-13. Freeze the paper-level reproduction report and verdict.
-14. If authorized, execute the separately contracted controlled solution and
-    publish it as an addendum that cannot alter the reproduction verdict.
-15. Begin the next paper with a fresh independent contract.
+1. Register the paper and preserve the complete source.
+2. Read it end to end and draft numerical and causal claim maps.
+3. Use a disposable sandbox and cheap diagnostic breadth to expose competing
+   explanations and decisive tests.
+4. Return to the source and freeze the executable specification.
+5. Acquire, checksum, and inspect the exact named data.
+6. Build the smallest transparent paper-literal instrument.
+7. Pass deterministic, one-step, triviality, and output-inspection checks.
+8. Obtain one eligible anchor and inspect the complete artifact.
+9. Promote only unresolved `N/M/A` questions whose expected information gain
+   justifies deeper execution.
+10. Execute finite numerical branches, mechanism controls, and attainability
+    curves as separately identified work.
+11. Freeze and run confirmation without post-hoc selection.
+12. Analyze uncertainty, failures, causal discrimination, and the empirical
+    envelope.
+13. Update the durable evidence ledger and issue three bounded findings.
+14. Publish the paper report and public evidence map.
+15. Only under a later, separate contract, design a better solution to the
+    underlying research problem.
 
-The public `site/` is a separate static publication surface. It contains no raw
-data, paper PDFs, credentials, or internal build state. GitHub Pages deploys
-only this directory; rendered report PDFs are copied into it only after their
-paper-level evidence is frozen.
+## Design decisions
 
-## Key design decisions
+- **Paper-first source authority:** author code is a relevant artifact, not a
+  license to replace the printed method silently.
+- **Discovery/formal separation:** adaptive play is encouraged while its
+  evidentiary status remains explicit.
+- **Breadth before depth:** cheap tests of competing explanations prevent
+  expensive execution from becoming a substitute for experimental design.
+- **Literal/interpretation/controlled separation:** repairs and alternatives
+  cannot overwrite the primary paper-literal question.
+- **Three independent findings:** numerical agreement, causal explanation, and
+  empirical attainability require different evidence.
+- **Predeclared finite search:** bounded conclusions remain testable without
+  pretending to exhaust an infinite implementation space.
+- **Local raw inputs, versioned provenance:** restricted or copyrighted
+  material is not redistributed.
+- **Per-paper isolation:** conclusions and assumptions do not leak across
+  papers.
 
-- **Literal/controlled separation:** protects the primary question from being
-  replaced by a better but different method.
-- **Local raw inputs, versioned provenance:** avoids redistributing restricted
-  or copyrighted material while maintaining auditability.
-- **Predeclared finite search:** makes the non-reproduction hypothesis testable
-  without claiming exhaustive proof over an infinite parameter space.
-- **Per-paper isolation:** prevents conclusions and implementation assumptions
-  from leaking from one target paper into another.
+## Extension rule
 
-## How to extend
-
-- Add a paper only after registering its PDF, claims, datasets, and independent
-  reproduction contract.
-- Add a methodological correction only under a clearly named controlled track.
-- Add a report by committing LaTeX source and reproducible build instructions;
-  generated build intermediates remain ignored.
+Add a paper only after registering its source, claims, datasets, and
+independent evidence contract. Add shared infrastructure only after repeated
+eligible work demonstrates a concrete mechanical need. Add a scientific
+correction only under a named controlled track. Add a report only when its
+three findings can be regenerated from preserved evidence.
