@@ -196,6 +196,61 @@ Synthetic evidence cannot reveal unpublished author code or prove that no
 implementation can achieve a target. It can show that the described causal
 explanation leaves no expected footprint even under controlled conditions.
 
+## Discovery sandbox before the formal audit
+
+The investigation should not begin as a large reproduction program. After an
+initial end-to-end reading identifies the paper's central numerical and causal
+claims, use a small disposable sandbox to discover what actually needs to be
+tested.
+
+The sandbox may be a notebook or short script using NumPy and the minimum model
+library needed to instantiate the written architectures. It should avoid the
+project's production runner, branch machinery, cluster orchestration, reporting
+layer, and full dataset unless one of them is essential to the immediate
+question.
+
+A useful starting sequence is:
+
+1. write the paper's central claim as `B > A because Z exploits S`;
+2. instantiate the smallest recognizable versions of `A`, `B`, and `B` without
+   `Z` from the text, making every necessary guess visible;
+3. verify shapes, output ranges, one forward/update step, and the ability to
+   overfit a hand-sized sample;
+4. construct simple geometric witness distributions on which the added
+   capability should be irrelevant, useful, and necessary;
+5. compare against zero-parameter, linear, random-feature, or other trivial
+   rules before interpreting the elaborate model;
+6. progressively add or destroy `S` and observe whether either architecture
+   notices;
+7. inspect per-example outputs, rankings, representations, and failure modes
+   rather than looking only at one aggregate metric; and
+8. record wall time and rough resource scaling so the likely cost of a formal
+   investigation is visible early.
+
+Exploration is allowed to be curious and adaptive. Its purpose is to expose
+candidate explanations, reveal whether the benchmark can distinguish the
+claimed capabilities, and locate the smallest experiment whose outcomes differ
+under those explanations. It is not confirmatory evidence and must not be
+presented as though its hypotheses, settings, or stopping rule were frozen in
+advance.
+
+The transition out of the sandbox is explicit:
+
+1. state the discriminating question discovered;
+2. record the competing explanations and the outcome each predicts;
+3. return to the complete paper and exact data to verify that the question and
+   proposed implementations are source-relevant;
+4. predeclare the eligible interpretations, controls, metrics, statistical
+   units, repetitions, compute budget, and stopping rule; and
+5. rerun the formal experiment through the preserved evidence path.
+
+Sandbox results may motivate a formal test but cannot select a favorable paper
+interpretation after outcomes are seen. A failed toy implementation may expose
+a coding mistake rather than a scientific limitation; a successful toy result
+shows capability under that controlled distribution, not reproduction on the
+paper's data. Preserve useful exploratory notes, but keep their evidentiary
+status visibly separate.
+
 ## Triviality floor before architectural ceilings
 
 Before interpreting a complex-model advantage, establish what the task yields
@@ -393,15 +448,19 @@ conversation does not:
 6. A benchmark may be too trivial, shortcut-ridden, or structurally
    insensitive to distinguish `Z` from its absence. A correct number can still
    support the wrong mechanism.
-7. Synthetic playgrounds provide capability witnesses: they show whether the
+7. Begin with a small disposable discovery sandbox: play with the written
+   architectures, trivial rules, and synthetic geometries until a genuinely
+   discriminating question emerges; then freeze and rerun that question through
+   the formal evidence path.
+8. Synthetic playgrounds provide capability witnesses: they show whether the
    written architectures differ when the claimed capability is actually
    necessary.
-8. Real-data ablations and matched comparisons show whether that capability is
+9. Real-data ablations and matched comparisons show whether that capability is
    relevant and used on the paper's task.
-9. Learning, capacity, threshold, and search curves define an empirical
+10. Learning, capacity, threshold, and search curves define an empirical
    performance envelope. Stable saturation far below the target supports
    conditional implausibility, not universal impossibility.
-10. The audit therefore needs three separately earned findings: numerical,
+11. The audit therefore needs three separately earned findings: numerical,
     mechanistic, and attainability.
 
 ## Immediate direction and non-action
@@ -415,4 +474,3 @@ active goal, plan, and experiments against this decision; identify what remains
 valid, what has drifted, and what evidence is missing; then propose a bounded
 documentation and goal correction for user approval before changing the
 scientific execution contract.
-
