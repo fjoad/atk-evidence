@@ -464,6 +464,10 @@
   discovery sandbox to find a capability-discriminating question, then freeze
   and rerun that question through the formal evidence path; sandbox outcomes
   remain exploratory and cannot select paper interpretations post hoc.
+  “Breadth first” means many cheap, small, question-specific sanity probes over
+  competing explanations before depth; one costly full run per model family or
+  thousands of lines of branch support is already execution depth, not the
+  intended first breadth layer.
 - 2026-08-11 baseline-first execution: before testing alternative assumptions,
   run one frozen straight-through Paper-1 anchor end to end. The current runnable
   lane is full ISET, FC-SAE, seed 11, batch 512, original `B2+M`, producing the

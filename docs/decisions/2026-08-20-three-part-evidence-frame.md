@@ -251,6 +251,50 @@ shows capability under that controlled distribution, not reproduction on the
 paper's data. Preserve useful exploratory notes, but keep their evidentiary
 status visibly separate.
 
+## Breadth first means diagnostic breadth
+
+The first breadth pass covers competing explanations, not every paper table
+cell, architecture, or ambiguity branch at full scale. It should run many small,
+cheap, discriminating checks that each answer one question and return learning
+before the next expensive decision.
+
+Diagnostic breadth may include:
+
+- hand-checkable geometry and output-domain probes;
+- zero, mean, one-feature, linear, nearest-neighbor, and random-feature rules;
+- tiny overfitting and label-permutation checks;
+- synthetic capability witnesses of increasing structural difficulty;
+- untrained-versus-trained score comparisons;
+- structure-preserving and structure-destroying transformations;
+- one component removal at a time;
+- score-direction and exact-threshold enumeration on small saved vectors;
+- small data-size, capacity, and epoch contrasts; and
+- rough runtime and memory measurements.
+
+Run independent cheap questions concurrently when useful, but inspect and
+interpret their outputs before expanding the next layer. The purpose is a map
+of which explanations remain viable, not a large pile of completed jobs.
+
+Only a surviving, source-relevant question promotes to depth:
+
+1. restate the exact question and competing predictions;
+2. freeze the full-data implementation and evidence contract;
+3. run one watched eligible anchor;
+4. verify scores, identities, and intermediate behavior; and
+5. add repetitions or a bounded search only when the anchor shows that
+   uncertainty about that question remains scientifically material.
+
+Running one expensive seed for every named architecture is model-family
+coverage, not the initial diagnostic breadth envisioned here. Likewise, adding
+thousands of lines to support branches before cheap probes establish which
+questions matter is execution depth disguised as breadth.
+
+The sandbox and first diagnostic map should remain disposable and small. Stop
+and reassess when code, orchestration, or documentation grows while the number
+of discriminated explanations does not. Prefer a short direct probe that fails
+in minutes over a generalized instrument that can execute many uninformative
+full runs.
+
 ## Triviality floor before architectural ceilings
 
 Before interpreting a complex-model advantage, establish what the task yields
@@ -448,7 +492,8 @@ conversation does not:
 6. A benchmark may be too trivial, shortcut-ridden, or structurally
    insensitive to distinguish `Z` from its absence. A correct number can still
    support the wrong mechanism.
-7. Begin with a small disposable discovery sandbox: play with the written
+7. Begin with a small disposable discovery sandbox and diagnostic breadth
+   pass: play with the written
    architectures, trivial rules, and synthetic geometries until a genuinely
    discriminating question emerges; then freeze and rerun that question through
    the formal evidence path.
