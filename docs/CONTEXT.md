@@ -450,6 +450,17 @@
 
 ## User emphases
 
+- 2026-08-20
+  [`three-part evidentiary frame`](decisions/2026-08-20-three-part-evidence-frame.md):
+  assess Paper 1 separately on
+  **numerical reproduction** (whether the reported result is reproduced),
+  **mechanism identification** (whether added component `Z` demonstrates and
+  uses the capability claimed to explain model `B`'s advantage over `A` on
+  structure `S`), and **attainability** (whether the target lies outside the
+  observed performance envelope with no trend suggesting ordinary additional
+  search will close the gap). Treat these as distinct claims requiring distinct
+  evidence; do not infer the mechanistic or attainability conclusion from a
+  numerical non-reproduction alone.
 - 2026-08-11 baseline-first execution: before testing alternative assumptions,
   run one frozen straight-through Paper-1 anchor end to end. The current runnable
   lane is full ISET, FC-SAE, seed 11, batch 512, original `B2+M`, producing the
