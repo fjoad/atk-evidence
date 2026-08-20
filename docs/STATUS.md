@@ -68,6 +68,13 @@
   also far below most printed cells. The retrain/resplit interpretations remain
   open. Table-IV half and three-quarter jobs `378182`--`378191` are running;
   full-size cells reuse the completed Table-III models.
+- Exact threshold enumeration is complete for all five proposed ISET score
+  vectors. Even the best threshold leaves a 48.91--60.11-point maximum gap
+  across the complete seven-metric Table-III row. This rules out threshold
+  choice for those vectors, not hyperparameters that create different scores.
+  FC-VAE Table-IV half and three-quarter runs were recovered after a post-score
+  target-lookup failure: ACC is 39.44% in both cells versus 79.5% and 86%
+  reported. The remaining eight Table-IV jobs are healthy.
 
 ## Paper 1: verified foundation
 

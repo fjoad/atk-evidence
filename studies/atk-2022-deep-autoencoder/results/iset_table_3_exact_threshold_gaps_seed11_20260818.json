@@ -1,0 +1,31 @@
+{
+  "status": "complete_exploratory_exact_threshold_audit",
+  "date": "2026-08-18",
+  "dataset": "ISET",
+  "seed": 11,
+  "scope": "all deterministic thresholds over each saved proposed-model score vector",
+  "objective": "minimize the maximum absolute gap across DR, FA, SP, PR, ACC, F1, and AUC",
+  "models": {
+    "fc_sae": {
+      "minimum_maximum_absolute_gap_pp": 49.9561359464236,
+      "threshold": 0.48731619119644165
+    },
+    "lstm_sae": {
+      "minimum_maximum_absolute_gap_pp": 48.912733195636875,
+      "threshold": 0.3391817808151245
+    },
+    "fc_vae": {
+      "minimum_maximum_absolute_gap_pp": 55.0356551132906,
+      "threshold": 0.7762121558189392
+    },
+    "lstm_vae": {
+      "minimum_maximum_absolute_gap_pp": 58.47663191621989,
+      "threshold": 0.8004904389381409
+    },
+    "lstm_aea": {
+      "minimum_maximum_absolute_gap_pp": 60.10982058420022,
+      "threshold": 0.422512024641037
+    }
+  },
+  "bounded_conclusion": "No deterministic threshold on any of these five saved score vectors reproduces its complete reported Table-III metric row. This eliminates threshold choice for these vectors, not hyperparameters or paper-consistent implementations that would create different scores."
+}

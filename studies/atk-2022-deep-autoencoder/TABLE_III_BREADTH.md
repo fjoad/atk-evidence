@@ -36,6 +36,14 @@ registered completions diverge. It does **not** establish intent, cover printed
 ADASYN, eliminate every source-supported ambiguity, or supply repeated-seed
 uncertainty.
 
+For the five proposed models, an exact enumeration of every deterministic
+threshold strengthens that result beyond the fixed printed cutoff. The minimum
+possible maximum absolute gap across the complete seven-metric row is 49.96,
+48.91, 55.04, 58.48, and 60.11 percentage points for FC-SAE, LSTM-SAE, FC-VAE,
+LSTM-VAE, and LSTM-AEA respectively. Thus threshold choice cannot recover any
+complete proposed-model row from these saved scores. The finite proof is about
+these score vectors; different hyperparameters could produce different scores.
+
 The next scientific step is to run the predeclared one-factor population,
 split, scaling, threshold-selection, and Attack-3 interpretations. Repeated
 seeds and clustered uncertainty follow only for the finite branches that
@@ -46,3 +54,5 @@ survive that divergence map.
 Machine-readable summaries are in [`results/`](results/). The two final rows
 are [`iset_lstm_vae_seed11_20260818.json`](results/iset_lstm_vae_seed11_20260818.json)
 and [`iset_lstm_aea_seed11_20260818.json`](results/iset_lstm_aea_seed11_20260818.json).
+The exact threshold gaps are
+[`iset_table_3_exact_threshold_gaps_seed11_20260818.json`](results/iset_table_3_exact_threshold_gaps_seed11_20260818.json).

@@ -1180,6 +1180,44 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/TABLE_V_BREADTH.md` and
   `studies/atk-2022-deep-autoencoder/results/iset_table_5_common_model_seed11_20260818.json`.
 
+### ISET proposed-model exact threshold exclusion
+
+- **Former belief/status:** The breadth map showed large fixed-threshold and
+  nearest-ROC-point gaps, but did not yet exclude every deterministic threshold
+  against the complete seven-metric row.
+- **Evidence:** Panther jobs `378199`--`378203` enumerated every score threshold
+  for each saved seed-11 proposed-model vector and minimized the maximum
+  absolute gap over DR, FA, SP, PR, ACC, F1, and AUC. The exact minima are
+  49.96, 48.91, 55.04, 58.48, and 60.11 percentage points in FC-SAE through
+  LSTM-AEA order.
+- **Root cause:** **OBSERVED** — each registered score vector has fundamentally
+  different class ranking/operating characteristics from its printed row; no
+  cutoff on that vector can jointly repair the metrics.
+- **Current conclusion + label:** **VERIFIED finite exclusion** — threshold
+  choice is not an explanation for any complete proposed-model row for these
+  five vectors.
+- **Remaining uncertainty / blast radius:** Different data interpretations,
+  training seeds, and hyperparameters can create different score vectors. The
+  exact proof must not be generalized beyond the recorded vectors.
+- **Source artifact:**
+  `studies/atk-2022-deep-autoencoder/results/iset_table_3_exact_threshold_gaps_seed11_20260818.json`.
+
+### Compact target-transcription omission
+
+- **Former belief/status:** The compact runner was assumed to contain every
+  Table-IV and Table-V reported target after model-family breadth completed.
+- **Evidence:** FC-VAE half-data job `378184` completed training and scoring but
+  failed while looking up an absent Table-IV target key. Static inspection found
+  only FC-SAE/LSTM-SAE Table-IV targets and only FC-SAE Table-V targets.
+- **Root cause:** **VERIFIED implementation omission** — result metadata was
+  incompletely transcribed even though model/data execution was unaffected.
+- **Current conclusion + label:** **CORRECTED** in `fcd2d78`; all five proposed
+  models now have all 3 Table-IV and all 6 Table-V targets, enforced by a test.
+  Completed scores are recovered without retraining and failures stay preserved.
+- **Remaining uncertainty / blast radius:** The omission affects historical
+  result target annotations and post-score failures only; it does not alter any
+  saved model, score vector, prediction, or metric.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

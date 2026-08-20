@@ -28,6 +28,13 @@
   stochastic observation. Alternative retrain/resplit experiment identities
   remain open. Table-IV jobs 378182--378191 cover the ten missing half and
   three-quarter cells and were all running when this context was updated.
+- Exact all-threshold audits for the five proposed ISET score vectors leave
+  complete-row minimax gaps of 49.96, 48.91, 55.04, 58.48, and 60.11 points in
+  model order. Threshold choice is therefore eliminated for these vectors.
+  The compact runner initially omitted Table-IV target dictionaries for
+  FC-VAE/LSTM-VAE/LSTM-AEA and non-FC Table-V targets; commit `fcd2d78` restores
+  the complete transcription and a coverage test. The omission affected only
+  post-score result writing, not training or saved scores.
 - Compact batch-512 Paper-1 anchor job 373789 completed 2026-08-11 in 53:12 on
   one V100. `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, reproduced
   DR/FA/ACC/AUC/F1 = 26.18/58.22/33.98/31.04/40.46% versus
