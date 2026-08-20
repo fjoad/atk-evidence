@@ -3,8 +3,8 @@
 **Created:** 2026-08-09
 
 **Status:** Active; Table-II/III model-family breadth and the Table-V
-common-model reading are complete; Table-IV size breadth is running and
-one-factor divergence isolation remains required before repeated-seed depth
+common-model reading are complete; Table-IV harvest is pending and the first
+one-factor population contrast is implemented but unrun
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
@@ -131,7 +131,10 @@ chain is inspectable and trusted for one full attempt.
    3,000), attack/test population and split, scaling fit population, printed
    threshold versus validation-derived threshold, and each materially distinct
    executable Attack-3 repair. Hold every non-target choice fixed. Do not launch
-   a Cartesian sweep.
+    a Cartesian sweep.
+    **Current:** deterministic all-4,225 versus seeded-3,000 residential
+    population is implemented and tested in the compact preparation route. Its
+    Panther preparation and FC-SAE anchor await interactive VPN restoration.
 11. **Model rows complete:** write the breadth map as a table with one row per attempted model or
     interpretation: source claim, exact completion, execution status, observed
     metrics, reported target, divergence, and next implication. Only then choose

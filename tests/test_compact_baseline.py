@@ -25,6 +25,30 @@ import run_experiment  # noqa: E402
 
 
 class CompactBaselineTests(unittest.TestCase):
+    def test_seeded_3000_population_is_exact_deterministic_and_distinct(self) -> None:
+        residential = np.arange(1, 4_226, dtype=np.int32)
+        first = prepare_data.select_residential_population(
+            residential, "seeded_3000", seed=11
+        )
+        repeated = prepare_data.select_residential_population(
+            residential, "seeded_3000", seed=11
+        )
+        other = prepare_data.select_residential_population(
+            residential, "seeded_3000", seed=22
+        )
+        self.assertEqual(first.size, 3_000)
+        self.assertTrue(np.array_equal(first, repeated))
+        self.assertFalse(np.array_equal(first, other))
+        self.assertTrue(np.isin(first, residential).all())
+        self.assertTrue(
+            np.array_equal(
+                prepare_data.select_residential_population(
+                    residential, "all", seed=11
+                ),
+                residential,
+            )
+        )
+
     def test_complete_metric_audit_exactly_searches_all_thresholds(self) -> None:
         labels = np.array([0, 0, 1, 1], dtype=np.int8)
         scores = np.array([0.1, 0.2, 0.8, 0.9], dtype=np.float32)

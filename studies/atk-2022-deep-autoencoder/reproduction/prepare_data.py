@@ -327,6 +327,25 @@ def allocation() -> tuple[pd.DataFrame, np.ndarray]:
     return parsed, residential
 
 
+def select_residential_population(
+    residential: np.ndarray,
+    population: str,
+    *,
+    seed: int,
+) -> np.ndarray:
+    """Resolve the paper's unspecified “around 3000” residential population."""
+
+    residential = np.sort(np.asarray(residential, dtype=np.int32))
+    if population == "all":
+        return residential
+    if population != "seeded_3000":
+        raise ValueError(f"unknown residential population: {population}")
+    if residential.size < 3_000:
+        raise ValueError("seeded_3000 requires at least 3,000 residential meters")
+    rng = np.random.default_rng(seed)
+    return np.sort(rng.choice(residential, size=3_000, replace=False))
+
+
 def zip_chunks(paths: list[Path]) -> Iterator[pd.DataFrame]:
     for path in paths:
         with zipfile.ZipFile(path) as archive:
@@ -486,6 +505,9 @@ def extract_full(
 def load_or_extract_profiles(
     output: Path,
     mode: str,
+    *,
+    population: str = "all",
+    seed: int = DATA_SEED,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, object]]:
     values_path = output / "benign_raw.npy"
     meters_path = output / "meter_ids.npy"
@@ -493,10 +515,15 @@ def load_or_extract_profiles(
     record_path = output / "profiles.json"
     if all(path.is_file() for path in (values_path, meters_path, days_path, record_path)):
         record = json.loads(record_path.read_text())
-        if record.get("mode") != mode:
+        cached_population = record.get("population", "all")
+        cached_seed = record.get("population_seed", seed)
+        if record.get("mode") != mode or cached_population != population or (
+            population == "seeded_3000" and cached_seed != seed
+        ):
             raise ValueError(
-                f"cached profiles were extracted in mode {record.get('mode')}, "
-                f"not requested mode {mode}"
+                "cached profiles use a different extraction configuration: "
+                f"mode={record.get('mode')}, population={cached_population}, "
+                f"seed={cached_seed}"
             )
         return (
             np.load(values_path, mmap_mode="r"),
@@ -506,6 +533,9 @@ def load_or_extract_profiles(
         )
 
     _, residential = allocation()
+    residential = select_residential_population(
+        residential, population, seed=seed
+    )
     started = time.perf_counter()
     if mode == "tiny":
         values, meters, days = extract_tiny(residential)
@@ -525,6 +555,9 @@ def load_or_extract_profiles(
     np.save(days_path, np.asarray(days, dtype=np.int16))
     record: dict[str, object] = {
         "mode": mode,
+        "population": population,
+        "population_seed": seed if population == "seeded_3000" else None,
+        "selected_residential_meters": int(residential.size),
         "rows": int(values.shape[0]),
         "features": int(values.shape[1]),
         "meters": int(np.unique(meters).size),
@@ -639,6 +672,7 @@ def prepare_p0(
     test_adasyn: str,
     force_expensive_adasyn: bool,
     source_record: dict[str, object],
+    residential_population: str,
 ) -> dict[str, object]:
     started = time.perf_counter()
     mean, scale = joint_scaler(benign_raw, meters, seed)
@@ -755,20 +789,27 @@ def prepare_p0(
     ]
     if test_adasyn == "printed":
         files.extend([output / "x_test.npy", output / "y_test.npy"])
+    method_parts = []
+    if residential_population == "seeded_3000":
+        method_parts.append("I-DATA-3000")
+    method_parts.append(
+        "P0-ISET-FCSAE"
+        if test_adasyn == "printed"
+        else "I-ADASYN-NONE-ISET-FCSAE"
+    )
+    configuration: dict[str, object] = {
+        "mode": profiles_record["mode"],
+        "seed": seed,
+        "test_adasyn": test_adasyn,
+        "adasyn_neighbors": adasyn_neighbors,
+    }
+    if residential_population != "all":
+        configuration["residential_population"] = residential_population
     metadata: dict[str, object] = {
         "status": "complete",
         "schema": 1,
-        "method": (
-            "P0-ISET-FCSAE"
-            if test_adasyn == "printed"
-            else "I-ADASYN-NONE-ISET-FCSAE"
-        ),
-        "configuration": {
-            "mode": profiles_record["mode"],
-            "seed": seed,
-            "test_adasyn": test_adasyn,
-            "adasyn_neighbors": adasyn_neighbors,
-        },
+        "method": "+".join(method_parts),
+        "configuration": configuration,
         "paper_order": [
             "strict_48_slot_profiles",
             "six_attacks_all_customers",
@@ -783,7 +824,11 @@ def prepare_p0(
             ),
         ],
         "choices": {
-            "population": "all_4225_residential",
+            "population": (
+                "deterministic_seeded_3000_residential"
+                if residential_population == "seeded_3000"
+                else "all_4225_residential"
+            ),
             "day": "strict_exact_slots_1_to_48",
             "attack_1": "one_alpha_per_customer_matrix",
             "attack_2_5": "independent_beta_per_half_hour",
@@ -878,6 +923,12 @@ def main() -> int:
         default="last_48",
     )
     parser.add_argument("--mode", choices=("tiny", "full"), default="tiny")
+    parser.add_argument(
+        "--residential-population",
+        choices=("all", "seeded_3000"),
+        default="all",
+        help="ISET only: all labeled residential meters or a seeded 3,000",
+    )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--seed", type=int, default=DATA_SEED)
     parser.add_argument("--adasyn-neighbors", type=int, default=5)
@@ -901,7 +952,11 @@ def main() -> int:
     output = args.output or DEFAULT_ROOT / (
         f"sgcc-{args.sgcc_representation.replace('_', '')}-{args.mode}"
         if args.dataset == "sgcc"
-        else f"p0-{args.mode}-{args.test_adasyn}"
+        else (
+            f"p0-{args.mode}-{args.test_adasyn}"
+            if args.residential_population == "all"
+            else f"p0-{args.mode}-{args.test_adasyn}-pop3000"
+        )
     )
     output.mkdir(parents=True, exist_ok=True)
     metadata_path = output / "metadata.json"
@@ -922,6 +977,8 @@ def main() -> int:
         source_record: dict[str, object] | None = None
     else:
         requested["test_adasyn"] = args.test_adasyn
+        if args.residential_population != "all":
+            requested["residential_population"] = args.residential_population
         source_record = verified_source()
     if metadata_path.is_file():
         metadata = json.loads(metadata_path.read_text())
@@ -947,7 +1004,10 @@ def main() -> int:
             )
         else:
             benign, meters, days, profiles_record = load_or_extract_profiles(
-                output, args.mode
+                output,
+                args.mode,
+                population=args.residential_population,
+                seed=args.seed,
             )
             assert source_record is not None
             metadata = prepare_p0(
@@ -961,6 +1021,7 @@ def main() -> int:
                 test_adasyn=args.test_adasyn,
                 force_expensive_adasyn=args.force_expensive_adasyn,
                 source_record=source_record,
+                residential_population=args.residential_population,
             )
     except Exception as exc:
         save_json(

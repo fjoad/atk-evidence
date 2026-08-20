@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-18
+**Last updated:** 2026-08-20
 
 ## Environment quirks
 
@@ -35,6 +35,11 @@
   FC-VAE/LSTM-VAE/LSTM-AEA and non-FC Table-V targets; commit `fcd2d78` restores
   the complete transcription and a coverage test. The omission affected only
   post-score result writing, not training or saved scores.
+- The first predeclared one-factor data branch is now executable in the compact
+  five-file route: all 4,225 residential meters versus a deterministic seeded
+  3,000. It has not run. Panther is temporarily unreachable because the saved
+  QCRI VPN connection requires an interactive OTP; never substitute a local
+  preparation or experiment.
 - Compact batch-512 Paper-1 anchor job 373789 completed 2026-08-11 in 53:12 on
   one V100. `I-ADASYN-NONE-ISET-FC-SAE`, seed 11, reproduced
   DR/FA/ACC/AUC/F1 = 26.18/58.22/33.98/31.04/40.46% versus

@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-18
+**Last updated:** 2026-08-20
 
 **Branch:** `main`
 
@@ -74,7 +74,14 @@
   choice for those vectors, not hyperparameters that create different scores.
   FC-VAE Table-IV half and three-quarter runs were recovered after a post-score
   target-lookup failure: ACC is 39.44% in both cells versus 79.5% and 86%
-  reported. The remaining eight Table-IV jobs are healthy.
+  reported. The remaining eight Table-IV jobs were healthy when last observed;
+  their final state awaits Panther harvest because the QCRI VPN currently
+  requires an interactive OTP login.
+- The first material one-factor branch is implemented but not executed:
+  `--residential-population seeded_3000` deterministically selects exactly
+  3,000 of the 4,225 labeled residential meters while changing no other paper-
+  primary preparation choice. The default all-meter cache identity remains
+  backward compatible. Full deterministic tests pass (140 study + 33 root).
 
 ## Paper 1: verified foundation
 
