@@ -1,6 +1,13 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-20
+**Last updated:** 2026-08-23
+
+**Governing state:**
+[`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
+supersedes the prior model-family/one-factor execution sequence. Its plan
+checkpoint is pending. Launch no new scientific run; preserve existing
+artifacts until Phase 0 classifies them. Older execution-order notes below are
+historical unless the new plan explicitly promotes them.
 
 ## Environment quirks
 
@@ -71,11 +78,9 @@
   explanation for the gap. This remains a one-seed corrected control, not a
   paper-level verdict. Future short Slurm wrappers request only the needed GPU
   type/count and leave CPU/memory shape unspecified.
-- Continue breadth-first with one eligible result for each of the six benchmark rows,
-  followed by each remaining proposed model, and finally one-factor
-  data/evaluation interpretations. Benchmarks come first because they provide
-  cheaper shared-pipeline diagnostics. Do not add seeds until that breadth map
-  is written; this sequence is explicit in the active plan.
+- **Historical, superseded 2026-08-23:** continue model-family breadth and then
+  one-factor data/evaluation interpretations. The completed artifacts remain
+  preserved, but this is no longer the active next-action sequence.
 - The 2026-08-11 reuse audit found no preserved ISET/Table-III benchmark
   attempt in committed results or Panther manifests. Historical benchmark
   completions are SGCC/Table II and are ineligible for the current ISET rows.
@@ -89,9 +94,9 @@
   execute the paper's pre-split supervised ADASYN and cannot fill the printed
   cell. It reproduced DR/FA/ACC/F1/AUC =
   88.78/44.53/72.12/90.50/79.17% versus 73/18/77.5/73/70% reported.
-- Latest execution-order instruction (2026-08-12): independent frozen breadth
-  rows run concurrently, one generic GPU per job, up to the established
-  three-job limit. Do not serialize independent models with Slurm dependencies.
+- **Historical execution instruction (2026-08-12):** independent frozen breadth
+  rows ran concurrently, one generic GPU per job, up to the established
+  three-job limit. This does not authorize new jobs under the 2026-08-23 plan.
 - ARIMA breadth job 373836 completed in 1m02s using pooled ARIMA(1,1,0)
   residual MSE on full B1/original B2+M. DR/FA/ACC/F1/AUC =
   21.48/57.20/32.14/34.46/24.72% versus 86/12/87/86/87% reported. This is a
@@ -450,6 +455,14 @@
 
 ## User emphases
 
+- 2026-08-23 clean-reader rebase: preserve a stateful plan before doing more
+  work. The governing flow is complete paper orientation → disposable sandbox
+  → return to the paper and freeze one reasonable-reader completion → assess
+  the existing five-file implementation → run or admit one exact-data anchor →
+  inspect the complete numerical result → promote only scientifically necessary
+  `N`, `M`, or `A` depth. The plan must show the current step, preserve
+  loop-backs, and prevent future agents from resuming the former numerical
+  branch sequence automatically.
 - 2026-08-20
   [`three-part evidentiary frame`](decisions/2026-08-20-three-part-evidence-frame.md):
   assess Paper 1 separately on

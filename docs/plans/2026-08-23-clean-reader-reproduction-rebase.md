@@ -1,0 +1,438 @@
+# Clean-reader reproduction rebase — Evidence Plan
+
+**Created:** 2026-08-23
+
+**Status:** Active governing plan; plan checkpoint pending before scientific
+execution
+
+**Current state:** Phase 0 — preserve and reconcile; not started
+
+**Supersedes:**
+[`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
+for execution order. The earlier plan remains preserved as historical context.
+
+**Governing decisions:**
+
+- [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
+- [`../decisions/2026-08-11-non-executable-source-ladder.md`](../decisions/2026-08-11-non-executable-source-ladder.md)
+- [`../decisions/2026-08-20-three-part-evidence-frame.md`](../decisions/2026-08-20-three-part-evidence-frame.md)
+
+## Goal
+
+Determine whether a competent independent reader, using the publication, its
+named data, and only predeclared minimal completions of unavoidable omissions,
+can reconstruct the method and recover its complete reported numerical result
+pattern.
+
+Do this through a paper-only orientation, a disposable discovery sandbox, a
+source-located clean-reader freeze, a fidelity assessment of the existing
+five-file implementation, and one preserved exact-data anchor. Only after that
+anchor is trusted may unresolved numerical, mechanism, or attainability
+questions be promoted to deeper work.
+
+## First finish condition
+
+The first program is complete when:
+
+1. a source-located clean-reader specification is frozen;
+2. every unavoidable assumption is visible and chosen before its eligible
+   outcome;
+3. the existing five-file implementation is either verified against that
+   specification or minimally corrected with prior results quarantined;
+4. one exact-data straight-through attempt is preserved; and
+5. the complete reported pattern is compared with that attempt under a bounded
+   initial numerical finding.
+
+More model families, branches, seeds, infrastructure, or documentation are not
+substitutes for this finish condition.
+
+## Governing question and classifications
+
+**Primary evidence question:** Numerical reproduction (`N`).
+
+**Discovery classification:** Exploratory (`X`) until the clean-reader source
+freeze.
+
+**Formal implementation classification:** Paper-literal (`P`) where the text
+executes; reasonable interpretation (`I`) only where a necessary omission or
+contradiction prevents execution. Controlled work (`C`) is excluded from the
+primary anchor.
+
+**Primary question:**
+
+> Can a competent independent reader reproduce the complete reported result
+> pattern from the publication and named data without result-guided choices?
+
+**Initial competing explanations:**
+
+1. The printed procedure or its minimal ordinary completion reproduces the
+   reported pattern.
+2. The clean-reader implementation is wrong or incomplete.
+3. A materially different but source-supported completion is required.
+4. The described method does not reproduce the pattern inside the declared
+   clean-reader contract.
+5. An undocumented procedure outside the contract was used; this remains open
+   and is never inferred merely from a non-match.
+
+## Full state flow
+
+```mermaid
+flowchart TD
+    P0["0. Preserve and reconcile existing work"] --> P1["1. Paper-only orientation read"]
+    P1 --> P2["2. Disposable discovery sandbox — X"]
+    P2 --> P3["3. Return to source and freeze clean-reader specification"]
+    P3 --> C1{"CHECKPOINT 1\nSource reading and primary completion approved?"}
+
+    C1 -- "Source misunderstanding" --> P1
+    C1 -- "Diagnostic question unclear" --> P2
+    C1 -- "Approved" --> P4["4. Existing five-file fidelity assessment"]
+
+    P4 --> F{"Implementation matches frozen specification?"}
+    F -- "No" --> Q["Minimal correction and quarantine affected results"]
+    Q --> P4
+    F -- "Yes" --> P5["5. One exact-data straight-through anchor"]
+
+    P5 --> P6["6. Inspect full artifact and issue initial numerical finding"]
+    P6 --> T{"Paper → data → code → scores → metrics chain trusted?"}
+    T -- "Source problem" --> P3
+    T -- "Implementation problem" --> P4
+    T -- "Operational failure" --> P5
+    T -- "Trusted" --> C2{"CHECKPOINT 2\nIs deeper evidence scientifically necessary?"}
+
+    C2 -- "Material numerical ambiguity" --> N["7N. Finite numerical depth"]
+    C2 -- "Causal claim unresolved" --> M["7M. Capability-sensitive mechanism program"]
+    C2 -- "Target plausibility unresolved" --> A["7A. Empirical attainability envelope"]
+    C2 -- "No promotion justified" --> P8["8. Freeze three bounded findings"]
+
+    N --> C3{"Confirmatory contracts frozen?"}
+    M --> C3
+    A --> C3
+    C3 -- "No" --> C2
+    C3 -- "Yes" --> P8
+    P8 --> P9["9. Report and publication"]
+```
+
+The arrows back to earlier phases are part of the plan. Looping back is not a
+failure if the reason and evidentiary impact are recorded. No result is deleted
+or silently relabeled when a loop occurs.
+
+## State tracker
+
+Update this table whenever a phase begins, completes, is blocked, or is
+reopened. At most one phase may be `IN PROGRESS`.
+
+| Phase | State | Entry requirement | Exit artifact or decision |
+|---|---|---|---|
+| 0. Preserve and reconcile | `NEXT` | Plan accepted as governing | Existing-artifact classification and no-new-run gate |
+| 1. Paper-only orientation | `PENDING` | Phase 0 complete | Provisional numerical and causal claim map |
+| 2. Discovery sandbox | `PENDING` | Orientation map exists | Sandbox log and discriminating questions |
+| 3. Clean-reader source freeze | `PENDING` | Sandbox questions recorded | Frozen specification and assumptions register |
+| Checkpoint 1 | `PENDING` | Phase 3 complete | User approval or explicit loop-back |
+| 4. Fidelity assessment | `PENDING` | Checkpoint 1 approved | Claim-to-code-to-data trace and quarantine list |
+| 5. Exact-data anchor | `PENDING` | Fidelity passes | One immutable complete attempt or preserved failure |
+| 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
+| Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
+| 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
+| 7M. Mechanism program | `PENDING` | Source causal claim promoted | Supported/contradicted/unidentified causal links |
+| 7A. Attainability envelope | `PENDING` | Plausibility question promoted | Declared envelope and conditional conclusion |
+| 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
+| 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
+
+## Phase 0 — Preserve and reconcile existing work
+
+### Question
+
+What work already exists, what question did each artifact actually answer, and
+what may safely inform the clean-reader program without determining its source
+interpretation?
+
+### Actions
+
+- Launch no new preparation, training, scoring, branch, or repeated-seed job.
+- Harvest and preserve already-completed external outputs when accessible; do
+  not treat harvesting as authorization for additional execution.
+- Inventory existing source notes, code, caches, attempts, failures, score
+  arrays, analyses, and reports.
+- Classify each material artifact provisionally by:
+  - evidence question: `N`, `M`, `A`, or none;
+  - implementation semantics: `P`, `I`, `C`, or `X`;
+  - status: eligible candidate, exploratory, fixture, operational evidence,
+    quarantined, or unresolved; and
+  - whether it can influence the clean-reader source interpretation.
+- Preserve existing artifacts in place. Do not delete, overwrite, or
+  retroactively preregister them.
+
+### Exit condition
+
+A compact reconciliation table identifies what exists and establishes a hard
+boundary: prior results may suggest questions but cannot select the new primary
+reading.
+
+## Phase 1 — Paper-only orientation read
+
+### Question
+
+What would an independent competent reader believe the paper claims and asks
+them to execute before seeing project code or outcomes?
+
+### Actions
+
+- Fingerprint and visually inspect the complete source from first page to last.
+- During this pass, do not consult the existing implementation, branch matrix,
+  or numerical outcomes.
+- Record provisionally:
+  - every headline numerical target;
+  - the paper's straight-through data-to-result flow;
+  - every explanatory claim expressible as `B > A because Z exploits S`;
+  - table-level red flags and static feasibility questions;
+  - explicit omissions, contradictions, and non-executable wording; and
+  - the smallest questions a sandbox could discriminate.
+- Store source locators for every consequential claim.
+
+### Exit condition
+
+A provisional source-only orientation map exists. It is not yet the formal
+specification and contains no result-guided completion.
+
+## Phase 2 — Disposable discovery sandbox
+
+### Question
+
+Do we understand the written procedure and which small observations would
+distinguish implementation error, task triviality, absent capability, and a
+genuine architectural effect?
+
+### Actions
+
+- Use the smallest disposable script or notebook; avoid the production runner,
+  cluster layer, full dataset, and historical branch machinery.
+- Instantiate only the minimum recognizable systems needed for the immediate
+  question.
+- Check shapes, output domains, one finite update, and hand-sized overfitting.
+- Use toy or synthetic data where the claimed structure is irrelevant, useful,
+  and necessary.
+- Compare zero-parameter and simple fair rules before interpreting elaborate
+  architectures.
+- Inspect per-example scores, rankings, and representations rather than only a
+  headline metric.
+- Record question, minimal setup, observation, affected explanations, and
+  whether a formal test should be promoted.
+
+### Boundary
+
+All sandbox work is `X`. It may expose a coding error or motivate a formal
+question. It cannot reproduce the paper, select a favorable interpretation,
+or become confirmation retrospectively.
+
+### Exit condition
+
+The sandbox log identifies the smallest discriminating questions and any
+misunderstandings that require another paper pass.
+
+## Phase 3 — Return to the source and freeze the clean-reader specification
+
+### Question
+
+What exact procedure can an ordinary independent reader execute without using
+the reported result to fill omissions?
+
+### Actions
+
+- Re-read every source location implicated by the orientation and sandbox.
+- Freeze the literal `P` procedure, including explicit failure where a printed
+  operation cannot execute.
+- For every execution-blocking omission or contradiction, record:
+  - the printed wording and locator;
+  - why the literal operation fails or is underdetermined;
+  - the smallest ordinary `I` completion;
+  - other materially distinct source-supported completions, listed but not yet
+    executed; and
+  - why the primary completion was chosen without outcomes.
+- Freeze exact data identity, sample unit, preparation order, model, training,
+  score, threshold, metrics, seed, and first-attempt stopping behavior.
+- Separate the primary clean-reader path from later `C` controls and unrelated
+  `X` possibilities.
+- Update the source specification with both numerical and causal claim maps.
+
+### CHECKPOINT 1 — User review
+
+Before formal implementation or execution, review:
+
+- the literal procedure and failures;
+- the primary reasonable-reader completion;
+- every unavoidable assumption;
+- the complete reported target pattern;
+- competing explanations and disconfirming outcomes; and
+- the exact first-anchor finish condition.
+
+If the paper reading is disputed, loop to Phase 1. If the discriminating
+question is weak, loop to Phase 2. Approval authorizes fidelity assessment, not
+an ambiguity sweep or repeated seeds.
+
+## Phase 4 — Existing five-file fidelity assessment
+
+### Question
+
+Does the current minimal implementation directly execute the approved
+clean-reader specification?
+
+### Actions
+
+- Trace each consequential source instruction through code, prepared data,
+  configuration, score, metric, and persisted result.
+- Compare runtime layers, shapes, domains, transformations, population
+  identities, score direction, and metric formulas with the freeze.
+- Reuse matching code. Do not rewrite for elegance or architecture.
+- If a mismatch exists, quarantine affected historical results, make only the
+  smallest correction needed by the frozen specification, and rerun the
+  fidelity check.
+- Pass deterministic tiny-data, one-step, score-direction, and metric checks.
+
+### Exit condition
+
+The approved clean-reader specification has one transparent executable route,
+or a literal operational failure is preserved and reported.
+
+## Phase 5 — One exact-data straight-through anchor
+
+### Question
+
+What happens when the approved clean-reader route is executed once, without
+branching or tuning toward the target?
+
+### Actions
+
+- Before execution, record the table/claim, `N` question, `P/I` semantics,
+  exact data hash, model, seed, predictions, budget, stopping rule, and report
+  finding it feeds.
+- Admit an existing attempt only if its complete provenance and configuration
+  exactly match the approved freeze.
+- Otherwise run one watched exact-data attempt through the five-file route.
+- Preserve failures, histories, scores, predictions, identities, metrics,
+  timings, configuration, environment, and hashes.
+- Do not add seeds, branches, corrected controls, or model-family coverage.
+
+### Exit condition
+
+One immutable attempt or literal operational failure represents the approved
+clean-reader path.
+
+## Phase 6 — Inspect and issue the initial numerical finding
+
+### Question
+
+Did the straight-through independent reimplementation recover the complete
+reported pattern, and is the entire measuring chain trustworthy?
+
+### Actions
+
+- Reload every persisted artifact and regenerate every metric.
+- Inspect score distributions, direction, thresholds, identities, failures,
+  and complete-pattern distance from the target.
+- Compare with trivial and positive controls only as diagnostics; do not let
+  them overwrite the numerical finding.
+- State separately:
+  - whether the literal method executed;
+  - whether the approved minimal completion executed; and
+  - whether its complete result pattern reproduced.
+- If inspection reveals a source problem, return to Phase 3. If it reveals an
+  implementation problem, return to Phase 4. If it reveals a transient
+  operational failure without scientific change, return to Phase 5.
+
+### Exit condition
+
+A bounded initial numerical finding is recorded without claiming statistical
+finality, mechanism failure, attainability, intent, or universal impossibility.
+
+## CHECKPOINT 2 — Promotion after the anchor
+
+Review the trusted anchor and choose only questions whose expected information
+gain justifies additional work:
+
+- **`N`:** a materially distinct source-supported interpretation or repetition
+  needed to stabilize the numerical finding;
+- **`M`:** a source-located causal claim whose competing explanations can be
+  separated by a capability-sensitive test; or
+- **`A`:** a target-plausibility question with meaningful response axes and a
+  finite empirical envelope.
+
+No paper row, model family, ambiguity, or seed is promoted merely because it
+exists.
+
+## Phase 7N — Finite numerical depth
+
+Freeze the smallest set of materially distinct `I` branches and repetitions
+needed for the numerical finding. Vary one ambiguity at a time. Preserve all
+attempts and report complete patterns with uncertainty. Do not execute an
+arbitrary Cartesian product.
+
+## Phase 7M — Capability-sensitive mechanism program
+
+For each promoted `B > A because Z exploits S` claim, test separately whether
+`S` exists and matters, `A` lacks the capability, `Z` supplies it, trained `B`
+uses it, and that use causes a paired advantage. Use capability witnesses,
+triviality controls, structure destruction, component ablation, fair matched
+comparisons, and learned-behavior inspection under a frozen effect criterion.
+
+## Phase 7A — Empirical attainability envelope
+
+Freeze relevant axes such as source-supported completions, seeds, partitions,
+capacity, data size, duration, thresholds, and compute. Record distributions,
+failures, learning/capacity/search curves, plateaus, and target gaps. Treat
+optimistic extrapolation as context, not a universal bound. Claim structural
+impossibility only from a genuine proof under exactly stated assumptions.
+
+## Phase 8 — Freeze three bounded findings
+
+Issue numerical, mechanism, and attainability findings separately. Mark a
+finding `not tested` when no question was promoted or the required evidence was
+not obtained. The combined interpretation cannot infer author intent,
+undocumented code, or an exhausted infinite space.
+
+## Phase 9 — Report and publication
+
+Only after the findings are frozen, update the paper report and public evidence
+map, render and verify the report, and then consider a separate corrected
+solution study.
+
+## Loop-back and update protocol
+
+This plan is a living state record, not a static checklist.
+
+After every material session:
+
+1. update **Current state** at the top of this file;
+2. update exactly one row in the state tracker to `IN PROGRESS`, `BLOCKED`,
+   `REOPENED`, or `COMPLETE` as appropriate;
+3. append a dated entry to the state history below;
+4. update `docs/STATUS.md` with the same current state and exact next action;
+5. update `docs/CONTEXT.md` only for non-obvious facts or user emphasis;
+6. update `docs/EVIDENCE-AND-LEARNINGS.md` only when evidence changes a belief;
+7. identify every artifact that remains valid, becomes exploratory, or must be
+   quarantined after a loop-back; and
+8. commit the state update with the work it describes.
+
+Never erase a completed state. If a phase reopens, retain its former completion
+and record why the new evidence changed its status.
+
+## State history
+
+| Date | From | To | Reason | Evidence impact |
+|---|---|---|---|---|
+| 2026-08-23 | Prior numerical breadth/depth plan | Plan checkpoint | Reoriented around clean-reader reproduction before mechanism or attainability depth | Existing work preserved; no artifact retroactively reclassified |
+
+## Hard exclusions until Checkpoint 1
+
+- no new experimental preparation, training, scoring, branch, or seed run;
+- no result-guided choice of the primary clean-reader interpretation;
+- no historical code or result treated as source authority;
+- no ambiguity lattice, workflow system, or infrastructure expansion;
+- no mechanism or attainability conclusion inferred from prior numerical
+  non-reproduction; and
+- no report or site verdict update.
+
+## Plan checkpoint
+
+User review of this saved flow is required before Phase 0 begins. Approval of
+the plan authorizes preservation/reconciliation and paper-only orientation. It
+does not cross Checkpoint 1 or authorize experimental execution.

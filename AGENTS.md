@@ -107,7 +107,7 @@ diagnostic breadth before execution depth.
 6. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
 7. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
 8. The active plan, currently
-   [`docs/plans/2026-08-09-paper-1-minimal-finish.md`](docs/plans/2026-08-09-paper-1-minimal-finish.md).
+   [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](docs/plans/2026-08-23-clean-reader-reproduction-rebase.md).
 
 If the current step has no plan, create one before experimental implementation.
 

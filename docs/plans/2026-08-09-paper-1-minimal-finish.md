@@ -2,9 +2,10 @@
 
 **Created:** 2026-08-09
 
-**Status:** Active; Table-II/III model-family breadth and the Table-V
-common-model reading are complete; Table-IV harvest is pending and the first
-one-factor population contrast is implemented but unrun
+**Status:** Superseded for execution order on 2026-08-23 by
+[`2026-08-23-clean-reader-reproduction-rebase.md`](2026-08-23-clean-reader-reproduction-rebase.md).
+Preserved as historical context; do not resume its next-action sequence unless
+the governing plan explicitly promotes that work.
 
 **Governing decision:**
 [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)

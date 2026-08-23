@@ -1,14 +1,20 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-20
+**Last updated:** 2026-08-23
 
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-08-09-paper-1-minimal-finish.md`](plans/2026-08-09-paper-1-minimal-finish.md)
+[`plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
 
 ## Current project state
 
+- The clean-reader reproduction rebase is now the governing execution plan.
+  Its saved flow begins with preservation/reconciliation, a paper-only read, a
+  disposable sandbox, and a new source freeze before assessing the existing
+  five-file implementation. The plan checkpoint is pending; no new scientific
+  execution is authorized. Prior code, runs, failures, and results remain
+  preserved without retroactive reclassification.
 - The paper-first minimal-instrument reframe is accepted and recorded in
   [`decisions/2026-08-09-paper-first-minimal-instrument.md`](decisions/2026-08-09-paper-first-minimal-instrument.md).
 - Paper 1 is the only active execution target. Paper 2's existing artifact-level
@@ -39,8 +45,9 @@
   without retraining. LSTM-AEA job `374396` completed all 100 epochs and full
   scoring. Panther audit jobs `378014` and `378015` closed both score-direction
   questions. Those model-family breadth jobs are complete; Table-IV half and
-  three-quarter jobs `378182`--`378191` are active. The Slurm wrapper only
-  requests `gpu-all` plus `gpu:1` and executes its arguments.
+  three-quarter jobs `378182`--`378191` were active when last observed on
+  2026-08-20, and their present state has not been harvested. The Slurm wrapper
+  only requests `gpu-all` plus `gpu:1` and executes its arguments.
 - Experimental preparation, training, and scoring must run on cluster compute
   nodes. Local work is limited to source reconstruction, code, documentation,
   lightweight inspection, transfer, and monitoring.
@@ -66,8 +73,8 @@
   models. Reproduced FA is exactly invariant across attacks for each model, as
   required mathematically, while the paper varies it. Reproduced attack DRs are
   also far below most printed cells. The retrain/resplit interpretations remain
-  open. Table-IV half and three-quarter jobs `378182`--`378191` are running;
-  full-size cells reuse the completed Table-III models.
+  open. Table-IV half and three-quarter jobs `378182`--`378191` were running at
+  the last observation; full-size cells reuse the completed Table-III models.
 - Exact threshold enumeration is complete for all five proposed ISET score
   vectors. Even the best threshold leaves a 48.91--60.11-point maximum gap
   across the complete seven-metric Table-III row. This rules out threshold
@@ -309,13 +316,17 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. **Complete:** close and record all eleven Table-III model-family breadth rows
-   and their score-direction audits.
-2. Run the predeclared one-factor population, split, scaling,
-   validation-threshold, and Attack-3 interpretations, one axis at a time.
-3. Add those interpretation rows to the breadth map, freeze the finite branches
-   that survive, and only then begin repeated seeds and clustered confirmatory
-   intervals.
+1. Review and approve the saved clean-reader rebase flow. This is the current
+   plan checkpoint.
+2. After approval, execute Phase 0 only: preserve and classify existing
+   artifacts, harvest already-completed outputs when access permits, and launch
+   no new experimental work.
+3. Continue to the paper-only orientation read. Existing code and results must
+   not determine the new primary source interpretation.
+
+The former next action—one-factor population/split/scaling/threshold/Attack-3
+execution followed by repeated seeds—is superseded. It may return only if the
+new plan promotes it after the trusted clean-reader anchor.
 
 ## Not on the critical path
 
