@@ -4,10 +4,13 @@
 
 **Governing state:**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
-supersedes the prior model-family/one-factor execution sequence. Its plan
-checkpoint is pending. Launch no new scientific run; preserve existing
-artifacts until Phase 0 classifies them. Older execution-order notes below are
-historical unless the new plan explicitly promotes them.
+supersedes the prior model-family/one-factor execution sequence. The user
+approved the plan on 2026-08-23. Phase 0 preservation/reconciliation is
+complete; Phase 1 paper-only orientation is also complete and recorded in
+`studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`. Phase 2's
+disposable sandbox is pending separate authorization. Launch no new scientific
+run. Older execution-order notes below are historical unless the new plan
+explicitly promotes them.
 
 ## Environment quirks
 

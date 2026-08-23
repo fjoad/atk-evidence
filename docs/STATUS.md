@@ -12,9 +12,11 @@
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a
   disposable sandbox, and a new source freeze before assessing the existing
-  five-file implementation. The plan checkpoint is pending; no new scientific
-  execution is authorized. Prior code, runs, failures, and results remain
-  preserved without retroactive reclassification.
+  five-file implementation. The user approved the plan on 2026-08-23. Phase 0
+  preservation/reconciliation and Phase 1 paper-only orientation are complete.
+  Phase 2's disposable discovery sandbox is pending separate authorization.
+  No new scientific execution is authorized. Prior code, runs, failures, and
+  results remain preserved without retroactive reclassification.
 - The paper-first minimal-instrument reframe is accepted and recorded in
   [`decisions/2026-08-09-paper-first-minimal-instrument.md`](decisions/2026-08-09-paper-first-minimal-instrument.md).
 - Paper 1 is the only active execution target. Paper 2's existing artifact-level
@@ -316,13 +318,14 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Review and approve the saved clean-reader rebase flow. This is the current
-   plan checkpoint.
-2. After approval, execute Phase 0 only: preserve and classify existing
-   artifacts, harvest already-completed outputs when access permits, and launch
-   no new experimental work.
-3. Continue to the paper-only orientation read. Existing code and results must
-   not determine the new primary source interpretation.
+1. Review the saved source-only orientation in
+   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md).
+2. Obtain separate authorization for Phase 2's disposable `X` sandbox. The
+   saved plan approval covered preservation/reconciliation and paper-only
+   orientation, not experimental execution.
+3. If authorized, pre-record each cheap sandbox question and use only toy or
+   synthetic data and disposable code; do not consult or run the historical
+   implementation, full data, or prior results.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

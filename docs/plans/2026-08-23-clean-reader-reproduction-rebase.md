@@ -2,10 +2,11 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; plan checkpoint pending before scientific
-execution
+**Status:** Active governing plan; plan approved 2026-08-23; Checkpoint 1
+remains closed before scientific implementation or execution
 
-**Current state:** Phase 0 — preserve and reconcile; not started
+**Current state:** Phase 1 complete — Phase 2 discovery sandbox awaiting
+separate authorization
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -123,8 +124,8 @@ reopened. At most one phase may be `IN PROGRESS`.
 
 | Phase | State | Entry requirement | Exit artifact or decision |
 |---|---|---|---|
-| 0. Preserve and reconcile | `NEXT` | Plan accepted as governing | Existing-artifact classification and no-new-run gate |
-| 1. Paper-only orientation | `PENDING` | Phase 0 complete | Provisional numerical and causal claim map |
+| 0. Preserve and reconcile | `COMPLETE` | Plan accepted as governing | Existing-artifact classification and no-new-run gate |
+| 1. Paper-only orientation | `COMPLETE` | Phase 0 complete | Provisional numerical and causal claim map |
 | 2. Discovery sandbox | `PENDING` | Orientation map exists | Sandbox log and discriminating questions |
 | 3. Clean-reader source freeze | `PENDING` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `PENDING` | Phase 3 complete | User approval or explicit loop-back |
@@ -420,6 +421,9 @@ and record why the new evidence changed its status.
 | Date | From | To | Reason | Evidence impact |
 |---|---|---|---|---|
 | 2026-08-23 | Prior numerical breadth/depth plan | Plan checkpoint | Reoriented around clean-reader reproduction before mechanism or attainability depth | Existing work preserved; no artifact retroactively reclassified |
+| 2026-08-23 | Plan checkpoint | Phase 0 in progress | User approved the saved plan | Preservation and classification authorized; no scientific run authorized |
+| 2026-08-23 | Phase 0 | Phase 1 in progress | Existing artifacts inventoried and fenced from the new source interpretation | No prior result admitted or relabeled; paper-only orientation authorized |
+| 2026-08-23 | Phase 1 in progress | Phase 1 complete; Phase 2 pending | Complete PDF visually inspected and source-only orientation map saved | Numerical targets, causal claims, contradictions, omissions, and sandbox questions recorded without consulting prior implementation or results |
 
 ## Hard exclusions until Checkpoint 1
 
@@ -433,6 +437,6 @@ and record why the new evidence changed its status.
 
 ## Plan checkpoint
 
-User review of this saved flow is required before Phase 0 begins. Approval of
-the plan authorizes preservation/reconciliation and paper-only orientation. It
-does not cross Checkpoint 1 or authorize experimental execution.
+**Approved 2026-08-23.** The approval authorizes preservation/reconciliation
+and paper-only orientation. It does not cross Checkpoint 1 or authorize
+experimental execution.
