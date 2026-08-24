@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-08-11
+**Last updated:** 2026-08-24
 
 ## Purpose
 
@@ -1217,6 +1217,104 @@ and repeated experiments determine technical conclusions.
 - **Remaining uncertainty / blast radius:** The omission affects historical
   result target annotations and post-score failures only; it does not alter any
   saved model, score vector, prediction, or metric.
+
+### Clean-reader source-only findings before the discovery sandbox
+
+- **Former belief/status:** The concern was initially intuitive: the paper's
+  results looked unusually clean, the task appeared possibly too easy to
+  support the architectural story, and some written operations seemed
+  incapable of behaving as claimed. Earlier project implementations and
+  outcomes could not be allowed to decide whether that intuition was a fair
+  reading of the source.
+- **Evidence:** During Phase 1 of the 2026-08-23 clean-reader rebase, the exact
+  12-page PDF was fingerprinted, visually inspected, and text-extracted page by
+  page while prior method reconstructions, code, and results remained closed.
+  The resulting source-only record transcribes the complete Tables II--V target
+  pattern, maps five explanatory claims as `B > A because Z exploits S`, and
+  records every material contradiction, omission, static constraint, and
+  smallest sandbox question found in that pass.
+- **Finding 1 — reported-pattern triage (`OBSERVED`, source-only):** Every
+  proposed model is ordered FC-SAE, LSTM-SAE, FC-VAE, LSTM-VAE, LSTM-AEA in
+  both main tables for every displayed metric, with FA reversed. The same
+  ordering persists at all three data sizes and for DR/FA on all six attacks;
+  every data-size accuracy curve is monotone. No run count, seed, dispersion,
+  confidence interval, or failed experiment is reported. Several flattering
+  metrics are algebraically dependent by the paper's own definitions:
+  `SP=100-FA`, `ACC=(DR+SP)/2`, and F1 is derived from DR and PR. The pattern is
+  a legitimate audit signal, not evidence of selection, fabrication, or
+  intent.
+- **Finding 2 — explanatory identification (`OBSERVED`, source-design
+  assessment; `M` remains formally open):** The reported comparisons are
+  comparisons between complete configurations, not isolated tests of the
+  credited components. LSTM versus FC also changes depth, width, activation,
+  optimizer, and dropout; VAE versus SAE changes model, objective, anomaly
+  score, and threshold; AEA versus VAE is not attention alone. The paper shows
+  no matched component ablation, structure destruction, capability witness,
+  learned-behavior inspection, or paired uncertainty. Therefore the printed
+  tables alone do not identify that recurrence, latent variance, or attention
+  caused the reported advantages. They also do not show that those mechanisms
+  are absent.
+- **Finding 3 — task triviality (`HYPOTHESIS`):** ISET attacks 1--5 introduce
+  conspicuous changes in amplitude, zero count, constancy, range, or variance
+  that may be detected by zero-parameter or one-feature rules. Attack 6
+  reverses time order while preserving the day's multiset and total, and is the
+  clearest printed capability witness for temporal sensitivity. Until a
+  triviality floor and structure-sensitive controls are run through the same
+  evaluation path, high aggregate performance cannot establish that depth,
+  recurrence, variational modeling, or attention was necessary.
+- **Finding 4 — executable-method status (`VERIFIED` source contradictions and
+  `OPEN` completions):** The printed Attack-3 endpoint subtracts a positive
+  duration from its start and therefore cannot create the described forward
+  interval under an ordinary literal reading. The VAE section says low
+  reconstruction probability is anomalous while the shared decision rule says
+  greater-than-threshold is anomalous. Equation (9) mixes distributions over
+  different variables; a valid positive variance parameterization is omitted;
+  the ROC/IQR threshold phrase does not define a unique scalar; the benign-only
+  training population cannot directly supply the labeled DR/ROC validation
+  later invoked; and customer identity, sample unit/cardinality, and layer
+  count remain materially ambiguous. A formal reproduction therefore requires
+  visible literal failures and predeclared `I` completions, never silent
+  repair.
+- **Finding 5 — geometric reconstruction floor (`VERIFIED` under the printed
+  preprocessing/output assumptions):** The paper standardizes model targets
+  to zero mean and unit variance, while Table I assigns Softmax outputs to the
+  FC autoencoders and sigmoid outputs to the recurrent autoencoders. A Softmax
+  reconstruction lies in the nonnegative unit-sum simplex and a sigmoid
+  reconstruction lies in the unit box. For a general standardized 48-vector
+  `x`, every admissible Softmax reconstruction therefore satisfies
+  `MSE >= dist(x, simplex)^2/48`; the sigmoid analogue is
+  `MSE >= dist(x, [0,1]^48)^2/48`. No optimizer, capacity increase, or extra
+  compute can remove that representation-domain floor. This is a structural
+  bound on exact reconstruction under those assumptions, **not** a bound on
+  DR, FA, AUC, ranking quality, or the published target pattern.
+- **Finding 6 — present three-part verdict (`OPEN` / not yet earned):** The new
+  clean-reader program has not yet produced a numerical reproduction finding,
+  a capability-sensitive formal mechanism finding, or an empirical
+  attainability envelope. The strongest present statement is that the source
+  reports an exceptionally tidy target pattern, does not isolate the causal
+  mechanisms used to explain that pattern, may evaluate a shortcut-dominated
+  task, and is not uniquely executable as written. Whether a predeclared
+  ordinary completion reproduces the complete target remains open.
+- **Root cause:** **INFERRED at the source-design level** — the publication
+  attaches causal explanations to aggregate comparisons among jointly changing
+  configurations, while its synthetic attacks and evaluation do not force the
+  credited capabilities to be necessary and several consequential operations
+  are contradictory or omitted.
+- **Current conclusion + boundary:** **OBSERVED/VERIFIED SOURCE FINDINGS** —
+  suspicion has been converted into explicit, falsifiable questions and one
+  genuine reconstruction-domain bound. It has not been converted into an
+  accusation, a numerical non-reproduction, a mechanism-absence claim, or an
+  attainability verdict.
+- **Remaining uncertainty / blast radius:** Phase 2 must use only disposable
+  `X` probes to test output-domain behavior, the triviality floor, temporal,
+  variance, and attention witnesses, score direction, threshold semantics, and
+  one-example execution. Any surviving question must then return to the PDF
+  and exact data for a frozen formal contract. Historical results remain
+  preserved but cannot retrospectively supply the clean-reader finding.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`,
+  `studies/atk-2022-deep-autoencoder/CLEAN_READER_RECONCILIATION.md`, and
+  `docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`.
 
 ## How to add a learning
 

@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-23
+**Last updated:** 2026-08-24
 
 **Governing state:**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
@@ -11,6 +11,16 @@ complete; Phase 1 paper-only orientation is also complete and recorded in
 disposable sandbox is pending separate authorization. Launch no new scientific
 run. Older execution-order notes below are historical unless the new plan
 explicitly promotes them.
+
+**Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
+in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings
+before the discovery sandbox.” It preserves six separate statements: tidy
+total ordering is an audit signal rather than an accusation; the reported
+full-configuration comparisons do not identify the credited mechanisms; task
+triviality is a sandbox hypothesis; multiple written operations are
+non-executable or underdetermined; standardized targets plus Softmax/sigmoid
+outputs imply a genuine reconstruction-error floor but no direct metric bound;
+and all three formal `N/M/A` verdicts remain open.
 
 ## Environment quirks
 

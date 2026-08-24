@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-23
+**Last updated:** 2026-08-24
 
 **Branch:** `main`
 
@@ -17,6 +17,14 @@
   Phase 2's disposable discovery sandbox is pending separate authorization.
   No new scientific execution is authorized. Prior code, runs, failures, and
   results remain preserved without retroactive reclassification.
+- The Phase-1 discussion has been preserved as six bounded source-only
+  findings in
+  [`EVIDENCE-AND-LEARNINGS.md`](EVIDENCE-AND-LEARNINGS.md): unusually total
+  numerical ordering; non-identification of the credited mechanisms by the
+  reported comparisons; a shortcut/triviality hypothesis; literal execution
+  blockers; a proved output-domain reconstruction floor; and an explicit
+  statement that the formal numerical, mechanism, and attainability findings
+  remain open.
 - The paper-first minimal-instrument reframe is accepted and recorded in
   [`decisions/2026-08-09-paper-first-minimal-instrument.md`](decisions/2026-08-09-paper-first-minimal-instrument.md).
 - Paper 1 is the only active execution target. Paper 2's existing artifact-level
@@ -320,7 +328,9 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 1. Review the saved source-only orientation in
    [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md).
-2. Obtain separate authorization for Phase 2's disposable `X` sandbox. The
+2. Discuss and select the smallest Phase-2 discovery questions from the saved
+   breadth-first list, then obtain authorization for the disposable `X`
+   sandbox. The
    saved plan approval covered preservation/reconciliation and paper-only
    orientation, not experimental execution.
 3. If authorized, pre-record each cheap sandbox question and use only toy or
