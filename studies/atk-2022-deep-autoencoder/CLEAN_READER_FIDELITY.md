@@ -104,3 +104,6 @@ archives are available with exact official byte sizes and MD5s, but
 `ISSDA_API_TOKEN` is configured. This is a genuine named-data gate, not a model
 result or evidence against the paper. The frozen semantic CSV remains
 ineligible unless the user approves a new visible `I` branch.
+
+The complete no-more-choices execution record is
+[`CLEAN_READER_ANCHOR_PRERUN.md`](CLEAN_READER_ANCHOR_PRERUN.md).

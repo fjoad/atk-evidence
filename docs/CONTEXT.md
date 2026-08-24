@@ -24,7 +24,9 @@ corrections, fail-closed contract, and 178 deterministic tests are recorded in
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`. Phase 5 is blocked
 because the exact official allocation `.tab` is absent both locally and on
 Panther and no ISSDA token is configured. The exact archive bytes are already
-available; do not substitute the semantic CSV. Checkpoint 2 remains binding.
+available; do not substitute the semantic CSV. The full frozen run contract is
+`studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
+commit `1e428ffddeee400f790c21b69812cf2a1a9e62bb`. Checkpoint 2 remains binding.
 Older execution-order notes below are historical unless the new plan explicitly
 promotes them.
 

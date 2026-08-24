@@ -130,7 +130,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 3. Clean-reader source freeze | `COMPLETE` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `COMPLETE` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
-| 5. Exact-data anchor | `BLOCKED` | Fidelity passes | One immutable complete attempt or preserved failure |
+| 5. Exact-data anchor | `BLOCKED` | Fidelity passes | Frozen pre-run contract plus one immutable complete attempt or preserved failure |
 | 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
 | Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |

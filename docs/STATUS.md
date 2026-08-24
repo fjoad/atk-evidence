@@ -35,6 +35,10 @@
   CSV is not eligible for this anchor. Formal mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
+  The complete frozen Phase-5 question, code/environment hashes, predictions,
+  36-hour one-GPU budget, exact command, stopping rule, and data-gate state are
+  in
+  [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md).
 - The active competing explanations, their predictions, discriminating tests,
   and status are now durable in
   [`../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`](../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md).
@@ -351,8 +355,8 @@ and hashes are local. Its score/eligibility audit is unfinished.
    `SME and Residential allocations.tab` artifact and verify byte size 196,316
    plus MD5 `124c10711ab1e7c52cb7317c8f69e42e`; do not transform the semantic
    CSV into a substitute.
-2. Freeze the Phase-5 pre-run record against the completed Phase-4 code commit,
-   sync that commit to Panther, and re-run the exact source gate.
+2. Use the already frozen Phase-5 pre-run record, sync its exact execution
+   commit to Panther, and re-run the exact source gate.
 3. Submit exactly one `CR-ISET-FCSAE-01` job using
    `reproduction/run_clean_reader_anchor.sbatch`, then stop for complete
    artifact inspection and Checkpoint 2.
