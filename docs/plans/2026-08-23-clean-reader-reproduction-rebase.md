@@ -2,10 +2,10 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; plan approved 2026-08-23; Checkpoint 1
-remains closed before scientific implementation or execution
+**Status:** Active governing plan; Checkpoint 1 approved 2026-08-24
 
-**Current state:** Phase 3 complete; Checkpoint 1 pending user review
+**Current state:** Phase 4 complete; Phase 5 blocked at the exact official
+allocation `.tab` data gate
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -128,9 +128,9 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 1. Paper-only orientation | `COMPLETE` | Phase 0 complete | Provisional numerical and causal claim map |
 | 2. Discovery sandbox | `COMPLETE` | Orientation map exists | Sandbox log and discriminating questions |
 | 3. Clean-reader source freeze | `COMPLETE` | Sandbox questions recorded | Frozen specification and assumptions register |
-| Checkpoint 1 | `PENDING` | Phase 3 complete | User approval or explicit loop-back |
-| 4. Fidelity assessment | `PENDING` | Checkpoint 1 approved | Claim-to-code-to-data trace and quarantine list |
-| 5. Exact-data anchor | `PENDING` | Fidelity passes | One immutable complete attempt or preserved failure |
+| Checkpoint 1 | `COMPLETE` | Phase 3 complete | User approval or explicit loop-back |
+| 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
+| 5. Exact-data anchor | `BLOCKED` | Fidelity passes | One immutable complete attempt or preserved failure |
 | 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
 | Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
@@ -428,12 +428,14 @@ and record why the new evidence changed its status.
 | 2026-08-24 | Phase 2 in progress | Phase 2 execution gate | Contract and standalone implementation frozen in `83dab57`; local SSH agent has no identity | Static checks and 173 deterministic tests pass, but no remote command, job submission, or sandbox result exists |
 | 2026-08-24 | Phase 2 execution gate | Phase 2 complete; Phase 3 pending | User clarified interactive authentication; frozen job `381540` completed once and every output was inspected | Exploratory `X` questions preserved; no named data, historical runner, or formal `N/M/A` result executed; no result-guided sandbox retry |
 | 2026-08-24 | Phase 3 pending | Phase 3 complete; Checkpoint 1 pending | All 12 PDF pages re-inspected; official ISSDA identity resolved; literal failures and one outcome-independent first-anchor completion frozen | `CR-ISET-FCSAE-01` is reviewable; no historical implementation was assessed and no named data or formal experiment executed |
+| 2026-08-24 | Checkpoint 1 pending | Checkpoint 1 complete; Phase 4 in progress | User directed execution of the six-step sequence and required every plausible explanation to be recorded and tested systematically | Source freeze approved; explanation register active; fidelity inspection authorized, while Phase-5 run contract and Checkpoint 2 remain binding |
+| 2026-08-24 | Phase 4 in progress | Phase 4 complete; Phase 5 data gate | All five direct files were traced; historical routes were quarantined; frozen mismatches were minimally corrected; 178 deterministic tests pass | One fail-closed clean-reader route exists; no historical result is eligible; exact-data execution may begin only after the official allocation `.tab` is available |
+| 2026-08-24 | Phase 5 data gate | Phase 5 blocked | Exact official archive identities are locally available, but the official allocation `.tab` is absent locally and on Panther and no ISSDA token is configured | No named-data preparation, training, or score exists; the semantic CSV remains an unapproved `I` branch; Checkpoint 2 is not reached |
 
-## Hard exclusions until Checkpoint 1
+## Current hard exclusions until the exact anchor and Checkpoint 2
 
-- no named-data, production-runner, historical-branch, or formally eligible
-  preparation, training, scoring, branch, or seed run; Phase 2's pre-recorded
-  toy/synthetic `X` sandbox is the sole execution exception;
+- no substitute allocation serialization, extra seed, second model, ambiguity
+  branch, corrected control, or threshold tuning before the one exact anchor;
 - no result-guided choice of the primary clean-reader interpretation;
 - no historical code or result treated as source authority;
 - no ambiguity lattice, workflow system, or infrastructure expansion;
@@ -443,6 +445,6 @@ and record why the new evidence changed its status.
 
 ## Plan checkpoint
 
-**Approved 2026-08-23 for Phases 0--1. Separately authorized 2026-08-24 for
-Phase 2's bounded discovery sandbox.** Neither approval crosses Checkpoint 1
-or authorizes named-data or formally eligible experimental execution.
+**Approved 2026-08-23 for Phases 0--1; separately authorized 2026-08-24 for
+Phase 2; Checkpoint 1 approved 2026-08-24 for the Phase-4/5 single-anchor
+sequence.** Checkpoint 2 remains closed.

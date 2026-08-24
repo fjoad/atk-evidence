@@ -104,9 +104,11 @@ diagnostic breadth before execution depth.
 4. [`docs/CONTEXT.md`](docs/CONTEXT.md) — compact working memory and don't-repeats.
 5. [`docs/EVIDENCE-AND-LEARNINGS.md`](docs/EVIDENCE-AND-LEARNINGS.md) when
    interpreting results, disputed claims, or corrected conclusions.
-6. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
-7. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
-8. The active plan, currently
+6. [`studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`](studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md)
+   when a result changes the plausibility of a competing explanation.
+7. [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — project and evidence flow.
+8. [`docs/VISION.md`](docs/VISION.md) when scope or intent is relevant.
+9. The active plan, currently
    [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](docs/plans/2026-08-23-clean-reader-reproduction-rebase.md).
 
 If the current step has no plan, create one before experimental implementation.

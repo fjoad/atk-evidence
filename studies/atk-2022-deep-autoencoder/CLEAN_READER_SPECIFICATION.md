@@ -2,8 +2,8 @@
 
 **Date:** 2026-08-24
 
-**Status:** Frozen candidate for Checkpoint 1 review; no formal implementation
-or named-data execution is authorized by this document
+**Status:** Approved at Checkpoint 1 on 2026-08-24; Phase 4 passed; Phase 5 is
+blocked at the exact official allocation `.tab` gate
 
 **Primary evidence question:** numerical reproduction (`N`)
 
@@ -355,9 +355,11 @@ another model, tune a threshold, or launch a control before full artifact
 inspection and Checkpoint 2. Phase 6 compares the complete seven-value row and
 measuring chain, not merely the closest metric.
 
-## 9. Checkpoint-1 questions
+## 9. Checkpoint-1 disposition
 
-User approval is required before Phase 4. Review specifically:
+The user approved proceeding on 2026-08-24 while requiring all plausible
+explanations to be preserved and systematically tested. The consequential
+review questions were:
 
 1. Is `CR-ISET-FCSAE-01` the right minimal first anchor?
 2. Is the Attack-3 completion—duration first, then an in-day start—the fairest
@@ -371,6 +373,8 @@ User approval is required before Phase 4. Review specifically:
 6. Is using the printed threshold 0.58, while preserving its failed derivation,
    preferable to inventing a threshold algorithm?
 
-Disagreement loops to Phase 1 or Phase 2. Approval authorizes only the Phase-4
-fidelity assessment; it does not authorize named-data execution, ambiguity
-sweeps, repeated seeds, or formal mechanism/attainability work.
+No source-reading disagreement or loop-back was requested. Phase 4 found and
+corrected only frozen-specification mismatches; see
+[`CLEAN_READER_FIDELITY.md`](CLEAN_READER_FIDELITY.md). Named-data execution
+cannot begin until the exact allocation `.tab` passes its checksum gate.
+Mechanism/attainability work remains behind Checkpoint 2.

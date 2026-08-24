@@ -2,8 +2,8 @@
 
 **Date:** 2026-08-24
 
-**Status:** Accepted as the candidate evidence contract for Checkpoint 1;
-formal execution remains unapproved
+**Status:** Approved at Checkpoint 1 on 2026-08-24; Phase 4 passed; Phase 5
+blocked at the exact allocation data gate
 
 ## Decision
 

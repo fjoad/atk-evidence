@@ -16,8 +16,15 @@ root tests pass. Panther job `381540` completed the one authorized wave with
 exit `0:0`; Phase 2 is complete and its results remain exploratory `X` only.
 Phase 3 is also complete: all 12 PDF pages were re-inspected and
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md` freezes the
-literal failures and candidate `CR-ISET-FCSAE-01` completion. Checkpoint 1 is
-pending explicit user review; Phase 4 and named-data execution remain closed.
+literal failures and candidate `CR-ISET-FCSAE-01` completion. The user approved
+Checkpoint 1 on 2026-08-24 and directed the six-step sequence to proceed while
+requiring every plausible explanation to be preserved and tested
+systematically. Phase 4 is complete: the five-file trace, quarantine, minimal
+corrections, fail-closed contract, and 178 deterministic tests are recorded in
+`studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`. Phase 5 is blocked
+because the exact official allocation `.tab` is absent both locally and on
+Panther and no ISSDA token is configured. The exact archive bytes are already
+available; do not substitute the semantic CSV. Checkpoint 2 remains binding.
 Older execution-order notes below are historical unless the new plan explicitly
 promotes them.
 
@@ -39,6 +46,13 @@ mechanism program, if promoted, must separate fitting success, temporal
 structure, inductive bias, and paired advantage. The VAE direction conflict may
 be a typo; preserve both directions and test them rather than overinterpreting
 the prose.
+
+**Explanation memory:** use
+`studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md` as the live
+hypothesis ledger. It contains E1–E6 from the temporal discussion and E7–E15
+for geometry, scoring, preprocessing, data, reproduction error, witness
+weakness, variation/selection, reporting error, and attainability. Add
+plausible explanations with competing predictions; never silently delete one.
 
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings

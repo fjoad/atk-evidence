@@ -200,6 +200,165 @@ class CompactBaselineTests(unittest.TestCase):
         self.assertTrue(np.allclose(mean, expected.mean(axis=0)))
         self.assertTrue(np.allclose(scale, expected.std(axis=0)))
 
+    def test_clean_reader_attack_3_preserves_the_full_sampled_duration(self) -> None:
+        benign = np.ones((32, 48), dtype=np.float32)
+        meters = np.arange(32, dtype=np.int32)
+        attack_3 = next(
+            values
+            for attack_id, _, values in prepare_data.attack_blocks(
+                benign,
+                meters,
+                seed=20260824,
+                attack_3_completion="duration_first_in_day",
+            )
+            if attack_id == 3
+        )
+        rng = np.random.default_rng(20260824 + 103)
+        durations = rng.integers(4, 25, size=benign.shape[0])
+        starts = rng.integers(0, 25 - durations, size=benign.shape[0])
+        self.assertTrue(
+            np.array_equal(
+                np.count_nonzero(attack_3 == 0, axis=1), 2 * durations
+            )
+        )
+        for row, (start, duration) in enumerate(zip(starts, durations, strict=True)):
+            expected = np.zeros(48, dtype=bool)
+            expected[2 * start : 2 * (start + duration)] = True
+            self.assertTrue(np.array_equal(attack_3[row] == 0, expected))
+
+    def test_clean_reader_test_attacks_are_restricted_to_b2_meters(self) -> None:
+        rng = np.random.default_rng(3)
+        benign = rng.uniform(0.1, 2.0, size=(12, 48)).astype(np.float32)
+        meters = np.repeat(np.arange(6, dtype=np.int32), 2)
+        days = np.tile(np.arange(2, dtype=np.int16), 6)
+        with tempfile.TemporaryDirectory() as temporary:
+            output = Path(temporary)
+            np.save(output / "benign_raw.npy", benign)
+            np.save(output / "meter_ids.npy", meters)
+            np.save(output / "day_numbers.npy", days)
+            metadata = prepare_data.prepare_p0(
+                output,
+                benign,
+                meters,
+                days,
+                {"mode": "tiny", "elapsed_seconds": 0.0},
+                seed=20260824,
+                adasyn_neighbors=5,
+                test_adasyn="none",
+                force_expensive_adasyn=False,
+                source_record={"branch": "official-tab-v1", "ready": True},
+                residential_population="all",
+                contract="exploratory",
+                attack_3_completion="duration_first_in_day",
+                malicious_test_population="b2",
+            )
+            b2 = np.load(output / "b2_index.npy")
+            source_rows = np.load(output / "test_original_source_row.npy")
+            attacks = np.load(output / "test_original_attack_id.npy")
+            self.assertEqual(
+                metadata["counts"]["test_source_malicious_profiles"],
+                6 * b2.size,
+            )
+            self.assertTrue(
+                np.isin(source_rows[attacks > 0], b2).all()
+            )
+            self.assertEqual(
+                np.unique(meters[source_rows[attacks > 0]]).size,
+                np.unique(meters[b2]).size,
+            )
+
+    def test_softmax_projection_floor_is_exact_on_hand_sized_rows(self) -> None:
+        values = np.vstack(
+            [
+                np.full(48, 1 / 48, dtype=np.float32),
+                np.zeros(48, dtype=np.float32),
+                np.array([2.0] + [0.0] * 47, dtype=np.float32),
+            ]
+        )
+        with tempfile.TemporaryDirectory() as temporary:
+            scores = run_experiment.score_simplex_projection_floor(
+                values,
+                Path(temporary) / "floor.npy",
+                batch_size=2,
+            )
+            self.assertAlmostEqual(float(scores[0]), 0.0, places=10)
+            self.assertAlmostEqual(float(scores[1]), 1 / (48 * 48), places=10)
+            self.assertAlmostEqual(float(scores[2]), 1 / 48, places=8)
+
+    def test_clean_reader_contract_reports_all_material_mismatches(self) -> None:
+        args = argparse.Namespace(
+            model="fc_sae",
+            seed=11,
+            epochs=100,
+            minimum_epochs=1,
+            batch_size=512,
+            patience=5,
+            min_delta=1e-4,
+            learning_rate=0.001,
+            output_activation="paper",
+            train_fraction="full",
+            test_view="original",
+            table_v=False,
+        )
+        metadata = {
+            "method": "historical",
+            "configuration": {
+                "contract": "exploratory",
+                "mode": "full",
+                "seed": 11,
+                "test_adasyn": "none",
+                "adasyn_neighbors": 5,
+                "source_branch": "sciencedb-csv-semantic-equivalence-v1",
+                "attack_3_completion": "start_first_clip",
+                "malicious_test_population": "all",
+            },
+        }
+        errors = run_experiment.clean_reader_contract_errors(args, metadata)
+        joined = "\n".join(errors)
+        for field in (
+            "seed",
+            "minimum_epochs",
+            "batch_size",
+            "min_delta",
+            "test_view",
+            "source_branch",
+            "attack_3_completion",
+            "malicious_test_population",
+            "data method",
+        ):
+            self.assertIn(field, joined)
+
+    def test_minimum_epoch_stopping_tracks_early_best_but_waits_to_stop(self) -> None:
+        class DummyModel:
+            def __init__(self) -> None:
+                self.stop_training = False
+                self.weight = np.array([0.0])
+
+            def get_weights(self) -> list[np.ndarray]:
+                return [self.weight.copy()]
+
+            def set_weights(self, weights: list[np.ndarray]) -> None:
+                self.weight = weights[0].copy()
+
+        callback = run_experiment.MinimumEpochEarlyStopping(
+            minimum_epochs=10,
+            patience=5,
+            min_delta=1e-6,
+        )
+        model = DummyModel()
+        callback.set_model(model)
+        losses = [1.0, 0.5, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4, 0.4]
+        for epoch, loss in enumerate(losses):
+            model.weight[:] = epoch
+            callback.on_epoch_end(epoch, {"loss": loss})
+            if epoch < 9:
+                self.assertFalse(model.stop_training)
+        self.assertTrue(model.stop_training)
+        self.assertEqual(callback.stopped_epoch, 10)
+        self.assertEqual(callback.best_epoch, 3)
+        callback.on_train_end()
+        self.assertEqual(float(model.weight[0]), 2.0)
+
     def test_paper_metric_formulas_use_balanced_accuracy(self) -> None:
         labels = np.array([1, 1, 0, 0], dtype=np.int8)
         scores = np.array([0.9, 0.1, 0.8, 0.2], dtype=np.float32)

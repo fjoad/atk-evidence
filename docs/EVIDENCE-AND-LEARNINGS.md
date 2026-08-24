@@ -1378,19 +1378,58 @@ and repeated experiments determine technical conclusions.
   and omits several data, RNG, dropout, and training semantics. A clean-reader
   reproduction therefore needs visible completions even before code fidelity
   can be assessed.
-- **Current conclusion + label:** **VERIFIED SOURCE FREEZE; USER APPROVAL
-  OPEN** — `CR-ISET-FCSAE-01` is the candidate first anchor. It preserves joint
+- **Current conclusion + label:** **VERIFIED SOURCE FREEZE; CHECKPOINT 1
+  APPROVED** — `CR-ISET-FCSAE-01` is the candidate first anchor. It preserves joint
   pre-split scaling, test-set ADASYN, Softmax reconstruction, and threshold
   0.58 while visibly completing attack timing, identity mapping, exact data,
-  architecture details, training, RNG, and metric semantics. It authorizes no
-  experiment by itself.
-- **Remaining uncertainty / blast radius:** Checkpoint 1 must decide whether
-  the first anchor and its six consequential completion choices are fair. The
-  exact official allocation `.tab` may be an operational data gate. Historical
-  code/results remain unopened for fidelity and cannot validate this freeze.
+  architecture details, training, RNG, and metric semantics. The user approved
+  Phase-4 fidelity assessment on 2026-08-24 and required a systematic register
+  of competing explanations. Formal execution still requires its Phase-5
+  pre-run contract.
+- **Remaining uncertainty / blast radius:** The approved exact official
+  allocation `.tab` is an operational data gate. Historical code/results were
+  opened only for the Phase-4 fidelity trace; their outcomes cannot
+  retroactively validate or select the freeze.
 - **Source artifacts:**
   `studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md` and
   `docs/decisions/2026-08-24-clean-reader-first-anchor-freeze.md`.
+
+### Clean-reader Phase-4 fidelity correction and Phase-5 data gate
+
+- **Former belief/status:** The five direct reproduction files were candidate
+  instrumentation whose fidelity was deliberately unknown; explanation E11
+  (our implementation is wrong) had to be addressed before interpreting a new
+  numerical result.
+- **Evidence:** A complete static trace found that FC-SAE architecture, strict
+  days, five attacks, scaling, split mechanism, score direction, threshold, and
+  metric formulas were reusable. It also found material mismatches: semantic
+  allocation CSV rather than official `.tab`, seed 11, clipped Attack 3,
+  attacks from all customers in the held-out set, batch 512,
+  `min_delta=1e-4`, no ten-epoch minimum, unresampled scoring by default, no
+  eligible-contract guard, and no Softmax projection floor. Only these frozen
+  fields were corrected. All prior affected attempts were quarantined rather
+  than deleted. The corrected route reloads persisted weights before scoring,
+  hashes run artifacts, and has an independent fail-closed anchor audit. The
+  full suite passes: 140 study tests plus 38 root tests.
+- **Root cause:** The earlier compact route encoded a different historical
+  interpretation and exploratory execution defaults. Passing its own tests did
+  not make it an implementation of the newly frozen clean-reader contract.
+- **Current conclusion + label:** **VERIFIED IMPLEMENTATION FIDELITY WITH
+  NAMED-DATA BLOCK** — Phase 4 closes the identified E11 mismatches for the
+  declared route at the static/tiny-test level. It produces no `N` result.
+  Exact local mirror archives match all six official byte/MD5 identities, but
+  the official 196,316-byte allocation `.tab` is absent both locally and on
+  Panther and no ISSDA token is configured. Phase 5 therefore stops at the
+  exact data gate.
+- **Remaining uncertainty / blast radius:** A defect may still be exposed by
+  exact preparation or artifact inspection; Phase 4 does not prove that the
+  model will train successfully or reproduce any target. The semantic CSV may
+  be scientifically equivalent, but it remains an unapproved `I` branch and
+  cannot fill this anchor silently. No mechanism or attainability explanation
+  is updated by this block.
+- **Source artifacts:** `studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`,
+  `studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`, and the five
+  direct files under `studies/atk-2022-deep-autoencoder/reproduction/`.
 
 ## How to add a learning
 

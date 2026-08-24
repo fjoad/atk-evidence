@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Prepare Paper 1 data in the printed order from the verified sources.
+"""Prepare Paper 1 data through an explicit frozen source contract.
 
 The order is intentionally the paper's order:
 
@@ -8,12 +8,13 @@ The order is intentionally the paper's order:
 3. jointly standardize benign and malicious rows before splitting;
 4. split benign customers 2:1 into B1/B2;
 5. train on B1;
-6. test on B2 plus attacks from *all* customers; and
+6. test on B2 plus attacks from the declared customer population; and
 7. either apply the printed ADASYN step or explicitly preserve the declared
    no-test-resampling continuation when that full-scale step is unavailable.
 
-This is not recommended methodology. It is the declared printed-method anchor.
-Use ``--mode tiny`` first; ``--mode full`` processes the complete source.
+This is not recommended methodology. The default is the approved clean-reader
+anchor contract; historical alternatives require ``--contract exploratory``.
+Full preparation is refused outside a Slurm compute job.
 """
 
 from __future__ import annotations
@@ -21,6 +22,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import platform
 import sys
 import tempfile
@@ -38,24 +40,47 @@ import sklearn
 from imblearn.over_sampling import ADASYN
 
 from download_data import (
+    CER_FILES,
+    CER_OFFICIAL_DIR,
     CER_SCIENCEDB_DIR,
+    OFFICIAL_ALLOCATION,
     SGCC_PATH,
     SGCC_SHA256,
     SCIENCEDB_ALLOCATION,
     digest,
     verify_cer_directory,
+    verify_file,
+    verify_zip,
 )
 
 
 REPO = Path(__file__).resolve().parents[3]
-RAW = CER_SCIENCEDB_DIR
 DEFAULT_ROOT = REPO / "data/derived/atk-2022-deep-autoencoder/reproduction"
 ARCHIVES = tuple(f"File{i}.txt.zip" for i in range(1, 7))
-ALLOCATION = SCIENCEDB_ALLOCATION[0]
 FEATURES = 48
-DATA_SEED = 11
+DATA_SEED = 20260824
 CHUNK_ROWS = 1_000_000
 ATTACK_CHUNK = 50_000
+CLEAN_READER_CONTRACT = "clean-reader-v1"
+SOURCE_BRANCHES = {
+    "official-tab-v1": {
+        # The six ScienceDB archive bytes have the exact official ISSDA MD5
+        # and byte size. Only the allocation serialization must come from the
+        # access-controlled official deposit.
+        "archive_directory": CER_SCIENCEDB_DIR,
+        "allocation_directory": CER_OFFICIAL_DIR,
+        "allocation": (
+            OFFICIAL_ALLOCATION[0],
+            OFFICIAL_ALLOCATION[2],
+            OFFICIAL_ALLOCATION[3],
+        ),
+    },
+    "sciencedb-csv-semantic-equivalence-v1": {
+        "archive_directory": CER_SCIENCEDB_DIR,
+        "allocation_directory": CER_SCIENCEDB_DIR,
+        "allocation": SCIENCEDB_ALLOCATION,
+    },
+}
 SGCC_REPRESENTATIONS = ("last_48", "first_48", "binned_mean_48")
 SGCC_METHOD_SUFFIX = {
     "last_48": "LAST48",
@@ -277,14 +302,44 @@ def save_json(path: Path, payload: dict[str, object]) -> None:
     temporary.replace(path)
 
 
-def verified_source() -> dict[str, object]:
+def verified_source(source_branch: str) -> dict[str, object]:
     """Recheck the exact archives and frozen allocation branch before parsing."""
 
-    record = verify_cer_directory(
-        RAW,
-        allocation=SCIENCEDB_ALLOCATION,
-        branch="sciencedb-csv-semantic-equivalence-v1",
-    )
+    selected = SOURCE_BRANCHES[source_branch]
+    if source_branch == "official-tab-v1":
+        records: dict[str, object] = {}
+        for filename, (_, size, md5) in CER_FILES.items():
+            path = selected["archive_directory"] / filename
+            item = verify_file(
+                path, algorithm="md5", expected=md5, expected_bytes=size
+            )
+            if item["status"] == "verified":
+                item["zip"] = verify_zip(path)
+                if item["zip"]["status"] != "verified":
+                    item["status"] = "invalid"
+            item["identity_note"] = (
+                "byte-identical mirror of the official ISSDA archive"
+            )
+            records[filename] = item
+        allocation_name, allocation_size, allocation_md5 = selected["allocation"]
+        allocation_path = selected["allocation_directory"] / allocation_name
+        records[allocation_name] = verify_file(
+            allocation_path,
+            algorithm="md5",
+            expected=allocation_md5,
+            expected_bytes=allocation_size,
+        )
+        record = {
+            "branch": source_branch,
+            "ready": all(item["status"] == "verified" for item in records.values()),
+            "files": records,
+        }
+    else:
+        record = verify_cer_directory(
+            selected["archive_directory"],
+            allocation=selected["allocation"],
+            branch=source_branch,
+        )
     if not record["ready"]:
         failed = [
             name
@@ -295,9 +350,9 @@ def verified_source() -> dict[str, object]:
     return record
 
 
-def allocation() -> tuple[pd.DataFrame, np.ndarray]:
+def allocation(raw: Path, allocation_name: str) -> tuple[pd.DataFrame, np.ndarray]:
     frame = pd.read_csv(
-        RAW / ALLOCATION,
+        raw / allocation_name,
         sep=None,
         engine="python",
         encoding="utf-8-sig",
@@ -406,9 +461,11 @@ def strict_profiles(frame: pd.DataFrame) -> tuple[np.ndarray, np.ndarray, np.nda
     return values, meters, days
 
 
-def extract_tiny(residential: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+def extract_tiny(
+    residential: np.ndarray, raw: Path
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
     eligible = set(map(int, residential))
-    for chunk in zip_chunks([RAW / ARCHIVES[0]]):
+    for chunk in zip_chunks([raw / ARCHIVES[0]]):
         filtered = chunk.loc[chunk["meter_id"].isin(eligible)]
         values, meters, days = strict_profiles(filtered)
         if values.size == 0:
@@ -430,6 +487,7 @@ def extract_tiny(residential: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.nd
 def extract_full(
     residential: np.ndarray,
     scratch: Path,
+    raw: Path,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, int]]:
     schema = pa.schema(
         [
@@ -444,7 +502,7 @@ def extract_full(
     writers: dict[int, pq.ParquetWriter] = {}
     source_rows = residential_rows = 0
     try:
-        for chunk in zip_chunks([RAW / name for name in ARCHIVES]):
+        for chunk in zip_chunks([raw / name for name in ARCHIVES]):
             source_rows += len(chunk)
             chunk = chunk.loc[chunk["meter_id"].isin(selected)].copy()
             residential_rows += len(chunk)
@@ -506,6 +564,9 @@ def load_or_extract_profiles(
     output: Path,
     mode: str,
     *,
+    archive_directory: Path,
+    allocation_directory: Path,
+    allocation_name: str,
     population: str = "all",
     seed: int = DATA_SEED,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, object]]:
@@ -532,13 +593,13 @@ def load_or_extract_profiles(
             record,
         )
 
-    _, residential = allocation()
+    _, residential = allocation(allocation_directory, allocation_name)
     residential = select_residential_population(
         residential, population, seed=seed
     )
     started = time.perf_counter()
     if mode == "tiny":
-        values, meters, days = extract_tiny(residential)
+        values, meters, days = extract_tiny(residential, archive_directory)
         extraction = {"source": "first verified archive deterministic fixture"}
     else:
         scratch_parent = output / "scratch"
@@ -547,7 +608,7 @@ def load_or_extract_profiles(
             prefix="cer-parquet-", dir=scratch_parent
         ) as temporary:
             values, meters, days, extraction = extract_full(
-                residential, Path(temporary)
+                residential, Path(temporary), archive_directory
             )
         scratch_parent.rmdir()
     np.save(values_path, np.asarray(values, dtype=np.float32))
@@ -582,6 +643,7 @@ def attack_blocks(
     meters: np.ndarray,
     *,
     seed: int,
+    attack_3_completion: str = "duration_first_in_day",
 ) -> Iterator[tuple[int, int, np.ndarray]]:
     unique_meters = np.unique(meters)
     alpha_rng = np.random.default_rng(seed + 101)
@@ -600,9 +662,20 @@ def attack_blocks(
                     0.1, 0.8, size=source.shape
                 ).astype(np.float32)
             elif attack_id == 3:
-                initial_hour = rng.integers(0, 20, size=source.shape[0])
                 length_hour = rng.integers(4, 25, size=source.shape[0])
-                final_hour = np.minimum(initial_hour + length_hour, 24)
+                if attack_3_completion == "duration_first_in_day":
+                    # High is exclusive, so this is exactly 0..24-duration.
+                    initial_hour = rng.integers(
+                        0, 25 - length_hour, size=source.shape[0]
+                    )
+                    final_hour = initial_hour + length_hour
+                elif attack_3_completion == "start_first_clip":
+                    initial_hour = rng.integers(0, 20, size=source.shape[0])
+                    final_hour = np.minimum(initial_hour + length_hour, 24)
+                else:
+                    raise ValueError(
+                        f"unsupported Attack-3 completion: {attack_3_completion}"
+                    )
                 bypass = (
                     (positions >= 2 * initial_hour[:, None])
                     & (positions < 2 * final_hour[:, None])
@@ -626,11 +699,18 @@ def joint_scaler(
     benign: np.ndarray,
     meters: np.ndarray,
     seed: int,
+    *,
+    attack_3_completion: str = "duration_first_in_day",
 ) -> tuple[np.ndarray, np.ndarray]:
     total = benign.shape[0]
     sums = np.asarray(benign, dtype=np.float64).sum(axis=0)
     squares = np.square(np.asarray(benign, dtype=np.float64)).sum(axis=0)
-    for _, _, attacked in attack_blocks(benign, meters, seed=seed):
+    for _, _, attacked in attack_blocks(
+        benign,
+        meters,
+        seed=seed,
+        attack_3_completion=attack_3_completion,
+    ):
         numeric = attacked.astype(np.float64)
         sums += numeric.sum(axis=0)
         squares += np.square(numeric).sum(axis=0)
@@ -673,9 +753,17 @@ def prepare_p0(
     force_expensive_adasyn: bool,
     source_record: dict[str, object],
     residential_population: str,
+    contract: str,
+    attack_3_completion: str,
+    malicious_test_population: str,
 ) -> dict[str, object]:
     started = time.perf_counter()
-    mean, scale = joint_scaler(benign_raw, meters, seed)
+    mean, scale = joint_scaler(
+        benign_raw,
+        meters,
+        seed,
+        attack_3_completion=attack_3_completion,
+    )
     np.save(output / "scaler_mean.npy", mean)
     np.save(output / "scaler_scale.npy", scale)
     benign = standardized_array(
@@ -690,7 +778,12 @@ def prepare_p0(
         attack_maps[attack_id] = np.lib.format.open_memmap(
             path, mode="w+", dtype="float32", shape=benign_raw.shape
         )
-    for attack_id, start, attacked in attack_blocks(benign_raw, meters, seed=seed):
+    for attack_id, start, attacked in attack_blocks(
+        benign_raw,
+        meters,
+        seed=seed,
+        attack_3_completion=attack_3_completion,
+    ):
         stop = start + attacked.shape[0]
         attack_maps[attack_id][start:stop] = (
             (attacked.astype(np.float64) - mean) / scale
@@ -712,7 +805,15 @@ def prepare_p0(
     np.save(output / "train_day_numbers.npy", np.asarray(days[train_index]))
     np.save(output / "table_iv_order.npy", rng.permutation(train_index.size))
 
-    original_rows = b2_index.size + 6 * benign.shape[0]
+    if malicious_test_population == "b2":
+        malicious_index = b2_index
+    elif malicious_test_population == "all":
+        malicious_index = np.arange(benign.shape[0], dtype=np.int64)
+    else:
+        raise ValueError(
+            f"unsupported malicious test population: {malicious_test_population}"
+        )
+    original_rows = b2_index.size + 6 * malicious_index.size
     original_path = output / "test_original_x.npy"
     original_x = np.lib.format.open_memmap(
         original_path, mode="w+", dtype="float32", shape=(original_rows, FEATURES)
@@ -727,13 +828,12 @@ def prepare_p0(
     original_source[cursor:next_cursor] = b2_index
     original_attack[cursor:next_cursor] = 0
     cursor = next_cursor
-    all_sources = np.arange(benign.shape[0], dtype=np.int64)
     for attack_id, path in enumerate(attack_paths, start=1):
         attacked = np.load(path, mmap_mode="r")
-        next_cursor = cursor + attacked.shape[0]
-        original_x[cursor:next_cursor] = attacked
+        next_cursor = cursor + malicious_index.size
+        original_x[cursor:next_cursor] = attacked[malicious_index]
         original_y[cursor:next_cursor] = 1
-        original_source[cursor:next_cursor] = all_sources
+        original_source[cursor:next_cursor] = malicious_index
         original_attack[cursor:next_cursor] = attack_id
         cursor = next_cursor
     original_x.flush()
@@ -792,16 +892,24 @@ def prepare_p0(
     method_parts = []
     if residential_population == "seeded_3000":
         method_parts.append("I-DATA-3000")
-    method_parts.append(
-        "P0-ISET-FCSAE"
-        if test_adasyn == "printed"
-        else "I-ADASYN-NONE-ISET-FCSAE"
-    )
+    if contract == CLEAN_READER_CONTRACT:
+        method_parts.append("CR-ISET-FCSAE-01-DATA")
+    else:
+        method_parts.append(
+            "P0-ISET-FCSAE"
+            if test_adasyn == "printed"
+            else "I-ADASYN-NONE-ISET-FCSAE"
+        )
     configuration: dict[str, object] = {
+        "contract": contract,
         "mode": profiles_record["mode"],
         "seed": seed,
         "test_adasyn": test_adasyn,
         "adasyn_neighbors": adasyn_neighbors,
+        "source_branch": source_record["branch"],
+        "attack_3_completion": attack_3_completion,
+        "malicious_test_population": malicious_test_population,
+        "expensive_adasyn_acknowledged": force_expensive_adasyn,
     }
     if residential_population != "all":
         configuration["residential_population"] = residential_population
@@ -812,11 +920,15 @@ def prepare_p0(
         "configuration": configuration,
         "paper_order": [
             "strict_48_slot_profiles",
-            "six_attacks_all_customers",
+            "six_attacks_generated_for_all_customers",
             "joint_B_plus_M_featurewise_standardization",
             "customer_disjoint_2_to_1_B1_B2",
             "XTR_equals_B1",
-            "XTST_original_equals_B2_plus_all_customer_M",
+            (
+                "XTST_original_equals_B2_plus_B2_customer_M"
+                if malicious_test_population == "b2"
+                else "XTST_original_equals_B2_plus_all_customer_M"
+            ),
             (
                 "ADASYN_inside_test"
                 if test_adasyn == "printed"
@@ -832,10 +944,10 @@ def prepare_p0(
             "day": "strict_exact_slots_1_to_48",
             "attack_1": "one_alpha_per_customer_matrix",
             "attack_2_5": "independent_beta_per_half_hour",
-            "attack_3": "addition_clip_two_slots_per_hour",
+            "attack_3": attack_3_completion,
             "scaling": "joint_B_plus_all_M_featurewise_before_split",
             "split": "customer_disjoint_seeded",
-            "malicious_test_population": "all_customers",
+            "malicious_test_population": malicious_test_population,
             "anomaly_adasyn": (
                 "test_set_as_printed"
                 if test_adasyn == "printed"
@@ -849,7 +961,8 @@ def prepare_p0(
             "meters": int(unique_meters.size),
             "B1_profiles": int(train_index.size),
             "B2_profiles": int(b2_index.size),
-            "malicious_profiles": int(6 * benign.shape[0]),
+            "generated_malicious_profiles": int(6 * benign.shape[0]),
+            "test_source_malicious_profiles": int(6 * malicious_index.size),
             "test_original_profiles": int(original_y.size),
             "test_original_benign": int(np.count_nonzero(original_y == 0)),
             "test_original_malicious": int(np.count_nonzero(original_y == 1)),
@@ -874,10 +987,16 @@ def prepare_p0(
             "attack_3_endpoint": {
                 "paper_claim": "t_f = t_i - t_l for a positive theft duration",
                 "literal_status": "non_executable_end_precedes_start",
-                "assumption": "t_f = t_i + t_l, clipped at hour 24",
+                "assumption": (
+                    "draw duration first and then a start that preserves the full interval"
+                    if attack_3_completion == "duration_first_in_day"
+                    else "t_f = t_i + t_l, clipped at hour 24"
+                ),
                 "derived_operation": (
-                    "draw integer start 0..19 and duration 4..24 inclusive; "
-                    "zero the corresponding half-open two-slots-per-hour interval"
+                    "draw duration 4..24 inclusive, then start 0..24-duration; "
+                    "zero the complete half-open two-slots-per-hour interval"
+                    if attack_3_completion == "duration_first_in_day"
+                    else "draw duration 4..24 and start 0..19; clip at hour 24"
                 ),
             },
             "test_adasyn": {
@@ -916,13 +1035,19 @@ def prepare_p0(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument(
+        "--contract",
+        choices=(CLEAN_READER_CONTRACT, "exploratory"),
+        default=CLEAN_READER_CONTRACT,
+        help="clean-reader-v1 fails closed on every approved anchor field",
+    )
     parser.add_argument("--dataset", choices=("iset", "sgcc"), default="iset")
     parser.add_argument(
         "--sgcc-representation",
         choices=SGCC_REPRESENTATIONS,
         default="last_48",
     )
-    parser.add_argument("--mode", choices=("tiny", "full"), default="tiny")
+    parser.add_argument("--mode", choices=("tiny", "full"), default="full")
     parser.add_argument(
         "--residential-population",
         choices=("all", "seeded_3000"),
@@ -931,6 +1056,21 @@ def main() -> int:
     )
     parser.add_argument("--output", type=Path)
     parser.add_argument("--seed", type=int, default=DATA_SEED)
+    parser.add_argument(
+        "--source-branch",
+        choices=tuple(SOURCE_BRANCHES),
+        default="official-tab-v1",
+    )
+    parser.add_argument(
+        "--attack-3-completion",
+        choices=("duration_first_in_day", "start_first_clip"),
+        default="duration_first_in_day",
+    )
+    parser.add_argument(
+        "--malicious-test-population",
+        choices=("b2", "all"),
+        default="b2",
+    )
     parser.add_argument("--adasyn-neighbors", type=int, default=5)
     parser.add_argument(
         "--test-adasyn",
@@ -949,13 +1089,39 @@ def main() -> int:
     args = parser.parse_args()
     if args.adasyn_neighbors < 1:
         parser.error("--adasyn-neighbors must be positive")
+    if args.mode == "full" and not os.environ.get("SLURM_JOB_ID"):
+        parser.error("full preparation must run inside a Slurm compute job")
+    if args.contract == CLEAN_READER_CONTRACT:
+        required = {
+            "dataset": "iset",
+            "mode": "full",
+            "residential_population": "all",
+            "seed": DATA_SEED,
+            "source_branch": "official-tab-v1",
+            "attack_3_completion": "duration_first_in_day",
+            "malicious_test_population": "b2",
+            "adasyn_neighbors": 5,
+            "test_adasyn": "printed",
+            "force_expensive_adasyn": True,
+        }
+        observed = {name: getattr(args, name) for name in required}
+        mismatches = {
+            name: {"required": value, "observed": observed[name]}
+            for name, value in required.items()
+            if observed[name] != value
+        }
+        if mismatches:
+            parser.error(
+                "clean-reader-v1 contract mismatch: "
+                + json.dumps(mismatches, sort_keys=True)
+            )
     output = args.output or DEFAULT_ROOT / (
         f"sgcc-{args.sgcc_representation.replace('_', '')}-{args.mode}"
         if args.dataset == "sgcc"
         else (
-            f"p0-{args.mode}-{args.test_adasyn}"
+            f"{args.contract}-{args.mode}-{args.test_adasyn}"
             if args.residential_population == "all"
-            else f"p0-{args.mode}-{args.test_adasyn}-pop3000"
+            else f"{args.contract}-{args.mode}-{args.test_adasyn}-pop3000"
         )
     )
     output.mkdir(parents=True, exist_ok=True)
@@ -976,10 +1142,19 @@ def main() -> int:
         )
         source_record: dict[str, object] | None = None
     else:
-        requested["test_adasyn"] = args.test_adasyn
+        requested.update(
+            {
+                "contract": args.contract,
+                "test_adasyn": args.test_adasyn,
+                "source_branch": args.source_branch,
+                "attack_3_completion": args.attack_3_completion,
+                "malicious_test_population": args.malicious_test_population,
+                "expensive_adasyn_acknowledged": args.force_expensive_adasyn,
+            }
+        )
         if args.residential_population != "all":
             requested["residential_population"] = args.residential_population
-        source_record = verified_source()
+        source_record = verified_source(args.source_branch)
     if metadata_path.is_file():
         metadata = json.loads(metadata_path.read_text())
         if metadata.get("status") == "complete":
@@ -1003,9 +1178,13 @@ def main() -> int:
                 representation=args.sgcc_representation,
             )
         else:
+            source_definition = SOURCE_BRANCHES[args.source_branch]
             benign, meters, days, profiles_record = load_or_extract_profiles(
                 output,
                 args.mode,
+                archive_directory=source_definition["archive_directory"],
+                allocation_directory=source_definition["allocation_directory"],
+                allocation_name=source_definition["allocation"][0],
                 population=args.residential_population,
                 seed=args.seed,
             )
@@ -1022,6 +1201,9 @@ def main() -> int:
                 force_expensive_adasyn=args.force_expensive_adasyn,
                 source_record=source_record,
                 residential_population=args.residential_population,
+                contract=args.contract,
+                attack_3_completion=args.attack_3_completion,
+                malicious_test_population=args.malicious_test_population,
             )
     except Exception as exc:
         save_json(

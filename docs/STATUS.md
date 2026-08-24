@@ -24,9 +24,20 @@
   data identity, primary completion, causal map, and one-attempt stopping rule
   are frozen in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md).
-  Checkpoint 1 now awaits user review. Historical implementation assessment,
-  named-data execution, and formal evidence remain closed. Prior code, runs,
-  failures, and results remain preserved without retroactive reclassification.
+  The user approved Checkpoint 1 on 2026-08-24 and required all plausible
+  explanations to be preserved and systematically tested. Phase 4 is complete:
+  the five-file trace and quarantine are saved in
+  [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md),
+  the frozen mismatches were minimally corrected, and all 178 deterministic
+  tests pass. Phase 5 is blocked at the exact official allocation `.tab` gate:
+  it is absent locally and on Panther and no ISSDA token is configured. The six
+  consumption archives already match the official bytes exactly. The semantic
+  CSV is not eligible for this anchor. Formal mechanism/attainability work
+  remains behind Checkpoint 2. Prior code, runs, failures, and results remain
+  preserved without retroactive reclassification.
+- The active competing explanations, their predictions, discriminating tests,
+  and status are now durable in
+  [`../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`](../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md).
 - The Phase-1 discussion has been preserved as six bounded source-only
   findings in
   [`EVIDENCE-AND-LEARNINGS.md`](EVIDENCE-AND-LEARNINGS.md): unusually total
@@ -336,16 +347,15 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Conduct Checkpoint 1 review of
-   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md),
-   especially the first anchor, Attack-3 repair, exact allocation requirement,
-   joint pre-split scaler, FC-SAE layer/dropout/training completion, and use of
-   printed threshold 0.58.
-2. If the source reading is disputed, loop to Phase 1; if the diagnostic
-   question is weak, loop to Phase 2; otherwise obtain explicit user approval
-   for Phase 4.
-3. Until approval, do not inspect the historical implementation for fidelity,
-   modify it, prepare named data, or execute any formal run.
+1. Obtain the exact access-controlled
+   `SME and Residential allocations.tab` artifact and verify byte size 196,316
+   plus MD5 `124c10711ab1e7c52cb7317c8f69e42e`; do not transform the semantic
+   CSV into a substitute.
+2. Freeze the Phase-5 pre-run record against the completed Phase-4 code commit,
+   sync that commit to Panther, and re-run the exact source gate.
+3. Submit exactly one `CR-ISET-FCSAE-01` job using
+   `reproduction/run_clean_reader_anchor.sbatch`, then stop for complete
+   artifact inspection and Checkpoint 2.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

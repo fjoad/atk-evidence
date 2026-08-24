@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import statistics
@@ -68,6 +69,8 @@ def strict_runtime_threshold(
 
 def effective_eligibility(attempt: dict[str, object]) -> str:
     config = attempt["configuration"]
+    if config.get("contract") == "clean-reader-v1":
+        return "eligible_clean_reader_P+I_N"
     if "I-SGCC-" in str(config.get("method", "")):
         recorded = str(attempt.get("eligibility", ""))
         return (
@@ -163,6 +166,53 @@ def chunked_pair_summary(
         "mean_absolute_difference": sum_abs_delta / count,
         "root_mean_squared_difference": math.sqrt(sum_delta_sq / count),
     }
+
+
+def sha256(path: Path) -> str:
+    value = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b""):
+            value.update(chunk)
+    return value.hexdigest()
+
+
+def metric_vector(
+    labels: np.ndarray,
+    scores: np.ndarray,
+    *,
+    threshold: float,
+    direction: str,
+) -> tuple[dict[str, float | int], np.ndarray]:
+    """Independently regenerate the runner's printed metric vector."""
+
+    predictions = scores > threshold if direction == "higher" else scores < threshold
+    labels = np.asarray(labels, dtype=np.int8)
+    predictions = np.asarray(predictions, dtype=bool)
+    tp = int(np.count_nonzero(predictions & (labels == 1)))
+    tn = int(np.count_nonzero(~predictions & (labels == 0)))
+    fp = int(np.count_nonzero(predictions & (labels == 0)))
+    fn = int(np.count_nonzero(~predictions & (labels == 1)))
+    dr = tp / (tp + fn)
+    fa = fp / (fp + tn)
+    sp = 1 - fa
+    precision = tp / (tp + fp) if tp + fp else 0.0
+    accuracy = (dr + sp) / 2
+    f1 = 2 * dr * precision / (dr + precision) if dr + precision else 0.0
+    oriented = scores if direction == "higher" else -scores
+    metrics: dict[str, float | int] = {
+        "TP": tp,
+        "TN": tn,
+        "FP": fp,
+        "FN": fn,
+        "DR": 100 * dr,
+        "FA": 100 * fa,
+        "SP": 100 * sp,
+        "PR": 100 * precision,
+        "ACC": 100 * accuracy,
+        "F1": 100 * f1,
+        "AUC": 100 * float(roc_auc_score(labels, oriented)),
+    }
+    return metrics, predictions.astype(np.int8)
 
 
 def best_balanced_threshold(
@@ -427,6 +477,156 @@ def audit_scores(attempt_path: Path) -> dict[str, object]:
     return result
 
 
+def audit_clean_reader_anchor(attempt_path: Path) -> dict[str, object]:
+    """Fail closed unless one result is a complete `CR-ISET-FCSAE-01` artifact."""
+
+    attempt_path = attempt_path.resolve()
+    attempt = json.loads(attempt_path.read_text())
+    run = attempt_path.parent
+    config = attempt.get("configuration", {})
+    errors: list[str] = []
+    expected_config = {
+        "contract": "clean-reader-v1",
+        "anchor_id": "CR-ISET-FCSAE-01",
+        "method": "CR-ISET-FCSAE-01",
+        "model": "fc_sae",
+        "seed": 20260824,
+        "epochs_max": 100,
+        "minimum_epochs": 10,
+        "batch_size": 32,
+        "patience": 5,
+        "min_delta": 1e-6,
+        "learning_rate": 0.001,
+        "train_fraction": "full",
+        "test_view": "adasyn",
+        "table_v": False,
+        "threshold": 0.58,
+        "anomaly_direction": "higher",
+        "attempt_rule": "one_attempt_then_stop_for_checkpoint_2",
+    }
+    for name, expected in expected_config.items():
+        if config.get(name) != expected:
+            errors.append(
+                f"configuration {name}: expected {expected!r}, observed {config.get(name)!r}"
+            )
+    if attempt.get("eligibility") != "eligible_clean_reader_P+I_N":
+        errors.append("result eligibility is not eligible_clean_reader_P+I_N")
+
+    data_path = Path(attempt.get("data", {}).get("path", ""))
+    if not data_path.is_absolute():
+        data_path = REPO / data_path
+    metadata_path = data_path / "metadata.json"
+    if not metadata_path.is_file():
+        errors.append(f"prepared metadata is missing: {metadata_path}")
+        metadata: dict[str, object] = {}
+    else:
+        metadata = json.loads(metadata_path.read_text())
+        if sha256(metadata_path) != config.get("data_metadata_sha256"):
+            errors.append("prepared metadata SHA-256 differs from the frozen configuration")
+    expected_data = {
+        "contract": "clean-reader-v1",
+        "mode": "full",
+        "seed": 20260824,
+        "test_adasyn": "printed",
+        "adasyn_neighbors": 5,
+        "source_branch": "official-tab-v1",
+        "attack_3_completion": "duration_first_in_day",
+        "malicious_test_population": "b2",
+        "expensive_adasyn_acknowledged": True,
+    }
+    data_config = metadata.get("configuration", {})
+    for name, expected in expected_data.items():
+        if data_config.get(name) != expected:
+            errors.append(
+                f"prepared data {name}: expected {expected!r}, observed {data_config.get(name)!r}"
+            )
+    source = metadata.get("source", {})
+    if source.get("branch") != "official-tab-v1" or not source.get("ready"):
+        errors.append("official-tab-v1 source gate is not recorded ready")
+    for name, record in source.get("files", {}).items():
+        if record.get("status") != "verified":
+            errors.append(f"source file is not verified: {name}")
+
+    for name, expected in attempt.get("data", {}).get("files", {}).items():
+        path = data_path / name
+        if not path.is_file() or sha256(path) != expected:
+            errors.append(f"prepared artifact hash mismatch: {name}")
+    for name, expected in attempt.get("artifact_sha256", {}).items():
+        path = run / name
+        if not path.is_file() or sha256(path) != expected:
+            errors.append(f"run artifact hash mismatch: {name}")
+
+    required_run_files = {
+        "scores.npy",
+        "predictions.npy",
+        "model.weights.h5",
+        "history.json",
+        "zero_reconstruction_scores.npy",
+        "softmax_projection_floor_scores.npy",
+    }
+    for name in sorted(required_run_files):
+        if not (run / name).is_file():
+            errors.append(f"required run artifact is missing: {name}")
+
+    recomputed: dict[str, float | int] | None = None
+    maximum_metric_gap: float | None = None
+    floor_violation: float | None = None
+    if (run / "scores.npy").is_file() and (data_path / "y_test.npy").is_file():
+        scores = np.load(run / "scores.npy", mmap_mode="r")
+        labels = np.load(data_path / "y_test.npy", mmap_mode="r")
+        recomputed, predictions = metric_vector(
+            labels,
+            scores,
+            threshold=float(config.get("threshold", 0.58)),
+            direction=str(config.get("anomaly_direction", "higher")),
+        )
+        recorded = attempt.get("metrics", {})
+        maximum_metric_gap = max(
+            abs(float(recomputed[name]) - float(recorded.get(name, float("nan"))))
+            for name in (*METRICS, "TP", "TN", "FP", "FN")
+        )
+        if not np.isfinite(maximum_metric_gap) or maximum_metric_gap > 1e-10:
+            errors.append(
+                f"independently regenerated metrics differ by {maximum_metric_gap}"
+            )
+        saved_predictions = np.load(run / "predictions.npy", mmap_mode="r")
+        if not np.array_equal(predictions, saved_predictions):
+            errors.append("saved predictions differ from score-threshold regeneration")
+        floor_path = run / "softmax_projection_floor_scores.npy"
+        if floor_path.is_file():
+            floor = np.load(floor_path, mmap_mode="r")
+            if floor.shape != scores.shape:
+                errors.append("Softmax projection-floor scores do not align")
+            else:
+                floor_violation = float(np.max(np.asarray(floor) - np.asarray(scores)))
+                if floor_violation > 1e-5:
+                    errors.append(
+                        "trained reconstruction score falls below the exact "
+                        f"Softmax-domain floor by {floor_violation}"
+                    )
+
+    history_path = run / "history.json"
+    if history_path.is_file():
+        history = json.loads(history_path.read_text())
+        completed = len(history.get("loss", []))
+        stop = attempt.get("training_stop", {})
+        if completed != stop.get("epochs_completed"):
+            errors.append("history length differs from the recorded stopping state")
+        if completed < 10 or completed > 100:
+            errors.append(f"completed epoch count is outside 10..100: {completed}")
+
+    return {
+        "status": "passed" if not errors else "failed",
+        "anchor_id": "CR-ISET-FCSAE-01",
+        "source_result": str(attempt_path),
+        "errors": errors,
+        "independently_recomputed_metrics": recomputed,
+        "maximum_recorded_metric_gap": maximum_metric_gap,
+        "maximum_floor_minus_trained_score": floor_violation,
+        "score_audit": audit_scores(attempt_path) if not errors else None,
+    }
+
+
 def load_attempts(root: Path) -> tuple[list[dict[str, object]], list[dict[str, object]]]:
     successes: list[dict[str, object]] = []
     failures: list[dict[str, object]] = []
@@ -589,11 +789,28 @@ def main() -> int:
         help="audit one result.json and its full score arrays",
     )
     parser.add_argument(
+        "--audit-clean-reader-anchor",
+        type=Path,
+        help="fail-closed audit of one CR-ISET-FCSAE-01 result.json",
+    )
+    parser.add_argument(
         "--audit-output",
         type=Path,
         help="score-audit JSON path (defaults beside the audited result)",
     )
     args = parser.parse_args()
+    if args.audit_attempt is not None and args.audit_clean_reader_anchor is not None:
+        parser.error("select only one audit mode")
+    if args.audit_clean_reader_anchor is not None:
+        payload = audit_clean_reader_anchor(args.audit_clean_reader_anchor)
+        output = (
+            args.audit_output
+            or args.audit_clean_reader_anchor.parent / "clean_reader_anchor_audit.json"
+        )
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
+        print(json.dumps(payload, indent=2, sort_keys=True))
+        return 0 if payload["status"] == "passed" else 1
     if args.audit_attempt is not None:
         payload = audit_scores(args.audit_attempt)
         output = args.audit_output or args.audit_attempt.parent / "score_audit.json"

@@ -15,6 +15,7 @@ import time
 from pathlib import Path
 
 os.environ.setdefault("KERAS_BACKEND", "torch")
+os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
 
 import keras
 import numpy as np
@@ -29,12 +30,15 @@ from models import SPECS, build_model, layer_inventory
 
 REPO = Path(__file__).resolve().parents[3]
 DEFAULT_DATA = (
-    REPO / "data/derived/atk-2022-deep-autoencoder/reproduction/p0-full-none"
+    REPO
+    / "data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-full-printed"
 )
 DEFAULT_RESULTS = (
     REPO
-    / "data/derived/atk-2022-deep-autoencoder/reproduction/results/runs"
+    / "data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-results/runs"
 )
+CLEAN_READER_CONTRACT = "clean-reader-v1"
+CLEAN_READER_SEED = 20260824
 REPORTED = {
     "fc_sae": {"DR": 81, "FA": 15, "SP": 85, "PR": 81, "ACC": 83, "F1": 81, "AUC": 81},
     "lstm_sae": {"DR": 85, "FA": 13, "SP": 87, "PR": 85, "ACC": 86, "F1": 85, "AUC": 82},
@@ -148,6 +152,69 @@ def save_json(path: Path, payload: dict[str, object]) -> None:
     temporary.replace(path)
 
 
+class MinimumEpochEarlyStopping(keras.callbacks.Callback):
+    """Training-loss stopping with a true minimum epoch count.
+
+    All epochs participate in best-weight tracking. Stopping is merely delayed
+    until ``minimum_epochs`` have completed, which is the frozen clean-reader
+    completion rather than Keras' different ``start_from_epoch`` behavior.
+    """
+
+    def __init__(
+        self,
+        *,
+        minimum_epochs: int,
+        patience: int,
+        min_delta: float,
+    ) -> None:
+        super().__init__()
+        self.minimum_epochs = minimum_epochs
+        self.patience = patience
+        self.min_delta = min_delta
+        self.best = float("inf")
+        self.best_epoch: int | None = None
+        self.best_weights: list[np.ndarray] | None = None
+        self.wait = 0
+        self.stopped_epoch: int | None = None
+
+    def on_epoch_end(
+        self, epoch: int, logs: dict[str, float] | None = None
+    ) -> None:
+        current = None if logs is None else logs.get("loss")
+        if current is None or not np.isfinite(current):
+            return
+        if float(current) < self.best - self.min_delta:
+            self.best = float(current)
+            self.best_epoch = epoch + 1
+            self.best_weights = self.model.get_weights()
+            self.wait = 0
+        else:
+            self.wait += 1
+        if epoch + 1 >= self.minimum_epochs and self.wait >= self.patience:
+            self.stopped_epoch = epoch + 1
+            self.model.stop_training = True
+
+    def on_train_end(self, logs: dict[str, float] | None = None) -> None:
+        del logs
+        if self.best_weights is not None:
+            self.model.set_weights(self.best_weights)
+
+
+def configure_determinism() -> dict[str, object]:
+    """Enable and report backend determinism where PyTorch supports it."""
+
+    torch.use_deterministic_algorithms(True, warn_only=True)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+    return {
+        "torch_deterministic_algorithms": torch.are_deterministic_algorithms_enabled(),
+        "torch_deterministic_warn_only": True,
+        "cudnn_benchmark": torch.backends.cudnn.benchmark,
+        "cudnn_deterministic": torch.backends.cudnn.deterministic,
+        "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
+    }
+
+
 def stable_id(payload: dict[str, object]) -> str:
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
     return hashlib.sha256(encoded).hexdigest()[:12]
@@ -243,6 +310,92 @@ def score_zero(
         )
     scores.flush()
     return scores
+
+
+def score_simplex_projection_floor(
+    values: np.ndarray,
+    target: Path,
+    *,
+    batch_size: int,
+) -> np.memmap:
+    """Save the exact per-row MSE floor over the closed probability simplex.
+
+    FC-SAE's Softmax output lies in the simplex interior. Euclidean projection
+    onto the closed simplex therefore supplies the exact attainable infimum and
+    a conservative reconstruction-error floor for every standardized target.
+    """
+
+    scores = np.lib.format.open_memmap(
+        target, mode="w+", dtype="float32", shape=(values.shape[0],)
+    )
+    for start in range(0, values.shape[0], batch_size):
+        stop = min(start + batch_size, values.shape[0])
+        batch = np.asarray(values[start:stop], dtype=np.float64)
+        ordered = np.sort(batch, axis=1)[:, ::-1]
+        cumulative = np.cumsum(ordered, axis=1) - 1.0
+        ranks = np.arange(1, batch.shape[1] + 1, dtype=np.float64)
+        positive = ordered - cumulative / ranks > 0
+        rho = np.sum(positive, axis=1) - 1
+        theta = cumulative[np.arange(batch.shape[0]), rho] / (rho + 1)
+        projection = np.maximum(batch - theta[:, None], 0.0)
+        scores[start:stop] = np.mean(
+            np.square(batch - projection), axis=1
+        ).astype(np.float32)
+    scores.flush()
+    return scores
+
+
+def clean_reader_contract_errors(
+    args: argparse.Namespace, metadata: dict[str, object]
+) -> list[str]:
+    """Return every mismatch against `CR-ISET-FCSAE-01` without short-circuiting."""
+
+    expected_args = {
+        "model": "fc_sae",
+        "seed": CLEAN_READER_SEED,
+        "epochs": 100,
+        "minimum_epochs": 10,
+        "batch_size": 32,
+        "patience": 5,
+        "min_delta": 1e-6,
+        "output_activation": "paper",
+        "train_fraction": "full",
+        "test_view": "adasyn",
+        "table_v": False,
+    }
+    errors = [
+        f"argument {name}: expected {expected!r}, observed {getattr(args, name)!r}"
+        for name, expected in expected_args.items()
+        if getattr(args, name) != expected
+    ]
+    if args.learning_rate not in (None, 0.001):
+        errors.append(
+            "argument learning_rate: expected the Adam 0.001 default or an "
+            f"explicit 0.001, observed {args.learning_rate!r}"
+        )
+    expected_data = {
+        "contract": CLEAN_READER_CONTRACT,
+        "mode": "full",
+        "seed": CLEAN_READER_SEED,
+        "test_adasyn": "printed",
+        "adasyn_neighbors": 5,
+        "source_branch": "official-tab-v1",
+        "attack_3_completion": "duration_first_in_day",
+        "malicious_test_population": "b2",
+        "expensive_adasyn_acknowledged": True,
+    }
+    observed_data = metadata.get("configuration", {})
+    errors.extend(
+        f"data {name}: expected {expected!r}, observed {observed_data.get(name)!r}"
+        for name, expected in expected_data.items()
+        if observed_data.get(name) != expected
+    )
+    if str(metadata.get("method")) != "CR-ISET-FCSAE-01-DATA":
+        errors.append(
+            "data method: expected 'CR-ISET-FCSAE-01-DATA', observed "
+            f"{metadata.get('method')!r}"
+        )
+    return errors
 
 
 def recover_failed_scoring(
@@ -1138,19 +1291,26 @@ def run_supervised_neural(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
+        "--contract",
+        choices=(CLEAN_READER_CONTRACT, "exploratory"),
+        default=CLEAN_READER_CONTRACT,
+        help="clean-reader-v1 fails closed on every approved anchor field",
+    )
+    parser.add_argument(
         "--model", choices=(*tuple(SPECS), *BENCHMARKS), default="fc_sae"
     )
-    parser.add_argument("--seed", type=int, default=11)
+    parser.add_argument("--seed", type=int, default=CLEAN_READER_SEED)
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
     parser.add_argument("--output", type=Path, default=DEFAULT_RESULTS)
     parser.add_argument("--epochs", type=int, default=100)
-    parser.add_argument("--batch-size", type=int, default=512)
+    parser.add_argument("--batch-size", type=int, default=32)
     parser.add_argument("--score-batch", type=int, default=8_192)
     parser.add_argument("--one-class-svm-train-cap", type=int, default=12_000)
     parser.add_argument("--multiclass-svm-train-cap", type=int, default=30_000)
     parser.add_argument("--svm-test-cap", type=int, default=30_000)
     parser.add_argument("--patience", type=int, default=5)
-    parser.add_argument("--min-delta", type=float, default=1e-4)
+    parser.add_argument("--minimum-epochs", type=int, default=10)
+    parser.add_argument("--min-delta", type=float, default=1e-6)
     parser.add_argument("--learning-rate", type=float)
     parser.add_argument(
         "--output-activation",
@@ -1162,7 +1322,7 @@ def main() -> int:
     parser.add_argument(
         "--test-view",
         choices=("adasyn", "original"),
-        default="original",
+        default="adasyn",
         help=(
             "adasyn uses the paper-printed resampled test cache; original uses "
             "the exact B2+M population before ADASYN (I-ADASYN/no-resampling)"
@@ -1177,8 +1337,10 @@ def main() -> int:
     parser.add_argument("--recovery-score-batch", type=int)
     args = parser.parse_args()
 
-    if min(args.epochs, args.batch_size, args.score_batch) < 1:
+    if min(args.epochs, args.minimum_epochs, args.batch_size, args.score_batch) < 1:
         parser.error("epochs and batch sizes must be positive")
+    if args.minimum_epochs > args.epochs:
+        parser.error("minimum epochs cannot exceed the maximum")
     if args.table_v and args.train_fraction != "full":
         parser.error("Table V is evaluated only from the full-training model")
     if args.output_activation != "paper" and args.model != "fc_sae":
@@ -1205,6 +1367,13 @@ def main() -> int:
         "SLURM_JOB_ID"
     ):
         raise RuntimeError("full preparation, training, and scoring must run in Slurm")
+    if args.contract == CLEAN_READER_CONTRACT:
+        contract_errors = clean_reader_contract_errors(args, metadata)
+        if contract_errors:
+            raise ValueError(
+                "clean-reader-v1 contract mismatch:\n- "
+                + "\n- ".join(contract_errors)
+            )
     if args.recover_scoring is not None:
         return recover_failed_scoring(
             args.recover_scoring,
@@ -1246,20 +1415,32 @@ def main() -> int:
         else args.output_activation
     )
     reported = reported_rows[args.model]
-    if args.output_activation != "paper":
+    if args.contract == CLEAN_READER_CONTRACT:
+        method = "CR-ISET-FCSAE-01"
+    elif args.output_activation != "paper":
         method = f"C-OUTPUT-{resolved_output_activation.upper()}-{dataset_name}-{SPECS[args.model].name}"
     else:
         method = f"{prepared_method(metadata)}-{SPECS[args.model].name}"
         if args.test_view == "original":
             method += "-NO-TEST-ADASYN"
     paper_tables = (
-        [str(table_number)]
-        if table_number == 2
-        else (["IV"] if args.train_fraction != "full" else ["III", "IV"])
+        ["III"]
+        if args.contract == CLEAN_READER_CONTRACT
+        else (
+            [str(table_number)]
+            if table_number == 2
+            else (["IV"] if args.train_fraction != "full" else ["III", "IV"])
+        )
     )
     if args.table_v:
         paper_tables.append("V")
     configuration = {
+        "contract": args.contract,
+        "anchor_id": (
+            "CR-ISET-FCSAE-01"
+            if args.contract == CLEAN_READER_CONTRACT
+            else None
+        ),
         "method": method,
         "paper_tables": paper_tables,
         "scientific_question": (
@@ -1269,6 +1450,7 @@ def main() -> int:
         "model": args.model,
         "seed": args.seed,
         "epochs_max": args.epochs,
+        "minimum_epochs": args.minimum_epochs,
         "batch_size": args.batch_size,
         "score_batch": args.score_batch,
         "patience": args.patience,
@@ -1281,6 +1463,16 @@ def main() -> int:
         "anomaly_direction": SPECS[args.model].anomaly_direction,
         "data_metadata_sha256": sha256(metadata_path),
     }
+    if args.contract == CLEAN_READER_CONTRACT:
+        configuration["evidence_question"] = "N"
+        configuration["implementation_semantics"] = "P+I"
+        configuration["attempt_rule"] = "one_attempt_then_stop_for_checkpoint_2"
+        configuration["competing_predictions"] = [
+            "complete-row close match",
+            "implementation or source defect exposed",
+            "materially distinct completion required",
+            "non-match inside the finite frozen contract",
+        ]
     if args.model in {"lstm_sae", "lstm_vae"}:
         configuration["decoder_completion"] = (
             "repeat_latent_with_mirrored_Algorithm_2_or_4_state_transfer"
@@ -1360,6 +1552,7 @@ def main() -> int:
         load_seconds = time.perf_counter() - load_started
 
         build_started = time.perf_counter()
+        determinism = configure_determinism()
         model = build_model(
             args.model,
             seed=args.seed,
@@ -1382,15 +1575,11 @@ def main() -> int:
             direction=SPECS[args.model].anomaly_direction,
         )
 
-        callbacks = [
-            keras.callbacks.EarlyStopping(
-                monitor="loss",
-                min_delta=args.min_delta,
-                patience=args.patience,
-                restore_best_weights=True,
-                verbose=1,
-            )
-        ]
+        stopping = MinimumEpochEarlyStopping(
+            minimum_epochs=args.minimum_epochs,
+            min_delta=args.min_delta,
+            patience=args.patience,
+        )
         fit_started = time.perf_counter()
         history = model.fit(
             x_train,
@@ -1398,11 +1587,37 @@ def main() -> int:
             epochs=args.epochs,
             batch_size=args.batch_size,
             shuffle=True,
-            callbacks=callbacks,
+            callbacks=[stopping],
             verbose=2,
         )
         fit_seconds = time.perf_counter() - fit_started
         model.save_weights(run / "model.weights.h5")
+
+        training_stop = {
+            "best_epoch": stopping.best_epoch,
+            "best_loss": stopping.best,
+            "stopped_epoch": stopping.stopped_epoch,
+            "epochs_completed": len(history.history.get("loss", [])),
+        }
+        # All eligible scores come from a fresh model loaded from the persisted
+        # weights, so a serialization/reload defect cannot hide behind the
+        # in-memory training object.
+        reload_started = time.perf_counter()
+        del stopping
+        del model
+        keras.backend.clear_session()
+        model = build_model(
+            args.model,
+            seed=args.seed,
+            learning_rate=resolved_learning_rate,
+            output_activation=(
+                resolved_output_activation
+                if args.output_activation != "paper"
+                else None
+            ),
+        )
+        model.load_weights(run / "model.weights.h5")
+        weights_reload_seconds = time.perf_counter() - reload_started
 
         scores, score_seconds = score_mse(
             model,
@@ -1435,6 +1650,20 @@ def main() -> int:
             threshold=SPECS[args.model].threshold,
             direction=SPECS[args.model].anomaly_direction,
         )
+        simplex_floor: np.memmap | None = None
+        simplex_floor_metrics: dict[str, float | int] | None = None
+        if args.model == "fc_sae" and resolved_output_activation == "softmax":
+            simplex_floor = score_simplex_projection_floor(
+                x_test,
+                run / "softmax_projection_floor_scores.npy",
+                batch_size=args.score_batch,
+            )
+            simplex_floor_metrics = confusion_metrics(
+                y_test,
+                simplex_floor,
+                threshold=SPECS[args.model].threshold,
+                direction=SPECS[args.model].anomaly_direction,
+            )
         table_v_rows: list[dict[str, object]] | None = None
         table_v_seconds = 0.0
         if args.table_v:
@@ -1464,6 +1693,7 @@ def main() -> int:
             "load": load_seconds,
             "model_build": build_seconds,
             "fit": fit_seconds,
+            "weights_reload": weights_reload_seconds,
             "score_table_3": score_seconds,
             "score_table_5": table_v_seconds,
             "total": time.perf_counter() - total_started,
@@ -1471,9 +1701,13 @@ def main() -> int:
         result: dict[str, object] = {
             "status": "success",
             "eligibility": (
-                "exploratory_control_C-OUTPUT-LINEAR"
-                if args.output_activation != "paper"
-                else f"exploratory_interpretation_{prepared_method(metadata)}"
+                "eligible_clean_reader_P+I_N"
+                if args.contract == CLEAN_READER_CONTRACT
+                else (
+                    "exploratory_control_C-OUTPUT-LINEAR"
+                    if args.output_activation != "paper"
+                    else f"exploratory_interpretation_{prepared_method(metadata)}"
+                )
             ),
             "configuration": configuration,
             "git_commit": git_commit(),
@@ -1534,7 +1768,9 @@ def main() -> int:
             "baselines": {
                 "untrained_stratified_sample": untrained,
                 "zero_reconstruction_full_test": zero_metrics,
+                "softmax_projection_floor_full_test": simplex_floor_metrics,
             },
+            "training_stop": training_stop,
             "table_v": table_v_rows,
             "history": history_payload,
             "timing_seconds": timing,
@@ -1550,13 +1786,31 @@ def main() -> int:
                 ),
                 "sklearn": sklearn.__version__,
                 "max_rss_kib": resource.getrusage(resource.RUSAGE_SELF).ru_maxrss,
+                "determinism": determinism,
             },
             "artifacts": {
                 "scores": "scores.npy",
                 "predictions": "predictions.npy",
                 "weights": "model.weights.h5",
                 "history": "history.json",
+                "softmax_projection_floor_scores": (
+                    "softmax_projection_floor_scores.npy"
+                    if simplex_floor is not None
+                    else None
+                ),
             },
+        }
+        artifact_names = [
+            "scores.npy",
+            "predictions.npy",
+            "model.weights.h5",
+            "history.json",
+            "zero_reconstruction_scores.npy",
+        ]
+        if simplex_floor is not None:
+            artifact_names.append("softmax_projection_floor_scores.npy")
+        result["artifact_sha256"] = {
+            name: sha256(run / name) for name in artifact_names
         }
         save_json(result_path, result)
     except Exception as exc:
