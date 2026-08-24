@@ -14,9 +14,21 @@ named-data and formal work remain closed. The wave's frozen contract,
 standalone script, and Slurm wrapper are in `83dab57`; 140 study tests and 33
 root tests pass. Panther job `381540` completed the one authorized wave with
 exit `0:0`; Phase 2 is complete and its results remain exploratory `X` only.
-Phase 3 must now return to the paper and freeze the clean-reader specification
-before Checkpoint 1. Older execution-order notes below are historical unless
-the new plan explicitly promotes them.
+Phase 3 is also complete: all 12 PDF pages were re-inspected and
+`studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md` freezes the
+literal failures and candidate `CR-ISET-FCSAE-01` completion. Checkpoint 1 is
+pending explicit user review; Phase 4 and named-data execution remain closed.
+Older execution-order notes below are historical unless the new plan explicitly
+promotes them.
+
+**Checkpoint-1 focus:** the candidate first anchor is Table-III ISET FC-SAE,
+seed 20260824. It requires official ISSDA V1 consumption files and allocation
+`.tab`; uses duration-first in-day Attack 3, joint pre-split feature scaling,
+customer-disjoint B1/B2 with attacks restricted to B2, test-set ADASYN,
+`48-400-300-200-100-100-200-300-400-48` sigmoid/Softmax FC-SAE, dropout after
+all hidden layers, an explicit training-loss convergence completion, printed
+threshold 0.58, and one attempt only. Controls and VAE/LSTM/attention repairs
+remain separate and deferred.
 
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings

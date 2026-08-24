@@ -19,10 +19,14 @@
   frozen in commit `83dab57`; all 173 deterministic tests pass. Panther job
   `381540` completed the single frozen wave with exit `0:0`, and Phase 2 is
   complete. Its simple-rule, temporal-witness, output-domain, and score-direction
-  observations remain exploratory `X` only. Phase 3 is next. Named data,
-  historical runners, formal evidence, and Checkpoint 1 remain closed. Prior
-  code, runs, failures, and results remain preserved without retroactive
-  reclassification.
+  observations remain exploratory `X` only. Phase 3 is also complete: every
+  PDF page was visually re-inspected and the literal failures, exact official
+  data identity, primary completion, causal map, and one-attempt stopping rule
+  are frozen in
+  [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md).
+  Checkpoint 1 now awaits user review. Historical implementation assessment,
+  named-data execution, and formal evidence remain closed. Prior code, runs,
+  failures, and results remain preserved without retroactive reclassification.
 - The Phase-1 discussion has been preserved as six bounded source-only
   findings in
   [`EVIDENCE-AND-LEARNINGS.md`](EVIDENCE-AND-LEARNINGS.md): unusually total
@@ -332,17 +336,16 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Begin Phase 3 by returning to every source location implicated by the
-   clean-reader orientation and the sandbox.
-2. Freeze the literal `P` procedure and every visible literal failure, then
-   define the smallest outcome-independent ordinary-reader `I` completion for
-   each execution-blocking omission or contradiction.
-3. Freeze data identity, sample unit, preparation order, architecture,
-   training, score orientation, threshold, metrics, seed, target pattern, and
-   first-anchor stopping behavior in a new clean-reader specification.
-4. Keep mechanism controls and other `C`/`X` ideas separate. Do not inspect the
-   historical implementation for fidelity and do not execute named data before
-   Checkpoint 1 review.
+1. Conduct Checkpoint 1 review of
+   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md),
+   especially the first anchor, Attack-3 repair, exact allocation requirement,
+   joint pre-split scaler, FC-SAE layer/dropout/training completion, and use of
+   printed threshold 0.58.
+2. If the source reading is disputed, loop to Phase 1; if the diagnostic
+   question is weak, loop to Phase 2; otherwise obtain explicit user approval
+   for Phase 4.
+3. Until approval, do not inspect the historical implementation for fidelity,
+   modify it, prepare named data, or execute any formal run.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

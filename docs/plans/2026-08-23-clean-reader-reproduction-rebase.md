@@ -5,7 +5,7 @@
 **Status:** Active governing plan; plan approved 2026-08-23; Checkpoint 1
 remains closed before scientific implementation or execution
 
-**Current state:** Phase 2 complete; Phase 3 clean-reader source freeze pending
+**Current state:** Phase 3 complete; Checkpoint 1 pending user review
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -16,6 +16,7 @@ for execution order. The earlier plan remains preserved as historical context.
 - [`../decisions/2026-08-09-paper-first-minimal-instrument.md`](../decisions/2026-08-09-paper-first-minimal-instrument.md)
 - [`../decisions/2026-08-11-non-executable-source-ladder.md`](../decisions/2026-08-11-non-executable-source-ladder.md)
 - [`../decisions/2026-08-20-three-part-evidence-frame.md`](../decisions/2026-08-20-three-part-evidence-frame.md)
+- [`../decisions/2026-08-24-clean-reader-first-anchor-freeze.md`](../decisions/2026-08-24-clean-reader-first-anchor-freeze.md)
 
 ## Goal
 
@@ -126,7 +127,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 0. Preserve and reconcile | `COMPLETE` | Plan accepted as governing | Existing-artifact classification and no-new-run gate |
 | 1. Paper-only orientation | `COMPLETE` | Phase 0 complete | Provisional numerical and causal claim map |
 | 2. Discovery sandbox | `COMPLETE` | Orientation map exists | Sandbox log and discriminating questions |
-| 3. Clean-reader source freeze | `PENDING` | Sandbox questions recorded | Frozen specification and assumptions register |
+| 3. Clean-reader source freeze | `COMPLETE` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `PENDING` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `PENDING` | Checkpoint 1 approved | Claim-to-code-to-data trace and quarantine list |
 | 5. Exact-data anchor | `PENDING` | Fidelity passes | One immutable complete attempt or preserved failure |
@@ -426,6 +427,7 @@ and record why the new evidence changed its status.
 | 2026-08-24 | Phase 2 pending | Phase 2 in progress | User authorized execution of the agreed bounded sandbox wave | Toy/synthetic `X` probes authorized; no exact data, historical runner, or formal evidence execution authorized |
 | 2026-08-24 | Phase 2 in progress | Phase 2 execution gate | Contract and standalone implementation frozen in `83dab57`; local SSH agent has no identity | Static checks and 173 deterministic tests pass, but no remote command, job submission, or sandbox result exists |
 | 2026-08-24 | Phase 2 execution gate | Phase 2 complete; Phase 3 pending | User clarified interactive authentication; frozen job `381540` completed once and every output was inspected | Exploratory `X` questions preserved; no named data, historical runner, or formal `N/M/A` result executed; no result-guided sandbox retry |
+| 2026-08-24 | Phase 3 pending | Phase 3 complete; Checkpoint 1 pending | All 12 PDF pages re-inspected; official ISSDA identity resolved; literal failures and one outcome-independent first-anchor completion frozen | `CR-ISET-FCSAE-01` is reviewable; no historical implementation was assessed and no named data or formal experiment executed |
 
 ## Hard exclusions until Checkpoint 1
 

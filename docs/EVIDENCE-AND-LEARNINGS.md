@@ -1355,6 +1355,36 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json`,
   and Panther job `381540`.
 
+### Clean-reader Phase-3 source freeze
+
+- **Former belief/status:** Phase 1 had identified literal failures and
+  omissions but deliberately selected no repair; Phase 2 had identified useful
+  questions but could not supply formal interpretations.
+- **Evidence:** All 12 pages of the fingerprinted publication were visually
+  re-inspected with the sandbox questions in view. Official ISSDA metadata
+  independently fixed the named ISET deposit, seven required filenames, byte
+  sizes, and MD5s. The source locations were then converted into one literal
+  `P` route, preserved failures, a finite alternatives register, and one
+  outcome-independent `I` path for the simplest proposed Table-III row.
+- **Root cause:** The paper defines the broad data-to-result order and final
+  FC-SAE settings but cannot execute Attack 3 or threshold selection literally
+  and omits several data, RNG, dropout, and training semantics. A clean-reader
+  reproduction therefore needs visible completions even before code fidelity
+  can be assessed.
+- **Current conclusion + label:** **VERIFIED SOURCE FREEZE; USER APPROVAL
+  OPEN** — `CR-ISET-FCSAE-01` is the candidate first anchor. It preserves joint
+  pre-split scaling, test-set ADASYN, Softmax reconstruction, and threshold
+  0.58 while visibly completing attack timing, identity mapping, exact data,
+  architecture details, training, RNG, and metric semantics. It authorizes no
+  experiment by itself.
+- **Remaining uncertainty / blast radius:** Checkpoint 1 must decide whether
+  the first anchor and its six consequential completion choices are fair. The
+  exact official allocation `.tab` may be an operational data gate. Historical
+  code/results remain unopened for fidelity and cannot validate this freeze.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md` and
+  `docs/decisions/2026-08-24-clean-reader-first-anchor-freeze.md`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion
