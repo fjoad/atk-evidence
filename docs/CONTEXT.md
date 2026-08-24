@@ -7,10 +7,11 @@
 supersedes the prior model-family/one-factor execution sequence. The user
 approved the plan on 2026-08-23. Phase 0 preservation/reconciliation is
 complete; Phase 1 paper-only orientation is also complete and recorded in
-`studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`. Phase 2's
-disposable sandbox is pending separate authorization. Launch no new scientific
-run. Older execution-order notes below are historical unless the new plan
-explicitly promotes them.
+`studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`. The user
+authorized Phase 2's bounded disposable sandbox on 2026-08-24. Only the
+pre-recorded toy/synthetic `X` wave in `DISCOVERY_SANDBOX.md` may execute;
+named-data and formal work remain closed. Older execution-order notes below are
+historical unless the new plan explicitly promotes them.
 
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings

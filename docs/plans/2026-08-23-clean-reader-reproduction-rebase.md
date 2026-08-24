@@ -5,8 +5,7 @@
 **Status:** Active governing plan; plan approved 2026-08-23; Checkpoint 1
 remains closed before scientific implementation or execution
 
-**Current state:** Phase 1 complete — Phase 2 discovery sandbox awaiting
-separate authorization
+**Current state:** Phase 2 — disposable discovery sandbox; in progress
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -126,7 +125,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 |---|---|---|---|
 | 0. Preserve and reconcile | `COMPLETE` | Plan accepted as governing | Existing-artifact classification and no-new-run gate |
 | 1. Paper-only orientation | `COMPLETE` | Phase 0 complete | Provisional numerical and causal claim map |
-| 2. Discovery sandbox | `PENDING` | Orientation map exists | Sandbox log and discriminating questions |
+| 2. Discovery sandbox | `IN PROGRESS` | Orientation map exists | Sandbox log and discriminating questions |
 | 3. Clean-reader source freeze | `PENDING` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `PENDING` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `PENDING` | Checkpoint 1 approved | Claim-to-code-to-data trace and quarantine list |
@@ -424,10 +423,13 @@ and record why the new evidence changed its status.
 | 2026-08-23 | Plan checkpoint | Phase 0 in progress | User approved the saved plan | Preservation and classification authorized; no scientific run authorized |
 | 2026-08-23 | Phase 0 | Phase 1 in progress | Existing artifacts inventoried and fenced from the new source interpretation | No prior result admitted or relabeled; paper-only orientation authorized |
 | 2026-08-23 | Phase 1 in progress | Phase 1 complete; Phase 2 pending | Complete PDF visually inspected and source-only orientation map saved | Numerical targets, causal claims, contradictions, omissions, and sandbox questions recorded without consulting prior implementation or results |
+| 2026-08-24 | Phase 2 pending | Phase 2 in progress | User authorized execution of the agreed bounded sandbox wave | Toy/synthetic `X` probes authorized; no exact data, historical runner, or formal evidence execution authorized |
 
 ## Hard exclusions until Checkpoint 1
 
-- no new experimental preparation, training, scoring, branch, or seed run;
+- no named-data, production-runner, historical-branch, or formally eligible
+  preparation, training, scoring, branch, or seed run; Phase 2's pre-recorded
+  toy/synthetic `X` sandbox is the sole execution exception;
 - no result-guided choice of the primary clean-reader interpretation;
 - no historical code or result treated as source authority;
 - no ambiguity lattice, workflow system, or infrastructure expansion;
@@ -437,6 +439,6 @@ and record why the new evidence changed its status.
 
 ## Plan checkpoint
 
-**Approved 2026-08-23.** The approval authorizes preservation/reconciliation
-and paper-only orientation. It does not cross Checkpoint 1 or authorize
-experimental execution.
+**Approved 2026-08-23 for Phases 0--1. Separately authorized 2026-08-24 for
+Phase 2's bounded discovery sandbox.** Neither approval crosses Checkpoint 1
+or authorizes named-data or formally eligible experimental execution.

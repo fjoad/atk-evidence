@@ -14,9 +14,11 @@
   disposable sandbox, and a new source freeze before assessing the existing
   five-file implementation. The user approved the plan on 2026-08-23. Phase 0
   preservation/reconciliation and Phase 1 paper-only orientation are complete.
-  Phase 2's disposable discovery sandbox is pending separate authorization.
-  No new scientific execution is authorized. Prior code, runs, failures, and
-  results remain preserved without retroactive reclassification.
+  The user authorized Phase 2's bounded disposable discovery sandbox on
+  2026-08-24; it is in progress. Only its pre-recorded toy/synthetic `X` probes
+  may execute. Named data, historical runners, formal evidence, and Checkpoint
+  1 remain closed. Prior code, runs, failures, and results remain preserved
+  without retroactive reclassification.
 - The Phase-1 discussion has been preserved as six bounded source-only
   findings in
   [`EVIDENCE-AND-LEARNINGS.md`](EVIDENCE-AND-LEARNINGS.md): unusually total
@@ -326,16 +328,16 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Review the saved source-only orientation in
-   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md).
-2. Discuss and select the smallest Phase-2 discovery questions from the saved
-   breadth-first list, then obtain authorization for the disposable `X`
-   sandbox. The
-   saved plan approval covered preservation/reconciliation and paper-only
-   orientation, not experimental execution.
-3. If authorized, pre-record each cheap sandbox question and use only toy or
-   synthetic data and disposable code; do not consult or run the historical
-   implementation, full data, or prior results.
+1. Complete the pre-recorded first Phase-2 wave in
+   [`../studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md`](../studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md):
+   triviality floor, temporal witness, output-domain consequence, and VAE score
+   direction.
+2. Use one disposable source-derived script, one fixed seed, and one bounded
+   cluster-compute execution. Do not import or run the historical
+   implementation, named data, production runner, or prior result artifacts.
+3. Preserve and interpret every output before deciding whether variance or
+   attention witnesses are needed. Phase 2 remains `X`; no outcome becomes
+   formal evidence retrospectively.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the
