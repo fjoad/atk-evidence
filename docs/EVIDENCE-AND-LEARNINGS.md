@@ -1316,6 +1316,45 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/CLEAN_READER_RECONCILIATION.md`, and
   `docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`.
 
+### Clean-reader Phase-2 disposable discovery sandbox
+
+- **Former belief/status:** The source-only pass suggested that attacks 1--5
+  may expose simple statistical shortcuts, reversal may require temporal
+  sensitivity, printed decoder domains may impose score geometry, and the VAE
+  threshold wording may reverse anomaly orientation. None had yet been
+  instantiated independently of the historical implementation and named data.
+- **Evidence:** The pre-recorded one-seed toy/synthetic job `381540` executed a
+  standalone script on one Panther GPU and completed once with exit `0:0`.
+  One-dimensional rules attained AUC 0.993--1.000 on toy attacks 1--5, while
+  order-insensitive reversal AUCs remained approximately 0.5. A comparable
+  dense AE detected block disruption at AUC 0.950, whereas the seq2seq LSTM was
+  near chance at 0.521 and both were near chance on reversal; the LSTM's much
+  higher final training loss prevents a capability-absence interpretation.
+  Exact unit-box/simplex projection floors were positive and strongly
+  population-dependent. Fixed-unit Gaussian reconstruction probability
+  strictly decreased with reconstruction error.
+- **Root cause:** **OBSERVED within the toy construction** — attacks 1--5
+  alter simple marginal statistics, reversal preserves the multiset, bounded
+  decoder ranges cannot represent general standardized vectors, and Gaussian
+  density is monotone decreasing in squared error. The recurrent witness's
+  failure is unresolved between underfitting, witness design, and absent
+  incremental capability.
+- **Current conclusion + label:** **OBSERVED, EXPLORATORY `X` ONLY** — the
+  sandbox supports promoting a triviality-floor control, output-domain audit,
+  and explicit VAE score-orientation branches into the clean-reader source
+  freeze. It did not identify a recurrence mechanism and did not test the
+  paper's numerical results or named data.
+- **Remaining uncertainty / blast radius:** No toy metric may be substituted
+  for a paper result or used to choose a favorable completion. Variance and
+  attention witnesses were deliberately not run. Any formal `M` test must be
+  frozen later, use the exact evaluation path, show matched fitting success,
+  and separate `A`, `B`, `Z`, and `S`.
+- **Source artifacts:**
+  `studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md`,
+  `studies/atk-2022-deep-autoencoder/exploration/phase2_discovery_sandbox.py`,
+  `studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json`,
+  and Panther job `381540`.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

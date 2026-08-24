@@ -2,8 +2,7 @@
 
 **Authorized:** 2026-08-24
 
-**Status:** First wave pre-recorded and implementation verified; execution
-blocked before submission because no SSH identity is loaded in the local agent
+**Status:** First wave complete; stopped after the single frozen job
 
 **Classification:** exploratory `X`; candidate questions touch `N`, `M`, and
 `A`, but no sandbox outcome is eligible evidence for any of them
@@ -119,8 +118,97 @@ explicit increasing sequence of reconstruction errors.
 
 ## Results
 
-Pending. No cluster command or sandbox job has executed. The eventual record
-must include failures and warnings as well as successful measurements.
+Job `381540` completed on one Panther GPU node in 2:25 with exit code `0:0`.
+The script reported 60.06 seconds of CUDA execution. The complete JSON has
+SHA-256
+`cef6e4d18ac765dcd5ba02b79c5deb51eace393c2670bee05e1fd54e577f2da8`.
+All observations below remain exploratory `X`; they are not paper
+reproduction, mechanism, or attainability evidence.
+
+### X1 — triviality floor
+
+The strongest single predeclared feature for each toy attack was:
+
+| Toy attack | Best feature | AUC | Oracle balanced accuracy |
+|---|---:|---:|---:|
+| 1 fixed reduction | roughness | 0.993 | 0.965 |
+| 2 dynamic reduction | roughness | 1.000 | 1.000 |
+| 3 forward bypass | zero count | 1.000 | 1.000 |
+| 4 daily mean | variance | 1.000 | 1.000 |
+| 5 randomized mean | roughness | 1.000 | 1.000 |
+| 6 reversal | linear trend | 0.661 | 0.662 |
+
+For reversal, the pairwise differences in energy, mean, variance, range, and
+zero count were at most `2.84e-14`, and their AUCs were approximately 0.5.
+Thus this toy generator behaves as predicted: attacks 1--5 expose simple
+shortcuts, while reversal defeats multiset-only summaries. This does not show
+that the named data have the same separability.
+
+### X2 — temporal witness
+
+| Toy anomaly | Dense AE AUC | Seq2seq LSTM AE AUC |
+|---|---:|---:|
+| Amplitude reduction | 1.000 | 0.903 |
+| Block disruption | 0.950 | 0.521 |
+| Reversal | 0.542 | 0.503 |
+
+Both models had finite first gradients and decreasing losses. Their parameter
+counts were comparable (2,792 dense; 2,683 recurrent), but final training loss
+was 0.345 for the dense model and 0.944 for the recurrent model. The recurrent
+model therefore did not demonstrate the proposed temporal advantage: the
+dense model detected block disruption while both were effectively at chance
+on reversal. Because the recurrent model also fit the benign generator much
+less well, this observation does not distinguish an absent capability from an
+underfit model or a weak witness. It is a failed mechanism witness, not evidence
+that recurrence is ineffective.
+
+### X3 — output-domain consequence
+
+Mean exact reconstruction-MSE lower bounds after the frozen standardization
+were:
+
+| Population | Sigmoid/unit-box floor | Softmax/simplex floor |
+|---|---:|---:|
+| Benign | 0.014 | 0.577 |
+| Attack 1 | 1.083 | 1.120 |
+| Attack 2 | 1.067 | 1.075 |
+| Attack 3 | 2.420 | 2.611 |
+| Attack 4 | 0.045 | 0.712 |
+| Attack 5 | 1.018 | 1.027 |
+| Attack 6 | 0.018 | 0.593 |
+
+The Softmax floor was positive for every row in every population. Mean floors
+differed substantially between benign data and toy attacks 1--5, so decoder
+range geometry alone can contribute to apparent anomaly separation without a
+learned structural representation. Reversal was geometrically similar to
+benign data. These are exact bounds for the toy vectors, not bounds on the
+paper's DR, FA, AUC, or reported table cells.
+
+### X4 — VAE score direction
+
+For reconstruction errors `[0, 0.25, 0.5, 1, 2, 4]`, fixed-unit Gaussian
+relative probability was
+`[1, 0.969, 0.882, 0.607, 0.135, 0.000335]`. It decreased strictly, confirming
+that low reconstruction probability is anomaly-consistent. This is an
+algebraic scoring-direction check, not a trained VAE result.
+
+### Promotion and stop decision
+
+- Carry the simple-rule floor into the source freeze as a candidate formal `M`
+  control: exact attacks must be compared with zero-parameter and one-feature
+  rules through the identical evaluation path before architectural necessity
+  is credited.
+- Carry reversal forward as the cleanest source-located temporal witness, but
+  do not promote the present dense/LSTM outcome. A later formal `M` test would
+  need matched fitting success and a witness whose competing predictions
+  isolate temporal capability.
+- Freeze preprocessing and decoder output domains explicitly because their
+  geometry can affect reconstruction scores before model sophistication does.
+- Freeze both literal and anomaly-consistent VAE score orientations because
+  the paper's prose and shared threshold rule point in opposite directions.
+- Do not run a result-guided temporal retry, variance model, or attention model
+  in the sandbox. The first wave has identified the necessary source questions,
+  and the predeclared stopping rule requires returning to the paper now.
 
 ## Operational log
 
@@ -135,7 +223,10 @@ must include failures and warnings as well as successful measurements.
   the local SSH agent reported no identities. The interactive password prompt
   was cancelled without entering a credential. No remote command, checkout
   update, `sbatch` submission, or experimental computation occurred.
-- Resume condition: the user loads or unlocks the ordinary Panther identity in
-  the local SSH agent. Then verify batch authentication, inspect the remote
-  checkout, fast-forward it to the frozen commit, submit exactly the one job
-  declared above, and stop after harvesting its result.
+- 2026-08-24: the user clarified that Panther uses interactive password
+  authentication. The credential was used only in interactive SSH/SCP prompts
+  and was not persisted. The clean remote checkout was fast-forwarded to
+  `c415c26`; job `381540` then ran exactly once and completed successfully.
+- 2026-08-24: the raw JSON and scheduler log were transferred without
+  transformation, their checksum was verified locally, and the first-wave
+  stopping rule was applied. No follow-up sandbox job was submitted.

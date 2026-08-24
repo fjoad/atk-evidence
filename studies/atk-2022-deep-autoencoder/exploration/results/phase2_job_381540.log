@@ -1,0 +1,5 @@
+{
+  "output": "studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json",
+  "runtime_seconds": 60.064832121133804,
+  "device": "cuda"
+}

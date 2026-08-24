@@ -12,10 +12,11 @@ authorized Phase 2's bounded disposable sandbox on 2026-08-24. Only the
 pre-recorded toy/synthetic `X` wave in `DISCOVERY_SANDBOX.md` may execute;
 named-data and formal work remain closed. The wave's frozen contract,
 standalone script, and Slurm wrapper are in `83dab57`; 140 study tests and 33
-root tests pass. No sandbox run exists yet: cluster authentication stopped
-before any remote command or submission because the local SSH agent contained
-no identity. Older execution-order notes below are historical unless the new
-plan explicitly promotes them.
+root tests pass. Panther job `381540` completed the one authorized wave with
+exit `0:0`; Phase 2 is complete and its results remain exploratory `X` only.
+Phase 3 must now return to the paper and freeze the clean-reader specification
+before Checkpoint 1. Older execution-order notes below are historical unless
+the new plan explicitly promotes them.
 
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings
@@ -219,9 +220,16 @@ and all three formal `N/M/A` verdicts remain open.
 - 2026-08-24 Phase-2 gate: the cluster was reachable and the `panther` host key
   matched already trusted aliases, but `ssh-add -l` reported no identities and
   batch authentication failed. The password prompt was cancelled; no remote
-  command or job ran. Resume only after the user loads or unlocks the ordinary
-  Panther identity in the local SSH agent; never request that the key or
-  password be pasted into chat.
+  command or job ran at that point. The user then clarified that Panther uses
+  interactive password authentication. Interactive login and transfer
+  succeeded; the credential was not persisted. Do not record it in project
+  files or repeat it in summaries.
+- Phase-2 job `381540` completed in 2:25 with exit `0:0` on one GPU. Raw JSON
+  SHA-256 is
+  `cef6e4d18ac765dcd5ba02b79c5deb51eace393c2670bee05e1fd54e577f2da8`.
+  The sandbox found simple toy shortcuts for attacks 1--5, no confirming
+  recurrent temporal witness, positive population-dependent decoder-domain
+  floors, and low-probability VAE anomaly direction. These are `X`, not `N/M/A`.
 - User execution policy (2026-07-24, widened 2026-07-24): run **every**
   experiment's preparation, training, and scoring on the cluster's compute nodes,
   never on the local Mac. This is not scoped to Paper 1 — it covers all
