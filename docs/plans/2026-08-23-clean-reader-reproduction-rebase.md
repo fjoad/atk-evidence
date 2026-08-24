@@ -5,7 +5,8 @@
 **Status:** Active governing plan; plan approved 2026-08-23; Checkpoint 1
 remains closed before scientific implementation or execution
 
-**Current state:** Phase 2 — disposable discovery sandbox; in progress
+**Current state:** Phase 2 — frozen disposable discovery sandbox; execution
+awaiting an SSH identity before cluster submission
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -424,6 +425,7 @@ and record why the new evidence changed its status.
 | 2026-08-23 | Phase 0 | Phase 1 in progress | Existing artifacts inventoried and fenced from the new source interpretation | No prior result admitted or relabeled; paper-only orientation authorized |
 | 2026-08-23 | Phase 1 in progress | Phase 1 complete; Phase 2 pending | Complete PDF visually inspected and source-only orientation map saved | Numerical targets, causal claims, contradictions, omissions, and sandbox questions recorded without consulting prior implementation or results |
 | 2026-08-24 | Phase 2 pending | Phase 2 in progress | User authorized execution of the agreed bounded sandbox wave | Toy/synthetic `X` probes authorized; no exact data, historical runner, or formal evidence execution authorized |
+| 2026-08-24 | Phase 2 in progress | Phase 2 execution gate | Contract and standalone implementation frozen in `83dab57`; local SSH agent has no identity | Static checks and 173 deterministic tests pass, but no remote command, job submission, or sandbox result exists |
 
 ## Hard exclusions until Checkpoint 1
 

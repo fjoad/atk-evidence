@@ -15,10 +15,14 @@
   five-file implementation. The user approved the plan on 2026-08-23. Phase 0
   preservation/reconciliation and Phase 1 paper-only orientation are complete.
   The user authorized Phase 2's bounded disposable discovery sandbox on
-  2026-08-24; it is in progress. Only its pre-recorded toy/synthetic `X` probes
-  may execute. Named data, historical runners, formal evidence, and Checkpoint
-  1 remain closed. Prior code, runs, failures, and results remain preserved
-  without retroactive reclassification.
+  2026-08-24; it is in progress. Its contract, standalone implementation, and
+  cluster wrapper are frozen in commit `83dab57`, and all 173 deterministic
+  tests pass. Execution is blocked before submission because this shell's SSH
+  agent has no identity loaded. No remote command or sandbox computation has
+  run. Only the pre-recorded toy/synthetic `X` probes may execute. Named data,
+  historical runners, formal evidence, and Checkpoint 1 remain closed. Prior
+  code, runs, failures, and results remain preserved without retroactive
+  reclassification.
 - The Phase-1 discussion has been preserved as six bounded source-only
   findings in
   [`EVIDENCE-AND-LEARNINGS.md`](EVIDENCE-AND-LEARNINGS.md): unusually total
@@ -328,14 +332,19 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Complete the pre-recorded first Phase-2 wave in
+1. Load or unlock the user's ordinary Panther SSH identity in the local SSH
+   agent; do not paste or record the credential in the repository or chat.
+2. Verify non-interactive cluster authentication, inspect the remote checkout,
+   and fast-forward it to frozen commit `83dab57` without disturbing remote
+   changes.
+3. Complete the pre-recorded first Phase-2 wave in
    [`../studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md`](../studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md):
    triviality floor, temporal witness, output-domain consequence, and VAE score
    direction.
-2. Use one disposable source-derived script, one fixed seed, and one bounded
+4. Use one disposable source-derived script, one fixed seed, and one bounded
    cluster-compute execution. Do not import or run the historical
    implementation, named data, production runner, or prior result artifacts.
-3. Preserve and interpret every output before deciding whether variance or
+5. Preserve and interpret every output before deciding whether variance or
    attention witnesses are needed. Phase 2 remains `X`; no outcome becomes
    formal evidence retrospectively.
 

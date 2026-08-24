@@ -2,7 +2,8 @@
 
 **Authorized:** 2026-08-24
 
-**Status:** First wave pre-recorded; execution pending
+**Status:** First wave pre-recorded and implementation verified; execution
+blocked before submission because no SSH identity is loaded in the local agent
 
 **Classification:** exploratory `X`; candidate questions touch `N`, `M`, and
 `A`, but no sandbox outcome is eligible evidence for any of them
@@ -118,5 +119,23 @@ explicit increasing sequence of reconstruction errors.
 
 ## Results
 
-Pending. The eventual record must include failures and warnings as well as
-successful measurements.
+Pending. No cluster command or sandbox job has executed. The eventual record
+must include failures and warnings as well as successful measurements.
+
+## Operational log
+
+- 2026-08-24: froze the contract above before implementation and committed the
+  standalone script and short Slurm wrapper in `83dab57`.
+- 2026-08-24: local static verification passed: Python AST parsing, Slurm
+  wrapper shell syntax, forbidden-import inspection, and `git diff --check`.
+  The repository's deterministic suite also passed: 140 study tests and 33
+  root tests. None of these checks executed the experimental sandbox.
+- 2026-08-24: the cluster was reachable and the `panther` host-key fingerprint
+  matched the already trusted aliases, but batch authentication failed because
+  the local SSH agent reported no identities. The interactive password prompt
+  was cancelled without entering a credential. No remote command, checkout
+  update, `sbatch` submission, or experimental computation occurred.
+- Resume condition: the user loads or unlocks the ordinary Panther identity in
+  the local SSH agent. Then verify batch authentication, inspect the remote
+  checkout, fast-forward it to the frozen commit, submit exactly the one job
+  declared above, and stop after harvesting its result.

@@ -10,8 +10,12 @@ complete; Phase 1 paper-only orientation is also complete and recorded in
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ORIENTATION.md`. The user
 authorized Phase 2's bounded disposable sandbox on 2026-08-24. Only the
 pre-recorded toy/synthetic `X` wave in `DISCOVERY_SANDBOX.md` may execute;
-named-data and formal work remain closed. Older execution-order notes below are
-historical unless the new plan explicitly promotes them.
+named-data and formal work remain closed. The wave's frozen contract,
+standalone script, and Slurm wrapper are in `83dab57`; 140 study tests and 33
+root tests pass. No sandbox run exists yet: cluster authentication stopped
+before any remote command or submission because the local SSH agent contained
+no identity. Older execution-order notes below are historical unless the new
+plan explicitly promotes them.
 
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings
@@ -212,6 +216,12 @@ and all three formal `N/M/A` verdicts remain open.
 - Cluster access is SSH-key-only and normally requires the institution's VPN
   off-site. Host, user, and project paths are deliberately not recorded in this
   public repository; keep them in local configuration.
+- 2026-08-24 Phase-2 gate: the cluster was reachable and the `panther` host key
+  matched already trusted aliases, but `ssh-add -l` reported no identities and
+  batch authentication failed. The password prompt was cancelled; no remote
+  command or job ran. Resume only after the user loads or unlocks the ordinary
+  Panther identity in the local SSH agent; never request that the key or
+  password be pasted into chat.
 - User execution policy (2026-07-24, widened 2026-07-24): run **every**
   experiment's preparation, training, and scoring on the cluster's compute nodes,
   never on the local Mac. This is not scoped to Paper 1 — it covers all
