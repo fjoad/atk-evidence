@@ -162,6 +162,16 @@ less well, this observation does not distinguish an absent capability from an
 underfit model or a weak witness. It is a failed mechanism witness, not evidence
 that recurrence is ineffective.
 
+The dense model is not an order-insensitive baseline. It receives the complete
+ordered 48-vector, so different time positions are different input features and
+the network can learn functions of relationships among them. Recurrence adds
+sequential parameter sharing and an inductive bias; it does not give exclusive
+access to time order. Therefore the paper's strong statement that the FC model
+lacks the capability to exploit temporal correlation is not established merely
+by labeling one architecture “static.” A later mechanism test must distinguish
+representational possibility, optimization, data efficiency, and generalization
+rather than assume that only an LSTM can use temporal structure.
+
 ### X3 — output-domain consequence
 
 Mean exact reconstruction-MSE lower bounds after the frozen standardization
@@ -209,6 +219,29 @@ algebraic scoring-direction check, not a trained VAE result.
 - Do not run a result-guided temporal retry, variance model, or attention model
   in the sandbox. The first wave has identified the necessary source questions,
   and the predeclared stopping rule requires returning to the paper now.
+
+### Researcher-lens interpretation
+
+The surprising dense/LSTM comparison rationally increases concern about the
+paper's explanatory claim: on a toy task deliberately containing temporal
+structure, merely substituting a recurrent architecture did not reveal the
+claimed advantage and instead produced substantially worse fitting. Combined
+with the source's confounded full-configuration comparisons, this raises the
+prior probability that optimization, output domains, simple shortcuts, or
+other configuration differences—not the named mechanism—could explain an
+observed ordering.
+
+That update is bounded. The sandbox used one seed, one small construction, and
+an underfit recurrent model. It does not make the paper's numbers false, show
+that its LSTM behaved similarly, or establish that recurrence is useless. It
+raises the value of three later tests: an exact numerical reproduction, a
+matched-fitting FC/LSTM capability comparison, and temporal-structure
+destruction or generalization tests.
+
+The VAE score-direction contradiction is treated differently. It may be a
+prose or inequality typo rather than an implementation defect. The scientific
+response is still to preserve both literal directions and later test which one
+is coherent with the score and reported behavior, without inferring intent.
 
 ## Operational log
 

@@ -30,6 +30,16 @@ all hidden layers, an explicit training-loss convergence completion, printed
 threshold 0.58, and one attempt only. Controls and VAE/LSTM/attention repairs
 remain separate and deferred.
 
+**User emphasis after Phase 2:** the most interesting sandbox observation is
+that the LSTM performed worse than the dense AE on a deliberately temporal toy
+task. Treat this as a rational increase in concern about the paper's mechanism
+story, not a paper-level result: the LSTM underfit, and a dense network over 48
+ordered coordinates can also model temporal relationships. The next formal
+mechanism program, if promoted, must separate fitting success, temporal
+structure, inductive bias, and paired advantage. The VAE direction conflict may
+be a typo; preserve both directions and test them rather than overinterpreting
+the prose.
+
 **Source-only findings now durable:** the 2026-08-23/24 discussion is recorded
 in `docs/EVIDENCE-AND-LEARNINGS.md` under “Clean-reader source-only findings
 before the discovery sandbox.” It preserves six separate statements: tidy

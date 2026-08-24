@@ -1342,13 +1342,20 @@ and repeated experiments determine technical conclusions.
 - **Current conclusion + label:** **OBSERVED, EXPLORATORY `X` ONLY** — the
   sandbox supports promoting a triviality-floor control, output-domain audit,
   and explicit VAE score-orientation branches into the clean-reader source
-  freeze. It did not identify a recurrence mechanism and did not test the
-  paper's numerical results or named data.
+  freeze. The dense/LSTM result rationally increases concern about the claimed
+  recurrent explanation because adding recurrence did not reveal a temporal
+  advantage and fitted the benign task much worse. A dense network over 48
+  ordered coordinates can itself learn time-position relationships, so
+  recurrence is an inductive bias rather than exclusive access to temporal
+  information. The sandbox did not identify a recurrence mechanism and did
+  not test the paper's numerical results or named data.
 - **Remaining uncertainty / blast radius:** No toy metric may be substituted
   for a paper result or used to choose a favorable completion. Variance and
   attention witnesses were deliberately not run. Any formal `M` test must be
   frozen later, use the exact evaluation path, show matched fitting success,
-  and separate `A`, `B`, `Z`, and `S`.
+  and separate `A`, `B`, `Z`, and `S`. The contradictory VAE score direction
+  may be a source typo; preserve and test both directions without inferring an
+  implementation choice or intent from the wording alone.
 - **Source artifacts:**
   `studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md`,
   `studies/atk-2022-deep-autoencoder/exploration/phase2_discovery_sandbox.py`,
