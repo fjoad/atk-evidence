@@ -79,11 +79,16 @@ The seventh required input is:
 - MD5: `124c10711ab1e7c52cb7317c8f69e42e`.
 
 On 2026-08-24 this file was absent both locally and under Panther's remote
-repository, and `ISSDA_API_TOKEN` was absent in both environments. Therefore
-the source gate is `BLOCKED`. The available
-`SME_and_Residential_allocations.csv` is a separately frozen semantic branch
-and is not eligible for this attempt without a new visible `I` decision and
-user review.
+repository, and `ISSDA_API_TOKEN` was absent in both environments. Official
+file-ID-808 metadata checked on 2026-08-25 shows that this `.tab` is
+Dataverse's archival ingest of an originally uploaded
+`SME and Residential allocations.xlsx` (185,480 bytes). The allocation
+information itself is not missing: the available ScienceDB CSV and an
+independent public GitHub workbook agree on all 6,445 mappings under the
+predeclared blank/zero normalization. Therefore the source gate remains
+`BLOCKED` only for the frozen byte-identical serialization branch. The verified
+semantic branch is not eligible for this attempt without a new visible `I`
+decision and user review.
 
 ## 5. Statistical unit and frozen implementation
 

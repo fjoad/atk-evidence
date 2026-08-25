@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-24
+**Last updated:** 2026-08-25
 
 **Branch:** `main`
 
@@ -29,10 +29,15 @@
   the five-file trace and quarantine are saved in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md),
   the frozen mismatches were minimally corrected, and all 178 deterministic
-  tests pass. Phase 5 is blocked at the exact official allocation `.tab` gate:
-  it is absent locally and on Panther and no ISSDA token is configured. The six
-  consumption archives already match the official bytes exactly. The semantic
-  CSV is not eligible for this anchor. Formal mechanism/attainability work
+  tests pass. Phase 5 remains blocked only under the frozen exact-serialization
+  gate: official metadata shows that the absent 196,316-byte `.tab` is
+  Dataverse's archival ingest of an original XLSX. The allocation information
+  itself is available in a public ScienceDB CSV and a public GitHub workbook;
+  all 6,445 mappings agree under the predeclared blank/zero normalization, and
+  all residential reading IDs are covered. The six consumption archives
+  already match the official bytes exactly. The verified semantic branch is
+  not eligible for this anchor until the user explicitly approves that visible
+  `I` completion. Formal mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
   The complete frozen Phase-5 question, code/environment hashes, predictions,

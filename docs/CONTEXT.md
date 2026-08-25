@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-24
+**Last updated:** 2026-08-25
 
 **Governing state:**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
@@ -22,9 +22,13 @@ requiring every plausible explanation to be preserved and tested
 systematically. Phase 4 is complete: the five-file trace, quarantine, minimal
 corrections, fail-closed contract, and 178 deterministic tests are recorded in
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`. Phase 5 is blocked
-because the exact official allocation `.tab` is absent both locally and on
-Panther and no ISSDA token is configured. The exact archive bytes are already
-available; do not substitute the semantic CSV. The full frozen run contract is
+only under the frozen exact-serialization gate. Official metadata identifies
+the `.tab` as Dataverse's ingest of an original XLSX; the allocation mapping is
+not missing. A public ScienceDB CSV and public GitHub workbook agree across all
+6,445 mappings, and every residential reading ID is covered. The exact archive
+bytes are already available. Do not silently substitute the semantic branch;
+the first anchor requires the user-visible `I` approval specified by the plan.
+The full frozen run contract is
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
 commit `1e428ffddeee400f790c21b69812cf2a1a9e62bb`. Checkpoint 2 remains binding.
 Older execution-order notes below are historical unless the new plan explicitly

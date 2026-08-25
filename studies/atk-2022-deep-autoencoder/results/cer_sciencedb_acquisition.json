@@ -8,6 +8,20 @@
     "local_directory": "data/raw/cer-sciencedb",
     "redistributed_by_project": false
   },
+  "official_allocation_serialization": {
+    "checked_at_utc": "2026-08-25T10:02:29Z",
+    "metadata_url": "https://issda.ucd.ie/api/files/808",
+    "dataverse_file_id": 808,
+    "archival_filename": "SME and Residential allocations.tab",
+    "archival_format": "text/tab-separated-values",
+    "archival_bytes": 196316,
+    "archival_md5": "124c10711ab1e7c52cb7317c8f69e42e",
+    "original_filename": "SME and Residential allocations.xlsx",
+    "original_format": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "original_bytes": 185480,
+    "restricted": true,
+    "interpretation": "The frozen .tab is Dataverse's archival serialization of an originally uploaded XLSX. Its absence is a byte/provenance distinction, not absence of the allocation mapping."
+  },
   "archives": [
     {
       "filename": "File1.txt.zip",
@@ -72,7 +86,12 @@
       "sme_code_2": 485,
       "other_code_3": 1735
     },
-    "second_copy_url": "https://github.com/wwzjustin/CER-Smart-Meter-Project-by-Irish-Social-Science-Data-Archive/blob/master/SME%20and%20Residential%20allocations.xlsx",
+    "second_copy_url": "https://github.com/wwzjustin/CER-Smart-Meter-Project-by-Irish-Social-Science-Data-Archive/blob/db791cfeb5d725b28bfbd4b2b1bf33a8cadaa15c/SME%20and%20Residential%20allocations.xlsx",
+    "second_copy_repository_commit": "db791cfeb5d725b28bfbd4b2b1bf33a8cadaa15c",
+    "second_copy_bytes": 294826,
+    "second_copy_md5": "0545b6dd2edab286c1fad3c4de46bee5",
+    "second_copy_sha256": "c7d76e7329ddea97c1c452c3b326feec942dc933f66d0d137348561ed8467650",
+    "second_copy_note": "The public workbook contains added images and is not byte-identical to the originally uploaded XLSX; its complete allocation grid is the independent semantic cross-copy.",
     "second_copy_rows": 6445,
     "id_code_mismatches": 0,
     "normalized_first_five_column_mismatches": 0,
