@@ -4,8 +4,9 @@
 
 **Status:** Active governing plan; Checkpoint 1 approved 2026-08-24
 
-**Current state:** Phase 4 complete; Phase 5 blocked at the exact official
-allocation `.tab` data gate
+**Current state:** Phase 4 complete; Phase 5 `IN PROGRESS` under the
+user-approved `sciencedb-csv-semantic-equivalence-v1` allocation `I` branch;
+the exact official-serialization failure remains preserved
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -17,6 +18,7 @@ for execution order. The earlier plan remains preserved as historical context.
 - [`../decisions/2026-08-11-non-executable-source-ladder.md`](../decisions/2026-08-11-non-executable-source-ladder.md)
 - [`../decisions/2026-08-20-three-part-evidence-frame.md`](../decisions/2026-08-20-three-part-evidence-frame.md)
 - [`../decisions/2026-08-24-clean-reader-first-anchor-freeze.md`](../decisions/2026-08-24-clean-reader-first-anchor-freeze.md)
+- [`../decisions/2026-08-30-clean-reader-semantic-allocation-admission.md`](../decisions/2026-08-30-clean-reader-semantic-allocation-admission.md)
 
 ## Goal
 
@@ -130,7 +132,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 3. Clean-reader source freeze | `COMPLETE` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `COMPLETE` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
-| 5. Exact-data anchor | `BLOCKED` | Fidelity passes | Frozen pre-run contract plus one immutable complete attempt or preserved failure |
+| 5. Exact-data anchor | `IN PROGRESS` | Fidelity passes | Frozen pre-run contract plus one immutable complete attempt or preserved failure |
 | 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
 | Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
@@ -432,6 +434,7 @@ and record why the new evidence changed its status.
 | 2026-08-24 | Phase 4 in progress | Phase 4 complete; Phase 5 data gate | All five direct files were traced; historical routes were quarantined; frozen mismatches were minimally corrected; 178 deterministic tests pass | One fail-closed clean-reader route exists; no historical result is eligible; exact-data execution may begin only after the official allocation `.tab` is available |
 | 2026-08-24 | Phase 5 data gate | Phase 5 blocked | Exact official archive identities are locally available, but the official allocation `.tab` is absent locally and on Panther and no ISSDA token is configured | No named-data preparation, training, or score exists; the semantic CSV remains an unapproved `I` branch; Checkpoint 2 is not reached |
 | 2026-08-25 | Phase 5 blocked | Phase 5 serialization gate clarified | Official metadata identifies the `.tab` as a Dataverse ingest of an original XLSX; the public ScienceDB CSV and public GitHub workbook already agree on all 6,445 allocation mappings | The data are not missing; only the exact restricted serialization is absent. The verified semantic branch remains closed pending the plan-required explicit user approval |
+| 2026-08-30 | Phase 5 blocked | Phase 5 in progress | User approved `sciencedb-csv-semantic-equivalence-v1` after reviewing the distinction between allocation identity and Dataverse byte serialization | The official-serialization failure remains preserved; one visible `I` source branch may now execute the otherwise unchanged single-anchor contract |
 
 ## Current hard exclusions until the exact anchor and Checkpoint 2
 

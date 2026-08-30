@@ -21,8 +21,12 @@ fi
 .venv/bin/python \
     studies/atk-2022-deep-autoencoder/reproduction/prepare_data.py \
     --contract clean-reader-v1 \
+    --source-branch sciencedb-csv-semantic-equivalence-v1 \
+    --output data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-full-printed-semantic-allocation \
     --force-expensive-adasyn
 
 .venv/bin/python \
     studies/atk-2022-deep-autoencoder/reproduction/run_experiment.py \
-    --contract clean-reader-v1
+    --contract clean-reader-v1 \
+    --data data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-full-printed-semantic-allocation \
+    --output data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-results-semantic-allocation/runs

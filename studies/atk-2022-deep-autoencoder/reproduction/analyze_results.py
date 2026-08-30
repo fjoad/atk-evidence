@@ -529,7 +529,7 @@ def audit_clean_reader_anchor(attempt_path: Path) -> dict[str, object]:
         "seed": 20260824,
         "test_adasyn": "printed",
         "adasyn_neighbors": 5,
-        "source_branch": "official-tab-v1",
+        "source_branch": "sciencedb-csv-semantic-equivalence-v1",
         "attack_3_completion": "duration_first_in_day",
         "malicious_test_population": "b2",
         "expensive_adasyn_acknowledged": True,
@@ -541,8 +541,13 @@ def audit_clean_reader_anchor(attempt_path: Path) -> dict[str, object]:
                 f"prepared data {name}: expected {expected!r}, observed {data_config.get(name)!r}"
             )
     source = metadata.get("source", {})
-    if source.get("branch") != "official-tab-v1" or not source.get("ready"):
-        errors.append("official-tab-v1 source gate is not recorded ready")
+    if (
+        source.get("branch") != "sciencedb-csv-semantic-equivalence-v1"
+        or not source.get("ready")
+    ):
+        errors.append(
+            "sciencedb-csv-semantic-equivalence-v1 source gate is not recorded ready"
+        )
     for name, record in source.get("files", {}).items():
         if record.get("status") != "verified":
             errors.append(f"source file is not verified: {name}")

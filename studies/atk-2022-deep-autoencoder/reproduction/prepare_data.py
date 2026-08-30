@@ -1097,7 +1097,7 @@ def main() -> int:
             "mode": "full",
             "residential_population": "all",
             "seed": DATA_SEED,
-            "source_branch": "official-tab-v1",
+            "source_branch": "sciencedb-csv-semantic-equivalence-v1",
             "attack_3_completion": "duration_first_in_day",
             "malicious_test_population": "b2",
             "adasyn_neighbors": 5,

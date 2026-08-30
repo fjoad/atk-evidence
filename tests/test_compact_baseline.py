@@ -308,7 +308,7 @@ class CompactBaselineTests(unittest.TestCase):
                 "seed": 11,
                 "test_adasyn": "none",
                 "adasyn_neighbors": 5,
-                "source_branch": "sciencedb-csv-semantic-equivalence-v1",
+                "source_branch": "official-tab-v1",
                 "attack_3_completion": "start_first_clip",
                 "malicious_test_population": "all",
             },
@@ -327,6 +327,39 @@ class CompactBaselineTests(unittest.TestCase):
             "data method",
         ):
             self.assertIn(field, joined)
+
+    def test_clean_reader_contract_accepts_approved_semantic_source(self) -> None:
+        args = argparse.Namespace(
+            model="fc_sae",
+            seed=20260824,
+            epochs=100,
+            minimum_epochs=10,
+            batch_size=32,
+            patience=5,
+            min_delta=1e-6,
+            learning_rate=0.001,
+            output_activation="paper",
+            train_fraction="full",
+            test_view="adasyn",
+            table_v=False,
+        )
+        metadata = {
+            "method": "CR-ISET-FCSAE-01-DATA",
+            "configuration": {
+                "contract": "clean-reader-v1",
+                "mode": "full",
+                "seed": 20260824,
+                "test_adasyn": "printed",
+                "adasyn_neighbors": 5,
+                "source_branch": "sciencedb-csv-semantic-equivalence-v1",
+                "attack_3_completion": "duration_first_in_day",
+                "malicious_test_population": "b2",
+                "expensive_adasyn_acknowledged": True,
+            },
+        }
+        self.assertEqual(
+            run_experiment.clean_reader_contract_errors(args, metadata), []
+        )
 
     def test_minimum_epoch_stopping_tracks_early_best_but_waits_to_stop(self) -> None:
         class DummyModel:

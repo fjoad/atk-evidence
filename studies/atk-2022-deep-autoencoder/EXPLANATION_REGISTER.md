@@ -175,11 +175,11 @@ customer-disjoint, untouched-test controls one factor at a time.
 ### E10 — data identity or representation differs
 
 The exact customer subset, date range, missing/DST policy, SGCC mapping, and
-allocation serialization may differ. **Current status:** `SUPPORTED AS A
-PRESENT DATA GATE`, otherwise `OPEN`; the six exact official consumption bytes
-are available, but the exact allocation `.tab` is absent locally and on
-Panther. Test only source-supported identities and never choose the one nearest
-the target after seeing results.
+allocation serialization may differ. **Current status:** `OPEN`; the six exact
+official consumption bytes are available, the exact allocation `.tab` remains
+absent, and the independently cross-checked semantic allocation branch was
+approved before its anchor outcome on 2026-08-30. Test only source-supported
+identities and never choose the one nearest the target after seeing results.
 
 ### E11 — our reproduction implementation is wrong
 
