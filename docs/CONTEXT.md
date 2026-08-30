@@ -32,9 +32,12 @@ for the otherwise unchanged single anchor. Phase 5 is in progress; execute one
 attempt only from eligible code commit
 `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`, then stop for full audit and
 Checkpoint 2. The 179 deterministic tests and strict local seven-file verifier
-pass. Panther job `384390` is the sole submission; it was initially pending on
-priority on 2026-08-30. Do not submit a second job or change the contract while
-it is queued or running. The full frozen run contract is
+pass. Panther job `384390` is the sole submission; it entered `RUNNING` on
+2026-08-30. The thread heartbeat `monitor-clean-reader-anchor` may observe this
+job hourly, audit a terminal artifact, and update the frozen evidence documents;
+it is explicitly forbidden from submitting, retrying, altering, or expanding
+an experiment. Do not submit a second job or change the contract while it is
+queued or running. The full frozen run contract is
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
 commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Checkpoint 2 remains binding.
 Older execution-order notes below are historical unless the new plan explicitly

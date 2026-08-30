@@ -41,9 +41,12 @@
   gate is frozen in eligible code commit
   `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the
   strict local seven-file verifier pass. The sole Panther submission is job
-  `384390`, submitted on 2026-08-30 and initially pending for priority. No
-  second submission, repair, or retry is authorized before its complete
-  outcome is inspected. Formal mechanism/attainability work
+  `384390`, submitted on 2026-08-30 and now running. The active hourly thread
+  heartbeat `monitor-clean-reader-anchor` is observation-only until terminal
+  state, after which it may execute the frozen fail-closed audit and update the
+  evidence documents. It may not submit, repair, retry, or expand an
+  experiment. No second submission is authorized before the complete outcome
+  is inspected. Formal mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
   The complete frozen Phase-5 question, code/environment hashes, predictions,
