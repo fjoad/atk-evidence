@@ -40,8 +40,10 @@
   branch as a visible `I` completion for the single anchor. The changed source
   gate is frozen in eligible code commit
   `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the
-  strict local seven-file verifier pass. Phase 5 is ready for its sole Panther
-  submission. Formal mechanism/attainability work
+  strict local seven-file verifier pass. The sole Panther submission is job
+  `384390`, submitted on 2026-08-30 and initially pending for priority. No
+  second submission, repair, or retry is authorized before its complete
+  outcome is inspected. Formal mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
   The complete frozen Phase-5 question, code/environment hashes, predictions,

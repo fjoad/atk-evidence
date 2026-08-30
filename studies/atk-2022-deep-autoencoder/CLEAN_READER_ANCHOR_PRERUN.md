@@ -2,9 +2,9 @@
 
 **Frozen:** 2026-08-24; source branch refrozen 2026-08-30 before execution
 
-**Status:** `AUTHORIZED AND READY` for one submission under the approved
-`sciencedb-csv-semantic-equivalence-v1` allocation `I` branch; no eligible
-preparation, training, or scoring attempt exists yet
+**Status:** `SUBMITTED` once as Panther job `384390` under the approved
+`sciencedb-csv-semantic-equivalence-v1` allocation `I` branch; pending at the
+time of this update, with no second submission authorized
 
 **Evidence question:** numerical reproduction (`N`)
 
@@ -158,8 +158,9 @@ sbatch --export=ALL,EXPECTED_COMMIT=a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca \
   studies/atk-2022-deep-autoencoder/reproduction/run_clean_reader_anchor.sbatch
 ```
 
-No submission occurred while this record was written. After the immutable
-attempt finishes, Phase 6 runs the fail-closed audit against its `result.json`:
+The command above was submitted once on 2026-08-30 as Panther job `384390`.
+After the immutable attempt finishes, Phase 6 runs the fail-closed audit
+against its `result.json`:
 
 ```bash
 .venv/bin/python \
