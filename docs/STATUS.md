@@ -28,7 +28,7 @@
   explanations to be preserved and systematically tested. Phase 4 is complete:
   the five-file trace and quarantine are saved in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md),
-  the frozen mismatches were minimally corrected, and all 178 deterministic
+  the frozen mismatches were minimally corrected, and all 179 deterministic
   tests pass. The formerly blocked exact-serialization gate remains preserved:
   official metadata shows that the absent 196,316-byte `.tab` is
   Dataverse's archival ingest of an original XLSX. The allocation information
@@ -37,9 +37,11 @@
   all residential reading IDs are covered. The six consumption archives
   already match the official bytes exactly. On 2026-08-30 the user explicitly
   approved the verified `sciencedb-csv-semantic-equivalence-v1` allocation
-  branch as a visible `I` completion for the single anchor. Phase 5 is now in
-  progress while that changed source gate is re-frozen and verified before the
-  one submission. Formal mechanism/attainability work
+  branch as a visible `I` completion for the single anchor. The changed source
+  gate is frozen in eligible code commit
+  `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the
+  strict local seven-file verifier pass. Phase 5 is ready for its sole Panther
+  submission. Formal mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
   The complete frozen Phase-5 question, code/environment hashes, predictions,

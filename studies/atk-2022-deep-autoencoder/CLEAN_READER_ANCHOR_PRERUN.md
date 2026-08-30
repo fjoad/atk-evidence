@@ -1,9 +1,10 @@
 # `CR-ISET-FCSAE-01` pre-run contract
 
-**Frozen:** 2026-08-24
+**Frozen:** 2026-08-24; source branch refrozen 2026-08-30 before execution
 
-**Status:** `BLOCKED` at the exact official allocation data gate; no eligible
-preparation, training, or scoring attempt exists
+**Status:** `AUTHORIZED AND READY` for one submission under the approved
+`sciencedb-csv-semantic-equivalence-v1` allocation `I` branch; no eligible
+preparation, training, or scoring attempt exists yet
 
 **Evidence question:** numerical reproduction (`N`)
 
@@ -44,18 +45,18 @@ not a repeated-seed confidence statement.
 ## 3. Frozen code and environment
 
 The eligible execution commit is full Git commit
-`1e428ffddeee400f790c21b69812cf2a1a9e62bb`. The Slurm wrapper refuses a
+`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. The Slurm wrapper refuses a
 different checkout.
 
 | Artifact | SHA-256 |
 |---|---|
 | `requirements-lock.txt` | `813d84ccf6230dd3821e94a6b280da94644b9a5e58046db3c48c035e127b3277` |
 | `download_data.py` | `fe09c03a63a71dfab5fae6008c6bb91e4091a504b07b4d38d89bc72ef83ad192` |
-| `prepare_data.py` | `bebbed81ae8fe24671c31a83b53d150a93c1dab3d8f8b16b4d869d7caf0ba850` |
+| `prepare_data.py` | `2daea25d3a4112bec411d061958770a92836855274904f6d342249cfd425a5c7` |
 | `models.py` | `3515415082b26bb91cb5367effbd1eba4324bf250ec47e799f7fccb3e6df83f0` |
-| `run_experiment.py` | `ef13f49788cbc49cde11d39c4422844d6e3e09f4e38c0cee762ea03cf91a6fc1` |
-| `analyze_results.py` | `26ffa06ca24396b95dc01336d96c3070be0d0cf417132b69dcc35b19c561d62a` |
-| `run_clean_reader_anchor.sbatch` | `d247fa8d42fde436ffb82846d2b1fac74bf0cc0152f20180d16506cb89859544` |
+| `run_experiment.py` | `5a522b5a298998eedf6aca2e18d1f9ec40b8b280c431df56ae0eff7a3b3dd51f` |
+| `analyze_results.py` | `ecc7586a23bf9ccbccaee56a8433db38b6059f6b7a737ef11bfa13b78d945023` |
+| `run_clean_reader_anchor.sbatch` | `b8e183aad54ff3ab84530be80af3f1a59562d81cd3ff79ad9d2744f8c225b98b` |
 | clean-reader specification | `5eb02149e5e90bbd4139aa143b76dd6a825d69587a626ab301c67b8d4c1eb9f1` |
 
 The Panther `.venv` was checked without importing the heavy neural runtime on
@@ -66,13 +67,13 @@ enables deterministic PyTorch algorithms with warning-on-unsupported behavior,
 disables cuDNN benchmarking, enables deterministic cuDNN, sets the CUDA BLAS
 workspace configuration, and records the effective state and device.
 
-## 4. Exact named-data gate
+## 4. Named-data identity and approved serialization branch
 
 The six available local/Panther consumption archives have the exact official
 byte sizes and MD5 identities frozen in the specification. A byte-identical
 mirror is not a semantic substitution.
 
-The seventh required input is:
+The originally frozen seventh input was:
 
 - file: `SME and Residential allocations.tab`;
 - bytes: `196316`;
@@ -86,9 +87,28 @@ Dataverse's archival ingest of an originally uploaded
 information itself is not missing: the available ScienceDB CSV and an
 independent public GitHub workbook agree on all 6,445 mappings under the
 predeclared blank/zero normalization. Therefore the source gate remains
-`BLOCKED` only for the frozen byte-identical serialization branch. The verified
-semantic branch is not eligible for this attempt without a new visible `I`
-decision and user review.
+`BLOCKED` for the byte-identical official serialization branch, and that
+failure remains preserved.
+
+On 2026-08-30 the user explicitly approved the separately named
+`sciencedb-csv-semantic-equivalence-v1` allocation branch for this one anchor.
+Its frozen allocation file is:
+
+- file: `SME_and_Residential_allocations.csv`;
+- bytes: `112589`;
+- MD5: `89263f89253cf56b857079986ae73096`;
+- SHA-256:
+  `96298be047f34ba91fe281c899b440d2b28747b4f102af6f239dbbd93dd354d4`;
+- rows/unique meter IDs: `6445` / `6445`;
+- allocation counts: Code 1 `4225`, Code 2 `485`, Code 3 `1735`; and
+- canonical normalized five-column SHA-256:
+  `b6e5ac79964c991d820e359c4413990e8bb60d8f051f4a7bb795d7bae60516c8`.
+
+The public GitHub workbook independently agrees across all 6,445 semantic
+rows after the predeclared inapplicable-zero/blank normalization. The clean
+reader code and audit now fail closed unless this exact branch name and every
+file verification are present. No other experimental field changed. See
+[`docs/decisions/2026-08-30-clean-reader-semantic-allocation-admission.md`](../../docs/decisions/2026-08-30-clean-reader-semantic-allocation-admission.md).
 
 ## 5. Statistical unit and frozen implementation
 
@@ -130,11 +150,11 @@ decision and user review.
 ## 7. Exact submission and inspection commands
 
 The repository must first be synchronized and checked out exactly at the
-eligible commit. Once the official `.tab` passes its size/MD5 gate, the sole
-submission command is:
+eligible commit. Once the approved semantic branch passes its full gate, the
+sole submission command is:
 
 ```bash
-sbatch --export=ALL,EXPECTED_COMMIT=1e428ffddeee400f790c21b69812cf2a1a9e62bb \
+sbatch --export=ALL,EXPECTED_COMMIT=a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca \
   studies/atk-2022-deep-autoencoder/reproduction/run_clean_reader_anchor.sbatch
 ```
 

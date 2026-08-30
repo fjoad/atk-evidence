@@ -20,7 +20,7 @@ literal failures and candidate `CR-ISET-FCSAE-01` completion. The user approved
 Checkpoint 1 on 2026-08-24 and directed the six-step sequence to proceed while
 requiring every plausible explanation to be preserved and tested
 systematically. Phase 4 is complete: the five-file trace, quarantine, minimal
-corrections, fail-closed contract, and 178 deterministic tests are recorded in
+corrections, fail-closed contract, and 179 deterministic tests are recorded in
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md`. The former Phase-5
 exact-serialization block remains preserved. Official metadata identifies
 the `.tab` as Dataverse's ingest of an original XLSX; the allocation mapping is
@@ -29,16 +29,19 @@ not missing. A public ScienceDB CSV and public GitHub workbook agree across all
 bytes are already available. On 2026-08-30 the user explicitly approved
 `sciencedb-csv-semantic-equivalence-v1` as the visible allocation `I` branch
 for the otherwise unchanged single anchor. Phase 5 is in progress; execute one
-attempt only, then stop for full audit and Checkpoint 2. The full frozen run
-contract is
+attempt only from eligible code commit
+`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`, then stop for full audit and
+Checkpoint 2. The 179 deterministic tests and strict local seven-file verifier
+pass. The full frozen run contract is
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
-commit `1e428ffddeee400f790c21b69812cf2a1a9e62bb`. Checkpoint 2 remains binding.
+commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Checkpoint 2 remains binding.
 Older execution-order notes below are historical unless the new plan explicitly
 promotes them.
 
 **Checkpoint-1 focus:** the candidate first anchor is Table-III ISET FC-SAE,
-seed 20260824. It requires official ISSDA V1 consumption files and allocation
-`.tab`; uses duration-first in-day Attack 3, joint pre-split feature scaling,
+seed 20260824. It uses exact-byte official ISSDA V1 consumption archives plus
+the approved semantic-equivalence allocation CSV; duration-first in-day Attack
+3, joint pre-split feature scaling,
 customer-disjoint B1/B2 with attacks restricted to B2, test-set ADASYN,
 `48-400-300-200-100-100-200-300-400-48` sigmoid/Softmax FC-SAE, dropout after
 all hidden layers, an explicit training-loss convergence completion, printed
