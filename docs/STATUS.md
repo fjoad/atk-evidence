@@ -52,6 +52,18 @@
   36-hour one-GPU budget, exact command, stopping rule, and data-gate state are
   in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md).
+  A 17-minute content sanity check found every pre-ADASYN artifact complete:
+  small contiguous samples from every NumPy array were fully finite and
+  nonconstant where expected; exact labels contained 750,767 benign and
+  4,504,602 malicious rows, with 750,767 rows per attack ID. The positive
+  scaler scales and plausible raw/standardized ranges exclude obvious empty,
+  all-zero, NaN/Inf, and collapsed-cache failures. `x_test.npy` and
+  `metadata.json` do not yet exist because the process is inside the expected
+  exact ADASYN search. The central ETA is approximately 07:00--08:00 Qatar time
+  on 2026-08-31, with a cautious 06:00--16:00 window; this combines the measured
+  14.16-hour search estimate with the prior closely matched 3.37-hour batch-32
+  FC-SAE runtime and remains sensitive to neighbor-search speed and stopping
+  epoch.
 - The active competing explanations, their predictions, discriminating tests,
   and status are now durable in
   [`../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`](../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md).

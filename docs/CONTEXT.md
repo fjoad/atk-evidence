@@ -39,6 +39,17 @@ job or change the contract while it is queued or running. The full frozen run
 contract is
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
 commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Checkpoint 2 remains binding.
+At 17 minutes, all pre-ADASYN artifacts were complete. Beginning/middle/end
+samples from every saved NumPy array were 100% finite with nonzero variation
+where expected; the full label counts were 750,767 benign and 4,504,602
+malicious, with exactly 750,767 rows for each of six attack IDs. Positive
+48-slot scaler scales and plausible raw/standardized ranges rule out an empty,
+constant, all-zero, or NaN/Inf cache. The missing `x_test.npy` and
+`metadata.json` identify the active phase as the expected exact ADASYN search.
+The measured 14.16-hour search estimate plus the prior closely matched
+batch-32 FC-SAE's 3.37-hour run gives a central completion estimate near
+07:00--08:00 Qatar time on 2026-08-31, with roughly 06:00--16:00 retained as a
+realistic uncertainty window because search speed and stopping epoch can vary.
 Older execution-order notes below are historical unless the new plan explicitly
 promotes them.
 
