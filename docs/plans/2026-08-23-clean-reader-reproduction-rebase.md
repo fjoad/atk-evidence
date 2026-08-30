@@ -438,6 +438,7 @@ and record why the new evidence changed its status.
 | 2026-08-30 | Phase 5 in progress | Phase 5 ready for submission | The semantic source gate, runner, independent audit, and cluster wrapper were frozen in eligible code commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the strict seven-file verifier pass | Exactly one Panther attempt is authorized; all other branches, seeds, models, controls, and retries remain closed |
 | 2026-08-30 | Phase 5 ready for submission | Phase 5 job submitted | The exact frozen command submitted Panther job `384390`; initial state `PENDING (Priority)` | This is the sole authorized anchor attempt; wait, preserve its complete success or failure, audit it, and do not launch a replacement before Checkpoint 2 |
 | 2026-08-30 | Phase 5 job submitted | Phase 5 job running | Panther job `384390` entered `RUNNING`; hourly thread heartbeat `monitor-clean-reader-anchor` was activated for observation and terminal audit only | The heartbeat cannot submit, retry, alter, or expand an experiment; preserve the sole outcome and stop at Checkpoint 2 |
+| 2026-08-30 | Phase 5 job running | Phase 5 job running; manual checks only | User requested that `monitor-clean-reader-anchor` be disabled and that status be checked only when prompted; the automation was set to `PAUSED` | Do not perform automatic checks; the sole job and Checkpoint-2 restrictions are unchanged |
 
 ## Current hard exclusions until the exact anchor and Checkpoint 2
 
