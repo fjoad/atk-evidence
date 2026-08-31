@@ -3,152 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="ATK Evidence: independent paper-by-paper audits of numerical reproduction, claimed mechanisms, and empirical attainability.">
-  <title>ATK Evidence — Paper-by-paper evidence audits</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0b0d12;
-      --panel: #141821;
-      --line: #2a303c;
-      --text: #f4f6f8;
-      --muted: #a9b1bf;
-      --blue: #79adff;
-      --green: #6ee7a2;
-      --amber: #f5c968;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 12% -10%, #16315a 0, transparent 30rem),
-        var(--bg);
-      color: var(--text);
-      font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    main { width: min(1080px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0 100px; }
-    .eyebrow { color: var(--blue); font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
-    h1 { max-width: 850px; margin: 12px 0 18px; font-size: clamp(2.6rem, 7vw, 5.5rem); line-height: 1.02; letter-spacing: -.055em; }
-    .lede { max-width: 820px; color: #d3d8e0; font-size: clamp(1.1rem, 2.2vw, 1.35rem); }
-    .principle { margin: 42px 0; padding: 22px 26px; border-left: 4px solid var(--green); background: #101b18; color: #dff8e9; }
-    h2 { margin: 64px 0 20px; font-size: 1.65rem; }
-    .study {
-      display: grid;
-      grid-template-columns: 72px 1fr;
-      gap: 22px;
-      padding: 28px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      background: linear-gradient(145deg, #171c26, #11151c);
-    }
-    .number { display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--blue); color: #07101e; font-size: 1.45rem; font-weight: 850; }
-    .study h3 { margin: 0 0 8px; font-size: 1.45rem; }
-    .study p { margin: 8px 0 20px; color: var(--muted); }
-    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
-    a.button { display: inline-block; padding: 10px 15px; border-radius: 10px; background: var(--blue); color: #07101e; font-weight: 800; text-decoration: none; }
-    a.secondary { border: 1px solid var(--line); background: transparent; color: var(--text); }
-    .coming { margin-top: 14px; color: var(--amber); font-size: .95rem; }
-    footer { margin-top: 72px; padding-top: 22px; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
-    footer a { color: var(--blue); }
-    @media (max-width: 620px) {
-      main { width: min(100% - 26px, 1080px); padding-top: 42px; }
-      .study { grid-template-columns: 1fr; padding: 22px; }
-    }
-  </style>
+  <title>ATK Evidence — Reproducing published research</title>
+  <meta name="description" content="We read research papers, implement their methods, and compare what happens with what was reported. Read the first audited electricity-theft reproduction.">
+  <meta property="og:title" content="ATK Evidence — Reproducing published research">
+  <meta property="og:description" content="The paper, the implementation, and the results—explained together.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://fjoad.github.io/atk-evidence/og.png">
+  <meta property="og:image:alt" content="ATK Evidence. Reproducing published research. The paper. The code. The results.">
+  <meta property="og:url" content="https://fjoad.github.io/atk-evidence/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://fjoad.github.io/atk-evidence/og.png">
+  <meta name="twitter:title" content="ATK Evidence — Reproducing published research">
+  <meta name="twitter:description" content="The paper, the implementation, and the results—explained together.">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <main>
-    <div class="eyebrow">Independent paper-by-paper evidence audit</div>
-    <h1>Published numbers and explanations should follow from published methods.</h1>
-    <p class="lede">ATK Evidence rebuilds papers whose results do not look right and asks three separate questions: did the number reproduce, did the claimed mechanism explain the advantage, and does the target lie inside a credible empirical performance envelope?</p>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="./">ATK Evidence</a>
+  <nav aria-label="Main navigation"><a href="#studies">Studies</a><a href="#approach">Our approach</a><a href="https://github.com/fjoad/atk-evidence">Code &amp; records</a></nav>
+</header>
+<main class="home" id="main">
+  <div class="eyebrow">Research reproduction notes</div>
+  <h1>Can we reproduce the published results?</h1>
+  <p class="lede">We read a paper, implement the method it describes, and compare our results with the published ones. When they differ, we try to understand why.</p>
+  <p>These pages show that work: the instructions we followed, the choices we had to make, the code we ran, and the evidence for each conclusion. A successful reproduction matters just as much as an unsuccessful one.</p>
 
-    <div class="principle">
-      “Do the numbers come out?” is necessary but not sufficient. A correct number can come from the wrong mechanism, and a failed reproduction does not prove that every possible implementation must fail. Numerical, mechanism, and attainability findings therefore have separate evidence bars.
+  <section aria-labelledby="latest">
+    <h2 id="latest">Latest: an electricity-theft detector</h2>
+    <p>We rebuilt the simplest autoencoder in Takiddin et al. (2022) and tested it on the named Irish electricity data. This first run did not reproduce the FC-SAE row in Table III.</p>
+    <div class="table-wrap">
+      <table class="results" data-result="clean-reader-20260831">
+        <caption>Percentages. One implementation, with documented choices for missing details, and one training seed. Lower false-alarm rates are better.</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col" class="number">Paper</th><th scope="col" class="number">Our run</th></tr></thead>
+        <tbody>
+          <tr data-metric="DR"><th scope="row">Attacks detected</th><td class="number">81.00</td><td class="number">25.48</td></tr>
+          <tr data-metric="FA"><th scope="row">False alarms</th><td class="number">15.00</td><td class="number">45.13</td></tr>
+          <tr data-metric="ACC"><th scope="row">Balanced accuracy</th><td class="number">83.00</td><td class="number">40.18</td></tr>
+          <tr data-metric="AUC"><th scope="row">AUC</th><td class="number">81.00</td><td class="number">39.40</td></tr>
+        </tbody>
+      </table>
     </div>
+    <p>The data and saved predictions passed our checks. Changing the cutoff alone cannot recover the reported performance from these scores. The reason for the larger mismatch is still under investigation; we have not shown that every reasonable implementation must fail.</p>
+    <p><a class="button" href="papers/atk-2022-deep-autoencoder/reproduction/">Read the reproduction: paper → code → results → explanations</a></p>
+    <p class="meta">Completed 30 August 2026 · Checked 31 August 2026 · No follow-up training yet</p>
+  </section>
 
-    <div class="principle" style="border-left-color:var(--amber); background:#241f12; color:#f6e6c2">
-      <strong>Conflict of interest.</strong> A maintainer of this project is the second author of the 2025 water paper audited as study&nbsp;2. Those findings are held to pre-registered ambiguity branches, published corrections of the audit&rsquo;s own errors, and conclusions bounded strictly to what the artefact supports.
+  <section aria-labelledby="studies">
+    <h2 id="studies">The studies</h2>
+    <ol class="study-list">
+      <li>
+        <h3>1. Detecting electricity theft with autoencoders</h3>
+        <p>Takiddin et al., <cite>IEEE Systems Journal</cite>, 2022. Our current work starts with one model and one reported result.</p>
+        <div class="actions"><a href="papers/atk-2022-deep-autoencoder/reproduction/">Current reproduction report</a><a href="papers/atk-2022-deep-autoencoder/">Earlier method notes</a><a href="reports/atk-2022-deep-autoencoder.pdf">Earlier report (PDF)</a></div>
+      </li>
+      <li>
+        <h3>2. Detecting attacks on water networks</h3>
+        <p>Ahasan et al., <cite>EUSIPCO</cite>, 2025. An earlier study examines the reported numbers, simple detectors, and the role of graph structure. Its results and corrections remain available; no new experiments are included in this update.</p>
+        <div class="actions"><a href="papers/tlstgt-2025-water/">Read the earlier study</a><a href="reports/tlstgt-2025-water.pdf">Earlier report (PDF)</a></div>
+      </li>
+    </ol>
+  </section>
+
+  <section aria-labelledby="approach">
+    <h2 id="approach">How we investigate a paper</h2>
+    <div class="flow">
+      <div><strong>Read and rebuild</strong><p>Start with the complete paper. Connect each important instruction to the code, and say where the text leaves a choice.</p></div>
+      <div><strong>Test and compare</strong><p>Try small checks first. Run the stated experiment, keep the outputs, and compare every reported measure—not just the best one.</p></div>
+      <div><strong>Explain the difference</strong><p>Test possible explanations. Ask what training adds, whether the claimed component matters, and what limits the method can have.</p></div>
     </div>
+    <p>We distinguish three questions: <em>Did the result reproduce? Did the method work for the reason claimed? Could the stated method reach the target?</em> One failed run cannot answer all three. A mathematical limit must state its assumptions; a statistical conclusion must state what was sampled.</p>
+    <p>Small exploratory experiments help choose the next question. They do not become reproductions just because their results are interesting. We report our own mistakes and preserve earlier attempts.</p>
+  </section>
 
-    <h2>Studies</h2>
-    <article class="study">
-      <div class="number">1</div>
-      <div>
-        <h3>Deep autoencoder electricity-theft detection</h3>
-        <p>Takiddin et al., IEEE Systems Journal (2022). Source reconstruction, named datasets, Tables II–V, ambiguity branches, and corrected controls.</p>
-        <div class="actions">
-          <a class="button" href="papers/atk-2022-deep-autoencoder/">Open the method map</a>
-          <a class="button secondary" href="reports/atk-2022-deep-autoencoder.pdf">Work-in-progress report (PDF)</a>
-          <a class="button secondary" href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder">Study files on GitHub</a>
-        </div>
-        <div class="coming">Verdict: <strong>in progress</strong> — none issued.</div>
-      </div>
-    </article>
-
-    <article class="study" style="margin-top:22px">
-      <div class="number">2</div>
-      <div>
-        <h3>Graph transfer learning for water-network attack detection</h3>
-        <p>Ahasan et al., EUSIPCO (2025). Figure-exact graphs, pre-registered ambiguity branches, zero-parameter reference detectors, structure ablations, and forensics on the reported table.</p>
-        <div class="actions">
-          <a class="button" href="papers/tlstgt-2025-water/">Read the verdict</a>
-          <a class="button secondary" href="reports/tlstgt-2025-water.pdf">Report (PDF)</a>
-          <a class="button secondary" href="https://github.com/fjoad/atk-evidence/tree/main/studies/tlstgt-2025-water">Study files on GitHub</a>
-        </div>
-        <div class="coming" style="color:#ff9b8f">Verdict: <strong>no consistent protocol</strong> &mdash; an exhaustive search over 67,326 measurement protocols per cell finds none that reproduces the table; 20 of 27 cells are unreachable under <em>every</em> protocol tested.</div>
-      </div>
-    </article>
-
-    <h2>The pipeline</h2>
-    <p class="lede" style="font-size:1.05rem">After one complete orientation read, we explore cheaply in a disposable sandbox, return to the paper to freeze the formal reading, and promote only questions that survive diagnostic breadth to expensive execution.</p>
-    <ol style="color:var(--muted); max-width:820px">
-      <li><strong style="color:var(--text)">Read and map the claims.</strong> Record the numerical targets and causal story, such as “B beats A because component Z exploits structure S.”</li>
-      <li><strong style="color:var(--text)">Discover in a sandbox.</strong> Use toy witnesses, trivial rules, minimal models, static checks, and output inspection to find tests that distinguish competing explanations.</li>
-      <li><strong style="color:var(--text)">Freeze the source reading.</strong> Return to the complete paper and predeclare the executable method, reasonable interpretations, predictions, budget, and stopping rules.</li>
-      <li><strong style="color:var(--text)">Build the minimal instrument.</strong> Acquire the exact data, implement the paper-literal path, and prove the data, model, and metric routes on tiny cases.</li>
-      <li><strong style="color:var(--text)">Run diagnostic breadth.</strong> Check coherence, triviality, claimed structure, component necessity, fairness, evaluation soundness, and possible ceilings with the cheapest informative probe first.</li>
-      <li><strong style="color:var(--text)">Promote surviving questions.</strong> Only then spend deeply on numerical branches, capability-sensitive mechanism tests, or an empirical performance envelope.</li>
-      <li><strong style="color:var(--text)">Confirm and report.</strong> Preserve all attempts and issue three bounded findings rather than one overloaded verdict.</li>
-    </ol>
-
-    <h2>The three findings</h2>
-    <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:.97rem">
-      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Finding</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Question</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Required evidence</th></tr>
-      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Numerical</strong></td><td style="padding:8px 10px">Was the reported result recovered?</td><td style="padding:8px 10px">A source-faithful finite space, repeated runs, uncertainty, failures, and predeclared comparison criteria.</td></tr>
-      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Mechanism</strong></td><td style="padding:8px 10px">Did the claimed component or structure cause the advantage?</td><td style="padding:8px 10px">Capability witnesses, structure controls, ablations, trivial baselines, and behavior that discriminates the claim from alternatives.</td></tr>
-      <tr><td style="padding:8px 10px"><strong style="color:var(--text)">Attainability</strong></td><td style="padding:8px 10px">Where is the target relative to the observed performance envelope?</td><td style="padding:8px 10px">Declared search axes, distributions, response curves, plateaus, target gap, budget, and explicit untested space.</td></tr>
-    </table>
-    <p style="color:var(--muted); max-width:820px; font-size:.95rem">A numerical miss does not establish a mechanism failure or universal impossibility. A flat empirical curve supports bounded implausibility only inside its declared envelope. Literal impossibility is reserved for a proved constraint whose assumptions exactly match the printed protocol.</p>
-
-    <h2>Numerical and internal-consistency vocabulary</h2>
-    <table style="width:100%; border-collapse:collapse; color:var(--muted); font-size:.97rem">
-      <tr style="text-align:left"><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Finding</th><th style="padding:8px 10px; border-bottom:1px solid var(--line); color:var(--text)">Meaning</th></tr>
-      <tr><td style="padding:8px 10px"><code>reproduced</code></td><td style="padding:8px 10px">The complete reported result pattern was recovered.</td></tr>
-      <tr><td style="padding:8px 10px"><code>partially reproduced</code></td><td style="padding:8px 10px">Some reported results recovered, others not.</td></tr>
-      <tr><td style="padding:8px 10px"><code>not reproduced</code></td><td style="padding:8px 10px">Not recovered within the finite tested space. Bounded by that space — <em>not</em> a claim that reproduction is impossible.</td></tr>
-      <tr><td style="padding:8px 10px"><code>internally inconsistent</code></td><td style="padding:8px 10px">The reported numbers contradict each other or the paper’s own stated protocol, independent of any implementation.</td></tr>
-      <tr><td style="padding:8px 10px; color:#ff9b8f"><code>unattainable as printed</code></td><td style="padding:8px 10px">No valid confusion matrix on the described protocol yields the printed numbers, <strong>and</strong> the deviation is systematic rather than consistent with rounding or isolated transcription error.</td></tr>
-      <tr><td style="padding:8px 10px; color:#ff9b8f"><code>no consistent protocol</code></td><td style="padding:8px 10px"><strong>Strongest rung.</strong> An exhaustive pre-registered search over measurement protocols &mdash; any test-set size, any class prevalence, and the common metric-definition variants &mdash; finds <strong>no single protocol</strong> reproducing the reported table, and most cells are unreachable under <em>every</em> protocol searched. The likelihood of the table under &ldquo;these were measured&rdquo; is then zero rather than small.</td></tr>
-    </table>
-    <p style="color:var(--muted); max-width:820px; font-size:.95rem">Every label is a statement about the artefact and the declared evidence space. Even the strongest does not distinguish deliberate fabrication from catastrophic process failure. That distinction requires evidence outside the paper, and this project does not assert it.</p>
-
-    <h2>Rules we hold ourselves to</h2>
-    <ol style="color:var(--muted); max-width:820px">
-      <li>Read the complete paper once, explore adaptively in a visibly disposable sandbox, then return to the paper and freeze the formal method.</li>
-      <li>Treat author code as an artefact, not authority over unclear or contradictory printed wording.</li>
-      <li>Execute questionable printed steps rather than silently correcting them.</li>
-      <li>Enumerate every material formal interpretation <em>before</em> its eligible results are seen.</li>
-      <li>Test competing explanations cheaply before expanding model families or search spaces.</li>
-      <li>Design experiments whose outcome we do not control. Results confirming a paper’s premise are reported as plainly as results that do not.</li>
-      <li>No cherry-picking: distributions and failures, never the best seed.</li>
-      <li>Keep numerical, mechanism, and attainability conclusions separate and bounded to the evidence that earned them.</li>
-      <li><strong style="color:var(--text)">Publish our own errors.</strong> Each study page carries a corrections section. Two findings in study 2 were retracted as our own bugs.</li>
-    </ol>
-
-    <footer>
-      This project assesses numerical reproduction, claimed mechanisms, and empirical attainability within documented finite evidence spaces. It does not infer author intent or claim to exhaust undocumented procedures. Source code and evidence are at
-      <a href="https://github.com/fjoad/atk-evidence">github.com/fjoad/atk-evidence</a>.
-    </footer>
-  </main>
+  <section class="disclosure" aria-labelledby="disclosure">
+    <h2 id="disclosure">Disclosure</h2>
+    <p>Faaiz Joad, a maintainer of this project, is a co-author of the water-network paper. That relationship is relevant when reading the second study. Its page includes corrections to our analysis. Neither study claims to establish author intent.</p>
+  </section>
+  <footer><p>ATK Evidence · Research in progress · Updated 31 August 2026</p><p><a href="https://github.com/fjoad/atk-evidence">Source code and research records</a>. Original datasets and paper PDFs are not redistributed here; the linked PDFs are our reports.</p></footer>
+</main>
 </body>
 </html>

@@ -14,17 +14,19 @@ EUSIPCO 2025.
 67,326 measurement protocols per cell finds none that reproduces the reported
 table; 20 of 27 cells are unreachable under every protocol searched.
 
-## What this project is *not*
+## What this study asks
 
-It is not "implement the paper and compare numbers." That is too weak — it
-invites *"you implemented it wrong"*, and during this audit that reply was
-correct twice. Both instances are documented in `EVIDENCE.md` as retractions
-rather than quietly amended.
+We compare the reported numbers with the method and with our implementation.
+We also ask whether simple rules already solve parts of the task, whether the
+graph and transfer-learning components help, and whether the evaluation makes
+those comparisons fairly. Our own implementation was wrong in two important
+instances; both corrections are recorded in `EVIDENCE.md`.
 
-The audit instead asks what a reviewer would ask who doubts every item in the
-paper: does it cohere with itself, is the task non-trivial at all, does each
-claimed component do work, are the comparisons fair, is the evaluation sound —
-and only then, does the headline pattern reproduce.
+This is an earlier study, currently paused while Paper 1 is active. Its
+measurements are preserved. The public wording was clarified on 2026-08-31:
+the protocol search is finite, and the replay and capacity observations do not
+establish universal impossibility. See the appended correction in
+[EVIDENCE.md](EVIDENCE.md). No water-network experiment was rerun for that update.
 
 ## Read in this order
 

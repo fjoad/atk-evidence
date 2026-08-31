@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reproducing an electricity-theft detector — ATK Evidence</title>
+  <meta name="description" content="A reproduction of the FC-SAE result in Table III of Takiddin et al. (2022): the paper, code, measured results, and remaining explanations.">
+  <meta property="og:title" content="Reproducing an electricity-theft detector">
+  <meta property="og:description" content="The stated FC-SAE model reached 40.18% balanced accuracy in our documented run, versus 83% reported. The cause remains open.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Reproducing an electricity-theft detector">
+  <meta name="twitter:description" content="The paper, implementation, results, and limits of the first FC-SAE reproduction.">
+  <link rel="stylesheet" href="../../../styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header"><a class="brand" href="../../../">ATK Evidence</a><nav aria-label="Main navigation"><a href="../">Earlier method notes</a><a href="https://github.com/fjoad/atk-evidence">Code &amp; records</a></nav></header>
+<main id="main">
+  <article>
+    <header>
+      <div class="eyebrow">Electricity-theft study · First reproduction</div>
+      <h1>Reproducing an electricity-theft detector</h1>
+      <p class="lede">What happened when we implemented the FC-SAE model described by Takiddin et al. and tested its Table III result on the named Irish electricity data.</p>
+      <p class="meta">Research in progress · Run completed 30 August 2026 · Results checked 31 August 2026</p>
+    </header>
+    <section class="abstract" aria-labelledby="abstract">
+      <h2 id="abstract">Abstract</h2>
+      <p>We implemented the paper's fully connected simple autoencoder (FC-SAE), recording the choices needed where the method was incomplete. In one run, attack detection was 25.48% rather than the reported 81%, and balanced accuracy was 40.18% rather than 83%. The saved arrays, predictions, and metrics passed our checks. Changing the threshold cannot recover the target from these scores. This establishes a numerical mismatch for this implementation and seed, not a conclusion about every configuration or the cause of the discrepancy.</p>
+    </section>
+
+    <nav class="contents" aria-label="Report contents"><ol>
+      <li><a href="#question">1. Question</a></li><li><a href="#methods">2. Paper to code</a></li><li><a href="#setup">3. Setup</a></li>
+      <li><a href="#results">4. Results</a></li><li><a href="#checks">5. Checks</a></li><li><a href="#sandbox">6. Earlier small tests</a></li>
+      <li><a href="#explanations">7. Explanations</a></li><li><a href="#limitations">8. Limits</a></li><li><a href="#next">9. Next questions</a></li><li><a href="#references">References</a></li>
+    </ol></nav>
+
+    <section aria-labelledby="question">
+      <h2 id="question"><span class="section-index">1</span>What are we trying to reproduce?</h2>
+      <p>An autoencoder learns to copy its input. In this paper, the input is a day of electricity readings. The proposed detector learns from normal days, then treats a large copying error as evidence of theft. The idea is that an altered day should look unfamiliar and be harder to reconstruct.</p>
+      <p>Takiddin et al. compare five autoencoders and several other detectors. Their simplest proposed model is the fully connected simple autoencoder, or FC-SAE. We began with its result on the Irish Smart Energy Trial data, called ISET in the paper: <strong>Table III, printed page 4116</strong>. This report covers that row only. <a href="#ref-paper">[1]</a></p>
+      <p>Our question was whether a reader could implement the written method, state the necessary assumptions, and obtain the reported result. No author implementation was available to us. We did not try configurations until one approached the published number.</p>
+    </section>
+
+    <section aria-labelledby="methods">
+      <h2 id="methods"><span class="section-index">2</span>From the paper to the implementation</h2>
+      <p>We read the complete paper, tried a small synthetic-data sandbox, and returned to the source before settling the implementation. The table below links the instructions to the code actually used. Page numbers are the paper's printed numbers, not the PDF viewer's page counter. <a href="#ref-spec">[2]</a></p>
+      <div class="table-wrap">
+        <table class="source-table">
+          <caption>Table 1. Selected source-to-code links. All code links in this table point to the unchanged revision used for the experiment.</caption>
+          <thead><tr><th scope="col">What we read</th><th scope="col">What we implemented</th><th scope="col">Code</th></tr></thead>
+          <tbody>
+            <tr><td>Section III-A, p. 4109: the input layer has 48 neurons.</td><td>One complete day of 48 ordered half-hour readings per example. Incomplete or duplicated days are excluded under our documented parsing choice.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/prepare_data.py#L424-L461">Daily profiles</a>; <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L155">input shape</a></td></tr>
+            <tr><td>Section IV-C, p. 4115: encoder widths 400, 300, 200, 100, <q>with opposite order in the decoder’s part</q>.</td><td>Four encoder layers followed by four decoder layers, retaining both central 100-unit layers.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L27-L32">Layer widths</a>; <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L146-L177">construction</a></td></tr>
+            <tr><td>Table I, p. 4115: Adam, dropout 0.4, sigmoid hidden activation, Softmax output.</td><td>Those settings, with dropout after each hidden layer. Dropout placement and Adam's learning rate are explicit implementation choices.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L146-L177">Model and optimizer</a></td></tr>
+            <tr><td>Section II-C, p. 4109: <q>zero mean and unit variance</q>, a 2:1 benign split, and ADASYN on the test set.</td><td>Joint feature-wise scaling; disjoint training/test customers; synthetic benign test profiles generated after the split. We kept the unusual test-resampling step.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/prepare_data.py#L698-L722">Scaling</a>; <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/prepare_data.py#L743-L884">split and resampling</a></td></tr>
+            <tr><td>Equation (7) and Section III-A, p. 4109: minimize reconstruction error using benign examples.</td><td>Mean squared error between each benign input and its reconstruction. No attack example is used for fitting.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L171-L175">Loss</a>; <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/run_experiment.py#L1584-L1593">training call</a></td></tr>
+            <tr><td>Section IV-B, p. 4115: the FC-SAE threshold is 0.58.</td><td>Average the squared error over 48 coordinates. A score strictly greater than 0.58 is an attack.</td><td><a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/run_experiment.py#L234-L292">Scores and metrics</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <figure id="model">
+        <div class="diagram"><img src="model.svg" width="1040" height="330" alt="FC-SAE: 48 inputs; encoder 400, 300, 200, 100; decoder 100, 200, 300, 400; 48 Softmax outputs. Every hidden layer uses sigmoid and dropout 0.4 during training."></div>
+        <figcaption>Figure 1. Our implementation of the Table I FC-SAE configuration. Numbers are layer widths, not a drawing of individual neurons. The model has 450,448 trainable parameters. The interpretation of eight hidden layers and the dropout placement are recorded choices; this is not a claim that the paper specifies every connection unambiguously.</figcaption>
+      </figure>
+      <p>The configuration in the run's model file is short enough to inspect directly:</p>
+      <pre aria-label="Exact FC-SAE configuration excerpt"><code>"fc_sae": ModelSpec(
+    "FC-SAE", (400, 300, 200, 100), (100, 200, 300, 400),
+    "Adam", 0.4, "sigmoid", "softmax", 0.58, "mse", "higher",
+),</code></pre>
+      <p class="meta">Excerpt from <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L27-L32">models.py</a>. The <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L146-L177">construction function</a> creates the layers; its <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction/models.py#L180-L199">runtime check</a> checks widths, activations, dropout, and parameter count. These checks establish agreement with our recorded reading, not that it is the only possible reading.</p>
+
+      <h3>Where the paper did not give a complete recipe</h3>
+      <p>Some instructions cannot be executed literally. Attack 3 subtracts a positive duration from its start time, reversing the stated interval. The threshold-selection description also refers to an ROC calculation over training data defined as benign-only, without explaining where the attack labels come from. We preserved those problems and documented our executable choices before the run.</p>
+      <ul>
+        <li><strong>Attack 3:</strong> choose a duration of 4–24 hours, then a start that keeps the interval within the day; zero both half-hour readings in each selected hour.</li>
+        <li><strong>Customer population:</strong> use all 4,225 meters labeled residential. The paper says roughly 3,000 but does not identify a subset.</li>
+        <li><strong>Test attacks:</strong> include attacks derived only from held-out customers, following the paper's statement that test customers are unseen.</li>
+        <li><strong>Missing training settings:</strong> use the fixed settings below. We used the published final architecture and threshold; we did not reproduce the undocumented search that selected them.</li>
+      </ul>
+      <p>The source specification lists the other reasonable readings we have not tested in this run. We call this a reproduction attempt with explicit interpretations—not a verbatim execution of a fully specified method. <a href="#ref-spec">[2]</a></p>
+    </section>
+
+    <section aria-labelledby="setup">
+      <h2 id="setup"><span class="section-index">3</span>Data and experimental setup</h2>
+      <p>We used the CER Smart Metering Project's 2009–2010 electricity data, the source of ISET. The six consumption archives match the official file checksums. The official allocation-table serialization was unavailable; an explicitly approved CSV copy was independently checked against another public workbook. All 6,445 customer-type mappings agreed after the declared blank/zero normalization. This file-format substitution was recorded before training. <a href="#ref-data">[3]</a></p>
+      <p>Each retained day gives one benign profile and six altered profiles. The six attacks reduce readings by a fixed or varying fraction, zero a time interval, replace a day by its mean, scale that mean, or reverse the day's order. They are constructed attacks, not observed theft labels.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 2. The actual training and evaluation setup, not estimated counts from the paper.</caption>
+          <tbody>
+            <tr><th scope="row">Training / test customers</th><td>2,816 / 1,409; no customer appears on both sides</td></tr>
+            <tr><th scope="row">Training examples</th><td>1,500,523 benign daily profiles</td></tr>
+            <tr><th scope="row">Original test examples</th><td>750,767 benign + 4,504,602 attack profiles</td></tr>
+            <tr><th scope="row">After test-set ADASYN</th><td>4,380,387 benign + 4,504,602 attack profiles = 8,884,989 total</td></tr>
+            <tr><th scope="row">Synthetic benign examples added</th><td>3,629,620; integer allocation leaves the classes nearly, not exactly, equal</td></tr>
+            <tr><th scope="row">Seed / batch size / Adam learning rate</th><td>20260824 / 32 / 0.001</td></tr>
+            <tr><th scope="row">Stopping rule</th><td>At most 100 epochs; after at least 10 epochs, stop after five without training-MSE improvement of at least 0.000001; restore the best weights</td></tr>
+            <tr><th scope="row">Observed stopping</th><td>28 epochs; restored epoch 23; best recorded training loss 1.74779</td></tr>
+            <tr><th scope="row">Compute</th><td>One Tesla P100 GPU; fitting 8 h 02 min 46 s; scoring 11.12 s; whole job 9 h 14 min 27 s</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Joint scaling uses information from outside the training subset, and ADASYN changes the test distribution. We retained those operations to test this reading of the paper, not because we recommend them for an independent evaluation. A conventional train-only preprocessing control would be a separate experiment.</p>
+      <p>There was one training attempt. It was not restarted or tuned after its result was seen. Its <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/config.json">configuration</a>, <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/history.json">training history</a>, and <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/metadata.json">data metadata</a> are preserved.</p>
+    </section>
+
+    <section aria-labelledby="results">
+      <h2 id="results"><span class="section-index">4</span>The reported result and our result</h2>
+    <div class="table-wrap">
+      <table class="results" data-result="clean-reader-20260831">
+        <caption>Table 3. The complete FC-SAE row from Table III, compared with our run. All values are percentages. ACC is balanced accuracy, following the paper's formula.</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col" class="number">Paper</th><th scope="col" class="number">Our run</th></tr></thead>
+        <tbody>
+          <tr data-metric="DR"><th scope="row">Detection rate</th><td class="number">81.00</td><td class="number">25.48</td></tr>
+          <tr data-metric="FA"><th scope="row">False-alarm rate ↓</th><td class="number">15.00</td><td class="number">45.13</td></tr>
+          <tr data-metric="SP"><th scope="row">Specificity</th><td class="number">85.00</td><td class="number">54.87</td></tr>
+          <tr data-metric="PR"><th scope="row">Precision</th><td class="number">81.00</td><td class="number">36.73</td></tr>
+          <tr data-metric="ACC"><th scope="row">Balanced accuracy</th><td class="number">83.00</td><td class="number">40.18</td></tr>
+          <tr data-metric="F1"><th scope="row">F1</th><td class="number">81.00</td><td class="number">30.09</td></tr>
+          <tr data-metric="AUC"><th scope="row">AUC</th><td class="number">81.00</td><td class="number">39.40</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>In this evaluation, the model detected about 25 of every 100 attack profiles and raised an alarm on about 45 of every 100 benign profiles. The test set includes synthetic benign examples added by the paper's stated resampling step; these are not counts of independent households.</p>
+
+      <p>Here, detection rate is the fraction of attack profiles flagged. False-alarm rate is the fraction of benign profiles flagged. Specificity is one minus false-alarm rate; precision asks how many alarms are correct; F1 combines precision and detection. The paper's ACC is <strong>balanced accuracy</strong>: the average of detection and specificity. AUC measures how well the score ranks attacks above benign profiles across cutoffs; 50% is chance-level ranking.</p>
+      <p>Detection fell short by 55.52 percentage points, balanced accuracy by 42.82 points, and AUC by 41.60 points. These are large discrepancies. All seven values come from the same saved scores and evaluation population. <a href="#ref-result">[4]</a></p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 4. Saved confusion counts at the published threshold, 0.58.</caption>
+          <thead><tr><th scope="col">Actual profile</th><th scope="col" class="number">Called normal</th><th scope="col" class="number">Called attack</th></tr></thead>
+          <tbody><tr><th scope="row">Benign</th><td class="number">2,403,359</td><td class="number">1,977,028</td></tr><tr><th scope="row">Attack</th><td class="number">3,356,651</td><td class="number">1,147,951</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section aria-labelledby="checks">
+      <h2 id="checks"><span class="section-index">5</span>Could the result be a recording or cutoff error?</h2>
+      <h3>Checking the saved experiment</h3>
+      <p>The predeclared audit recomputed every metric and confusion count with zero discrepancy. It checked the configuration and artifact hashes. Additional checks scanned every saved numeric array for NaN or infinity, verified customer separation and row identities, replayed the stopping rule, and reloaded the model weights.</p>
+      <p>Fresh inference on 256 examples, spread across benign, six attack, and synthetic-benign groups, agreed with the saved scores within 0.00000012. All sampled predictions agreed. This was a sample of fresh inference, not a second full scoring run. These checks reduce the likelihood of errors in the tested chain; they do not exclude an incorrect interpretation of the paper. <a href="#ref-audit">[5]</a></p>
+
+      <h3>Trying every cutoff on the same scores</h3>
+      <p>We enumerated 7,202,671 threshold candidates. This deliberately gives the evaluation labels the opportunity to choose the most favorable cutoff. It is a diagnostic upper limit for the saved scores, not a valid replacement for the paper's test procedure.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 5. Cutoff diagnostics for the existing score vector. No model was retrained.</caption>
+          <thead><tr><th scope="col">Diagnostic</th><th scope="col" class="number">Best balanced accuracy</th><th scope="col">Meaning</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Higher error means attack</th><td class="number">50.00072%</td><td>No threshold on these scores reaches the reported 83%.</td></tr>
+            <tr><th scope="row">Reverse the direction</th><td class="number">60.21%</td><td>Even treating lower error as suspicious leaves a large gap.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>In the printed direction, even the closest detection/false-alarm pair misses at least one of the two reported values by 40.75 points. The threshold is therefore not the whole explanation for this run. A different training or data procedure would produce different scores, to which this fixed-score limit does not apply.</p>
+
+      <h3>How much did the reconstruction change the score?</h3>
+      <p>The mean score was 1.19676 for benign profiles and 0.81304 for attack profiles. Higher error triggers an alarm, so the aggregate ordering often points the wrong way. This does not imply identical behavior for all six attack types.</p>
+      <p>We also compared the trained score with a rule that reconstructs every input as zero. That rule measures the average squared size of the input and requires no learning. Its scores had Pearson correlation <strong>0.999253</strong> with the trained scores.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 6. Diagnostic scores on the same evaluation rows. Balanced accuracy uses the same 0.58 cutoff. The two no-training rules are controls, not methods reported in the paper.</caption>
+          <thead><tr><th scope="col">Score</th><th scope="col" class="number">Balanced accuracy</th><th scope="col" class="number">AUC</th></tr></thead>
+          <tbody><tr><th scope="row">Zero reconstruction</th><td class="number">39.00%</td><td class="number">37.23%</td></tr><tr><th scope="row">Trained FC-SAE</th><td class="number">40.18%</td><td class="number">39.40%</td></tr><tr><th scope="row">Closest allowed Softmax-domain reconstruction, per example</th><td class="number">40.20%</td><td class="number">39.35%</td></tr></tbody>
+        </table>
+      </div>
+      <p>The trained gain over zero reconstruction is 1.18 balanced-accuracy points and 2.17 AUC points. It is not zero. Close score correlation does not prove that the remaining difference contains no useful information.</p>
+      <p>The third row chooses the nearest nonnegative vector whose entries sum to one. It supplies a lower bound on reconstruction error, not an upper bound on classification accuracy. A model need not minimize every example's error to distinguish classes well.</p>
+
+      <details id="correction"><summary>A mistake in our additional checker</summary>
+        <p>The first supplemental check compared a short final chunk of original data with a longer resampled slice extending into synthetic rows. That checker failed. We corrected the slice boundary and preserved both reports; the corrected checker passed all 65 checks. No training data, weights, scores, or reported metrics changed.</p>
+        <p><a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/artifact_checks_20260831.json">First checker report</a> · <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/artifact_checks_20260831_v2.json">Corrected checker report</a>. A separate optimizer-state warning concerned unused optimizer slots during inference; fresh weight loading and the sampled predictions passed.</p>
+      </details>
+    </section>
+
+    <section aria-labelledby="sandbox">
+      <h2 id="sandbox"><span class="section-index">6</span>What the earlier small experiments showed</h2>
+      <p>Before this full-data run, we used a separate synthetic-data sandbox to understand the questions. It used 48-step toy profiles, small models, one seed, and fixed training settings. The script took 60.06 seconds. It was not an ISET reproduction. <a href="#ref-sandbox">[6]</a></p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 7. Completed exploratory checks from 24 August 2026. These results describe the toy construction only.</caption>
+          <thead><tr><th scope="col">Question</th><th scope="col">Observation</th><th scope="col">What remained open</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Can simple statistics distinguish the toy attacks?</th><td>The strongest tested single feature for attacks 1–5 had AUC 0.993–1.000. Order-insensitive summaries were at chance for reversal.</td><td>Whether equally simple rules work on the actual ISET evaluation.</td></tr>
+            <tr><th scope="row">Does a small recurrent model do better on a temporal disruption?</th><td>Block-disruption AUC: dense autoencoder 0.950; LSTM autoencoder 0.521. Their training losses were 0.345 and 0.944.</td><td>The LSTM fit much worse. The comparison does not separate optimization failure from lack of a useful recurrent advantage.</td></tr>
+            <tr><th scope="row">Do bounded output layers constrain reconstruction?</th><td>Standardized toy profiles lay outside the allowed output sets, giving positive minimum reconstruction errors.</td><td>A reconstruction constraint alone does not establish a detection-performance ceiling.</td></tr>
+            <tr><th scope="row">Which direction should a Gaussian reconstruction probability use?</th><td>Probability decreased as reconstruction error increased.</td><td>The VAE direction conflict may be a wording error. No trained VAE result is reported here.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>These observations motivated careful checks of output ranges, simple scores, and temporal structure. They did not select a favorable interpretation after seeing the full-data result. The small dense and recurrent models were not the full paper architectures.</p>
+    </section>
+
+    <section aria-labelledby="explanations">
+      <h2 id="explanations"><span class="section-index">7</span>What might explain the mismatch?</h2>
+      <p>The size of the discrepancy and its persistence across cutoffs warrant serious concern about this result under the method we implemented. They do not identify its cause. We keep the alternatives below open rather than treating another seed as either a guaranteed rescue or a guaranteed failure.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 8. Current explanations and the observations that would distinguish them. Follow-up tests in the last column are proposed, not completed.</caption>
+          <thead><tr><th scope="col">Possible explanation</th><th scope="col">Evidence so far</th><th scope="col">Useful next distinction</th></tr></thead>
+          <tbody>
+            <tr><th scope="row">Output restrictions and input magnitude dominate the score</th><td>The trained score closely follows zero reconstruction; standardized inputs do not generally lie in the Softmax output set.</td><td>Derive the allowable score range for each input and measure whether the learned correction adds label-relevant information.</td></tr>
+            <tr><th scope="row">The cutoff is the main problem</th><td>Ruled out for these fixed scores: every cutoff still falls short, including reversed direction.</td><td>Separate changes to the score itself from changes to its cutoff.</td></tr>
+            <tr><th scope="row">A data, preprocessing, or source-reading choice matters</th><td>Customer identity and transformation checks passed, but the paper leaves consequential choices unresolved.</td><td>Inspect source-supported alternatives one at a time, beginning with cheap saved-data checks.</td></tr>
+            <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>One seed and one stopping rule; no estimate of training-seed variability.</td><td>Inspect fitting on small controlled tasks before deciding whether expensive repetitions are informative.</td></tr>
+            <tr><th scope="row">The task offers little benefit from extra architecture</th><td>Simple rules worked on toy attacks. The current trained score adds only a small aggregate gain over zero reconstruction.</td><td>Test simple rules on the real evaluation and compare models with and without the credited component under matched conditions.</td></tr>
+            <tr><th scope="row">The paper omits a consequential procedure or contains a reporting error</th><td>Missing settings and contradictory instructions make this possible; a reproduction failure cannot identify what the authors ran.</td><td>Look for source-supported clarifications or author artifacts. Do not infer undocumented code from whichever change improves our score.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Our <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md">full explanation register</a> also records the temporal-model alternatives: underfitting, an inadequate toy test, dense models already using fixed time positions, and differences in activation, capacity, or optimization being mistaken for a recurrence effect.</p>
+    </section>
+
+    <section aria-labelledby="limitations">
+      <h2 id="limitations"><span class="section-index">8</span>What this study cannot yet conclude</h2>
+      <p><strong>Numerical result:</strong> the audited run did not reproduce this row. <strong>Explanation:</strong> the source of the discrepancy remains open. <strong>Broader attainability:</strong> we have not measured a performance range across seeds, training choices, or alternative source interpretations.</p>
+      <p>There are no seed-level confidence intervals here. Many rows share a customer or an original profile; synthetic examples add further dependence. Treating all 8.9 million rows as independent would overstate precision. A narrow interval for one fixed model would not, by itself, rule out another fitted model.</p>
+      <p>The model's output domain creates a real reconstruction-error constraint. We have not turned that constraint into a general bound on detection or AUC. Likewise, elapsed compute time is not evidence that the authors could not have obtained their result. The paper's hardware and training procedure are not specified sufficiently for that comparison.</p>
+      <p>The previous electricity notes and report contain older exploratory runs under different assumptions, including omitted test-set ADASYN. They remain available, but they are not silently counted as additional seeds of this experiment. The water-network study is separate evidence and is not used to strengthen this finding.</p>
+    </section>
+
+    <section aria-labelledby="next">
+      <h2 id="next"><span class="section-index">9</span>The next questions—not new results</h2>
+      <p>We are pausing experimental work while this account is reviewed. The next proposed work is small and diagnostic:</p>
+      <ol>
+        <li><strong>Check whether an actual performance bound is available.</strong> Give each example the most favorable reconstruction allowed by the output domain—even one chosen with knowledge of its label. If this deliberately generous limit cannot reach the reported detection/false-alarm pair, it would establish a conditional impossibility. If it can, the bound is inconclusive.</li>
+        <li><strong>Measure useful work beyond input magnitude.</strong> Compare the trained score with simple controls, including among examples with similar input energy. Define a meaningful improvement before testing for practical equivalence; close correlation alone is insufficient.</li>
+        <li><strong>Use small, targeted controls before more full training.</strong> Separate missing signal, an unsuitable objective, optimization failure, and an unnecessary component. Repeated seeds or other models should answer an identified question, not merely fill another table.</li>
+      </ol>
+      <p>The proposed conditional bound, equivalence analysis, and new controls have <strong>not been run</strong>. No statistical impossibility or years-of-search estimate is claimed.</p>
+    </section>
+
+    <section aria-labelledby="conclusion">
+      <h2 id="conclusion">Conclusion</h2>
+      <p>Following one documented reading of the paper, we obtained a large and audited mismatch for the FC-SAE result on ISET. Threshold selection alone cannot explain it for these scores. The similarity to a no-learning score gives a concrete reason to investigate what the trained model contributes.</p>
+      <p>This is a finding about an implementation and an experiment—not a claim that every reasonable implementation fails, that learning adds exactly zero, or that the published numbers were fabricated. The next step is to explain the mismatch and test the limits, not to assume either a rescue or an impossibility.</p>
+    </section>
+
+    <section aria-labelledby="references">
+      <h2 id="references">References and reproducibility records</h2>
+      <ol class="references">
+        <li id="ref-paper">A. Takiddin, M. Ismail, U. Zafar, and E. Serpedin. <cite>Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids.</cite> IEEE Systems Journal 16(3), 4106–4117, 2022. <a href="https://doi.org/10.1109/JSYST.2021.3136683">doi:10.1109/JSYST.2021.3136683</a>. Relevant locations: pp. 4107–4109 (data and model), p. 4114 (metrics), p. 4115 (Table I and threshold), p. 4116 (Table III). The complete 12-page PDF was read; the displayed method and table passages were visually rechecked for this report.</li>
+        <li id="ref-spec">Our <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md">source reading and assumptions</a>, <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_FIDELITY.md">paper-to-code checks</a>, and <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md">pre-run settings</a>. Scientific code revision: <code>a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca</code>. <a href="https://github.com/fjoad/atk-evidence/tree/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reproduction">Five-file implementation</a>.</li>
+        <li id="ref-data"><cite>CER Smart Metering Project—Electricity Customer Behaviour Trial, 2009–2010</cite>, ISSDA, version 1. <a href="https://doi.org/10.7929/ISSDA/BX59EU">Dataset record</a>. <a href="https://github.com/fjoad/atk-evidence/blob/main/docs/decisions/2026-08-30-clean-reader-semantic-allocation-admission.md">Allocation-file comparison and approval</a>. Raw data are not redistributed.</li>
+        <li id="ref-result"><a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/result.json">Unmodified result JSON</a>, <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/config.json">configuration</a>, <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/history.json">history</a>, and <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/metadata.json">data metadata</a>. <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reported/table_3.csv">Transcribed Table III targets</a>. Run identity: <code>seed_20260824_2f483335536c</code>.</li>
+        <li id="ref-audit"><a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/clean_reader_anchor_audit.json">Frozen audit and cutoff diagnostics</a>; <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/artifact_checks_20260831_v2.json">corrected supplemental checks</a>; <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/audit_execution.json">audit provenance</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md">complete technical finding</a>. Large arrays and weights remain preserved outside the public site.</li>
+        <li id="ref-sandbox"><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md">Synthetic sandbox: questions, setup, results, and limits</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/phase2_discovery_sandbox.py">standalone code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json">saved results</a>. These experiments preceded the full-data reproduction.</li>
+      </ol>
+    </section>
+  </article>
+  <footer><p><a href="../../../">All studies</a> · <a href="../">Earlier electricity notes</a> · <a href="../../../reports/atk-2022-deep-autoencoder.pdf">Earlier report PDF—not this reproduction</a></p><p>ATK Evidence · Updated 31 August 2026. This is an in-progress research report, not a peer-reviewed publication. Corrections and alternative explanations are part of the record.</p></footer>
+</main>
+</body>
+</html>

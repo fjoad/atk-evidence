@@ -2,6 +2,21 @@
 
 **Last updated:** 2026-08-31
 
+**Public-writing direction, 2026-08-31:** the user wants the README and site to
+read like a clear research report: paper → implementation → result → possible
+explanations → tests → bounded conclusion. No workflow jargon in place of
+explanation. A separate current reproduction page is added; both older paper
+pages remain. Obsolete charter commands and duplicate agent rules are removed,
+not the scientific history. No further experiment is authorized. Publication
+awaits the user's answer. The local rewrite is complete and all 187 tests pass,
+including eight static report checks. See the 2026-08-31 editorial plan.
+
+**Next scientific emphasis:** measure useful information beyond a simple input
+statistic; consider an optimistic output-domain bound and small controls before
+another long run. These are proposals, not findings. Rescaling an accuracy axis
+does not make a target less probable; fixed-model confidence intervals do not
+bound new seeds/configurations, and years-of-search estimates are conditional.
+
 **Governing state:**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
 supersedes the prior model-family/one-factor execution sequence. The user
@@ -609,7 +624,7 @@ and all three formal `N/M/A` verdicts remain open.
   and reasoning-intensive part of every study. Implementation should then be a
   small transparent transcription. Keep global infrastructure minimal, prove the
   measuring path cheaply, run one watched full anchor, and only then scale. The
-  shared Charter and human documentation must preserve this across compaction;
+  shared research documentation must preserve this across compaction;
   see `docs/decisions/2026-08-09-paper-first-minimal-instrument.md`.
 
 - The honest hypothesis is that the reported numbers will not be reproducible from the papers as written, but the project must be genuinely open to being wrong.

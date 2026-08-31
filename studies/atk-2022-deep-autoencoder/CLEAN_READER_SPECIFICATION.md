@@ -2,8 +2,12 @@
 
 **Date:** 2026-08-24
 
-**Status:** Approved at Checkpoint 1 on 2026-08-24; Phase 4 passed; Phase 5 is
-blocked at the exact official allocation `.tab` gate
+**Status note, 2026-08-31:** This is the preserved 2026-08-24 source freeze.
+The allocation gate described below was later amended by the explicitly
+approved [semantic-allocation decision](../../docs/decisions/2026-08-30-clean-reader-semantic-allocation-admission.md).
+The single run and its audit are complete; see
+[the finding](CLEAN_READER_FINDING.md). The original specification and its
+historical gate language remain below so the change is visible.
 
 **Primary evidence question:** numerical reproduction (`N`)
 

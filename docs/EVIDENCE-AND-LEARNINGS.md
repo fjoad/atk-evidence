@@ -1502,6 +1502,33 @@ and repeated experiments determine technical conclusions.
   `checks/clean_reader_anchor_artifacts.py`. Phase 6 is complete; Checkpoint 2
   now requires user review before any additional experimental promotion.
 
+### Public explanation and interpretation corrections — 2026-08-31
+
+- **Former presentation:** the public site led with internal workflow language
+  and showed an earlier no-test-ADASYN electricity run as current. Some older
+  water-study wording described finite searches and empirical observations as
+  universal limits.
+- **Evidence:** the audited clean-reader result is already preserved, including
+  its full ADASYN evaluation and fixed-score diagnostics. Water search output
+  records 229 selected test sizes, not every size in its range. Replay-distance
+  and capacity experiments do not establish universal classification bounds.
+- **Correction:** a separate readable report now connects paper locations to
+  the exact code revision, model diagram, settings, all seven metrics, checks,
+  possible causes, and limitations. Earlier pages retain their measurements
+  and are clearly dated. Water interpretation corrections are appended to that
+  study's `EVIDENCE.md`; no raw artifact or scientific run changed.
+- **Current scope:** one numerical non-reproduction remains the current Paper 1
+  finding. A conditional output-domain performance bound, useful-information
+  measurement, and small controls are proposed but not performed. No claim of
+  statistical impossibility, zero useful work, or fabrication is added.
+- **Reasoning to preserve:** “useful work” means incremental task-relevant
+  contribution over a fair simple comparison, not merely changed weights or
+  a small training loss. Equivalence needs a justified effect threshold and
+  dependence-aware uncertainty. A stretched percentage axis changes no
+  probability; a confidence interval for a fixed model or mean does not rule
+  out another seed/configuration. Search-time estimates condition on the
+  declared search process and are not minimum historical runtimes.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

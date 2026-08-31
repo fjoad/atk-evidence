@@ -9,6 +9,20 @@
 
 ## Current project state
 
+- **Public explanation, 2026-08-31:** the user requested the README and website
+  be rewritten before any further experiments. The new research report is
+  `site/papers/atk-2022-deep-autoencoder/reproduction/index.html`; it connects
+  source passages, the exact implementation, a model diagram, all seven
+  metrics, completed diagnostics, and proposed next questions. Both previous
+  paper pages remain, with historical scope and corrections made explicit.
+  Editorial work follows
+  [the short publication plan](plans/2026-08-31-readable-research-report.md).
+  The local rewrite is complete: all 187 deterministic tests pass, including
+  eight new report checks; site assets and local documentation links resolve.
+  Four duplicate agent-rule files were removed; research history remains in
+  Git and the scientific records. Public deployment is awaiting the user's
+  answer; the research Checkpoint 2 and completed numerical finding are unchanged.
+
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a
   disposable sandbox, and a new source freeze before assessing the existing

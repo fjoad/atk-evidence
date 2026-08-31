@@ -1,5 +1,4 @@
 @AGENTS.md
 
-`AGENTS.md` is the shared, canonical project bootstrap. Claude-specific
-automation lives in `.claude/rules/`; no project fact exists only there.
-
+`AGENTS.md` contains the complete shared instructions. There are no
+Claude-only charter commands or parallel scientific rules.

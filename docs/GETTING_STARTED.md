@@ -1,156 +1,79 @@
-# Getting Started
+# Getting started
 
-These instructions take a new contributor from a fresh clone to a verified
-local environment and the exact data-access boundary for Study 1. No private
-machine path, unpublished file, or chat transcript is required.
+These instructions verify a fresh clone and explain where the current
+experiment lives. They do not authorize a new experimental run.
 
-## 1. Clone
+## Install and test
+
+Requirements: Git, Python 3.12, and enough local space for the selected data.
 
 ```bash
 git clone https://github.com/fjoad/atk-evidence.git
 cd atk-evidence
-```
-
-## 2. Prerequisites
-
-- Git
-- Python 3.12
-- Approximately 10 GB free space for environments, archives, and prepared data
-- 7-Zip only for SGCC extraction:
-  - macOS: `brew install sevenzip`
-  - Debian/Ubuntu: install `7zip` or `p7zip-full`
-
-## 3. Create the pinned environment
-
-```bash
 bash scripts/bootstrap.sh
+bash scripts/test.sh
 ```
 
-The script creates `.venv`, installs the Study 1 lock file, compiles the Python
-sources, and runs deterministic tests. Override the Python executable if needed:
+The bootstrap script creates `.venv`, installs the pinned Paper 1 environment,
+compiles the Python sources, and runs deterministic tests. Set `PYTHON_BIN` if
+Python 3.12 is not the default.
 
-```bash
-PYTHON_BIN=/path/to/python3.12 bash scripts/bootstrap.sh
-```
+## Data
 
-## 4. Acquire SGCC (anonymous/public)
+### SGCC
+
+The public SGCC acquisition helper downloads an author-linked archive and checks
+its recorded hashes:
 
 ```bash
 bash scripts/acquire_sgcc.sh
 ```
 
-This script clones the author-linked source at the recorded commit, verifies
-all multipart archive SHA-256 values, extracts with 7-Zip into a temporary
-directory, verifies the final CSV, and only then moves it into
-`data/raw/sgcc-verified/data.csv`. It refuses to overwrite a mismatching file.
+### CER/ISET
 
-## 5. Acquire CER/ISET
+The Irish CER Smart Metering data require authorized access. Open the official
+record at <https://doi.org/10.7929/ISSDA/BX59EU> and follow its access terms.
+Do not commit a token or restricted files.
 
-The official Irish CER Smart Metering consumption archives are restricted. The
-safest fresh-clone route is an approved ISSDA request.
-
-1. Open the official record: <https://doi.org/10.7929/ISSDA/BX59EU>.
-2. Sign in to the UCD/ISSDA Dataverse and submit its data-access request for
-   legitimate research or educational use.
-3. After approval, create an API token in the account settings.
-4. Put the token in the process environment without committing or printing it.
-5. Run:
+Place authorized files under `data/raw/cer-authorized/` using their original
+names, then verify:
 
 ```bash
-export ISSDA_API_TOKEN="$(python3 -c 'import getpass; print(getpass.getpass("ISSDA API token: "))')"
-.venv/bin/python studies/atk-2022-deep-autoencoder/download_data.py iset
-unset ISSDA_API_TOKEN
+.venv/bin/python scripts/verify_data.py
+.venv/bin/python scripts/verify_data.py --strict
 ```
 
-The `getpass` prompt hides the token and keeps its value out of shell history.
-Do not paste a token into source code, command-line arguments, issues, or logs.
+Expected names and checksums are in
+[the study data record](../studies/atk-2022-deep-autoencoder/DATA_SOURCES.md).
+The current completed run used an explicitly documented semantic-allocation
+CSV because the official allocation file's archival serialization was
+unavailable. That substitution is recorded in
+[the admission decision](decisions/2026-08-30-clean-reader-semantic-allocation-admission.md);
+it must never happen silently.
 
-The downloader writes to `data/raw/cer-authorized/`, uses temporary `.part`
-files, and verifies every archive against the official MD5 before accepting it.
+## Current implementation
 
-If institutional policy requires downloading through the browser, select and
-download each restricted file separately from the dataset's file table. Put
-`File1.txt.zip` through `File6.txt.zip` **and**
-`SME and Residential allocations.tab` in `data/raw/cer-authorized/` with their
-original names. The verifier does not care whether the authorized download used
-the script or browser.
+The active scientific route is:
 
-The current exploratory branch was prepared from a ScienceDB deposit whose six
-consumption archives are byte-identical to the official files. Its converted
-allocation CSV is not the official binary; it is accepted only under the
-versioned `sciencedb-csv-semantic-equivalence-v1` branch after checksum,
-row-level semantic, and coverage checks. The project does not redistribute
-those files or treat the depositor's license label as proof that ISSDA's
-conditions were superseded. Full provenance and manual placement instructions
-are in the study `DATA_SOURCES.md`.
-
-## 6. Verify data
-
-For a status report that allows missing restricted files:
-
-```bash
-./.venv/bin/python scripts/verify_data.py
+```text
+studies/atk-2022-deep-autoencoder/reproduction/
+  download_data.py
+  prepare_data.py
+  models.py
+  run_experiment.py
+  analyze_results.py
 ```
 
-For the hard gate required before full Study 1 reproduction:
+Study-root wrappers and `src/` are older forensic code. They do not define the
+clean-reader experiment.
 
-```bash
-./.venv/bin/python scripts/verify_data.py --strict
-```
+Do not copy an old command from a historical plan. Before any scientific run,
+read [STATUS](STATUS.md), the
+[clean-reader specification](../studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md),
+and the active plan. The project is currently stopped at Checkpoint 2: no
+additional seed, configuration, model, or control is approved.
 
-Expected Study 1 files and checksums are also listed in
-[`studies/atk-2022-deep-autoencoder/DATA_SOURCES.md`](../studies/atk-2022-deep-autoencoder/DATA_SOURCES.md).
-
-## 7. Run tests
-
-```bash
-bash scripts/test.sh
-```
-
-## 8. Reproduce the study
-
-The current executable track is explicitly **exploratory paper-literal**, not a
-retrospectively preregistered confirmatory experiment. Normal use has four
-study-root commands. First checksum-gate and prepare the exact SGCC input
-without fitting a model:
-
-```bash
-.venv/bin/python studies/atk-2022-deep-autoencoder/prepare_data.py sgcc
-```
-
-The corresponding `iset` subcommand verifies the seven exact CER/ISET files,
-constructs complete 48-reading residential profiles, and generates the six
-paper-described synthetic attacks. For the current named ScienceDB branch:
-
-```bash
-.venv/bin/python studies/atk-2022-deep-autoencoder/prepare_data.py iset
-```
-
-The generated cache is an inspectable, checksummed data artifact. The training
-runner deliberately re-verifies the raw file and reconstructs preprocessing in
-each run instead of trusting a possibly stale cache; on SGCC this adds only a
-few seconds relative to model fitting.
-
-Run a declared model/seed cell with the unchanged frozen contract:
-
-```bash
-./.venv/bin/python \
-  studies/atk-2022-deep-autoencoder/run_experiment.py fc_sae --seeds 11
-```
-
-Each invocation appends checksum-verified immutable attempts; it
-does not overwrite a previous run or select a favorable seed. Verify retained
-artifacts and run the score-separation sanity checks with:
-
-```bash
-.venv/bin/python studies/atk-2022-deep-autoencoder/analyze_results.py
-```
-
-The simple run entry point currently covers SGCC Table II. Exact ISET
-preparation is complete, but Tables III--V remain explicitly unrun until their
-small dataset/table-specific execution adapter exists. The internal aggregation
-command and documented the cluster workflow remain available to audit or extend
-the pipeline; see
-local cluster configuration (not published; see the execution policy in `CONTEXT.md`). A later confirmatory runner remains gated on a
-separately frozen contract; see [`docs/STATUS.md`](STATUS.md) and the active
-plans under [`docs/plans/`](plans/).
+The completed run and audit are explained in the
+[readable finding](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md).
+Its public page links the exact code revision, configuration, and small saved
+records needed to inspect it.

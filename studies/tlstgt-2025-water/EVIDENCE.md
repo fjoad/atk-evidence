@@ -2,6 +2,10 @@
 
 > **Read [`README.md`](README.md) first** — it carries the audit framing this document assumes.
 
+Read the [31 August wording correction](#public-wording-correction--2026-08-31)
+alongside the dated entries below. It narrows the finite-search, capacity,
+replay, and predictor claims without changing their recorded measurements.
+
 Durable causal record for the water-distribution paper (EUSIPCO 2025). Format per
 project discipline: former belief → evidence → root cause → current conclusion →
 confidence and uncertainty. Labels: **VERIFIED** (measured, reproducible),
@@ -446,3 +450,37 @@ benign-training numbers without saying so; corrected.
 | "δ scale-incoherence caused the identical-model collapse" | **INVALIDATED** (C2, corrected attribution — the threshold bug did) |
 | σ-branch full table | **OPEN** — running |
 | Seed sensitivity | **VERIFIED** (C1 note) — 5 seeds: TGCN spans 23.7 F1, STGT 11.8; single-seed numbers are not quotable |
+
+## Public wording correction — 2026-08-31
+
+This correction changes the interpretation stated on the public page, not the
+saved measurements or search output. No experiment was rerun.
+
+- **Former wording:** the protocol search covered every test size from 20 to
+  1,000. **Source:** `results/protocol_search.txt` records 229 selected sizes,
+  49 prevalences, and six definitions: 67,326 combinations per cell.
+  **Correction:** no match was found within that finite grid; it is not a
+  search of every possible protocol.
+- **Former wording:** one-sided discrepancies excluded reporting errors.
+  **Correction:** the quoted sign-test calculation assumes independent,
+  equally likely signs. Correlated metrics and shared data require caution;
+  the number is not a probability of fabrication or a way to exclude every
+  reporting error.
+- **Former wording:** replay is undetectable in principle, with a 57.1%
+  overall detection ceiling. **Correction:** nearest-neighbour AUC 0.455 and
+  low observed replay detection do not prove equality of the full benign and
+  replay distributions available to a detector. The 57.1% figure is the
+  non-replay share: the result of detecting all non-replay attacks and zero
+  replay attacks. Under actual equal-distribution assumptions, replay
+  detection equals the false-alarm rate, so a bound must include that rate.
+  The universal-impossibility wording of C9 is withdrawn; the measured
+  difficulty and the attack-mix dependence remain.
+- **Former wording:** a flat capacity comparison proved capacity could never
+  matter, and frozen history forced every forecaster to predict a frozen
+  value. **Correction:** these observations and arguments are conditional on
+  the tested configurations and the predictor's behavior. They are not global
+  proofs for arbitrary capacities or predictors.
+
+The older entries and PDF remain historical records. This correction governs
+current interpretation of those statements. Further source and experimental
+work would be needed before stronger claims could be restored.

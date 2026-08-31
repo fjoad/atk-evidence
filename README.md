@@ -1,185 +1,93 @@
 # ATK Evidence
 
-**→ [atk-evidence site: findings, reports, and method maps](https://fjoad.github.io/atk-evidence/)**
+We read research papers, implement the methods they describe, and compare our
+results with the published ones. When they differ, we try to understand why.
 
-ATK Evidence is a paper-by-paper audit of published results that do not look
-right. It rebuilds the printed method from scratch and asks three questions:
-did the reported number reproduce, did the claimed mechanism actually explain
-the advantage, and does the target lie inside a credible empirical performance
-envelope?
+**[Read the studies](https://fjoad.github.io/atk-evidence/)** ·
+[Current electricity-theft reproduction](site/papers/atk-2022-deep-autoencoder/reproduction/index.html)
 
-Most reproduction work asks only *"do the numbers come out?"* That question is
-necessary but too weak. A number can be correct while the experiment fails to
-identify the explanation attached to it; a numerical miss can also be real
-without proving that every possible implementation must fail. This project
-therefore separates numerical, mechanistic, and attainability findings and
-earns each one with the evidence it requires.
+## What we found so far
 
-## Operating philosophy
+We rebuilt FC-SAE, the simplest autoencoder in Takiddin et al. (2022), and ran
+it on the named Irish electricity data. The first run did not reproduce its
+Table III result.
 
-The difficult part is reconstructing the paper correctly and discovering what
-would actually discriminate its story from simpler alternatives. After one
-end-to-end read, the researcher uses a disposable sandbox—tiny synthetic data,
-trivial rules, minimal versions of the compared systems, and output
-inspection—to find decisive questions cheaply. The researcher then returns to
-the complete source and freezes every material claim, operation, omission, and
-reasonable interpretation before formal model code is written. Sandbox results
-remain exploratory; they can motivate a test but cannot become confirmation
-after the fact.
+| Measure | Paper | Our run |
+|---|---:|---:|
+| Attack detection | 81.00% | 25.48% |
+| False alarms — lower is better | 15.00% | 45.13% |
+| Specificity | 85.00% | 54.87% |
+| Precision | 81.00% | 36.73% |
+| Balanced accuracy | 83.00% | 40.18% |
+| F1 | 81.00% | 30.09% |
+| AUC | 81.00% | 39.40% |
 
-The software is deliberately small. Each paper uses five direct scientific files
-for download, preparation, models, execution, and analysis. Shared code performs
-mechanical work only; the meaning of the paper remains visible in its study. The
-project does not build a general experiment platform before producing eligible
-results.
+This is **one model, one documented interpretation, and one training seed**.
+The paper omits some necessary settings, so we recorded our choices before
+running it. The saved data and predictions passed our checks. Changing the
+cutoff alone cannot recover the target from these scores.
 
-Execution is breadth-first before it is deep. The first computational pass uses
-many cheap, question-specific probes across competing explanations. One costly
-full run for every named architecture is already depth, not diagnostic breadth.
-Only unresolved questions with a clear route to changing a report finding are
-promoted to expensive execution.
+The trained scores closely follow a simple input-magnitude score, with only a
+1.18-percentage-point improvement in balanced accuracy over zero reconstruction.
+That suggests a useful next question: what did training add? It does not prove
+that the model learned nothing, that another configuration cannot work, or that
+the published results were fabricated.
 
-The full rationale and working rules are in the
-[`paper-first minimal-instrument decision`](docs/decisions/2026-08-09-paper-first-minimal-instrument.md)
-and the
-[`three-part evidence-frame decision`](docs/decisions/2026-08-20-three-part-evidence-frame.md).
+The [readable report](site/papers/atk-2022-deep-autoencoder/reproduction/index.html)
+connects the paper's instructions to the actual code, a model diagram, the
+complete results, and possible explanations.
+The [technical finding and audit records](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
+preserve the details. The run completed on 30 August 2026 and was checked on
+31 August. No new training follows automatically from it.
 
-## Conflict of interest
+## How we work
 
-Faaiz Joad, a maintainer of this project, is the second author of the 2025 water
-paper audited as study 2. That study's published findings are therefore held to
-pre-registered ambiguity branches, published corrections of the audit's own
-errors, and conclusions bounded strictly to what the artefact supports. The
-project does not assert how any reported numbers arose.
+1. Read the complete paper and write down what it asks the model to do.
+2. Try small sanity checks and simple alternatives before expensive training.
+3. Implement the stated method, making missing details and interpretations visible.
+4. Run the experiment and compare the complete result, keeping failures too.
+5. Test explanations for any difference, starting with the cheapest useful check.
 
-## Papers in the pipeline
+We keep three questions separate:
 
-| # | Paper | Year | Published state |
-|---|---|---|---|
-| 1 | Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids | 2022 | `in progress` |
-| 2 | Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems | 2025 | `no consistent protocol` |
+- **Does the result reproduce?**
+- **Does the extra architecture help for the reason the paper claims?**
+- **Can the described method credibly reach the reported performance?**
 
-Each paper has a study directory (`studies/<id>/`), a report
-(`reports/<id>/main.tex`), and an evidence page on the site. Registry labels
-record publication state and existing numerical or internal-consistency
-findings; the report contract requires the three findings described here.
+An unsuccessful reproduction does not answer the other two by itself. To show
+that a component adds little useful work, we need a fair comparison and a
+justified definition of a meaningful gain. To claim impossibility, we need a
+bound with explicit assumptions—not just a large gap or an extrapolated runtime.
 
-## The pipeline
+## The two studies
 
-1. **Read and map the claims.** Record both numerical targets and causal claims
-   such as “`B` beats `A` because component `Z` exploits structure `S`.”
-2. **Discover in a sandbox.** Use toy witnesses, trivial rules, minimal systems,
-   static checks, and output inspection to find discriminating questions.
-3. **Freeze the source reading.** Return to the complete paper and predeclare
-   the executable method, reasonable interpretations, predictions, budgets, and
-   stopping rules.
-4. **Build the minimal instrument.** Acquire the exact data, implement the
-   paper-literal route, and pass deterministic and one-step checks.
-5. **Run diagnostic breadth.** Test coherence, triviality, claimed structures,
-   component necessity, comparison fairness, evaluation soundness, and possible
-   ceilings with the cheapest informative probes first.
-6. **Promote surviving questions to depth.** Run only the numerical branches,
-   mechanism controls, or performance-envelope axes that remain material.
-7. **Confirm and report three findings.** Preserve all attempts and state
-   numerical, mechanism, and attainability conclusions separately.
+| Paper | Read |
+|---|---|
+| Takiddin et al., *Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids* (2022) | [Current reproduction](site/papers/atk-2022-deep-autoencoder/reproduction/index.html) · [Earlier method notes](site/papers/atk-2022-deep-autoencoder/index.html) |
+| Ahasan et al., *Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems* (2025) | [Earlier study and corrections](site/papers/tlstgt-2025-water/index.html) |
 
-Full protocol: [`RUNBOOK.md`](RUNBOOK.md).
+**Disclosure:** Faaiz Joad, a maintainer of this project, is a co-author of the
+water-network paper. That study is not independent of its authors. Its evidence,
+limitations, and corrections are kept visible. We do not infer author intent.
 
-## Research rule
+## Inspect or reproduce the work
 
-For every paper:
-
-1. orient with a complete read, then use a disposable discovery sandbox;
-2. return to the paper and freeze the printed method and causal claim map;
-3. execute questionable printed steps rather than silently correcting them;
-4. predeclare every material interpretation before formal outcomes are seen;
-5. keep exploratory work, reasonable repairs, and controlled analyses visibly
-   separate from paper-literal evidence;
-6. prefer cheap discriminating tests before expensive model-family coverage;
-7. preserve every seed, failure, timing, configuration, and raw result; and
-8. issue bounded numerical, mechanism, and attainability findings without
-   inferring intent or claiming an infinite space was exhausted.
-
-The working hypotheses are paper-specific and genuinely falsifiable. A stable
-numerical reproduction, a component that passes capability-sensitive causal
-tests, or a target that falls inside the observed envelope must each be
-reported plainly. Suspicion chooses what to inspect; it does not determine the
-result.
-
-## Studies
-
-| Study | Paper | State |
-|---|---|---|
-| [`atk-2022-deep-autoencoder`](studies/atk-2022-deep-autoencoder/) | Takiddin et al., “Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids” | Active source reconstruction and reproduction |
-| [`tlstgt-2025-water`](studies/tlstgt-2025-water/) | Ahasan et al., “Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems” | Artifact-level verdict recorded; execution frozen while Paper 1 is active |
-| Paper 3 | To be registered independently | Not started |
-
-Open the standalone
-[`Paper 1 method map`](site/papers/atk-2022-deep-autoencoder/index.html)
-to see, in one document, what the first paper says happens from raw data to
-Tables I–V.
-
-## Repository layout
-
-```text
-studies/<study-id>/       code, claims, configurations, and results for one paper
-reports/<study-id>/       LaTeX source for that paper's scientific report
-reports/synthesis/        later cross-paper report
-site/                     public project site and readable method maps
-docs/                     project protocol, status, decisions, and evidence ledger
-data/ and papers/         local-only inputs; never committed
-```
-
-## Start here
+The scientific code for the current experiment is under
+[studies/atk-2022-deep-autoencoder/reproduction/](studies/atk-2022-deep-autoencoder/reproduction/).
+It contains the download, data preparation, model, training, and analysis files.
+The report links the exact revision used for the run.
 
 ```bash
 git clone https://github.com/fjoad/atk-evidence.git
 cd atk-evidence
 bash scripts/bootstrap.sh
+bash scripts/test.sh
 ```
 
-Then read [`docs/GETTING_STARTED.md`](docs/GETTING_STARTED.md) and the target
-study's README. Raw datasets and publication PDFs are not redistributed.
-Acquisition instructions, access conditions, provenance, and checksums are
-recorded per study.
+See [Getting started](docs/GETTING_STARTED.md) for setup and data access.
+Original data and paper PDFs stay outside version control. Public records
+include code, file checksums, configurations, summary results, and corrections.
 
-Agents and researchers implementing a paper should begin with the single
-end-to-end [`RUNBOOK.md`](RUNBOOK.md). It defines the initial paper read,
-discovery sandbox, source freeze, five-file instrument, diagnostic breadth,
-promoted numerical/mechanism/attainability work, confirmation, and reporting
-sequence.
-
-## About the implementation size
-
-The current Paper 1 directory has two different concerns:
-
-- four short researcher-facing commands for download, preparation, execution,
-  and analysis; and
-- a much larger internal forensic harness that enumerates ambiguous readings,
-  verifies source-to-code fidelity, records immutable attempts, and supports
-  cluster execution.
-
-The genuine five-file reference track—download, prepare, models, run, and
-analyze—now exists independently of the forensic `src/` tree. The larger harness
-remains historical audit evidence, but it is neither an authority nor a
-dependency of the compact route and is not the amount of code needed to
-implement the paper.
-
-## Reports and website
-
-Each completed paper will have a conventional LaTeX report under
-`reports/<study-id>/` with separate numerical, mechanism, and attainability
-findings. GitHub Pages can host the project landing page, the method maps, and
-rendered report PDFs at one project URL:
-
-```text
-https://fjoad.github.io/atk-evidence/
-```
-
-The repository contains one Pages site with a separate path for each paper;
-separate repositories would be required only if each paper needed its own
-independent GitHub Pages project.
-
-See [`reports/README.md`](reports/README.md) for the report build and publishing
-convention, [`docs/VISION.md`](docs/VISION.md) for the research thesis, and
-[`docs/STATUS.md`](docs/STATUS.md) for the current state.
+For ongoing work, start with [current status](docs/STATUS.md) and the
+[documentation guide](docs/README.md). The [runbook](RUNBOOK.md) describes the
+research procedure; it is not required reading for understanding the results.

@@ -3,146 +3,34 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A source-first visual reconstruction of the experimental method in Takiddin et al.'s deep-autoencoder electricity-theft paper.">
-  <title>Paper 1 method map — ATK Evidence</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg: #0c0e12;
-      --surface: #17191e;
-      --surface-2: #1d2026;
-      --line: #343840;
-      --text: #f3f4f6;
-      --muted: #b6bbc5;
-      --blue: #77adff;
-      --green: #77dda1;
-      --green-bg: #123a23;
-      --amber: #f3ca66;
-      --amber-bg: #453510;
-      --red: #ff9b95;
-      --red-bg: #4a201d;
-      --cyan: #86dfef;
-      --cyan-bg: #123941;
-      --mono-bg: #17243c;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      background:
-        radial-gradient(circle at 12% -8%, #17345e 0, transparent 32rem),
-        var(--bg);
-      color: var(--text);
-      font: 17px/1.65 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    main { width: min(1320px, calc(100% - 42px)); margin: 0 auto; padding: 38px 0 100px; }
-    a { color: var(--blue); }
-    .topline { display: flex; justify-content: space-between; gap: 20px; align-items: center; margin-bottom: 46px; color: var(--muted); font-size: .94rem; }
-    .topline a { text-decoration: none; font-weight: 750; }
-    .kicker { color: var(--blue); font-weight: 800; letter-spacing: .11em; text-transform: uppercase; }
-    h1 { max-width: 1050px; margin: 12px 0 16px; font-size: clamp(2.35rem, 5.8vw, 5.2rem); line-height: 1.04; letter-spacing: -.052em; }
-    .lede { max-width: 1000px; margin: 0 0 30px; color: #d4d7dd; font-size: clamp(1.04rem, 2vw, 1.3rem); }
-    .meta { color: var(--muted); font-size: .92rem; }
-    .legend { display: flex; flex-wrap: wrap; gap: 12px 26px; margin: 36px 0 34px; }
-    .legend > span { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
-    .tag { display: inline-block; width: max-content; margin: 0 6px 4px 0; padding: 3px 10px; border-radius: 7px; font-size: .78rem; font-weight: 850; letter-spacing: .025em; white-space: nowrap; vertical-align: .08em; }
-    .paper { background: var(--green-bg); color: var(--green); }
-    .choice { background: var(--amber-bg); color: var(--amber); }
-    .impossible { background: var(--red-bg); color: var(--red); }
-    .alongside { background: var(--cyan-bg); color: var(--cyan); }
-    .overview {
-      display: grid;
-      grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
-      align-items: stretch;
-      gap: 10px;
-      margin: 34px 0 56px;
-    }
-    .flowbox { min-height: 118px; padding: 18px; border: 1px solid var(--line); border-radius: 15px; background: var(--surface); }
-    .flowbox strong { display: block; margin-bottom: 6px; font-size: 1.04rem; }
-    .flowbox span { color: var(--muted); font-size: .92rem; }
-    .arrow { display: grid; place-items: center; color: var(--blue); font-size: 1.8rem; font-weight: 900; }
-    .stage { margin: 30px 0; padding: 30px; border: 1px solid var(--line); border-radius: 22px; background: linear-gradient(150deg, #191b20, #13151a); }
-    .stage-title { display: flex; gap: 18px; align-items: center; margin-bottom: 24px; }
-    .stage-number { flex: 0 0 auto; display: grid; place-items: center; width: 58px; height: 58px; border-radius: 50%; background: var(--blue); color: #07101e; font-size: 1.35rem; font-weight: 900; }
-    h2 { margin: 0; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.2; }
-    .block { margin: 18px 0 0; padding: 22px 24px; border: 1px solid var(--line); border-radius: 16px; background: var(--surface-2); }
-    .block h3 { margin: 0 0 12px; font-size: 1.18rem; }
-    .block p { margin: 10px 0; }
-    .block ul, .block ol { margin: 10px 0 0; padding-left: 1.35rem; }
-    .block li + li { margin-top: 8px; }
-    .muted { color: var(--muted); }
-    .two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-    .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-    .equations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-    .equation { padding: 12px 14px; border-radius: 10px; background: var(--mono-bg); font: .9rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
-    .lane { position: relative; }
-    .lane::before { content: ""; position: absolute; top: 4px; bottom: 4px; left: -1px; width: 3px; border-radius: 2px; background: var(--blue); opacity: .75; }
-    .lane > * { margin-left: 14px; }
-    .chain { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 14px 0 6px; }
-    .chain span { padding: 7px 10px; border: 1px solid var(--line); border-radius: 9px; background: #12151a; }
-    .chain b { color: var(--blue); }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: .92rem; }
-    th, td { padding: 11px 12px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
-    th { color: var(--muted); font-size: .8rem; letter-spacing: .04em; text-transform: uppercase; }
-    td code { color: #d7e7ff; }
-    .callout { margin-top: 18px; padding: 17px 20px; border-left: 4px solid var(--amber); background: #241f12; }
-    .callout.red { border-color: var(--red); background: #271513; }
-    .track { min-height: 100%; padding: 18px; border-top: 3px solid var(--blue); border-radius: 10px; background: #11141a; }
-    .track strong { display: block; margin-bottom: 8px; }
-    .track p { margin: 0; color: var(--muted); font-size: .92rem; }
-    .status { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .status > div { padding: 16px; border-radius: 12px; background: #11141a; }
-    .status b { display: block; margin-bottom: 4px; }
-    .plain { margin: 0 0 22px; padding: 17px 20px; border-radius: 13px; background: #102038; color: #e5efff; font-size: 1.08rem; }
-    .plain strong { color: var(--blue); }
-    .result-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 18px 0; }
-    .metric-card { padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #11141a; }
-    .metric-card span { display: block; color: var(--muted); font-size: .84rem; text-transform: uppercase; letter-spacing: .04em; }
-    .metric-card strong { display: block; margin: 7px 0 4px; font-size: 1.55rem; }
-    .metric-card small { color: var(--muted); }
-    .proof { border-color: #74524d; background: #211716; }
-    .proof code { color: #ffd4d0; }
-    footer { margin-top: 46px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; }
-    @media (max-width: 900px) {
-      .overview { grid-template-columns: 1fr; }
-      .arrow { transform: rotate(90deg); }
-      .two, .three, .status, .equations, .result-grid { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 600px) {
-      main { width: min(100% - 24px, 1320px); padding-top: 24px; }
-      .topline { align-items: flex-start; flex-direction: column; margin-bottom: 34px; }
-      .stage { padding: 20px 14px; border-radius: 16px; }
-      .stage-title { align-items: flex-start; }
-      .stage-number { width: 46px; height: 46px; font-size: 1.1rem; }
-      .block { padding: 18px 16px; }
-    }
-    @media print {
-      :root { color-scheme: light; --bg: #fff; --surface: #fff; --surface-2: #fff; --line: #bbb; --text: #111; --muted: #444; --mono-bg: #eef3fa; }
-      body { background: #fff; }
-      main { width: 100%; padding: 0; }
-      .topline { display: none; }
-      .stage, .block, .flowbox { break-inside: avoid; box-shadow: none; }
-    }
-  </style>
+  <meta name="description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
+  <title>Earlier electricity-theft method notes — ATK Evidence</title>
+  <meta property="og:title" content="Earlier electricity-theft method notes — ATK Evidence">
+  <meta property="og:description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Earlier electricity-theft method notes — ATK Evidence">
+  <meta name="twitter:description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
+  <link rel="stylesheet" href="../../styles.css">
 </head>
-<body>
+<body class="legacy">
 <main>
   <div class="topline">
     <a href="../../">← ATK Evidence</a>
-    <span>Study 1 · source-first reconstruction · 11 August 2026</span>
+    <span>Earlier study notes · Results from 11 August 2026</span>
   </div>
 
-  <div class="kicker">The paper, in plain English</div>
-  <h1>From two electricity datasets to Tables I–V</h1>
-  <p class="lede">The paper trains computer models to recognize electricity theft. This page first explains the idea as simply as possible, then shows the exact technical instructions, missing details, contradictions, and current reproduction evidence underneath. Nothing is silently fixed and no result is treated as proof of author intent.</p>
+  <div class="kicker">Earlier method notes</div>
+  <h1>Reading the electricity-theft paper</h1>
+  <div class="note warning"><strong>This is the earlier account, not the current reproduction.</strong> The results below use older assumptions, including omitted test-set resampling. They are preserved for comparison. The later experiment completed the stated test-resampling step and was audited on 31 August 2026. <a href="reproduction/">Read the current reproduction report and its paper-to-code comparison.</a></div>
+  <p class="lede">The paper trains computer models to recognize electricity theft. These earlier notes explain the method, missing details, and initial experiments. They are not instructions to resume the old runs, and their numbers must not be combined with the current reproduction as if they were repeated seeds.</p>
   <p class="meta">Paper source: Sections II–IV, Equations (1)–(13), Algorithms 1–6, Figures 1–8, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
-  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the work-in-progress scientific report (PDF)</a>. It is updated with the current evidence but does not yet contain a verdict.</p>
+  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the work-in-progress scientific report (PDF)</a>. This PDF predates the current audited reproduction and is retained as an earlier report.</p>
 
   <div class="legend" aria-label="Legend">
     <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
     <span><b class="tag choice">OUR CHOICE</b> paper is silent; predeclared interpretation</span>
-    <span><b class="tag impossible">IMPOSSIBLE</b> printed step is not uniquely executable or is contradictory</span>
+    <span><b class="tag impossible">UNCLEAR OR INVALID</b> an instruction needs clarification or cannot run as printed</span>
     <span><b class="tag alongside">ALONGSIDE</b> scientifically corrected control, never paper reproduction</span>
   </div>
 
@@ -157,8 +45,8 @@
   </section>
 
   <section class="stage">
-    <div class="stage-title"><div class="stage-number">0</div><h2>What happened when we ran the basic experiment?</h2></div>
-    <p class="plain"><strong>Short version:</strong> using the named ISET/CER data and the printed FC-SAE architecture, our frozen seed-11 model missed nearly three quarters of the attacks and falsely accused more than half of the normal examples. This one run is strong evidence of a mismatch, but it is not yet a paper-wide verdict.</p>
+    <div class="stage-title"><div class="stage-number">0</div><h2>What happened in the earlier experiment?</h2></div>
+    <p class="plain"><strong>Short version:</strong> using the named ISET/CER data but omitting test-set ADASYN, our earlier seed-11 model missed nearly three quarters of the attacks and falsely accused more than half of the normal examples. This one run is strong evidence of a mismatch, but it is not yet a paper-wide verdict.</p>
     <div class="result-grid" aria-label="Reported versus reproduced headline metrics">
       <div class="metric-card"><span>Attacks detected</span><strong>81% → 26.18%</strong><small>paper → reproduced</small></div>
       <div class="metric-card"><span>False alarms</span><strong>15% → 58.22%</strong><small>paper → reproduced</small></div>
@@ -177,7 +65,7 @@
       <article class="block">
         <h3>What it does not establish</h3>
         <ul>
-          <li>It is not the paper’s complete printed evaluation because full test-set ADASYN has not completed.</li>
+          <li>This older run omitted full test-set ADASYN. That step was completed in the later, separately reported experiment.</li>
           <li>It does not prove every reasonable missing hyperparameter or interpretation must fail; those require predeclared repeated experiments.</li>
           <li>It does not prove fabrication, adaptive sample construction, or what private code the authors used.</li>
           <li>It is one primary seed. A statistical reproduction conclusion requires the remaining frozen seeds and ambiguity envelope.</li>
@@ -194,10 +82,10 @@
       <article class="block">
         <h3>Why did the autoencoder behave this way?</h3>
         <p class="plain"><strong>ELI5:</strong> the paper first turns the input into numbers above and below zero, then tells the final Softmax layer that it may output only positive numbers that add up to one. That is like asking a printer with no minus sign to copy a page full of negative numbers.</p>
-        <p>The trained model’s reconstruction-error ranking was <strong>0.99946 correlated</strong> with the ranking obtained by reconstructing every profile as zero. This directly motivates a separately labeled linear-output repair; it does not authorize changing the paper-consistent run.</p>
+        <p>The trained model’s reconstruction-error ranking was <strong>0.99946 correlated</strong> with the ranking obtained by reconstructing every profile as zero. This motivated a separate output-layer comparison. It did not establish that the output layer was the only cause or authorize changing the completed run.</p>
       </article>
     </div>
-    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim requires the breadth map followed by the frozen repeated-seed program below.</div>
+    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim remains open. The current investigation is described in the new report.</div>
   </section>
 
   <section class="stage">
@@ -241,7 +129,7 @@
         <div class="equation"><b>f5</b> multiply the day’s mean by independent β(d,t)</div>
         <div class="equation"><b>f6</b> reverse the 48 readings in time</div>
       </div>
-      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable. Executable interpretation branches use addition plus clipping, addition plus wraparound, or redraw to a valid endpoint, crossed with declared hour-to-half-hour mappings; every branch is run and reported separately.</div>
+      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable. Executable interpretation branches use addition plus clipping, addition plus wraparound, or redraw to a valid endpoint, crossed with declared hour-to-half-hour mappings; these were candidate interpretations, not a statement that every branch had been executed.</div>
     </article>
   </section>
 
@@ -271,10 +159,10 @@
 
     <article class="block">
       <h3>2c · ADASYN — “invent more examples from the smaller group”</h3>
-      <p><span class="tag paper">IN PAPER</span> For ISET, the paper applies ADASYN after building the anomaly-detector test set. In our frozen construction that test set has <strong>750,770 benign</strong> profiles and <strong>13,507,740 attack</strong> profiles, so benign is the smaller group.</p>
+      <p><span class="tag paper">IN PAPER</span> For ISET, the paper applies ADASYN after building the anomaly-detector test set. In this earlier construction that test set has <strong>750,770 benign</strong> profiles and <strong>13,507,740 attack</strong> profiles, so benign is the smaller group.</p>
       <p class="plain"><strong>ELI5:</strong> ADASYN looks at each smaller-group example, finds its nearest neighbors, and draws new synthetic examples between nearby smaller-group points. It does not inspect which neural model failed, and it cannot manufacture examples specially chosen for the next model.</p>
-      <div class="callout"><strong>Scale and measured estimate:</strong> the selected exact default implementation must compare roughly <code>750,770 × 14,258,510 = 10.7 trillion</code> profile pairs in its first neighbor search, then another 0.56 trillion pairs in a smaller-group search and generate about 12.8 million synthetic benign profiles. A same-machine 16-core benchmark extrapolates to <strong>about 14.2 wall-hours for the two neighbor searches alone</strong>, before synthesis and disk output. A prior bounded attempt ran for 79 minutes and consumed 9.35 CPU-hours without completing the first search.</div>
-      <div class="callout red"><strong>What the paper does not tell us:</strong> it names ADASYN but gives no library, neighbor-search implementation, approximation rule, hardware, subsample, random seed, or preprocessing time. Exact GPU search or approximate neighbors could be much faster than our CPU default. Fourteen CPU hours is also entirely possible as an overnight preprocessing job. Therefore the audit can report that this declared default is expensive and unreconstructable from the paper; it cannot honestly claim the authors “could not have run ADASYN” or infer what they actually ran.</div>
+      <div class="callout"><strong>Historical estimate—not the current runtime:</strong> the selected exact default implementation must compare roughly <code>750,770 × 14,258,510 = 10.7 trillion</code> profile pairs in its first neighbor search, then another 0.56 trillion pairs in a smaller-group search and generate about 12.8 million synthetic benign profiles. A same-machine 16-core benchmark extrapolates to <strong>about 14.2 wall-hours for the two neighbor searches alone</strong>, before synthesis and disk output. A prior bounded attempt ran for 79 minutes and consumed 9.35 CPU-hours without completing the first search.</div>
+      <div class="callout red"><strong>What the paper does not tell us:</strong> it names ADASYN but gives no library, neighbor-search implementation, approximation rule, hardware, subsample, random seed, or preprocessing time. Exact GPU search or approximate neighbors could be much faster than our CPU default. Fourteen CPU hours is also entirely possible as an overnight preprocessing job. Therefore the audit can report the cost of this declared default and the missing implementation details; it cannot honestly claim the authors “could not have run ADASYN” or infer what they actually ran.</div>
       <p><span class="tag alongside">STATISTICAL CAUTION</span> Applying oversampling to an evaluation set is unusual: it changes the exam after the model is trained. Here it adds benign rows only. It may change false alarms, AUC, precision, and balanced accuracy, but it cannot change detection on the existing malicious rows.</p>
       <p class="plain"><strong>About model-tailored synthetic samples:</strong> standard ADASYN uses class labels and nearest neighbors, not the neural model’s successes or failures. With benign as the smaller class, it creates more synthetic benign profiles near places where attack profiles are common. Running it again may produce a slightly different random test set, but it does not automatically create examples specially chosen for FC-SAE, then LSTM-SAE, and so on. The paper reports no model-adaptive sampling procedure.</p>
     </article>
@@ -375,38 +263,14 @@
   </section>
 
   <section class="stage">
-    <div class="stage-title"><div class="stage-number">6</div><h2>How the broader claim will be tested</h2></div>
-    <p class="plain"><strong>Plain English:</strong> one trustworthy run this far away is enough to stop polishing that same point and start asking <em>where the paths separate</em>. We now cover the major models and change one meaningful instruction at a time. Repeated seeds come later, after the scientific map exists.</p>
-    <div class="three">
-      <div class="track"><strong>1 · Breadth</strong><p>Run one watched seed for each proposed model family and each high-information one-factor interpretation.</p></div>
-      <div class="track"><strong>2 · Locate divergence</strong><p>Start with linear output for standardized inputs, then inspect model identity, scaling, attack population/split, and threshold—never a blind Cartesian sweep.</p></div>
-      <div class="track"><strong>3 · Depth</strong><p>Only after the breadth map is frozen do we repeat seeds and calculate confirmatory intervals. No best-seed selection is permitted.</p></div>
-    </div>
-    <div class="callout"><strong>Statistical limit:</strong> because the paper reports rounded point estimates with no seeds, repetitions, or uncertainty, no ordinary two-sample test against the authors’ run distribution is possible. We can rigorously show non-reproduction within our finite, predeclared interpretation and hyperparameter envelope; we cannot prove failure over an infinite space of unreported private implementations.</div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">→</div><h2>How the audit runs this without changing the question</h2></div>
-    <div class="three">
-      <div class="track"><strong><span class="tag paper">P</span> Printed track</strong><p>Execute every stated operation as printed, including test-set ADASYN. Keep truly invalid expressions visible as non-executable findings.</p></div>
-      <div class="track"><strong><span class="tag choice">I</span> Interpretation track</strong><p>Run each finite, defensible reading of omissions and contradictions under a stable ID fixed before outcomes.</p></div>
-      <div class="track"><strong><span class="tag alongside">C</span> Corrected track</strong><p>Use conventional leakage controls and valid selection as a separate scientific comparison, never as paper-reproduction evidence.</p></div>
-    </div>
-    <div class="callout"><strong>Result display contract:</strong> for every impossible source node, the final results view and scientific PDF will show the paper's number, the literal non-executable status, and every reasonable repair's full result distribution side by side—not only the repair that comes closest.</div>
-    <p class="muted">The compact map intentionally does not display the internal combinatorial audit matrix. Its purpose is to make the paper’s actual experimental story legible. The machine-readable branch inventory remains available for verification.</p>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">✓</div><h2>Current project position</h2></div>
-    <div class="status">
-      <div><b>Data</b><span class="muted">Exact CER consumption archives are verified and the full ISET baseline population is prepared.</span></div>
-      <div><b>Current evidence</b><span class="muted">One frozen batch-512 FC-SAE run and its score audit are complete. The result is far from the reported pattern and is not rescued by an oracle cutoff.</span></div>
-      <div><b>Verdict</b><span class="muted">Not issued. The breadth-first model/interpretation map, later repeated seeds, and the printed ADASYN boundary remain.</span></div>
-    </div>
+    <div class="stage-title"><h2>Where this leaves the earlier notes</h2></div>
+    <p>The old execution sequence is superseded. One expensive run per model is not a cheap first pass. The current work uses small checks to identify which explanations deserve another full experiment.</p>
+    <p>The later FC-SAE run used a newly documented reading, a different seed, all residential customers, attacks only from held-out customers, and completed test-set ADASYN. It reached 25.48% detection and 40.18% balanced accuracy. Those results and their limits belong to the <a href="reproduction/">new reproduction report</a>, not this earlier run.</p>
+    <p>Original results, code, and changes of interpretation remain in the research record. No additional training is authorized by this page.</p>
   </section>
 
   <footer>
-    This page is a method reconstruction, not a final review verdict and not a claim about author intent. Detailed source locations and executable classifications are maintained in the repository’s Paper 1 traceability record.
+    Earlier method notes, retained with their original results. Wording and navigation updated 31 August 2026. See the new report for the current experiment; no claim about author intent is made.
   </footer>
 </main>
 </body>

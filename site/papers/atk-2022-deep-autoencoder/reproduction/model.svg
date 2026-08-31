@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 330" role="img" aria-labelledby="title description">
+<title id="title">FC-SAE implemented for the Table III reproduction</title>
+<desc id="description">A 48-value daily profile passes through encoder widths 400, 300, 200, 100 and decoder widths 100, 200, 300, 400 to a 48-value Softmax reconstruction. Each of the eight hidden layers uses sigmoid activation and dropout 0.4 during training. The reconstruction is compared with the input using mean squared error. The drawing shows layer order, not neuron-level connections.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#69736b"/></marker></defs>
+<rect width="1040" height="330" fill="#fff"/>
+<g font-family="Arial, sans-serif" text-anchor="middle" fill="#222823">
+<text x="315" y="32" font-size="17">Encoder</text><text x="698" y="32" font-size="17">Decoder</text>
+<path d="M170 45H455 M558 45H839" fill="none" stroke="#225c65"/>
+<text x="57" y="101" font-size="14">Input</text><text x="967" y="101" font-size="14">Reconstruction</text>
+<g fill="#f1f0eb" stroke="#9ca49b">
+<rect x="20" y="125" width="74" height="74" rx="3"/>
+<rect x="930" y="125" width="74" height="74" rx="3"/>
+</g>
+<g fill="#e4eeee" stroke="#225c65">
+<rect x="165" y="67" width="55" height="190" rx="3"/>
+<rect x="250" y="92" width="55" height="140" rx="3"/>
+<rect x="335" y="112" width="55" height="100" rx="3"/>
+<rect x="420" y="129" width="55" height="66" rx="3"/>
+</g>
+<g fill="#edf0e6" stroke="#5b7050">
+<rect x="555" y="129" width="55" height="66" rx="3"/>
+<rect x="640" y="112" width="55" height="100" rx="3"/>
+<rect x="725" y="92" width="55" height="140" rx="3"/>
+<rect x="810" y="67" width="55" height="190" rx="3"/>
+</g>
+<g stroke="#69736b" marker-end="url(#arrow)" fill="none">
+<path d="M96 162H155"/><path d="M222 162H240"/><path d="M307 162H325"/><path d="M392 162H410"/>
+<path d="M477 162H545"/><path d="M612 162H630"/><path d="M697 162H715"/><path d="M782 162H800"/><path d="M867 162H920"/>
+</g>
+<g font-size="16">
+<text x="57" y="169">48</text><text x="192.5" y="169">400</text><text x="277.5" y="169">300</text><text x="362.5" y="169">200</text><text x="447.5" y="169">100</text>
+<text x="582.5" y="169">100</text><text x="667.5" y="169">200</text><text x="752.5" y="169">300</text><text x="837.5" y="169">400</text><text x="967" y="169">48</text>
+</g>
+<g font-size="13" fill="#60675f"><text x="57" y="222">Half-hour</text><text x="57" y="240">readings</text><text x="967" y="222">Softmax</text><text x="967" y="240">Sum = 1</text></g>
+<text x="515" y="289" font-size="14">Eight hidden layers · Sigmoid · Dropout 0.4 during training</text>
+<text x="515" y="314" font-size="14" fill="#60675f">Training: reconstruct benign profiles · Test: alarm when mean squared error &gt; 0.58</text>
+</g>
+</svg>
