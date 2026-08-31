@@ -9,6 +9,12 @@
 
 ## Current project state
 
+- **Source-assumption review, now authorized:** the user approved reviewing
+  source support and checking a few load-bearing alternatives, with discussion
+  before public updates. The local plan/contract is
+  [SOURCE_ASSUMPTION_CHECK.md](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md).
+  No training, public-report edit, or push is authorized for this round.
+
 - **Completed diagnostic round, 2026-08-31:** the user-approved bound,
   useful-information checks, and warranted small control are complete. Both
   CPU jobs exited `0:0` and released their allocations. No model was trained;

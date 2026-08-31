@@ -58,6 +58,13 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user has approved the follow-up in
+[SOURCE_ASSUMPTION_CHECK.md](studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md):
+source review and capped no-training sensitivity checks only. Discuss the new
+results before editing README/site/report or pushing this round. Save internal
+records and local commits for continuity. The prior stop below is superseded
+only for this bounded follow-up; no training or public update is approved.
+
 Paper 1 is the only active experiment. Its first clean-reader FC-SAE run is
 complete and audited. The result did not reproduce Table III under the declared
 implementation and one seed. The completed follow-up excludes the target for

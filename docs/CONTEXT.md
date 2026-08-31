@@ -2,6 +2,13 @@
 
 **Last updated:** 2026-08-31
 
+**Latest user instruction:** discuss measured results and interpretation before
+updating or publishing the public account. The user approved the source review
+and cheap assumption checks in `SOURCE_ASSUMPTION_CHECK.md`, not training.
+Save internal records for continuity; do not edit README/site/report or push
+this round before discussion. The older completed-round boundary below is
+superseded only for this new bounded source-assumption diagnostic.
+
 **Current state — diagnostic round complete, experiments stopped:** the user
 approved the bounded post-anchor sequence on 2026-08-31. Jobs `385090` and
 `385091` both completed `0:0`; no training or original artifact changed.

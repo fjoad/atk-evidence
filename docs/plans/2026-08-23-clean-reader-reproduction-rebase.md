@@ -4,7 +4,13 @@
 
 **Status:** Active governing plan; approved diagnostic round complete, further experiments stopped
 
-**Current state:** bounded post-anchor diagnostics `COMPLETE`, including the
+**Current state:** source-assumption review/checks `IN PROGRESS`, approved by
+the user after discussing the previous findings. Follow
+[SOURCE_ASSUMPTION_CHECK.md](../../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md).
+This is a bounded loop to source interpretation and no-training diagnostics,
+not a new fitted model. Preserve the public account until results are discussed.
+
+**Previous round:** bounded post-anchor diagnostics `COMPLETE`, including the
 separately frozen adaptive geometry control. Both CPU jobs completed without
 training. The [finding](../../studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
 excludes the target under fixed preparation/Softmax/MSE assumptions while
@@ -156,6 +162,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
 | 7M. Mechanism program | `PENDING` | Source causal claim promoted | Score/control diagnostics completed; matched architecture and training-causality tests remain untested |
 | 7A. Attainability envelope | `COMPLETE — conditional bound only` | No-training output-domain question approved | Fixed preparation/Softmax/MSE target excluded; other source interpretations and broad empirical search untested |
+| Source-assumption follow-up | `IN PROGRESS` | User approved source review and a few cheap checks | Frozen local SOURCE_ASSUMPTION_CHECK.md; discuss results before public updates |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
