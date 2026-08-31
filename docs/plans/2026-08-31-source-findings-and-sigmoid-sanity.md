@@ -38,15 +38,26 @@ not authorize a new paper, full training, a seed sweep, or a broad search.
    All 223 deterministic tests passed (140 study, 83 root), including six
    new hand-sized Sigmoid fixtures. Scientific code is 182 direct lines and
    reuses the unchanged geometric helpers.
-3. **IN PROGRESS — Run only the promoted checks.** No full retraining. A direct
+3. **COMPLETE — Run only the promoted checks.** No full retraining. A direct
    substitution in saved Softmax weights is not a trained Sigmoid model and
    cannot by itself establish Sigmoid failure. Any small fitted comparison
    must remain clearly exploratory, paired, and time-limited; do not tune on
    its evaluation labels or escalate automatically to the complete dataset.
-4. **PENDING — Save and discuss.** Preserve every result and runtime, update
+   Frozen code `9d6c31b`, job `385137`: pilot 4.97 s, full 39.70 s; allocation
+   completed `0:0` after 2:17. All identities/hashes and finite checks passed;
+   the original-row reference bounds reproduced within 1e-7 points.
+   Sigmoid at 0.58 still fails (minimum FA 29.66640%); with a changed cutoff,
+   the complete-evaluation bound permits the target pair (DR ceiling 85.32587%
+   at FA<=15%). Both label-blind controls miss it. No training was promoted.
+4. **SAVED; DISCUSSION PENDING — Save and discuss.** Preserve every result and runtime, update
    the explanation register and working memory, then stop for discussion.
    The user's permission to publish the already discussed source checks does
    not authorize publishing new Sigmoid outcomes before discussing them.
+   [The local finding](../../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md)
+   preserves the opening as well as the exclusions. Stop here.
+   All 225 post-run deterministic tests pass; 62 checked local documentation
+   links resolve. Public files and the original reproduction remain unchanged
+   from `dc37bbe`. New records are preserved in a local commit only.
 
 ## What the next checks must distinguish
 

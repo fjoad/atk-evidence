@@ -9,7 +9,7 @@
 
 ## Current project state
 
-- **Publication and small Sigmoid follow-up approved:** after discussing the
+- **Publication and small Sigmoid follow-up complete:** after discussing the
   source-assumption findings, the user requested their publication first,
   followed by quick Sigmoid checks without full retraining. Follow
   [the bounded sequence](plans/2026-08-31-source-findings-and-sigmoid-sanity.md)
@@ -17,10 +17,21 @@
   tests and is live at `dc37bbe`: Pages run `33419150100` succeeded and all nine
   checked public files match local bytes. The no-training Sigmoid contract is
   [SIGMOID_SANITY.md](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY.md);
-  all 223 deterministic tests pass before scoring. The code and contract are
-  ready for one pilot and, if promoted, one capped full pass. New findings must be discussed
-  before they are published. No full training, seed sweep, or broad search is
-  authorized.
+  all 223 deterministic tests passed before code freeze `9d6c31b`. CPU job
+  `385137` completed `0:0`: pilot 4.97 s, full 39.70 s, allocation 2:17. The
+  [new local finding](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md)
+  records every result. On the complete prepared evaluation, minimum Sigmoid
+  FA at 0.58 is 29.66640%, so the printed cutoff still fails. With a changed
+  cutoff, upper DR at FA<=15% is 85.32587%: the target pair is no longer
+  excluded. Reversal is also not excluded. The original-row result reproduces
+  exactly within tolerance; the synthetic benign population changes the
+  all-cutoff answer. Neither no-training control reaches the target. No model
+  was trained. Stop for discussion before publishing these new outcomes or
+  launching another experiment; no full training or broad search is authorized.
+  Post-run verification passed all 225 deterministic tests (140 study, 85
+  root), including eight Sigmoid checks. All checked documentation links
+  resolve; public files and original reproduction remain unchanged from
+  published `dc37bbe`. New records and code are committed locally only.
 
 - **Source-assumption review complete; discussion pending:** the user approved reviewing
   source support and checking a few load-bearing alternatives, with discussion
@@ -478,12 +489,13 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Discuss the new, locally saved source-assumption findings: explicit
-   Softmax/MSE choices, surviving detection bounds under two additional
-   normalization readings, and the separately labeled Sigmoid-range controls.
-2. Decide whether any specifically identified remaining source assumption
-   warrants another cheap check. Do not infer an undocumented implementation
-   from whichever control improves an optimistic limit.
+1. Discuss the new, locally saved Sigmoid findings: the printed 0.58 cutoff
+   still fails, but the complete-evaluation bound no longer excludes the target
+   with a changed cutoff. The original-row limit must not be generalized across
+   the synthetic benign evaluation population.
+2. Decide whether a tiny properly trained Sigmoid comparison could distinguish
+   the remaining explanations. No learned model has yet realized the bound's
+   opening; failure of two label-blind rules does not rule training out.
 3. Stop experimental execution and public updates pending discussion. No
    further training, seed, branch, report edit, or push is approved.
 

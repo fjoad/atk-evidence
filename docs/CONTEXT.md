@@ -2,18 +2,25 @@
 
 **Last updated:** 2026-08-31
 
-**Newest approval:** publish the discussed source-assumption findings first,
-with the plain-language question visible inside each methods block, then do a
-quick Sigmoid investigation without full retraining. See
-`docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md`. Public revision
-`dc37bbe` is live: Pages run `33419150100` succeeded and nine checked files
-match local bytes. The next setup is `SIGMOID_SANITY.md`: full prepared-data
-cube bound and two label-blind rules, no training, pilot then capped full pass.
-No experimental scoring has started. The earlier discussion gate
-below is satisfied for the source-assumption round, not for the forthcoming
-Sigmoid results. Preserve the distinction between an output-range ceiling and
-achieved model performance; a head swap in Softmax-trained weights alone is
-not a test of a trained Sigmoid model.
+**Newest completed work:** the discussed source-assumption findings are live
+at `dc37bbe`; Pages run `33419150100` succeeded and nine public files match
+local bytes. The subsequent quick Sigmoid investigation is complete and LOCAL
+ONLY, awaiting discussion. See `SIGMOID_SANITY_FINDING.md` and
+`docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md`.
+Frozen code `9d6c31b`, CPU job `385137`, pilot 4.97 s, full 39.70 s, allocation
+2:17, completed `0:0`. No training, head swap, rescaling, or regeneration.
+On all 8,884,989 prepared rows, Sigmoid + printed cutoff 0.58 still fails:
+minimum FA is 29.66640%, versus 15%. With a changed cutoff, however, its bound
+allows up to 85.32587% DR at FA<=15%, so the pair is NOT excluded. Reversed
+scoring also remains open (upper DR 93.76498%). This is a bound, not an achieved
+model result. Original-row high-error DR ceiling remains 59.98410%; adding
+synthetic benign rows changes the FA population, so do not generalize the
+original-row exclusion. The best cutoff-based balanced accuracy among clipping
+and constant-half controls in both directions is about 58.23%; neither
+is a learned Sigmoid model. Preserve these openings as plainly as failures.
+Stop for discussion; no new public edit/push, fitted comparison, or experiment
+is automatically approved. A head swap in Softmax-trained weights alone is
+not a test of Sigmoid learning.
 
 **Latest user instruction:** discuss measured results and interpretation before
 updating or publishing the public account. The user approved the source review

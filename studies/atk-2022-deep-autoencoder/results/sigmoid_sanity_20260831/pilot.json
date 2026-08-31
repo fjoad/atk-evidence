@@ -1,0 +1,470 @@
+{
+  "analysis_commit": "9d6c31ba1fe8d3d437c5ebaf7088a4753c196640",
+  "checks_passed": [
+    "hashes",
+    "identities",
+    "finite_inputs_and_scores",
+    "constant_containment"
+  ],
+  "classification": "X/A exploratory no-training Sigmoid checks",
+  "contract_sha256": "e012c6cbc71200e0234bf16830c97af5a9be7949af3a59e0d1e94a27ebf2967e",
+  "elapsed_seconds": 4.965969566255808,
+  "geometry_seconds": 0.004141835495829582,
+  "helper_sha256": {
+    "post_anchor_diagnostics.py": "029696b736d0115b8b051bbc3f996001e545d2f28e4cf49618a42b63a4d7905f",
+    "source_assumption_check.py": "d06c7764320580f663adc142e8ca8c7b152403467843655de8c611a00b3448f1"
+  },
+  "input_sha256": {
+    "test_attack_id.npy": "ca76e2e01c830f64de5a6646ddc6d3f1650d2ba81e238f2a00af9ebe4b7dec7b",
+    "test_source_row.npy": "0d2f99d21e27c3b521e3fc4842ccea77673e3ebc4360ab61124134c453ab6964",
+    "x_test.npy": "a942e2affb3d76b5ca3b25f1f023878c2eeda1449b9dbd3d8bce037361a5ece0",
+    "y_test.npy": "cec8c078b62557535a0b30ff80da2908115639a0c3c52821a44227378537c887"
+  },
+  "job_id": "385137",
+  "metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+  "numerical_scope": "outward-padded float64 analytic bound, not certified interval arithmetic",
+  "population": {
+    "attacks": 384,
+    "original_rows": 448,
+    "rows": 512,
+    "synthetic_benign": 64
+  },
+  "reference_sha256": "3ef1cf59cae7bc7e9dcec2f2d8119b65b221f26b5d2b455b314b14546362dbd8",
+  "scope": "Unchanged prepared inputs; Sigmoid cube and two no-training controls; not a fitted-model reproduction",
+  "script_sha256": "301c979088d159c64f8c6613639cba4662dfec3074abdf05acb49a19cc69374b",
+  "selection": "f8c2f9ac886f6bcf7143073dce8f3bfcea8dda5c924c9d2f426c85fbaf1be82b",
+  "source_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+  "stage": "pilot",
+  "status": "passed",
+  "synthetic_benign_controls": {
+    "clipped_input": {
+      "FA_printed": 34.375,
+      "FA_reversed": 65.625
+    },
+    "constant_half": {
+      "FA_printed": 92.1875,
+      "FA_reversed": 7.8125
+    }
+  },
+  "threshold": 0.58,
+  "time_cap_seconds": 240,
+  "verification_seconds": 4.8381737265735865,
+  "versions": {
+    "numpy": "2.5.1",
+    "sklearn": "1.9.0"
+  },
+  "views": {
+    "full": {
+      "bounds": {
+        "printed": {
+          "at_FA_cap": {
+            "15.0": {
+              "FA": 14.84375,
+              "max_DR": 87.5,
+              "threshold": 1.1334789039727078
+            },
+            "15.5": {
+              "FA": 14.84375,
+              "max_DR": 87.5,
+              "threshold": 1.1334789039727078
+            }
+          },
+          "at_printed_threshold": {
+            "max_DR": 94.53125,
+            "min_FA": 37.5
+          },
+          "direction": "higher_printed",
+          "max_ACC": 86.328125,
+          "max_AUC": 88.89567057291666,
+          "rounded_target_pair_not_excluded": true,
+          "target_pair_not_excluded": true,
+          "threshold_candidates": 512
+        },
+        "reversed_control": {
+          "at_FA_cap": {
+            "15.0": {
+              "FA": 14.84375,
+              "max_DR": 95.83333333333334,
+              "threshold": -1.6064955078450713
+            },
+            "15.5": {
+              "FA": 14.84375,
+              "max_DR": 95.83333333333334,
+              "threshold": -1.6064955078450713
+            }
+          },
+          "at_original_error_cutoff": {
+            "max_DR": 86.71875,
+            "min_FA": 0.0
+          },
+          "direction": "lower_control",
+          "max_ACC": 96.61458333333333,
+          "max_AUC": 96.84041341145833,
+          "rounded_target_pair_not_excluded": true,
+          "target_pair_not_excluded": true,
+          "threshold_candidates": 486
+        }
+      },
+      "controls": {
+        "clipped_input": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.84375,
+                  "max_DR": 6.25,
+                  "threshold": 1.1414057458163134
+                },
+                "15.5": {
+                  "FA": 14.84375,
+                  "max_DR": 6.25,
+                  "threshold": 1.1414057458163134
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 13.28125,
+                "min_FA": 37.5
+              },
+              "direction": "higher_printed",
+              "max_ACC": 50.0,
+              "max_AUC": 36.163330078125,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 486
+            },
+            "fixed_cutoff": {
+              "ACC": 37.890625,
+              "AUC": 36.163330078125,
+              "DR": 13.28125,
+              "F1": 21.11801242236025,
+              "FA": 37.5,
+              "FN": 333,
+              "FP": 48,
+              "PR": 51.515151515151516,
+              "SP": 62.5,
+              "TN": 80,
+              "TP": 51
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.84375,
+                  "max_DR": 29.427083333333332,
+                  "threshold": -0.1444331904764198
+                },
+                "15.5": {
+                  "FA": 14.84375,
+                  "max_DR": 29.427083333333332,
+                  "threshold": -0.1444331904764198
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 63.15104166666667,
+              "max_AUC": 63.836669921875,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 486
+            },
+            "fixed_cutoff": {
+              "ACC": 62.109375,
+              "AUC": 63.836669921875,
+              "DR": 86.71875,
+              "F1": 83.5633626097867,
+              "FA": 62.5,
+              "FN": 51,
+              "FP": 80,
+              "PR": 80.62953995157385,
+              "SP": 37.5,
+              "TN": 48,
+              "TP": 333
+            }
+          }
+        },
+        "constant_half": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.84375,
+                  "max_DR": 7.291666666666667,
+                  "threshold": 1.887393935903489
+                },
+                "15.5": {
+                  "FA": 14.84375,
+                  "max_DR": 7.291666666666667,
+                  "threshold": 1.887393935903489
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 76.30208333333334,
+                "min_FA": 90.625
+              },
+              "direction": "higher_printed",
+              "max_ACC": 50.0,
+              "max_AUC": 40.584309895833336,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 512
+            },
+            "fixed_cutoff": {
+              "ACC": 42.83854166666667,
+              "AUC": 40.584309895833336,
+              "DR": 76.30208333333334,
+              "F1": 73.89659520807062,
+              "FA": 90.625,
+              "FN": 91,
+              "FP": 116,
+              "PR": 71.63814180929096,
+              "SP": 9.375,
+              "TN": 12,
+              "TP": 293
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.84375,
+                  "max_DR": 27.604166666666668,
+                  "threshold": -0.65338401673217
+                },
+                "15.5": {
+                  "FA": 14.84375,
+                  "max_DR": 27.604166666666668,
+                  "threshold": -0.65338401673217
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 57.94270833333333,
+              "max_AUC": 59.41569010416667,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 512
+            },
+            "fixed_cutoff": {
+              "ACC": 57.161458333333336,
+              "AUC": 59.41569010416667,
+              "DR": 23.697916666666664,
+              "F1": 37.37166324435318,
+              "FA": 9.375,
+              "FN": 293,
+              "FP": 12,
+              "PR": 88.3495145631068,
+              "SP": 90.625,
+              "TN": 116,
+              "TP": 91
+            }
+          }
+        }
+      }
+    },
+    "original": {
+      "bounds": {
+        "printed": {
+          "at_FA_cap": {
+            "15.0": {
+              "FA": 14.0625,
+              "max_DR": 76.82291666666666,
+              "threshold": 1.5320799130836842
+            },
+            "15.5": {
+              "FA": 14.0625,
+              "max_DR": 76.82291666666666,
+              "threshold": 1.5320799130836842
+            }
+          },
+          "at_printed_threshold": {
+            "max_DR": 94.53125,
+            "min_FA": 40.625
+          },
+          "direction": "higher_printed",
+          "max_ACC": 85.80729166666667,
+          "max_AUC": 87.07682291666666,
+          "rounded_target_pair_not_excluded": false,
+          "target_pair_not_excluded": false,
+          "threshold_candidates": 448
+        },
+        "reversed_control": {
+          "at_FA_cap": {
+            "15.0": {
+              "FA": 14.0625,
+              "max_DR": 95.57291666666666,
+              "threshold": -1.5250107076046837
+            },
+            "15.5": {
+              "FA": 14.0625,
+              "max_DR": 95.57291666666666,
+              "threshold": -1.5250107076046837
+            }
+          },
+          "at_original_error_cutoff": {
+            "max_DR": 86.71875,
+            "min_FA": 0.0
+          },
+          "direction": "lower_control",
+          "max_ACC": 96.35416666666667,
+          "max_AUC": 96.89127604166667,
+          "rounded_target_pair_not_excluded": true,
+          "target_pair_not_excluded": true,
+          "threshold_candidates": 422
+        }
+      },
+      "controls": {
+        "clipped_input": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.0625,
+                  "max_DR": 4.427083333333334,
+                  "threshold": 1.5568735924033033
+                },
+                "15.5": {
+                  "FA": 14.0625,
+                  "max_DR": 4.427083333333334,
+                  "threshold": 1.5568735924033033
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 13.28125,
+                "min_FA": 40.625
+              },
+              "direction": "higher_printed",
+              "max_ACC": 50.651041666666664,
+              "max_AUC": 34.3017578125,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 422
+            },
+            "fixed_cutoff": {
+              "ACC": 36.328125,
+              "AUC": 34.3017578125,
+              "DR": 13.28125,
+              "F1": 22.125813449023862,
+              "FA": 40.625,
+              "FN": 333,
+              "FP": 26,
+              "PR": 66.23376623376623,
+              "SP": 59.375,
+              "TN": 38,
+              "TP": 51
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.0625,
+                  "max_DR": 27.604166666666668,
+                  "threshold": -0.13518541092418979
+                },
+                "15.5": {
+                  "FA": 14.0625,
+                  "max_DR": 27.604166666666668,
+                  "threshold": -0.13518541092418979
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 65.75520833333333,
+              "max_AUC": 65.6982421875,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 422
+            },
+            "fixed_cutoff": {
+              "ACC": 63.671875,
+              "AUC": 65.6982421875,
+              "DR": 86.71875,
+              "F1": 88.21192052980132,
+              "FA": 59.375,
+              "FN": 51,
+              "FP": 38,
+              "PR": 89.75741239892183,
+              "SP": 40.625,
+              "TN": 26,
+              "TP": 333
+            }
+          }
+        },
+        "constant_half": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.0625,
+                  "max_DR": 3.90625,
+                  "threshold": 2.4755046501784292
+                },
+                "15.5": {
+                  "FA": 14.0625,
+                  "max_DR": 3.90625,
+                  "threshold": 2.4755046501784292
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 76.30208333333334,
+                "min_FA": 89.0625
+              },
+              "direction": "higher_printed",
+              "max_ACC": 50.651041666666664,
+              "max_AUC": 38.618977864583336,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 448
+            },
+            "fixed_cutoff": {
+              "ACC": 43.61979166666667,
+              "AUC": 38.618977864583336,
+              "DR": 76.30208333333334,
+              "F1": 79.83651226158038,
+              "FA": 89.0625,
+              "FN": 91,
+              "FP": 57,
+              "PR": 83.71428571428571,
+              "SP": 10.9375,
+              "TN": 7,
+              "TP": 293
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.0625,
+                  "max_DR": 24.739583333333336,
+                  "threshold": -0.6022092563604263
+                },
+                "15.5": {
+                  "FA": 14.0625,
+                  "max_DR": 24.739583333333336,
+                  "threshold": -0.6022092563604263
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 59.765625,
+              "max_AUC": 61.381022135416664,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 448
+            },
+            "fixed_cutoff": {
+              "ACC": 56.380208333333336,
+              "AUC": 61.381022135416664,
+              "DR": 23.697916666666664,
+              "F1": 37.75933609958506,
+              "FA": 10.9375,
+              "FN": 293,
+              "FP": 7,
+              "PR": 92.85714285714286,
+              "SP": 89.0625,
+              "TN": 57,
+              "TP": 91
+            }
+          }
+        }
+      }
+    }
+  }
+}

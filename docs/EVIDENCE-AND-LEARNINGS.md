@@ -1626,6 +1626,45 @@ and repeated experiments determine technical conclusions.
   [discussion finding](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md),
   [complete records](../studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/).
 
+### Sigmoid on the full prepared evaluation — 2026-08-31
+
+- **Former uncertainty:** original-row Sigmoid range permitted high detection
+  alone but excluded the high-error DR/FA pair. Synthetic benign rows had not
+  been included, so the complete-evaluation answer was explicitly open.
+- **New exploratory `X/A` evidence:** keep the full prepared inputs unchanged;
+  replace only the allowed reconstruction range by the closed Sigmoid cube.
+  On 8,884,989 rows, the printed cutoff still fails: minimum FA 29.66640%,
+  versus 15%. But allowing a different high-error cutoff gives an upper DR
+  of 85.32587% at FA<=15%; balanced-accuracy and AUC ceilings are 85.69966%
+  and 90.02601%. The target pair is no longer excluded. Reversed scoring
+  remains open too (DR ceiling 93.76498% at FA<=15%).
+- **Why the answer changed:** adding the unchanged synthetic benign rows
+  changes the false-alarm population. The earlier original-row DR ceiling of
+  59.98410% is reproduced within tolerance; it was not a full-evaluation bound.
+  The attack population and its fixed-cutoff DR ceiling are unchanged.
+- **Concrete controls:** clipped input and constant-half reconstructions use
+  no labels or training. At the printed cutoff their full-data BA is 42.59659%
+  and 45.72641%; their best-cutoff BA across both directions is 58.23399%
+  (rounded). They do not realize the label-aware bound's advantage. These two
+  controls cannot establish failure of a properly trained Sigmoid model.
+- **Current conclusion:** Sigmoid alone does not rescue the printed-cutoff
+  procedure. Sigmoid plus another cutoff is an unresolved alternative, not
+  excluded by this bound and not reproduced. No new trained numerical or
+  architectural-mechanism result follows. Do not claim all bounded-output
+  detectors or all reasonable implementations fail.
+- **Execution:** local freeze `9d6c31b`, 223 pre-run tests; CPU job `385137`
+  completed `0:0`, pilot 4.97 s, full 39.70 s, total allocation 2:17. No fitted
+  model, head swap, rescaling, regeneration, or original artifact changed.
+  Both directions, both controls, full precision and failures are preserved.
+- **Publication boundary:** the already discussed source findings were
+  published first in `dc37bbe` with Pages deployment `33419150100` verified.
+  These new outcomes are local pending discussion; no automatic next run or
+  public update. The user's question-led plain-language reporting emphasis
+  now appears inside the relevant methods blocks.
+- **Sources:** [frozen setup](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY.md),
+  [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md),
+  [all records](../studies/atk-2022-deep-autoencoder/results/sigmoid_sanity_20260831/).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

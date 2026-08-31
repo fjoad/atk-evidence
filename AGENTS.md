@@ -58,12 +58,13 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-The source-assumption findings have been discussed. The user now approves
-publishing them first, then a small, capped Sigmoid investigation. Follow
-[the bounded follow-up plan](docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md).
-No full retraining or broad search is authorized. Discuss the new Sigmoid
-outcomes before publishing them; approval covers the already discussed
-source findings only.
+The discussed source-assumption findings are published at `dc37bbe`. The
+subsequent user-approved no-training Sigmoid investigation is also complete:
+[saved local finding](studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md).
+Stop for discussion before publishing its outcomes or running another check.
+No training or broad search is authorized. The
+[bounded follow-up plan](docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md)
+records publication, the frozen setup, every outcome, and this stop.
 
 Paper 1 is the only active experiment. Its first clean-reader FC-SAE run is
 complete and audited. The result did not reproduce Table III under the declared
@@ -74,9 +75,9 @@ source interpretations remain open. See
 [the follow-up finding](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
 and [current status](docs/STATUS.md).
 
-The earlier Checkpoint-2 diagnostic rounds are complete. Their CPU allocations
-ended successfully; no model was trained. The newly approved Sigmoid follow-up
-still needs a named remaining question and recorded setup. Do not start a full
+The Checkpoint-2 diagnostic rounds and Sigmoid follow-up are complete. Their
+CPU allocations ended successfully; no model was trained. Any further work
+needs a named remaining question, recorded setup, and approval. Do not start a full
 training run, seed sweep, model family, or broader search. Experimental scoring
 remains on cluster compute nodes; local runs are software fixtures only.
 Preserve the original run and both diagnostic contracts unchanged.

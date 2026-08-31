@@ -1,6 +1,8 @@
 """Hand-sized fixtures; no paper data or experimental scoring."""
 
 import importlib.util
+import hashlib
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -63,6 +65,37 @@ class SigmoidSanityTests(unittest.TestCase):
         self.assertEqual(set(metrics), {"TP", "FP", "FN", "TN", "DR", "FA", "SP", "PR", "ACC", "F1", "AUC"})
         self.assertEqual(metrics["ACC"], 75)
         self.assertAlmostEqual(metrics["PR"], 200 / 3)
+
+    def test_saved_records_match_frozen_code_and_transfer_hashes(self):
+        study = CHECKS.parent
+        folder = study / "results/sigmoid_sanity_20260831"
+        execution = json.loads((folder / "execution.json").read_text())
+        for stage in ("pilot", "full"):
+            raw = (folder / f"{stage}.json").read_bytes()
+            result = json.loads(raw)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), execution[f"{stage}_sha256"])
+            self.assertEqual(result["status"], "passed")
+            self.assertEqual(check.digest(CHECKS / "sigmoid_sanity.py"), result["script_sha256"])
+            self.assertEqual(check.digest(study / "SIGMOID_SANITY.md"), result["contract_sha256"])
+            for name, value in result["helper_sha256"].items():
+                self.assertEqual(check.digest(CHECKS / name), value)
+        self.assertEqual(result["population"]["rows"], 8884989)
+        self.assertTrue(result["original_reference_reproduced"])
+
+    def test_fixed_cutoff_exclusion_and_changed_cutoff_opening_are_both_preserved(self):
+        study = CHECKS.parent
+        result = json.loads((study / "results/sigmoid_sanity_20260831/full.json").read_text())
+        full = result["views"]["full"]["bounds"]["printed"]
+        original = result["views"]["original"]["bounds"]["printed"]
+        self.assertGreater(full["at_printed_threshold"]["min_FA"], 15.5)
+        self.assertTrue(full["target_pair_not_excluded"])
+        self.assertFalse(original["target_pair_not_excluded"])
+        finding = (study / "SIGMOID_SANITY_FINDING.md").read_text()
+        self.assertIn("29.66%", finding)
+        self.assertIn("85.33%", finding)
+        self.assertIn("no longer rules", finding)
+        self.assertIn("not an achieved result", finding)
+        self.assertIn("Stop for discussion", finding)
 
 
 if __name__ == "__main__":

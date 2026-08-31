@@ -330,3 +330,32 @@ the full original-row analysis in 56.76 seconds. See
 
 Experiments are stopped. Findings are saved locally; no README/site/report
 update or push is authorized before discussion.
+
+## Sigmoid follow-up — 2026-08-31, awaiting discussion
+
+After the preceding findings were discussed and published, the user approved
+a quick Sigmoid investigation. Code `9d6c31b`, job `385137`, completed the full
+no-training check in 39.70 seconds. See [the finding](SIGMOID_SANITY_FINDING.md).
+
+- **E7, output geometry:** Sigmoid + printed 0.58 still fails on the complete
+  prepared evaluation (minimum FA 29.66640%). Unlike the original-row check,
+  Sigmoid + a changed high-error cutoff is not excluded: the complete-data
+  bound gives DR up to 85.32587% at FA<=15%. Reversal is open too. Do not
+  generalize the Softmax exclusion or the original-row Sigmoid exclusion.
+- **E8, threshold/scoring:** a cutoff change cannot rescue fixed Softmax
+  scores or the fixed-input Softmax range, but may matter after changing the
+  output range. The label-aware Sigmoid cutoff near 1.24143 is not a trained
+  model threshold or evidence of author behavior.
+- **E9, evaluation population:** unchanged synthetic benign rows change the
+  population over which FA is computed and change the all-cutoff Sigmoid
+  answer. The original-row bounds reproduce; no original result is invalidated.
+- **E4/E15, triviality and attainability:** two label-blind reconstructions
+  do not reach the target. The larger label-aware ceiling is not achieved by
+  these controls, and no trained Sigmoid model has been tested. The learned
+  alternative remains unresolved; no zero-useful-work claim follows.
+- **E10/E11/E14:** no author implementation or intent is identified. The
+  result keeps a changed-output/changed-cutoff explanation open without
+  asserting that it occurred or matches the complete seven-metric row.
+
+All new records remain local until discussed. No training, new branch, or
+publication is automatically promoted by this completed check.

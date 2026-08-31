@@ -2,15 +2,18 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; source-assumption follow-up complete, discussion pending
+**Status:** Active governing plan; source findings published, quick Sigmoid follow-up complete, discussion pending
 
-**Current state:** source-assumption review/checks `COMPLETE`, approved by the
-user after discussing the previous findings. The
-[discussion finding](../../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md)
-records all four frozen cases. Job `385119` completed without training; the
-full pass took 56.76 seconds. Preserve the public account and stop for discussion
-before pushing or starting another experiment. The frozen contract is
-[SOURCE_ASSUMPTION_CHECK.md](../../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md).
+**Current state:** the source-assumption findings were discussed and published
+in `dc37bbe`, Pages run `33419150100`, with nine public files verified. The
+separately approved [quick Sigmoid follow-up](2026-08-31-source-findings-and-sigmoid-sanity.md)
+is `COMPLETE`, with results LOCAL ONLY. CPU job `385137` passed without
+training in 39.70 seconds after a 4.97-second pilot. See
+[SIGMOID_SANITY_FINDING.md](../../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md).
+Sigmoid at the printed cutoff still fails, but a changed cutoff on the full
+prepared evaluation is no longer excluded by the bound. The concrete controls
+do not reach the target. Preserve this counterevidence and stop for discussion
+before another experiment, public edit, or push.
 
 **Previous round:** bounded post-anchor diagnostics `COMPLETE`, including the
 separately frozen adaptive geometry control. Both CPU jobs completed without
@@ -164,7 +167,8 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
 | 7M. Mechanism program | `PENDING` | Source causal claim promoted | Score/control diagnostics completed; matched architecture and training-causality tests remain untested |
 | 7A. Attainability envelope | `COMPLETE — conditional bound only` | No-training output-domain question approved | Fixed preparation/Softmax/MSE target excluded; other source interpretations and broad empirical search untested |
-| Source-assumption follow-up | `COMPLETE — discussion pending` | User approved source review and a few cheap checks | SOURCE_ASSUMPTION_FINDING.md and all records saved locally; no public update or push |
+| Source-assumption follow-up | `COMPLETE — published after discussion` | User approved source review, discussed the results, then requested publication | Public revision dc37bbe, verified Pages deployment 33419150100 |
+| Quick Sigmoid follow-up | `COMPLETE — local, discussion pending` | User approved a cheap investigation without full retraining | SIGMOID_SANITY_FINDING.md; 39.70-second full check, printed cutoff excluded but changed cutoff not excluded; no further experiment or push |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
@@ -529,6 +533,7 @@ and record why the new evidence changed its status.
 | 2026-08-31 | 7A in progress | Conditional bound and score-control round complete; experiments stopped | CPU jobs 385090 and 385091 completed; full analysis 112.92 s and adaptive control 18.03 s | Conditional attainability limit established on fixed inputs/output/score; useful score differences preserved; no repeated seed needed for that bound; other source assumptions and matched mechanism questions remain open |
 | 2026-08-31 | Completed diagnostic round | Findings public and verified | Report commit 97c9236, successful Pages run 33407618030, nine public files byte-identical, 206 local tests passed | Discuss source-supported assumptions before proposing further execution; no broader scientific approval implied |
 | 2026-08-31 | Public diagnostic round complete | Source-assumption follow-up approved, then completed locally | User required discussion before public changes and approved source review plus cheap checks; local code b76cb02 and CPU job 385119 completed four frozen cases in 56.76 s | Softmax detection limit survives two additional normalization readings at 0.58 on fixed attacks; other all-cutoff limits are original-row only; stop for discussion, with no push/public edit/training |
+| 2026-08-31 | Source findings discussed | Source findings published; quick Sigmoid check complete locally | User requested publication first, then cheap Sigmoid investigation; dc37bbe deployed and verified, frozen code 9d6c31b/job 385137 completed full check in 39.70 s | Sigmoid at 0.58 still fails; complete-evaluation bound permits the target at a changed cutoff. Concrete controls do not attain it. Stop for discussion before publication or any fitted comparison |
 
 ## Current hard exclusions after the approved diagnostic round
 
