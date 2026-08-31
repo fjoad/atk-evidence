@@ -9,6 +9,9 @@
 branch. Phase 6 is `COMPLETE`: independent audit passed, the bounded Table-III
 FC-SAE non-reproduction is saved, and Checkpoint 2 awaits user review.
 The exact official-serialization failure remains preserved.
+The initial finding is now published as an in-progress report, explicitly
+approved by the user on 2026-08-31. This editorial publication does not complete
+Phase 9's final three-finding report or open Checkpoint 2 to experiments.
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -380,6 +383,34 @@ gain justifies additional work:
 No paper row, model family, ambiguity, or seed is promoted merely because it
 exists.
 
+### Proposed next questions after publication — 2026-08-31
+
+These are a discussion proposal, not an approved or preregistered run contract.
+Keep the audited reproduction unchanged and begin with cheap diagnostic breadth:
+
+1. **Conditional performance bound (`A`).** For the fixed prepared inputs,
+   score definition, and output domain, derive each input's allowed score
+   interval. Give every example an optimistically chosen, even label-aware
+   reconstruction and optimize a single shared cutoff. Failure even with this
+   extra freedom could rule out the target under the stated assumptions,
+   independent of weights or seed. A feasible target leaves the bound
+   inconclusive; it does not show that a trainable model can reach it.
+2. **Incremental useful information (`M`).** On preserved scores/data, compare
+   the trained score with no-learning input statistics, including per-attack
+   and similar-input-magnitude comparisons. Distinguish useful ranking changes
+   from nearly identical aggregate scores. State a meaningful effect before
+   any equivalence claim; uncertainty must respect customers and synthetic
+   dependencies, not count millions of related rows as independent trials.
+3. **Small discriminating controls (`N/M`).** If needed, use a capped sandbox
+   with positive controls and checked fitting to distinguish absent signal,
+   the reconstruction objective/output restriction, and optimization failure.
+   Separate source-supported interpretations from corrected controls.
+
+Before execution, record competing predictions, the smallest setup, sample and
+compute caps, and stopping/promotion rules. Only a surviving question justifies
+another full training run, repeated seeds, or another table. Do not repeat the
+completed artifact audit or threshold enumeration without a specific new issue.
+
 ## Phase 7N — Finite numerical depth
 
 Freeze the smallest set of materially distinct `I` branches and repetitions
@@ -459,6 +490,7 @@ and record why the new evidence changed its status.
 | 2026-08-30 | Phase 5 job running | Phase 5 job running; manual checks only | User requested that `monitor-clean-reader-anchor` be disabled and that status be checked only when prompted; the automation was set to `PAUSED` | Do not perform automatic checks; the sole job and Checkpoint-2 restrictions are unchanged |
 | 2026-08-31 | Phase 5 job running; manual checks only | Phase 5 complete; Phase 6 audit pending | Manual inspection found Slurm `COMPLETED 0:0`, end 2026-08-30 22:48:39 Qatar, 9:14:27 elapsed, and a saved result/metadata record | Operational completion is not yet an independently trusted numerical finding; do not submit new work or cross Checkpoint 2 |
 | 2026-08-31 | Phase 6 audit pending | Phase 6 complete; Checkpoint 2 pending | User approved the audit; CPU-only job 384939 ran the frozen audit and supplemental checks on the unchanged sole attempt. All metrics regenerate exactly; a supplemental last-chunk checker defect was preserved and corrected, with all 65 checks passing afterward | The one frozen Table-III FC-SAE completion does not reproduce its target; N/M/A depth remains unapproved, and no scientific attempt was repeated |
+| 2026-08-31 | Checkpoint 2 pending | Checkpoint 2 pending; initial report public | User approved the readable report and explicitly requested GitHub/GitHub Pages publication; deployment succeeded and public files match the reviewed version | Editorial publication only; conditional-bound, useful-information, and small-control questions are proposed for discussion, not approved experiments |
 
 ## Current hard exclusions until the exact anchor and Checkpoint 2
 
@@ -469,7 +501,8 @@ and record why the new evidence changed its status.
 - no ambiguity lattice, workflow system, or infrastructure expansion;
 - no mechanism or attainability conclusion inferred from prior numerical
   non-reproduction; and
-- no report or site verdict update.
+- no stronger scientific verdict without new evidence; the user-approved
+  in-progress report may publish the completed initial numerical finding.
 
 ## Plan checkpoint
 

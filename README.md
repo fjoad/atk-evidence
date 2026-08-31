@@ -4,7 +4,7 @@ We read research papers, implement the methods they describe, and compare our
 results with the published ones. When they differ, we try to understand why.
 
 **[Read the studies](https://fjoad.github.io/atk-evidence/)** ·
-[Current electricity-theft reproduction](site/papers/atk-2022-deep-autoencoder/reproduction/index.html)
+[Current electricity-theft reproduction](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/)
 
 ## What we found so far
 
@@ -33,7 +33,7 @@ That suggests a useful next question: what did training add? It does not prove
 that the model learned nothing, that another configuration cannot work, or that
 the published results were fabricated.
 
-The [readable report](site/papers/atk-2022-deep-autoencoder/reproduction/index.html)
+The [readable report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/)
 connects the paper's instructions to the actual code, a model diagram, the
 complete results, and possible explanations.
 The [technical finding and audit records](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
@@ -63,8 +63,8 @@ bound with explicit assumptions—not just a large gap or an extrapolated runtim
 
 | Paper | Read |
 |---|---|
-| Takiddin et al., *Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids* (2022) | [Current reproduction](site/papers/atk-2022-deep-autoencoder/reproduction/index.html) · [Earlier method notes](site/papers/atk-2022-deep-autoencoder/index.html) |
-| Ahasan et al., *Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems* (2025) | [Earlier study and corrections](site/papers/tlstgt-2025-water/index.html) |
+| Takiddin et al., *Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids* (2022) | [Current reproduction](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/) · [Earlier method notes](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/) |
+| Ahasan et al., *Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems* (2025) | [Earlier study and corrections](https://fjoad.github.io/atk-evidence/papers/tlstgt-2025-water/) |
 
 **Disclosure:** Faaiz Joad, a maintainer of this project, is a co-author of the
 water-network paper. That study is not independent of its authors. Its evidence,

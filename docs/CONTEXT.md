@@ -7,9 +7,12 @@ read like a clear research report: paper → implementation → result → possi
 explanations → tests → bounded conclusion. No workflow jargon in place of
 explanation. A separate current reproduction page is added; both older paper
 pages remain. Obsolete charter commands and duplicate agent rules are removed,
-not the scientific history. No further experiment is authorized. Publication
-awaits the user's answer. The local rewrite is complete and all 187 tests pass,
-including eight static report checks. See the 2026-08-31 editorial plan.
+not the scientific history. The user explicitly approved GitHub/GitHub Pages
+publication on 2026-08-31. The rewrite and supporting evidence were pushed;
+Pages run `33400529269` succeeded and all public pages/assets match the reviewed
+files. The README links to the rendered reports. All 187 local tests passed,
+including eight static report checks. No further experiment is authorized.
+See the 2026-08-31 editorial plan and the proposed next questions at Checkpoint 2.
 
 **Next scientific emphasis:** measure useful information beyond a simple input
 statistic; consider an optimistic output-domain bound and small controls before

@@ -2,7 +2,7 @@
 
 Date: 2026-08-31
 
-Status: local rewrite complete and verified; public deployment awaits approval
+Status: complete; published to GitHub and verified on GitHub Pages
 
 ## Request
 
@@ -37,8 +37,8 @@ still applies.
   source specifications, and correction record. Reduce redundant overview
   documents instead of deleting research history.
 - Retain the static GitHub Pages site. Do not introduce a framework, move the
-  hosting, or start training. Public deployment awaits the user's answer;
-  otherwise provide a local preview and commit the work.
+  hosting, or start training. The user explicitly approved public deployment
+  on 2026-08-31 after reviewing the local preview.
 
 ## Steps
 
@@ -49,7 +49,8 @@ still applies.
 5. [x] Simplify charter-related instructions and documentation navigation.
 6. [x] Verify metrics against saved JSON, check links and document structure,
        run deterministic tests, update status, and commit.
-7. [x] Hand off the local preview. Do not publish without the user's answer.
+7. [x] Hand off the local preview, then publish after the user's explicit
+       approval and verify the public pages.
 
 ## Verification
 
@@ -81,7 +82,21 @@ automation or experimental jobs are needed for this editorial task.
 - CI now fetches Git history so the source-link tests can inspect the exact
   historical revisions cited by the report.
 
-The local preview is served at `http://127.0.0.1:8765/`; the new report is under
-`papers/atk-2022-deep-autoencoder/reproduction/`. Public GitHub Pages is not
-updated by a local commit. Review or publication is the next editorial action;
-the next scientific action still requires Checkpoint 2 approval.
+## Publication
+
+On 2026-08-31 the user explicitly requested publication to the existing GitHub
+repository and GitHub Pages site. Commit `0f411ec`, including the supporting
+evidence commits it cites, was pushed to `main`. The
+[Pages deployment](https://github.com/fjoad/atk-evidence/actions/runs/33400529269)
+completed successfully. All four public HTML pages, stylesheet, model diagram,
+and social-preview image returned HTTP 200 and were byte-identical to the
+reviewed local files.
+
+- [Public homepage](https://fjoad.github.io/atk-evidence/)
+- [Current reproduction report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/)
+- [GitHub repository and README](https://github.com/fjoad/atk-evidence)
+
+The README now links to the rendered public reports rather than their HTML
+source files. Publication does not approve another experiment. The proposed
+next questions are recorded under Checkpoint 2 in the active research plan;
+experimental execution still requires that approval.

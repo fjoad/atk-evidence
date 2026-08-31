@@ -20,8 +20,14 @@
   The local rewrite is complete: all 187 deterministic tests pass, including
   eight new report checks; site assets and local documentation links resolve.
   Four duplicate agent-rule files were removed; research history remains in
-  Git and the scientific records. Public deployment is awaiting the user's
-  answer; the research Checkpoint 2 and completed numerical finding are unchanged.
+  Git and the scientific records. The user explicitly approved publication on
+  2026-08-31: the changes and supporting evidence are now on GitHub, Pages
+  deployment `33400529269` succeeded, and all public pages/assets match the
+  reviewed files byte for byte. See the
+  [live report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/).
+  The next discussion is the proposed no-training bound, incremental useful
+  information, and small discriminating controls recorded at Checkpoint 2.
+  No further experiment is approved; the numerical finding is unchanged.
 
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a

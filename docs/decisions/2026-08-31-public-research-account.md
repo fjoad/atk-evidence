@@ -26,6 +26,11 @@ results, checks, explanations, limitations, and conclusion.
   framework is unnecessary for this task. Public deployment requires the
   user's answer to the publication question.
 
+**Publication approval:** on 2026-08-31, after reviewing the local rewrite, the
+user explicitly directed publication to GitHub and GitHub Pages. The existing
+Pages workflow deployed successfully; the public files were checked against
+the reviewed version. This approval covers publication, not new experiments.
+
 ## Scientific scope is unchanged
 
 No model, data preparation, result artifact, seed, or experimental contract is
