@@ -6,8 +6,19 @@
 updating or publishing the public account. The user approved the source review
 and cheap assumption checks in `SOURCE_ASSUMPTION_CHECK.md`, not training.
 Save internal records for continuity; do not edit README/site/report or push
-this round before discussion. The older completed-round boundary below is
-superseded only for this new bounded source-assumption diagnostic.
+this round before discussion. That follow-up is now complete and stopped:
+job `385119` exited `0:0`; full analysis 56.76 seconds after an 8.20-second
+pilot. Code/contract frozen in local `b76cb02`; no push or public edit occurred.
+See `SOURCE_ASSUMPTION_FINDING.md`. Softmax + high-error MSE are explicit;
+normalization statistics are omitted. At the printed 0.58 cutoff, upper DR is
+29.58% current, 29.81% joint scalar, 33.96% separate-class feature scaling
+(rounded upward), versus 81%. These attack-only bounds survive benign-only
+resampling on unchanged attacks. All-cutoff alternative limits use original
+rows only, NOT regenerated ADASYN. Sigmoid-range control raises the original
+ACC ceiling to 80.84% but still fails DR/FA jointly in the printed direction;
+with reversal its relaxation no longer excludes the DR>=81%, FA<=15% pair.
+Those changes are not the stated FC-SAE and prove no trainable-model match.
+No new trained numerical or mechanism experiment was performed. Await discussion.
 
 **Current state — diagnostic round complete, experiments stopped:** the user
 approved the bounded post-anchor sequence on 2026-08-31. Jobs `385090` and

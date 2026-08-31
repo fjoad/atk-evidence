@@ -297,3 +297,36 @@ Stop the diagnostic round. The next proposed work is a source-supported
 assumption map: which changes actually leave the bounded input/output/score
 space, and which are corrections rather than reproduction? No broader
 experiment is automatically promoted by this update.
+
+## Source-assumption follow-up — 2026-08-31, awaiting discussion
+
+The user approved the source review and capped no-training checks but required
+discussion before public updates. Code `b76cb02`, CPU job `385119`, completed
+the full original-row analysis in 56.76 seconds. See
+[SOURCE_ASSUMPTION_FINDING.md](SOURCE_ASSUMPTION_FINDING.md).
+
+- **E7, output geometry:** source support for FC-SAE Softmax and high-error
+  MSE is verified again, not inferred from our code. A Sigmoid cube control
+  changes the original-row ACC ceiling from 50.16% to 80.84% (upward-rounded
+  limits). It still fails the combined target in the printed direction;
+  with reversal the relaxation does not exclude DR>=81%, FA<=15%. Thus the
+  restrictive combination matters; no universal bounded-output or learned-
+  mechanism conclusion follows.
+- **E8, score units:** SSE and RMSE are monotone transforms of MSE and cannot
+  change the existing all-cutoff ROC region on the complete fixed evaluation.
+  This does not rule out genuinely different scoring procedures.
+- **E9, normalization:** the fitted scope is not explicitly specified. Two
+  further interpretations were tested: joint scalar and weaker separate-class
+  feature-wise scaling. Their optimistic DR at 0.58 is bounded by 29.81% and
+  33.96%, versus 81%. These fixed-cutoff rescues are closed for the same attack
+  population, even if benign-only ADASYN is regenerated. Other original-row
+  all-cutoff limits do NOT automatically transfer to regenerated ADASYN.
+- **E10/E11/E14:** no newly discovered source/code mismatch explains away
+  Softmax or MSE. Other populations, interpretations, untested defects, and
+  possible reporting errors remain open; no author implementation is inferred.
+- **E15:** the fixed-cutoff bound covers three explicit normalization readings,
+  not every reasonable preparation or an infinite hyperparameter search.
+  No new `N` reproduction or matched `M` comparison was performed.
+
+Experiments are stopped. Findings are saved locally; no README/site/report
+update or push is authorized before discussion.

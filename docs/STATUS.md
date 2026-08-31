@@ -9,11 +9,25 @@
 
 ## Current project state
 
-- **Source-assumption review, now authorized:** the user approved reviewing
+- **Source-assumption review complete; discussion pending:** the user approved reviewing
   source support and checking a few load-bearing alternatives, with discussion
   before public updates. The local plan/contract is
   [SOURCE_ASSUMPTION_CHECK.md](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md).
   No training, public-report edit, or push is authorized for this round.
+  Local code freeze `b76cb02` passed all 212 deterministic tests. CPU job
+  `385119` completed `0:0`: pilot 8.20 seconds, full 56.76 seconds, allocation
+  3:18. All consumed hashes/identities and geometric checks passed; the prior
+  original-row reference bounds were reproduced. The
+  [discussion finding](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md)
+  records the source map and every outcome. At the printed cutoff, Softmax DR
+  is bounded by 29.58% current, 29.81% joint-scalar, and 33.96% separate-class
+  scaling (rounded upward), all below 81%. Sigmoid-range control substantially
+  changes the limits but is not the Table-I FC-SAE and is not a reproduction.
+  No training or ADASYN regeneration occurred. No further experiment, push,
+  README/site/report change is authorized before discussion.
+  Post-run verification passed all 214 deterministic tests (140 study, 74
+  root); local documentation links resolve and `git diff --check` passes.
+  README, website, and reproduction files are unchanged from `149cde7`.
 
 - **Completed diagnostic round, 2026-08-31:** the user-approved bound,
   useful-information checks, and warranted small control are complete. Both
@@ -451,13 +465,14 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Discuss the completed, published findings: a conditional performance limit
-   and evidence of small useful score differences, not zero useful work.
-2. Consider a source/semantic map: which defensible changes to preparation,
-   output, or score could actually change the bound? Keep corrections separate
-   from source-supported numerical interpretations.
-3. Stop experimental execution pending that decision and a recorded setup.
-   No full training, repeated seeds, or broader search is approved.
+1. Discuss the new, locally saved source-assumption findings: explicit
+   Softmax/MSE choices, surviving detection bounds under two additional
+   normalization readings, and the separately labeled Sigmoid-range controls.
+2. Decide whether any specifically identified remaining source assumption
+   warrants another cheap check. Do not infer an undocumented implementation
+   from whichever control improves an optimistic limit.
+3. Stop experimental execution and public updates pending discussion. No
+   further training, seed, branch, report edit, or push is approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

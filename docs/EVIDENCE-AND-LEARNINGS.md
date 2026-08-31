@@ -1584,6 +1584,48 @@ and repeated experiments determine technical conclusions.
   [adaptive control contract](../studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md),
   [results and execution records](../studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/).
 
+### Does the source force the assumptions? — 2026-08-31
+
+- **Former uncertainty:** the fixed-preparation Softmax/MSE bound was strong,
+  but a consequential interpretation supplied by us might have created it.
+- **Source evidence:** complete paper re-read; printed pp. 4109, 4114, 4115,
+  and 4116 visually checked. Softmax for FC-SAE, MSE, high-error direction,
+  and threshold 0.58 are explicit. The fitted normalization scope is omitted.
+- **New `C/A` diagnostics on explicit input interpretations:** the current
+  reference, joint-scalar scaling, and weaker separate-class feature scaling
+  cap detection at 0.58 at 29.58%, 29.81%, and 33.96% (rounded upward),
+  versus 81%. Alternative statistics use the full pre-split original
+  population. All 4,504,602 original attack rows were evaluated.
+- **Scope distinction:** attack-only detection at the fixed cutoff cannot
+  be improved by adding synthetic benign rows, so that exclusion survives
+  benign-only ADASYN on unchanged attacks. The original-row all-cutoff/AUC
+  results do not establish a complete resampled bound for new scalings.
+- **Counterevidence/control:** the Sigmoid cube raises the original-row ACC
+  ceiling from 50.16% to 80.84%. It still excludes the combined target in the
+  printed direction, while Sigmoid plus reversal no longer excludes the
+  DR>=81%, FA<=15% pair in the label-aware relaxation. Those are changes to
+  the stated final FC-SAE, not a reproduced or trained model. The evidence
+  does not justify a universal limit on every bounded-output detector.
+- **Static correction guard:** SSE=48*MSE and RMSE=sqrt(MSE) preserve rankings
+  and all-cutoff ROC regions; changing units alone cannot rescue the previous
+  complete-evaluation bound. A genuinely different score remains outside it.
+- **Current interpretation:** source confidence in the main output/score
+  choices increases. The fixed-cutoff non-attainability result extends to
+  two additional explicit normalization readings. Other populations and
+  transformations remain open. No new numerical or learned-mechanism finding,
+  nor inference about author code or intent, is added.
+- **Execution:** local freeze `b76cb02`, 212 pre-run tests passed. CPU job
+  `385119` completed `0:0`, pilot 8.20 s, full 56.76 s, allocation 3:18.
+  All hashes and identities passed, and the original reference bound was
+  reproduced. Original artifacts and public files remain unchanged.
+- **User correction to workflow:** discuss results before updating public
+  writing or publishing. Local records and commits preserve this round;
+  no push or new experiment follows automatically.
+- **Sources:**
+  [source map and frozen setup](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md),
+  [discussion finding](../studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md),
+  [complete records](../studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

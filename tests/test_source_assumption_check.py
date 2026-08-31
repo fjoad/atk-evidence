@@ -1,6 +1,9 @@
 """Hand-sized fixtures only; no paper data or experimental scoring."""
 
 import itertools
+import hashlib
+import json
+import math
 from pathlib import Path
 import sys
 import unittest
@@ -75,6 +78,32 @@ class SourceAssumptionTests(unittest.TestCase):
             check.scales_from_moments(np.array([3.0]), np.array([2.0]))
         with self.assertRaises(ValueError):
             check.moments(np.array([[np.nan, 2.0]]))
+
+    def test_saved_records_match_the_frozen_sources_and_transfer_hashes(self):
+        study = Path(check.__file__).resolve().parent.parent
+        results = study / "results/source_assumption_20260831"
+        execution = json.loads((results / "execution.json").read_text())
+        for stage in ("pilot", "full"):
+            raw = (results / f"{stage}.json").read_bytes()
+            record = json.loads(raw)
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), execution[f"{stage}_sha256"])
+            self.assertEqual(record["status"], "passed")
+            self.assertEqual(record["script_sha256"], check.digest(Path(check.__file__)))
+            self.assertEqual(record["contract_sha256"], check.digest(study / "SOURCE_ASSUMPTION_CHECK.md"))
+            self.assertEqual(record["helper_sha256"], check.digest(study / "checks/post_anchor_diagnostics.py"))
+            self.assertEqual(set(record["branches"]), set(check.BRANCHES))
+        self.assertTrue(record["reference_original_bound_reproduced"])
+        self.assertEqual(record["rows"], 5255369)
+
+    def test_discussion_detection_limits_round_up_from_the_record(self):
+        study = Path(check.__file__).resolve().parent.parent
+        record = json.loads((study / "results/source_assumption_20260831/full.json").read_text())
+        finding = (study / "SOURCE_ASSUMPTION_FINDING.md").read_text()
+        for branch in record["branches"].values():
+            limit = branch["printed"]["at_printed_threshold"]["max_DR"]
+            self.assertIn(f"{math.ceil(100 * limit) / 100:.2f}%", finding)
+        self.assertIn("NOT a new Table III result", finding)
+        self.assertIn("Stop here for discussion", finding)
 
 
 if __name__ == "__main__":
