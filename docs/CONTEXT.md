@@ -1,6 +1,18 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-31
+**Last updated:** 2026-09-01
+
+**Newest direction, 2026-09-01:** update and publish the full site with the
+completed Sigmoid evidence first, then finish the paper audit. Active plan:
+`docs/plans/2026-09-01-full-site-and-paper-completion.md`. Publication includes
+README, all current ATK site entry points, and a newly current rendered PDF.
+No science runs during publication. Afterward freeze exact remaining Table-III
+proposed-model, mechanism, Tables IV/V, and finite Table-II contracts and show
+their costs/ambiguities at the recorded checkpoint before cluster submission.
+Historical breadth remains exploratory/quarantined. The local publication
+bundle is complete and verified: 235 deterministic tests pass, data identity
+selects the verified ScienceDB branch, and all five PDF pages were visually
+inspected. Publication is the only pending part of Phase A.
 
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see
@@ -16,9 +28,9 @@ all-cutoff exclusion for these fixed scores/sample, NOT all Sigmoid weights.
 Sigmoid calibration MSE improved 1.61028→1.33863; best epoch is 10, the last
 tested. No long-run plateau, zero-useful-work, or seed-probability claim is
 earned. All hashes, finite checks, and weight updates passed. Preserve all
-outcomes. No more experiment, public edit, or push before discussion.
-Post-run: 232 tests passed, 73 local links resolve, and public/reproduction
-files remain unchanged from `dc37bbe`. The saved records are local only.
+outcomes. The earlier stop for discussion was satisfied; the user approved a
+full public update on 1 September before the remaining-paper program. No new
+science run has started.
 
 **Previous completed work:** the discussed source-assumption findings are live
 at `dc37bbe`; Pages run `33419150100` succeeded and nine public files match
@@ -40,11 +52,11 @@ Stop for discussion; no new public edit/push, fitted comparison, or experiment
 is automatically approved. A head swap in Softmax-trained weights alone is
 not a test of Sigmoid learning.
 
-**Latest user instruction:** discuss measured results and interpretation before
-updating or publishing the public account. The user approved the source review
-and cheap assumption checks in `SOURCE_ASSUMPTION_CHECK.md`, not training.
-Save internal records for continuity; do not edit README/site/report or push
-this round before discussion. That follow-up is now complete and stopped:
+**Earlier checkpoint, now satisfied:** the user required discussion of measured
+results before updating the public account. That discussion occurred, the
+Sigmoid range and fitted findings were added, and the 1 September instruction
+now governs publication. The earlier source review was limited to the cheap
+assumption checks in `SOURCE_ASSUMPTION_CHECK.md`:
 job `385119` exited `0:0`; full analysis 56.76 seconds after an 8.20-second
 pilot. Code/contract frozen in local `b76cb02`; no push or public edit occurred.
 See `SOURCE_ASSUMPTION_FINDING.md`. Softmax + high-error MSE are explicit;

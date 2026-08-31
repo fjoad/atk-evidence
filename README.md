@@ -39,12 +39,24 @@ Different preprocessing, output layers, or scores are outside this bound.
 We checked which restrictions were actually in the paper. Softmax, MSE, and
 the 0.58 cutoff are explicit; the normalization statistics are less precise.
 Two additional normalization readings still cap detection at **29.81% and
-33.96%**, versus 81%. A Sigmoid output range changes the limits substantially,
-but is not a trained-model improvement or a reproduction. See
+33.96%**, versus 81%. A Sigmoid output range changes the limits substantially:
+on the complete evaluation it permits the reported detection/false-alarm pair
+at another cutoff, so that range calculation alone cannot exclude the rescue.
+See
 [which assumptions matter](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/#source-assumptions)
 and [what Sigmoid changes](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/#sigmoid-range).
 The full source-assumption check took 57 seconds with no training;
 [all outcomes and limitations are saved](studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md).
+
+We then trained one small paired Softmax/Sigmoid control from identical starting
+weights. Both completed ten epochs. Even after enumerating every cutoff on the
+held-out sampled scores, Sigmoid detected only **9.75%** of attacks at at most
+15% false alarms, or **25.39%** when lower error was treated as suspicious,
+versus 81% reported. The relaxed rounding target also failed. This proves that
+no cutoff rescues that fitted model on that sample. It does **not** prove that
+all Sigmoid training procedures fail: calibration loss was still improving at
+the final epoch. The [paired finding](studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md)
+preserves both the failure and that open possibility.
 
 That does **not** mean the model does nothing useful. On original customer
 rows, its balanced-accuracy gain over zero reconstruction is 0.89 percentage
@@ -57,9 +69,10 @@ connects the paper's instructions to the actual code, a model diagram, the
 complete results, the bound, and possible explanations.
 The [initial finding](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
 and [follow-up findings and records](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
-preserve the details. The follow-up required 113 seconds for the full analysis
-and 18 seconds for a small control, with no model training. The diagnostic
-round is complete. Other source interpretations and the cause of the published
+preserve the details. The output-domain follow-up required 113 seconds for the
+full analysis and 18 seconds for a small no-training control. The later paired
+fit required 25 seconds of analysis. Other source interpretations, the
+remaining proposed models and tables, and the cause of the published
 discrepancy remain open; no conclusion about author intent follows.
 
 ## How we work

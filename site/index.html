@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ATK Evidence — Reproducing published research</title>
-  <meta name="description" content="We read research papers, implement their methods, and compare what happens with what was reported. Read the first audited electricity-theft reproduction.">
+  <meta name="description" content="We read research papers, implement their methods, and compare measured results with published claims. Read the audited electricity-theft reproduction and diagnostic follow-ups.">
   <meta property="og:title" content="ATK Evidence — Reproducing published research">
   <meta property="og:description" content="The paper, the implementation, and the results—explained together.">
   <meta property="og:type" content="website">
@@ -46,9 +46,9 @@
     </div>
     <p>A follow-up found a stronger, conditional limit. On these prepared inputs, even a detector allowed to choose each Softmax reconstruction using the true label stays below <strong>50.93% balanced accuracy</strong>, versus 83% reported. At at most 15% false alarms, detection cannot exceed <strong>9.25%</strong>, versus 81%. New weights or seeds cannot fix that gap while the prepared data, output restriction, and mean-squared-error score stay the same.</p>
     <p>This does not mean the model does nothing useful: its fitted score makes small beneficial changes and ranks attacks better than the simple controls tested within similar-input-magnitude groups. Different preprocessing, output layers, and scores remain outside the bound. <a href="papers/atk-2022-deep-autoencoder/reproduction/#bound">Read the calculation and its limits</a>.</p>
-    <p>We returned to the paper: Softmax output, MSE scoring, and the 0.58 cutoff are explicit. Two additional normalization readings still cap detection at <strong>29.81% and 33.96%</strong>, versus 81%. Changing to a Sigmoid output range substantially changes the limits, but is not a demonstrated reproduction. <a href="papers/atk-2022-deep-autoencoder/reproduction/#source-assumptions">Which assumptions matter?</a> · <a href="papers/atk-2022-deep-autoencoder/reproduction/#sigmoid-range">What would Sigmoid change?</a></p>
+    <p>We returned to the paper: Softmax output, MSE scoring, and the 0.58 cutoff are explicit. Two additional normalization readings still cap detection at <strong>29.81% and 33.96%</strong>, versus 81%. A Sigmoid output range removes the all-cutoff mathematical exclusion on the complete evaluation, but one genuinely trained small Sigmoid model still reached only <strong>9.75% detection</strong> at at most 15% false alarms—or <strong>25.39%</strong> when the score rule was reversed. Every cutoff failed for that model and sample. Its loss was still improving, so this is not a universal Sigmoid impossibility result. <a href="papers/atk-2022-deep-autoencoder/reproduction/#source-assumptions">Which assumptions matter?</a> · <a href="papers/atk-2022-deep-autoencoder/reproduction/#sigmoid-fit">What happened after training Sigmoid?</a></p>
     <p><a class="button" href="papers/atk-2022-deep-autoencoder/reproduction/">Read the reproduction: paper → code → results → explanations</a></p>
-    <p class="meta">Run completed 30 August 2026 · Audit and diagnostic round completed 31 August 2026 · No follow-up training</p>
+    <p class="meta">Full reproduction completed 30 August 2026 · Diagnostic and small fitted follow-ups completed 31 August 2026 · Full site updated 1 September 2026</p>
   </section>
 
   <section aria-labelledby="studies">
@@ -56,8 +56,8 @@
     <ol class="study-list">
       <li>
         <h3>1. Detecting electricity theft with autoencoders</h3>
-        <p>Takiddin et al., <cite>IEEE Systems Journal</cite>, 2022. Our current work starts with one model and one reported result.</p>
-        <div class="actions"><a href="papers/atk-2022-deep-autoencoder/reproduction/">Current reproduction report</a><a href="papers/atk-2022-deep-autoencoder/">Earlier method notes</a><a href="reports/atk-2022-deep-autoencoder.pdf">Earlier report (PDF)</a></div>
+        <p>Takiddin et al., <cite>IEEE Systems Journal</cite>, 2022. The current clean-reader evidence covers one full proposed-model row plus conditional bounds and small diagnostic follow-ups; the remaining paper tables are not yet complete.</p>
+        <div class="actions"><a href="papers/atk-2022-deep-autoencoder/reproduction/">Current reproduction report</a><a href="papers/atk-2022-deep-autoencoder/">Earlier method notes</a><a href="reports/atk-2022-deep-autoencoder.pdf">Current report (PDF)</a></div>
       </li>
       <li>
         <h3>2. Detecting attacks on water networks</h3>
@@ -82,7 +82,7 @@
     <h2 id="disclosure">Disclosure</h2>
     <p>Faaiz Joad, a maintainer of this project, is a co-author of the water-network paper. That relationship is relevant when reading the second study. Its page includes corrections to our analysis. Neither study claims to establish author intent.</p>
   </section>
-  <footer><p>ATK Evidence · Research in progress · Updated 31 August 2026</p><p><a href="https://github.com/fjoad/atk-evidence">Source code and research records</a>. Original datasets and paper PDFs are not redistributed here; the linked PDFs are our reports.</p></footer>
+  <footer><p>ATK Evidence · Research in progress · Updated 1 September 2026</p><p><a href="https://github.com/fjoad/atk-evidence">Source code and research records</a>. Original datasets and paper PDFs are not redistributed here; the linked PDFs are our reports.</p></footer>
 </main>
 </body>
 </html>

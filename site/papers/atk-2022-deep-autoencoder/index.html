@@ -22,10 +22,10 @@
 
   <div class="kicker">Earlier method notes</div>
   <h1>Reading the electricity-theft paper</h1>
-  <div class="note warning"><strong>This is the earlier account, not the current reproduction.</strong> The results below use older assumptions, including omitted test-set resampling. They are preserved for comparison. The later experiment completed the stated test-resampling step and was audited on 31 August 2026. <a href="reproduction/">Read the current reproduction report and its paper-to-code comparison.</a></div>
+  <div class="note warning"><strong>This is the earlier account, not the current reproduction.</strong> The results below use older assumptions, including omitted test-set resampling. They are preserved for comparison. The later experiment completed the stated test-resampling step and was audited on 31 August 2026; subsequent output-domain and fitted-Sigmoid checks are also complete. <a href="reproduction/">Read the current reproduction report and its paper-to-code comparison.</a></div>
   <p class="lede">The paper trains computer models to recognize electricity theft. These earlier notes explain the method, missing details, and initial experiments. They are not instructions to resume the old runs, and their numbers must not be combined with the current reproduction as if they were repeated seeds.</p>
   <p class="meta">Paper source: Sections II–IV, Equations (1)–(13), Algorithms 1–6, Figures 1–8, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
-  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the work-in-progress scientific report (PDF)</a>. This PDF predates the current audited reproduction and is retained as an earlier report.</p>
+  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the current work-in-progress scientific report (PDF)</a>. It supersedes the older PDF while retaining the historical results below as explicitly earlier evidence.</p>
 
   <div class="legend" aria-label="Legend">
     <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
@@ -265,12 +265,12 @@
   <section class="stage">
     <div class="stage-title"><h2>Where this leaves the earlier notes</h2></div>
     <p>The old execution sequence is superseded. One expensive run per model is not a cheap first pass. The current work uses small checks to identify which explanations deserve another full experiment.</p>
-    <p>The later FC-SAE run used a newly documented reading, a different seed, all residential customers, attacks only from held-out customers, and completed test-set ADASYN. It reached 25.48% detection and 40.18% balanced accuracy. Those results and their limits belong to the <a href="reproduction/">new reproduction report</a>, not this earlier run.</p>
+    <p>The later FC-SAE run used a newly documented reading, a different seed, all residential customers, attacks only from held-out customers, and completed test-set ADASYN. It reached 25.48% detection and 40.18% balanced accuracy. A subsequent Softmax-domain proof excludes the target under those fixed data/output/score assumptions; a small trained Sigmoid control also failed every cutoff on its sampled evaluation, while longer Sigmoid training remains unresolved. Those results and their limits belong to the <a href="reproduction/">new reproduction report</a>, not this earlier run.</p>
     <p>Original results, code, and changes of interpretation remain in the research record. No additional training is authorized by this page.</p>
   </section>
 
   <footer>
-    Earlier method notes, retained with their original results. Wording and navigation updated 31 August 2026. See the new report for the current experiment; no claim about author intent is made.
+    Earlier method notes, retained with their original results. Wording and navigation updated 1 September 2026. See the new report for the current experiment; no claim about author intent is made.
   </footer>
 </main>
 </body>

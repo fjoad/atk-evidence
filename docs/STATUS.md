@@ -1,15 +1,26 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-31
+**Last updated:** 2026-09-01
 
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
+[`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md)
 
 ## Current project state
 
-- **Small fitted Sigmoid check complete; discussion pending:** the user
+- **Full-site publication bundle verified, then remaining-paper plan:** the user
+  requested publishing the two completed Sigmoid follow-ups across the full
+  site first, then completing the remaining proposed models, mechanism tests,
+  and Tables II-V. Follow the new active plan above. No experiment runs during
+  publication. The local bundle now includes every current site entry point,
+  a rebuilt five-page PDF, and record-backed Sigmoid tables; 235 deterministic
+  tests pass and all five rendered PDF pages were inspected. Before later
+  cluster work, freeze the exact remaining model and
+  table contracts, cost them, and pass the plan's scientific checkpoint; do
+  not upgrade quarantined historical breadth to eligible evidence.
+
+- **Small fitted Sigmoid check complete and approved for publication:** the user
   requested testing the remaining alternative. See
   [the bounded fit plan](plans/2026-08-31-small-sigmoid-fit.md) and
   [exact setup](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_CHECK.md).
@@ -23,11 +34,9 @@
   possible Sigmoid configuration. Sigmoid calibration MSE improved through
   the last epoch; no long-run plateau is established. The
   [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md)
-  preserves that limitation, every outcome, hashes, and timing. Stop for
-  discussion; no full retraining, sweep, public edit, or push is authorized.
-  Post-run verification passed 232 deterministic tests (140 study, 92 root)
-  and 73 local documentation links. The README, website, reports, and five
-  reproduction files are unchanged from `dc37bbe`. Records are local only.
+  preserves that limitation, every outcome, hashes, and timing. The earlier
+  discussion stop was satisfied; on 1 September the user approved updating the
+  full site before continuing. No full retraining or sweep has begun.
 
 - **Earlier publication and no-training Sigmoid follow-up complete:** after discussing the
   source-assumption findings, the user requested their publication first,

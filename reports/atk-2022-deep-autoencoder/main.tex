@@ -1,285 +1,313 @@
 \documentclass[11pt]{article}
 
-\usepackage[margin=1in]{geometry}
+\usepackage[margin=0.92in]{geometry}
 \usepackage{booktabs}
 \usepackage{longtable}
 \usepackage{array}
+\usepackage{amsmath}
 \usepackage{microtype}
 \usepackage{xcolor}
 \usepackage[hidelinks]{hyperref}
 
 \definecolor{evidenceblue}{HTML}{245B96}
-\newcommand{\status}[1]{\textsc{#1}}
+\newcommand{\status}[1]{\textcolor{evidenceblue}{\textsc{#1}}}
 \newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\arraybackslash}p{#1}}
 
 \title{A Reproduction Audit of\\
 \emph{Deep Autoencoder-Based Anomaly Detection of\\
 Electricity Theft Cyberattacks in Smart Grids}}
 \author{ATK Evidence}
-\date{Work in progress --- 11 August 2026}
+\date{Work in progress -- 1 September 2026}
 
 \begin{document}
 \maketitle
 
 \begin{abstract}
-This report tests whether the principal numerical results reported by
-Takiddin et al.\ can be reproduced from the named datasets and the experimental
-procedure described in the paper. The primary track preserves the printed
-method, including questionable operations; material omissions and
-contradictions are tested as predeclared branches; statistically corrected
-controls are reported separately. This document is a live report scaffold.
-One full compact FC-SAE interpretation has completed; no paper-level
-reproduction verdict has yet been issued.
+We implemented the paper's written ISET FC-SAE method from a clean reader's
+perspective and compared it with Table III. The reported balanced accuracy was
+83.00\%; the audited run produced 40.18\%. A finite geometric calculation then
+showed that no change to the fitted weights, seed, or optimizer can raise this
+same Softmax-output method above 50.93\% balanced accuracy on the fixed prepared
+inputs. Replacing Softmax with Sigmoid removes that particular bound, but does
+not reproduce the result: in a small paired fit, the best detection rate at no
+more than 15\% false alarms was 9.74935\% in the paper's score direction and
+25.39063\% with the direction reversed, versus 81\% reported. The Sigmoid loss
+was still improving at epoch ten, so this is not a proof against every Sigmoid
+configuration. Four proposed Table III models and the mechanism, Table II, and
+Tables IV--V checks remain. The current conclusion is therefore narrow: one
+numerical result did not reproduce; one fixed-input Softmax target is excluded;
+and a bounded Sigmoid diagnostic did not rescue it.
 \end{abstract}
 
-\section{Scope and testable claim}
+\section{The three questions}
 
-The target is the complete result pattern in Tables II--V, not an isolated
-metric or a favorable random seed. A paper-consistent reproduction must recover
-the joint metric pattern within predeclared tolerances across repeated runs.
-Failure is bounded to the finite documented implementation, hyperparameter,
-seed, split, and compute space; it is not a claim of logical impossibility or
-author intent.
+The audit keeps three questions separate.
 
-\section{Source protocol reconstruction}
+\begin{enumerate}
+  \item \textbf{Numerical:} does the method as written reproduce the reported
+  numbers?
+  \item \textbf{Mechanistic:} does the added architecture demonstrate the
+  capability claimed to explain its advantage?
+  \item \textbf{Attainability:} does the reported target lie inside a justified
+  performance envelope, or far outside it with no ordinary route to the target?
+\end{enumerate}
 
-The paper uses two different data paths. SGCC supplies real benign and
-malicious labels. ISET, drawn from CER, supplies benign half-hourly profiles,
-from which six malicious variants are synthesized using Equations (1)--(6).
-Anomaly detectors are trained on benign data only, whereas supervised models
-use benign and malicious classes. The printed anomaly protocol applies ADASYN
-to the test set; the supervised protocol applies ADASYN before splitting.
+A numerical miss is not automatically a mechanism failure or an attainability
+result. None of the three, alone or together, identifies author intent.
 
-In the frozen ISET construction, the anomaly test population before ADASYN has
-750,770 benign profiles and 13,507,740 malicious profiles. The selected exact
-imbalanced-learn/scikit-learn default therefore queries 750,770 minority rows
-against all 14,258,510 test rows in its first nearest-neighbor pass, or roughly
-$10.7\times10^{12}$ profile-pair distances, followed by a minority-only search
-and generation of approximately 12.8 million synthetic benign profiles. A
-bounded full attempt consumed 4,724.52 seconds wall time and 33,665.16
-CPU-seconds without completing the first query. This is an operational result
-for the declared default implementation, not a proof that ADASYN is impossible
-in principle: exact GPU search, approximate neighbors, or an unreported
-subsample may have different cost, and the paper specifies none of them. A
-same-machine 16-core benchmark of 250 queries against all 14,258,510 rows
-processed 3,564,627,500 distance pairs in 16.12 seconds. Linear extrapolation
-estimates 13.45 hours for the first full search and 0.71 hours for the
-minority-only search, or 14.16 wall-hours before synthesis and serialization.
-This makes the selected CPU default expensive but plainly possible as an
-overnight job; it provides no basis for claiming that the authors could not
-have run ADASYN.
+\section{What the paper says}
 
-\section{Reproduction methods}
+For the ISET experiment, benign half-hourly electricity profiles are used to
+construct six families of synthetic attacks. The anomaly detector is trained
+on benign profiles. Table I describes an FC-SAE with dimensions
+\(48\!\rightarrow\!400\!\rightarrow\!300\!\rightarrow\!200\!\rightarrow\!100
+\!\rightarrow\!100\!\rightarrow\!200\!\rightarrow\!300\!\rightarrow\!400
+\!\rightarrow\!48\), hidden Sigmoid activations, dropout 0.4, a Softmax output,
+Adam at 0.001, and mean squared reconstruction error. A reconstruction score
+above 0.58 is treated as malicious. Table III reports 81\% detection, 15\%
+false alarms, 85\% specificity, 81\% precision, 83\% accuracy, 81\% F1, and
+81\% AUC for ISET FC-SAE.
 
-\subsection{Data provenance}
+The source is incomplete or contradictory in several consequential places.
+For example, the paper does not make every data mapping or threshold-selection
+operation executable; its VAE equation mixes incompatible variables; its AEA
+algorithm and prose disagree; and some published metric rows cannot all obey
+the stated formulas. We preserve those facts and label each executable
+completion instead of silently choosing a favorable repair.
 
-Every input is identified by source, access conditions, version, byte size,
-and checksum. Raw datasets and the source paper remain local and are not
-redistributed.
+\section{Clean-reader implementation}
 
-\subsection{Paper-consistent branches}
+The first eligible run used 1,500,523 benign training profiles. The prepared
+test set contained 4,380,387 benign and 4,504,602 attack profiles after the
+declared ADASYN step, or 8,884,989 rows. The network had 450,448 parameters.
+Training stopped after 28 epochs and restored epoch 23. Fitting took 8:02:46 on
+one NVIDIA P100; the complete job took 9:14:27.
 
-Each material omission or contradiction receives a stable branch identifier
-before eligible results are examined. Non-executable printed expressions are
-preserved as findings and receive only explicitly labeled minimal repairs.
+The implementation is intentionally literal. Corrections are separate
+experiments. All seven values below use the paper's printed metric definitions
+and the declared score direction.
 
-\subsection{From impossible wording to executable evidence}
-
-When a printed operation cannot exist or execute, the audit does not silently
-repair it and does not stop at criticism. First, the exact wording and source
-locator are preserved as a literal non-executable outcome. Second, the smallest
-reasonable executable repair and every other materially defensible reading are
-predeclared under separate interpretation identifiers. Third, every such repair
-is executed over all declared seeds. The results section and public study site
-will place the reported target, literal failure, every repair's configuration,
-failures, timings, and metric distribution side by side. A repair that matches
-the paper is reported as plainly as a non-match. No repair is represented as
-the authors' unobserved implementation. The working hypothesis is non-match,
-but it cannot determine branch selection, stopping, or display.
-
-\subsection{Source failures and planned executable interpretations}
-
-{\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{longtable}{L{0.17\textwidth}L{0.24\textwidth}L{0.50\textwidth}}
+\begin{table}[ht]
+\centering
+\caption{Table III ISET FC-SAE: reported and audited values (percent).}
+\small
+\begin{tabular}{lrrrrrrr}
 \toprule
-Source issue & Literal status & Executable evidence path \\
+ & DR & FA & SP & PR & ACC & F1 & AUC \\
+\midrule
+Reported & 81.00 & 15.00 & 85.00 & 81.00 & 83.00 & 81.00 & 81.00 \\
+Audited & 25.48 & 45.13 & 54.87 & 36.73 & 40.18 & 30.09 & 39.40 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\noindent\status{Numerical finding.} This one clean-reader FC-SAE result did
+not reproduce Table III. It is one eligible model and one seed, not a verdict
+on the complete paper.
+
+\section{Could a better cutoff rescue the same Softmax model?}
+
+We first asked a broader question than ordinary threshold tuning: even if we
+could choose the most favorable Softmax output separately for every attack,
+could enough attacks cross a threshold while keeping false alarms at or below
+15\%?
+
+For a prepared input \(x\), let \(r\) be any possible 48-way Softmax output and
+let the reconstruction score be
+\[
+  s(x,r)=\frac{\lVert x-r\rVert_2^2}{48}.
+\]
+Every Softmax output lies on the probability simplex. The minimum possible
+score is the squared distance from \(x\) to that simplex divided by 48. The
+maximum is attained at one of the simplex vertices:
+\[
+  L(x)=\frac{d(x,\Delta)^2}{48}, \qquad
+  U(x)=\frac{\lVert x\rVert_2^2+1-2\min_j x_j}{48}.
+\]
+We evaluated outward-padded float64 versions of these limits over every fixed
+prepared row, then exhaustively enumerated the resulting score boundaries.
+This is conservative floating-point evidence, not certified interval
+arithmetic.
+
+\begin{table}[ht]
+\centering
+\caption{Best possible Softmax-output performance on the fixed prepared rows.}
+\begin{tabular}{L{0.51\textwidth}r}
+\toprule
+Quantity & Upper limit \\
+\midrule
+Detection rate at FA $\leq$ 15\% & 9.25\% \\
+Detection rate at FA $\leq$ 15.5\% & 9.72\% \\
+Balanced accuracy at any cutoff & 50.93\% \\
+AUC under the paper's score direction & 45.11\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The reported pair is 81\% detection at 15\% false alarms. These limits include
+every set of weights, seed, optimizer, and training duration that retains the
+fixed prepared inputs, 48-way Softmax output, MSE score, and the paper's score
+direction. Ordinary training or cutoff search cannot bridge this gap inside
+that declared system.
+
+This does not prove that every conceivable interpretation fails. Changing the
+input preparation, output activation, score, or population changes the system
+and requires a separately labeled experiment.
+
+\section{Source-supported alternatives}
+
+Before training another model, we enumerated material readings supported by
+the source. Using the paper's printed Softmax output, MSE score, high-error
+direction, and cutoff 0.58 yields the limits above. Two additional
+normalization readings cap detection at that cutoff at 29.81\% and 33.96\%.
+Neither reaches 81\%.
+
+The paper also contains wording that could motivate replacing the Softmax
+output with independent Sigmoid outputs. This is a real architectural change,
+so the Softmax proof cannot be transferred to it.
+
+\section{Sigmoid: range first, then a paired fit}
+
+\subsection{No-training range check}
+
+For independent Sigmoid outputs, the attainable reconstruction-score interval
+is different. Across all 8,884,989 prepared evaluation rows, a label-aware
+upper range permits as much as 85.32587\% detection at at most 15\% false
+alarms in the high-error direction, or 93.76498\% after reversing the score.
+These are upper limits that choose favorable allowed outputs with knowledge of
+the labels; they are not results produced by a trained model.
+
+At the printed cutoff 0.58, even the best allowed high-error assignment must
+falsely flag at least 29.66640\% of benign rows. Thus Sigmoid opens a possible
+route at a different cutoff, but it cannot rescue the complete printed
+procedure at 0.58. A permitted target is not a reproduced target.
+
+\subsection{Small matched training control}
+
+We next ran a deliberately small control. Softmax and Sigmoid used the same
+architecture, 450,448 parameters, hidden activations, dropout, optimizer,
+2,048 fitting rows, 1,024 benign calibration rows, ten epochs, 640 updates,
+and identical starting weight arrays. Only the final activation differed. The
+held-out evaluation contained 12,119 rows: 6,144 attacks, 1,024 source benign
+days, and 4,951 synthetic benign rows.
+
+\begin{table}[ht]
+\centering
+\caption{Exhaustive held-out cutoff enumeration after the paired fit (percent).}
+\small
+\begin{tabular}{L{0.31\textwidth}rrrr}
+\toprule
+Model and score direction & DR at 15 & DR at 15.5 & Best ACC & AUC \\
+\midrule
+Softmax, high error & 8.64258 & 8.83789 & 50.05667 & 37.68698 \\
+Sigmoid, high error & 9.74935 & 9.99349 & 50.33353 & 37.70499 \\
+Softmax, low error & 25.52083 & 26.12305 & 61.48292 & 62.31302 \\
+Sigmoid, low error & 25.39063 & 25.81380 & 61.64614 & 62.29501 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the fitted Sigmoid model, all 12,060 ROC boundaries were enumerated. In the
+paper's high-error direction and at FA $\leq$ 15\%, at most 896 of 5,975
+benign rows can be false alarms and only 599 of 6,144 attacks are detected.
+No threshold rounding can turn 9.74935\% into 81\%. At cutoff 0.58 the fitted
+model gives 25.24414\% detection and 47.02929\% false alarms. A threshold set
+using only the benign calibration rows gives 7.12891\% detection and 9.92469\%
+false alarms.
+
+Sigmoid therefore did not rescue this bounded fit. It is not an all-Sigmoid
+proof. Its calibration MSE improved from 1.61028 at epoch one to 1.33863 at
+epoch ten, and epoch ten was the selected checkpoint. No long-run plateau has
+been established.
+
+\section{What useful work did the added output perform?}
+
+The paired control isolates one proposed change. In the paper's score direction,
+Sigmoid improves constrained detection by about 1.11 percentage points over
+Softmax, from 8.64258\% to 9.74935\%. The reversed direction is slightly worse.
+This bounded result shows no material capability gain approaching the reported
+target, but it does not yet test the paper's main FC-versus-LSTM mechanism.
+
+A mechanism claim needs a task that distinguishes the proposed capability.
+The next matched tests therefore keep parameter budget and training protocol as
+close as possible while comparing FC and recurrent models, then destroy or
+permute temporal order. If an LSTM advantage is attributed to temporal
+structure, that advantage should respond predictably when temporal structure
+is removed.
+
+\section{Static checks on the broader paper}
+
+Independent of training, five Table II rows and eight Table III rows are
+inconsistent with a common balanced-evaluation prevalence under the paper's
+printed DR, FA, and precision definitions, even after allowing for rounding.
+Table II's Naive Bayes row reports DR = PR = 75\% but F1 = 77\%; their harmonic
+mean is 75\%. Table V reports different false-alarm rates for each attack type
+within a model. If the model, threshold, and benign evaluation population are
+fixed, false alarms cannot depend on which attack family is paired with those
+same benign rows. These are source inconsistencies. They do not by themselves
+show how the experiments were implemented.
+
+\section{Current coverage and next work}
+
+\begin{longtable}{L{0.23\textwidth}L{0.26\textwidth}L{0.42\textwidth}}
+\toprule
+Paper result & Current eligible coverage & Next evidential question \\
 \midrule
 \endfirsthead
 \toprule
-Source issue & Literal status & Executable evidence path \\
+Paper result & Current eligible coverage & Next evidential question \\
 \midrule
 \endhead
-SGCC length versus input & Roughly 1,034 daily values are supplied but the
-model consumes 48 inputs; no mapping is stated. & Separately named crop,
-window, resampling, and aggregation interpretations; no proxy may be called the
-literal result. \\
-Attack 3 endpoint & $t_f=t_i-t_l$ puts the final time before the start; hours
-are also mapped to 48 half-hour positions without a rule. & Preserve the
-literal failure; execute addition-plus-clipping, addition-plus-wraparound, and
-valid-endpoint redraw with declared slot mappings. \\
-Customer identity & The text requires unseen test customers but constructs the
-test population as $B_2+M$, where $M$ was generated from every customer. & Run
-all-customer versus held-out-customer attacks and customer-disjoint versus
-daily-row splits as distinct interpretations. \\
-VAE definition & Equation (9) mixes incompatible distribution variables;
-variance positivity and reconstruction probability are undefined; two passages
-give opposite score directions. & Execute finite declared loss reductions,
-positive variance parameterizations, probability estimators, draw counts, and
-both printed score directions. \\
-AEA decoder & Algorithm 5 uses the reconstruction before it has been decoded
-and disagrees with the prose over summation versus concatenation. & Execute
-repeat-latent, first-step/zero, and autoregressive schedules with both merge
-readings under separate identifiers. \\
-Search and threshold & Benign-only $X_{TR}$ cannot provide DR/FA or an ROC;
-the layer loop cannot yield the unequal Table-I widths; ``median of IQR of ROC''
-is not an algorithm. & Preserve the failures; execute direct Table-I replay and
-predeclared staged-search, validation-population, and deterministic threshold
-interpretations. \\
-Reported metric identities & Table-II Naive Bayes has DR=PR=75 but F1=77, and
-Tables II--III admit no common prevalence from their DR/FA/PR rows under the
-printed formulas. & This is a static source contradiction, not something to
-repair by changing the target. Experimental rows remain reported separately
-against the exact published values. \\
-Table-V identity & A fixed model, threshold, and benign set imply one FA, but
-six FAs are reported per model. & Execute common-model/common-benign,
-per-attack retraining, per-attack benign resampling, and their combination. \\
+Table III FC-SAE & One full clean-reader run; Softmax fixed-input bound;
+paired Sigmoid diagnostic & Numerical miss and conditional unattainability are
+established at their stated scope. \\
+Table III LSTM-SAE, FC-VAE, LSTM-VAE, LSTM-AEA & Not yet run through the current
+clean-reader path & Do the other four proposed models reproduce their rows? \\
+FC versus LSTM mechanism & Not yet tested in a matched mechanism experiment &
+Does recurrence add useful temporal capability, and does any advantage survive
+temporal destruction? \\
+Tables IV--V & Historical exploratory artifacts exist, but current eligible
+coverage is incomplete & For models that pass the frozen eligibility gate, do
+timing and per-attack results reproduce? \\
+Table II & Literal route is not executable because roughly 1,034 daily values
+must become 48 inputs without a stated mapping & Do any predeclared, materially
+reasonable source-supported mappings reproduce the table? \\
 \bottomrule
 \end{longtable}
-}
 
-\subsection{Corrected controls}
+The order is breadth first: complete one declared run for each remaining
+proposed family before deep seed or hyperparameter searches; then run the
+matched mechanism tests; then Tables IV--V for eligible models; then the finite
+Table II interpretation family. Every expensive run must answer a named
+uncertainty under a frozen data, code, seed, metric, budget, and stopping rule.
 
-Corrected experiments use customer-disjoint partitions, transformations fitted
-on training data only, untouched validation/test data, and valid
-validation-selected thresholds. They answer a different question and cannot
-substitute for the paper-consistent reproduction.
+\section{Conclusion}
 
-\section{Fidelity audit}
+The present evidence supports three carefully bounded statements. First, the
+clean-reader ISET FC-SAE implementation did not reproduce its Table III row.
+Second, for the fixed prepared inputs, a 48-way Softmax output scored by MSE
+cannot attain the reported operating point, regardless of training. Third, a
+small matched Sigmoid fit remained far below the target, although its improving
+loss means broader Sigmoid attainability remains open.
 
-The source-to-code audit will cover data populations, attack equations, split
-identity, normalization and ADASYN order, every reported neural layer,
-training loss, anomaly score, threshold selection, metric definitions, and
-experiment identity for Tables II--V. Historical runs affected by a material
-mismatch are retained but excluded from paper-reproduction claims.
+The stronger paper-level conclusion is not yet available. The remaining model
+families and the mechanism-specific tests are necessary to decide whether the
+same pattern extends across the paper. Undocumented code or an untested method
+outside the declared interpretation space also remains possible. No current
+result warrants a claim about fabrication or author intent.
 
-\section{Results}
+\section*{References}
 
-\textcolor{evidenceblue}{\status{Exploratory:}} One full compact
-\texttt{I-ADASYN-NONE-ISET-FC-SAE} attempt has completed. It is the frozen
-seed-11, batch-512 executable completion without test-set resampling, not the
-completed printed-ADASYN result and not a confirmatory verdict. The model had
-450,448 parameters, trained for 74 epochs with epoch 69 restored, and completed
-in 53:12 of Slurm wall time.
-
-\begin{table}[ht]
-\centering
-\caption{Reported and reproduced full-ISET FC-SAE metrics (percent).}
-\begin{tabular}{lrrrrr}
-\toprule
- & DR & FA & Balanced ACC & AUC & F1 \\
-\midrule
-Reported & 81.00 & 15.00 & 83.00 & 81.00 & 81.00 \\
-Reproduced, seed 11 & 26.18 & 58.22 & 33.98 & 31.04 & 40.46 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-The result closely repeats the prior batch-32 sensitivity rather than being
-rescued by the frozen batch-512 primary completion. Under the common-model,
-common-benign Table-V interpretation, reproduced FA is exactly 57.9152\% for
-all six attack types, whereas the paper reports 15, 16, 10, 17, 17, and 19\%.
-An artifact-reload score audit gives additional diagnosis. With the paper's
-``larger reconstruction error is malicious'' direction, an oracle threshold
-selected on the test labels reaches only 50.0019\% balanced accuracy
-(AUC 31.0439\%). Reversing the score direction reaches 66.2554\% balanced
-accuracy (AUC 68.9561\%), still 16.7446 points below the reported 83\%.
-Moreover, trained reconstruction-error scores correlate at 0.999459 with the
-scores obtained by reconstructing every profile as zero. This is consistent
-with a structural tension in the printed method: joint zero-mean/unit-variance
-standardization produces negative inputs, while Table I's Softmax output is
-nonnegative and constrained to sum to one. The diagnostic motivates a
-separately labeled linear-output repair; it does not modify or invalidate the
-paper-consistent Softmax attempt.
-
-Additional Softmax seeds are deliberately deferred while a breadth-first pass
-maps one seed per proposed model family and high-information one-factor
-interpretation. Each non-executable source item will
-ultimately receive a
-reported-versus-literal-failure-versus-repair block; no closest repair will be
-selected in place of the full predeclared family.
-
-\subsection{A conditional bound on what test-set ADASYN can repair}
-
-For ISET, ADASYN oversamples the benign test class after model fitting. It does
-not alter the fitted weights or predictions on the preserved malicious rows.
-Thus, for this trained model, DR remains 26.1807\% regardless of the added
-benign samples. From the paper's own balanced-accuracy definition,
-\[
-  \mathrm{ACC}=\frac{\mathrm{DR}+100-\mathrm{FA}}{2},
-\]
-even the unattainably favorable bound $\mathrm{FA}=0$ gives only 63.0903\%,
-below the reported 83\%. This is a mathematical impossibility result
-conditional on this trained model and the paper's ISET ADASYN placement. It is
-not a proof that every paper-consistent training completion has the same DR,
-nor evidence of fabrication or author intent.
-
-\begin{table}[ht]
-\centering
-\caption{Final reproduction decisions will be populated only from eligible,
-fingerprinted attempts.}
-\begin{tabular}{lll}
-\toprule
-Published table & Reproduction state & Evidence status \\
-\midrule
-Table II & Pending eligible completion & Open \\
-Table III & One no-resampling FC-SAE seed & Exploratory \\
-Table IV & Full-size FC-SAE timing recorded & Exploratory \\
-Table V & Common-model FC-SAE identity recorded & Exploratory \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\section{Statistical assessment}
-
-The final analysis will report all predeclared seeds and failures, uncertainty
-intervals, complete metric patterns, and the fraction of eligible branches
-meeting the frozen reproduction tolerance. No best-seed or best-branch result
-will stand in for the distribution. The current 63.0903\% ceiling is an exact
-conditional bound, not a substitute for repeated seeds or the finite
-interpretation envelope. The exploratory stage first maps model and
-interpretation breadth with one watched seed each; those anchors are not used
-for a statistical verdict. Confirmation will then freeze a larger seed set and
-the finite source-supported interpretation envelope. A branch will be classified
-as a non-match only when its uncertainty interval remains outside the
-predeclared $\pm2$ percentage-point reproduction band. Because the paper
-reports rounded point estimates without repetitions or uncertainty, a
-two-sample test against the authors' run distribution is not possible.
-Conclusions therefore remain bounded to the tested envelope rather than an
-infinite space of unreported implementations.
-
-\section{Limitations}
-
-The paper omits hardware, software versions, epochs, batch size, seeds,
-repetitions, and several data/threshold details. Consequently, any verdict must
-remain conditional on the finite tested interpretations. Reported training
-minutes cannot be compared absolutely without the original timing boundary and
-hardware.
-
-\section{Verdict}
-
-\textcolor{evidenceblue}{\status{Not yet issued.}} The verdict will be frozen
-only after the eligible reproduction matrix and its statistical assessment are
-complete.
-
-\appendix
-\section{Reproducibility materials}
-
-Code, configurations, provenance records, checksums, run manifests, and
-machine-readable summaries are maintained at
-\url{https://github.com/fjoad/atk-evidence}. The public method map is intended
-to make the paper's experimental flow readable before the detailed evidence is
-examined.
+\begin{enumerate}
+  \item B. Takiddin, M. Ismail, U. Zafar, and E. Serpedin, ``Deep
+  Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in
+  Smart Grids,'' \emph{IEEE Systems Journal}, 2022.
+  \item Commission for Energy Regulation, Smart Metering Project electricity
+  customer behaviour trial data, accessed through the Irish Social Science Data
+  Archive under its terms.
+  \item ATK Evidence, frozen clean-reader implementation, experiment contracts,
+  result records, and source-to-code audit in the accompanying repository.
+\end{enumerate}
 
 \end{document}

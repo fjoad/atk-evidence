@@ -9,6 +9,7 @@ import re
 import subprocess
 import unittest
 import xml.etree.ElementTree as ET
+from decimal import Decimal, ROUND_HALF_UP
 from functools import lru_cache
 from html.parser import HTMLParser
 from pathlib import Path
@@ -21,7 +22,10 @@ STUDY = ROOT / "studies/atk-2022-deep-autoencoder"
 RECORDS = STUDY / "results/clean_reader_anchor_20260831"
 DIAGNOSTICS = STUDY / "results/post_anchor_20260831"
 ASSUMPTIONS = STUDY / "results/source_assumption_20260831"
+SIGMOID_RANGE = STUDY / "results/sigmoid_sanity_20260831"
+SIGMOID_FIT = STUDY / "results/sigmoid_fit_20260831"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
+REPORT_SOURCE = ROOT / "reports/atk-2022-deep-autoencoder/main.tex"
 
 
 class Page(HTMLParser):
@@ -36,6 +40,7 @@ class Page(HTMLParser):
         self.gains = {}
         self.scalings = {}
         self.ranges = {}
+        self.fits = {}
         self.h1_count = 0
         self.row = None
         self.row_group = None
@@ -58,7 +63,8 @@ class Page(HTMLParser):
         if tag == "tr":
             groups = {"metric": self.metrics, "bound": self.bounds,
                       "control": self.controls, "gain": self.gains,
-                      "scaling": self.scalings, "range": self.ranges}
+                      "scaling": self.scalings, "range": self.ranges,
+                      "fit": self.fits}
             for name, group in groups.items():
                 if f"data-{name}" in attrs:
                     self.row = attrs[f"data-{name}"]
@@ -98,6 +104,8 @@ class PublicReportTests(unittest.TestCase):
         cls.diagnostics = json.loads((DIAGNOSTICS / "full/diagnostics.json").read_text())
         cls.control = json.loads((DIAGNOSTICS / "energy_band_control.json").read_text())
         cls.assumptions = json.loads((ASSUMPTIONS / "full.json").read_text())
+        cls.sigmoid_range = json.loads((SIGMOID_RANGE / "full.json").read_text())
+        cls.sigmoid_fit = json.loads((SIGMOID_FIT / "small.json").read_text())
 
     def test_complete_current_result_matches_saved_metrics(self):
         rows = self.pages[REPORT].metrics
@@ -183,7 +191,7 @@ class PublicReportTests(unittest.TestCase):
         self.assertIn("229 selected test sizes", water)
         self.assertIn("20 of 27", water)
         self.assertIn("not an unconditional detection ceiling", water)
-        self.assertIn("not been run", self.report_text)
+        self.assertIn("have <strong>not been run</strong>", self.report_text)
         self.assertIn("There are no seed-level confidence intervals here", self.report_text)
         for name in ("atk-2022-deep-autoencoder", "tlstgt-2025-water"):
             self.assertTrue((SITE / f"reports/{name}.pdf").is_file())
@@ -286,8 +294,61 @@ class PublicReportTests(unittest.TestCase):
                 value = result["at_printed_threshold"]["max_DR"]
                 self.assertEqual(rows[key][1], f"{math.ceil(value * 100) / 100:.2f}%")
         self.assertIn("No synthetic benign rows are included", self.report_text)
-        self.assertIn("We did not train a Sigmoid model", self.report_text)
-        self.assertIn("a permitted target is not a reproduced target", self.report_text)
+        self.assertIn("first calculation did not train a Sigmoid model", self.report_text)
+        self.assertIn("A permitted target is not a reproduced target", self.report_text)
+
+    def test_complete_sigmoid_range_and_fitted_scores_are_current(self):
+        complete = self.sigmoid_range["views"]["full"]["bounds"]
+        printed = complete["printed"]
+        reversed_control = complete["reversed_control"]
+        for value in (
+            printed["at_FA_cap"]["15.0"]["max_DR"],
+            reversed_control["at_FA_cap"]["15.0"]["max_DR"],
+            printed["at_printed_threshold"]["min_FA"],
+        ):
+            self.assertIn(f"{math.ceil(value * 100) / 100:.2f}%", self.report_text)
+        self.assertTrue(printed["target_pair_not_excluded"])
+        self.assertTrue(reversed_control["target_pair_not_excluded"])
+
+        rows = self.pages[REPORT].fits
+        expected = {
+            "softmax_printed": ("softmax", "printed"),
+            "sigmoid_printed": ("sigmoid", "printed"),
+            "softmax_reversed": ("softmax", "reversed_control"),
+            "sigmoid_reversed": ("sigmoid", "reversed_control"),
+        }
+        self.assertEqual(set(rows), set(expected))
+        for key, (head, direction) in expected.items():
+            result = self.sigmoid_fit["models"][head]["selected"]["sampled_prepared"][direction]["all_cutoffs_diagnostic"]
+            values = (result["at_FA_cap"]["15.0"]["max_DR"],
+                      result["at_FA_cap"]["15.5"]["max_DR"],
+                      result["max_ACC"], result["max_AUC"])
+            displayed = [f"{Decimal(str(value)).quantize(Decimal('0.00001'), rounding=ROUND_HALF_UP)}%"
+                         for value in values]
+            self.assertEqual(rows[key][1:], displayed)
+            self.assertFalse(result["target_pair_not_excluded"])
+            self.assertFalse(result["rounded_target_pair_not_excluded"])
+        sigmoid = self.sigmoid_fit["models"]["sigmoid"]
+        self.assertEqual(sigmoid["selected_epoch"], 10)
+        self.assertLess(sigmoid["epochs"][-1]["val_loss"], sigmoid["epochs"][0]["val_loss"])
+        self.assertIn("not a universal Sigmoid impossibility proof", self.report_text)
+
+    def test_all_current_entry_points_name_the_fitted_sigmoid_scope(self):
+        for path in (ROOT / "README.md", SITE / "index.html", REPORT):
+            content = path.read_text()
+            with self.subTest(path=path):
+                self.assertIn("9.75%", content)
+                self.assertIn("25.39%", content)
+                self.assertIn("still improving", content)
+
+    def test_downloadable_report_source_is_current_and_bounded(self):
+        source = REPORT_SOURCE.read_text()
+        for value in ("40.18", "50.93", "9.74935", "25.39063"):
+            self.assertIn(value, source)
+        self.assertIn("not an all-Sigmoid", source)
+        self.assertIn("Four proposed Table III models", source)
+        self.assertIn("No current", source)
+        self.assertIn("fabrication or author intent", source)
 
     def test_plain_language_questions_precede_the_relevant_checks(self):
         question = "even if we could choose the most favorable allowed output separately for every attack, could enough attacks cross the detection threshold?"
