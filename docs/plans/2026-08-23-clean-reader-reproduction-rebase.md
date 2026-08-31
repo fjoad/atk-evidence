@@ -2,16 +2,22 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; Checkpoint 1 approved 2026-08-24
+**Status:** Active governing plan; Checkpoint 2 approved for bounded diagnostics on 2026-08-31
 
-**Current state:** Phase 5 operationally `COMPLETE`: sole job `384390` exited
+**Current state:** bounded post-anchor diagnostics `IN PROGRESS` under
+[`POST_ANCHOR_DIAGNOSTICS.md`](../../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md).
+The user approved the proposed sequence on 2026-08-31: no-training oracle
+bound, useful-information measurements, and only a subsequently justified small
+control. No new full training, seed sweep, or model family is approved.
+Phase 5 operationally `COMPLETE`: sole job `384390` exited
 `0:0` on 2026-08-30 after 9:14:27 under the approved semantic allocation `I`
 branch. Phase 6 is `COMPLETE`: independent audit passed, the bounded Table-III
-FC-SAE non-reproduction is saved, and Checkpoint 2 awaits user review.
+FC-SAE non-reproduction is saved.
 The exact official-serialization failure remains preserved.
 The initial finding is now published as an in-progress report, explicitly
 approved by the user on 2026-08-31. This editorial publication does not complete
-Phase 9's final three-finding report or open Checkpoint 2 to experiments.
+Phase 9's final three-finding report. The subsequent diagnostic approval is
+separate from that publication approval.
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -139,10 +145,10 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
 | 5. Exact-data anchor | `COMPLETE` | Fidelity passes | Job 384390 completed once; immutable attempt seed_20260824_2f483335536c saved; independently audited in Phase 6 |
 | 6. Initial numerical finding | `COMPLETE` | User approved inspection of the sole completed anchor | CLEAN_READER_FINDING.md; frozen audit and 65 supplemental checks passed |
-| Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
+| Checkpoint 2 | `COMPLETE — limited scope` | User approved the proposed diagnostic sequence | Frozen post-anchor contract; no full training or broader search |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
 | 7M. Mechanism program | `PENDING` | Source causal claim promoted | Supported/contradicted/unidentified causal links |
-| 7A. Attainability envelope | `PENDING` | Plausibility question promoted | Declared envelope and conditional conclusion |
+| 7A. Attainability envelope | `IN PROGRESS — analytic bound only` | No-training output-domain question approved | Conditional oracle bound on fixed data; broad empirical search remains closed |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
@@ -383,9 +389,10 @@ gain justifies additional work:
 No paper row, model family, ambiguity, or seed is promoted merely because it
 exists.
 
-### Proposed next questions after publication — 2026-08-31
+### Approved next questions after publication — 2026-08-31
 
-These are a discussion proposal, not an approved or preregistered run contract.
+The user approved this sequence. Its bounded executable contract is
+[`POST_ANCHOR_DIAGNOSTICS.md`](../../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md).
 Keep the audited reproduction unchanged and begin with cheap diagnostic breadth:
 
 1. **Conditional performance bound (`A`).** For the fixed prepared inputs,
@@ -491,6 +498,7 @@ and record why the new evidence changed its status.
 | 2026-08-31 | Phase 5 job running; manual checks only | Phase 5 complete; Phase 6 audit pending | Manual inspection found Slurm `COMPLETED 0:0`, end 2026-08-30 22:48:39 Qatar, 9:14:27 elapsed, and a saved result/metadata record | Operational completion is not yet an independently trusted numerical finding; do not submit new work or cross Checkpoint 2 |
 | 2026-08-31 | Phase 6 audit pending | Phase 6 complete; Checkpoint 2 pending | User approved the audit; CPU-only job 384939 ran the frozen audit and supplemental checks on the unchanged sole attempt. All metrics regenerate exactly; a supplemental last-chunk checker defect was preserved and corrected, with all 65 checks passing afterward | The one frozen Table-III FC-SAE completion does not reproduce its target; N/M/A depth remains unapproved, and no scientific attempt was repeated |
 | 2026-08-31 | Checkpoint 2 pending | Checkpoint 2 pending; initial report public | User approved the readable report and explicitly requested GitHub/GitHub Pages publication; deployment succeeded and public files match the reviewed version | Editorial publication only; conditional-bound, useful-information, and small-control questions are proposed for discussion, not approved experiments |
+| 2026-08-31 | Checkpoint 2 pending | Limited diagnostic scope approved; 7A in progress | User said to execute the proposed bound/useful-information/small-control sequence | One capped no-training CPU pilot and, if checks pass, one full saved-artifact analysis; no new fitted model or seed |
 
 ## Current hard exclusions until the exact anchor and Checkpoint 2
 
@@ -508,4 +516,6 @@ and record why the new evidence changed its status.
 
 **Approved 2026-08-23 for Phases 0--1; separately authorized 2026-08-24 for
 Phase 2; Checkpoint 1 approved 2026-08-24 for the Phase-4/5 single-anchor
-sequence.** Checkpoint 2 remains closed.
+sequence; Checkpoint 2 approved 2026-08-31 for the bounded post-anchor diagnostic
+contract only.** Broader training, repeated seeds, and paper-table expansion
+remain closed.

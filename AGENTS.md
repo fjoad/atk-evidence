@@ -64,8 +64,12 @@ implementation and one seed. Mechanism and broader attainability remain open.
 See [the readable result](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
 and [current status](docs/STATUS.md).
 
-Do not start another seed, model, configuration, mechanism experiment, or
-performance search until the user approves the question at Checkpoint 2.
+The user approved Checkpoint 2 on 2026-08-31 only for the bounded checks in
+[POST_ANCHOR_DIAGNOSTICS.md](studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md).
+Do not start another full training run, seed sweep, model family, or broader
+search. Experimental scoring remains on cluster compute nodes; local runs are
+software fixtures only. Preserve the original run and inspect each diagnostic
+before promoting the next one.
 
 ## Repository and evidence
 

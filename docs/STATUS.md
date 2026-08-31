@@ -9,6 +9,14 @@
 
 ## Current project state
 
+- **Approved diagnostic round, 2026-08-31:** the user directed execution of the
+  proposed no-training bound and useful-information checks. The frozen scope is
+  [POST_ANCHOR_DIAGNOSTICS.md](../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md):
+  one 512-row cluster pilot, then one full saved-array pass if it checks out;
+  four CPU cores, 12 GiB, 20-minute allocation, no training or automatic retry.
+  The completed reproduction stays unchanged. Any small trained control needs
+  a specific surviving question and a separately recorded setup first.
+
 - **Public explanation, 2026-08-31:** the user requested the README and website
   be rewritten before any further experiments. The new research report is
   `site/papers/atk-2022-deep-autoencoder/reproduction/index.html`; it connects
@@ -27,7 +35,8 @@
   [live report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/).
   The next discussion is the proposed no-training bound, incremental useful
   information, and small discriminating controls recorded at Checkpoint 2.
-  No further experiment is approved; the numerical finding is unchanged.
+  The subsequent limited diagnostic approval is recorded above; the numerical
+  finding is unchanged.
 
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a
@@ -412,11 +421,12 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Review the saved clean-reader initial numerical finding at Checkpoint 2.
-2. Decide whether a cheap geometry/scoring/triviality diagnostic or a materially
-   different source completion would discriminate a surviving explanation.
-3. Do not launch new seeds, models, branches, mechanism experiments, or an
-   attainability search until that question and its budget are approved.
+1. Freeze and fixture-test the approved post-anchor analysis.
+2. Run its 512-row CPU pilot on the cluster; inspect before promoting the full
+   saved-array pass inside the same 20-minute budget.
+3. Record the conditional bound and useful-information results before deciding
+   whether any additional small control is warranted. No full training,
+   repeated seeds, or broader search is approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

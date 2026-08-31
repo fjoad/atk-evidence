@@ -2,6 +2,14 @@
 
 **Last updated:** 2026-08-31
 
+**Current approval:** the user approved execution of the post-anchor sequence
+on 2026-08-31. `POST_ANCHOR_DIAGNOSTICS.md` freezes the oracle output-domain
+bound and useful-information checks: 512-row pilot then a conditional full
+saved-array pass; one 4-CPU, 12-GiB, 20-minute allocation; no new training or
+automatic retry. This supersedes older “Checkpoint 2 pending” statements below
+only for that bounded scope. A small control must answer a surviving question
+and have its setup recorded before execution.
+
 **Public-writing direction, 2026-08-31:** the user wants the README and site to
 read like a clear research report: paper → implementation → result → possible
 explanations → tests → bounded conclusion. No workflow jargon in place of
@@ -11,7 +19,8 @@ not the scientific history. The user explicitly approved GitHub/GitHub Pages
 publication on 2026-08-31. The rewrite and supporting evidence were pushed;
 Pages run `33400529269` succeeded and all public pages/assets match the reviewed
 files. The README links to the rendered reports. All 187 local tests passed,
-including eight static report checks. No further experiment is authorized.
+including eight static report checks. The subsequent limited diagnostic
+authorization is stated above; no full training or broad search is authorized.
 See the 2026-08-31 editorial plan and the proposed next questions at Checkpoint 2.
 
 **Next scientific emphasis:** measure useful information beyond a simple input
