@@ -15,6 +15,19 @@ files match local bytes. The bundle passed 235 deterministic tests, data
 identity selected the verified ScienceDB branch, and all five PDF pages were
 visually inspected. Phase A is complete; Phase B is next.
 
+**Phase-B checkpoint, 2026-09-01:** the direct-paper reconstruction is saved in
+`studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md`. The paper fixes
+the remaining Table-I widths/optimizer/dropout/activations and printed cutoffs,
+but not an executable recurrent decoder schedule, VAE probability, or AEA
+loop. Proposed primary choices are first-step latent then zeros/top-state-only
+for LSTM-SAE/VAE; Equation-(10) sum-squared plus KL with ten-draw probability
+kernels for VAE; and autoregressive, concatenated additive attention for AEA.
+Batch remains 32. First wave: four two-hour cluster feasibility jobs, eight
+GPU-hours maximum; each passing full anchor has a 72-hour cap. No job or code
+change has begun. Panther has no queued user jobs and still holds the audited
+7.1-GiB cache and sole FC-SAE result. Await the five explicit Section-12
+checkpoint decisions before implementation/submission.
+
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see
 `SIGMOID_FIT_FINDING.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`.

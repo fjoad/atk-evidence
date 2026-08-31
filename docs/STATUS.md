@@ -21,6 +21,19 @@
   table contracts, cost them, and pass the plan's scientific checkpoint; do
   not upgrade quarantined historical breadth to eligible evidence.
 
+- **Remaining-paper scientific checkpoint ready:** the exact proposed model,
+  score, feasibility, mechanism, Tables IV/V, and Table-II sequence is saved in
+  [`REMAINING_PAPER_CONTRACT.md`](../studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md).
+  The source fixes widths, optimizers, dropout, activations, and cutoffs but
+  leaves recurrent decoder input, VAE probability, and AEA execution
+  incomplete. The contract makes the primary completions and alternatives
+  visible before outcomes. Panther read-only checks found no queued jobs; the
+  audited 7.1-GiB prepared cache and sole FC-SAE result remain present. Proposed
+  first execution is four at-most-two-hour feasibility jobs (eight GPU-hours
+  maximum), followed only for passing models by one at-most-72-hour full anchor
+  each. No code change or job has started; resolve Section 12's five checkpoint
+  decisions first.
+
 - **Small fitted Sigmoid check complete and approved for publication:** the user
   requested testing the remaining alternative. See
   [the bounded fit plan](plans/2026-08-31-small-sigmoid-fit.md) and

@@ -27,7 +27,7 @@ root/public), strict data verification selected the verified ScienceDB branch,
 all five PDF pages were rendered and inspected, Pages run `33448349593`
 succeeded, and all 11 deployed files matched the reviewed local bytes.
 
-## B. Exact remaining-paper contract - next
+## B. Exact remaining-paper contract - checkpoint ready
 
 Return to the frozen complete-paper source map. Reconcile Table-I definitions,
 Tables II-V targets, every non-executable instruction, and the quarantined
@@ -50,6 +50,17 @@ Before cluster submission, compare the contract with available resources and
 show the user the exact proposed runs, costs, and remaining ambiguities. This is
 the required scientific checkpoint; broad authorization does not permit us to
 invent omitted model semantics after observing outcomes.
+
+The proposed contract is now
+[`REMAINING_PAPER_CONTRACT.md`](../../studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md).
+It was reconstructed directly from the source PDF and preserves the deferred
+decoder, VAE-score, and attention failures. Panther is reachable, the audited
+7.1-GiB prepared cache and sole FC-SAE result remain present, no jobs are
+queued, and the accessible general partitions remain available. The first
+requested execution wave is four separate two-hour feasibility jobs (eight
+GPU-hours maximum); passing models then receive one immutable full anchor each,
+at no more than 72 GPU-hours per model. Await the five decisions in Section 12
+before changing code or submitting the feasibility wave.
 
 ## C. Clean-reader Table III proposed-family depth - pending checkpoint
 
