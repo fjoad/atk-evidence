@@ -55,6 +55,7 @@ figure { margin: 30px 0; }
 .diagram { background: var(--surface); border: 1px solid var(--line); padding: 12px; overflow-x: auto; }
 .diagram img { display: block; width: 100%; min-width: 670px; height: auto; }
 figcaption { margin-top: 12px; font-size: .82rem; color: var(--muted); line-height: 1.55; }
+.research-figure { display: block; width: 100%; max-width: 760px; height: auto; margin: auto; }
 code, pre { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .83em; }
 code { background: var(--mono-bg); padding: .12em .3em; overflow-wrap: anywhere; }
 pre { background: #eef0eb; border: 1px solid var(--line); padding: 22px; overflow-x: auto; line-height: 1.7; }

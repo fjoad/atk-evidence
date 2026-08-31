@@ -1,0 +1,3040 @@
+{
+  "analysis_commit": "26a42dbc27338d78329a7dcfb21e957b0e689718",
+  "classification": "X/M exploratory control",
+  "contract_sha256": "bd1f9faa1869731b8bbe5f8665e32d26ad09db0180fbb5c3e62d553f78225a41",
+  "elapsed_seconds": 18.032516101375222,
+  "helper_sha256": "029696b736d0115b8b051bbc3f996001e545d2f28e4cf49618a42b63a4d7905f",
+  "input_sha256": {
+    "scores.npy": "9fe8b22728244efee6628cb4aa2b1cd5bea7ee4b90a9d4c42d8e29e283098761",
+    "softmax_projection_floor_scores.npy": "533294facd1a2242ce006c0fdc3562b1e37cb47ff287a5000975ea1bb99d00f7",
+    "test_source_row.npy": "0d2f99d21e27c3b521e3fc4842ccea77673e3ebc4360ab61124134c453ab6964",
+    "x_test.npy": "a942e2affb3d76b5ca3b25f1f023878c2eeda1449b9dbd3d8bce037361a5ece0",
+    "y_test.npy": "cec8c078b62557535a0b30ff80da2908115639a0c3c52821a44227378537c887",
+    "zero_reconstruction_scores.npy": "9136759c066860e249eaacc7fb4b08d4134d53f5195daec33481e875ad83b9c2"
+  },
+  "job_id": "385091",
+  "pair_weighted_within_bin_AUC": {
+    "energy": 49.74125445462169,
+    "projection": 62.1838700621674,
+    "trained": 65.48802905445801,
+    "uniform": 55.02018611660775
+  },
+  "rows": 70000,
+  "sample_day_indices_sha256": "85505e8255fa0ac2a90f533ba2bccfca71848f8f74f63daf07d9015420bd0528",
+  "sample_source_days": 10000,
+  "script_sha256": "c802f9a09abe1f9a179da637d88ecc1678a8228ccdfe4951afa3eb4ad0bc9a35",
+  "seed": 20260831,
+  "source_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+  "status": "passed",
+  "within_energy_checks": {
+    "projection": {
+      "bins": [
+        {
+          "AUC": {
+            "energy": 42.90830945558739,
+            "trained": 45.48710601719198,
+            "trained_minus_energy": 51.57593123209169
+          },
+          "bin": 1,
+          "positive_negative_pairs": 1396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22606650990931,
+            "trained": 69.10760273205689,
+            "trained_minus_energy": 71.82846265815698
+          },
+          "bin": 2,
+          "positive_negative_pairs": 8931,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 30.57907542579076,
+            "trained": 51.844282238442815,
+            "trained_minus_energy": 69.09975669099757
+          },
+          "bin": 3,
+          "positive_negative_pairs": 10275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.9593385125619,
+            "trained": 67.67979646540367,
+            "trained_minus_energy": 73.51778656126481
+          },
+          "bin": 4,
+          "positive_negative_pairs": 22011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 56.75937778812211,
+            "trained": 61.7130222273944,
+            "trained_minus_energy": 61.21649404554095
+          },
+          "bin": 5,
+          "positive_negative_pairs": 25779,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.35820895522389,
+            "trained": 59.9452736318408,
+            "trained_minus_energy": 58.74129353233831
+          },
+          "bin": 6,
+          "positive_negative_pairs": 20100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.125,
+            "trained": 47.94117647058824,
+            "trained_minus_energy": 46.529411764705884
+          },
+          "bin": 7,
+          "positive_negative_pairs": 13600,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03630239520958,
+            "trained": 59.98315868263473,
+            "trained_minus_energy": 60.82990269461078
+          },
+          "bin": 8,
+          "positive_negative_pairs": 21376,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.470364867095924,
+            "trained": 67.94342633867151,
+            "trained_minus_energy": 69.88057894447196
+          },
+          "bin": 9,
+          "positive_negative_pairs": 18171,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.83382642998027,
+            "trained": 65.22435897435896,
+            "trained_minus_energy": 65.38461538461537
+          },
+          "bin": 10,
+          "positive_negative_pairs": 16224,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.74493498022909,
+            "trained": 67.8733031674208,
+            "trained_minus_energy": 68.04451510333864
+          },
+          "bin": 11,
+          "positive_negative_pairs": 24531,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96328482692252,
+            "trained": 69.70925315680499,
+            "trained_minus_energy": 71.18194278382083
+          },
+          "bin": 12,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.725758945495905,
+            "trained": 68.43486629144672,
+            "trained_minus_energy": 68.7643988218483
+          },
+          "bin": 13,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.290977192847436,
+            "trained": 66.66410118268811,
+            "trained_minus_energy": 67.02070345570692
+          },
+          "bin": 14,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.58718130870629,
+            "trained": 63.18375562396401,
+            "trained_minus_energy": 63.02786328834162
+          },
+          "bin": 15,
+          "positive_negative_pairs": 50676,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.56987385604749,
+            "trained": 67.88894385357409,
+            "trained_minus_energy": 67.44372990353698
+          },
+          "bin": 16,
+          "positive_negative_pairs": 48516,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.86408202368577,
+            "trained": 60.12148637355021,
+            "trained_minus_energy": 60.80229927230477
+          },
+          "bin": 17,
+          "positive_negative_pairs": 49059,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.43715846994536,
+            "trained": 69.9544626593807,
+            "trained_minus_energy": 70.01639344262296
+          },
+          "bin": 18,
+          "positive_negative_pairs": 54900,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.14936476595065,
+            "trained": 61.586788727338,
+            "trained_minus_energy": 61.18390873372026
+          },
+          "bin": 19,
+          "positive_negative_pairs": 50139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15413253909158,
+            "trained": 67.04206999255398,
+            "trained_minus_energy": 67.30733432613552
+          },
+          "bin": 20,
+          "positive_negative_pairs": 42976,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 42.87381959934127,
+            "trained": 64.99343353275937,
+            "trained_minus_energy": 65.65633403514623
+          },
+          "bin": 21,
+          "positive_negative_pairs": 47971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.08404104741684,
+            "trained": 66.1491507430998,
+            "trained_minus_energy": 66.76176574663836
+          },
+          "bin": 22,
+          "positive_negative_pairs": 45216,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.69384544799108,
+            "trained": 63.232177579690195,
+            "trained_minus_energy": 63.548972056542354
+          },
+          "bin": 23,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.53171221952765,
+            "trained": 70.1186340696074,
+            "trained_minus_energy": 70.11426449061634
+          },
+          "bin": 24,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.33226666666667,
+            "trained": 66.43626666666667,
+            "trained_minus_energy": 67.06133333333332
+          },
+          "bin": 25,
+          "positive_negative_pairs": 46875,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.989767722994564,
+            "trained": 59.46809429237544,
+            "trained_minus_energy": 59.37095242207063
+          },
+          "bin": 26,
+          "positive_negative_pairs": 46324,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.275353773584904,
+            "trained": 60.48914111635221,
+            "trained_minus_energy": 60.598466981132084
+          },
+          "bin": 27,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.12509031262815,
+            "trained": 67.09105465622619,
+            "trained_minus_energy": 66.82939212278612
+          },
+          "bin": 28,
+          "positive_negative_pairs": 51211,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.70594952865044,
+            "trained": 69.54477261022414,
+            "trained_minus_energy": 69.95006605611411
+          },
+          "bin": 29,
+          "positive_negative_pairs": 44659,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.51059963658388,
+            "trained": 63.99999999999999,
+            "trained_minus_energy": 63.68988491823138
+          },
+          "bin": 30,
+          "positive_negative_pairs": 41275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.22583955463198,
+            "trained": 62.25659970753483,
+            "trained_minus_energy": 62.702993919802964
+          },
+          "bin": 31,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 63.059895833333336,
+            "trained": 70.81510416666667,
+            "trained_minus_energy": 69.890625
+          },
+          "bin": 32,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.4030070754717,
+            "trained": 69.10623034591194,
+            "trained_minus_energy": 69.41823899371069
+          },
+          "bin": 33,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.141153722204315,
+            "trained": 64.66591470619831,
+            "trained_minus_energy": 64.7948222150607
+          },
+          "bin": 34,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.63446025559685,
+            "trained": 59.986706547025605,
+            "trained_minus_energy": 60.11964107676969
+          },
+          "bin": 35,
+          "positive_negative_pairs": 33099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.830619880675506,
+            "trained": 64.58944281524927,
+            "trained_minus_energy": 64.5869147537668
+          },
+          "bin": 36,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.57356157592371,
+            "trained": 64.2996704674696,
+            "trained_minus_energy": 63.88556764165525
+          },
+          "bin": 37,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.939773735581184,
+            "trained": 71.43411712511092,
+            "trained_minus_energy": 71.66426353149956
+          },
+          "bin": 38,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.8403105345912,
+            "trained": 70.4721894654088,
+            "trained_minus_energy": 70.57291666666667
+          },
+          "bin": 39,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.91963437796771,
+            "trained": 66.80318138651474,
+            "trained_minus_energy": 67.03169515669516
+          },
+          "bin": 40,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.66215574548908,
+            "trained": 62.79677113010447,
+            "trained_minus_energy": 63.029736467236475
+          },
+          "bin": 41,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.58179012345679,
+            "trained": 74.66464862298196,
+            "trained_minus_energy": 74.9139363722697
+          },
+          "bin": 42,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 41.40234375,
+            "trained": 66.9921875,
+            "trained_minus_energy": 67.4140625
+          },
+          "bin": 43,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.0318313645045,
+            "trained": 62.200844120629085,
+            "trained_minus_energy": 62.402442762490864
+          },
+          "bin": 44,
+          "positive_negative_pairs": 42411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.880545696539485,
+            "trained": 64.6628216503993,
+            "trained_minus_energy": 65.21739130434784
+          },
+          "bin": 45,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.08072468753584,
+            "trained": 64.84921453961702,
+            "trained_minus_energy": 64.89221419561977
+          },
+          "bin": 46,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.662208615318505,
+            "trained": 65.63003544956494,
+            "trained_minus_energy": 66.43570737995489
+          },
+          "bin": 47,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.19943622269203,
+            "trained": 69.11909795630726,
+            "trained_minus_energy": 68.69626497533474
+          },
+          "bin": 48,
+          "positive_negative_pairs": 35475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.60225792444637,
+            "trained": 66.94528875379939,
+            "trained_minus_energy": 67.11535678101028
+          },
+          "bin": 49,
+          "positive_negative_pairs": 27636,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.11797034764827,
+            "trained": 65.44925869120655,
+            "trained_minus_energy": 65.81032719836402
+          },
+          "bin": 50,
+          "positive_negative_pairs": 31296,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.03871522798968,
+            "trained": 78.94799732339163,
+            "trained_minus_energy": 79.49287830991301
+          },
+          "bin": 51,
+          "positive_negative_pairs": 41844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.49363867684478,
+            "trained": 73.6234096692112,
+            "trained_minus_energy": 73.11959287531808
+          },
+          "bin": 52,
+          "positive_negative_pairs": 29475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.42720382927803,
+            "trained": 75.12298896423349,
+            "trained_minus_energy": 75.60164871692594
+          },
+          "bin": 53,
+          "positive_negative_pairs": 30084,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.83384615384615,
+            "trained": 81.76923076923077,
+            "trained_minus_energy": 81.6923076923077
+          },
+          "bin": 54,
+          "positive_negative_pairs": 32500,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.671875,
+            "trained": 78.05729166666666,
+            "trained_minus_energy": 77.83984375
+          },
+          "bin": 55,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.46753323836657,
+            "trained": 81.73076923076923,
+            "trained_minus_energy": 81.78715574548907
+          },
+          "bin": 56,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.82643120132938,
+            "trained": 70.18995796813398,
+            "trained_minus_energy": 71.04688670945882
+          },
+          "bin": 57,
+          "positive_negative_pairs": 30691,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.71293429652563,
+            "trained": 79.78156174750602,
+            "trained_minus_energy": 79.92202729044836
+          },
+          "bin": 58,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.432291666666664,
+            "trained": 71.80729166666666,
+            "trained_minus_energy": 72.046875
+          },
+          "bin": 59,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.15135878912969,
+            "trained": 68.63461758972595,
+            "trained_minus_energy": 67.31882811604174
+          },
+          "bin": 60,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.292142784912535,
+            "trained": 81.57548791586612,
+            "trained_minus_energy": 81.95216907675194
+          },
+          "bin": 61,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.93073811931244,
+            "trained": 77.88422649140546,
+            "trained_minus_energy": 78.4479271991911
+          },
+          "bin": 62,
+          "positive_negative_pairs": 19780,
+          "rows": 476
+        },
+        {
+          "AUC": {
+            "energy": 21.725713429705642,
+            "trained": 82.95932888922178,
+            "trained_minus_energy": 83.44468579132649
+          },
+          "bin": 63,
+          "positive_negative_pairs": 66755,
+          "rows": 924
+        },
+        {
+          "AUC": {
+            "energy": 53.39666666666667,
+            "trained": 74.75166666666668,
+            "trained_minus_energy": 74.84833333333334
+          },
+          "bin": 64,
+          "positive_negative_pairs": 60000,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.14965986394557,
+            "trained": 68.74109643857544,
+            "trained_minus_energy": 69.8407362945178
+          },
+          "bin": 65,
+          "positive_negative_pairs": 62475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96385481346863,
+            "trained": 69.77888838406786,
+            "trained_minus_energy": 70.77212378211925
+          },
+          "bin": 66,
+          "positive_negative_pairs": 79236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.702178155160595,
+            "trained": 65.90369706239122,
+            "trained_minus_energy": 66.19838088708401
+          },
+          "bin": 67,
+          "positive_negative_pairs": 75844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.70635583668165,
+            "trained": 68.59344127514554,
+            "trained_minus_energy": 68.10544880720319
+          },
+          "bin": 68,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.772075918332845,
+            "trained": 63.82325175071508,
+            "trained_minus_energy": 62.94824646686674
+          },
+          "bin": 69,
+          "positive_negative_pairs": 70971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.35492577597841,
+            "trained": 59.81106612685559,
+            "trained_minus_energy": 60.45883940620782
+          },
+          "bin": 70,
+          "positive_negative_pairs": 74100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.26339692503509,
+            "trained": 64.18519214914882,
+            "trained_minus_energy": 64.3001779024863
+          },
+          "bin": 71,
+          "positive_negative_pairs": 69139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15653053021353,
+            "trained": 60.670653722944245,
+            "trained_minus_energy": 60.5421503306983
+          },
+          "bin": 72,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.85345631438811,
+            "trained": 63.36070822707306,
+            "trained_minus_energy": 62.83773915583467
+          },
+          "bin": 73,
+          "positive_negative_pairs": 89011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.95309321672615,
+            "trained": 56.99094995066931,
+            "trained_minus_energy": 56.95928086822008
+          },
+          "bin": 74,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.963679038867014,
+            "trained": 59.28843272201668,
+            "trained_minus_energy": 59.70746973253238
+          },
+          "bin": 75,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03669400452489,
+            "trained": 60.04607371794872,
+            "trained_minus_energy": 60.18040629713424
+          },
+          "bin": 76,
+          "positive_negative_pairs": 84864,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.98402803057881,
+            "trained": 60.13947033127047,
+            "trained_minus_energy": 60.5768793228977
+          },
+          "bin": 77,
+          "positive_negative_pairs": 87904,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.13222660109977,
+            "trained": 63.20231576744673,
+            "trained_minus_energy": 62.715214080610096
+          },
+          "bin": 78,
+          "positive_negative_pairs": 86019,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.026346377373116,
+            "trained": 58.520599250936336,
+            "trained_minus_energy": 59.85083301046106
+          },
+          "bin": 79,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.39067544879246,
+            "trained": 60.42877437685652,
+            "trained_minus_energy": 60.445994231348756
+          },
+          "bin": 80,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.25083796512369,
+            "trained": 59.37354151639867,
+            "trained_minus_energy": 58.85909457338029
+          },
+          "bin": 81,
+          "positive_negative_pairs": 94276,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.98966570436384,
+            "trained": 55.44590184511108,
+            "trained_minus_energy": 56.472532530019656
+          },
+          "bin": 82,
+          "positive_negative_pairs": 95604,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.47076341100246,
+            "trained": 53.63193689886917,
+            "trained_minus_energy": 54.06102861282144
+          },
+          "bin": 83,
+          "positive_negative_pairs": 99396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.64891812770738,
+            "trained": 59.18106102343066,
+            "trained_minus_energy": 60.21054109818409
+          },
+          "bin": 84,
+          "positive_negative_pairs": 92571,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.02628772965879,
+            "trained": 56.00701279527559,
+            "trained_minus_energy": 56.041871719160106
+          },
+          "bin": 85,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.917609908136484,
+            "trained": 57.618725393700785,
+            "trained_minus_energy": 57.09584153543307
+          },
+          "bin": 86,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.60776792136179,
+            "trained": 58.4588827619276,
+            "trained_minus_energy": 58.132821865260134
+          },
+          "bin": 87,
+          "positive_negative_pairs": 104275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.38541340787761,
+            "trained": 55.57719671816815,
+            "trained_minus_energy": 56.16907690910375
+          },
+          "bin": 88,
+          "positive_negative_pairs": 99091,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.38180152846552,
+            "trained": 60.985011115245534,
+            "trained_minus_energy": 60.86384062741506
+          },
+          "bin": 89,
+          "positive_negative_pairs": 104811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.514920790863314,
+            "trained": 53.428617311707086,
+            "trained_minus_energy": 54.260384095825586
+          },
+          "bin": 90,
+          "positive_negative_pairs": 105859,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.66558380941713,
+            "trained": 55.27426160337552,
+            "trained_minus_energy": 55.61452148911542
+          },
+          "bin": 91,
+          "positive_negative_pairs": 107124,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.108314651612375,
+            "trained": 57.90849435917915,
+            "trained_minus_energy": 55.77242487225333
+          },
+          "bin": 92,
+          "positive_negative_pairs": 110179,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.21213847864646,
+            "trained": 49.96921267151299,
+            "trained_minus_energy": 52.459310180036944
+          },
+          "bin": 93,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.1905853250391,
+            "trained": 53.80515842700717,
+            "trained_minus_energy": 57.90088762777839
+          },
+          "bin": 94,
+          "positive_negative_pairs": 109956,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.21940059482956,
+            "trained": 52.9910775566232,
+            "trained_minus_energy": 52.706474490963174
+          },
+          "bin": 95,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.41667662276793,
+            "trained": 53.85209215980002,
+            "trained_minus_energy": 56.589866833316485
+          },
+          "bin": 96,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.943719972546326,
+            "trained": 51.74651109585907,
+            "trained_minus_energy": 55.22260352322124
+          },
+          "bin": 97,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22186439050787,
+            "trained": 51.34885101109279,
+            "trained_minus_energy": 48.672967995880576
+          },
+          "bin": 98,
+          "positive_negative_pairs": 114579,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.09622706818968,
+            "trained": 48.29525787469713,
+            "trained_minus_energy": 52.216260913041815
+          },
+          "bin": 99,
+          "positive_negative_pairs": 104004,
+          "rows": 700
+        }
+      ],
+      "interpretation": "Ranking within label-blind energy bands, not exact conditional independence",
+      "pair_count": 5549854,
+      "pair_weighted_within_bin_AUC": {
+        "energy": 49.74125445462169,
+        "trained": 62.1838700621674,
+        "trained_minus_energy": 62.62153923328434
+      },
+      "requested_bins": 100,
+      "usable_bins": 99
+    },
+    "trained": {
+      "bins": [
+        {
+          "AUC": {
+            "energy": 42.90830945558739,
+            "trained": 29.154727793696278,
+            "trained_minus_energy": 49.14040114613181
+          },
+          "bin": 1,
+          "positive_negative_pairs": 1396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22606650990931,
+            "trained": 47.90057104467585,
+            "trained_minus_energy": 44.328742582017696
+          },
+          "bin": 2,
+          "positive_negative_pairs": 8931,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 30.57907542579076,
+            "trained": 28.866180048661803,
+            "trained_minus_energy": 42.50121654501216
+          },
+          "bin": 3,
+          "positive_negative_pairs": 10275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.9593385125619,
+            "trained": 53.45963381945391,
+            "trained_minus_energy": 56.81704602244333
+          },
+          "bin": 4,
+          "positive_negative_pairs": 22011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 56.75937778812211,
+            "trained": 60.910043058303266,
+            "trained_minus_energy": 56.99988362620738
+          },
+          "bin": 5,
+          "positive_negative_pairs": 25779,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.35820895522389,
+            "trained": 58.86069651741293,
+            "trained_minus_energy": 56.78109452736319
+          },
+          "bin": 6,
+          "positive_negative_pairs": 20100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.125,
+            "trained": 49.86764705882353,
+            "trained_minus_energy": 48.61029411764706
+          },
+          "bin": 7,
+          "positive_negative_pairs": 13600,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03630239520958,
+            "trained": 60.853293413173645,
+            "trained_minus_energy": 60.70827095808383
+          },
+          "bin": 8,
+          "positive_negative_pairs": 21376,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.470364867095924,
+            "trained": 62.968466237411256,
+            "trained_minus_energy": 63.77194430686258
+          },
+          "bin": 9,
+          "positive_negative_pairs": 18171,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.83382642998027,
+            "trained": 75.05547337278105,
+            "trained_minus_energy": 75.23422090729784
+          },
+          "bin": 10,
+          "positive_negative_pairs": 16224,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.74493498022909,
+            "trained": 63.13236313236313,
+            "trained_minus_energy": 63.31580449227508
+          },
+          "bin": 11,
+          "positive_negative_pairs": 24531,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96328482692252,
+            "trained": 64.43381645329679,
+            "trained_minus_energy": 64.90041118660874
+          },
+          "bin": 12,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.725758945495905,
+            "trained": 66.47516841153656,
+            "trained_minus_energy": 67.52209034440523
+          },
+          "bin": 13,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.290977192847436,
+            "trained": 65.03501885630725,
+            "trained_minus_energy": 64.05243849252162
+          },
+          "bin": 14,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.58718130870629,
+            "trained": 63.33175467677007,
+            "trained_minus_energy": 63.96025732101981
+          },
+          "bin": 15,
+          "positive_negative_pairs": 50676,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.56987385604749,
+            "trained": 65.84837991590403,
+            "trained_minus_energy": 65.92773518014677
+          },
+          "bin": 16,
+          "positive_negative_pairs": 48516,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.86408202368577,
+            "trained": 58.87400884649095,
+            "trained_minus_energy": 58.62940540981268
+          },
+          "bin": 17,
+          "positive_negative_pairs": 49059,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.43715846994536,
+            "trained": 69.3023679417122,
+            "trained_minus_energy": 69.52276867030965
+          },
+          "bin": 18,
+          "positive_negative_pairs": 54900,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.14936476595065,
+            "trained": 59.313109555435894,
+            "trained_minus_energy": 58.71277847583717
+          },
+          "bin": 19,
+          "positive_negative_pairs": 50139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15413253909158,
+            "trained": 65.39463886820552,
+            "trained_minus_energy": 66.00893521965749
+          },
+          "bin": 20,
+          "positive_negative_pairs": 42976,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 42.87381959934127,
+            "trained": 63.350774426215835,
+            "trained_minus_energy": 64.7307748431344
+          },
+          "bin": 21,
+          "positive_negative_pairs": 47971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.08404104741684,
+            "trained": 64.99690375088464,
+            "trained_minus_energy": 64.96151804670914
+          },
+          "bin": 22,
+          "positive_negative_pairs": 45216,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.69384544799108,
+            "trained": 60.62135413252933,
+            "trained_minus_energy": 60.228092023333545
+          },
+          "bin": 23,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.53171221952765,
+            "trained": 70.83742981363746,
+            "trained_minus_energy": 70.16232985951804
+          },
+          "bin": 24,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.33226666666667,
+            "trained": 63.104000000000006,
+            "trained_minus_energy": 64.02346666666668
+          },
+          "bin": 25,
+          "positive_negative_pairs": 46875,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.989767722994564,
+            "trained": 60.27329246179086,
+            "trained_minus_energy": 60.227959588981946
+          },
+          "bin": 26,
+          "positive_negative_pairs": 46324,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.275353773584904,
+            "trained": 58.88364779874213,
+            "trained_minus_energy": 58.51022012578616
+          },
+          "bin": 27,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.12509031262815,
+            "trained": 67.12425064927456,
+            "trained_minus_energy": 66.47595243209467
+          },
+          "bin": 28,
+          "positive_negative_pairs": 51211,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.70594952865044,
+            "trained": 66.76369824671399,
+            "trained_minus_energy": 67.41306343626145
+          },
+          "bin": 29,
+          "positive_negative_pairs": 44659,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.51059963658388,
+            "trained": 62.8976377952756,
+            "trained_minus_energy": 63.101150817686246
+          },
+          "bin": 30,
+          "positive_negative_pairs": 41275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.22583955463198,
+            "trained": 61.83586033505222,
+            "trained_minus_energy": 62.36178455065547
+          },
+          "bin": 31,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 63.059895833333336,
+            "trained": 70.69010416666667,
+            "trained_minus_energy": 69.59635416666667
+          },
+          "bin": 32,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.4030070754717,
+            "trained": 66.703518081761,
+            "trained_minus_energy": 67.03272405660378
+          },
+          "bin": 33,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.141153722204315,
+            "trained": 63.92738210334085,
+            "trained_minus_energy": 64.13417123214094
+          },
+          "bin": 34,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.63446025559685,
+            "trained": 60.94746064835797,
+            "trained_minus_energy": 60.79035620411493
+          },
+          "bin": 35,
+          "positive_negative_pairs": 33099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.830619880675506,
+            "trained": 65.75740722014359,
+            "trained_minus_energy": 66.27060370108202
+          },
+          "bin": 36,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.57356157592371,
+            "trained": 64.99956256743752,
+            "trained_minus_energy": 64.76626520078155
+          },
+          "bin": 37,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.939773735581184,
+            "trained": 68.91637089618457,
+            "trained_minus_energy": 69.25188553682344
+          },
+          "bin": 38,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.8403105345912,
+            "trained": 67.54127358490565,
+            "trained_minus_energy": 67.48231132075472
+          },
+          "bin": 39,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.91963437796771,
+            "trained": 66.84769705603037,
+            "trained_minus_energy": 67.69052706552706
+          },
+          "bin": 40,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.66215574548908,
+            "trained": 62.18839031339033,
+            "trained_minus_energy": 63.02825261158594
+          },
+          "bin": 41,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.58179012345679,
+            "trained": 74.01471984805318,
+            "trained_minus_energy": 74.14529914529913
+          },
+          "bin": 42,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 41.40234375,
+            "trained": 68.39843750000001,
+            "trained_minus_energy": 69.4765625
+          },
+          "bin": 43,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.0318313645045,
+            "trained": 64.17203084105539,
+            "trained_minus_energy": 64.88175237556295
+          },
+          "bin": 44,
+          "positive_negative_pairs": 42411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.880545696539485,
+            "trained": 66.573314108252,
+            "trained_minus_energy": 67.52994676131323
+          },
+          "bin": 45,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.08072468753584,
+            "trained": 66.29973626877653,
+            "trained_minus_energy": 66.0388716890265
+          },
+          "bin": 46,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.662208615318505,
+            "trained": 64.65114405414116,
+            "trained_minus_energy": 65.72537329466108
+          },
+          "bin": 47,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.19943622269203,
+            "trained": 67.86187455954897,
+            "trained_minus_energy": 67.33333333333334
+          },
+          "bin": 48,
+          "positive_negative_pairs": 35475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.60225792444637,
+            "trained": 64.52091474887827,
+            "trained_minus_energy": 64.87552467795629
+          },
+          "bin": 49,
+          "positive_negative_pairs": 27636,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.11797034764827,
+            "trained": 66.14263803680981,
+            "trained_minus_energy": 66.8551891615542
+          },
+          "bin": 50,
+          "positive_negative_pairs": 31296,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.03871522798968,
+            "trained": 79.14157346334004,
+            "trained_minus_energy": 79.57891214989007
+          },
+          "bin": 51,
+          "positive_negative_pairs": 41844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.49363867684478,
+            "trained": 75.53180661577609,
+            "trained_minus_energy": 74.23579304495335
+          },
+          "bin": 52,
+          "positive_negative_pairs": 29475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.42720382927803,
+            "trained": 73.70030581039757,
+            "trained_minus_energy": 74.55790453397155
+          },
+          "bin": 53,
+          "positive_negative_pairs": 30084,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.83384615384615,
+            "trained": 81.35076923076923,
+            "trained_minus_energy": 81.96461538461539
+          },
+          "bin": 54,
+          "positive_negative_pairs": 32500,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.671875,
+            "trained": 77.21093750000001,
+            "trained_minus_energy": 77.39192708333333
+          },
+          "bin": 55,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.46753323836657,
+            "trained": 73.67343304843304,
+            "trained_minus_energy": 74.49697293447294
+          },
+          "bin": 56,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.82643120132938,
+            "trained": 69.9439575119742,
+            "trained_minus_energy": 72.66136652438826
+          },
+          "bin": 57,
+          "positive_negative_pairs": 30691,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.71293429652563,
+            "trained": 80.7676871918358,
+            "trained_minus_energy": 82.79153766769866
+          },
+          "bin": 58,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.432291666666664,
+            "trained": 71.4921875,
+            "trained_minus_energy": 74.26432291666667
+          },
+          "bin": 59,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.15135878912969,
+            "trained": 72.65651874785001,
+            "trained_minus_energy": 75.85712647632153
+          },
+          "bin": 60,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.292142784912535,
+            "trained": 79.93730407523513,
+            "trained_minus_energy": 81.04333097380929
+          },
+          "bin": 61,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.93073811931244,
+            "trained": 76.42315470171891,
+            "trained_minus_energy": 76.24368048533873
+          },
+          "bin": 62,
+          "positive_negative_pairs": 19780,
+          "rows": 476
+        },
+        {
+          "AUC": {
+            "energy": 21.725713429705642,
+            "trained": 81.16470676353832,
+            "trained_minus_energy": 82.14141262826755
+          },
+          "bin": 63,
+          "positive_negative_pairs": 66755,
+          "rows": 924
+        },
+        {
+          "AUC": {
+            "energy": 53.39666666666667,
+            "trained": 67.90499999999999,
+            "trained_minus_energy": 67.72166666666666
+          },
+          "bin": 64,
+          "positive_negative_pairs": 60000,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.14965986394557,
+            "trained": 70.46178471388555,
+            "trained_minus_energy": 70.86194477791116
+          },
+          "bin": 65,
+          "positive_negative_pairs": 62475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96385481346863,
+            "trained": 73.27856025039125,
+            "trained_minus_energy": 73.736054318744
+          },
+          "bin": 66,
+          "positive_negative_pairs": 79236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.702178155160595,
+            "trained": 69.59944095775539,
+            "trained_minus_energy": 69.777437898845
+          },
+          "bin": 67,
+          "positive_negative_pairs": 75844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.70635583668165,
+            "trained": 67.56839187916881,
+            "trained_minus_energy": 67.29920038190716
+          },
+          "bin": 68,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.772075918332845,
+            "trained": 64.87015823364473,
+            "trained_minus_energy": 64.14380521621507
+          },
+          "bin": 69,
+          "positive_negative_pairs": 70971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.35492577597841,
+            "trained": 65.41430499325236,
+            "trained_minus_energy": 65.77935222672066
+          },
+          "bin": 70,
+          "positive_negative_pairs": 74100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.26339692503509,
+            "trained": 67.96308884999783,
+            "trained_minus_energy": 67.74468823674049
+          },
+          "bin": 71,
+          "positive_negative_pairs": 69139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15653053021353,
+            "trained": 63.17981948623005,
+            "trained_minus_energy": 62.81440699643114
+          },
+          "bin": 72,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.85345631438811,
+            "trained": 67.65680646212266,
+            "trained_minus_energy": 67.34729415465505
+          },
+          "bin": 73,
+          "positive_negative_pairs": 89011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.95309321672615,
+            "trained": 63.34303706500688,
+            "trained_minus_energy": 64.06533575317606
+          },
+          "bin": 74,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.963679038867014,
+            "trained": 64.4461683308801,
+            "trained_minus_energy": 64.65568683613796
+          },
+          "bin": 75,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03669400452489,
+            "trained": 66.29725207390649,
+            "trained_minus_energy": 66.98187688536952
+          },
+          "bin": 76,
+          "positive_negative_pairs": 84864,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.98402803057881,
+            "trained": 66.81607207863124,
+            "trained_minus_energy": 67.43663542045869
+          },
+          "bin": 77,
+          "positive_negative_pairs": 87904,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.13222660109977,
+            "trained": 64.47180274125485,
+            "trained_minus_energy": 63.898673548867116
+          },
+          "bin": 78,
+          "positive_negative_pairs": 86019,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.026346377373116,
+            "trained": 67.2241594558526,
+            "trained_minus_energy": 68.41824874079813
+          },
+          "bin": 79,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.39067544879246,
+            "trained": 65.33212794351888,
+            "trained_minus_energy": 66.24585647251281
+          },
+          "bin": 80,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.25083796512369,
+            "trained": 68.33764690907547,
+            "trained_minus_energy": 68.77996520853664
+          },
+          "bin": 81,
+          "positive_negative_pairs": 94276,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.98966570436384,
+            "trained": 63.91364378059497,
+            "trained_minus_energy": 65.75927785448307
+          },
+          "bin": 82,
+          "positive_negative_pairs": 95604,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.47076341100246,
+            "trained": 62.789247052195265,
+            "trained_minus_energy": 64.63942210954163
+          },
+          "bin": 83,
+          "positive_negative_pairs": 99396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.64891812770738,
+            "trained": 68.4172148945134,
+            "trained_minus_energy": 70.8591243477979
+          },
+          "bin": 84,
+          "positive_negative_pairs": 92571,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.02628772965879,
+            "trained": 61.530614337270336,
+            "trained_minus_energy": 62.72555774278216
+          },
+          "bin": 85,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.917609908136484,
+            "trained": 65.98794291338582,
+            "trained_minus_energy": 67.20851788057742
+          },
+          "bin": 86,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.60776792136179,
+            "trained": 65.2160153440422,
+            "trained_minus_energy": 66.94174058978663
+          },
+          "bin": 87,
+          "positive_negative_pairs": 104275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.38541340787761,
+            "trained": 66.97581011393568,
+            "trained_minus_energy": 70.0926421168421
+          },
+          "bin": 88,
+          "positive_negative_pairs": 99091,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.38180152846552,
+            "trained": 69.61483050443178,
+            "trained_minus_energy": 71.8054402686741
+          },
+          "bin": 89,
+          "positive_negative_pairs": 104811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.514920790863314,
+            "trained": 65.28212055658942,
+            "trained_minus_energy": 68.69798505559281
+          },
+          "bin": 90,
+          "positive_negative_pairs": 105859,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.66558380941713,
+            "trained": 63.22766140174004,
+            "trained_minus_energy": 68.38896979201672
+          },
+          "bin": 91,
+          "positive_negative_pairs": 107124,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.108314651612375,
+            "trained": 67.40485936521479,
+            "trained_minus_energy": 69.88763739006525
+          },
+          "bin": 92,
+          "positive_negative_pairs": 110179,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.21213847864646,
+            "trained": 60.33948773561497,
+            "trained_minus_energy": 69.1570705167676
+          },
+          "bin": 93,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.1905853250391,
+            "trained": 64.14292989923243,
+            "trained_minus_energy": 75.72529011604642
+          },
+          "bin": 94,
+          "positive_negative_pairs": 109956,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.21940059482956,
+            "trained": 62.97231754747198,
+            "trained_minus_energy": 73.4477236330359
+          },
+          "bin": 95,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.41667662276793,
+            "trained": 60.84770841183336,
+            "trained_minus_energy": 75.89398130703697
+          },
+          "bin": 96,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.943719972546326,
+            "trained": 57.46694120338594,
+            "trained_minus_energy": 75.23404255319149
+          },
+          "bin": 97,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22186439050787,
+            "trained": 55.14361270389861,
+            "trained_minus_energy": 74.06767383202856
+          },
+          "bin": 98,
+          "positive_negative_pairs": 114579,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.09622706818968,
+            "trained": 49.80241144571362,
+            "trained_minus_energy": 78.90177300873043
+          },
+          "bin": 99,
+          "positive_negative_pairs": 104004,
+          "rows": 700
+        }
+      ],
+      "interpretation": "Ranking within label-blind energy bands, not exact conditional independence",
+      "pair_count": 5549854,
+      "pair_weighted_within_bin_AUC": {
+        "energy": 49.74125445462169,
+        "trained": 65.48802905445801,
+        "trained_minus_energy": 68.39410550259521
+      },
+      "requested_bins": 100,
+      "usable_bins": 99
+    },
+    "uniform": {
+      "bins": [
+        {
+          "AUC": {
+            "energy": 42.90830945558739,
+            "trained": 31.876790830945556,
+            "trained_minus_energy": 51.64756446991403
+          },
+          "bin": 1,
+          "positive_negative_pairs": 1396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22606650990931,
+            "trained": 49.53532639122159,
+            "trained_minus_energy": 46.43377001455604
+          },
+          "bin": 2,
+          "positive_negative_pairs": 8931,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 30.57907542579076,
+            "trained": 26.394160583941606,
+            "trained_minus_energy": 45.58637469586375
+          },
+          "bin": 3,
+          "positive_negative_pairs": 10275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.9593385125619,
+            "trained": 36.47267275453182,
+            "trained_minus_energy": 47.08100495206942
+          },
+          "bin": 4,
+          "positive_negative_pairs": 22011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 56.75937778812211,
+            "trained": 49.06707009581442,
+            "trained_minus_energy": 45.606889328523216
+          },
+          "bin": 5,
+          "positive_negative_pairs": 25779,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.35820895522389,
+            "trained": 45.7363184079602,
+            "trained_minus_energy": 41.830845771144276
+          },
+          "bin": 6,
+          "positive_negative_pairs": 20100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.125,
+            "trained": 35.69117647058823,
+            "trained_minus_energy": 31.15441176470588
+          },
+          "bin": 7,
+          "positive_negative_pairs": 13600,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03630239520958,
+            "trained": 39.52095808383233,
+            "trained_minus_energy": 38.81923652694611
+          },
+          "bin": 8,
+          "positive_negative_pairs": 21376,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.470364867095924,
+            "trained": 46.90440812283308,
+            "trained_minus_energy": 50.23388916405261
+          },
+          "bin": 9,
+          "positive_negative_pairs": 18171,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.83382642998027,
+            "trained": 48.12006903353058,
+            "trained_minus_energy": 48.07692307692308
+          },
+          "bin": 10,
+          "positive_negative_pairs": 16224,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.74493498022909,
+            "trained": 50.499368146426974,
+            "trained_minus_energy": 52.28078757490522
+          },
+          "bin": 11,
+          "positive_negative_pairs": 24531,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96328482692252,
+            "trained": 50.8704907993351,
+            "trained_minus_energy": 54.865708203318654
+          },
+          "bin": 12,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.725758945495905,
+            "trained": 51.19127467848706,
+            "trained_minus_energy": 55.708494940363366
+          },
+          "bin": 13,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.290977192847436,
+            "trained": 51.45078118987146,
+            "trained_minus_energy": 54.131711947458896
+          },
+          "bin": 14,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 44.58718130870629,
+            "trained": 51.29844502328519,
+            "trained_minus_energy": 52.902754755702894
+          },
+          "bin": 15,
+          "positive_negative_pairs": 50676,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.56987385604749,
+            "trained": 54.95918872124659,
+            "trained_minus_energy": 56.75447275125731
+          },
+          "bin": 16,
+          "positive_negative_pairs": 48516,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.86408202368577,
+            "trained": 50.410729937422296,
+            "trained_minus_energy": 50.836747589636964
+          },
+          "bin": 17,
+          "positive_negative_pairs": 49059,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.43715846994536,
+            "trained": 57.88342440801457,
+            "trained_minus_energy": 59.49362477231329
+          },
+          "bin": 18,
+          "positive_negative_pairs": 54900,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.14936476595065,
+            "trained": 50.920441173537554,
+            "trained_minus_energy": 51.94958016713536
+          },
+          "bin": 19,
+          "positive_negative_pairs": 50139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15413253909158,
+            "trained": 58.49543931496649,
+            "trained_minus_energy": 60.8386075949367
+          },
+          "bin": 20,
+          "positive_negative_pairs": 42976,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 42.87381959934127,
+            "trained": 54.7664213795835,
+            "trained_minus_energy": 58.88349210981635
+          },
+          "bin": 21,
+          "positive_negative_pairs": 47971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.08404104741684,
+            "trained": 57.280608634111815,
+            "trained_minus_energy": 59.76424274593064
+          },
+          "bin": 22,
+          "positive_negative_pairs": 45216,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.69384544799108,
+            "trained": 55.73398003102401,
+            "trained_minus_energy": 55.64221887221167
+          },
+          "bin": 23,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.53171221952765,
+            "trained": 60.909746345939574,
+            "trained_minus_energy": 61.62198772148304
+          },
+          "bin": 24,
+          "positive_negative_pairs": 45771,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.33226666666667,
+            "trained": 58.5728,
+            "trained_minus_energy": 61.54666666666666
+          },
+          "bin": 25,
+          "positive_negative_pairs": 46875,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.989767722994564,
+            "trained": 54.27208358518263,
+            "trained_minus_energy": 54.52681115620413
+          },
+          "bin": 26,
+          "positive_negative_pairs": 46324,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.275353773584904,
+            "trained": 56.88138757861635,
+            "trained_minus_energy": 56.979658018867916
+          },
+          "bin": 27,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.12509031262815,
+            "trained": 61.37743844095995,
+            "trained_minus_energy": 59.674679268125985
+          },
+          "bin": 28,
+          "positive_negative_pairs": 51211,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.70594952865044,
+            "trained": 61.02241429499094,
+            "trained_minus_energy": 63.00633690857386
+          },
+          "bin": 29,
+          "positive_negative_pairs": 44659,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.51059963658388,
+            "trained": 61.298606904906116,
+            "trained_minus_energy": 60.77771047849788
+          },
+          "bin": 30,
+          "positive_negative_pairs": 41275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.22583955463198,
+            "trained": 53.10551835603786,
+            "trained_minus_energy": 55.74027040201134
+          },
+          "bin": 31,
+          "positive_negative_pairs": 38979,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 63.059895833333336,
+            "trained": 69.5234375,
+            "trained_minus_energy": 65.83333333333333
+          },
+          "bin": 32,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.4030070754717,
+            "trained": 61.927574685534594,
+            "trained_minus_energy": 62.981525157232696
+          },
+          "bin": 33,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.141153722204315,
+            "trained": 60.02255881405092,
+            "trained_minus_energy": 59.32699538081425
+          },
+          "bin": 34,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.63446025559685,
+            "trained": 57.5304389860721,
+            "trained_minus_energy": 55.46391129641379
+          },
+          "bin": 35,
+          "positive_negative_pairs": 33099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.830619880675506,
+            "trained": 59.872080088987765,
+            "trained_minus_energy": 61.15380726059257
+          },
+          "bin": 36,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.57356157592371,
+            "trained": 60.24904493890526,
+            "trained_minus_energy": 59.94284214516929
+          },
+          "bin": 37,
+          "positive_negative_pairs": 34291,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.939773735581184,
+            "trained": 65.47803904170364,
+            "trained_minus_energy": 65.62222715173026
+          },
+          "bin": 38,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.8403105345912,
+            "trained": 65.72081367924528,
+            "trained_minus_energy": 64.98624213836479
+          },
+          "bin": 39,
+          "positive_negative_pairs": 40704,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.91963437796771,
+            "trained": 62.75819088319088,
+            "trained_minus_energy": 62.68399810066476
+          },
+          "bin": 40,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.66215574548908,
+            "trained": 60.82027540360874,
+            "trained_minus_energy": 60.00415479582147
+          },
+          "bin": 41,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.58179012345679,
+            "trained": 68.68471035137702,
+            "trained_minus_energy": 69.39399335232667
+          },
+          "bin": 42,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 41.40234375,
+            "trained": 63.31770833333334,
+            "trained_minus_energy": 64.08333333333334
+          },
+          "bin": 43,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.0318313645045,
+            "trained": 58.80078281577893,
+            "trained_minus_energy": 57.65956945132159
+          },
+          "bin": 44,
+          "positive_negative_pairs": 42411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.880545696539485,
+            "trained": 61.72637533274181,
+            "trained_minus_energy": 61.34372227151731
+          },
+          "bin": 45,
+          "positive_negative_pairs": 36064,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.08072468753584,
+            "trained": 64.01788785689713,
+            "trained_minus_energy": 62.09436991170737
+          },
+          "bin": 46,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.662208615318505,
+            "trained": 63.32312815554839,
+            "trained_minus_energy": 61.671500698249005
+          },
+          "bin": 47,
+          "positive_negative_pairs": 37236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.19943622269203,
+            "trained": 65.55602536997885,
+            "trained_minus_energy": 64.03946441155743
+          },
+          "bin": 48,
+          "positive_negative_pairs": 35475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.60225792444637,
+            "trained": 66.01172383847157,
+            "trained_minus_energy": 65.57388913012014
+          },
+          "bin": 49,
+          "positive_negative_pairs": 27636,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.11797034764827,
+            "trained": 64.71753578732107,
+            "trained_minus_energy": 63.3084100204499
+          },
+          "bin": 50,
+          "positive_negative_pairs": 31296,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.03871522798968,
+            "trained": 74.96176273778798,
+            "trained_minus_energy": 75.36564381990249
+          },
+          "bin": 51,
+          "positive_negative_pairs": 41844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.49363867684478,
+            "trained": 71.62680237489398,
+            "trained_minus_energy": 69.98473282442748
+          },
+          "bin": 52,
+          "positive_negative_pairs": 29475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.42720382927803,
+            "trained": 72.59008110623589,
+            "trained_minus_energy": 72.46044408988166
+          },
+          "bin": 53,
+          "positive_negative_pairs": 30084,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.83384615384615,
+            "trained": 76.87692307692308,
+            "trained_minus_energy": 76.6246153846154
+          },
+          "bin": 54,
+          "positive_negative_pairs": 32500,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.671875,
+            "trained": 73.49739583333333,
+            "trained_minus_energy": 73.26302083333334
+          },
+          "bin": 55,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.46753323836657,
+            "trained": 74.96735517568851,
+            "trained_minus_energy": 75.664767331434
+          },
+          "bin": 56,
+          "positive_negative_pairs": 33696,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.82643120132938,
+            "trained": 68.29689485516927,
+            "trained_minus_energy": 67.96454986803948
+          },
+          "bin": 57,
+          "positive_negative_pairs": 30691,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 45.71293429652563,
+            "trained": 72.58055268891181,
+            "trained_minus_energy": 72.70668501318656
+          },
+          "bin": 58,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.432291666666664,
+            "trained": 65.07291666666666,
+            "trained_minus_energy": 64.92708333333333
+          },
+          "bin": 59,
+          "positive_negative_pairs": 38400,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.15135878912969,
+            "trained": 67.26722852883844,
+            "trained_minus_energy": 63.76992317394794
+          },
+          "bin": 60,
+          "positive_negative_pairs": 34884,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.292142784912535,
+            "trained": 74.92415815552634,
+            "trained_minus_energy": 75.36404085347355
+          },
+          "bin": 61,
+          "positive_negative_pairs": 39556,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 43.93073811931244,
+            "trained": 67.27249747219413,
+            "trained_minus_energy": 68.01061678463094
+          },
+          "bin": 62,
+          "positive_negative_pairs": 19780,
+          "rows": 476
+        },
+        {
+          "AUC": {
+            "energy": 21.725713429705642,
+            "trained": 76.27818140963224,
+            "trained_minus_energy": 79.8449554340499
+          },
+          "bin": 63,
+          "positive_negative_pairs": 66755,
+          "rows": 924
+        },
+        {
+          "AUC": {
+            "energy": 53.39666666666667,
+            "trained": 60.78666666666667,
+            "trained_minus_energy": 62.29
+          },
+          "bin": 64,
+          "positive_negative_pairs": 60000,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.14965986394557,
+            "trained": 57.28211284513806,
+            "trained_minus_energy": 60.96998799519808
+          },
+          "bin": 65,
+          "positive_negative_pairs": 62475,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.96385481346863,
+            "trained": 55.429350295320305,
+            "trained_minus_energy": 58.66525316775203
+          },
+          "bin": 66,
+          "positive_negative_pairs": 79236,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.702178155160595,
+            "trained": 51.99224724434366,
+            "trained_minus_energy": 53.65618901956648
+          },
+          "bin": 67,
+          "positive_negative_pairs": 75844,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.70635583668165,
+            "trained": 58.28592645635252,
+            "trained_minus_energy": 58.23553592977152
+          },
+          "bin": 68,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 55.772075918332845,
+            "trained": 54.74912288117682,
+            "trained_minus_energy": 54.836482506939454
+          },
+          "bin": 69,
+          "positive_negative_pairs": 70971,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.35492577597841,
+            "trained": 54.623481781376526,
+            "trained_minus_energy": 59.08367071524966
+          },
+          "bin": 70,
+          "positive_negative_pairs": 74100,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.26339692503509,
+            "trained": 54.40200176456125,
+            "trained_minus_energy": 56.302521008403374
+          },
+          "bin": 71,
+          "positive_negative_pairs": 69139,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.15653053021353,
+            "trained": 51.7034312232792,
+            "trained_minus_energy": 55.01285033922459
+          },
+          "bin": 72,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.85345631438811,
+            "trained": 54.40451180191212,
+            "trained_minus_energy": 55.88298075518756
+          },
+          "bin": 73,
+          "positive_negative_pairs": 89011,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.95309321672615,
+            "trained": 49.2539494999939,
+            "trained_minus_energy": 52.72049598655282
+          },
+          "bin": 74,
+          "positive_negative_pairs": 82099,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.963679038867014,
+            "trained": 52.42603864157749,
+            "trained_minus_energy": 58.246144461683315
+          },
+          "bin": 75,
+          "positive_negative_pairs": 75411,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.03669400452489,
+            "trained": 51.44289687028657,
+            "trained_minus_energy": 57.60923359728507
+          },
+          "bin": 76,
+          "positive_negative_pairs": 84864,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.98402803057881,
+            "trained": 49.501729159082636,
+            "trained_minus_energy": 52.33777757553695
+          },
+          "bin": 77,
+          "positive_negative_pairs": 87904,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.13222660109977,
+            "trained": 53.03246957067624,
+            "trained_minus_energy": 52.94411699740754
+          },
+          "bin": 78,
+          "positive_negative_pairs": 86019,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.026346377373116,
+            "trained": 46.82186060527789,
+            "trained_minus_energy": 52.750871755133666
+          },
+          "bin": 79,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.39067544879246,
+            "trained": 48.79783890826122,
+            "trained_minus_energy": 52.07391622540789
+          },
+          "bin": 80,
+          "positive_negative_pairs": 92916,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 52.25083796512369,
+            "trained": 51.66426237854809,
+            "trained_minus_energy": 54.27468284611141
+          },
+          "bin": 81,
+          "positive_negative_pairs": 94276,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 46.98966570436384,
+            "trained": 47.34634534119911,
+            "trained_minus_energy": 54.48203004058407
+          },
+          "bin": 82,
+          "positive_negative_pairs": 95604,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.47076341100246,
+            "trained": 48.14077025232404,
+            "trained_minus_energy": 53.76675117710974
+          },
+          "bin": 83,
+          "positive_negative_pairs": 99396,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.64891812770738,
+            "trained": 49.33510494647352,
+            "trained_minus_energy": 53.93805835520844
+          },
+          "bin": 84,
+          "positive_negative_pairs": 92571,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.02628772965879,
+            "trained": 51.84854822834646,
+            "trained_minus_energy": 56.10441272965879
+          },
+          "bin": 85,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.917609908136484,
+            "trained": 49.781619094488185,
+            "trained_minus_energy": 50.108677821522306
+          },
+          "bin": 86,
+          "positive_negative_pairs": 97536,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.60776792136179,
+            "trained": 50.78206665068329,
+            "trained_minus_energy": 50.71973147926157
+          },
+          "bin": 87,
+          "positive_negative_pairs": 104275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.38541340787761,
+            "trained": 50.09334853821235,
+            "trained_minus_energy": 56.62572786630471
+          },
+          "bin": 88,
+          "positive_negative_pairs": 99091,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 53.38180152846552,
+            "trained": 51.90962780624171,
+            "trained_minus_energy": 49.17041150260946
+          },
+          "bin": 89,
+          "positive_negative_pairs": 104811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.514920790863314,
+            "trained": 49.2041300220104,
+            "trained_minus_energy": 53.09704418141112
+          },
+          "bin": 90,
+          "positive_negative_pairs": 105859,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 50.66558380941713,
+            "trained": 50.919495164482285,
+            "trained_minus_energy": 55.87263358351069
+          },
+          "bin": 91,
+          "positive_negative_pairs": 107124,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 54.108314651612375,
+            "trained": 54.15369535029362,
+            "trained_minus_energy": 54.26986993891758
+          },
+          "bin": 92,
+          "positive_negative_pairs": 110179,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 47.21213847864646,
+            "trained": 47.53931128286662,
+            "trained_minus_energy": 57.18171876005184
+          },
+          "bin": 93,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.1905853250391,
+            "trained": 49.125104587289464,
+            "trained_minus_energy": 53.01029502710175
+          },
+          "bin": 94,
+          "positive_negative_pairs": 109956,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.21940059482956,
+            "trained": 51.165408373369935,
+            "trained_minus_energy": 53.903454587051016
+          },
+          "bin": 95,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.41667662276793,
+            "trained": 51.38542978191543,
+            "trained_minus_energy": 52.707906369760416
+          },
+          "bin": 96,
+          "positive_negative_pairs": 108811,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 49.943719972546326,
+            "trained": 49.888812628689095,
+            "trained_minus_energy": 52.581102722489135
+          },
+          "bin": 97,
+          "positive_negative_pairs": 109275,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 51.22186439050787,
+            "trained": 51.324413723282625,
+            "trained_minus_energy": 58.018485062707825
+          },
+          "bin": 98,
+          "positive_negative_pairs": 114579,
+          "rows": 700
+        },
+        {
+          "AUC": {
+            "energy": 48.09622706818968,
+            "trained": 48.107765085958235,
+            "trained_minus_energy": 53.90177300873044
+          },
+          "bin": 99,
+          "positive_negative_pairs": 104004,
+          "rows": 700
+        }
+      ],
+      "interpretation": "Ranking within label-blind energy bands, not exact conditional independence",
+      "pair_count": 5549854,
+      "pair_weighted_within_bin_AUC": {
+        "energy": 49.74125445462169,
+        "trained": 55.02018611660775,
+        "trained_minus_energy": 57.27471389337449
+      },
+      "requested_bins": 100,
+      "usable_bins": 99
+    }
+  }
+}

@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reproducing an electricity-theft detector — ATK Evidence</title>
-  <meta name="description" content="A reproduction of the FC-SAE result in Table III of Takiddin et al. (2022): the paper, code, measured results, and remaining explanations.">
+  <meta name="description" content="The FC-SAE reproduction, a conditional performance bound below 50.93% balanced accuracy, and the small but nonzero differences made by its fitted score.">
   <meta property="og:title" content="Reproducing an electricity-theft detector">
-  <meta property="og:description" content="The stated FC-SAE model reached 40.18% balanced accuracy in our documented run, versus 83% reported. The cause remains open.">
+  <meta property="og:description" content="A documented run reached 40.18% rather than 83%. A new output-domain bound excludes the target for the fixed preparation and MSE score, regardless of weights or seed.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Reproducing an electricity-theft detector">
-  <meta name="twitter:description" content="The paper, implementation, results, and limits of the first FC-SAE reproduction.">
+  <meta name="twitter:description" content="The paper, code, failed reproduction, conditional output-domain limit, and evidence that the trained score is not identical to a simple rule.">
   <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
@@ -20,20 +20,20 @@
 <main id="main">
   <article>
     <header>
-      <div class="eyebrow">Electricity-theft study · First reproduction</div>
+      <div class="eyebrow">Electricity-theft study · Reproduction and diagnostic follow-up</div>
       <h1>Reproducing an electricity-theft detector</h1>
       <p class="lede">What happened when we implemented the FC-SAE model described by Takiddin et al. and tested its Table III result on the named Irish electricity data.</p>
       <p class="meta">Research in progress · Run completed 30 August 2026 · Results checked 31 August 2026</p>
     </header>
     <section class="abstract" aria-labelledby="abstract">
       <h2 id="abstract">Abstract</h2>
-      <p>We implemented the paper's fully connected simple autoencoder (FC-SAE), recording the choices needed where the method was incomplete. In one run, attack detection was 25.48% rather than the reported 81%, and balanced accuracy was 40.18% rather than 83%. The saved arrays, predictions, and metrics passed our checks. Changing the threshold cannot recover the target from these scores. This establishes a numerical mismatch for this implementation and seed, not a conclusion about every configuration or the cause of the discrepancy.</p>
+      <p>We implemented the paper's fully connected simple autoencoder (FC-SAE), recording the choices needed where the method was incomplete. The audited run reached 40.18% balanced accuracy rather than 83%. We then bounded the performance of any Softmax reconstruction on the same prepared data: even outputs chosen with knowledge of the labels stay below 50.93%. This excludes a weight, seed, or cutoff change as a rescue under those fixed assumptions. The trained score nevertheless makes small, nonzero improvements over simple controls. The result is a conditional limit on this preparation and scoring combination, not a finding about author intent or every possible interpretation of the paper.</p>
     </section>
 
     <nav class="contents" aria-label="Report contents"><ol>
       <li><a href="#question">1. Question</a></li><li><a href="#methods">2. Paper to code</a></li><li><a href="#setup">3. Setup</a></li>
       <li><a href="#results">4. Results</a></li><li><a href="#checks">5. Checks</a></li><li><a href="#sandbox">6. Earlier small tests</a></li>
-      <li><a href="#explanations">7. Explanations</a></li><li><a href="#limitations">8. Limits</a></li><li><a href="#next">9. Next questions</a></li><li><a href="#references">References</a></li>
+      <li><a href="#bound">7. Performance bound</a></li><li><a href="#useful-work">8. Useful work</a></li><li><a href="#explanations">9. Explanations</a></li><li><a href="#limitations">10. Limits</a></li><li><a href="#next">11. Next questions</a></li><li><a href="#references">References</a></li>
     </ol></nav>
 
     <section aria-labelledby="question">
@@ -168,7 +168,7 @@
         </table>
       </div>
       <p>The trained gain over zero reconstruction is 1.18 balanced-accuracy points and 2.17 AUC points. It is not zero. Close score correlation does not prove that the remaining difference contains no useful information.</p>
-      <p>The third row chooses the nearest nonnegative vector whose entries sum to one. It supplies a lower bound on reconstruction error, not an upper bound on classification accuracy. A model need not minimize every example's error to distinguish classes well.</p>
+      <p>The third row chooses the nearest nonnegative vector whose entries sum to one. By itself it supplies a lower bound on reconstruction error, not an upper bound on classification accuracy. A model need not minimize every example's error to distinguish classes well. The later <a href="#bound">performance bound</a> uses both the smallest and largest possible errors and deliberately chooses them in the model's favor.</p>
 
       <details id="correction"><summary>A mistake in our additional checker</summary>
         <p>The first supplemental check compared a short final chunk of original data with a longer resampled slice extending into synthetic rows. That checker failed. We corrected the slice boundary and preserved both reports; the corrected checker passed all 65 checks. No training data, weights, scores, or reported metrics changed.</p>
@@ -194,19 +194,86 @@
       <p>These observations motivated careful checks of output ranges, simple scores, and temporal structure. They did not select a favorable interpretation after seeing the full-data result. The small dense and recurrent models were not the full paper architectures.</p>
     </section>
 
-    <section aria-labelledby="explanations">
-      <h2 id="explanations"><span class="section-index">7</span>What might explain the mismatch?</h2>
-      <p>The size of the discrepancy and its persistence across cutoffs warrant serious concern about this result under the method we implemented. They do not identify its cause. We keep the alternatives below open rather than treating another seed as either a guaranteed rescue or a guaranteed failure.</p>
+    <section aria-labelledby="bound">
+      <h2 id="bound"><span class="section-index">7</span>Could any allowed reconstruction reach the target?</h2>
+      <p>The failed run left a question: perhaps different weights would give much better scores. We tested that possibility without training another model. For each input day, we calculated the <em>smallest</em> and <em>largest</em> copying error permitted by the output layer.</p>
+      <p>A Softmax reconstruction has 48 nonnegative values adding to one. Its smallest error comes from the nearest vector in that set; its largest comes from putting all the output mass on the input's smallest coordinate. Allowing zero coordinates makes this set slightly more generous than a finite Softmax output. <a href="#ref-bound">[7]</a></p>
+      <p>We then gave every attack its largest possible error and every benign day its smallest. This imaginary detector knows the answers and may choose each reconstruction independently, even when a real network could not. If <em>this</em> advantage is insufficient, no choice of shared weights or training seed can fix the gap while the preparation, output restriction, and MSE score stay the same.</p>
+      <div class="table-wrap">
+        <table id="bound-table">
+          <caption>Table 8. Label-aware upper bounds on the complete post-ADASYN evaluation. Limits are rounded upward; they are not fitted-model results. The original-row and reversed-direction checks are also preserved in the record.</caption>
+          <thead><tr><th scope="col">Quantity</th><th scope="col" class="number">Paper</th><th scope="col" class="number">Optimistic limit</th></tr></thead>
+          <tbody>
+            <tr data-bound="ACC"><th scope="row">Balanced accuracy, any cutoff</th><td class="number">83%</td><td class="number">50.93%</td></tr>
+            <tr data-bound="AUC"><th scope="row">Ranking AUC</th><td class="number">81%</td><td class="number">45.11%</td></tr>
+            <tr data-bound="DR15"><th scope="row">Detection with false alarms at most 15%</th><td class="number">81%</td><td class="number">9.25%</td></tr>
+            <tr data-bound="DR155"><th scope="row">Detection with false alarms at most 15.5%</th><td class="number">At least 80.5%, allowing rounding</td><td class="number">9.54%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <figure>
+        <img class="research-figure" src="output-domain-envelope.svg" width="650" height="480" alt="The reported point, 15% false alarms and 81% detection, lies far above the optimistic output-domain curves for both the resampled and original evaluations.">
+        <figcaption>Figure 2. The reported operating point lies outside even the label-aware score region. Lines display sampled points from the complete threshold enumeration; decisions use all boundaries, not the drawn interpolation.</figcaption>
+      </figure>
+      <p>At the printed cutoff 0.58, even the imaginary detector reaches at most 29.58% detection and must falsely flag at least 44.28% of benign profiles. Allowing the opposite score direction still gives an upper limit below 64.56% balanced accuracy and 35.82% detection at 15% false alarms. The target is also excluded when synthetic benign rows are removed.</p>
+      <details><summary>The calculation and its assumptions</summary>
+        <p>For input <code>x</code> and reconstruction <code>r</code>, the score is <code>||x − r||² / 48</code>. Let <code>L</code> be the squared distance to the closed probability simplex, divided by 48, and <code>U = (||x||² + 1 − 2 min(x)) / 48</code>. Convexity puts the largest distance at a simplex vertex. At cutoff <code>t</code>, detection cannot exceed the fraction of attack rows with <code>U &gt; t</code>; false alarms cannot be lower than the fraction of benign rows with <code>L &gt; t</code>.</p>
+        <p>We enumerated 8,212,855 boundaries on the label-aware vector. Endpoints were evaluated in float64 and padded outward by <code>0.00001 × (1 + U)</code>. Every saved trained score fell inside its range. This is a conservative numerical evaluation of an analytic bound, not certified interval arithmetic. It applies to these fixed prepared inputs and MSE scoring—not to another dataset, normalization, output domain, or score.</p>
+      </details>
+      <p><strong>This changes the conclusion.</strong> More seeds, wider hidden layers, different optimizers, or longer training cannot reach the target under this fixed combination. We do not need to extrapolate a learning curve or estimate years of search to establish that conditional limit.</p>
+    </section>
+
+    <section aria-labelledby="useful-work">
+      <h2 id="useful-work"><span class="section-index">8</span>Did the fitted score do anything useful?</h2>
+      <p>Yes, there are small beneficial changes—but not enough to overcome the limit above. On original customer rows, the trained score increases balanced accuracy over zero reconstruction by 0.89 points. It does so mainly by reducing false alarms; attack detection actually decreases. The synthetic test rows change the aggregate comparison, so we show this original-row view separately.</p>
       <div class="table-wrap">
         <table>
-          <caption>Table 8. Current explanations and the observations that would distinguish them. Follow-up tests in the last column are proposed, not completed.</caption>
+          <caption>Table 9. Trained-minus-control gains on original rows at the unchanged 0.58 cutoff. Intervals use 2,000 paired customer-bootstrap resamples, not independent resampling of days or synthetic rows.</caption>
+          <thead><tr><th scope="col">No-training comparison</th><th scope="col" class="number">Accuracy gain, points</th><th scope="col">Conditional 95% interval</th></tr></thead>
+          <tbody>
+            <tr data-gain="zero"><th scope="row">Zero reconstruction</th><td class="number">+0.891</td><td>[0.805, 0.981]</td></tr>
+            <tr data-gain="uniform"><th scope="row">Uniform Softmax reconstruction</th><td class="number">+0.853</td><td>[0.770, 0.941]</td></tr>
+            <tr data-gain="projection_floor"><th scope="row">Nearest allowed reconstruction</th><td class="number">+0.030</td><td>[0.009, 0.051]</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>All three aggregate intervals lie within the recorded ±1-point region. That supports small average differences under this particular criterion, not exact equality or uniformly negligible effects. The criterion was set before these measurements but after the initial result was known. The intervals hold the model, split, scaler, and generated attacks fixed and assume exchangeable customer clusters.</p>
+      <figure>
+        <img class="research-figure" src="useful-work-by-attack.svg" width="650" height="480" alt="Trained-minus-zero accuracy gains vary across attacks: about plus 0.76, minus 0.25, plus 0.17, plus 1.72, plus 2.03, and plus 0.92 points. The aggregate gain is plus 0.89 points.">
+        <figcaption>Figure 3. The average hides both improvements and deterioration. These are score comparisons against a no-learning rule, not a matched trained-versus-untrained causal test. The uncertainty is conditional on this fitted model.</figcaption>
+      </figure>
+      <h3>A check against the “nothing learned” explanation</h3>
+      <p>Near-perfect overall correlation hid some distinctions. Within 100 similar-energy bands on all original rows, the trained score's pair-weighted AUC was 65.24%, versus 49.63% for energy alone. These are within-band rankings, not the overall AUC in Table III and not an exact conditional-independence test.</p>
+      <p>We then recorded a small exploratory control: sample 10,000 source days with all six attack siblings, and compare the trained score with two additional no-training reconstructions in the same energy bands. No model was fitted. <a href="#ref-control">[8]</a></p>
+      <div class="table-wrap">
+        <table id="energy-control-table">
+          <caption>Table 10. Adaptive exploratory comparison on the same 70,000 original rows. This statistic has no confidence interval here and is not a reproduction metric.</caption>
+          <thead><tr><th scope="col">Score</th><th scope="col" class="number">Within-energy-band AUC</th></tr></thead>
+          <tbody>
+            <tr data-control="energy"><th scope="row">Input energy</th><td class="number">49.74%</td></tr>
+            <tr data-control="uniform"><th scope="row">Uniform constant reconstruction</th><td class="number">55.02%</td></tr>
+            <tr data-control="projection"><th scope="row">Nearest allowed reconstruction</th><td class="number">62.18%</td></tr>
+            <tr data-control="trained"><th scope="row">Trained FC-SAE</th><td class="number">65.49%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The fitted score is not interchangeable with these simple rules. It ranks better within the bands, although this does not prove that another simple rule could not match it or identify the paper's claimed architectural mechanism. A small useful difference and an unattainable published target can coexist.</p>
+      <p class="meta">The pilot took 5.00 seconds, the complete no-training analysis 112.92 seconds, and this small control 18.03 seconds. Both CPU jobs completed successfully. Original training, data, weights, and scores were unchanged.</p>
+    </section>
+
+    <section aria-labelledby="explanations">
+      <h2 id="explanations"><span class="section-index">9</span>What might explain the mismatch?</h2>
+      <p>The output-domain check closes one large family of explanations: a different seed or better optimization cannot rescue the target while the prepared inputs and Softmax/MSE scoring remain fixed. It does not tell us which assumption differs from the authors' experiment.</p>
+      <div class="table-wrap">
+        <table>
+          <caption>Table 11. Explanations after the diagnostic round. Further tests remain proposals, not completed results.</caption>
           <thead><tr><th scope="col">Possible explanation</th><th scope="col">Evidence so far</th><th scope="col">Useful next distinction</th></tr></thead>
           <tbody>
-            <tr><th scope="row">Output restrictions and input magnitude dominate the score</th><td>The trained score closely follows zero reconstruction; standardized inputs do not generally lie in the Softmax output set.</td><td>Derive the allowable score range for each input and measure whether the learned correction adds label-relevant information.</td></tr>
+            <tr><th scope="row">The prepared inputs and output/scoring combination limit performance</th><td>The label-aware bound excludes the reported target, for every weight and seed under the fixed assumptions.</td><td>Identify source-supported alternatives that actually change those assumptions.</td></tr>
             <tr><th scope="row">The cutoff is the main problem</th><td>Ruled out for these fixed scores: every cutoff still falls short, including reversed direction.</td><td>Separate changes to the score itself from changes to its cutoff.</td></tr>
             <tr><th scope="row">A data, preprocessing, or source-reading choice matters</th><td>Customer identity and transformation checks passed, but the paper leaves consequential choices unresolved.</td><td>Inspect source-supported alternatives one at a time, beginning with cheap saved-data checks.</td></tr>
-            <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>One seed and one stopping rule; no estimate of training-seed variability.</td><td>Inspect fitting on small controlled tasks before deciding whether expensive repetitions are informative.</td></tr>
-            <tr><th scope="row">The task offers little benefit from extra architecture</th><td>Simple rules worked on toy attacks. The current trained score adds only a small aggregate gain over zero reconstruction.</td><td>Test simple rules on the real evaluation and compare models with and without the credited component under matched conditions.</td></tr>
+            <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>Cannot explain a match under the fixed preparation/Softmax/MSE assumptions. This does not estimate variability under different assumptions.</td><td>Do not repeat seeds to answer a question the bound already closes.</td></tr>
+            <tr><th scope="row">The task offers little benefit from extra architecture</th><td>Aggregate score gains are small, but attack-specific effects and within-energy rankings are nonzero. No new architecture contrast has been run.</td><td>A matched component test would be needed to identify the claimed mechanism.</td></tr>
             <tr><th scope="row">The paper omits a consequential procedure or contains a reporting error</th><td>Missing settings and contradictory instructions make this possible; a reproduction failure cannot identify what the authors ran.</td><td>Look for source-supported clarifications or author artifacts. Do not infer undocumented code from whichever change improves our score.</td></tr>
           </tbody>
         </table>
@@ -215,28 +282,28 @@
     </section>
 
     <section aria-labelledby="limitations">
-      <h2 id="limitations"><span class="section-index">8</span>What this study cannot yet conclude</h2>
-      <p><strong>Numerical result:</strong> the audited run did not reproduce this row. <strong>Explanation:</strong> the source of the discrepancy remains open. <strong>Broader attainability:</strong> we have not measured a performance range across seeds, training choices, or alternative source interpretations.</p>
+      <h2 id="limitations"><span class="section-index">10</span>What this study cannot yet conclude</h2>
+      <p><strong>Numerical result:</strong> the audited run did not reproduce this row. <strong>Mechanism:</strong> the trained score has nonzero effects, but the paper's architectural explanation remains untested by a matched comparison. <strong>Attainability:</strong> the target is excluded under the fixed preparation/output/scoring assumptions; broader source interpretations remain unresolved.</p>
       <p>There are no seed-level confidence intervals here. Many rows share a customer or an original profile; synthetic examples add further dependence. Treating all 8.9 million rows as independent would overstate precision. A narrow interval for one fixed model would not, by itself, rule out another fitted model.</p>
-      <p>The model's output domain creates a real reconstruction-error constraint. We have not turned that constraint into a general bound on detection or AUC. Likewise, elapsed compute time is not evidence that the authors could not have obtained their result. The paper's hardware and training procedure are not specified sufficiently for that comparison.</p>
+      <p>The new bound concerns every allowed reconstruction on these exact prepared inputs. It does not cover a different normalization, customer population, data representation, output layer, or score. Elapsed compute time is not evidence that the authors could not have obtained their result. No claim about intent or their unobserved implementation follows.</p>
       <p>The previous electricity notes and report contain older exploratory runs under different assumptions, including omitted test-set ADASYN. They remain available, but they are not silently counted as additional seeds of this experiment. The water-network study is separate evidence and is not used to strengthen this finding.</p>
     </section>
 
     <section aria-labelledby="next">
-      <h2 id="next"><span class="section-index">9</span>The next questions—not new results</h2>
-      <p>We are pausing experimental work while this account is reviewed. The next proposed work is small and diagnostic:</p>
+      <h2 id="next"><span class="section-index">11</span>What would be worth checking next?</h2>
+      <p>This diagnostic round is complete. The next questions concern assumptions, not another seed of the same setup:</p>
       <ol>
-        <li><strong>Check whether an actual performance bound is available.</strong> Give each example the most favorable reconstruction allowed by the output domain—even one chosen with knowledge of its label. If this deliberately generous limit cannot reach the reported detection/false-alarm pair, it would establish a conditional impossibility. If it can, the bound is inconclusive.</li>
-        <li><strong>Measure useful work beyond input magnitude.</strong> Compare the trained score with simple controls, including among examples with similar input energy. Define a meaningful improvement before testing for practical equivalence; close correlation alone is insufficient.</li>
-        <li><strong>Use small, targeted controls before more full training.</strong> Separate missing signal, an unsuitable objective, optimization failure, and an unnecessary component. Repeated seeds or other models should answer an identified question, not merely fill another table.</li>
+        <li><strong>Map the remaining source-supported readings.</strong> Which changes to preprocessing, output, or score are defensible from the paper, and which would be corrections rather than reproduction?</li>
+        <li><strong>Check those assumptions cheaply.</strong> Establish whether a proposed change can move the mathematical limit before paying for training. Preserve the current non-match.</li>
+        <li><strong>Keep mechanism claims separate.</strong> Testing recurrence or attention still requires an isolated component comparison on a task where the credited capability matters.</li>
       </ol>
-      <p>The proposed conditional bound, equivalence analysis, and new controls have <strong>not been run</strong>. No statistical impossibility or years-of-search estimate is claimed.</p>
+      <p>These further source and architecture experiments have <strong>not been run</strong>. No extra seed, model family, or broad search has started. The completed bound is conditional, not a years-of-search estimate.</p>
     </section>
 
     <section aria-labelledby="conclusion">
       <h2 id="conclusion">Conclusion</h2>
-      <p>Following one documented reading of the paper, we obtained a large and audited mismatch for the FC-SAE result on ISET. Threshold selection alone cannot explain it for these scores. The similarity to a no-learning score gives a concrete reason to investigate what the trained model contributes.</p>
-      <p>This is a finding about an implementation and an experiment—not a claim that every reasonable implementation fails, that learning adds exactly zero, or that the published numbers were fabricated. The next step is to explain the mismatch and test the limits, not to assume either a rescue or an impossibility.</p>
+      <p>Following one documented reading, we obtained a large and audited mismatch for the FC-SAE result on ISET. The follow-up establishes a stronger conditional result: even label-aware optimal Softmax reconstructions cannot reach the reported row on the fixed prepared data using MSE. A new seed or longer training cannot change that limit.</p>
+      <p>At the same time, the trained score makes small beneficial changes and captures distinctions beyond the simple controls tested. “The target is unattainable under these assumptions” and “the model does nothing useful” are different claims; the evidence supports the first, not the second. Other source interpretations and the cause of the published discrepancy remain open.</p>
     </section>
 
     <section aria-labelledby="references">
@@ -248,6 +315,8 @@
         <li id="ref-result"><a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/result.json">Unmodified result JSON</a>, <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/config.json">configuration</a>, <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/history.json">history</a>, and <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/metadata.json">data metadata</a>. <a href="https://github.com/fjoad/atk-evidence/blob/a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca/studies/atk-2022-deep-autoencoder/reported/table_3.csv">Transcribed Table III targets</a>. Run identity: <code>seed_20260824_2f483335536c</code>.</li>
         <li id="ref-audit"><a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/clean_reader_anchor_audit.json">Frozen audit and cutoff diagnostics</a>; <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/artifact_checks_20260831_v2.json">corrected supplemental checks</a>; <a href="https://github.com/fjoad/atk-evidence/blob/2de3434/studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/audit_execution.json">audit provenance</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md">complete technical finding</a>. Large arrays and weights remain preserved outside the public site.</li>
         <li id="ref-sandbox"><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md">Synthetic sandbox: questions, setup, results, and limits</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/phase2_discovery_sandbox.py">standalone code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json">saved results</a>. These experiments preceded the full-data reproduction.</li>
+        <li id="ref-bound"><a href="https://github.com/fjoad/atk-evidence/blob/1175e8d/studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md">Frozen diagnostic contract and bound derivation</a>; <a href="https://github.com/fjoad/atk-evidence/blob/1175e8d/studies/atk-2022-deep-autoencoder/checks/post_anchor_diagnostics.py">exact analysis code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/full/diagnostics.json">complete unmodified results</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md">finding and limits</a>. The primary pilot and full pass ran once, with no training.</li>
+        <li id="ref-control"><a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md">Small-control question and frozen setup</a>; <a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/checks/energy_band_control.py">code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/energy_band_control.json">control results</a>. This was adaptive exploration motivated by the first check, not an independent confirmation.</li>
       </ol>
     </section>
   </article>

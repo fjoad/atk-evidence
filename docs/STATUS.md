@@ -9,28 +9,31 @@
 
 ## Current project state
 
-- **Approved diagnostic round, 2026-08-31:** the user directed execution of the
-  proposed no-training bound and useful-information checks. The frozen scope is
-  [POST_ANCHOR_DIAGNOSTICS.md](../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md):
-  one 512-row cluster pilot, then one full saved-array pass if it checks out;
-  four CPU cores, 12 GiB, 20-minute allocation, no training or automatic retry.
-  The completed reproduction stays unchanged. Any small trained control needs
-  a specific surviving question and a separately recorded setup first.
-  Analysis commit `1175e8d` passes all 200 local tests. CPU allocation `385090`
-  ran the 512-row pilot successfully in 5.00 seconds; geometry took 0.00358 s,
-  consumed hashes and block identities passed, and every saved score was inside
-  its padded range. This promotes one full saved-array pass under the unchanged
-  contract and remaining 20-minute allocation. Pilot metrics are not a
-  full-population finding.
-  The full pass subsequently completed in 112.92 seconds; the CPU allocation
-  exited `0:0` in 4:16. Its generous bound is 50.92105% balanced accuracy and
-  9.24779% detection at FA <=15%, excluding the published target under the fixed
-  preparation/Softmax/MSE assumptions. Original-row trained-minus-zero gain is
-  +0.89081 points [0.80454, 0.98117], and energy-band comparisons reveal nonzero
-  residual information. The warranted third-step control is frozen in
-  [ENERGY_BAND_CONTROL.md](../studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md):
-  compare trained, uniform, and projection scores on 10,000 source days plus
-  their six attack siblings, in a separate 3-minute CPU cap. No training.
+- **Completed diagnostic round, 2026-08-31:** the user-approved bound,
+  useful-information checks, and warranted small control are complete. Both
+  CPU jobs exited `0:0` and released their allocations. No model was trained;
+  the original data, weights, scores, and numerical result are unchanged.
+  See [POST_ANCHOR_FINDING.md](../studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md).
+  - **Conditional attainability (`C/A`):** the label-aware relaxation on all
+    8,884,989 prepared rows has maximum balanced ACC 50.92105%, AUC 45.10918%,
+    and DR 9.24779% at FA <=15%, versus 83/81/81% reported. This excludes
+    all weights/seeds under fixed preparation, Softmax output, and MSE,
+    not other source interpretations. Endpoints use outward-padded float64,
+    not certified interval arithmetic. Rounding allowance and reversed
+    direction also cannot recover the target.
+  - **Useful score differences (`C/M`, then adaptive `X/M`):** original-row
+    trained-minus-zero ACC is +0.89081 points, conditional customer-bootstrap
+    95% interval [0.80454, 0.98117]. On 10,000 source days plus attack siblings,
+    within-energy-band AUC is 65.49% trained, 62.18% projection, 55.02% uniform,
+    49.74% energy. The latter differences have no confidence interval.
+    “Nothing useful learned” is not established; no matched architecture or
+    trained-versus-untrained causal comparison was performed.
+  - **Cost:** primary code `1175e8d`, job `385090`: pilot 5.00 seconds, full
+    analysis 112.92 seconds, allocation 4:16. Adaptive control code `26a42db`,
+    job `385091`: analysis 18.03 seconds, allocation 53 seconds. Both frozen
+    contracts and every result are preserved with hashes.
+  Stop experiments here. The proposed next step is a source-supported map of
+  assumptions that can change the bound, not another seed or model family.
 
 - **Public explanation, 2026-08-31:** the user requested the README and website
   be rewritten before any further experiments. The new research report is
@@ -48,10 +51,13 @@
   deployment `33400529269` succeeded, and all public pages/assets match the
   reviewed files byte for byte. See the
   [live report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/).
-  The next discussion is the proposed no-training bound, incremental useful
-  information, and small discriminating controls recorded at Checkpoint 2.
-  The subsequent limited diagnostic approval is recorded above; the numerical
-  finding is unchanged.
+  The subsequent limited diagnostic round is complete, as recorded above.
+  Its report update adds the bound, paired gains, counterevidence, figures,
+  and source records; the initial numerical result remains unchanged.
+  The follow-up passes all 206 deterministic tests (140 study, 66 root),
+  including 14 report checks. New public figure bytes match the cluster
+  exports, 64 local Markdown links resolve, and the updated local pages and
+  figures return HTTP 200. Deployment verification follows the final push.
 
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a
@@ -88,15 +94,15 @@
   `384390`, completed with Slurm exit `0:0` on 2026-08-30 at 22:48:39 Qatar
   time after 9:14:27. Phase 6 is complete: the frozen audit and all 65 corrected
   supplemental artifact checks passed. The Table-III ISET FC-SAE row was not
-  reproduced in this one frozen `P+I` completion. Checkpoint 2 awaits review.
+  reproduced in this one frozen `P+I` completion. Checkpoint 2 was subsequently
+  approved only for the now-completed bounded diagnostic round above.
   The initial finding and full comparison are in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md).
   The hourly thread heartbeat
   `monitor-clean-reader-anchor` is paused at the user's request; check the job
   only after a new user prompt. No second submission, repair, retry, or
-  expansion is authorized before Checkpoint 2 approval. Formal
-  mechanism/attainability work
-  remains behind Checkpoint 2. Prior code, runs, failures, and results remain
+  expansion beyond that completed round is authorized. Broader mechanism and
+  attainability work remains unapproved. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
   The complete frozen Phase-5 question, code/environment hashes, predictions,
   36-hour one-GPU budget, exact command, stopping rule, and data-gate state are
@@ -436,12 +442,13 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Freeze and fixture-test the approved post-anchor analysis.
-2. Run its 512-row CPU pilot on the cluster; inspect before promoting the full
-   saved-array pass inside the same 20-minute budget.
-3. Record the conditional bound and useful-information results before deciding
-   whether any additional small control is warranted. No full training,
-   repeated seeds, or broader search is approved.
+1. Finish verification and GitHub Pages publication of the completed diagnostic
+   report, preserving both the conditional bound and useful-work counterevidence.
+2. Discuss a source/semantic map: which defensible changes to preparation,
+   output, or score could actually change the bound? Keep corrections separate
+   from source-supported numerical interpretations.
+3. Stop experimental execution pending that decision and a recorded setup.
+   No full training, repeated seeds, or broader search is approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

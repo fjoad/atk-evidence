@@ -60,16 +60,20 @@ attainability is preserved in
 
 Paper 1 is the only active experiment. Its first clean-reader FC-SAE run is
 complete and audited. The result did not reproduce Table III under the declared
-implementation and one seed. Mechanism and broader attainability remain open.
-See [the readable result](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
+implementation and one seed. The completed follow-up excludes the target for
+any weights under the fixed prepared inputs, Softmax output, and MSE score.
+Useful score differences exist; the claimed architectural mechanism and other
+source interpretations remain open. See
+[the follow-up finding](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
 and [current status](docs/STATUS.md).
 
-The user approved Checkpoint 2 on 2026-08-31 only for the bounded checks in
-[POST_ANCHOR_DIAGNOSTICS.md](studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md).
-Do not start another full training run, seed sweep, model family, or broader
-search. Experimental scoring remains on cluster compute nodes; local runs are
-software fixtures only. Preserve the original run and inspect each diagnostic
-before promoting the next one.
+The user-approved Checkpoint-2 diagnostic round and its separately recorded
+small control are complete. Both CPU allocations ended successfully; no model
+was trained. Stop experiments here. Any further scientific run needs a named
+remaining question, a recorded setup, and approval. Do not start another full
+training run, seed sweep, model family, or broader search. Experimental scoring
+remains on cluster compute nodes; local runs are software fixtures only.
+Preserve the original run and both diagnostic contracts unchanged.
 
 ## Repository and evidence
 

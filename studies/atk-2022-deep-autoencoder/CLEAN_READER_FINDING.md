@@ -2,7 +2,12 @@
 
 **Date:** 2026-08-31
 
-**State:** Phase 6 complete; Checkpoint 2 awaits user review
+**State at initial finding:** Phase 6 complete; Checkpoint 2 awaited user review
+
+**Follow-up:** the approved diagnostic round is now complete. Its
+[separate finding](POST_ANCHOR_FINDING.md) adds a conditional performance
+bound and useful-information measurements. The numerical result and initial
+interpretation below are preserved unchanged.
 
 **Question:** `N` — numerical reproduction
 

@@ -1,0 +1,4 @@
+# Preserve scientific plotting exports byte-for-byte, including path whitespace.
+studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/**/*.svg -whitespace
+site/papers/atk-2022-deep-autoencoder/reproduction/output-domain-envelope.svg -whitespace
+site/papers/atk-2022-deep-autoencoder/reproduction/useful-work-by-attack.svg -whitespace

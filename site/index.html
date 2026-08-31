@@ -44,9 +44,10 @@
         </tbody>
       </table>
     </div>
-    <p>The data and saved predictions passed our checks. Changing the cutoff alone cannot recover the reported performance from these scores. The reason for the larger mismatch is still under investigation; we have not shown that every reasonable implementation must fail.</p>
+    <p>A follow-up found a stronger, conditional limit. On these prepared inputs, even a detector allowed to choose each Softmax reconstruction using the true label stays below <strong>50.93% balanced accuracy</strong>, versus 83% reported. At at most 15% false alarms, detection cannot exceed <strong>9.25%</strong>, versus 81%. New weights or seeds cannot fix that gap while the prepared data, output restriction, and mean-squared-error score stay the same.</p>
+    <p>This does not mean the model does nothing useful: its fitted score makes small beneficial changes and ranks attacks better than the simple controls tested within similar-input-magnitude groups. Different preprocessing, output layers, and scores remain outside the bound. <a href="papers/atk-2022-deep-autoencoder/reproduction/#bound">Read the calculation and its limits</a>.</p>
     <p><a class="button" href="papers/atk-2022-deep-autoencoder/reproduction/">Read the reproduction: paper → code → results → explanations</a></p>
-    <p class="meta">Completed 30 August 2026 · Checked 31 August 2026 · No follow-up training yet</p>
+    <p class="meta">Run completed 30 August 2026 · Audit and diagnostic round completed 31 August 2026 · No follow-up training</p>
   </section>
 
   <section aria-labelledby="studies">

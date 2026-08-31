@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
+import math
 import re
 import subprocess
 import unittest
@@ -17,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 STUDY = ROOT / "studies/atk-2022-deep-autoencoder"
 RECORDS = STUDY / "results/clean_reader_anchor_20260831"
+DIAGNOSTICS = STUDY / "results/post_anchor_20260831"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
 
 
@@ -27,8 +30,12 @@ class Page(HTMLParser):
         self.links = []
         self.metadata = {}
         self.metrics = {}
+        self.bounds = {}
+        self.controls = {}
+        self.gains = {}
         self.h1_count = 0
         self.row = None
+        self.row_group = None
         self.cells = []
         self.cell = None
         self.feed(path.read_text())
@@ -45,9 +52,14 @@ class Page(HTMLParser):
             self.h1_count += 1
         if tag == "meta":
             self.metadata[attrs.get("property", attrs.get("name"))] = attrs.get("content")
-        if tag == "tr" and "data-metric" in attrs:
-            self.row = attrs["data-metric"]
-            self.cells = []
+        if tag == "tr":
+            groups = {"metric": self.metrics, "bound": self.bounds,
+                      "control": self.controls, "gain": self.gains}
+            for name, group in groups.items():
+                if f"data-{name}" in attrs:
+                    self.row = attrs[f"data-{name}"]
+                    self.row_group = group
+                    self.cells = []
         if self.row and tag in ("th", "td"):
             self.cell = []
 
@@ -60,8 +72,9 @@ class Page(HTMLParser):
             self.cells.append("".join(self.cell).strip())
             self.cell = None
         if tag == "tr" and self.row:
-            self.metrics[self.row] = self.cells
+            self.row_group[self.row] = self.cells
             self.row = None
+            self.row_group = None
 
 
 @lru_cache(maxsize=None)
@@ -78,6 +91,8 @@ class PublicReportTests(unittest.TestCase):
         cls.audit = json.loads((RECORDS / "clean_reader_anchor_audit.json").read_text())
         cls.pages = {path: Page(path) for path in SITE.rglob("*.html")}
         cls.report_text = REPORT.read_text()
+        cls.diagnostics = json.loads((DIAGNOSTICS / "full/diagnostics.json").read_text())
+        cls.control = json.loads((DIAGNOSTICS / "energy_band_control.json").read_text())
 
     def test_complete_current_result_matches_saved_metrics(self):
         rows = self.pages[REPORT].metrics
@@ -167,6 +182,79 @@ class PublicReportTests(unittest.TestCase):
         self.assertIn("There are no seed-level confidence intervals here", self.report_text)
         for name in ("atk-2022-deep-autoencoder", "tlstgt-2025-water"):
             self.assertTrue((SITE / f"reports/{name}.pdf").is_file())
+
+    def test_output_domain_bounds_are_rounded_up_from_saved_results(self):
+        bound = self.diagnostics["bounds"]["full"]["printed"]
+        values = {"ACC": bound["max_ACC"], "AUC": bound["max_AUC"],
+                  "DR15": bound["at_FA_cap"]["15.0"]["max_DR"],
+                  "DR155": bound["at_FA_cap"]["15.5"]["max_DR"]}
+        rows = self.pages[REPORT].bounds
+        self.assertEqual(set(rows), set(values))
+        for key, value in values.items():
+            self.assertEqual(rows[key][2], f"{math.ceil(value * 100) / 100:.2f}%")
+            self.assertGreaterEqual(float(rows[key][2].rstrip("%")), value)
+        self.assertFalse(bound["target_pair_not_excluded"])
+        self.assertFalse(bound["rounded_target_pair_not_excluded"])
+        self.assertIn("Limits are rounded upward", self.report_text)
+
+    def test_useful_work_gains_and_intervals_match_customer_records(self):
+        comparisons = self.diagnostics["customer_statistics"]["comparisons"]
+        rows = self.pages[REPORT].gains
+        self.assertEqual(set(rows), set(comparisons))
+        for key, comparison in comparisons.items():
+            low, high = comparison["original_ACC_gain_95CI_pp"]
+            self.assertEqual(rows[key][1], f"{comparison['original_ACC_gain_pp']:+.3f}")
+            self.assertEqual(rows[key][2], f"[{low:.3f}, {high:.3f}]")
+        self.assertEqual(self.diagnostics["customer_statistics"]["resamples"], 2000)
+        self.assertIn("assume exchangeable customer clusters", self.report_text)
+        self.assertIn("not a matched trained-versus-untrained causal test", self.report_text)
+
+    def test_adaptive_control_table_matches_its_separate_record(self):
+        rows = self.pages[REPORT].controls
+        values = self.control["pair_weighted_within_bin_AUC"]
+        self.assertEqual(set(rows), set(values))
+        for key, value in values.items():
+            self.assertEqual(rows[key][1], f"{value:.2f}%")
+        self.assertEqual(self.control["rows"], 70000)
+        self.assertEqual(self.control["sample_source_days"], 10000)
+        self.assertIn("This statistic has no confidence interval here", self.report_text)
+        self.assertIn("not an independent confirmation", self.report_text)
+
+    def test_public_diagnostic_figures_preserve_scientific_exports(self):
+        for name in ("output-domain-envelope.svg", "useful-work-by-attack.svg"):
+            saved = DIAGNOSTICS / "full" / name
+            public = REPORT.parent / name
+            self.assertEqual(public.read_bytes(), saved.read_bytes())
+            self.assertEqual(ET.parse(public).getroot().tag, "{http://www.w3.org/2000/svg}svg")
+
+    def test_diagnostic_provenance_and_original_result_are_unchanged(self):
+        def sha(path):
+            return hashlib.sha256(path.read_bytes()).hexdigest()
+
+        execution = json.loads((DIAGNOSTICS / "execution.json").read_text())
+        for stage in ("pilot", "full"):
+            self.assertEqual(sha(DIAGNOSTICS / stage / "diagnostics.json"),
+                             execution[f"{stage}_sha256"])
+        self.assertEqual(sha(DIAGNOSTICS / "energy_band_control.json"),
+                         execution["adaptive_control"]["result_sha256"])
+        for record, script, contract in (
+            (self.diagnostics, "post_anchor_diagnostics.py", "POST_ANCHOR_DIAGNOSTICS.md"),
+            (self.control, "energy_band_control.py", "ENERGY_BAND_CONTROL.md"),
+        ):
+            self.assertEqual(sha(STUDY / "checks" / script), record["script_sha256"])
+            self.assertEqual(sha(STUDY / contract), record["contract_sha256"])
+            self.assertEqual(sha(RECORDS / "result.json"), record["source_result_sha256"])
+
+    def test_bound_scope_remains_visible_in_all_current_accounts(self):
+        for path in (ROOT / "README.md", SITE / "index.html", REPORT):
+            content = path.read_text()
+            with self.subTest(path=path):
+                self.assertIn("50.93%", content)
+                self.assertIn("9.25%", content)
+                self.assertIn("Softmax", content)
+                self.assertIn("prepared", content)
+        self.assertIn("not certified interval arithmetic", self.report_text)
+        self.assertIn("not to another dataset, normalization, output domain, or score", self.report_text)
 
 
 if __name__ == "__main__":

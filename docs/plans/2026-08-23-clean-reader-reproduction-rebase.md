@@ -2,13 +2,16 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; Checkpoint 2 approved for bounded diagnostics on 2026-08-31
+**Status:** Active governing plan; approved diagnostic round complete, further experiments stopped
 
-**Current state:** bounded post-anchor diagnostics `IN PROGRESS` under
-[`POST_ANCHOR_DIAGNOSTICS.md`](../../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md).
-The user approved the proposed sequence on 2026-08-31: no-training oracle
-bound, useful-information measurements, and only a subsequently justified small
-control. No new full training, seed sweep, or model family is approved.
+**Current state:** bounded post-anchor diagnostics `COMPLETE`, including the
+separately frozen adaptive geometry control. Both CPU jobs completed without
+training. The [finding](../../studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
+excludes the target under fixed preparation/Softmax/MSE assumptions while
+preserving evidence of small useful score differences. The claimed
+architecture mechanism and other source interpretations remain open.
+The next proposed step is a source/semantic map of assumptions that could
+change the bound. No new full training, seed sweep, or model family is approved.
 Phase 5 operationally `COMPLETE`: sole job `384390` exited
 `0:0` on 2026-08-30 after 9:14:27 under the approved semantic allocation `I`
 branch. Phase 6 is `COMPLETE`: independent audit passed, the bounded Table-III
@@ -115,7 +118,7 @@ flowchart TD
 
     C2 -- "Material numerical ambiguity" --> N["7N. Finite numerical depth"]
     C2 -- "Causal claim unresolved" --> M["7M. Capability-sensitive mechanism program"]
-    C2 -- "Target plausibility unresolved" --> A["7A. Empirical attainability envelope"]
+    C2 -- "Target plausibility unresolved" --> A["7A. Conditional bound or empirical envelope"]
     C2 -- "No promotion justified" --> P8["8. Freeze three bounded findings"]
 
     N --> C3{"Confirmatory contracts frozen?"}
@@ -147,8 +150,8 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 6. Initial numerical finding | `COMPLETE` | User approved inspection of the sole completed anchor | CLEAN_READER_FINDING.md; frozen audit and 65 supplemental checks passed |
 | Checkpoint 2 | `COMPLETE — limited scope` | User approved the proposed diagnostic sequence | Frozen post-anchor contract; no full training or broader search |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
-| 7M. Mechanism program | `PENDING` | Source causal claim promoted | Supported/contradicted/unidentified causal links |
-| 7A. Attainability envelope | `IN PROGRESS — analytic bound only` | No-training output-domain question approved | Conditional oracle bound on fixed data; broad empirical search remains closed |
+| 7M. Mechanism program | `PENDING` | Source causal claim promoted | Score/control diagnostics completed; matched architecture and training-causality tests remain untested |
+| 7A. Attainability envelope | `COMPLETE — conditional bound only` | No-training output-domain question approved | Fixed preparation/Softmax/MSE target excluded; other source interpretations and broad empirical search untested |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
@@ -418,6 +421,17 @@ compute caps, and stopping/promotion rules. Only a surviving question justifies
 another full training run, repeated seeds, or another table. Do not repeat the
 completed artifact audit or threshold enumeration without a specific new issue.
 
+### Outcome of this approved sequence — 2026-08-31
+
+The primary pilot and full saved-array pass completed, followed by the
+separately recorded [small geometry control](../../studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md).
+No training occurred. On fixed prepared inputs, the label-aware Softmax/MSE
+bound excludes the target regardless of seed/weights. The trained score has
+small beneficial differences and better within-energy ranking than the tested
+no-learning controls; “nothing useful learned” is not established. A matched
+causal mechanism test was not performed. Stop this round; the next proposed
+loop is source interpretation, not more compute within a ruled-out domain.
+
 ## Phase 7N — Finite numerical depth
 
 Freeze the smallest set of materially distinct `I` branches and repetitions
@@ -499,18 +513,20 @@ and record why the new evidence changed its status.
 | 2026-08-31 | Phase 6 audit pending | Phase 6 complete; Checkpoint 2 pending | User approved the audit; CPU-only job 384939 ran the frozen audit and supplemental checks on the unchanged sole attempt. All metrics regenerate exactly; a supplemental last-chunk checker defect was preserved and corrected, with all 65 checks passing afterward | The one frozen Table-III FC-SAE completion does not reproduce its target; N/M/A depth remains unapproved, and no scientific attempt was repeated |
 | 2026-08-31 | Checkpoint 2 pending | Checkpoint 2 pending; initial report public | User approved the readable report and explicitly requested GitHub/GitHub Pages publication; deployment succeeded and public files match the reviewed version | Editorial publication only; conditional-bound, useful-information, and small-control questions are proposed for discussion, not approved experiments |
 | 2026-08-31 | Checkpoint 2 pending | Limited diagnostic scope approved; 7A in progress | User said to execute the proposed bound/useful-information/small-control sequence | One capped no-training CPU pilot and, if checks pass, one full saved-artifact analysis; no new fitted model or seed |
+| 2026-08-31 | 7A in progress | Conditional bound and score-control round complete; experiments stopped | CPU jobs 385090 and 385091 completed; full analysis 112.92 s and adaptive control 18.03 s | Conditional attainability limit established on fixed inputs/output/score; useful score differences preserved; no repeated seed needed for that bound; other source assumptions and matched mechanism questions remain open |
 
-## Current hard exclusions until the exact anchor and Checkpoint 2
+## Current hard exclusions after the approved diagnostic round
 
-- no substitute allocation serialization, extra seed, second model, ambiguity
-  branch, corrected control, or threshold tuning before the one exact anchor;
+- no additional preparation, seed, model, ambiguity branch, or control without
+  a new discriminating question, recorded setup, and approval;
 - no result-guided choice of the primary clean-reader interpretation;
 - no historical code or result treated as source authority;
 - no ambiguity lattice, workflow system, or infrastructure expansion;
 - no mechanism or attainability conclusion inferred from prior numerical
   non-reproduction; and
-- no stronger scientific verdict without new evidence; the user-approved
-  in-progress report may publish the completed initial numerical finding.
+- no stronger scientific verdict outside the stated assumptions; the
+  user-approved in-progress report publishes the numerical mismatch,
+  conditional bound, and useful-work evidence together.
 
 ## Plan checkpoint
 

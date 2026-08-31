@@ -1529,6 +1529,61 @@ and repeated experiments determine technical conclusions.
   out another seed/configuration. Search-time estimates condition on the
   declared search process and are not minimum historical runtimes.
 
+### Conditional limit, with counterevidence to zero useful work — 2026-08-31
+
+- **Former belief/status:** the audited numerical gap and fixed-score cutoff
+  limit did not exclude another seed or configuration. Near-perfect
+  correlation with input energy suggested little useful contribution but did
+  not establish score equivalence. The proposed bound and controls had not run.
+- **New evidence (`C/A`):** primary diagnostic revision `1175e8d` ran on CPU
+  job `385090`. It calculates each prepared input's minimum and maximum MSE
+  over the closed probability simplex, grants attacks the maximum and benign
+  rows the minimum, then enumerates every boundary. On all 8,884,989 rows,
+  this label-aware relaxation gives maximum balanced ACC 50.92105%, AUC
+  45.10918%, and DR 9.24779% at FA <=15%, versus 83/81/81% reported. Target
+  rounding, original-only rows, and reversed direction also fail to recover
+  the reported operating point. All saved scores are inside their padded ranges.
+- **Root cause isolated within scope:** the fixed prepared input geometry,
+  Softmax output domain, and MSE scoring are jointly incompatible with the
+  target. The relaxation contains every allowed network output, even granting
+  a separate reconstruction for identical inputs. Another seed, wider hidden
+  layers, optimizer, or training duration cannot change that conditional
+  conclusion. It does not identify which source interpretation or unobserved
+  author procedure differs. Evaluation is float64 with outward padding, not
+  certified interval arithmetic or a claim about an unseen population.
+- **Counterevidence (`C/M`, then adaptive `X/M`):** original-row trained-minus-
+  zero balanced ACC is +0.89081 points, customer-bootstrap 95% interval
+  [0.80454, 0.98117]. Gains over uniform and projection scores are +0.85335
+  and +0.02975 points; some per-attack gains exceed one point. Fewer benign
+  alarms drive the aggregate gain while attack detection decreases. Near-
+  perfect overall correlation does not make scores interchangeable: within
+  energy bands, the trained score distinguishes labels better than energy.
+  The separately frozen adaptive control (`26a42db`, job `385091`) sampled
+  10,000 source days with six attack siblings. Within-band AUC was
+  trained/projection/uniform/energy = 65.49/62.18/55.02/49.74%.
+- **Current conclusions:** numerical non-reproduction unchanged; conditional
+  attainability limit `VERIFIED`; “nothing useful learned” `WEAKENED, NOT
+  ESTABLISHED`. The matched architectural mechanism remains `OPEN`. These
+  are score comparisons, not a matched trained-versus-untrained causal test.
+- **Uncertainty:** the 2,000 customer-cluster resamples hold fitted model,
+  scaler, split, and generated attacks fixed and assume exchangeable customer
+  clusters; no synthetic-row bootstrap or seed-level interval was used.
+  The +/-1-point region was specified before the new measurements but after
+  the original result was known. The adaptive within-band differences have
+  no confidence interval and are not independent confirmation. Other simple
+  rules and other source-supported input/output/score choices remain untested.
+- **Compute and stopping:** the full analysis took 112.92 seconds after a
+  5.00-second pilot, and the adaptive control took 18.03 seconds. Allocations
+  ended `0:0` after 4:16 and 0:53. No training or original data/result changed.
+  Both questions are answered within scope; stop rather than launch more
+  seeds. The proposed next discussion concerns source assumptions that can
+  change the bound. No new experiment follows automatically.
+- **Sources:**
+  [diagnostic finding](../studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md),
+  [primary frozen contract](../studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md),
+  [adaptive control contract](../studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md),
+  [results and execution records](../studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

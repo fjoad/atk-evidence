@@ -17,5 +17,21 @@
   "full_sha256": "0e337db5a7f424dafc46cc3aac0643b5fac77c61799b0558b2434143bf5cd372",
   "promotion": "512-row pilot passed input hashes, source block identities, geometry, and score containment; 0.00358-second geometry timing supported one full pass inside the remaining allocation",
   "transfer": "pilot and full JSON SHA-256 verified against cluster originals",
-  "scope": "No training, weights, source preparation, original score, or original numerical result changed"
+  "scope": "No training, weights, source preparation, original score, or original numerical result changed",
+  "adaptive_control": {
+    "analysis_commit": "26a42db",
+    "job_id": "385091",
+    "classification": "X/M exploratory control, separately frozen after the primary result",
+    "cpus": 2,
+    "memory_limit_gib": 4,
+    "time_limit_minutes": 3,
+    "state": "COMPLETED",
+    "exit_code": "0:0",
+    "start_qatar": "2026-08-31T18:01:07+03:00",
+    "end_qatar": "2026-08-31T18:02:00+03:00",
+    "allocation_elapsed_seconds": 53,
+    "analysis_seconds": 18.032516101375222,
+    "max_rss_kib": 163468,
+    "result_sha256": "d988527f801c2d30d3bc8337e8ce26568939155514539843f39bee256ab58ee4"
+  }
 }

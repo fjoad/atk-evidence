@@ -27,18 +27,30 @@ The paper omits some necessary settings, so we recorded our choices before
 running it. The saved data and predictions passed our checks. Changing the
 cutoff alone cannot recover the target from these scores.
 
-The trained scores closely follow a simple input-magnitude score, with only a
-1.18-percentage-point improvement in balanced accuracy over zero reconstruction.
-That suggests a useful next question: what did training add? It does not prove
-that the model learned nothing, that another configuration cannot work, or that
-the published results were fabricated.
+We then asked a stronger question: could *any* reconstruction allowed by this
+output layer reach the target? On the same prepared data, even an imaginary
+detector that knows every label and chooses each reconstruction in its favor
+stays below **50.93% balanced accuracy**, versus 83% reported. At a false-alarm
+rate of at most 15%, it can detect at most **9.25%** of attacks, versus 81%.
+Changing weights, seeds, or training duration cannot overcome this limit while
+the prepared inputs, Softmax output, and mean-squared-error score stay fixed.
+Different preprocessing, output layers, or scores are outside this bound.
+
+That does **not** mean the model does nothing useful. On original customer
+rows, its balanced-accuracy gain over zero reconstruction is 0.89 percentage
+points (conditional 95% interval: 0.80–0.98). It also ranks attacks better than
+the tested simple controls within similar-input-magnitude groups. These score
+comparisons do not identify the paper's claimed architectural mechanism.
 
 The [readable report](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/)
 connects the paper's instructions to the actual code, a model diagram, the
-complete results, and possible explanations.
-The [technical finding and audit records](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
-preserve the details. The run completed on 30 August 2026 and was checked on
-31 August. No new training follows automatically from it.
+complete results, the bound, and possible explanations.
+The [initial finding](studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md)
+and [follow-up findings and records](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
+preserve the details. The follow-up required 113 seconds for the full analysis
+and 18 seconds for a small control, with no model training. The diagnostic
+round is complete. Other source interpretations and the cause of the published
+discrepancy remain open; no conclusion about author intent follows.
 
 ## How we work
 

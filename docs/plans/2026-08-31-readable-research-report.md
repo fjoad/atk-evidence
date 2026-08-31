@@ -82,7 +82,30 @@ automation or experimental jobs are needed for this editorial task.
 - CI now fetches Git history so the source-link tests can inspect the exact
   historical revisions cited by the report.
 
-## Publication
+## Diagnostic follow-up publication — 2026-08-31
+
+The user subsequently approved the separate diagnostic sequence in the active
+research plan. It is complete. The public report now adds the conditional
+Softmax/MSE performance bound, paired useful-work comparisons, small adaptive
+geometry control, two scientific figures, and remaining assumptions. The
+original numerical table, scientific implementation, and older pages are
+unchanged. README, current status, active plan, and explanation register agree
+with the new finding; the original interpretation remains in the history.
+
+- `bash scripts/test.sh`: 206 tests pass (140 study and 66 root), including
+  14 static report tests.
+- Report tests compare upper limits using upward rounding, gains/intervals,
+  adaptive-control values, figure bytes, and source/result/contract hashes.
+- All 64 local Markdown links in the 10 changed Markdown files checked at
+  this stage resolve. The updated homepage, report, and both new figures
+  return local HTTP 200. `git diff --check` passes.
+- Scientific figure exports retain their original bytes; narrow
+  `.gitattributes` entries exempt only those Matplotlib SVGs from Git's
+  trailing-whitespace check. No code or measured record was reformatted.
+- Existing GitHub Pages remains the publication destination. Verify the
+  successful deployment and public file hashes after pushing the final report.
+
+## Initial publication
 
 On 2026-08-31 the user explicitly requested publication to the existing GitHub
 repository and GitHub Pages site. Commit `0f411ec`, including the supporting

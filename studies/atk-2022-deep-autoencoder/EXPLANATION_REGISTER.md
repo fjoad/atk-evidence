@@ -95,6 +95,10 @@ attacks, so temporal modeling is unnecessary even if it is available.
 
 **Present evidence:** `SUPPORTED IN TOY DATA ONLY`. One-dimensional statistics
 gave AUC 0.993–1.000 on toy attacks 1–5; reversal defeated multiset-only rules.
+The 2026-08-31 FC-SAE diagnostics do not establish exact-data task triviality:
+trained scores improve on the tested simple controls within energy bands, and
+no recurrence/attention comparison was performed. Small aggregate gains alone
+cannot establish that the claimed temporal capability is unnecessary.
 
 **Predictions:** Exact-data simple rules approach elaborate models on attacks
 1–5; performance falls most on reversal; destroying temporal order has little
@@ -152,12 +156,18 @@ indefinitely and must never become an accusation by elimination.
 ### E7 — output-domain geometry dominates reconstruction scores
 
 Softmax/sigmoid outputs cannot exactly reconstruct general standardized
-profiles. **Current status:** structural floor `VERIFIED`; dominance on named
-data `SUPPORTED AS A DESCRIPTIVE DIAGNOSTIC, CAUSAL ATTRIBUTION OPEN`. The
-audited clean-reader anchor has trained/zero-score Pearson correlation 0.999253;
-ACC is 40.18% trained, 39.00% for zero reconstruction, and 40.20% for the
-per-row simplex floor. This motivates a controlled geometry test, not a claim
-that training did nothing or that every model is bounded to these metrics.
+profiles. **Current status:** fixed-preparation Softmax/MSE attainability limit
+`VERIFIED CONDITIONALLY`; “nothing useful learned” `WEAKENED, NOT ESTABLISHED`.
+The 2026-08-31 label-aware relaxation bounds balanced ACC below 50.93% and DR
+at 9.25% when FA <=15%, across every allowed reconstruction. This is a
+float64 evaluation with outward padding, not certified interval arithmetic.
+Changing the preparation/output/score can escape the bound.
+Despite global trained/energy correlation 0.999253, original-row trained-minus-
+zero ACC is +0.89081 points [0.80454, 0.98117]. In the small adaptive control,
+within-energy AUC is 65.49% trained, 62.18% projection, 55.02% uniform, and
+49.74% energy. The latter differences have no uncertainty estimate and do not
+isolate learning causally. Geometry constrains performance without making all
+scores equivalent. See [the finding](POST_ANCHOR_FINDING.md).
 
 ### E8 — score direction, reduction, or threshold semantics differ
 
@@ -166,8 +176,11 @@ construction is not executable; and a printed constant may have been applied
 under a different scale. **Current status:** source ambiguity `VERIFIED`, cause
 `OPEN`. On the audited clean-reader score vector, threshold choice alone in
 the printed direction cannot exceed 50.00072% balanced ACC; reversing direction
-cannot exceed 60.21%, versus 83% reported. This closes that specific fixed-score
-rescue, not changes to training or data that produce different scores.
+cannot exceed 60.21%, versus 83% reported. The subsequent domain relaxation
+closes the stronger fixed-preparation Softmax/MSE rescue for any weights:
+best balanced ACC is below 50.93% in the printed direction, 64.56% reversed.
+A positive constant sum-versus-mean rescaling cannot alter rankings or an
+all-cutoff ROC region; other score definitions or preprocessing remain open.
 Preserve literal and anomaly-consistent directions, explicit score
 reductions, printed threshold, and finite source-supported alternatives.
 
@@ -218,8 +231,11 @@ execution.
 
 Unreported seeds, partitions, failed runs, hyperparameter trials, rounding, or
 selection could create a tidy table even without misconduct. **Current status:**
-`OPEN`; the source reports no dispersion or run count. After one anchor, use
-predeclared repetitions and preserve all runs if `N` or `A` depth is promoted.
+seed/weight/optimizer rescue `CLOSED WITHIN FIXED PREPARATION/SOFTMAX/MSE SPACE`
+by the output-domain bound, including target rounding. Variation involving
+other prepared inputs or scores remains `OPEN`; the source reports no
+dispersion or run count. Do not repeat seeds to answer the closed conditional
+question. No inference about the authors' selection history follows.
 
 ### E14 — reporting or transcription error
 
@@ -234,15 +250,18 @@ as a blanket repair for the entire target pattern.
 
 Even after source-supported completions, seeds, capacity, training, and
 threshold choices, the target may remain far outside observed plateaus.
-**Current status:** `OPEN`; the audited single anchor is a large numerical
-non-match, but no clean-reader envelope exists. Fixed-score threshold
-enumeration does not bound scores produced by another implementation. Only a later
-predeclared `A` program can support a conditional implausibility conclusion.
-Empirical saturation is not universal impossibility.
+**Current status:** `CLOSED WITHIN FIXED PREPARATION/SOFTMAX/MSE SPACE` by an
+analytic domain relaxation, not by extrapolating the failed seed. Even an
+independent label-aware reconstruction per input cannot reach the target;
+original-row and reversed-direction controls also miss it. This is stronger
+than empirical implausibility within that fixed space. Other source-supported
+preparations, output domains, and scores remain `OPEN`; no broader empirical
+envelope or years-of-search estimate has been measured. Empirical saturation
+would still not establish universal impossibility.
 
 ## Ordered test map
 
-**2026-08-31 checkpoint:** the initial audited result and full metrics are in
+**Initial 2026-08-31 checkpoint:** the initial audited result and full metrics are in
 [CLEAN_READER_FINDING.md](CLEAN_READER_FINDING.md). E1–E6 and E12–E14 were not
 newly discriminated by a recurrent comparison or repeated seeds. Do not treat
 the first numerical finding as their elimination.
@@ -264,3 +283,17 @@ the first numerical finding as their elimination.
 
 No later result may delete an explanation from this register. Close it with the
 tested space, evidence, and remaining escape conditions stated explicitly.
+
+## Completed post-anchor update — 2026-08-31
+
+The user approved the bounded sequence; primary code `1175e8d` and adaptive
+control code `26a42db` ran as CPU jobs `385090` and `385091`. Both completed
+without training. [The saved finding](POST_ANCHOR_FINDING.md) links the
+contracts, all results, and hashes. E7/E8/E13/E15 now have the conditional
+closures above. E4 is not upgraded to an exact-data triviality finding, and
+E1–E6/E9–E12/E14 are not eliminated. No author procedure is inferred.
+
+Stop the diagnostic round. The next proposed work is a source-supported
+assumption map: which changes actually leave the bounded input/output/score
+space, and which are corrections rather than reproduction? No broader
+experiment is automatically promoted by this update.

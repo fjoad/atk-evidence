@@ -22,12 +22,20 @@ The saved artifacts and metrics passed the recorded checks. Every cutoff on the
 same scores remains far below the reported result. The model's scores closely
 follow a zero-reconstruction input-magnitude score.
 
-This is one implementation and one seed. It establishes a numerical mismatch
-for that declared experiment. It does not yet establish why the mismatch
-exists, that another configuration cannot work, or that the paper's result was
-fabricated.
+This numerical result is one implementation and one seed. A subsequent
+no-training bound goes further: on the fixed prepared data, even label-aware
+optimal Softmax reconstructions with MSE scoring stay below 50.93% balanced
+accuracy. Detection at at most 15% false alarms is bounded by 9.25%, versus
+81% reported. This excludes every weight and seed under those assumptions,
+not different preprocessing, output domains, or scores.
 
-Read the [complete finding](CLEAN_READER_FINDING.md), the
+The fitted score is not identical to simple input magnitude: original-row
+balanced accuracy improves by 0.89 points, and within-energy ranking exceeds
+both tested no-training geometry controls. These comparisons do not identify
+a learned causal mechanism or establish “nothing useful learned.”
+
+Read the [initial finding](CLEAN_READER_FINDING.md), the
+[completed diagnostic finding](POST_ANCHOR_FINDING.md), the
 [paper-to-code fidelity record](CLEAN_READER_FIDELITY.md), and the
 [remaining explanations](EXPLANATION_REGISTER.md).
 
@@ -57,10 +65,11 @@ be resumed as though they were.
 
 ## Next decision
 
-The first run and its audit are complete. The project is stopped at Checkpoint 2.
-Proposed next questions concern a conditional output-domain performance bound,
-useful information beyond input magnitude, and small controls that separate
-optimization, objective, and task explanations. None has been run.
+The first run, audit, and user-approved bounded diagnostic round are complete.
+No experiment remains running. The next proposed question is which
+source-supported alternatives would actually change the bound's assumptions.
+Begin with a source/semantic map, not repeated seeds or a broad search. A
+matched recurrence or attention comparison remains untested.
 
 Repository setup and authorized data access are in
 [Getting started](../../docs/GETTING_STARTED.md). Do not launch another seed,

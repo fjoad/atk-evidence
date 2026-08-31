@@ -2,13 +2,26 @@
 
 **Last updated:** 2026-08-31
 
-**Current approval:** the user approved execution of the post-anchor sequence
-on 2026-08-31. `POST_ANCHOR_DIAGNOSTICS.md` freezes the oracle output-domain
-bound and useful-information checks: 512-row pilot then a conditional full
-saved-array pass; one 4-CPU, 12-GiB, 20-minute allocation; no new training or
-automatic retry. This supersedes older “Checkpoint 2 pending” statements below
-only for that bounded scope. A small control must answer a surviving question
-and have its setup recorded before execution.
+**Current state — diagnostic round complete, experiments stopped:** the user
+approved the bounded post-anchor sequence on 2026-08-31. Jobs `385090` and
+`385091` both completed `0:0`; no training or original artifact changed.
+The full analysis took 112.92 seconds, the adaptive 70,000-row control 18.03.
+`POST_ANCHOR_FINDING.md` is the current interpretation; preserve the two frozen
+contracts, code revisions `1175e8d`/`26a42db`, and raw diagnostic summaries.
+No further experiment is authorized by completion of this round.
+
+**What the new evidence says:** on the frozen prepared inputs, an optimistic
+label-aware Softmax/MSE relaxation bounds ACC below 50.93%, AUC at 45.11%,
+and DR at 9.25% when FA <=15%, versus 83/81/81% reported. This covers every
+weight/seed under those assumptions, not other preparation/output/score
+choices. It is an outward-padded float64 evaluation of an analytic bound, not
+certified interval arithmetic or extrapolation over seeds.
+Original-row trained-minus-zero ACC is +0.89081 points [0.80454, 0.98117]
+under a fixed-model, customer-cluster bootstrap. Some per-attack gains exceed
+one point. The adaptive within-energy control gives trained/projection/
+uniform/energy AUC 65.49/62.18/55.02/49.74%; no CI for that statistic.
+Thus “no useful work” is not established. Score comparisons do not identify
+training causally or test the paper's recurrence/attention explanation.
 
 **Public-writing direction, 2026-08-31:** the user wants the README and site to
 read like a clear research report: paper → implementation → result → possible
@@ -21,15 +34,16 @@ Pages run `33400529269` succeeded and all public pages/assets match the reviewed
 files. The README links to the rendered reports. All 187 local tests passed,
 including eight static report checks. The subsequent limited diagnostic
 authorization is stated above; no full training or broad search is authorized.
-See the 2026-08-31 editorial plan and the proposed next questions at Checkpoint 2.
+See the 2026-08-31 editorial plan and the completed diagnostic round above.
 
-**Next scientific emphasis:** measure useful information beyond a simple input
-statistic; consider an optimistic output-domain bound and small controls before
-another long run. These are proposals, not findings. Rescaling an accuracy axis
-does not make a target less probable; fixed-model confidence intervals do not
-bound new seeds/configurations, and years-of-search estimates are conditional.
+**Next scientific emphasis:** discuss which source-supported assumptions could
+change the bound, beginning with a source/semantic map, not another seed of the
+same setup. Any further experiment needs a recorded question and approval.
+Rescaling an accuracy axis does not make a target less probable; fixed-model
+confidence intervals do not bound new seeds/configurations, and years-of-search
+estimates are conditional. The completed analytic bound avoids those shortcuts.
 
-**Governing state:**
+**Governing plan and historical progression (current boundary above):**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
 supersedes the prior model-family/one-factor execution sequence. The user
 approved the plan on 2026-08-23. Phase 0 preservation/reconciliation is
@@ -58,7 +72,8 @@ bytes are already available. On 2026-08-30 the user explicitly approved
 for the otherwise unchanged single anchor. Phase 5 is operationally complete;
 the sole attempt ran from eligible code commit
 `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Phase 6 is complete: frozen audit
-and 65 corrected supplemental checks passed; Checkpoint 2 awaits review.
+and 65 corrected supplemental checks passed; the initial Checkpoint-2 pause
+was later opened only for the now-completed diagnostic round above.
 The 179 deterministic tests and
 strict local seven-file verifier passed before submission. Panther job
 `384390` completed with exit `0:0` at 22:48:39 Qatar time on 2026-08-30 after
@@ -91,6 +106,8 @@ is 0.999253, with only +1.18 ACC points over the zero rule; the Softmax-domain
 floor has ACC 40.20 versus 40.18 trained. These motivate geometry/scoring
 questions but establish neither causal mechanism failure nor a method-family
 attainability envelope. No further experiment is approved.
+The preceding fixed-score interpretation is the pre-diagnostic state; the
+conditional bound and useful-information measurements above supersede it.
 The user reconfirmed that sandbox tests should remain quick: Phase 2 took
 60.06 s of computation (2:25 total job); this 9:14:27 run was the later full-data
 numerical reproduction, not sandbox breadth. Explain that boundary explicitly.
