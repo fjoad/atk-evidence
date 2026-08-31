@@ -1,0 +1,21 @@
+{
+  "analysis_commit": "1175e8dc8e852e8013b5d4d9e895d44853000cb4",
+  "job_id": "385090",
+  "partition": "cpu-all",
+  "cpus": 4,
+  "memory_limit_gib": 12,
+  "time_limit_minutes": 20,
+  "state": "COMPLETED",
+  "exit_code": "0:0",
+  "start_qatar": "2026-08-31T17:50:03+03:00",
+  "end_qatar": "2026-08-31T17:54:19+03:00",
+  "allocation_elapsed_seconds": 256,
+  "max_rss_kib": 2627800,
+  "pilot_analysis_seconds": 4.997593504143879,
+  "full_analysis_seconds": 112.9184864370618,
+  "pilot_sha256": "3b97acc58293c6bd5f4896c4adfb4a2258e509852b294d561a34472f2a7db9ca",
+  "full_sha256": "0e337db5a7f424dafc46cc3aac0643b5fac77c61799b0558b2434143bf5cd372",
+  "promotion": "512-row pilot passed input hashes, source block identities, geometry, and score containment; 0.00358-second geometry timing supported one full pass inside the remaining allocation",
+  "transfer": "pilot and full JSON SHA-256 verified against cluster originals",
+  "scope": "No training, weights, source preparation, original score, or original numerical result changed"
+}

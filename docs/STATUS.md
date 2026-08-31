@@ -16,6 +16,21 @@
   four CPU cores, 12 GiB, 20-minute allocation, no training or automatic retry.
   The completed reproduction stays unchanged. Any small trained control needs
   a specific surviving question and a separately recorded setup first.
+  Analysis commit `1175e8d` passes all 200 local tests. CPU allocation `385090`
+  ran the 512-row pilot successfully in 5.00 seconds; geometry took 0.00358 s,
+  consumed hashes and block identities passed, and every saved score was inside
+  its padded range. This promotes one full saved-array pass under the unchanged
+  contract and remaining 20-minute allocation. Pilot metrics are not a
+  full-population finding.
+  The full pass subsequently completed in 112.92 seconds; the CPU allocation
+  exited `0:0` in 4:16. Its generous bound is 50.92105% balanced accuracy and
+  9.24779% detection at FA <=15%, excluding the published target under the fixed
+  preparation/Softmax/MSE assumptions. Original-row trained-minus-zero gain is
+  +0.89081 points [0.80454, 0.98117], and energy-band comparisons reveal nonzero
+  residual information. The warranted third-step control is frozen in
+  [ENERGY_BAND_CONTROL.md](../studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md):
+  compare trained, uniform, and projection scores on 10,000 source days plus
+  their six attack siblings, in a separate 3-minute CPU cap. No training.
 
 - **Public explanation, 2026-08-31:** the user requested the README and website
   be rewritten before any further experiments. The new research report is
