@@ -36,6 +36,16 @@ Changing weights, seeds, or training duration cannot overcome this limit while
 the prepared inputs, Softmax output, and mean-squared-error score stay fixed.
 Different preprocessing, output layers, or scores are outside this bound.
 
+We checked which restrictions were actually in the paper. Softmax, MSE, and
+the 0.58 cutoff are explicit; the normalization statistics are less precise.
+Two additional normalization readings still cap detection at **29.81% and
+33.96%**, versus 81%. A Sigmoid output range changes the limits substantially,
+but is not a trained-model improvement or a reproduction. See
+[which assumptions matter](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/#source-assumptions)
+and [what Sigmoid changes](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/#sigmoid-range).
+The full source-assumption check took 57 seconds with no training;
+[all outcomes and limitations are saved](studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md).
+
 That does **not** mean the model does nothing useful. On original customer
 rows, its balanced-accuracy gain over zero reconstruction is 0.89 percentage
 points (conditional 95% interval: 0.80–0.98). It also ranks attacks better than

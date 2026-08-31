@@ -2,6 +2,16 @@
 
 **Last updated:** 2026-08-31
 
+**Newest approval:** publish the discussed source-assumption findings first,
+with the plain-language question visible inside each methods block, then do a
+quick Sigmoid investigation without full retraining. See
+`docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md`. Public edits are
+under way; no experimental scoring has started. The earlier discussion gate
+below is satisfied for the source-assumption round, not for the forthcoming
+Sigmoid results. Preserve the distinction between an output-range ceiling and
+achieved model performance; a head swap in Softmax-trained weights alone is
+not a test of a trained Sigmoid model.
+
 **Latest user instruction:** discuss measured results and interpretation before
 updating or publishing the public account. The user approved the source review
 and cheap assumption checks in `SOURCE_ASSUMPTION_CHECK.md`, not training.

@@ -9,6 +9,16 @@
 
 ## Current project state
 
+- **Publication and small Sigmoid follow-up approved:** after discussing the
+  source-assumption findings, the user requested their publication first,
+  followed by quick Sigmoid checks without full retraining. Follow
+  [the bounded sequence](plans/2026-08-31-source-findings-and-sigmoid-sanity.md)
+  within the governing clean-reader plan. Public edits are validated by all
+  217 tests (140 study, 77 root) and are ready for publication; experimental
+  scoring has not started. New Sigmoid findings must be discussed
+  before they are published. No full training, seed sweep, or broad search is
+  authorized.
+
 - **Source-assumption review complete; discussion pending:** the user approved reviewing
   source support and checking a few load-bearing alternatives, with discussion
   before public updates. The local plan/contract is

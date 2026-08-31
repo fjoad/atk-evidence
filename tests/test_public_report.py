@@ -20,6 +20,7 @@ SITE = ROOT / "site"
 STUDY = ROOT / "studies/atk-2022-deep-autoencoder"
 RECORDS = STUDY / "results/clean_reader_anchor_20260831"
 DIAGNOSTICS = STUDY / "results/post_anchor_20260831"
+ASSUMPTIONS = STUDY / "results/source_assumption_20260831"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
 
 
@@ -33,6 +34,8 @@ class Page(HTMLParser):
         self.bounds = {}
         self.controls = {}
         self.gains = {}
+        self.scalings = {}
+        self.ranges = {}
         self.h1_count = 0
         self.row = None
         self.row_group = None
@@ -54,7 +57,8 @@ class Page(HTMLParser):
             self.metadata[attrs.get("property", attrs.get("name"))] = attrs.get("content")
         if tag == "tr":
             groups = {"metric": self.metrics, "bound": self.bounds,
-                      "control": self.controls, "gain": self.gains}
+                      "control": self.controls, "gain": self.gains,
+                      "scaling": self.scalings, "range": self.ranges}
             for name, group in groups.items():
                 if f"data-{name}" in attrs:
                     self.row = attrs[f"data-{name}"]
@@ -93,6 +97,7 @@ class PublicReportTests(unittest.TestCase):
         cls.report_text = REPORT.read_text()
         cls.diagnostics = json.loads((DIAGNOSTICS / "full/diagnostics.json").read_text())
         cls.control = json.loads((DIAGNOSTICS / "energy_band_control.json").read_text())
+        cls.assumptions = json.loads((ASSUMPTIONS / "full.json").read_text())
 
     def test_complete_current_result_matches_saved_metrics(self):
         rows = self.pages[REPORT].metrics
@@ -255,6 +260,42 @@ class PublicReportTests(unittest.TestCase):
                 self.assertIn("prepared", content)
         self.assertIn("not certified interval arithmetic", self.report_text)
         self.assertIn("not to another dataset, normalization, output domain, or score", self.report_text)
+
+    def test_normalization_detection_limits_match_all_three_frozen_cases(self):
+        rows = self.pages[REPORT].scalings
+        expected = {"joint_feature_softmax", "joint_scalar_softmax", "separate_class_feature_softmax"}
+        self.assertEqual(set(rows), expected)
+        for key in expected:
+            value = self.assumptions["branches"][key]["printed"]["at_printed_threshold"]["max_DR"]
+            self.assertEqual(rows[key][1], f"{math.ceil(value * 100) / 100:.2f}%")
+        self.assertIn("4,504,602", self.report_text)
+        self.assertIn("does not exhaust every reasonable normalization", self.report_text)
+
+    def test_sigmoid_controls_preserve_direction_and_original_row_scope(self):
+        rows = self.pages[REPORT].ranges
+        self.assertEqual(set(rows), {"softmax_printed", "sigmoid_printed", "sigmoid_reversed"})
+        for key, branch, direction in (
+            ("softmax_printed", "joint_feature_softmax", "printed"),
+            ("sigmoid_printed", "joint_feature_sigmoid_control", "printed"),
+            ("sigmoid_reversed", "joint_feature_sigmoid_control", "reversed_control"),
+        ):
+            result = self.assumptions["branches"][branch][direction]
+            value = result["at_FA_cap"]["15.0"]["max_DR"]
+            self.assertEqual(rows[key][2], f"{math.ceil(value * 100) / 100:.2f}%")
+            if direction == "printed":
+                value = result["at_printed_threshold"]["max_DR"]
+                self.assertEqual(rows[key][1], f"{math.ceil(value * 100) / 100:.2f}%")
+        self.assertIn("No synthetic benign rows are included", self.report_text)
+        self.assertIn("We did not train a Sigmoid model", self.report_text)
+        self.assertIn("a permitted target is not a reproduced target", self.report_text)
+
+    def test_plain_language_questions_precede_the_relevant_checks(self):
+        question = "even if we could choose the most favorable allowed output separately for every attack, could enough attacks cross the detection threshold?"
+        self.assertIn(question, self.report_text)
+        self.assertLess(self.report_text.index(question), self.report_text.index('id="bound-table"'))
+        self.assertIn('id="source-assumptions"', self.report_text)
+        self.assertIn('id="sigmoid-range"', self.report_text)
+        self.assertIn("Escaping a bound means", self.report_text)
 
 
 if __name__ == "__main__":

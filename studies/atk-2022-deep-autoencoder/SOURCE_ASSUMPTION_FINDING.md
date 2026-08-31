@@ -2,7 +2,12 @@
 
 Date: 2026-08-31
 
-Status: checks complete; discussion draft, not approved for publication
+Status: checks complete; discussed with the user and approved for publication
+
+The original stopping point below records the completed round. After discussion,
+the user approved publishing these findings, followed by a separately recorded,
+quick Sigmoid investigation. That follow-up does not alter these records or
+authorize publishing its new results before discussion.
 
 ## Short answer
 

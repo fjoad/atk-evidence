@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reproducing an electricity-theft detector — ATK Evidence</title>
-  <meta name="description" content="The FC-SAE reproduction, a conditional performance bound below 50.93% balanced accuracy, and the small but nonzero differences made by its fitted score.">
+  <meta name="description" content="The FC-SAE reproduction, why three Softmax preparations cannot reach the reported detection rate, and what a Sigmoid output range does—and does not—change.">
   <meta property="og:title" content="Reproducing an electricity-theft detector">
   <meta property="og:description" content="A documented run reached 40.18% rather than 83%. A new output-domain bound excludes the target for the fixed preparation and MSE score, regardless of weights or seed.">
   <meta property="og:type" content="article">
@@ -28,12 +28,13 @@
     <section class="abstract" aria-labelledby="abstract">
       <h2 id="abstract">Abstract</h2>
       <p>We implemented the paper's fully connected simple autoencoder (FC-SAE), recording the choices needed where the method was incomplete. The audited run reached 40.18% balanced accuracy rather than 83%. We then bounded the performance of any Softmax reconstruction on the same prepared data: even outputs chosen with knowledge of the labels stay below 50.93%. This excludes a weight, seed, or cutoff change as a rescue under those fixed assumptions. The trained score nevertheless makes small, nonzero improvements over simple controls. The result is a conditional limit on this preparation and scoring combination, not a finding about author intent or every possible interpretation of the paper.</p>
+      <p>A return to the source confirmed that Softmax, MSE scoring, and the 0.58 cutoff are explicit. Two additional normalization readings still cap detection below 34% at that cutoff, versus 81% reported. Replacing the allowed output range with Sigmoid's changes the limits substantially, but does not demonstrate a trained-model improvement or reproduce the reported result.</p>
     </section>
 
     <nav class="contents" aria-label="Report contents"><ol>
       <li><a href="#question">1. Question</a></li><li><a href="#methods">2. Paper to code</a></li><li><a href="#setup">3. Setup</a></li>
       <li><a href="#results">4. Results</a></li><li><a href="#checks">5. Checks</a></li><li><a href="#sandbox">6. Earlier small tests</a></li>
-      <li><a href="#bound">7. Performance bound</a></li><li><a href="#useful-work">8. Useful work</a></li><li><a href="#explanations">9. Explanations</a></li><li><a href="#limitations">10. Limits</a></li><li><a href="#next">11. Next questions</a></li><li><a href="#references">References</a></li>
+      <li><a href="#bound">7. Performance bound</a></li><li><a href="#source-assumptions">7a. Source assumptions</a></li><li><a href="#sigmoid-range">7b. What Sigmoid changes</a></li><li><a href="#useful-work">8. Useful work</a></li><li><a href="#explanations">9. Explanations</a></li><li><a href="#limitations">10. Limits</a></li><li><a href="#next">11. Next questions</a></li><li><a href="#references">References</a></li>
     </ol></nav>
 
     <section aria-labelledby="question">
@@ -196,6 +197,7 @@
 
     <section aria-labelledby="bound">
       <h2 id="bound"><span class="section-index">7</span>Could any allowed reconstruction reach the target?</h2>
+      <div class="note research-question"><p><strong>We asked:</strong> <em>even if we could choose the most favorable allowed output separately for every attack, could enough attacks cross the detection threshold?</em></p></div>
       <p>The failed run left a question: perhaps different weights would give much better scores. We tested that possibility without training another model. For each input day, we calculated the <em>smallest</em> and <em>largest</em> copying error permitted by the output layer.</p>
       <p>A Softmax reconstruction has 48 nonnegative values adding to one. Its smallest error comes from the nearest vector in that set; its largest comes from putting all the output mass on the input's smallest coordinate. Allowing zero coordinates makes this set slightly more generous than a finite Softmax output. <a href="#ref-bound">[7]</a></p>
       <p>We then gave every attack its largest possible error and every benign day its smallest. This imaginary detector knows the answers and may choose each reconstruction independently, even when a real network could not. If <em>this</em> advantage is insufficient, no choice of shared weights or training seed can fix the gap while the preparation, output restriction, and MSE score stay the same.</p>
@@ -221,6 +223,41 @@
         <p>We enumerated 8,212,855 boundaries on the label-aware vector. Endpoints were evaluated in float64 and padded outward by <code>0.00001 × (1 + U)</code>. Every saved trained score fell inside its range. This is a conservative numerical evaluation of an analytic bound, not certified interval arithmetic. It applies to these fixed prepared inputs and MSE scoring—not to another dataset, normalization, output domain, or score.</p>
       </details>
       <p><strong>This changes the conclusion.</strong> More seeds, wider hidden layers, different optimizers, or longer training cannot reach the target under this fixed combination. We do not need to extrapolate a learning curve or estimate years of search to establish that conditional limit.</p>
+
+      <h3 id="source-assumptions">7a. Did our interpretation create the obstacle?</h3>
+      <div class="note research-question"><p><strong>We asked:</strong> <em>are the restrictions causing this limit actually in the paper, or did we introduce them when filling in missing details?</em></p></div>
+      <p>We re-read the complete paper and visually checked the relevant pages. Softmax is specified for FC-SAE in Table I and the text on p. 4115. MSE and the higher-error alarm direction are explicit on pp. 4109 and 4114; the FC-SAE cutoff is 0.58 on p. 4115. Those choices were not invented by our implementation. Standardization to zero mean and unit variance is also stated, but which rows and coordinates supply its statistics is not. <a href="#ref-assumptions">[9]</a></p>
+      <p>We therefore tested two additional readings of normalization. Each uses statistics from the complete original population before the split. The reconstruction bound then covers all 4,504,602 held-out attack rows, with no fitting or new seed.</p>
+      <div class="table-wrap"><table id="normalization-table">
+        <caption>Table 8a. Optimistic detection limits at the printed MSE cutoff of 0.58. These are upper limits, not trained-model results; each is rounded upward. The paper reports 81% detection.</caption>
+        <thead><tr><th scope="col">Normalization with Softmax output</th><th scope="col" class="number">Detection ceiling</th></tr></thead>
+        <tbody>
+          <tr data-scaling="joint_feature_softmax"><th scope="row">Existing reading: separate statistics for each half-hour coordinate, pooling benign and attack rows</th><td class="number">29.58%</td></tr>
+          <tr data-scaling="joint_scalar_softmax"><th scope="row">One shared mean and standard deviation across all readings</th><td class="number">29.81%</td></tr>
+          <tr data-scaling="separate_class_feature_softmax"><th scope="row">Separate coordinate-wise statistics for benign rows and pooled attack rows</th><td class="number">33.96%</td></tr>
+        </tbody>
+      </table></div>
+      <p>The last interpretation is weaker: it uses class membership to prepare the inputs and is not presented as a deployable procedure or what the authors did. We retain it to make the sensitivity check explicit.</p>
+      <p><strong>Neither tested alternative rescues the detection rate.</strong> Even adding synthetic benign examples cannot improve the fraction of these same attacks detected at 0.58. This extends the conditional exclusion across these three preparations; it does not exhaust every reasonable normalization, population, or attack-generation procedure.</p>
+
+      <h3 id="sigmoid-range">7b. Would changing Softmax to Sigmoid change the answer?</h3>
+      <div class="note research-question"><p><strong>We asked:</strong> <em>does changing the output layer merely move the score a little, or does it remove the restriction that made the target unreachable?</em></p></div>
+      <p>Softmax forces all 48 reconstructed values to share a total of one. Sigmoid allows each value independently to range between zero and one. Changing one word in the code can therefore change the allowed reconstruction space substantially. Neither output range can reproduce negative standardized values exactly.</p>
+      <p>Here we changed only the <em>allowed range</em> in the calculation, using the existing normalization. We did not train a Sigmoid model. Sigmoid is listed among the paper's searched output options, but it is not the selected FC-SAE output in Table I.</p>
+      <div class="table-wrap"><table id="sigmoid-range-table">
+        <caption>Table 8b. Upper limits on the original-row evaluation: 750,767 benign days and their six attack siblings. No synthetic benign rows are included. Limits are rounded upward; a ceiling is not an achieved result.</caption>
+        <thead><tr><th scope="col">Allowed range and alarm rule</th><th scope="col" class="number">Detection at 0.58</th><th scope="col" class="number">Detection at ≤15% false alarms, any cutoff</th><th scope="col">Does this bound exclude the 81% / 15% target?</th></tr></thead>
+        <tbody>
+          <tr data-range="softmax_printed"><th scope="row">Softmax; flag high error</th><td class="number">29.58%</td><td class="number">5.60%</td><td>Yes</td></tr>
+          <tr data-range="sigmoid_printed"><th scope="row">Sigmoid range; flag high error</th><td class="number">95.73%</td><td class="number">59.99%</td><td>Yes, for the combined target on these original rows</td></tr>
+          <tr data-range="sigmoid_reversed"><th scope="row">Sigmoid range; instead flag low error</th><td>Not evaluated at the printed cutoff</td><td class="number">94.04%</td><td>No—but no trained model has demonstrated it</td></tr>
+        </tbody>
+      </table></div>
+      <p>Sigmoid's optimistic detection alone can pass 81%, but detection alone is not the claim: false alarms must also remain low. At 0.58, at least about 41.1% of original benign rows must be falsely flagged. Even choosing a different cutoff cannot meet both targets in the printed direction on these rows.</p>
+      <p>The larger output range also raises the original-row balanced-accuracy ceiling from 50.16% to 80.84%. That is a change in the limit, not an observed improvement from training. With <em>both</em> Sigmoid and reversed scoring, the detection/false-alarm pair is no longer excluded by this calculation. This is important counterevidence to a universal claim about autoencoders, but changes two explicit parts of the stated FC-SAE recipe.</p>
+      <div class="note warning"><p><strong>Escaping a bound means “worth investigating,” not “we now know it works.”</strong> These all-cutoff Sigmoid results concern original rows only. They do not establish the limit on the full evaluation after synthetic benign examples are added, or show a match to the paper's complete seven-metric row.</p></div>
+      <p>Changing MSE to summed squared error or RMSE cannot change ranking or the all-cutoff ROC curve: these only rescale the same ordering. A genuinely different score or output range is a different question.</p>
+      <p class="meta">The source-assumption pilot took 8.20 seconds; the full check took 56.76 seconds. No model was trained. The reference, both normalization alternatives, the Sigmoid control, and both score directions are preserved—not just favorable outcomes. <a href="#ref-assumptions">Source map, code, and all results [9]</a>.</p>
     </section>
 
     <section aria-labelledby="useful-work">
@@ -269,9 +306,9 @@
           <caption>Table 11. Explanations after the diagnostic round. Further tests remain proposals, not completed results.</caption>
           <thead><tr><th scope="col">Possible explanation</th><th scope="col">Evidence so far</th><th scope="col">Useful next distinction</th></tr></thead>
           <tbody>
-            <tr><th scope="row">The prepared inputs and output/scoring combination limit performance</th><td>The label-aware bound excludes the reported target, for every weight and seed under the fixed assumptions.</td><td>Identify source-supported alternatives that actually change those assumptions.</td></tr>
+            <tr><th scope="row">The prepared inputs and output/scoring combination limit performance</th><td>The label-aware bound excludes the reported target, for every weight and seed under the fixed assumptions. Two further normalization readings still cannot reach detection at 0.58.</td><td>Separate the remaining data assumptions from changes to explicit output and scoring choices.</td></tr>
             <tr><th scope="row">The cutoff is the main problem</th><td>Ruled out for these fixed scores: every cutoff still falls short, including reversed direction.</td><td>Separate changes to the score itself from changes to its cutoff.</td></tr>
-            <tr><th scope="row">A data, preprocessing, or source-reading choice matters</th><td>Customer identity and transformation checks passed, but the paper leaves consequential choices unresolved.</td><td>Inspect source-supported alternatives one at a time, beginning with cheap saved-data checks.</td></tr>
+            <tr><th scope="row">A data, preprocessing, or source-reading choice matters</th><td>Softmax and MSE are explicit; the normalization statistics are not. The two additional scalings tested do not rescue detection. Sigmoid changes the limits but is a different FC-SAE output.</td><td>Check Sigmoid on the complete prepared evaluation before considering a small learned control; do not assume a larger ceiling is achievable.</td></tr>
             <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>Cannot explain a match under the fixed preparation/Softmax/MSE assumptions. This does not estimate variability under different assumptions.</td><td>Do not repeat seeds to answer a question the bound already closes.</td></tr>
             <tr><th scope="row">The task offers little benefit from extra architecture</th><td>Aggregate score gains are small, but attack-specific effects and within-energy rankings are nonzero. No new architecture contrast has been run.</td><td>A matched component test would be needed to identify the claimed mechanism.</td></tr>
             <tr><th scope="row">The paper omits a consequential procedure or contains a reporting error</th><td>Missing settings and contradictory instructions make this possible; a reproduction failure cannot identify what the authors ran.</td><td>Look for source-supported clarifications or author artifacts. Do not infer undocumented code from whichever change improves our score.</td></tr>
@@ -285,25 +322,26 @@
       <h2 id="limitations"><span class="section-index">10</span>What this study cannot yet conclude</h2>
       <p><strong>Numerical result:</strong> the audited run did not reproduce this row. <strong>Mechanism:</strong> the trained score has nonzero effects, but the paper's architectural explanation remains untested by a matched comparison. <strong>Attainability:</strong> the target is excluded under the fixed preparation/output/scoring assumptions; broader source interpretations remain unresolved.</p>
       <p>There are no seed-level confidence intervals here. Many rows share a customer or an original profile; synthetic examples add further dependence. Treating all 8.9 million rows as independent would overstate precision. A narrow interval for one fixed model would not, by itself, rule out another fitted model.</p>
-      <p>The new bound concerns every allowed reconstruction on these exact prepared inputs. It does not cover a different normalization, customer population, data representation, output layer, or score. Elapsed compute time is not evidence that the authors could not have obtained their result. No claim about intent or their unobserved implementation follows.</p>
+      <p>The complete-evaluation bound concerns every allowed Softmax reconstruction on the fixed prepared inputs. The follow-up extends the fixed-cutoff detection exclusion to two more normalization readings on unchanged attacks. Its other all-cutoff and Sigmoid limits concern original rows only. Untested normalizations, customer populations, data representations, and scoring procedures remain outside these conclusions. Elapsed compute time is not evidence that the authors could not have obtained their result. No claim about intent or their unobserved implementation follows.</p>
       <p>The previous electricity notes and report contain older exploratory runs under different assumptions, including omitted test-set ADASYN. They remain available, but they are not silently counted as additional seeds of this experiment. The water-network study is separate evidence and is not used to strengthen this finding.</p>
     </section>
 
     <section aria-labelledby="next">
       <h2 id="next"><span class="section-index">11</span>What would be worth checking next?</h2>
-      <p>This diagnostic round is complete. The next questions concern assumptions, not another seed of the same setup:</p>
+      <p>The source review and output-range checks above are complete. The next question is whether Sigmoid offers an actual route, not whether another Softmax seed can defeat its bound:</p>
       <ol>
-        <li><strong>Map the remaining source-supported readings.</strong> Which changes to preprocessing, output, or score are defensible from the paper, and which would be corrections rather than reproduction?</li>
-        <li><strong>Check those assumptions cheaply.</strong> Establish whether a proposed change can move the mathematical limit before paying for training. Preserve the current non-match.</li>
+        <li><strong>Check the complete Sigmoid limit without training.</strong> Include the existing synthetic benign test rows, keeping the inputs fixed. Ask whether the printed or reversed score can meet the target even with label-aware outputs.</li>
+        <li><strong>Only then consider a small feasible control.</strong> If the limit permits the target, ask whether a label-blind rule or tightly capped learned model shows a route. A short training failure would not establish impossibility.</li>
         <li><strong>Keep mechanism claims separate.</strong> Testing recurrence or attention still requires an isolated component comparison on a task where the credited capability matters.</li>
       </ol>
-      <p>These further source and architecture experiments have <strong>not been run</strong>. No extra seed, model family, or broad search has started. The completed bound is conditional, not a years-of-search estimate.</p>
+      <p>These next Sigmoid and architecture experiments have <strong>not been run</strong> in the evidence reported on this page. No full retraining or broad search is implied. The completed bound is conditional, not a years-of-search estimate.</p>
     </section>
 
     <section aria-labelledby="conclusion">
       <h2 id="conclusion">Conclusion</h2>
       <p>Following one documented reading, we obtained a large and audited mismatch for the FC-SAE result on ISET. The follow-up establishes a stronger conditional result: even label-aware optimal Softmax reconstructions cannot reach the reported row on the fixed prepared data using MSE. A new seed or longer training cannot change that limit.</p>
       <p>At the same time, the trained score makes small beneficial changes and captures distinctions beyond the simple controls tested. “The target is unattainable under these assumptions” and “the model does nothing useful” are different claims; the evidence supports the first, not the second. Other source interpretations and the cause of the published discrepancy remain open.</p>
+      <p>The source review strengthens that conditional conclusion: the main restrictions are explicitly written, and the two tested normalization alternatives do not remove the detection shortfall. Sigmoid shows that a small code change can substantially change the allowed performance region, but a permitted target is not a reproduced target. We cannot infer what the authors implemented.</p>
     </section>
 
     <section aria-labelledby="references">
@@ -317,6 +355,7 @@
         <li id="ref-sandbox"><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md">Synthetic sandbox: questions, setup, results, and limits</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/phase2_discovery_sandbox.py">standalone code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/exploration/results/phase2_seed_20260824.json">saved results</a>. These experiments preceded the full-data reproduction.</li>
         <li id="ref-bound"><a href="https://github.com/fjoad/atk-evidence/blob/1175e8d/studies/atk-2022-deep-autoencoder/POST_ANCHOR_DIAGNOSTICS.md">Frozen diagnostic contract and bound derivation</a>; <a href="https://github.com/fjoad/atk-evidence/blob/1175e8d/studies/atk-2022-deep-autoencoder/checks/post_anchor_diagnostics.py">exact analysis code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/full/diagnostics.json">complete unmodified results</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md">finding and limits</a>. The primary pilot and full pass ran once, with no training.</li>
         <li id="ref-control"><a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/ENERGY_BAND_CONTROL.md">Small-control question and frozen setup</a>; <a href="https://github.com/fjoad/atk-evidence/blob/26a42db/studies/atk-2022-deep-autoencoder/checks/energy_band_control.py">code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/results/post_anchor_20260831/energy_band_control.json">control results</a>. This was adaptive exploration motivated by the first check, not an independent confirmation.</li>
+        <li id="ref-assumptions"><a href="https://github.com/fjoad/atk-evidence/blob/b76cb02/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md">Frozen source map and normalization/range checks</a>; <a href="https://github.com/fjoad/atk-evidence/blob/b76cb02/studies/atk-2022-deep-autoencoder/checks/source_assumption_check.py">analysis code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/decb136/studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/full.json">unmodified complete results</a>; <a href="https://github.com/fjoad/atk-evidence/blob/decb136/studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/execution.json">execution record</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md">finding and scope</a>. The pilot and full pass completed once, without training or regenerating synthetic examples.</li>
       </ol>
     </section>
   </article>
