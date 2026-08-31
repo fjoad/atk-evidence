@@ -58,12 +58,15 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-The source-assumption findings are published at `dc37bbe`; the no-training
-Sigmoid follow-up is saved locally. After discussion, the user asked to test
-the remaining Sigmoid-plus-changed-cutoff possibility. Only the bounded
-[small paired fit](docs/plans/2026-08-31-small-sigmoid-fit.md) is approved,
-with pilot and time gates. Do not assume the requested failure, run full-data
-training or a sweep, or publish new outcomes before discussion.
+The source-assumption findings are published at `dc37bbe`; subsequent Sigmoid
+checks are saved locally. The approved
+[small paired fit](docs/plans/2026-08-31-small-sigmoid-fit.md) is complete.
+Both models finished ten epochs. Sigmoid's best detection at FA<=15% was
+9.74935% (25.39063% reversed), versus 81%. This excludes cutoff rescue for
+those fitted models and sampled rows, not all Sigmoid configurations. Its
+calibration loss still improved; no long-run plateau is established. Stop
+for discussion before another experiment or publication. See
+[the finding](studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md).
 
 Paper 1 is the only active experiment. Its first clean-reader FC-SAE run is
 complete and audited. The result did not reproduce Table III under the declared
@@ -74,8 +77,8 @@ source interpretations remain open. See
 [the follow-up finding](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
 and [current status](docs/STATUS.md).
 
-The earlier diagnostic allocations are complete. The small paired fit above
-is the only new exception to their stop. Any further work needs a named
+All diagnostic allocations, including the small paired fit, are complete.
+Any further work needs a named
 remaining question, recorded setup, and approval. Do not start a full
 training run, seed sweep, model family, or broader search. Experimental scoring
 remains on cluster compute nodes; local runs are software fixtures only.

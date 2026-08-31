@@ -359,3 +359,34 @@ no-training check in 39.70 seconds. See [the finding](SIGMOID_SANITY_FINDING.md)
 
 All new records remain local until discussed. No training, new branch, or
 publication is automatically promoted by this completed check.
+
+## Small trained Sigmoid follow-up — 2026-08-31, awaiting discussion
+
+The user subsequently requested testing the remaining alternative. The
+[paired-fit setup](SIGMOID_FIT_CHECK.md) was frozen in `cc9af5e`; CPU job
+`385198` completed the ten-epoch pair in a 24.81-second analysis. See
+[SIGMOID_FIT_FINDING.md](SIGMOID_FIT_FINDING.md). This is exploratory `X/A`.
+
+- **E7, output geometry:** genuinely training the Sigmoid head does not
+  realize the permissive bound under the small declared setup. This contrasts
+  two actual fitted models, not just allowed output sets. It does not show
+  that every Sigmoid model fails or identify a claimed architectural mechanism.
+- **E8, cutoff/direction:** closed for the two selected score vectors on the
+  12,119-row evaluation sample. Max DR at FA<=15% is Softmax 8.64258%, Sigmoid
+  9.74935%; reversing gives 25.52083% and 25.39063%. No cutoff reaches 81%,
+  including relaxed rounding. Different fitted scores remain an escape.
+- **E6/E13/E15, fitting and attainability:** both completed 640 updates and
+  ten epochs without hitting the budget. Sigmoid's best benign-calibration
+  checkpoint is epoch 10; loss continued improving after a marked epoch-5/6
+  change. The brief budget is therefore not a demonstrated long-run plateau.
+  Larger-data/longer-budget fits remain open, not promoted automatically.
+- **E4/useful work:** no zero-useful-work or task-triviality conclusion.
+  Sigmoid learned to reconstruct better while high-error AUC declined; reversed
+  AUC improved. Those distinct observations need preservation, not a blanket
+  claim that training did nothing. There is no matched temporal ablation here.
+- **E9–E11/E14:** data/preparation were not changed. No author implementation,
+  hidden procedure, reporting mistake, or intent is identified by this failure.
+
+The finite fitted-model cutoff rescue is closed; the broader Sigmoid
+alternative remains unresolved. All outcomes are local. Stop for discussion
+before publication or any additional experiment.

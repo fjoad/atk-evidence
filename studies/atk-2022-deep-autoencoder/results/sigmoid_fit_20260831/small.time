@@ -1,0 +1,23 @@
+	Command being timed: "/export/home/fjoad/atk-evidence/.venv/bin/python studies/atk-2022-deep-autoencoder/checks/sigmoid_fit_check.py --root /export/home/fjoad/atk-evidence --result /export/home/fjoad/atk-evidence/data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json --output small --stage small --analysis-commit cc9af5ec49e11c4c71cce9d97e7c0bc38aee1608"
+	User time (seconds): 88.78
+	System time (seconds): 2.49
+	Percent of CPU this job got: 261%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:34.90
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 1643600
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 13
+	Minor (reclaiming a frame) page faults: 481632
+	Voluntary context switches: 17090
+	Involuntary context switches: 570
+	Swaps: 0
+	File system inputs: 21816
+	File system outputs: 51288
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0

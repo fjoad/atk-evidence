@@ -1,6 +1,8 @@
 """Small software fixtures, never experimental evidence."""
 
 import importlib.util
+import hashlib
+import json
 from pathlib import Path
 import sys
 import unittest
@@ -60,6 +62,50 @@ class SigmoidFitTests(unittest.TestCase):
         self.assertTrue(np.isfinite(scores).all())
         self.assertGreaterEqual(bounds["min"], 0)
         self.assertLessEqual(bounds["max"], 1)
+
+    def test_saved_results_match_frozen_sources_and_transferred_bytes(self):
+        study = CHECKS.parent
+        folder = study / "results/sigmoid_fit_20260831"
+        execution = json.loads((folder / "execution.json").read_text())
+        sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+        for name, expected in execution["transferred_sha256"].items():
+            self.assertEqual(sha(folder / name), expected)
+        for stage, updates in (("pilot", 4), ("small", 640)):
+            result = json.loads((folder / f"{stage}.json").read_text())
+            self.assertEqual(result["analysis_commit"], execution["analysis_commit"])
+            self.assertEqual(result["status"], "passed")
+            self.assertEqual(result["script_sha256"], sha(CHECKS / "sigmoid_fit_check.py"))
+            self.assertEqual(result["contract_sha256"], sha(study / "SIGMOID_FIT_CHECK.md"))
+            self.assertEqual(result["model_source_sha256"], sha(study / "reproduction/models.py"))
+            for name, expected in result["helpers"].items():
+                self.assertEqual(sha(CHECKS / name), expected)
+            heads = list(result["models"].values())
+            self.assertEqual(heads[0]["initial_weight_sha256"], heads[1]["initial_weight_sha256"])
+            for head in heads:
+                self.assertEqual(head["parameters"], 450448)
+                self.assertEqual(head["updates"], updates)
+                self.assertTrue(head["completed_requested_updates"])
+                self.assertFalse(head["budget_stopped"])
+                self.assertNotEqual(head["initial_weight_sha256"], head["selected_weight_sha256"])
+
+    def test_finite_cutoff_failure_does_not_erase_learning_or_prior_open_bound(self):
+        study = CHECKS.parent
+        result = json.loads((study / "results/sigmoid_fit_20260831/small.json").read_text())
+        for head in result["models"].values():
+            for stage in ("initial", "selected"):
+                for view in head[stage].values():
+                    for direction in view.values():
+                        cutoff = direction["all_cutoffs_diagnostic"]
+                        self.assertFalse(cutoff["target_pair_not_excluded"])
+                        self.assertFalse(cutoff["rounded_target_pair_not_excluded"])
+        sigmoid = result["models"]["sigmoid"]
+        self.assertEqual(sigmoid["selected_epoch"], len(sigmoid["epochs"]))
+        self.assertLess(sigmoid["epochs"][-1]["val_loss"], sigmoid["epochs"][0]["val_loss"])
+        prior = json.loads((study / "results/sigmoid_sanity_20260831/full.json").read_text())
+        self.assertTrue(prior["views"]["full"]["bounds"]["printed"]["target_pair_not_excluded"])
+        finding = (study / "SIGMOID_FIT_FINDING.md").read_text()
+        self.assertIn("No seed-level confidence interval", finding)
+        self.assertIn("long-run plateau", finding)
 
 
 if __name__ == "__main__":

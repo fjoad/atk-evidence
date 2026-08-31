@@ -1665,6 +1665,44 @@ and repeated experiments determine technical conclusions.
   [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md),
   [all records](../studies/atk-2022-deep-autoencoder/results/sigmoid_sanity_20260831/).
 
+### Small genuinely trained Sigmoid alternative — 2026-08-31
+
+- **Former uncertainty:** the complete-data Sigmoid range bound permits the
+  target after a cutoff change, but neither trivial control realizes it. A
+  learned Sigmoid model remained untested. The request to prove failure did
+  not make failure a premise of the investigation.
+- **New exploratory `X/A` evidence:** paired FC-SAE models differ only in
+  their final Softmax/Sigmoid activation, with identical initial weights,
+  fitting sample, budget, and dropout seeds. Both completed ten epochs / 640
+  updates on 2,048 fitting rows. Benign calibration alone selected checkpoints.
+  On 12,119 sampled held-out rows, best DR at FA<=15% was 8.64258% Softmax and
+  9.74935% Sigmoid. Reversing gives 25.52083% and 25.39063%. The 81% target
+  and rounding-relaxed pair fail for every cutoff. Original-only and initial
+  untrained views also fail; every result is retained.
+- **What is isolated:** no overlooked cutoff rescues these fixed score
+  vectors on these rows. This is exact finite threshold enumeration, not a
+  sparse threshold search, an all-weights limit, or a general-population CI.
+  The quick trained replacement did not realize the permissive range ceiling.
+- **Counterevidence to a stronger interpretation:** Sigmoid calibration MSE
+  fell 1.61028→1.33863 with a marked improvement at epochs 5–6; its best epoch
+  is the last one tested. No long-run plateau is established. High-error AUC
+  fell 43.93233→37.70499%, while reversed AUC rose; better reconstruction is
+  distinct from the paper's detection objective. Neither zero useful work nor
+  inevitable failure under longer training follows.
+- **Current conclusion:** the changed-head/changed-cutoff rescue failed for
+  this small fitted pair. Other Sigmoid fits, more data, longer budgets, and
+  changed procedures remain open. The earlier complete-input Softmax proof
+  remains separate and is not extended to Sigmoid. No new eligible numerical
+  reproduction or architectural-mechanism verdict is earned.
+- **Execution and stop:** `cc9af5e`, 230 pre-run tests; CPU job `385198`
+  completed `0:0`. Pilot analysis 9.22 s, paired small analysis 24.81 s,
+  allocation 3:52 including imports and inspection. All hashes, identities,
+  finite outputs/scores/losses, initial-weight equality, and update checks
+  passed. All records remain local; discuss before publication or further work.
+- **Sources:** [frozen setup](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_CHECK.md),
+  [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md),
+  [records](../studies/atk-2022-deep-autoencoder/results/sigmoid_fit_20260831/).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

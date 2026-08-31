@@ -1,0 +1,964 @@
+{
+  "analysis_commit": "cc9af5ec49e11c4c71cce9d97e7c0bc38aee1608",
+  "artifacts": {
+    "selection.npz": "5621a4762787a698109034238ef4d1366c6f7cc26e577bc9c2c0d72f7d4d1daa",
+    "sigmoid.initial.weights.h5": "fb7a03258a23398c330bd7ee7d2d7b29523cb08f8985633789f334db15c8bd29",
+    "sigmoid.last.weights.h5": "03c77f9b14f058e20abe4746e60398d37e07c9d8feb3c16a9c546a051e288e53",
+    "sigmoid.scores.npz": "5c075baf2c18c184196240aa6ae622a567793c0974a36b448fee2b209ebd7500",
+    "sigmoid.selected.weights.h5": "03c77f9b14f058e20abe4746e60398d37e07c9d8feb3c16a9c546a051e288e53",
+    "softmax.initial.weights.h5": "cab30f8c7ebea667c79da6eb6cfd16ace4423e1d96e683c8c592484a5d8418bf",
+    "softmax.last.weights.h5": "dacf937087e1f4605665368cec074f87563e2b6a5c9aa9cab0b7de739af3a834",
+    "softmax.scores.npz": "a05341ba7468f00b5bad6d9a52c60b1d968ac47a61ddd91469db104fca1bdce1",
+    "softmax.selected.weights.h5": "dacf937087e1f4605665368cec074f87563e2b6a5c9aa9cab0b7de739af3a834"
+  },
+  "classification": "X/A small paired fit, not a universal bound",
+  "contract_sha256": "9e2b354d900093f98fe995122a72a62c7c8853e9960fb52fb503e5a0a633df24",
+  "elapsed_seconds": 9.216277251020074,
+  "helpers": {
+    "post_anchor_diagnostics.py": "029696b736d0115b8b051bbc3f996001e545d2f28e4cf49618a42b63a4d7905f",
+    "sigmoid_sanity.py": "301c979088d159c64f8c6613639cba4662dfec3074abdf05acb49a19cc69374b",
+    "source_assumption_check.py": "d06c7764320580f663adc142e8ca8c7b152403467843655de8c611a00b3448f1"
+  },
+  "identical_initial_weights": true,
+  "input_sha256": {
+    "test_attack_id.npy": "ca76e2e01c830f64de5a6646ddc6d3f1650d2ba81e238f2a00af9ebe4b7dec7b",
+    "test_source_row.npy": "0d2f99d21e27c3b521e3fc4842ccea77673e3ebc4360ab61124134c453ab6964",
+    "x_test.npy": "a942e2affb3d76b5ca3b25f1f023878c2eeda1449b9dbd3d8bce037361a5ece0",
+    "x_train.npy": "e114d6242aeda3d8267651037289d432ed1cea9e25728d13c60ecf72727b620c",
+    "y_test.npy": "cec8c078b62557535a0b30ff80da2908115639a0c3c52821a44227378537c887"
+  },
+  "job_id": "385198",
+  "metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+  "model_source_sha256": "3515415082b26bb91cb5367effbd1eba4324bf250ec47e799f7fccb3e6df83f0",
+  "models": {
+    "sigmoid": {
+      "batch_seconds": [
+        0.01347450539469719,
+        0.012314995750784874,
+        0.011652028188109398,
+        0.012133825570344925
+      ],
+      "budget_stopped": false,
+      "completed_requested_updates": true,
+      "epochs": [
+        {
+          "epoch": 1,
+          "loss": 1.7192974090576172,
+          "val_loss": 1.5156939029693604
+        }
+      ],
+      "fit_seconds": 0.07499790377914906,
+      "initial": {
+        "original": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 6.25,
+                  "threshold": 3.424564229610459
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 6.25,
+                  "threshold": 3.424564229610459
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 75.0,
+                "min_FA": 87.5
+              },
+              "direction": "higher_printed",
+              "max_ACC": 52.083333333333336,
+              "max_AUC": 30.208333333333336,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 2.186506088259842,
+            "calibrated_metrics": {
+              "ACC": 31.25,
+              "AUC": 30.208333333333336,
+              "DR": 12.5,
+              "F1": 20.689655172413794,
+              "FA": 50.0,
+              "FN": 42,
+              "FP": 4,
+              "PR": 60.0,
+              "SP": 50.0,
+              "TN": 4,
+              "TP": 6
+            },
+            "fixed_cutoff": {
+              "ACC": 43.75,
+              "AUC": 30.208333333333336,
+              "DR": 75.0,
+              "F1": 79.12087912087912,
+              "FA": 87.5,
+              "FN": 12,
+              "FP": 7,
+              "PR": 83.72093023255815,
+              "SP": 12.5,
+              "TN": 1,
+              "TP": 36
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.8129857623797618
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.8129857623797618
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 72.91666666666667,
+              "max_AUC": 69.79166666666666,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 0.6200526280570214,
+            "calibrated_metrics": {
+              "ACC": 58.333333333333336,
+              "AUC": 69.79166666666666,
+              "DR": 29.166666666666668,
+              "F1": 44.44444444444444,
+              "FA": 12.5,
+              "FN": 34,
+              "FP": 1,
+              "PR": 93.33333333333333,
+              "SP": 87.5,
+              "TN": 7,
+              "TP": 14
+            },
+            "fixed_cutoff": {
+              "ACC": 56.25,
+              "AUC": 69.79166666666666,
+              "DR": 25.0,
+              "F1": 39.34426229508197,
+              "FA": 12.5,
+              "FN": 36,
+              "FP": 1,
+              "PR": 92.3076923076923,
+              "SP": 87.5,
+              "TN": 7,
+              "TP": 12
+            }
+          }
+        },
+        "sampled_prepared": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 2.7492699497870223
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 2.7492699497870223
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 75.0,
+                "min_FA": 93.61702127659575
+              },
+              "direction": "higher_printed",
+              "max_ACC": 51.0195035460993,
+              "max_AUC": 38.96276595744681,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 2.186506088259842,
+            "calibrated_metrics": {
+              "ACC": 44.547872340425535,
+              "AUC": 38.96276595744681,
+              "DR": 12.5,
+              "F1": 18.46153846153846,
+              "FA": 23.404255319148938,
+              "FN": 42,
+              "FP": 11,
+              "PR": 35.294117647058826,
+              "SP": 76.59574468085107,
+              "TN": 36,
+              "TP": 6
+            },
+            "fixed_cutoff": {
+              "ACC": 40.691489361702125,
+              "AUC": 38.96276595744681,
+              "DR": 75.0,
+              "F1": 56.25,
+              "FA": 93.61702127659575,
+              "FN": 12,
+              "FP": 44,
+              "PR": 45.0,
+              "SP": 6.382978723404253,
+              "TN": 3,
+              "TP": 36
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 29.166666666666668,
+                  "threshold": -0.6946900614154675
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 29.166666666666668,
+                  "threshold": -0.6946900614154675
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 60.416666666666664,
+              "max_AUC": 61.0372340425532,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 0.6200526280570214,
+            "calibrated_metrics": {
+              "ACC": 60.32801418439717,
+              "AUC": 61.0372340425532,
+              "DR": 29.166666666666668,
+              "F1": 42.42424242424242,
+              "FA": 8.51063829787234,
+              "FN": 34,
+              "FP": 4,
+              "PR": 77.77777777777777,
+              "SP": 91.48936170212765,
+              "TN": 43,
+              "TP": 14
+            },
+            "fixed_cutoff": {
+              "ACC": 59.308510638297875,
+              "AUC": 61.0372340425532,
+              "DR": 25.0,
+              "F1": 38.095238095238095,
+              "FA": 6.382978723404255,
+              "FN": 36,
+              "FP": 3,
+              "PR": 80.0,
+              "SP": 93.61702127659575,
+              "TN": 44,
+              "TP": 12
+            }
+          }
+        }
+      },
+      "initial_scoring_seconds": 0.012790054082870483,
+      "initial_weight_sha256": "3aede985e397851c9026fcd560151e40018b0605abb574bf2aaad43a689cc0de",
+      "output_ranges": {
+        "initial": {
+          "max": 0.789498507976532,
+          "min": 0.13848178088665009,
+          "softmax_sum_error": 0.0
+        },
+        "selected": {
+          "max": 0.7676901817321777,
+          "min": 0.10691305994987488,
+          "softmax_sum_error": 0.0
+        }
+      },
+      "parameters": 450448,
+      "selected": {
+        "original": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 8.333333333333332,
+                  "threshold": 3.4949894198169016
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 8.333333333333332,
+                  "threshold": 3.4949894198169016
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 75.0,
+                "min_FA": 87.5
+              },
+              "direction": "higher_printed",
+              "max_ACC": 54.166666666666664,
+              "max_AUC": 32.291666666666664,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 2.164686340893402,
+            "calibrated_metrics": {
+              "ACC": 31.25,
+              "AUC": 32.291666666666664,
+              "DR": 12.5,
+              "F1": 20.689655172413794,
+              "FA": 50.0,
+              "FN": 42,
+              "FP": 4,
+              "PR": 60.0,
+              "SP": 50.0,
+              "TN": 4,
+              "TP": 6
+            },
+            "fixed_cutoff": {
+              "ACC": 43.75,
+              "AUC": 32.291666666666664,
+              "DR": 75.0,
+              "F1": 79.12087912087912,
+              "FA": 87.5,
+              "FN": 12,
+              "FP": 7,
+              "PR": 83.72093023255815,
+              "SP": 12.5,
+              "TN": 1,
+              "TP": 36
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 33.33333333333333,
+                  "threshold": -0.6969827208692646
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 33.33333333333333,
+                  "threshold": -0.6969827208692646
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 72.91666666666667,
+              "max_AUC": 67.70833333333334,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 0.5030387550618198,
+            "calibrated_metrics": {
+              "ACC": 56.25,
+              "AUC": 67.70833333333334,
+              "DR": 25.0,
+              "F1": 39.34426229508197,
+              "FA": 12.5,
+              "FN": 36,
+              "FP": 1,
+              "PR": 92.3076923076923,
+              "SP": 87.5,
+              "TN": 7,
+              "TP": 12
+            },
+            "fixed_cutoff": {
+              "ACC": 56.25,
+              "AUC": 67.70833333333334,
+              "DR": 25.0,
+              "F1": 39.34426229508197,
+              "FA": 12.5,
+              "FN": 36,
+              "FP": 1,
+              "PR": 92.3076923076923,
+              "SP": 87.5,
+              "TN": 7,
+              "TP": 12
+            }
+          }
+        },
+        "sampled_prepared": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 12.5,
+                  "threshold": 2.359101568752396
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 12.5,
+                  "threshold": 2.359101568752396
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 75.0,
+                "min_FA": 78.72340425531915
+              },
+              "direction": "higher_printed",
+              "max_ACC": 53.10283687943262,
+              "max_AUC": 39.9822695035461,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 2.164686340893402,
+            "calibrated_metrics": {
+              "ACC": 48.8031914893617,
+              "AUC": 39.9822695035461,
+              "DR": 12.5,
+              "F1": 19.672131147540984,
+              "FA": 14.893617021276595,
+              "FN": 42,
+              "FP": 7,
+              "PR": 46.15384615384615,
+              "SP": 85.1063829787234,
+              "TN": 40,
+              "TP": 6
+            },
+            "fixed_cutoff": {
+              "ACC": 48.138297872340424,
+              "AUC": 39.9822695035461,
+              "DR": 75.0,
+              "F1": 59.50413223140496,
+              "FA": 78.72340425531915,
+              "FN": 12,
+              "FP": 37,
+              "PR": 49.31506849315068,
+              "SP": 21.276595744680847,
+              "TN": 10,
+              "TP": 36
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 25.0,
+                  "threshold": -0.5224607693317211
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 25.0,
+                  "threshold": -0.5224607693317211
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 60.815602836879435,
+              "max_AUC": 60.0177304964539,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 0.5030387550618198,
+            "calibrated_metrics": {
+              "ACC": 58.24468085106383,
+              "AUC": 60.0177304964539,
+              "DR": 25.0,
+              "F1": 37.5,
+              "FA": 8.51063829787234,
+              "FN": 36,
+              "FP": 4,
+              "PR": 75.0,
+              "SP": 91.48936170212765,
+              "TN": 43,
+              "TP": 12
+            },
+            "fixed_cutoff": {
+              "ACC": 51.86170212765957,
+              "AUC": 60.0177304964539,
+              "DR": 25.0,
+              "F1": 34.285714285714285,
+              "FA": 21.27659574468085,
+              "FN": 36,
+              "FP": 10,
+              "PR": 54.54545454545455,
+              "SP": 78.72340425531915,
+              "TN": 37,
+              "TP": 12
+            }
+          }
+        }
+      },
+      "selected_epoch": 1,
+      "selected_weight_sha256": "d53bf4e965ae2d0e85e302828f07cc8edeb5a31b009b30ad67b424d82477014d",
+      "updates": 4
+    },
+    "softmax": {
+      "batch_seconds": [
+        0.7126225754618645,
+        0.021987320855259895,
+        0.013502601534128189,
+        0.013071516528725624
+      ],
+      "budget_stopped": false,
+      "completed_requested_updates": true,
+      "epochs": [
+        {
+          "epoch": 1,
+          "loss": 1.7080950736999512,
+          "val_loss": 1.5574300289154053
+        }
+      ],
+      "fit_seconds": 0.9231843091547489,
+      "initial": {
+        "original": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 4.166666666666666,
+                  "threshold": 4.03777800570069
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 4.166666666666666,
+                  "threshold": 4.03777800570069
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 37.5,
+                "min_FA": 62.5
+              },
+              "direction": "higher_printed",
+              "max_ACC": 52.083333333333336,
+              "max_AUC": 26.302083333333332,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 2.4608223773943076,
+            "calibrated_metrics": {
+              "ACC": 30.208333333333336,
+              "AUC": 26.302083333333332,
+              "DR": 10.416666666666668,
+              "F1": 17.54385964912281,
+              "FA": 50.0,
+              "FN": 43,
+              "FP": 4,
+              "PR": 55.55555555555556,
+              "SP": 50.0,
+              "TN": 4,
+              "TP": 5
+            },
+            "fixed_cutoff": {
+              "ACC": 37.5,
+              "AUC": 26.302083333333332,
+              "DR": 37.5,
+              "F1": 50.70422535211268,
+              "FA": 62.5,
+              "FN": 30,
+              "FP": 5,
+              "PR": 78.26086956521739,
+              "SP": 37.5,
+              "TN": 3,
+              "TP": 18
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 45.83333333333333,
+                  "threshold": -0.37773523266283676
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 45.83333333333333,
+                  "threshold": -0.37773523266283676
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 72.91666666666667,
+              "max_AUC": 73.69791666666667,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 0.24269822443938724,
+            "calibrated_metrics": {
+              "ACC": 60.416666666666664,
+              "AUC": 73.69791666666667,
+              "DR": 20.833333333333336,
+              "F1": 34.48275862068966,
+              "FA": 0.0,
+              "FN": 38,
+              "FP": 0,
+              "PR": 100.0,
+              "SP": 100.0,
+              "TN": 8,
+              "TP": 10
+            },
+            "fixed_cutoff": {
+              "ACC": 62.5,
+              "AUC": 73.69791666666667,
+              "DR": 62.5,
+              "F1": 74.07407407407408,
+              "FA": 37.5,
+              "FN": 18,
+              "FP": 3,
+              "PR": 90.9090909090909,
+              "SP": 62.5,
+              "TN": 5,
+              "TP": 30
+            }
+          }
+        },
+        "sampled_prepared": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 3.0462907260585306
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 3.0462907260585306
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 37.5,
+                "min_FA": 51.06382978723404
+              },
+              "direction": "higher_printed",
+              "max_ACC": 51.0195035460993,
+              "max_AUC": 35.90425531914893,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 2.4608223773943076,
+            "calibrated_metrics": {
+              "ACC": 45.633865248226954,
+              "AUC": 35.90425531914893,
+              "DR": 10.416666666666668,
+              "F1": 16.129032258064516,
+              "FA": 19.148936170212767,
+              "FN": 43,
+              "FP": 9,
+              "PR": 35.714285714285715,
+              "SP": 80.85106382978724,
+              "TN": 38,
+              "TP": 5
+            },
+            "fixed_cutoff": {
+              "ACC": 43.21808510638298,
+              "AUC": 35.90425531914893,
+              "DR": 37.5,
+              "F1": 40.0,
+              "FA": 51.06382978723404,
+              "FN": 30,
+              "FP": 24,
+              "PR": 42.857142857142854,
+              "SP": 48.93617021276596,
+              "TN": 23,
+              "TP": 18
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.31203151421056197
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.31203151421056197
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 64.02925531914893,
+              "max_AUC": 64.09574468085107,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 0.24269822443938724,
+            "calibrated_metrics": {
+              "ACC": 57.22517730496454,
+              "AUC": 64.09574468085107,
+              "DR": 20.833333333333336,
+              "F1": 32.78688524590164,
+              "FA": 6.382978723404255,
+              "FN": 38,
+              "FP": 3,
+              "PR": 76.92307692307692,
+              "SP": 93.61702127659575,
+              "TN": 44,
+              "TP": 10
+            },
+            "fixed_cutoff": {
+              "ACC": 56.78191489361703,
+              "AUC": 64.09574468085107,
+              "DR": 62.5,
+              "F1": 59.40594059405941,
+              "FA": 48.93617021276596,
+              "FN": 18,
+              "FP": 23,
+              "PR": 56.60377358490566,
+              "SP": 51.06382978723405,
+              "TN": 24,
+              "TP": 30
+            }
+          }
+        }
+      },
+      "initial_scoring_seconds": 0.22165250405669212,
+      "initial_weight_sha256": "3aede985e397851c9026fcd560151e40018b0605abb574bf2aaad43a689cc0de",
+      "output_ranges": {
+        "initial": {
+          "max": 0.0673518255352974,
+          "min": 0.002886576112359762,
+          "softmax_sum_error": 2.384185791015625e-07
+        },
+        "selected": {
+          "max": 0.13224805891513824,
+          "min": 0.002030191710218787,
+          "softmax_sum_error": 1.1920928955078125e-07
+        }
+      },
+      "parameters": 450448,
+      "selected": {
+        "original": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 4.166666666666666,
+                  "threshold": 4.022279301123629
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 4.166666666666666,
+                  "threshold": 4.022279301123629
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 37.5,
+                "min_FA": 62.5
+              },
+              "direction": "higher_printed",
+              "max_ACC": 52.083333333333336,
+              "max_AUC": 26.041666666666668,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 2.4638829696818028,
+            "calibrated_metrics": {
+              "ACC": 30.208333333333336,
+              "AUC": 26.041666666666668,
+              "DR": 10.416666666666668,
+              "F1": 17.54385964912281,
+              "FA": 50.0,
+              "FN": 43,
+              "FP": 4,
+              "PR": 55.55555555555556,
+              "SP": 50.0,
+              "TN": 4,
+              "TP": 5
+            },
+            "fixed_cutoff": {
+              "ACC": 37.5,
+              "AUC": 26.041666666666668,
+              "DR": 37.5,
+              "F1": 50.70422535211268,
+              "FA": 62.5,
+              "FN": 30,
+              "FP": 5,
+              "PR": 78.26086956521739,
+              "SP": 37.5,
+              "TN": 3,
+              "TP": 18
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 12.5,
+                  "max_DR": 45.83333333333333,
+                  "threshold": -0.3844722502984278
+                },
+                "15.5": {
+                  "FA": 12.5,
+                  "max_DR": 45.83333333333333,
+                  "threshold": -0.3844722502984278
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 72.91666666666667,
+              "max_AUC": 73.95833333333334,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 57
+            },
+            "calibrated_cutoff": 0.24130661246966698,
+            "calibrated_metrics": {
+              "ACC": 60.416666666666664,
+              "AUC": 73.95833333333334,
+              "DR": 20.833333333333336,
+              "F1": 34.48275862068966,
+              "FA": 0.0,
+              "FN": 38,
+              "FP": 0,
+              "PR": 100.0,
+              "SP": 100.0,
+              "TN": 8,
+              "TP": 10
+            },
+            "fixed_cutoff": {
+              "ACC": 62.5,
+              "AUC": 73.95833333333334,
+              "DR": 62.5,
+              "F1": 74.07407407407408,
+              "FA": 37.5,
+              "FN": 18,
+              "FP": 3,
+              "PR": 90.9090909090909,
+              "SP": 62.5,
+              "TN": 5,
+              "TP": 30
+            }
+          }
+        },
+        "sampled_prepared": {
+          "printed": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 3.0244970425858386
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 10.416666666666668,
+                  "threshold": 3.0244970425858386
+                }
+              },
+              "at_printed_threshold": {
+                "max_DR": 37.5,
+                "min_FA": 51.06382978723404
+              },
+              "direction": "higher_printed",
+              "max_ACC": 51.0195035460993,
+              "max_AUC": 35.99290780141844,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 2.4638829696818028,
+            "calibrated_metrics": {
+              "ACC": 45.633865248226954,
+              "AUC": 35.99290780141844,
+              "DR": 10.416666666666668,
+              "F1": 16.129032258064516,
+              "FA": 19.148936170212767,
+              "FN": 43,
+              "FP": 9,
+              "PR": 35.714285714285715,
+              "SP": 80.85106382978724,
+              "TN": 38,
+              "TP": 5
+            },
+            "fixed_cutoff": {
+              "ACC": 43.21808510638298,
+              "AUC": 35.99290780141844,
+              "DR": 37.5,
+              "F1": 40.0,
+              "FA": 51.06382978723404,
+              "FN": 30,
+              "FP": 24,
+              "PR": 42.857142857142854,
+              "SP": 48.93617021276596,
+              "TN": 23,
+              "TP": 18
+            }
+          },
+          "reversed_control": {
+            "all_cutoffs_diagnostic": {
+              "at_FA_cap": {
+                "15.0": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.30929178148880504
+                },
+                "15.5": {
+                  "FA": 14.893617021276595,
+                  "max_DR": 35.41666666666667,
+                  "threshold": -0.30929178148880504
+                }
+              },
+              "direction": "lower_control",
+              "max_ACC": 64.02925531914893,
+              "max_AUC": 64.00709219858157,
+              "rounded_target_pair_not_excluded": false,
+              "target_pair_not_excluded": false,
+              "threshold_candidates": 96
+            },
+            "calibrated_cutoff": 0.24130661246966698,
+            "calibrated_metrics": {
+              "ACC": 57.22517730496454,
+              "AUC": 64.00709219858157,
+              "DR": 20.833333333333336,
+              "F1": 32.78688524590164,
+              "FA": 6.382978723404255,
+              "FN": 38,
+              "FP": 3,
+              "PR": 76.92307692307692,
+              "SP": 93.61702127659575,
+              "TN": 44,
+              "TP": 10
+            },
+            "fixed_cutoff": {
+              "ACC": 56.78191489361703,
+              "AUC": 64.00709219858157,
+              "DR": 62.5,
+              "F1": 59.40594059405941,
+              "FA": 48.93617021276596,
+              "FN": 18,
+              "FP": 23,
+              "PR": 56.60377358490566,
+              "SP": 51.06382978723405,
+              "TN": 24,
+              "TP": 30
+            }
+          }
+        }
+      },
+      "selected_epoch": 1,
+      "selected_weight_sha256": "ac3ebf9ca7f19c207418c7979636a4363f25a8411905718da0d7a3e21157a576",
+      "updates": 4
+    }
+  },
+  "population": {
+    "calibration": 64,
+    "fit": 128,
+    "original_test": 56,
+    "test": 95
+  },
+  "script_sha256": "37fa1a85c01fdf3c1aeb76441d2ee5f182300aab86822b0a151e07390f118ca4",
+  "seed": 20260831,
+  "source_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+  "stage": "pilot",
+  "status": "passed",
+  "verification_seconds": 6.872629603371024,
+  "versions": {
+    "keras": "3.15.0",
+    "numpy": "2.5.1",
+    "torch": "2.7.1+cu126"
+  }
+}

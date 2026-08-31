@@ -2,15 +2,25 @@
 
 **Last updated:** 2026-08-31
 
-**Newest request:** user asks to test whether Sigmoid plus another cutoff also
-fails. Do not assume that conclusion. The bounded next work is
-`SIGMOID_FIT_CHECK.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`: one
-small paired Softmax/Sigmoid fit, same architecture/initial weights, no full
-retraining or sweep. Pilot and budget gates apply. No public edits or push.
-An every-cutoff failure would cover those fitted models and sampled examples,
-not all possible Sigmoid configurations. Code has not yet executed.
+**Newest completed work:** the user requested testing Sigmoid plus another
+cutoff. The bounded paired fit is complete and stopped for discussion; see
+`SIGMOID_FIT_FINDING.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`.
+Frozen `cc9af5e`, 230 pre-run tests, CPU job `385198` completed `0:0`.
+Pilot 9.2163 s; measured estimate 62.2256 s (92.0258 s conservative) promoted
+the sole small pair. Actual small analysis 24.8064 s, total allocation 3:52
+including slow pilot startup. Both heads completed ten epochs / 640 updates
+with identical initial weights. On 12,119 sampled held-out rows, max DR at
+FA<=15% is Softmax 8.64258%, Sigmoid 9.74935%; reversing gives 25.52083% /
+25.39063%, all below 81%. Rounded targets also fail. This is an exact
+all-cutoff exclusion for these fixed scores/sample, NOT all Sigmoid weights.
+Sigmoid calibration MSE improved 1.61028→1.33863; best epoch is 10, the last
+tested. No long-run plateau, zero-useful-work, or seed-probability claim is
+earned. All hashes, finite checks, and weight updates passed. Preserve all
+outcomes. No more experiment, public edit, or push before discussion.
+Post-run: 232 tests passed, 73 local links resolve, and public/reproduction
+files remain unchanged from `dc37bbe`. The saved records are local only.
 
-**Newest completed work:** the discussed source-assumption findings are live
+**Previous completed work:** the discussed source-assumption findings are live
 at `dc37bbe`; Pages run `33419150100` succeeded and nine public files match
 local bytes. The subsequent quick Sigmoid investigation is complete and LOCAL
 ONLY, awaiting discussion. See `SIGMOID_SANITY_FINDING.md` and

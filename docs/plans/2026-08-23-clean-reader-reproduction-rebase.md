@@ -2,15 +2,18 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; bounded small Sigmoid fit approved, pilot pending
+**Status:** Active governing plan; bounded small Sigmoid fit complete, discussion pending
 
 **Current state:** following discussion, the user requested testing the
 remaining Sigmoid-plus-changed-cutoff alternative. The
-[small paired-fit plan](2026-08-31-small-sigmoid-fit.md) records the sole new
-authorization: a capped pilot and, if promoted, one ten-epoch pair. This is
-exploratory, not a universal impossibility test. No full-data training, sweep,
-public edit, or push is authorized. All 230 deterministic tests passed before
-experimental execution.
+[small paired-fit plan](2026-08-31-small-sigmoid-fit.md) is complete, with
+[all results saved](../../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md).
+Both models completed ten epochs. Sigmoid's best DR at FA<=15% was 9.74935%
+(25.39063% reversed), versus 81%. That excludes every cutoff for those fitted
+scores/sample, not all Sigmoid configurations. Calibration loss still improved
+at the end; no long-run plateau is established. Stop for discussion before any
+new experiment or public edit/push. CPU job `385198` completed `0:0`; small
+analysis 24.81 seconds, total allocation 3:52. All 230 tests passed pre-run.
 
 **Previous Sigmoid round:** the source-assumption findings were discussed and published
 in `dc37bbe`, Pages run `33419150100`, with nine public files verified. The
@@ -177,7 +180,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 7A. Attainability envelope | `COMPLETE — conditional bound only` | No-training output-domain question approved | Fixed preparation/Softmax/MSE target excluded; other source interpretations and broad empirical search untested |
 | Source-assumption follow-up | `COMPLETE — published after discussion` | User approved source review, discussed the results, then requested publication | Public revision dc37bbe, verified Pages deployment 33419150100 |
 | Quick Sigmoid follow-up | `COMPLETE — local, discussion pending` | User approved a cheap investigation without full retraining | SIGMOID_SANITY_FINDING.md; 39.70-second full check, printed cutoff excluded but changed cutoff not excluded; no further experiment or push |
-| Small fitted Sigmoid check | `IN PROGRESS — pilot pending` | User requested testing the remaining alternative; bounded setup recorded before code | One paired fit only after checks and budget promotion; save all outcomes and discuss before publication |
+| Small fitted Sigmoid check | `COMPLETE — local, discussion pending` | User requested testing the remaining alternative; bounded setup recorded before code | SIGMOID_FIT_FINDING.md; fixed-score target excluded on the sample, broader training unresolved; stop before new work/publication |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
@@ -544,10 +547,21 @@ and record why the new evidence changed its status.
 | 2026-08-31 | Public diagnostic round complete | Source-assumption follow-up approved, then completed locally | User required discussion before public changes and approved source review plus cheap checks; local code b76cb02 and CPU job 385119 completed four frozen cases in 56.76 s | Softmax detection limit survives two additional normalization readings at 0.58 on fixed attacks; other all-cutoff limits are original-row only; stop for discussion, with no push/public edit/training |
 | 2026-08-31 | Source findings discussed | Source findings published; quick Sigmoid check complete locally | User requested publication first, then cheap Sigmoid investigation; dc37bbe deployed and verified, frozen code 9d6c31b/job 385137 completed full check in 39.70 s | Sigmoid at 0.58 still fails; complete-evaluation bound permits the target at a changed cutoff. Concrete controls do not attain it. Stop for discussion before publication or any fitted comparison |
 
+### Subsequent bounded-fit transition — 2026-08-31
+
+After discussion, the user requested testing the remaining Sigmoid alternative.
+The pre-recorded `SIGMOID_FIT_CHECK.md` and code `cc9af5e` passed 230 tests.
+A successful pilot promoted one small pair. Job `385198` completed `0:0`:
+no fixed-score cutoff attained the pair on the sample, but continued Sigmoid
+calibration improvement prevents a long-run plateau claim. The
+`SIGMOID_FIT_FINDING.md` and all records are saved locally. This transitions
+back to discussion, not broader training or publication approval.
+
 ## Current hard exclusions after the approved diagnostic round
 
-The separately approved small paired Sigmoid fit is the only new exception;
-its sample, pilot, and time gates are in `2026-08-31-small-sigmoid-fit.md`.
+The separately approved small paired Sigmoid fit is now complete. Its sample,
+pilot, and time gates are in `2026-08-31-small-sigmoid-fit.md`; no new exception
+to the experiment/publication stop is active.
 
 - no additional preparation, seed, model, ambiguity branch, or control without
   a new discriminating question, recorded setup, and approval;

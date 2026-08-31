@@ -9,17 +9,27 @@
 
 ## Current project state
 
-- **Small fitted Sigmoid check approved; pilot pending:** the user
-  asks to test the remaining alternative after discussion. Follow
+- **Small fitted Sigmoid check complete; discussion pending:** the user
+  requested testing the remaining alternative. See
   [the bounded fit plan](plans/2026-08-31-small-sigmoid-fit.md) and
   [exact setup](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_CHECK.md).
-  One paired small fit may run only after a successful pilot and budget gate.
-  A failed fit cannot establish universal failure; preserve contrary outcomes.
-  No full retraining, sweep, public edit, or push is authorized.
-  The direct paired check and five software fixtures are implemented; all
-  230 deterministic tests passed before experimental execution.
+  Frozen code `cc9af5e` passed 230 tests before execution. CPU job `385198`
+  completed `0:0`: 9.22-second pilot, 24.81-second small analysis, 3:52 total
+  allocation including startup and inspection. Both heads completed 640
+  updates / ten epochs from identical initial weights. On 12,119 held-out
+  sampled rows, Sigmoid's maximum DR at FA<=15% is 9.74935% high-error or
+  25.39063% reversed, versus 81%. Relaxed rounding also fails. Softmax gives
+  8.64258% / 25.52083%. Every cutoff fails for these fitted scores, not every
+  possible Sigmoid configuration. Sigmoid calibration MSE improved through
+  the last epoch; no long-run plateau is established. The
+  [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md)
+  preserves that limitation, every outcome, hashes, and timing. Stop for
+  discussion; no full retraining, sweep, public edit, or push is authorized.
+  Post-run verification passed 232 deterministic tests (140 study, 92 root)
+  and 73 local documentation links. The README, website, reports, and five
+  reproduction files are unchanged from `dc37bbe`. Records are local only.
 
-- **Publication and small Sigmoid follow-up complete:** after discussing the
+- **Earlier publication and no-training Sigmoid follow-up complete:** after discussing the
   source-assumption findings, the user requested their publication first,
   followed by quick Sigmoid checks without full retraining. Follow
   [the bounded sequence](plans/2026-08-31-source-findings-and-sigmoid-sanity.md)
