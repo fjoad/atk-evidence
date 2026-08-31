@@ -5,8 +5,11 @@
 **Newest approval:** publish the discussed source-assumption findings first,
 with the plain-language question visible inside each methods block, then do a
 quick Sigmoid investigation without full retraining. See
-`docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md`. Public edits are
-under way; no experimental scoring has started. The earlier discussion gate
+`docs/plans/2026-08-31-source-findings-and-sigmoid-sanity.md`. Public revision
+`dc37bbe` is live: Pages run `33419150100` succeeded and nine checked files
+match local bytes. The next setup is `SIGMOID_SANITY.md`: full prepared-data
+cube bound and two label-blind rules, no training, pilot then capped full pass.
+No experimental scoring has started. The earlier discussion gate
 below is satisfied for the source-assumption round, not for the forthcoming
 Sigmoid results. Preserve the distinction between an output-range ceiling and
 achieved model performance; a head swap in Softmax-trained weights alone is

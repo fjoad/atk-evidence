@@ -11,7 +11,7 @@ not authorize a new paper, full training, a seed sweep, or a broad search.
 
 ## Sequence and current step
 
-1. **VALIDATED; PUBLISHING — Publish existing evidence.** Extend the current report with
+1. **COMPLETE — Publish existing evidence.** Extend the current report with
    the source review, three normalization limits, Sigmoid-range sensitivity,
    and reversed-direction counterevidence. Preserve the original numerical
    result and keep original-row checks distinct from the full resampled test.
@@ -21,13 +21,24 @@ not authorize a new paper, full training, a seed sweep, or a broad search.
    All 217 deterministic tests passed (140 study, 77 root), including 17
    public-report checks; the local report response matches its source bytes.
    The original numerical/scientific records and implementations are unchanged.
-2. **PENDING — Freeze the next cheap question.** Specify an exploratory `X/A`
+   Published revision `dc37bbed81323369adf35ab450c7d3138601a039`; Pages run
+   `33419150100` succeeded. All nine checked public pages/assets returned 200
+   and matched local source bytes, including the source-assumption sections.
+2. **COMPLETE — Freeze the next cheap question.** Specify an exploratory `X/A`
    Sigmoid check using the unchanged original data preparation. Begin with a
    no-training bound on the complete prepared evaluation, including synthetic
    benign rows. Record whether any learned check can add information after
    that result. Fix the sample, controls, time cap, promotion and stopping
    rules before scoring. Use a cluster compute node only.
-3. **PENDING — Run only the promoted checks.** No full retraining. A direct
+   The exact no-training setup is now in
+   [SIGMOID_SANITY.md](../../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY.md):
+   complete bound plus clipped-input and constant-half controls, both directions,
+   512-row pilot then at most one full pass; 240-second process cap. No fitted
+   comparison is part of this first wave.
+   All 223 deterministic tests passed (140 study, 83 root), including six
+   new hand-sized Sigmoid fixtures. Scientific code is 182 direct lines and
+   reuses the unchanged geometric helpers.
+3. **IN PROGRESS — Run only the promoted checks.** No full retraining. A direct
    substitution in saved Softmax weights is not a trained Sigmoid model and
    cannot by itself establish Sigmoid failure. Any small fitted comparison
    must remain clearly exploratory, paired, and time-limited; do not tune on

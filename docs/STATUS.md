@@ -13,9 +13,12 @@
   source-assumption findings, the user requested their publication first,
   followed by quick Sigmoid checks without full retraining. Follow
   [the bounded sequence](plans/2026-08-31-source-findings-and-sigmoid-sanity.md)
-  within the governing clean-reader plan. Public edits are validated by all
-  217 tests (140 study, 77 root) and are ready for publication; experimental
-  scoring has not started. New Sigmoid findings must be discussed
+  within the governing clean-reader plan. The public update passed all 217
+  tests and is live at `dc37bbe`: Pages run `33419150100` succeeded and all nine
+  checked public files match local bytes. The no-training Sigmoid contract is
+  [SIGMOID_SANITY.md](../studies/atk-2022-deep-autoencoder/SIGMOID_SANITY.md);
+  all 223 deterministic tests pass before scoring. The code and contract are
+  ready for one pilot and, if promoted, one capped full pass. New findings must be discussed
   before they are published. No full training, seed sweep, or broad search is
   authorized.
 
