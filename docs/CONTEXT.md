@@ -9,10 +9,11 @@ README, all current ATK site entry points, and a newly current rendered PDF.
 No science runs during publication. Afterward freeze exact remaining Table-III
 proposed-model, mechanism, Tables IV/V, and finite Table-II contracts and show
 their costs/ambiguities at the recorded checkpoint before cluster submission.
-Historical breadth remains exploratory/quarantined. The local publication
-bundle is complete and verified: 235 deterministic tests pass, data identity
-selects the verified ScienceDB branch, and all five PDF pages were visually
-inspected. Publication is the only pending part of Phase A.
+Historical breadth remains exploratory/quarantined. Publication commit
+`b1973d9` is live through successful Pages run `33448349593`; all 11 deployed
+files match local bytes. The bundle passed 235 deterministic tests, data
+identity selected the verified ScienceDB branch, and all five PDF pages were
+visually inspected. Phase A is complete; Phase B is next.
 
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see

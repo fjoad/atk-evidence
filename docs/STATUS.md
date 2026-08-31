@@ -9,14 +9,15 @@
 
 ## Current project state
 
-- **Full-site publication bundle verified, then remaining-paper plan:** the user
+- **Full-site publication complete; remaining-paper contract next:** the user
   requested publishing the two completed Sigmoid follow-ups across the full
   site first, then completing the remaining proposed models, mechanism tests,
   and Tables II-V. Follow the new active plan above. No experiment runs during
-  publication. The local bundle now includes every current site entry point,
-  a rebuilt five-page PDF, and record-backed Sigmoid tables; 235 deterministic
-  tests pass and all five rendered PDF pages were inspected. Before later
-  cluster work, freeze the exact remaining model and
+  publication. Commit `b1973d9` is public; Pages run `33448349593` succeeded
+  and all 11 deployed files match the reviewed local bytes. The bundle includes
+  every current site entry point, a rebuilt five-page PDF, and record-backed
+  Sigmoid tables; 235 deterministic tests pass and all five rendered PDF pages
+  were inspected. Before later cluster work, freeze the exact remaining model and
   table contracts, cost them, and pass the plan's scientific checkpoint; do
   not upgrade quarantined historical breadth to eligible evidence.
 

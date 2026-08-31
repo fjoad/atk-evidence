@@ -7,7 +7,7 @@ the remaining proposed-model, mechanism, and table work discussed on 1
 September. This plan extends the governing clean-reader plan; it does not make
 historical quarantined runs eligible.
 
-## A. Current-evidence publication - in progress
+## A. Current-evidence publication - complete
 
 1. Update the README, home page, earlier-study warning, and current reproduction
    report with both completed Sigmoid checks.
@@ -22,7 +22,12 @@ historical quarantined runs eligible.
 
 No scientific experiment may run during this phase.
 
-## B. Exact remaining-paper contract - pending publication
+Completed in `b1973d9`. All 235 deterministic tests passed (140 study, 95
+root/public), strict data verification selected the verified ScienceDB branch,
+all five PDF pages were rendered and inspected, Pages run `33448349593`
+succeeded, and all 11 deployed files matched the reviewed local bytes.
+
+## B. Exact remaining-paper contract - next
 
 Return to the frozen complete-paper source map. Reconcile Table-I definitions,
 Tables II-V targets, every non-executable instruction, and the quarantined
@@ -80,4 +85,3 @@ Regenerate Tables II-V from eligible preserved attempts. Report historical
 exploration separately. Issue bounded numerical, mechanism, and attainability
 findings, including open explanations and failures, then update the HTML and PDF
 once more. No allegation about intent follows without separate evidence.
-
