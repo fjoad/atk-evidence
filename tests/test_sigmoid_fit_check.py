@@ -1,0 +1,66 @@
+"""Small software fixtures, never experimental evidence."""
+
+import importlib.util
+from pathlib import Path
+import sys
+import unittest
+
+import numpy as np
+
+CHECKS = Path(__file__).resolve().parents[1] / "studies/atk-2022-deep-autoencoder/checks"
+sys.path.insert(0, str(CHECKS))
+spec = importlib.util.spec_from_file_location("sigmoid_fit_check", CHECKS / "sigmoid_fit_check.py")
+check = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(check)
+
+
+class SigmoidFitTests(unittest.TestCase):
+    def test_heads_differ_only_in_activation_and_have_same_initial_weights(self):
+        softmax, sigmoid = [check.build_model(name) for name in ("softmax", "sigmoid")]
+        self.assertEqual(check.weight_digest(softmax), check.weight_digest(sigmoid))
+        self.assertEqual(softmax.count_params(), 450448)
+        self.assertEqual(sigmoid.count_params(), 450448)
+        for left, right in zip(softmax.layers[:-1], sigmoid.layers[:-1]):
+            self.assertEqual(left.get_config(), right.get_config())
+        self.assertEqual(softmax.layers[-1].activation.__name__, "softmax")
+        self.assertEqual(sigmoid.layers[-1].activation.__name__, "sigmoid")
+
+    def test_selection_is_deterministic_disjoint_and_keeps_siblings(self):
+        first, original = check.select_indices(4000, 1500, 1500 * 12, "small")
+        second, _ = check.select_indices(4000, 1500, 1500 * 12, "small")
+        for key in first:
+            np.testing.assert_array_equal(first[key], second[key])
+        self.assertFalse(np.intersect1d(first["fit"], first["calibration"]).size)
+        self.assertEqual(original, 7168)
+        for group in range(7):
+            np.testing.assert_array_equal(first["test"][group * 1024:(group + 1) * 1024], first["test"][:1024] + 1500 * group)
+
+    def test_calibration_cutoff_uses_only_benign_errors_and_strict_rules(self):
+        errors = np.arange(100, dtype=float)
+        high, low = check.calibration_cutoff(errors), check.calibration_cutoff(errors, True)
+        self.assertLessEqual(np.mean(errors > high), .15)
+        self.assertLessEqual(np.mean(errors < low), .15)
+
+    def test_calibrated_metrics_and_oracle_diagnostics_are_separate(self):
+        y = np.array([0, 1, 1, 1, 1, 1, 1, 0])
+        scores = np.array([.1, .8, .8, .8, .8, .8, .8, .2])
+        result = check.summarize(y, scores, np.array([.9, 1.]), 7)
+        high = result["sampled_prepared"]["printed"]
+        self.assertEqual(high["all_cutoffs_diagnostic"]["max_ACC"], 100)
+        self.assertEqual(high["calibrated_metrics"]["DR"], 0)
+
+    def test_one_update_is_finite_and_changes_sigmoid_weights(self):
+        model = check.build_model("sigmoid")
+        inputs = np.random.default_rng(4).normal(size=(4, 48)).astype(np.float32)
+        before = check.weight_digest(model)
+        loss = model.train_on_batch(inputs, inputs)
+        self.assertTrue(np.isfinite(loss))
+        self.assertNotEqual(before, check.weight_digest(model))
+        scores, bounds = check.score(model, inputs, "sigmoid")
+        self.assertTrue(np.isfinite(scores).all())
+        self.assertGreaterEqual(bounds["min"], 0)
+        self.assertLessEqual(bounds["max"], 1)
+
+
+if __name__ == "__main__":
+    unittest.main()

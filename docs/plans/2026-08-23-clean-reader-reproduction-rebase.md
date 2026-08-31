@@ -2,9 +2,17 @@
 
 **Created:** 2026-08-23
 
-**Status:** Active governing plan; source findings published, quick Sigmoid follow-up complete, discussion pending
+**Status:** Active governing plan; bounded small Sigmoid fit approved, pilot pending
 
-**Current state:** the source-assumption findings were discussed and published
+**Current state:** following discussion, the user requested testing the
+remaining Sigmoid-plus-changed-cutoff alternative. The
+[small paired-fit plan](2026-08-31-small-sigmoid-fit.md) records the sole new
+authorization: a capped pilot and, if promoted, one ten-epoch pair. This is
+exploratory, not a universal impossibility test. No full-data training, sweep,
+public edit, or push is authorized. All 230 deterministic tests passed before
+experimental execution.
+
+**Previous Sigmoid round:** the source-assumption findings were discussed and published
 in `dc37bbe`, Pages run `33419150100`, with nine public files verified. The
 separately approved [quick Sigmoid follow-up](2026-08-31-source-findings-and-sigmoid-sanity.md)
 is `COMPLETE`, with results LOCAL ONLY. CPU job `385137` passed without
@@ -169,6 +177,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 7A. Attainability envelope | `COMPLETE — conditional bound only` | No-training output-domain question approved | Fixed preparation/Softmax/MSE target excluded; other source interpretations and broad empirical search untested |
 | Source-assumption follow-up | `COMPLETE — published after discussion` | User approved source review, discussed the results, then requested publication | Public revision dc37bbe, verified Pages deployment 33419150100 |
 | Quick Sigmoid follow-up | `COMPLETE — local, discussion pending` | User approved a cheap investigation without full retraining | SIGMOID_SANITY_FINDING.md; 39.70-second full check, printed cutoff excluded but changed cutoff not excluded; no further experiment or push |
+| Small fitted Sigmoid check | `IN PROGRESS — pilot pending` | User requested testing the remaining alternative; bounded setup recorded before code | One paired fit only after checks and budget promotion; save all outcomes and discuss before publication |
 | 8. Three findings | `PENDING` | Promoted programs complete or explicitly untested | Frozen `N/M/A` findings |
 | 9. Reporting | `PENDING` | Findings frozen | Verified report and publication artifacts |
 
@@ -536,6 +545,9 @@ and record why the new evidence changed its status.
 | 2026-08-31 | Source findings discussed | Source findings published; quick Sigmoid check complete locally | User requested publication first, then cheap Sigmoid investigation; dc37bbe deployed and verified, frozen code 9d6c31b/job 385137 completed full check in 39.70 s | Sigmoid at 0.58 still fails; complete-evaluation bound permits the target at a changed cutoff. Concrete controls do not attain it. Stop for discussion before publication or any fitted comparison |
 
 ## Current hard exclusions after the approved diagnostic round
+
+The separately approved small paired Sigmoid fit is the only new exception;
+its sample, pilot, and time gates are in `2026-08-31-small-sigmoid-fit.md`.
 
 - no additional preparation, seed, model, ambiguity branch, or control without
   a new discriminating question, recorded setup, and approval;

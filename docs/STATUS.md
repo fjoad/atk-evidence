@@ -9,6 +9,16 @@
 
 ## Current project state
 
+- **Small fitted Sigmoid check approved; pilot pending:** the user
+  asks to test the remaining alternative after discussion. Follow
+  [the bounded fit plan](plans/2026-08-31-small-sigmoid-fit.md) and
+  [exact setup](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_CHECK.md).
+  One paired small fit may run only after a successful pilot and budget gate.
+  A failed fit cannot establish universal failure; preserve contrary outcomes.
+  No full retraining, sweep, public edit, or push is authorized.
+  The direct paired check and five software fixtures are implemented; all
+  230 deterministic tests passed before experimental execution.
+
 - **Publication and small Sigmoid follow-up complete:** after discussing the
   source-assumption findings, the user requested their publication first,
   followed by quick Sigmoid checks without full retraining. Follow

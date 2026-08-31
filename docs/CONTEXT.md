@@ -2,6 +2,14 @@
 
 **Last updated:** 2026-08-31
 
+**Newest request:** user asks to test whether Sigmoid plus another cutoff also
+fails. Do not assume that conclusion. The bounded next work is
+`SIGMOID_FIT_CHECK.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`: one
+small paired Softmax/Sigmoid fit, same architecture/initial weights, no full
+retraining or sweep. Pilot and budget gates apply. No public edits or push.
+An every-cutoff failure would cover those fitted models and sampled examples,
+not all possible Sigmoid configurations. Code has not yet executed.
+
 **Newest completed work:** the discussed source-assumption findings are live
 at `dc37bbe`; Pages run `33419150100` succeeded and nine public files match
 local bytes. The subsequent quick Sigmoid investigation is complete and LOCAL
