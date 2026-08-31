@@ -57,7 +57,10 @@
   The follow-up passes all 206 deterministic tests (140 study, 66 root),
   including 14 report checks. New public figure bytes match the cluster
   exports, 64 local Markdown links resolve, and the updated local pages and
-  figures return HTTP 200. Deployment verification follows the final push.
+  figures return HTTP 200. Follow-up report commit `97c9236` is on GitHub;
+  Pages deployment `33407618030` succeeded. All four public HTML pages,
+  stylesheet, social preview, model diagram, and two new figures were fetched
+  successfully and match the reviewed files byte for byte.
 
 - The clean-reader reproduction rebase is now the governing execution plan.
   Its saved flow begins with preservation/reconciliation, a paper-only read, a
@@ -442,9 +445,9 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Finish verification and GitHub Pages publication of the completed diagnostic
-   report, preserving both the conditional bound and useful-work counterevidence.
-2. Discuss a source/semantic map: which defensible changes to preparation,
+1. Discuss the completed, published findings: a conditional performance limit
+   and evidence of small useful score differences, not zero useful work.
+2. Consider a source/semantic map: which defensible changes to preparation,
    output, or score could actually change the bound? Keep corrections separate
    from source-supported numerical interpretations.
 3. Stop experimental execution pending that decision and a recorded setup.

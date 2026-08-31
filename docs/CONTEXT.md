@@ -9,6 +9,9 @@ The full analysis took 112.92 seconds, the adaptive 70,000-row control 18.03.
 `POST_ANCHOR_FINDING.md` is the current interpretation; preserve the two frozen
 contracts, code revisions `1175e8d`/`26a42db`, and raw diagnostic summaries.
 No further experiment is authorized by completion of this round.
+The follow-up is public: report commit `97c9236`, successful Pages deployment
+`33407618030`, all nine checked public pages/assets byte-identical to local.
+All 206 local deterministic tests passed, including 14 static report checks.
 
 **What the new evidence says:** on the frozen prepared inputs, an optimistic
 label-aware Softmax/MSE relaxation bounds ACC below 50.93%, AUC at 45.11%,
@@ -31,7 +34,8 @@ pages remain. Obsolete charter commands and duplicate agent rules are removed,
 not the scientific history. The user explicitly approved GitHub/GitHub Pages
 publication on 2026-08-31. The rewrite and supporting evidence were pushed;
 Pages run `33400529269` succeeded and all public pages/assets match the reviewed
-files. The README links to the rendered reports. All 187 local tests passed,
+files. The README links to the rendered reports. At that first publication,
+all 187 local tests passed,
 including eight static report checks. The subsequent limited diagnostic
 authorization is stated above; no full training or broad search is authorized.
 See the 2026-08-31 editorial plan and the completed diagnostic round above.

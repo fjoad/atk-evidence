@@ -12,6 +12,10 @@ preserving evidence of small useful score differences. The claimed
 architecture mechanism and other source interpretations remain open.
 The next proposed step is a source/semantic map of assumptions that could
 change the bound. No new full training, seed sweep, or model family is approved.
+The follow-up report is published from commit `97c9236`; Pages deployment
+`33407618030` succeeded and all nine checked public files match the reviewed
+version. All 206 local deterministic tests passed. Publication completes this
+round's reporting, not the untested whole-paper mechanism program.
 Phase 5 operationally `COMPLETE`: sole job `384390` exited
 `0:0` on 2026-08-30 after 9:14:27 under the approved semantic allocation `I`
 branch. Phase 6 is `COMPLETE`: independent audit passed, the bounded Table-III
@@ -514,6 +518,7 @@ and record why the new evidence changed its status.
 | 2026-08-31 | Checkpoint 2 pending | Checkpoint 2 pending; initial report public | User approved the readable report and explicitly requested GitHub/GitHub Pages publication; deployment succeeded and public files match the reviewed version | Editorial publication only; conditional-bound, useful-information, and small-control questions are proposed for discussion, not approved experiments |
 | 2026-08-31 | Checkpoint 2 pending | Limited diagnostic scope approved; 7A in progress | User said to execute the proposed bound/useful-information/small-control sequence | One capped no-training CPU pilot and, if checks pass, one full saved-artifact analysis; no new fitted model or seed |
 | 2026-08-31 | 7A in progress | Conditional bound and score-control round complete; experiments stopped | CPU jobs 385090 and 385091 completed; full analysis 112.92 s and adaptive control 18.03 s | Conditional attainability limit established on fixed inputs/output/score; useful score differences preserved; no repeated seed needed for that bound; other source assumptions and matched mechanism questions remain open |
+| 2026-08-31 | Completed diagnostic round | Findings public and verified | Report commit 97c9236, successful Pages run 33407618030, nine public files byte-identical, 206 local tests passed | Discuss source-supported assumptions before proposing further execution; no broader scientific approval implied |
 
 ## Current hard exclusions after the approved diagnostic round
 

@@ -102,8 +102,17 @@ with the new finding; the original interpretation remains in the history.
 - Scientific figure exports retain their original bytes; narrow
   `.gitattributes` entries exempt only those Matplotlib SVGs from Git's
   trailing-whitespace check. No code or measured record was reformatted.
-- Existing GitHub Pages remains the publication destination. Verify the
-  successful deployment and public file hashes after pushing the final report.
+- Existing GitHub Pages remains the publication destination. Report commit
+  `97c92363a8264b5ab04d62dc2fc8c5b4c3d8cfb0` is pushed. The
+  [Pages deployment](https://github.com/fjoad/atk-evidence/actions/runs/33407618030)
+  completed successfully. All nine checked public files (four HTML pages,
+  stylesheet, social preview, model diagram, and two diagnostic figures)
+  were fetched and match the reviewed files byte for byte.
+- Verified public report SHA-256:
+  `da92d2bf9db2a2f6065d40b1cc3fc28f0fb47c9fb251dae0335f62b382771eba`.
+  Bound figure: `f5704ba617c83f690cb2bfcc642b1ba76bd400cd1c1f44ee8f734a65569d1eb9`.
+  Useful-work figure: `5d40a31d1cd28f79cd0f0e4d72d41dc121f1961f1dfc78eb26b0516bd2765da1`.
+  No further scientific execution is started by publication.
 
 ## Initial publication
 
