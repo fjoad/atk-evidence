@@ -4,9 +4,10 @@
 
 **Status:** Active governing plan; Checkpoint 1 approved 2026-08-24
 
-**Current state:** Phase 4 complete; Phase 5 `IN PROGRESS` under the
-user-approved `sciencedb-csv-semantic-equivalence-v1` allocation `I` branch;
-the exact official-serialization failure remains preserved
+**Current state:** Phase 5 operationally `COMPLETE`: sole job `384390` exited
+`0:0` on 2026-08-30 after 9:14:27 under the approved semantic allocation `I`
+branch. Phase 6's independent artifact audit is pending; Checkpoint 2 is closed.
+The exact official-serialization failure remains preserved.
 
 **Supersedes:**
 [`2026-08-09-paper-1-minimal-finish.md`](2026-08-09-paper-1-minimal-finish.md)
@@ -132,7 +133,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | 3. Clean-reader source freeze | `COMPLETE` | Sandbox questions recorded | Frozen specification and assumptions register |
 | Checkpoint 1 | `COMPLETE` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
-| 5. Exact-data anchor | `IN PROGRESS` | Fidelity passes | Frozen pre-run contract plus one immutable complete attempt or preserved failure |
+| 5. Exact-data anchor | `COMPLETE` | Fidelity passes | Job 384390 completed once; immutable attempt seed_20260824_2f483335536c saved; independent audit pending |
 | 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
 | Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
@@ -439,6 +440,7 @@ and record why the new evidence changed its status.
 | 2026-08-30 | Phase 5 ready for submission | Phase 5 job submitted | The exact frozen command submitted Panther job `384390`; initial state `PENDING (Priority)` | This is the sole authorized anchor attempt; wait, preserve its complete success or failure, audit it, and do not launch a replacement before Checkpoint 2 |
 | 2026-08-30 | Phase 5 job submitted | Phase 5 job running | Panther job `384390` entered `RUNNING`; hourly thread heartbeat `monitor-clean-reader-anchor` was activated for observation and terminal audit only | The heartbeat cannot submit, retry, alter, or expand an experiment; preserve the sole outcome and stop at Checkpoint 2 |
 | 2026-08-30 | Phase 5 job running | Phase 5 job running; manual checks only | User requested that `monitor-clean-reader-anchor` be disabled and that status be checked only when prompted; the automation was set to `PAUSED` | Do not perform automatic checks; the sole job and Checkpoint-2 restrictions are unchanged |
+| 2026-08-31 | Phase 5 job running; manual checks only | Phase 5 complete; Phase 6 audit pending | Manual inspection found Slurm `COMPLETED 0:0`, end 2026-08-30 22:48:39 Qatar, 9:14:27 elapsed, and a saved result/metadata record | Operational completion is not yet an independently trusted numerical finding; do not submit new work or cross Checkpoint 2 |
 
 ## Current hard exclusions until the exact anchor and Checkpoint 2
 

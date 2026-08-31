@@ -1431,6 +1431,37 @@ and repeated experiments determine technical conclusions.
   `studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`, and the five
   direct files under `studies/atk-2022-deep-autoencoder/reproduction/`.
 
+### Clean-reader runtime correction and sandbox/full-data boundary — 2026-08-31
+
+- **Former belief/status:** The running anchor was forecast to finish around
+  07:00--08:00 on 2026-08-31 by combining a 14.16-hour historical neighbor-search
+  extrapolation with a 3.37-hour historical batch-32 training run. The user
+  reasonably questioned whether multi-hour computation was still sandbox work.
+- **Evidence:** Phase-2 sandbox job `381540` took 2:25 total, with 60.06 s
+  recorded by its script. The later full-data numerical anchor `384390` ran
+  from 2026-08-30 13:34:12 to 22:48:39 Qatar time and completed `0:0` after
+  9:14:27. Its metadata records 3,890.66 s for exact ADASYN and approximately
+  4,183.36 s for profile extraction plus preparation. Its result records
+  28,965.90 s of fitting across 28 epochs on a Tesla P100, best epoch 23, and
+  11.12 s of Table-III scoring. Training has 1,500,523 profiles; the resampled
+  evaluation has 8,884,989 rows.
+- **Root cause:** **VERIFIED mismatch in ETA inputs** — the historical neighbor
+  benchmark used 14,258,510 references, versus this contract's 5,255,369 original
+  test rows. The training comparison also crossed device, seed, and stopping
+  semantics. Population size alone does not explain the entire timing gap;
+  the remaining implementation/hardware throughput contributions are not
+  isolated. Treat historical timing as context, not a portable forecast.
+- **Current conclusion:** **INVALIDATED ETA; OBSERVED operational completion**.
+  The sandbox remained small and quick. This separate `P+I/N` full-data anchor
+  was execution depth, not sandbox breadth. The saved result self-reports
+  success, but its independent Phase-6 audit and initial numerical finding
+  remain pending. No mechanism or attainability conclusion follows from timing.
+- **Sources:** `studies/atk-2022-deep-autoencoder/DISCOVERY_SANDBOX.md`; Slurm
+  job `384390` accounting and the remote repository's `slurm-384390.out`;
+  the semantic-allocation cache's `metadata.json`; and
+  `seed_20260824_2f483335536c/result.json` under the existing study's remote
+  reproduction-derived results path.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-08-30
+**Last updated:** 2026-08-31
 
 **Branch:** `main`
 
@@ -41,7 +41,9 @@
   gate is frozen in eligible code commit
   `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the
   strict local seven-file verifier pass. The sole Panther submission is job
-  `384390`, submitted on 2026-08-30 and now running. The hourly thread heartbeat
+  `384390`, completed with Slurm exit `0:0` on 2026-08-30 at 22:48:39 Qatar
+  time after 9:14:27. Phase 5 is operationally complete; Phase 6's independent
+  full artifact audit remains pending. The hourly thread heartbeat
   `monitor-clean-reader-anchor` is paused at the user's request; check the job
   only after a new user prompt. No second submission, repair, retry, or
   expansion is authorized before the complete outcome is inspected. Formal
@@ -52,18 +54,20 @@
   36-hour one-GPU budget, exact command, stopping rule, and data-gate state are
   in
   [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md).
-  A 17-minute content sanity check found every pre-ADASYN artifact complete:
-  small contiguous samples from every NumPy array were fully finite and
-  nonconstant where expected; exact labels contained 750,767 benign and
-  4,504,602 malicious rows, with 750,767 rows per attack ID. The positive
-  scaler scales and plausible raw/standardized ranges exclude obvious empty,
-  all-zero, NaN/Inf, and collapsed-cache failures. `x_test.npy` and
-  `metadata.json` do not yet exist because the process is inside the expected
-  exact ADASYN search. The central ETA is approximately 07:00--08:00 Qatar time
-  on 2026-08-31, with a cautious 06:00--16:00 window; this combines the measured
-  14.16-hour search estimate with the prior closely matched 3.37-hour batch-32
-  FC-SAE runtime and remains sensitive to neighbor-search speed and stopping
-  epoch.
+  The initial contiguous array samples were fully finite and nonconstant
+  where expected; this was a sampled sanity check, not a complete array audit.
+  The completed preparation now records 1,500,523 training profiles and
+  8,884,989 post-ADASYN test profiles. Measured ADASYN time was 3,890.66 s
+  (1:04:51); recorded extraction plus preparation took about 1:09:43;
+  fitting took 28,965.90 s (8:02:46) for 28 epochs on a Tesla P100, restoring
+  epoch 23; Table-III scoring took 11.12 s. The earlier 07:00--08:00 Aug-31
+  ETA is invalidated: it incorrectly reused a benchmark of the larger
+  historical test population and transferred training timing across hardware
+  and contracts. The saved attempt is
+  `seed_20260824_2f483335536c` under the semantic-allocation results directory.
+  Its own `success`/eligibility fields are not yet independently audited.
+  This full-data numerical anchor is distinct from Phase 2's 60.06-second
+  toy/synthetic sandbox (2:25 total job time); neither is relabeled as the other.
 - The active competing explanations, their predictions, discriminating tests,
   and status are now durable in
   [`../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md`](../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md).
@@ -376,15 +380,14 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Obtain the exact access-controlled
-   `SME and Residential allocations.tab` artifact and verify byte size 196,316
-   plus MD5 `124c10711ab1e7c52cb7317c8f69e42e`; do not transform the semantic
-   CSV into a substitute.
-2. Use the already frozen Phase-5 pre-run record, sync its exact execution
-   commit to Panther, and re-run the exact source gate.
-3. Submit exactly one `CR-ISET-FCSAE-01` job using
-   `reproduction/run_clean_reader_anchor.sbatch`, then stop for complete
-   artifact inspection and Checkpoint 2.
+1. Inspect the sole completed attempt from job `384390` without retraining,
+   changing the contract, or submitting a replacement.
+2. Run the frozen fail-closed Phase-6 audit on
+   `clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json`
+   and preserve its full audit outcome before issuing the initial numerical
+   finding.
+3. Stop at Checkpoint 2; no new seeds, models, branches, mechanism experiments,
+   or attainability search are authorized by a status check.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

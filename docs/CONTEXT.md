@@ -1,6 +1,6 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-08-30
+**Last updated:** 2026-08-31
 
 **Governing state:**
 [`docs/plans/2026-08-23-clean-reader-reproduction-rebase.md`](plans/2026-08-23-clean-reader-reproduction-rebase.md)
@@ -28,28 +28,31 @@ not missing. A public ScienceDB CSV and public GitHub workbook agree across all
 6,445 mappings, and every residential reading ID is covered. The exact archive
 bytes are already available. On 2026-08-30 the user explicitly approved
 `sciencedb-csv-semantic-equivalence-v1` as the visible allocation `I` branch
-for the otherwise unchanged single anchor. Phase 5 is in progress; execute one
-attempt only from eligible code commit
-`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`, then stop for full audit and
-Checkpoint 2. The 179 deterministic tests and strict local seven-file verifier
-pass. Panther job `384390` is the sole submission; it entered `RUNNING` on
-2026-08-30. The thread heartbeat `monitor-clean-reader-anchor` was paused at the
-user's request; inspect this job only when the user asks. Do not submit a second
-job or change the contract while it is queued or running. The full frozen run
-contract is
+for the otherwise unchanged single anchor. Phase 5 is operationally complete;
+the sole attempt ran from eligible code commit
+`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Phase 6's independent artifact audit
+is pending, and Checkpoint 2 remains closed. The 179 deterministic tests and
+strict local seven-file verifier passed before submission. Panther job
+`384390` completed with exit `0:0` at 22:48:39 Qatar time on 2026-08-30 after
+9:14:27. The thread heartbeat `monitor-clean-reader-anchor` is paused at the
+user's request; checks remain manual. No second submission or experimental
+change is authorized. The full frozen run contract is
 `studies/atk-2022-deep-autoencoder/CLEAN_READER_ANCHOR_PRERUN.md`, tied to code
 commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Checkpoint 2 remains binding.
-At 17 minutes, all pre-ADASYN artifacts were complete. Beginning/middle/end
-samples from every saved NumPy array were 100% finite with nonzero variation
-where expected; the full label counts were 750,767 benign and 4,504,602
-malicious, with exactly 750,767 rows for each of six attack IDs. Positive
-48-slot scaler scales and plausible raw/standardized ranges rule out an empty,
-constant, all-zero, or NaN/Inf cache. The missing `x_test.npy` and
-`metadata.json` identify the active phase as the expected exact ADASYN search.
-The measured 14.16-hour search estimate plus the prior closely matched
-batch-32 FC-SAE's 3.37-hour run gives a central completion estimate near
-07:00--08:00 Qatar time on 2026-08-31, with roughly 06:00--16:00 retained as a
-realistic uncertainty window because search speed and stopping epoch can vary.
+Initial contiguous beginning/middle/end array samples were finite and varied;
+do not describe sampled checks as an exhaustive NaN/Inf scan. The completed
+preparation records 1,500,523 training and 8,884,989 post-ADASYN test rows.
+Actual ADASYN time was 1:04:51, preparation about 1:09:43, fitting 8:02:46
+(28 epochs, best epoch 23, Tesla P100), and scoring 11.12 s. The former
+07:00--08:00 Aug-31 ETA was wrong: the neighbor benchmark used a larger
+historical population, and old training timing did not transfer to this
+hardware/contract. The result is at
+`clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json`
+under the remote reproduction-derived directory. Its self-reported success
+is not yet an independently audited numerical finding.
+The user reconfirmed that sandbox tests should remain quick: Phase 2 took
+60.06 s of computation (2:25 total job); this 9:14:27 run was the later full-data
+numerical reproduction, not sandbox breadth. Explain that boundary explicitly.
 Older execution-order notes below are historical unless the new plan explicitly
 promotes them.
 

@@ -2,9 +2,11 @@
 
 **Frozen:** 2026-08-24; source branch refrozen 2026-08-30 before execution
 
-**Status:** `SUBMITTED` once as Panther job `384390` under the approved
-`sciencedb-csv-semantic-equivalence-v1` allocation `I` branch; pending at the
-time of this update, with no second submission authorized
+**Execution status (observed 2026-08-31; frozen contract unchanged):** Panther
+job `384390` completed once with exit `0:0` at 22:48:39 Qatar time on
+2026-08-30, after 9:14:27, under the approved
+`sciencedb-csv-semantic-equivalence-v1` allocation `I` branch. Independent
+Phase-6 artifact audit is pending; no second submission is authorized.
 
 **Evidence question:** numerical reproduction (`N`)
 
