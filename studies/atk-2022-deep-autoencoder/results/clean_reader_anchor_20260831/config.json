@@ -1,0 +1,35 @@
+{
+  "anchor_id": "CR-ISET-FCSAE-01",
+  "anomaly_direction": "higher",
+  "attempt_id": "2f483335536c",
+  "attempt_rule": "one_attempt_then_stop_for_checkpoint_2",
+  "batch_size": 32,
+  "competing_predictions": [
+    "complete-row close match",
+    "implementation or source defect exposed",
+    "materially distinct completion required",
+    "non-match inside the finite frozen contract"
+  ],
+  "configuration_id": "877b8f8c5dd1",
+  "contract": "clean-reader-v1",
+  "data_metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+  "epochs_max": 100,
+  "evidence_question": "N",
+  "implementation_semantics": "P+I",
+  "learning_rate": 0.001,
+  "method": "CR-ISET-FCSAE-01",
+  "min_delta": 1e-06,
+  "minimum_epochs": 10,
+  "model": "fc_sae",
+  "paper_tables": [
+    "III"
+  ],
+  "patience": 5,
+  "scientific_question": "Does the frozen FC-SAE completion reproduce the reported Table 3 ISET row?",
+  "score_batch": 8192,
+  "seed": 20260824,
+  "table_v": false,
+  "test_view": "adasyn",
+  "threshold": 0.58,
+  "train_fraction": "full"
+}

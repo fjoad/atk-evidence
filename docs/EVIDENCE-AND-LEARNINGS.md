@@ -1462,6 +1462,46 @@ and repeated experiments determine technical conclusions.
   `seed_20260824_2f483335536c/result.json` under the existing study's remote
   reproduction-derived results path.
 
+### First audited clean-reader numerical finding — 2026-08-31
+
+- **Former belief/status:** The sole full-data attempt had completed, but its
+  self-reported metrics were not yet an independently trusted finding.
+- **Evidence:** The frozen audit ran on CPU allocation `384939` and passed:
+  every metric/count regenerated with zero discrepancy. The corrected
+  supplemental checker passed 65 checks, fully scanning 31 arrays with no
+  NaN/Inf, verifying disjoint customer identities and preserved original rows,
+  replaying stopping at epoch 28 with best epoch 23, and reloading saved weights
+  whose 256 sampled scores differed by at most 1.1921e-7. DR/FA/ACC/AUC/F1 are
+  25.48/45.13/40.18/39.40/30.09%, versus 81/15/83/81/81% reported. All seven
+  metrics and deltas are in `CLEAN_READER_FINDING.md`.
+- **Checker correction:** The first supplemental report failed because its
+  last partial original-data chunk was compared with an overlong resampled
+  slice. The defect was in this new checker, not in the data or reproduction.
+  Its source and failed report are preserved; clamping the slice yielded a
+  passing second report. No scientific attempt, score, weight, or data changed.
+- **Root cause:** **OPEN for the numerical gap.** On these fixed scores,
+  all-threshold balanced ACC is at most 50.00072% in the printed direction and
+  60.21% reversed. Mean benign error exceeds malicious error. Trained scores
+  correlate 0.999253 with zero-reconstruction input energy; trained ACC improves
+  over that rule by only 1.18 points, and the per-row simplex floor has ACC
+  40.20% versus 40.18% trained. These are descriptive geometry/scoring clues,
+  not an isolated causal mechanism or a global classification bound.
+- **Current conclusion:** **OBSERVED `P+I/N` initial non-reproduction** of one
+  Table-III ISET FC-SAE completion. **VERIFIED artifact checks** weaken E11 for
+  the checked chain. E7 is supported diagnostically; E8's fixed-score
+  threshold-only rescue is closed for this vector. E9/E10 remain open across
+  other source completions. Formal `M` and `A` findings remain open; no
+  recurrent comparison, repeated seed, or performance envelope was added.
+- **Boundary:** This is one descriptive seed under visible completions, not
+  confirmation, proof of what author code did, or a paper-wide conclusion.
+  ADASYN's actual class counts are near-balanced, not exactly equal; its
+  synthetic benign identities are preserved. Table-IV target metadata and
+  per-attack audit output do not expand the Table-III-only contract.
+- **Sources:** `studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md`,
+  `results/clean_reader_anchor_20260831/` under that study, and the scoped
+  `checks/clean_reader_anchor_artifacts.py`. Phase 6 is complete; Checkpoint 2
+  now requires user review before any additional experimental promotion.
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

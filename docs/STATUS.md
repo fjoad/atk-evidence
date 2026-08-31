@@ -42,11 +42,15 @@
   `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`; 179 deterministic tests and the
   strict local seven-file verifier pass. The sole Panther submission is job
   `384390`, completed with Slurm exit `0:0` on 2026-08-30 at 22:48:39 Qatar
-  time after 9:14:27. Phase 5 is operationally complete; Phase 6's independent
-  full artifact audit remains pending. The hourly thread heartbeat
+  time after 9:14:27. Phase 6 is complete: the frozen audit and all 65 corrected
+  supplemental artifact checks passed. The Table-III ISET FC-SAE row was not
+  reproduced in this one frozen `P+I` completion. Checkpoint 2 awaits review.
+  The initial finding and full comparison are in
+  [`../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md`](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md).
+  The hourly thread heartbeat
   `monitor-clean-reader-anchor` is paused at the user's request; check the job
   only after a new user prompt. No second submission, repair, retry, or
-  expansion is authorized before the complete outcome is inspected. Formal
+  expansion is authorized before Checkpoint 2 approval. Formal
   mechanism/attainability work
   remains behind Checkpoint 2. Prior code, runs, failures, and results remain
   preserved without retroactive reclassification.
@@ -65,7 +69,15 @@
   historical test population and transferred training timing across hardware
   and contracts. The saved attempt is
   `seed_20260824_2f483335536c` under the semantic-allocation results directory.
-  Its own `success`/eligibility fields are not yet independently audited.
+  Its reported metrics are now independently verified with exactly zero
+  discrepancy. DR/FA/ACC/AUC/F1 are 25.48/45.13/40.18/39.40/30.09% versus
+  81/15/83/81/81% reported. Every saved numeric array was fully scanned with
+  no NaN/Inf; customer identities are disjoint; fresh-loaded weights agree
+  with 256 saved scores within 1.20e-7. Exact threshold enumeration gives at
+  most 50.00072% balanced ACC in the printed direction, 60.21% reversed.
+  Scores correlate 0.999253 with zero-reconstruction input energy, while the
+  trained ACC gain over that rule is only 1.18 points. These diagnostics do
+  not establish mechanism failure or a method-family attainability envelope.
   This full-data numerical anchor is distinct from Phase 2's 60.06-second
   toy/synthetic sandbox (2:25 total job time); neither is relabeled as the other.
 - The active competing explanations, their predictions, discriminating tests,
@@ -380,14 +392,11 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Inspect the sole completed attempt from job `384390` without retraining,
-   changing the contract, or submitting a replacement.
-2. Run the frozen fail-closed Phase-6 audit on
-   `clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json`
-   and preserve its full audit outcome before issuing the initial numerical
-   finding.
-3. Stop at Checkpoint 2; no new seeds, models, branches, mechanism experiments,
-   or attainability search are authorized by a status check.
+1. Review the saved clean-reader initial numerical finding at Checkpoint 2.
+2. Decide whether a cheap geometry/scoring/triviality diagnostic or a materially
+   different source completion would discriminate a surviving explanation.
+3. Do not launch new seeds, models, branches, mechanism experiments, or an
+   attainability search until that question and its budget are approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

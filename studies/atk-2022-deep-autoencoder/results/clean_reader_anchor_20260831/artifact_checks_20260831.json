@@ -1,0 +1,413 @@
+{
+  "checks": {
+    "customer_disjoint": true,
+    "data/attack_1.npy_finite": true,
+    "data/attack_2.npy_finite": true,
+    "data/attack_3.npy_finite": true,
+    "data/attack_4.npy_finite": true,
+    "data/attack_5.npy_finite": true,
+    "data/attack_6.npy_finite": true,
+    "data/b2_index.npy_finite": true,
+    "data/benign.npy_finite": true,
+    "data/benign_raw.npy_finite": true,
+    "data/day_numbers.npy_finite": true,
+    "data/meter_ids.npy_finite": true,
+    "data/scaler_mean.npy_finite": true,
+    "data/scaler_scale.npy_finite": true,
+    "data/table_iv_order.npy_finite": true,
+    "data/test_attack_id.npy_finite": true,
+    "data/test_is_synthetic.npy_finite": true,
+    "data/test_original_attack_id.npy_finite": true,
+    "data/test_original_source_row.npy_finite": true,
+    "data/test_original_x.npy_finite": true,
+    "data/test_original_y.npy_finite": true,
+    "data/test_source_row.npy_finite": true,
+    "data/train_day_numbers.npy_finite": true,
+    "data/train_index.npy_finite": true,
+    "data/train_meter_ids.npy_finite": true,
+    "data/x_test.npy_finite": true,
+    "data/x_train.npy_finite": true,
+    "data/y_test.npy_finite": true,
+    "eligible_code_commit": true,
+    "finite_loss_history": true,
+    "finite_weights": true,
+    "fresh_weight_prediction_agreement": true,
+    "fresh_weight_score_agreement": true,
+    "metadata_complete": true,
+    "original_attack_identity": true,
+    "original_feature_block_0": true,
+    "original_feature_block_1": true,
+    "original_feature_block_2": true,
+    "original_feature_block_3": true,
+    "original_feature_block_4": true,
+    "original_feature_block_5": true,
+    "original_feature_block_6": true,
+    "original_features_preserved": false,
+    "original_label_identity": true,
+    "original_source_identity": true,
+    "positive_scaler": true,
+    "preserved_original_labels": true,
+    "preserved_original_provenance": true,
+    "profile_partition": true,
+    "run/predictions.npy_finite": true,
+    "run/scores.npy_finite": true,
+    "run/softmax_projection_floor_scores.npy_finite": true,
+    "run/zero_reconstruction_scores.npy_finite": true,
+    "softmax_output_domain": true,
+    "softmax_projection_floor_full_test_metrics": true,
+    "source_file_count": true,
+    "stopping_replay": true,
+    "synthetic_benign_only": true,
+    "synthetic_provenance": true,
+    "target_matches_source_csv": true,
+    "training_day_ids": true,
+    "training_features_match": true,
+    "training_meter_ids": true,
+    "training_permutation": true,
+    "zero_reconstruction_full_test_metrics": true
+  },
+  "classification": "P+I/N artifact verification; no new scientific attempt",
+  "customer_counts": {
+    "test": 1409,
+    "training": 2816
+  },
+  "elapsed_seconds": 125.03806792409159,
+  "full_array_scan": {
+    "data/attack_1.npy": {
+      "dtype": "float32",
+      "max": 21.471498489379883,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/attack_2.npy": {
+      "dtype": "float32",
+      "max": 22.377822875976562,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/attack_3.npy": {
+      "dtype": "float32",
+      "max": 31.4462833404541,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/attack_4.npy": {
+      "dtype": "float32",
+      "max": 29.587533950805664,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/attack_5.npy": {
+      "dtype": "float32",
+      "max": 22.717933654785156,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/attack_6.npy": {
+      "dtype": "float32",
+      "max": 35.84086227416992,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/b2_index.npy": {
+      "dtype": "int64",
+      "max": 2251289.0,
+      "min": 1066.0,
+      "nonfinite": 0,
+      "shape": [
+        750767
+      ],
+      "values": 750767
+    },
+    "data/benign.npy": {
+      "dtype": "float32",
+      "max": 32.013816833496094,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/benign_raw.npy": {
+      "dtype": "float32",
+      "max": 17.114999771118164,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        2251290,
+        48
+      ],
+      "values": 108061920
+    },
+    "data/day_numbers.npy": {
+      "dtype": "int16",
+      "max": 730.0,
+      "min": 195.0,
+      "nonfinite": 0,
+      "shape": [
+        2251290
+      ],
+      "values": 2251290
+    },
+    "data/meter_ids.npy": {
+      "dtype": "int32",
+      "max": 7443.0,
+      "min": 1002.0,
+      "nonfinite": 0,
+      "shape": [
+        2251290
+      ],
+      "values": 2251290
+    },
+    "data/scaler_mean.npy": {
+      "dtype": "float64",
+      "max": 0.40911021889789817,
+      "min": 0.2828234495152493,
+      "nonfinite": 0,
+      "shape": [
+        48
+      ],
+      "values": 48
+    },
+    "data/scaler_scale.npy": {
+      "dtype": "float64",
+      "max": 0.5705827130111533,
+      "min": 0.3976154251308544,
+      "nonfinite": 0,
+      "shape": [
+        48
+      ],
+      "values": 48
+    },
+    "data/table_iv_order.npy": {
+      "dtype": "int64",
+      "max": 1500522.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        1500523
+      ],
+      "values": 1500523
+    },
+    "data/test_attack_id.npy": {
+      "dtype": "int8",
+      "max": 6.0,
+      "min": -1.0,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "data/test_is_synthetic.npy": {
+      "dtype": "bool",
+      "max": 1.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "data/test_original_attack_id.npy": {
+      "dtype": "int8",
+      "max": 6.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        5255369
+      ],
+      "values": 5255369
+    },
+    "data/test_original_source_row.npy": {
+      "dtype": "int64",
+      "max": 2251289.0,
+      "min": 1066.0,
+      "nonfinite": 0,
+      "shape": [
+        5255369
+      ],
+      "values": 5255369
+    },
+    "data/test_original_x.npy": {
+      "dtype": "float32",
+      "max": 31.6451473236084,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        5255369,
+        48
+      ],
+      "values": 252257712
+    },
+    "data/test_original_y.npy": {
+      "dtype": "int8",
+      "max": 1.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        5255369
+      ],
+      "values": 5255369
+    },
+    "data/test_source_row.npy": {
+      "dtype": "int64",
+      "max": 2251289.0,
+      "min": -1.0,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "data/train_day_numbers.npy": {
+      "dtype": "int16",
+      "max": 730.0,
+      "min": 195.0,
+      "nonfinite": 0,
+      "shape": [
+        1500523
+      ],
+      "values": 1500523
+    },
+    "data/train_index.npy": {
+      "dtype": "int64",
+      "max": 2250756.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        1500523
+      ],
+      "values": 1500523
+    },
+    "data/train_meter_ids.npy": {
+      "dtype": "int32",
+      "max": 7442.0,
+      "min": 1002.0,
+      "nonfinite": 0,
+      "shape": [
+        1500523
+      ],
+      "values": 1500523
+    },
+    "data/x_test.npy": {
+      "dtype": "float32",
+      "max": 31.6451473236084,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        8884989,
+        48
+      ],
+      "values": 426479472
+    },
+    "data/x_train.npy": {
+      "dtype": "float32",
+      "max": 32.013816833496094,
+      "min": -0.8487539291381836,
+      "nonfinite": 0,
+      "shape": [
+        1500523,
+        48
+      ],
+      "values": 72025104
+    },
+    "data/y_test.npy": {
+      "dtype": "int8",
+      "max": 1.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "run/predictions.npy": {
+      "dtype": "int8",
+      "max": 1.0,
+      "min": 0.0,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "run/scores.npy": {
+      "dtype": "float32",
+      "max": 165.3014373779297,
+      "min": 0.003286067396402359,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "run/softmax_projection_floor_scores.npy": {
+      "dtype": "float32",
+      "max": 165.13345336914062,
+      "min": 0.0013880247715860605,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    },
+    "run/zero_reconstruction_scores.npy": {
+      "dtype": "float32",
+      "max": 166.20216369628906,
+      "min": 0.0026404045056551695,
+      "nonfinite": 0,
+      "shape": [
+        8884989
+      ],
+      "values": 8884989
+    }
+  },
+  "script_sha256": "981be5d04f8f81742ea83d224636d0ba8cdfcc9e792f80ff71b503a3b4f70c91",
+  "slurm_job_id": "384939",
+  "source_result": "/export/home/fjoad/atk-evidence/data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json",
+  "source_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+  "status": "failed",
+  "weight_reload_sample": {
+    "atol": 1e-06,
+    "device": "cpu",
+    "maximum_absolute_score_difference": 1.1920928955078125e-07,
+    "rows": 256,
+    "rtol": 1e-05
+  },
+  "weight_reload_warnings": [
+    "Skipping variable loading for optimizer 'adam', because it has 2 variables whereas the saved optimizer has 38 variables. "
+  ]
+}

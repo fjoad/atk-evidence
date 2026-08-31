@@ -1,0 +1,384 @@
+{
+  "choices": {
+    "adasyn_neighbors": 5,
+    "anomaly_adasyn": "test_set_as_printed",
+    "attack_1": "one_alpha_per_customer_matrix",
+    "attack_2_5": "independent_beta_per_half_hour",
+    "attack_3": "duration_first_in_day",
+    "day": "strict_exact_slots_1_to_48",
+    "malicious_test_population": "b2",
+    "population": "all_4225_residential",
+    "scaling": "joint_B_plus_all_M_featurewise_before_split",
+    "seed": 20260824,
+    "split": "customer_disjoint_seeded"
+  },
+  "configuration": {
+    "adasyn_neighbors": 5,
+    "attack_3_completion": "duration_first_in_day",
+    "contract": "clean-reader-v1",
+    "expensive_adasyn_acknowledged": true,
+    "malicious_test_population": "b2",
+    "mode": "full",
+    "seed": 20260824,
+    "source_branch": "sciencedb-csv-semantic-equivalence-v1",
+    "test_adasyn": "printed"
+  },
+  "counts": {
+    "B1_profiles": 1500523,
+    "B2_profiles": 750767,
+    "benign_profiles": 2251290,
+    "generated_malicious_profiles": 13507740,
+    "meters": 4225,
+    "table_iv_full_scalar_readings": 72025104,
+    "test_after_adasyn": 8884989,
+    "test_benign": 4380387,
+    "test_malicious": 4504602,
+    "test_original_benign": 750767,
+    "test_original_malicious": 4504602,
+    "test_original_profiles": 5255369,
+    "test_source_malicious_profiles": 4504602,
+    "test_synthetic_profiles": 3629620
+  },
+  "files": {
+    "attack_1.npy": {
+      "bytes": 432247808,
+      "sha256": "cd8cc0f6ddb1f19bdf923e6fba23f785a23a5011b006fa3e7516d33826004dad"
+    },
+    "attack_2.npy": {
+      "bytes": 432247808,
+      "sha256": "a98a5524819031798f8f886535c8c8f1de33d8bb027e8457fe466a665ebfffd2"
+    },
+    "attack_3.npy": {
+      "bytes": 432247808,
+      "sha256": "63243cdb4f31d1d534258a22c8159a73787e914d3d08dfb824b446eba5ebcdde"
+    },
+    "attack_4.npy": {
+      "bytes": 432247808,
+      "sha256": "3e2a41197a832f50cdeed8724d6e0dabdd4495ee6a74f4af066973524ad3652e"
+    },
+    "attack_5.npy": {
+      "bytes": 432247808,
+      "sha256": "f141526bdab95762eab7074f3a6a14c1dd98e3991c99903b3a0a9c3daf946b67"
+    },
+    "attack_6.npy": {
+      "bytes": 432247808,
+      "sha256": "92a818f73d7661566eab2068af216fab07eaa87a76e2f9aef1350c5c596d3ab2"
+    },
+    "benign.npy": {
+      "bytes": 432247808,
+      "sha256": "040404fcb321a9d9eeb53e4ae9684e5bf26e9be5a0f1b86599d827a9846578fb"
+    },
+    "benign_raw.npy": {
+      "bytes": 432247808,
+      "sha256": "84242d77611eae988f649b98dfe96b014175e6cf69e03fb0b5c1264e9db98fd3"
+    },
+    "day_numbers.npy": {
+      "bytes": 4502708,
+      "sha256": "40226f4d736d4c2efb03bd311068384921ae6acf30dd83acd99647d0283f6c09"
+    },
+    "meter_ids.npy": {
+      "bytes": 9005288,
+      "sha256": "70eb2cb6127129bae8ac2ab10db161950a7f28aeac7a622c721e717ca8733af5"
+    },
+    "scaler_mean.npy": {
+      "bytes": 512,
+      "sha256": "2c4c9e609536c82be3962e89418e3dd9b73bfc6520be40a06dcc6a35d8ea92e6"
+    },
+    "scaler_scale.npy": {
+      "bytes": 512,
+      "sha256": "53ad544a89cb7727c2eb132d6316379b0495bdfb608ad4b427c63fc7d0b0ab5a"
+    },
+    "test_original_x.npy": {
+      "bytes": 1009030976,
+      "sha256": "37d5bba3fdb4c69eddb7cdb6b28857a0fdd229f0db7305c553ba1a575158e7ca"
+    },
+    "test_original_y.npy": {
+      "bytes": 5255497,
+      "sha256": "7932b0445a686da7d0b373a235e2d8691d9326b7d48114a58c1f8882ab2562c6"
+    },
+    "x_test.npy": {
+      "bytes": 1705918016,
+      "sha256": "a942e2affb3d76b5ca3b25f1f023878c2eeda1449b9dbd3d8bce037361a5ece0"
+    },
+    "x_train.npy": {
+      "bytes": 288100544,
+      "sha256": "e114d6242aeda3d8267651037289d432ed1cea9e25728d13c60ecf72727b620c"
+    },
+    "y_test.npy": {
+      "bytes": 8885117,
+      "sha256": "cec8c078b62557535a0b30ff80da2908115639a0c3c52821a44227378537c887"
+    }
+  },
+  "method": "CR-ISET-FCSAE-01-DATA",
+  "paper_order": [
+    "strict_48_slot_profiles",
+    "six_attacks_generated_for_all_customers",
+    "joint_B_plus_M_featurewise_standardization",
+    "customer_disjoint_2_to_1_B1_B2",
+    "XTR_equals_B1",
+    "XTST_original_equals_B2_plus_B2_customer_M",
+    "ADASYN_inside_test"
+  ],
+  "profiles": {
+    "elapsed_seconds": 241.79400792345405,
+    "extraction": {
+      "residential_meters_with_profiles": 4225,
+      "residential_rows": 108678770,
+      "source_rows": 157992996,
+      "strict_profiles": 2251290
+    },
+    "features": 48,
+    "files": {
+      "benign_raw.npy": {
+        "bytes": 432247808,
+        "sha256": "84242d77611eae988f649b98dfe96b014175e6cf69e03fb0b5c1264e9db98fd3"
+      },
+      "day_numbers.npy": {
+        "bytes": 4502708,
+        "sha256": "40226f4d736d4c2efb03bd311068384921ae6acf30dd83acd99647d0283f6c09"
+      },
+      "meter_ids.npy": {
+        "bytes": 9005288,
+        "sha256": "70eb2cb6127129bae8ac2ab10db161950a7f28aeac7a622c721e717ca8733af5"
+      }
+    },
+    "meters": 4225,
+    "mode": "full",
+    "population": "all",
+    "population_seed": null,
+    "rows": 2251290,
+    "selected_residential_meters": 4225
+  },
+  "scaler": {
+    "mean": [
+      0.32846199216556116,
+      0.314056447608497,
+      0.2996032105927273,
+      0.2961458876421005,
+      0.2903396257093112,
+      0.28935213446593233,
+      0.2842147502823345,
+      0.28352184607517555,
+      0.2828234495152493,
+      0.2853637119358377,
+      0.28506981679419174,
+      0.29070349776934296,
+      0.29521991843940576,
+      0.2999648413767752,
+      0.3100811871771372,
+      0.32183185564253997,
+      0.32528217539491366,
+      0.32486528931967373,
+      0.32538586705566874,
+      0.3305808221646702,
+      0.3353377977658547,
+      0.34138970765237325,
+      0.34284687477656595,
+      0.3419705198279883,
+      0.3454433859391264,
+      0.35067621308411634,
+      0.34944915328776516,
+      0.3396767501500407,
+      0.3340916688776097,
+      0.3298489383095103,
+      0.33313384840337446,
+      0.3381636660447061,
+      0.3493699513610834,
+      0.3618409525633767,
+      0.3807778789423217,
+      0.39411269138788335,
+      0.40166667785357346,
+      0.39606926483249183,
+      0.40287550379559406,
+      0.39753797531151963,
+      0.4014068818505911,
+      0.3991939528905551,
+      0.40911021889789817,
+      0.40047150150321614,
+      0.400168804118155,
+      0.3820502635969527,
+      0.3740262408274406,
+      0.35036817358319255
+    ],
+    "scale": [
+      0.40609035101805624,
+      0.40010907276569463,
+      0.3976154251308544,
+      0.40878623297710615,
+      0.4195395621399869,
+      0.4319982501652309,
+      0.4366542111179326,
+      0.44471064388349435,
+      0.4554709143062113,
+      0.46611698504354937,
+      0.46929094837843016,
+      0.4826566420657661,
+      0.49128596450454304,
+      0.4885011885777466,
+      0.4885821852806737,
+      0.4928382493436074,
+      0.4869253367248451,
+      0.4814554153525459,
+      0.4823245816470622,
+      0.49207933168385926,
+      0.503072753433817,
+      0.5159025566289073,
+      0.5231113665068721,
+      0.5239309487968189,
+      0.5278192086710299,
+      0.5305817000917983,
+      0.522075707494111,
+      0.5070666649497775,
+      0.4965934766779709,
+      0.48817697470273475,
+      0.4895224934233948,
+      0.4970606272602105,
+      0.5128779131360433,
+      0.5296129113732695,
+      0.5548510825825625,
+      0.5705827130111533,
+      0.569809625322703,
+      0.5544944178503207,
+      0.5568954573002307,
+      0.5427759177286009,
+      0.5340583257638145,
+      0.5204994900943942,
+      0.5183786187413795,
+      0.495184526225344,
+      0.4791669233295094,
+      0.45074021450376317,
+      0.44067687353005675,
+      0.42083989270439975
+    ]
+  },
+  "schema": 1,
+  "source": {
+    "branch": "sciencedb-csv-semantic-equivalence-v1",
+    "files": {
+      "File1.txt.zip": {
+        "actual": "00203f66f3f5e5201b20ed160b787684",
+        "algorithm": "md5",
+        "bytes": 101978611,
+        "expected": "00203f66f3f5e5201b20ed160b787684",
+        "expected_bytes": 101978611,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File1.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File1.txt",
+          "status": "verified",
+          "uncompressed_bytes": 412330430
+        }
+      },
+      "File2.txt.zip": {
+        "actual": "5e3af1474d3c8976e2e1e0f8c1969507",
+        "algorithm": "md5",
+        "bytes": 102197028,
+        "expected": "5e3af1474d3c8976e2e1e0f8c1969507",
+        "expected_bytes": 102197028,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File2.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File2.txt",
+          "status": "verified",
+          "uncompressed_bytes": 412872266
+        }
+      },
+      "File3.txt.zip": {
+        "actual": "b537785f8b37cb3e89103600d39da8ff",
+        "algorithm": "md5",
+        "bytes": 101624145,
+        "expected": "b537785f8b37cb3e89103600d39da8ff",
+        "expected_bytes": 101624145,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File3.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File3.txt",
+          "status": "verified",
+          "uncompressed_bytes": 411309460
+        }
+      },
+      "File4.txt.zip": {
+        "actual": "53ec9e70c1610b74ae72417cc010a0c3",
+        "algorithm": "md5",
+        "bytes": 102401577,
+        "expected": "53ec9e70c1610b74ae72417cc010a0c3",
+        "expected_bytes": 102401577,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File4.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File4.txt",
+          "status": "verified",
+          "uncompressed_bytes": 415164843
+        }
+      },
+      "File5.txt.zip": {
+        "actual": "6f8c7c9dfba3bbfbff0e5f1703e122fc",
+        "algorithm": "md5",
+        "bytes": 102257883,
+        "expected": "6f8c7c9dfba3bbfbff0e5f1703e122fc",
+        "expected_bytes": 102257883,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File5.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File5.txt",
+          "status": "verified",
+          "uncompressed_bytes": 414075955
+        }
+      },
+      "File6.txt.zip": {
+        "actual": "c0a435d0359974f23ce434b5e838e251",
+        "algorithm": "md5",
+        "bytes": 147826765,
+        "expected": "c0a435d0359974f23ce434b5e838e251",
+        "expected_bytes": 147826765,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/File6.txt.zip",
+        "status": "verified",
+        "zip": {
+          "member": "File6.txt",
+          "status": "verified",
+          "uncompressed_bytes": 597031006
+        }
+      },
+      "SME_and_Residential_allocations.csv": {
+        "actual": "89263f89253cf56b857079986ae73096",
+        "algorithm": "md5",
+        "bytes": 112589,
+        "expected": "89263f89253cf56b857079986ae73096",
+        "expected_bytes": 112589,
+        "path": "/export/home/fjoad/atk-evidence/data/raw/cer-sciencedb/SME_and_Residential_allocations.csv",
+        "sha256": "96298be047f34ba91fe281c899b440d2b28747b4f102af6f239dbbd93dd354d4",
+        "status": "verified"
+      }
+    },
+    "ready": true
+  },
+  "source_nodes": {
+    "attack_3_endpoint": {
+      "assumption": "draw duration first and then a start that preserves the full interval",
+      "derived_operation": "draw duration 4..24 inclusive, then start 0..24-duration; zero the complete half-open two-slots-per-hour interval",
+      "literal_status": "non_executable_end_precedes_start",
+      "paper_claim": "t_f = t_i - t_l for a positive theft duration"
+    },
+    "test_adasyn": {
+      "assumption": "imbalanced-learn default exact neighbors",
+      "derived_operation": "printed",
+      "first_pass_query_reference_pairs": 3945557618023,
+      "literal_status": "executed",
+      "paper_claim": "apply ADASYN to B2 plus all-customer M"
+    }
+  },
+  "status": "complete",
+  "timing_seconds": {
+    "adasyn": 3890.6619037389755,
+    "preparation_after_profile_load": 3941.5643659867346,
+    "profile_extraction": 241.79400792345405
+  },
+  "versions": {
+    "imbalanced_learn": "0.14.2",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "platform": "Linux-5.15.0-50-generic-x86_64-with-glibc2.31",
+    "python": "3.12.2",
+    "sklearn": "1.9.0"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "benign_profiles": 2251290,
+  "meters": 4225,
+  "B1_profiles": 1500523,
+  "B2_profiles": 750767,
+  "generated_malicious_profiles": 13507740,
+  "test_source_malicious_profiles": 4504602,
+  "test_original_profiles": 5255369,
+  "test_original_benign": 750767,
+  "test_original_malicious": 4504602,
+  "test_after_adasyn": 8884989,
+  "test_synthetic_profiles": 3629620,
+  "test_benign": 4380387,
+  "test_malicious": 4504602,
+  "table_iv_full_scalar_readings": 72025104
+}
+prepared: data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-full-printed-semantic-allocation
+Epoch 1/100
+46892/46892 - 1017s - 22ms/step - loss: 1.7881
+Epoch 2/100
+46892/46892 - 1019s - 22ms/step - loss: 1.7634
+Epoch 3/100
+46892/46892 - 1027s - 22ms/step - loss: 1.7571
+Epoch 4/100
+46892/46892 - 1035s - 22ms/step - loss: 1.7547
+Epoch 5/100
+46892/46892 - 1036s - 22ms/step - loss: 1.7537
+Epoch 6/100
+46892/46892 - 1034s - 22ms/step - loss: 1.7529
+Epoch 7/100
+46892/46892 - 1030s - 22ms/step - loss: 1.7521
+Epoch 8/100
+46892/46892 - 1036s - 22ms/step - loss: 1.7516
+Epoch 9/100
+46892/46892 - 1037s - 22ms/step - loss: 1.7507
+Epoch 10/100
+46892/46892 - 1026s - 22ms/step - loss: 1.7505
+Epoch 11/100
+46892/46892 - 1030s - 22ms/step - loss: 1.7501
+Epoch 12/100
+46892/46892 - 1032s - 22ms/step - loss: 1.7495
+Epoch 13/100
+46892/46892 - 1032s - 22ms/step - loss: 1.7491
+Epoch 14/100
+46892/46892 - 1039s - 22ms/step - loss: 1.7488
+Epoch 15/100
+46892/46892 - 1021s - 22ms/step - loss: 1.7486
+Epoch 16/100
+46892/46892 - 1016s - 22ms/step - loss: 1.7484
+Epoch 17/100
+46892/46892 - 1048s - 22ms/step - loss: 1.7484
+Epoch 18/100
+46892/46892 - 1045s - 22ms/step - loss: 1.7481
+Epoch 19/100
+46892/46892 - 1041s - 22ms/step - loss: 1.7482
+Epoch 20/100
+46892/46892 - 1036s - 22ms/step - loss: 1.7481
+Epoch 21/100
+46892/46892 - 1059s - 23ms/step - loss: 1.7482
+Epoch 22/100
+46892/46892 - 1073s - 23ms/step - loss: 1.7480
+Epoch 23/100
+46892/46892 - 1033s - 22ms/step - loss: 1.7478
+Epoch 24/100
+46892/46892 - 1022s - 22ms/step - loss: 1.7484
+Epoch 25/100
+46892/46892 - 1042s - 22ms/step - loss: 1.7484
+Epoch 26/100
+46892/46892 - 1037s - 22ms/step - loss: 1.7482
+Epoch 27/100
+46892/46892 - 1032s - 22ms/step - loss: 1.7482
+Epoch 28/100
+46892/46892 - 1032s - 22ms/step - loss: 1.7481
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/keras/src/saving/saving_lib.py:843: UserWarning: Skipping variable loading for optimizer 'adam', because it has 2 variables whereas the saved optimizer has 38 variables. 
+  saveable.load_own_variables(weights_store.get(inner_path))
+{
+  "TP": 1147951,
+  "TN": 2403359,
+  "FP": 1977028,
+  "FN": 3356651,
+  "DR": 25.483960625156225,
+  "FA": 45.13363773566125,
+  "SP": 54.86636226433874,
+  "PR": 36.73467885704192,
+  "ACC": 40.17516144474749,
+  "F1": 30.09211121816519,
+  "AUC": 39.39864524924006
+}
+{
+  "load": 0.33933983370661736,
+  "model_build": 0.26203637197613716,
+  "fit": 28965.896594397724,
+  "weights_reload": 0.4035330228507519,
+  "score_table_3": 11.118079360574484,
+  "score_table_5": 0.0,
+  "total": 28999.802865035832
+}
+saved immutable attempt: data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c

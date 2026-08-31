@@ -1,0 +1,433 @@
+{
+  "artifact_sha256": {
+    "history.json": "e24a9835a9d1e4e5084ba8a4c39bd2b40eed5718bd82fda0bdb6a5b22e4ba254",
+    "model.weights.h5": "466d5d47a7edefa7b1d1f87f32cd5f984335672017db8ef0305c9619da8722be",
+    "predictions.npy": "ec12787801a37a3ff8a652f3c59299429cb284e3798ec2e9cdf84d94b7783793",
+    "scores.npy": "9fe8b22728244efee6628cb4aa2b1cd5bea7ee4b90a9d4c42d8e29e283098761",
+    "softmax_projection_floor_scores.npy": "533294facd1a2242ce006c0fdc3562b1e37cb47ff287a5000975ea1bb99d00f7",
+    "zero_reconstruction_scores.npy": "9136759c066860e249eaacc7fb4b08d4134d53f5195daec33481e875ad83b9c2"
+  },
+  "artifacts": {
+    "history": "history.json",
+    "predictions": "predictions.npy",
+    "scores": "scores.npy",
+    "softmax_projection_floor_scores": "softmax_projection_floor_scores.npy",
+    "weights": "model.weights.h5"
+  },
+  "baselines": {
+    "softmax_projection_floor_full_test": {
+      "ACC": 40.20211122939041,
+      "AUC": 39.351599371226676,
+      "DR": 24.687752658281465,
+      "F1": 29.43395447375807,
+      "FA": 44.28353019950064,
+      "FN": 3392517,
+      "FP": 1939790,
+      "PR": 36.439402006962936,
+      "SP": 55.716469800499354,
+      "TN": 2440597,
+      "TP": 1112085
+    },
+    "untrained_stratified_sample": {
+      "metrics": {
+        "ACC": 29.060000000000002,
+        "AUC": 27.959052,
+        "DR": 17.02,
+        "F1": 19.349704411095956,
+        "FA": 58.9,
+        "FN": 4149,
+        "FP": 2945,
+        "PR": 22.418335089567968,
+        "SP": 41.1,
+        "TN": 2055,
+        "TP": 851
+      },
+      "rows": 10000,
+      "score": {
+        "maximum": 35.582401275634766,
+        "median": 0.41791796684265137,
+        "minimum": 0.027769455686211586
+      }
+    },
+    "zero_reconstruction_full_test": {
+      "ACC": 38.99770591939996,
+      "AUC": 37.22922201960631,
+      "DR": 27.909768720965804,
+      "F1": 31.635168819169156,
+      "FA": 49.91435688216589,
+      "FN": 3247378,
+      "FP": 2186442,
+      "PR": 36.5083024892658,
+      "SP": 50.08564311783411,
+      "TN": 2193945,
+      "TP": 1257224
+    }
+  },
+  "configuration": {
+    "anchor_id": "CR-ISET-FCSAE-01",
+    "anomaly_direction": "higher",
+    "attempt_id": "2f483335536c",
+    "attempt_rule": "one_attempt_then_stop_for_checkpoint_2",
+    "batch_size": 32,
+    "competing_predictions": [
+      "complete-row close match",
+      "implementation or source defect exposed",
+      "materially distinct completion required",
+      "non-match inside the finite frozen contract"
+    ],
+    "configuration_id": "877b8f8c5dd1",
+    "contract": "clean-reader-v1",
+    "data_metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+    "epochs_max": 100,
+    "evidence_question": "N",
+    "implementation_semantics": "P+I",
+    "learning_rate": 0.001,
+    "method": "CR-ISET-FCSAE-01",
+    "min_delta": 1e-06,
+    "minimum_epochs": 10,
+    "model": "fc_sae",
+    "paper_tables": [
+      "III"
+    ],
+    "patience": 5,
+    "scientific_question": "Does the frozen FC-SAE completion reproduce the reported Table 3 ISET row?",
+    "score_batch": 8192,
+    "seed": 20260824,
+    "table_v": false,
+    "test_view": "adasyn",
+    "threshold": 0.58,
+    "train_fraction": "full"
+  },
+  "data": {
+    "counts": {
+      "B1_profiles": 1500523,
+      "test_benign": 4380387,
+      "test_malicious": 4504602,
+      "test_profiles": 8884989
+    },
+    "dataset": "ISET",
+    "files": {
+      "table_iv_order.npy": "f5acf853f2efdcc5e237cdf137cd17590fc0712f8151798de65f5b034f351643",
+      "test_attack_id.npy": "ca76e2e01c830f64de5a6646ddc6d3f1650d2ba81e238f2a00af9ebe4b7dec7b",
+      "test_is_synthetic.npy": "1386d6e37989429c0a4385dde6bfee15809a884dd239dc2f4b0a11f48fee8c4f",
+      "test_source_row.npy": "0d2f99d21e27c3b521e3fc4842ccea77673e3ebc4360ab61124134c453ab6964",
+      "train_day_numbers.npy": "f6a0bbe78db10e12f0ef2230406bfcdf7a91564e2ddcbb4d6a6822828056db5f",
+      "train_meter_ids.npy": "451511e6900c02e13f4237cf9eba962618cff8a221c401af4a55d10cdf210687",
+      "x_test.npy": "a942e2affb3d76b5ca3b25f1f023878c2eeda1449b9dbd3d8bce037361a5ece0",
+      "x_train.npy": "e114d6242aeda3d8267651037289d432ed1cea9e25728d13c60ecf72727b620c",
+      "y_test.npy": "cec8c078b62557535a0b30ff80da2908115639a0c3c52821a44227378537c887"
+    },
+    "metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+    "method": "CR-ISET-FCSAE-01-DATA",
+    "path": "data/derived/atk-2022-deep-autoencoder/reproduction/clean-reader-v1-full-printed-semantic-allocation",
+    "source_nodes": {
+      "attack_3_endpoint": {
+        "assumption": "draw duration first and then a start that preserves the full interval",
+        "derived_operation": "draw duration 4..24 inclusive, then start 0..24-duration; zero the complete half-open two-slots-per-hour interval",
+        "literal_status": "non_executable_end_precedes_start",
+        "paper_claim": "t_f = t_i - t_l for a positive theft duration"
+      },
+      "test_adasyn": {
+        "assumption": "imbalanced-learn default exact neighbors",
+        "derived_operation": "printed",
+        "first_pass_query_reference_pairs": 3945557618023,
+        "literal_status": "executed",
+        "paper_claim": "apply ADASYN to B2 plus all-customer M"
+      }
+    },
+    "training_rows_used": 1500523
+  },
+  "difference_reproduced_minus_reported": {
+    "ACC": -42.82483855525251,
+    "AUC": -41.60135475075994,
+    "DR": -55.51603937484377,
+    "F1": -50.907888781834814,
+    "FA": 30.133637735661253,
+    "PR": -44.26532114295808,
+    "SP": -30.13363773566126
+  },
+  "eligibility": "eligible_clean_reader_P+I_N",
+  "git_commit": "a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca",
+  "history": {
+    "loss": [
+      1.7881088256835938,
+      1.7634451389312744,
+      1.7571367025375366,
+      1.7546730041503906,
+      1.753697395324707,
+      1.7528802156448364,
+      1.7521414756774902,
+      1.7516003847122192,
+      1.7506523132324219,
+      1.7505173683166504,
+      1.750136137008667,
+      1.7494572401046753,
+      1.7490627765655518,
+      1.748793601989746,
+      1.74856698513031,
+      1.7483993768692017,
+      1.7484148740768433,
+      1.7480624914169312,
+      1.7481554746627808,
+      1.7480665445327759,
+      1.748185157775879,
+      1.748022198677063,
+      1.7477854490280151,
+      1.7483830451965332,
+      1.7484018802642822,
+      1.7482107877731323,
+      1.748165488243103,
+      1.7481107711791992
+    ]
+  },
+  "metrics": {
+    "ACC": 40.17516144474749,
+    "AUC": 39.39864524924006,
+    "DR": 25.483960625156225,
+    "F1": 30.09211121816519,
+    "FA": 45.13363773566125,
+    "FN": 3356651,
+    "FP": 1977028,
+    "PR": 36.73467885704192,
+    "SP": 54.86636226433874,
+    "TN": 2403359,
+    "TP": 1147951
+  },
+  "model": {
+    "inventory": [
+      {
+        "activation": null,
+        "class": "InputLayer",
+        "name": "daily_profile",
+        "output_shape": "(None, 48)",
+        "parameters": 0,
+        "rate": null,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_1_400",
+        "output_shape": "(None, 400)",
+        "parameters": 19600,
+        "rate": null,
+        "units": 400
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_1",
+        "output_shape": "(None, 400)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_2_300",
+        "output_shape": "(None, 300)",
+        "parameters": 120300,
+        "rate": null,
+        "units": 300
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_2",
+        "output_shape": "(None, 300)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_3_200",
+        "output_shape": "(None, 200)",
+        "parameters": 60200,
+        "rate": null,
+        "units": 200
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_3",
+        "output_shape": "(None, 200)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "encoder_dense_4_100",
+        "output_shape": "(None, 100)",
+        "parameters": 20100,
+        "rate": null,
+        "units": 100
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "encoder_dropout_4",
+        "output_shape": "(None, 100)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_1_100",
+        "output_shape": "(None, 100)",
+        "parameters": 10100,
+        "rate": null,
+        "units": 100
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_1",
+        "output_shape": "(None, 100)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_2_200",
+        "output_shape": "(None, 200)",
+        "parameters": 20200,
+        "rate": null,
+        "units": 200
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_2",
+        "output_shape": "(None, 200)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_3_300",
+        "output_shape": "(None, 300)",
+        "parameters": 60300,
+        "rate": null,
+        "units": 300
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_3",
+        "output_shape": "(None, 300)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "sigmoid",
+        "class": "Dense",
+        "name": "decoder_dense_4_400",
+        "output_shape": "(None, 400)",
+        "parameters": 120400,
+        "rate": null,
+        "units": 400
+      },
+      {
+        "activation": null,
+        "class": "Dropout",
+        "name": "decoder_dropout_4",
+        "output_shape": "(None, 400)",
+        "parameters": 0,
+        "rate": 0.4,
+        "units": null
+      },
+      {
+        "activation": "softmax",
+        "class": "Dense",
+        "name": "reconstruction",
+        "output_shape": "(None, 48)",
+        "parameters": 19248,
+        "rate": null,
+        "units": 48
+      }
+    ],
+    "parameters": 450448,
+    "specification": {
+      "anomaly_direction": "higher",
+      "anomaly_score": "mse",
+      "decoder": [
+        100,
+        200,
+        300,
+        400
+      ],
+      "dropout": 0.4,
+      "encoder": [
+        400,
+        300,
+        200,
+        100
+      ],
+      "hidden_activation": "sigmoid",
+      "name": "FC-SAE",
+      "optimizer": "Adam",
+      "output_activation": "softmax",
+      "threshold": 0.58
+    }
+  },
+  "reported_table_3": {
+    "ACC": 83,
+    "AUC": 81,
+    "DR": 81,
+    "F1": 81,
+    "FA": 15,
+    "PR": 81,
+    "SP": 85
+  },
+  "reported_table_4": {
+    "ACC": 83,
+    "training_minutes": 137
+  },
+  "runtime": {
+    "backend": "torch",
+    "cuda_available": true,
+    "cuda_device": "Tesla P100-PCIE-16GB",
+    "determinism": {
+      "cublas_workspace_config": ":4096:8",
+      "cudnn_benchmark": false,
+      "cudnn_deterministic": true,
+      "torch_deterministic_algorithms": true,
+      "torch_deterministic_warn_only": true
+    },
+    "keras": "3.15.0",
+    "max_rss_kib": 4116340,
+    "platform": "Linux-5.15.0-50-generic-x86_64-with-glibc2.31",
+    "python": "3.12.2",
+    "sklearn": "1.9.0",
+    "torch": "2.7.1+cu126"
+  },
+  "status": "success",
+  "table_v": null,
+  "timing_seconds": {
+    "fit": 28965.896594397724,
+    "load": 0.33933983370661736,
+    "model_build": 0.26203637197613716,
+    "score_table_3": 11.118079360574484,
+    "score_table_5": 0.0,
+    "total": 28999.802865035832,
+    "weights_reload": 0.4035330228507519
+  },
+  "training_stop": {
+    "best_epoch": 23,
+    "best_loss": 1.7477854490280151,
+    "epochs_completed": 28,
+    "stopped_epoch": 28
+  }
+}

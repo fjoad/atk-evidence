@@ -30,8 +30,9 @@ bytes are already available. On 2026-08-30 the user explicitly approved
 `sciencedb-csv-semantic-equivalence-v1` as the visible allocation `I` branch
 for the otherwise unchanged single anchor. Phase 5 is operationally complete;
 the sole attempt ran from eligible code commit
-`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Phase 6's independent artifact audit
-is pending, and Checkpoint 2 remains closed. The 179 deterministic tests and
+`a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`. Phase 6 is complete: frozen audit
+and 65 corrected supplemental checks passed; Checkpoint 2 awaits review.
+The 179 deterministic tests and
 strict local seven-file verifier passed before submission. Panther job
 `384390` completed with exit `0:0` at 22:48:39 Qatar time on 2026-08-30 after
 9:14:27. The thread heartbeat `monitor-clean-reader-anchor` is paused at the
@@ -48,8 +49,21 @@ Actual ADASYN time was 1:04:51, preparation about 1:09:43, fitting 8:02:46
 historical population, and old training timing did not transfer to this
 hardware/contract. The result is at
 `clean-reader-v1-results-semantic-allocation/runs/table_3/fc_sae/seed_20260824_2f483335536c/result.json`
-under the remote reproduction-derived directory. Its self-reported success
-is not yet an independently audited numerical finding.
+under the remote reproduction-derived directory. The independent audit now
+regenerates all metrics and confusion counts with zero discrepancy. DR/FA/ACC/
+AUC/F1 are 25.48/45.13/40.18/39.40/30.09% versus 81/15/83/81/81% reported.
+This is one frozen `P+I/N` non-reproduction, not a paper-wide or confirmatory
+finding. See `studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md`.
+Full scans of 31 arrays found no NaN/Inf; 2,816 training and 1,409 test customers
+are disjoint; 256 CPU fresh-load scores agree within 1.20e-7. The checker-v1
+last-chunk boundary bug and failed report are preserved; v2 clamps the slice
+and passes, without changing any reproduction artifact.
+All-threshold balanced ACC is at most 50.00072% in the paper direction and
+60.21% reversed for these fixed scores. Trained/zero-score Pearson correlation
+is 0.999253, with only +1.18 ACC points over the zero rule; the Softmax-domain
+floor has ACC 40.20 versus 40.18 trained. These motivate geometry/scoring
+questions but establish neither causal mechanism failure nor a method-family
+attainability envelope. No further experiment is approved.
 The user reconfirmed that sandbox tests should remain quick: Phase 2 took
 60.06 s of computation (2:25 total job); this 9:14:27 run was the later full-data
 numerical reproduction, not sandbox breadth. Explain that boundary explicitly.

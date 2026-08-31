@@ -6,7 +6,9 @@
 job `384390` completed once with exit `0:0` at 22:48:39 Qatar time on
 2026-08-30, after 9:14:27, under the approved
 `sciencedb-csv-semantic-equivalence-v1` allocation `I` branch. Independent
-Phase-6 artifact audit is pending; no second submission is authorized.
+Phase-6 artifact audit passed on 2026-08-31; the bounded initial non-reproduction
+is saved in [CLEAN_READER_FINDING.md](CLEAN_READER_FINDING.md). Checkpoint 2
+awaits review, and no second submission is authorized.
 
 **Evidence question:** numerical reproduction (`N`)
 

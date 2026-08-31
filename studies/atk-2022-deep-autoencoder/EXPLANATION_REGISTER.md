@@ -153,15 +153,22 @@ indefinitely and must never become an accusation by elimination.
 
 Softmax/sigmoid outputs cannot exactly reconstruct general standardized
 profiles. **Current status:** structural floor `VERIFIED`; dominance on named
-data `OPEN`. Test exact projection floors, score correlation with those floors,
-and a linear-output `C` control after the primary reproduction.
+data `SUPPORTED AS A DESCRIPTIVE DIAGNOSTIC, CAUSAL ATTRIBUTION OPEN`. The
+audited clean-reader anchor has trained/zero-score Pearson correlation 0.999253;
+ACC is 40.18% trained, 39.00% for zero reconstruction, and 40.20% for the
+per-row simplex floor. This motivates a controlled geometry test, not a claim
+that training did nothing or that every model is bounded to these metrics.
 
 ### E8 — score direction, reduction, or threshold semantics differ
 
 The VAE inequality may be a typo; MSE may use sum versus mean; threshold
 construction is not executable; and a printed constant may have been applied
 under a different scale. **Current status:** source ambiguity `VERIFIED`, cause
-`OPEN`. Preserve literal and anomaly-consistent directions, explicit score
+`OPEN`. On the audited clean-reader score vector, threshold choice alone in
+the printed direction cannot exceed 50.00072% balanced ACC; reversing direction
+cannot exceed 60.21%, versus 83% reported. This closes that specific fixed-score
+rescue, not changes to training or data that produce different scores.
+Preserve literal and anomaly-consistent directions, explicit score
 reductions, printed threshold, and finite source-supported alternatives.
 
 ### E9 — preprocessing, leakage, resampling, or identity creates the effect
@@ -169,8 +176,13 @@ reductions, printed threshold, and finite source-supported alternatives.
 Joint pre-split scaling, test-set ADASYN, customer/day identity, attack
 population, and validation leakage can alter apparent performance. **Current
 status:** source procedure/ambiguity `VERIFIED`, causal contribution `OPEN`.
-First reproduce it literally; later compare corrected train-fitted,
-customer-disjoint, untouched-test controls one factor at a time.
+The clean-reader printed-position ADASYN executed, preserving all original
+test rows and adding 3,629,620 benign rows. Its integer allocation yielded
+4,380,387 benign versus 4,504,602 malicious rows, not exact class equality.
+Customer and row identities passed the artifact audit; this does not establish
+that the entire preprocessing protocol is scientifically unbiased.
+If promoted at Checkpoint 2, compare corrected train-fitted and untouched-test
+controls one factor at a time without replacing the completed numerical row.
 
 ### E10 — data identity or representation differs
 
@@ -184,12 +196,15 @@ identities and never choose the one nearest the target after seeing results.
 ### E11 — our reproduction implementation is wrong
 
 A clean-reader non-match may be caused by a parser, attack, split, model,
-training, score, or metric defect in our code. **Current status:** `WEAKENED AT
-THE STATIC/TINY-TEST LEVEL, OPEN FOR EXACT EXECUTION`. Phase 4 corrected every
-identified mismatch, 178 deterministic tests pass, eligible scoring reloads
-persisted weights, and the anchor audit independently regenerates metrics.
-Exact preparation and artifact inspection can still expose a defect before any
-gap is interpreted.
+training, score, or metric defect in our code. **Current status:** `WEAKENED FOR
+THE AUDITED CLEAN-READER CHAIN, NOT ELIMINATED IN PRINCIPLE`. Phase 4 corrected
+identified mismatches; all 179 deterministic tests pass. The frozen exact-data
+audit regenerates every metric/count with zero discrepancy. Full array scans,
+customer/feature identities, stopping replay, finite weights, and fresh-load
+sample scores passed. A supplemental checker last-chunk slicing bug was
+preserved and corrected without altering reproduction code or artifacts.
+Remaining source-reading mistakes or untested implementation defects remain
+possible; the audit is not proof of every conceivable semantic detail.
 
 ### E12 — the sandbox witness is weak or non-transferable
 
@@ -219,11 +234,18 @@ as a blanket repair for the entire target pattern.
 
 Even after source-supported completions, seeds, capacity, training, and
 threshold choices, the target may remain far outside observed plateaus.
-**Current status:** `OPEN`; no clean-reader envelope exists. Only a later
+**Current status:** `OPEN`; the audited single anchor is a large numerical
+non-match, but no clean-reader envelope exists. Fixed-score threshold
+enumeration does not bound scores produced by another implementation. Only a later
 predeclared `A` program can support a conditional implausibility conclusion.
 Empirical saturation is not universal impossibility.
 
 ## Ordered test map
+
+**2026-08-31 checkpoint:** the initial audited result and full metrics are in
+[CLEAN_READER_FINDING.md](CLEAN_READER_FINDING.md). E1–E6 and E12–E14 were not
+newly discriminated by a recurrent comparison or repeated seeds. Do not treat
+the first numerical finding as their elimination.
 
 1. **Phase 4 fidelity (`E11`):** prove or correct the five-file route against
    the frozen specification.

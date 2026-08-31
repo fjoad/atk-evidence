@@ -1,0 +1,21 @@
+{
+  "classification": "P+I/N artifact audit; no new scientific attempt",
+  "audit_job_id": "384939",
+  "slurm_state": "COMPLETED",
+  "slurm_exit_code": "0:0",
+  "started_qatar": "2026-08-31T14:42:14+03:00",
+  "ended_qatar": "2026-08-31T14:50:53+03:00",
+  "elapsed_including_interactive_pauses": "00:08:39",
+  "max_rss_kib": 3602240,
+  "scientific_job_id": "384390",
+  "scientific_commit": "a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca",
+  "source_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+  "frozen_audit": "clean_reader_anchor_audit.json",
+  "supplemental_v1": "artifact_checks_20260831.json",
+  "supplemental_v1_source_commit": "281afc2",
+  "supplemental_v1_status": "failed_checker_slice_boundary",
+  "supplemental_v2": "artifact_checks_20260831_v2.json",
+  "supplemental_v2_status": "passed",
+  "supplemental_v2_source_sha256": "2865614d97b54953142c59b418aa0dd63686e8570d966359a0dce970c525c302",
+  "correction": "Clamp both original-prefix comparison slices to the original row count; no change to reproduction code, data, scores, weights, metrics, or thresholds."
+}

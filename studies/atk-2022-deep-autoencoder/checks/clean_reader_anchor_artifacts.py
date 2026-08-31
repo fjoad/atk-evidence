@@ -106,7 +106,8 @@ def main():
     check("synthetic_provenance", np.all(source[n:] == -1) and np.all(attacks[n:] == -1)
           and not np.any(synthetic[:n]) and np.all(synthetic[n:]))
     check("original_features_preserved", all(np.array_equal(
-        test_x[i:i + 65536], original[i:i + 65536]) for i in range(0, n, 65536)))
+        test_x[i:min(i + 65536, n)], original[i:min(i + 65536, n)])
+        for i in range(0, n, 65536)))
     for attack in range(7):
         values = load("benign.npy" if attack == 0 else f"attack_{attack}.npy")
         check(f"original_feature_block_{attack}", all(np.array_equal(
