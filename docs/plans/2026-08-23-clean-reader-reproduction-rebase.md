@@ -6,7 +6,8 @@
 
 **Current state:** Phase 5 operationally `COMPLETE`: sole job `384390` exited
 `0:0` on 2026-08-30 after 9:14:27 under the approved semantic allocation `I`
-branch. Phase 6's independent artifact audit is pending; Checkpoint 2 is closed.
+branch. Phase 6's independent artifact audit is `IN PROGRESS`, approved by the
+user on 2026-08-31; Checkpoint 2 is closed.
 The exact official-serialization failure remains preserved.
 
 **Supersedes:**
@@ -134,7 +135,7 @@ reopened. At most one phase may be `IN PROGRESS`.
 | Checkpoint 1 | `COMPLETE` | Phase 3 complete | User approval or explicit loop-back |
 | 4. Fidelity assessment | `COMPLETE` | Checkpoint 1 approved | Claim-to-code-to-data trace, corrected route, and quarantine list |
 | 5. Exact-data anchor | `COMPLETE` | Fidelity passes | Job 384390 completed once; immutable attempt seed_20260824_2f483335536c saved; independent audit pending |
-| 6. Initial numerical finding | `PENDING` | Anchor inspected | Bounded complete-pattern comparison |
+| 6. Initial numerical finding | `IN PROGRESS` | User approved inspection of the sole completed anchor | Bounded complete-pattern comparison after independent artifact audit |
 | Checkpoint 2 | `PENDING` | Trusted initial finding | Promote `N`, `M`, `A`, or stop |
 | 7N. Numerical depth | `PENDING` | Material numerical question promoted | Finite branch/repetition assessment |
 | 7M. Mechanism program | `PENDING` | Source causal claim promoted | Supported/contradicted/unidentified causal links |
@@ -347,6 +348,22 @@ reported pattern, and is the entire measuring chain trustworthy?
 
 A bounded initial numerical finding is recorded without claiming statistical
 finality, mechanism failure, attainability, intent, or universal impossibility.
+
+### 2026-08-31 artifact-audit scope
+
+The user approved Phase 6 for `CR-ISET-FCSAE-01`, Table III ISET FC-SAE,
+seed `20260824`, `P+I/N`, immutable attempt `seed_20260824_2f483335536c`.
+The question is whether the recorded numerical gap survives an independent
+check of the measuring chain. Competing audit outcomes are a preserved defect
+requiring a source/code loop-back, or matching provenance/arrays/metrics that
+permit the bounded initial numerical finding. Run the frozen fail-closed audit
+from eligible commit `a88d17477ad96b01ffa44a50d8ce051dd8d2b5ca`, then inspect
+finite values, sample identities, stopping history, and fresh-load weight/score
+agreement without training, tuning, or changing thresholds. A short CPU
+allocation (4 cores, 16 GiB, at most 20 minutes) may perform these checks; no
+new scientific model attempt is authorized. Preserve audit output beside the
+attempt and copy small provenance/result/audit records into the study. Stop at
+Checkpoint 2 after recording the complete target comparison and limitations.
 
 ## CHECKPOINT 2 — Promotion after the anchor
 
