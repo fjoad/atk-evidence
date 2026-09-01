@@ -14,6 +14,14 @@ and 10,980 seconds of fitting followed by full scoring. No H200/A100,
 multi-GPU, retry, or longer fit. See `PAPER_TIME_BUDGET_CONTRACT.md` and
 `docs/plans/2026-09-01-paper-time-budget.md`.
 
+**Live execution:** the frozen paper-time runner was committed as `46f0ddd`
+after 261 tests and strict data verification. Panther Slurm job `385632`
+started 2026-09-01 15:20:59 Asia/Qatar on one V100-16GB. Its initial
+configuration artifact matches the frozen commit, data cardinalities, source
+hashes, batch 32, seed 20260824, and 10,980-second fit budget; training entered
+epoch 1. Do not submit a retry. After completion, transfer and audit the
+artifacts and discuss the result before any website change.
+
 **Superseded hardware-promotion result:** after discussing what would make a
 result highly implausible versus fabricated, the user authorized the proposed
 prospective LSTM-SAE gate, cost check, and one full anchor if affordable. The

@@ -30,8 +30,11 @@ inside that envelope.
    timing, memory, all seven printed-cutoff metrics, both score directions, and
    the complete fixed-score threshold envelope.
 5. **In progress:** the frozen runner passed 261 repository tests and strict
-   data verification. Commit and sync the frozen attempt, run it once, then
-   transfer and audit every artifact.
+   data verification, was committed as `46f0ddd`, and was synchronized to a
+   clean Panther checkout. The single authorized execution is Slurm job
+   `385632`, started 2026-09-01 15:20:59 Asia/Qatar on one V100-16GB. Its
+   configuration artifact passed the initial identity audit and training
+   entered epoch 1. Transfer and audit every artifact after completion.
 6. **Pending:** update the current website, README, status, context, evidence
    register, and explanation register. Publish only claims earned by the run.
 7. **Pending:** stop for discussion. Do not add a GPU, seed, model, table, or

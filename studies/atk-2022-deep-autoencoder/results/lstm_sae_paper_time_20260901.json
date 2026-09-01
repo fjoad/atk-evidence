@@ -1,5 +1,5 @@
 {
-  "status": "frozen_pending_execution",
+  "status": "executing",
   "date": "2026-09-01",
   "contract": "lstm-sae-paper-time-v1",
   "evidence_scope": "time_bounded_N_and_A_for_one_declared_completion",
@@ -67,5 +67,14 @@
     "run_experiment_sha256": "5443060ee7fefeeaf37a687371652325303230c371eaa2c8d8c423eb1865436f",
     "remaining_models_sha256": "d0d9c42f3b7c846f6f6f1b579fb9fa3b114e3b523fda84dc86754e57c78cb35d"
   },
-  "next_decision": "commit_sync_and_run_exactly_once"
+  "execution": {
+    "frozen_commit": "46f0ddd3ab99f4117c644b40f959193593bb063a",
+    "slurm_job_id": "385632",
+    "started_at": "2026-09-01T15:20:59+03:00",
+    "node": "crimv3mgpu005",
+    "gpu_allocation": "one v100_16GB",
+    "attempt_id": "b92c9fa92866",
+    "initial_audit": "configuration_identity_passed_and_epoch_1_entered"
+  },
+  "next_decision": "wait_transfer_audit_then_discuss_before_publication"
 }

@@ -11,6 +11,14 @@ which supersedes the hardware-promotion plan and remains a continuation within
 
 ## Current project state
 
+- **The single paper-time execution is running:** frozen commit `46f0ddd` is
+  executing as Panther Slurm job `385632`, which started 2026-09-01 15:20:59
+  Asia/Qatar on exactly one V100-16GB. The configuration artifact records the
+  expected 1,500,523 fit rows, 8,884,989 score rows, batch 32, seed 20260824,
+  source hashes, and 10,980-second fit limit. Training entered epoch 1. No
+  retry is authorized. The fitting clock should end at approximately 18:24;
+  full scoring and the fixed-score threshold audit follow outside that clock.
+
 - **Paper-time LSTM-SAE run is frozen on one contemporaneous GPU:** the
   user rejected faster or additional hardware as a rescue. Table IV reports
   183 minutes for full-ISET LSTM-SAE training, but the paper omits hardware,
@@ -654,10 +662,9 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Commit and synchronize the locally verified single-V100, 183-minute
-   time-bounded LSTM-SAE runner, then execute it exactly once.
-2. No second GPU, newer GPU, retry, seed, or longer fit is allowed.
-3. Transfer and audit the full scores, then stop to discuss the finding before
+1. Let Panther Slurm job `385632` complete without intervention. No second GPU,
+   newer GPU, retry, seed, or longer fit is allowed.
+2. Transfer and audit the full scores, then stop to discuss the finding before
    updating the public report. No other model or experiment is approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
