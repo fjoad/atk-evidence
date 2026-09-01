@@ -13,7 +13,8 @@ Historical breadth remains exploratory/quarantined. Publication commit
 `b1973d9` is live through successful Pages run `33448349593`; all 11 deployed
 files match local bytes. The bundle passed 235 deterministic tests, data
 identity selected the verified ScienceDB branch, and all five PDF pages were
-visually inspected. Phase A is complete; Phase B is next.
+visually inspected. Phase A and the Phase-B checkpoint are complete; Phase C's
+feasibility instrument is in local verification.
 
 **Phase-B checkpoint, 2026-09-01:** the direct-paper reconstruction is saved in
 `studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md`. The paper fixes
@@ -23,10 +24,21 @@ loop. Proposed primary choices are first-step latent then zeros/top-state-only
 for LSTM-SAE/VAE; Equation-(10) sum-squared plus KL with ten-draw probability
 kernels for VAE; and autoregressive, concatenated additive attention for AEA.
 Batch remains 32. First wave: four two-hour cluster feasibility jobs, eight
-GPU-hours maximum; each passing full anchor has a 72-hour cap. No job or code
-change has begun. Panther has no queued user jobs and still holds the audited
-7.1-GiB cache and sole FC-SAE result. Await the five explicit Section-12
-checkpoint decisions before implementation/submission.
+GPU-hours maximum; each passing full anchor has a 72-hour cap. The user accepted
+all five checkpoint choices on 2026-09-01. The pilot implementation is isolated
+in `reproduction/remaining_models.py`; do not edit the historical
+`reproduction/models.py`, whose SHA-256 is bound into the Sigmoid-fit evidence.
+The exact pilot uses the first 32,768 entries of `table_iv_order.npy` and 12,119
+test rows: 1,024 source days with all seven benign/attack identities plus 4,951
+synthetic benign rows. Each job must use the pilot-only two-hour `gpu-short`
+wrapper, batch 32, two epochs, exact save/reload, two safe scoring partitions,
+and the recorded 72-hour projection/memory gates. The VAE pilot scores MC10 on
+all 12,119 rows and exercises MC1/10/100 on 256 interface rows; the primary
+full anchor must still perform the contract's 12,119-row MC stability check.
+All 243 deterministic tests pass (140 study, 103 root), the historical model
+source hash remains exact, and strict data verification selects the complete
+ScienceDB semantic-equivalence branch. No pilot has run yet; commit before
+Panther sync.
 
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see

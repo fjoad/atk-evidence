@@ -27,7 +27,7 @@ root/public), strict data verification selected the verified ScienceDB branch,
 all five PDF pages were rendered and inspected, Pages run `33448349593`
 succeeded, and all 11 deployed files matched the reviewed local bytes.
 
-## B. Exact remaining-paper contract - checkpoint ready
+## B. Exact remaining-paper contract - complete
 
 Return to the frozen complete-paper source map. Reconcile Table-I definitions,
 Tables II-V targets, every non-executable instruction, and the quarantined
@@ -59,16 +59,29 @@ decoder, VAE-score, and attention failures. Panther is reachable, the audited
 queued, and the accessible general partitions remain available. The first
 requested execution wave is four separate two-hour feasibility jobs (eight
 GPU-hours maximum); passing models then receive one immutable full anchor each,
-at no more than 72 GPU-hours per model. Await the five decisions in Section 12
-before changing code or submitting the feasibility wave.
+at no more than 72 GPU-hours per model. The user accepted all five decisions in
+Section 12 on 2026-09-01.
 
-## C. Clean-reader Table III proposed-family depth - pending checkpoint
+## C. Clean-reader Table III proposed-family depth - feasibility instrument in progress
 
 After the checkpoint, run cheap checks and then one watched eligible anchor for
 each of LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA on the same audited data path as
 FC-SAE. Preserve every failure. Audit all artifacts and compare all seven
 metrics plus the reported family ordering. Add seeds only where the first run
 leaves material stochastic uncertainty and the frozen plan promotes them.
+
+The four-model implementation and pilot-only Slurm wrapper are now written.
+The old `reproduction/models.py` remains byte-identical because completed
+Sigmoid evidence records its source hash; new approved completions live in
+`reproduction/remaining_models.py`. Before submission, the complete regression
+suite must pass, the code must be committed and pushed, and Panther must be at
+that exact clean commit. The first execution remains exactly four capped
+operational pilots, not full anchors.
+
+Local verification is complete: 140 study tests and 103 root/public tests pass,
+the strict data verifier selects the complete ScienceDB semantic-equivalence
+branch, and the historical source hash guard passes. Commit/push and exact
+Panther synchronization remain before submission.
 
 ## D. Mechanism program - pending Table III anchors
 

@@ -9,7 +9,26 @@
 
 ## Current project state
 
-- **Full-site publication complete; remaining-paper contract next:** the user
+- **Four-model feasibility instrument in local verification:** the user accepted
+  all five choices in the remaining-paper checkpoint on 2026-09-01. The new
+  `remaining-paper-v1` implementation is isolated in
+  `reproduction/remaining_models.py`, so the earlier Sigmoid result's recorded
+  `models.py` SHA-256 remains valid. The four approved models build with frozen
+  parameter counts, take finite local fixture updates, preserve the summed
+  Equation-(10) objective without a duplicate KL term, and produce
+  batch-partition-invariant deterministic-draw VAE scores. The fail-closed
+  runner selects 32,768 entries from the frozen training order and 12,119
+  held-out rows containing 1,024 source days with all six attack siblings plus
+  4,951 synthetic benign rows. It caps fitting at 5,400 seconds inside each
+  two-hour allocation, checks exact save/reload, two safe inference batches,
+  finite artifacts, parameter counts, peak CPU/GPU memory, and a conservative
+  10/100-epoch projection. All 243 deterministic tests pass (140 study, 103
+  root), including historical-source hash guards, and the strict verifier
+  selects the complete ScienceDB semantic-equivalence branch. No pilot or paper
+  result has run yet. Freeze and push the implementation commit, then submit
+  exactly four `gpu-short` jobs through the pilot-only wrapper.
+
+- **Full-site publication complete:** the user
   requested publishing the two completed Sigmoid follow-ups across the full
   site first, then completing the remaining proposed models, mechanism tests,
   and Tables II-V. Follow the new active plan above. No experiment runs during
@@ -21,7 +40,7 @@
   table contracts, cost them, and pass the plan's scientific checkpoint; do
   not upgrade quarantined historical breadth to eligible evidence.
 
-- **Remaining-paper scientific checkpoint ready:** the exact proposed model,
+- **Remaining-paper scientific checkpoint approved:** the exact proposed model,
   score, feasibility, mechanism, Tables IV/V, and Table-II sequence is saved in
   [`REMAINING_PAPER_CONTRACT.md`](../studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md).
   The source fixes widths, optimizers, dropout, activations, and cutoffs but
@@ -31,8 +50,8 @@
   audited 7.1-GiB prepared cache and sole FC-SAE result remain present. Proposed
   first execution is four at-most-two-hour feasibility jobs (eight GPU-hours
   maximum), followed only for passing models by one at-most-72-hour full anchor
-  each. No code change or job has started; resolve Section 12's five checkpoint
-  decisions first.
+  each. The user accepted Section 12's five decisions without modification on
+  2026-09-01. The implementation freeze described above is now the active step.
 
 - **Small fitted Sigmoid check complete and approved for publication:** the user
   requested testing the remaining alternative. See

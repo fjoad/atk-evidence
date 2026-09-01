@@ -2,9 +2,9 @@
 
 **Drafted:** 2026-09-01
 
-**Status:** exact scientific checkpoint; no experiment in this document has
-run. Freeze code and execute only after the choices and budgets in Section 12
-are accepted without outcome-dependent changes.
+**Status:** checkpoint approved and implementation locally verified on
+2026-09-01; commit freeze pending; no experiment in this document has run. Do
+not make outcome-dependent changes.
 
 **Evidence questions:** numerical reproduction (`N`), mechanism (`M`), and
 attainability (`A`) remain separate.
@@ -234,6 +234,43 @@ Therefore no honest remaining-model ETA exists until the pilots. Pilot exposure
 is at most eight GPU-hours; the absolute four-anchor ceiling is 288 GPU-hours,
 and the promotion gate should make the realized cost substantially smaller.
 
+### 6.1 Frozen pilot instrument details
+
+These operational details were fixed after the scientific checkpoint and
+before any pilot outcome:
+
+- preserve the historical `reproduction/models.py` byte-for-byte because a
+  completed Sigmoid result is cryptographically bound to it; place the approved
+  additions in `reproduction/remaining_models.py`;
+- take the first 32,768 entries of the already seeded
+  `table_iv_order.npy` as the nested fit subset;
+- derive separate reproducible streams from root seed `20260824` for model
+  initialization, training latent draws, epoch shuffling, and scoring draws;
+- use a separate deterministic seed stream to choose 1,024 held-out source
+  days, retain the benign row and all six attack siblings for each, and add
+  4,951 sampled synthetic-benign rows from the ADASYN tail, for exactly 12,119
+  scoring rows;
+- reserve the final 30 minutes of each two-hour allocation for reload and
+  scoring by stopping fitting unsuccessfully at 5,400 seconds if two epochs
+  have not completed;
+- for VAE pilots, calculate the primary MC10 score family on all 12,119 rows
+  and exercise MC1/10/100 on the first 256 selected rows as an interface check;
+  the full primary fit still owes the 12,119-row MC1/10/100 stability analysis
+  required by Section 5;
+- stop after finding the first two memory-safe inference batches in descending
+  order from 256, 128, 64, and 32, requiring all saved scores to agree within
+  `1e-6`; and
+- project the full fit from the slower of the two pilot epochs, scale by the
+  exact step count, add primary scoring scaled by rows, and multiply the total
+  by 1.5. Both peak resident RAM and peak allocated/reserved GPU memory must be
+  no more than 75% of their allocations.
+
+Every pilot hashes the prepared inputs and three implementation sources, saves
+its exact selection, weights, score vectors, configuration, environment,
+timings, projections, and gate decisions, and is labeled operational `X`, not
+numerical evidence. The wrapper accepts only the four approved model names and
+an exact expected clean Git commit; it contains no full-anchor command.
+
 ## 7. Table III order and seed promotion
 
 After all feasible primary anchors are audited, compare the complete rows and
@@ -406,3 +443,6 @@ The checkpoint decisions are:
 
 Any changed decision creates a new dated contract before code is frozen. It
 does not edit this document after an outcome.
+
+All five decisions were accepted without modification by the user on
+2026-09-01.

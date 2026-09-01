@@ -26,6 +26,13 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.svm import OneClassSVM, SVC
 
 from models import SPECS, build_model, layer_inventory
+from remaining_models import (
+    REMAINING_MODELS,
+    REMAINING_PAPER_CONTRACT,
+    REMAINING_PARAMETER_COUNTS,
+    RemainingPaperBundle,
+    build_remaining_paper_model,
+)
 
 
 REPO = Path(__file__).resolve().parents[3]
@@ -39,6 +46,17 @@ DEFAULT_RESULTS = (
 )
 CLEAN_READER_CONTRACT = "clean-reader-v1"
 CLEAN_READER_SEED = 20260824
+REMAINING_FEASIBILITY_CONTRACT = "remaining-paper-feasibility-v1"
+PILOT_TRAIN_ROWS = 32_768
+PILOT_SOURCE_DAYS = 1_024
+PILOT_SYNTHETIC_ROWS = 4_951
+PILOT_SCORE_ROWS = 12_119
+PILOT_EPOCHS = 2
+PILOT_BATCH_SIZE = 32
+PILOT_SCORE_BATCHES = (256, 128, 64, 32)
+PILOT_PROJECTION_SAFETY_FACTOR = 1.5
+PILOT_FULL_HOUR_LIMIT = 72.0
+PILOT_FIT_SECONDS_LIMIT = 5_400.0
 REPORTED = {
     "fc_sae": {"DR": 81, "FA": 15, "SP": 85, "PR": 81, "ACC": 83, "F1": 81, "AUC": 81},
     "lstm_sae": {"DR": 85, "FA": 13, "SP": 87, "PR": 85, "ACC": 86, "F1": 85, "AUC": 82},
@@ -396,6 +414,844 @@ def clean_reader_contract_errors(
             f"{metadata.get('method')!r}"
         )
     return errors
+
+
+def remaining_pilot_contract_errors(
+    args: argparse.Namespace, metadata: dict[str, object]
+) -> list[str]:
+    """Return every mismatch against the approved four-model pilot wave."""
+
+    expected_args = {
+        "seed": CLEAN_READER_SEED,
+        "epochs": PILOT_EPOCHS,
+        "minimum_epochs": PILOT_EPOCHS,
+        "batch_size": PILOT_BATCH_SIZE,
+        "score_batch": PILOT_SCORE_BATCHES[0],
+        "patience": 5,
+        "min_delta": 1e-6,
+        "output_activation": "paper",
+        "train_fraction": "full",
+        "test_view": "adasyn",
+        "table_v": False,
+    }
+    errors = [
+        f"argument {name}: expected {expected!r}, observed {getattr(args, name)!r}"
+        for name, expected in expected_args.items()
+        if getattr(args, name) != expected
+    ]
+    if args.model not in REMAINING_MODELS:
+        errors.append(
+            f"argument model: expected one of {REMAINING_MODELS!r}, "
+            f"observed {args.model!r}"
+        )
+    if args.model in REMAINING_MODELS:
+        expected_rate = 0.01 if SPECS[args.model].optimizer == "SGD" else 0.001
+        if args.learning_rate not in (None, expected_rate):
+            errors.append(
+                f"argument learning_rate: expected {expected_rate} or None, "
+                f"observed {args.learning_rate!r}"
+            )
+    expected_data = {
+        "contract": CLEAN_READER_CONTRACT,
+        "mode": "full",
+        "seed": CLEAN_READER_SEED,
+        "test_adasyn": "printed",
+        "adasyn_neighbors": 5,
+        "source_branch": "sciencedb-csv-semantic-equivalence-v1",
+        "attack_3_completion": "duration_first_in_day",
+        "malicious_test_population": "b2",
+        "expensive_adasyn_acknowledged": True,
+    }
+    observed_data = metadata.get("configuration", {})
+    errors.extend(
+        f"data {name}: expected {expected!r}, observed {observed_data.get(name)!r}"
+        for name, expected in expected_data.items()
+        if observed_data.get(name) != expected
+    )
+    if str(metadata.get("method")) != "CR-ISET-FCSAE-01-DATA":
+        errors.append(
+            "data method: expected 'CR-ISET-FCSAE-01-DATA', observed "
+            f"{metadata.get('method')!r}"
+        )
+    return errors
+
+
+def remaining_pilot_selection(
+    train_order: np.ndarray,
+    *,
+    test_rows: int,
+    original_group_rows: int,
+    seed: int,
+) -> dict[str, np.ndarray]:
+    """Select the frozen nested fit rows and dependency-preserving score rows."""
+
+    if train_order.size < PILOT_TRAIN_ROWS:
+        raise ValueError("training order is smaller than the pilot fit allocation")
+    original_rows = 7 * original_group_rows
+    if test_rows < original_rows + PILOT_SYNTHETIC_ROWS:
+        raise ValueError("test population is smaller than the pilot score allocation")
+    fit = np.asarray(train_order[:PILOT_TRAIN_ROWS], dtype=np.int64)
+    rng = np.random.default_rng(np.random.SeedSequence([seed, 0xF3A51B]))
+    source_days = np.sort(
+        rng.choice(original_group_rows, PILOT_SOURCE_DAYS, replace=False)
+    ).astype(np.int64)
+    original = np.concatenate(
+        [source_days + group * original_group_rows for group in range(7)]
+    )
+    synthetic = np.sort(
+        rng.choice(
+            test_rows - original_rows,
+            PILOT_SYNTHETIC_ROWS,
+            replace=False,
+        )
+    ).astype(np.int64) + original_rows
+    score = np.concatenate((original, synthetic))
+    if fit.size != PILOT_TRAIN_ROWS or score.size != PILOT_SCORE_ROWS:
+        raise AssertionError("pilot selection count drifted")
+    return {"fit": fit, "source_days": source_days, "score": score}
+
+
+def verify_remaining_pilot_identities(
+    selection: dict[str, np.ndarray],
+    *,
+    labels: np.ndarray,
+    attacks: np.ndarray,
+    sources: np.ndarray,
+    original_group_rows: int,
+) -> None:
+    """Fail if the held-out slice loses a source day or any attack sibling."""
+
+    score = selection["score"]
+    selected_labels = np.asarray(labels[score])
+    selected_attacks = np.asarray(attacks[score])
+    selected_sources = np.asarray(sources[score])
+    original_count = 7 * PILOT_SOURCE_DAYS
+    expected_labels = np.concatenate(
+        (
+            np.zeros(PILOT_SOURCE_DAYS, dtype=np.int8),
+            np.ones(6 * PILOT_SOURCE_DAYS, dtype=np.int8),
+        )
+    )
+    expected_attacks = np.repeat(np.arange(7), PILOT_SOURCE_DAYS)
+    if not np.array_equal(selected_labels[:original_count], expected_labels):
+        raise AssertionError("original pilot labels do not preserve seven groups")
+    if not np.array_equal(selected_attacks[:original_count], expected_attacks):
+        raise AssertionError("original pilot attack identities do not preserve groups")
+    source_matrix = selected_sources[:original_count].reshape(7, PILOT_SOURCE_DAYS)
+    if not all(np.array_equal(source_matrix[0], row) for row in source_matrix[1:]):
+        raise AssertionError("attack siblings do not share the same source rows")
+    if np.any(score[:original_count] >= 7 * original_group_rows):
+        raise AssertionError("original pilot rows leaked into the synthetic tail")
+    if np.any(score[original_count:] < 7 * original_group_rows):
+        raise AssertionError("synthetic pilot rows leaked into the original groups")
+    if not np.all(selected_labels[original_count:] == 0):
+        raise AssertionError("synthetic pilot rows must retain their benign ADASYN label")
+    if not np.all(selected_attacks[original_count:] == -1):
+        raise AssertionError("synthetic pilot attack identities must remain -1")
+    if not np.all(selected_sources[original_count:] == -1):
+        raise AssertionError("synthetic pilot source identities must remain -1")
+
+
+def weight_digest(model: keras.Model) -> str:
+    digest = hashlib.sha256()
+    for weight in model.get_weights():
+        array = np.asarray(weight)
+        digest.update(str((array.shape, str(array.dtype))).encode())
+        digest.update(array.tobytes())
+    return digest.hexdigest()
+
+
+def remaining_pilot_seed_streams(seed: int) -> dict[str, int]:
+    """Return stable, visibly distinct streams for every stochastic role."""
+
+    sequence = np.random.SeedSequence([seed, 0x51EA4])
+    names = ("initialization", "latent_training", "shuffle", "scoring")
+    children = sequence.spawn(len(names))
+    return {
+        name: int(child.generate_state(1, dtype=np.uint32)[0])
+        for name, child in zip(names, children, strict=True)
+    }
+
+
+def _predict_reconstruction(
+    bundle: RemainingPaperBundle,
+    values: np.ndarray,
+    *,
+    batch_size: int,
+) -> tuple[np.ndarray, dict[str, np.ndarray] | None]:
+    """Return deterministic latent-mean reconstruction and VAE statistics."""
+
+    reconstruction = np.empty(values.shape, dtype=np.float32)
+    vae = bundle.name.endswith("_vae")
+    statistics: dict[str, np.ndarray] | None = None
+    if vae:
+        assert bundle.encoder is not None and bundle.decoder is not None
+        latent_width = SPECS[bundle.name].encoder[-1]
+        statistics = {
+            "mean": np.empty((values.shape[0], latent_width), dtype=np.float32),
+            "log_variance": np.empty(
+                (values.shape[0], latent_width), dtype=np.float32
+            ),
+        }
+        if bundle.name == "lstm_vae":
+            statistics["hidden"] = np.empty(
+                (values.shape[0], latent_width), dtype=np.float32
+            )
+            statistics["cell"] = np.empty(
+                (values.shape[0], latent_width), dtype=np.float32
+            )
+    for start in range(0, values.shape[0], batch_size):
+        stop = min(start + batch_size, values.shape[0])
+        batch = np.asarray(values[start:stop], dtype=np.float32)
+        with torch.no_grad():
+            if not vae:
+                decoded = bundle.model(batch, training=False)
+            else:
+                assert statistics is not None
+                encoded = bundle.encoder(batch, training=False)
+                if not isinstance(encoded, (tuple, list)):
+                    raise AssertionError("VAE encoder must expose mean and log variance")
+                arrays = [keras.ops.convert_to_numpy(item) for item in encoded]
+                statistics["mean"][start:stop] = arrays[0]
+                statistics["log_variance"][start:stop] = arrays[1]
+                if bundle.name == "lstm_vae":
+                    statistics["hidden"][start:stop] = arrays[2]
+                    statistics["cell"][start:stop] = arrays[3]
+                    decoded = bundle.decoder(
+                        (arrays[0], arrays[2], arrays[3]), training=False
+                    )
+                else:
+                    decoded = bundle.decoder(arrays[0], training=False)
+        reconstruction[start:stop] = keras.ops.convert_to_numpy(decoded)
+    if not np.isfinite(reconstruction).all():
+        raise FloatingPointError("nonfinite deterministic reconstruction")
+    return reconstruction, statistics
+
+
+def score_remaining_bundle(
+    bundle: RemainingPaperBundle,
+    values: np.ndarray,
+    *,
+    batch_size: int,
+    monte_carlo_samples: int = 10,
+    scoring_seed: int = CLEAN_READER_SEED,
+) -> tuple[dict[str, np.ndarray], float]:
+    """Score one pilot with batch-invariant deterministic latent draws."""
+
+    started = time.perf_counter()
+    reconstruction, statistics = _predict_reconstruction(
+        bundle, values, batch_size=batch_size
+    )
+    residual = values.astype(np.float64) - reconstruction.astype(np.float64)
+    mse = np.mean(np.square(residual), axis=1)
+    scores: dict[str, np.ndarray] = {"deterministic_mse": mse}
+    if statistics is None:
+        scores["primary"] = mse
+        return scores, time.perf_counter() - started
+
+    mean = statistics["mean"]
+    log_variance = statistics["log_variance"]
+    kl = -0.5 * np.sum(
+        1.0 + log_variance - np.square(mean) - np.exp(log_variance), axis=1
+    )
+    scores["deterministic_mse_plus_kl"] = mse + kl
+    kernel_mean = np.zeros(values.shape[0], dtype=np.float64)
+    kernel_sum = np.zeros(values.shape[0], dtype=np.float64)
+    assert bundle.decoder is not None
+    for draw in range(monte_carlo_samples):
+        rng = np.random.default_rng(
+            np.random.SeedSequence([scoring_seed, draw, 0x5C0A3])
+        )
+        epsilon = rng.standard_normal(mean.shape, dtype=np.float32)
+        sampled = mean + np.exp(0.5 * log_variance) * epsilon
+        for start in range(0, values.shape[0], batch_size):
+            stop = min(start + batch_size, values.shape[0])
+            with torch.no_grad():
+                if bundle.name == "lstm_vae":
+                    decoded = bundle.decoder(
+                        (
+                            sampled[start:stop],
+                            statistics["hidden"][start:stop],
+                            statistics["cell"][start:stop],
+                        ),
+                        training=False,
+                    )
+                else:
+                    decoded = bundle.decoder(sampled[start:stop], training=False)
+            decoded_array = keras.ops.convert_to_numpy(decoded).astype(np.float64)
+            squared = np.square(
+                values[start:stop].astype(np.float64) - decoded_array
+            )
+            kernel_mean[start:stop] += np.exp(-0.5 * np.mean(squared, axis=1))
+            kernel_sum[start:stop] += np.exp(-0.5 * np.sum(squared, axis=1))
+    scores["kernel_mean"] = kernel_mean / monte_carlo_samples
+    scores["kernel_sum"] = kernel_sum / monte_carlo_samples
+    scores["primary"] = scores["kernel_mean"]
+    if not all(np.isfinite(value).all() for value in scores.values()):
+        raise FloatingPointError("nonfinite pilot score")
+    return scores, time.perf_counter() - started
+
+
+class FeasibilityTrace(keras.callbacks.Callback):
+    """Record finite updates and leave scoring time before the Slurm ceiling."""
+
+    def __init__(self, fit_seconds_limit: float = PILOT_FIT_SECONDS_LIMIT) -> None:
+        super().__init__()
+        self.fit_seconds_limit = float(fit_seconds_limit)
+        self.epochs: list[dict[str, float | int]] = []
+        self.batch_seconds: list[float] = []
+        self.budget_stopped = False
+
+    def on_train_begin(self, logs: dict[str, float] | None = None) -> None:
+        del logs
+        self.fit_started = time.perf_counter()
+        self.epoch_started = self.fit_started
+
+    def on_epoch_begin(
+        self, epoch: int, logs: dict[str, float] | None = None
+    ) -> None:
+        del epoch, logs
+        self.epoch_started = time.perf_counter()
+
+    def on_train_batch_begin(
+        self, batch: int, logs: dict[str, float] | None = None
+    ) -> None:
+        del batch, logs
+        self.batch_started = time.perf_counter()
+
+    def on_train_batch_end(
+        self, batch: int, logs: dict[str, float] | None = None
+    ) -> None:
+        del batch
+        self.batch_seconds.append(time.perf_counter() - self.batch_started)
+        loss = None if logs is None else logs.get("loss")
+        if loss is None or not np.isfinite(float(loss)):
+            raise FloatingPointError("pilot produced a nonfinite training objective")
+        if time.perf_counter() - self.fit_started >= self.fit_seconds_limit:
+            self.budget_stopped = True
+            self.model.stop_training = True
+
+    def on_epoch_end(
+        self, epoch: int, logs: dict[str, float] | None = None
+    ) -> None:
+        values = {} if logs is None else {
+            key: float(value) for key, value in logs.items()
+        }
+        if not values or not all(np.isfinite(value) for value in values.values()):
+            raise FloatingPointError("pilot produced a nonfinite epoch objective")
+        self.epochs.append(
+            {
+                "epoch": epoch + 1,
+                "seconds": time.perf_counter() - self.epoch_started,
+                **values,
+            }
+        )
+
+
+def _memory_snapshot() -> dict[str, float | int | None]:
+    rss_raw = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    rss_bytes = int(rss_raw if platform.system() == "Darwin" else rss_raw * 1024)
+    if torch.cuda.is_available():
+        gpu_peak = int(torch.cuda.max_memory_allocated())
+        gpu_reserved = int(torch.cuda.max_memory_reserved())
+        gpu_total = int(torch.cuda.get_device_properties(0).total_memory)
+    else:
+        gpu_peak = None
+        gpu_reserved = None
+        gpu_total = None
+    return {
+        "peak_rss_bytes": rss_bytes,
+        "allocated_ram_bytes": 96 * 1024**3,
+        "peak_rss_fraction": rss_bytes / (96 * 1024**3),
+        "peak_gpu_allocated_bytes": gpu_peak,
+        "peak_gpu_reserved_bytes": gpu_reserved,
+        "visible_gpu_total_bytes": gpu_total,
+        "peak_gpu_fraction": (
+            None if gpu_peak is None or gpu_total is None else gpu_peak / gpu_total
+        ),
+        "peak_gpu_reserved_fraction": (
+            None
+            if gpu_reserved is None or gpu_total is None
+            else gpu_reserved / gpu_total
+        ),
+    }
+
+
+def _pilot_runtime_errors() -> list[str]:
+    errors: list[str] = []
+    if not os.environ.get("SLURM_JOB_ID"):
+        errors.append("remaining pilots must run inside Slurm")
+    if os.environ.get("SLURM_JOB_PARTITION") != "gpu-short":
+        errors.append(
+            "remaining pilots require SLURM_JOB_PARTITION='gpu-short'"
+        )
+    if not torch.cuda.is_available():
+        errors.append("remaining pilots require one visible CUDA GPU")
+    elif torch.cuda.device_count() != 1:
+        errors.append(
+            f"remaining pilots require exactly one visible GPU, observed {torch.cuda.device_count()}"
+        )
+    if os.environ.get("SLURM_CPUS_PER_TASK") != "16":
+        errors.append("remaining pilots require SLURM_CPUS_PER_TASK=16")
+    if os.environ.get("SLURM_MEM_PER_NODE") != "98304":
+        errors.append("remaining pilots require SLURM_MEM_PER_NODE=98304 MiB")
+    return errors
+
+
+def configure_remaining_pilot_determinism() -> dict[str, object]:
+    """Require deterministic CUDA operations rather than accepting warnings."""
+
+    torch.use_deterministic_algorithms(True, warn_only=False)
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.deterministic = True
+    return {
+        "torch_deterministic_algorithms": (
+            torch.are_deterministic_algorithms_enabled()
+        ),
+        "torch_deterministic_warn_only": False,
+        "cudnn_benchmark": torch.backends.cudnn.benchmark,
+        "cudnn_deterministic": torch.backends.cudnn.deterministic,
+        "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
+    }
+
+
+def run_remaining_pilot(
+    args: argparse.Namespace,
+    *,
+    metadata: dict[str, object],
+    metadata_path: Path,
+) -> int:
+    """Execute one immutable operational pilot; never a paper result."""
+
+    reproduction_dir = Path(__file__).resolve().parent
+    runtime_errors = _pilot_runtime_errors()
+    if runtime_errors:
+        raise RuntimeError(
+            "remaining-paper feasibility runtime mismatch:\n- "
+            + "\n- ".join(runtime_errors)
+        )
+    expected_shapes = {
+        "x_train.npy": (1_500_523, 48),
+        "x_test.npy": (8_884_989, 48),
+        "y_test.npy": (8_884_989,),
+        "table_iv_order.npy": (1_500_523,),
+        "test_attack_id.npy": (8_884_989,),
+        "test_source_row.npy": (8_884_989,),
+    }
+    metadata_files = metadata.get("files", {})
+    input_sha256: dict[str, str] = {}
+    for name in expected_shapes:
+        entry = metadata_files.get(name)
+        expected_sha = (
+            entry.get("sha256") if isinstance(entry, dict) else entry
+        )
+        if not isinstance(expected_sha, str) or len(expected_sha) != 64:
+            raise ValueError(f"prepared metadata omits the checksum for {name}")
+        observed_sha = sha256(args.data / name)
+        if observed_sha != expected_sha:
+            raise ValueError(
+                f"pilot data checksum drifted for {name}: {observed_sha}"
+            )
+        input_sha256[name] = observed_sha
+    arrays = {
+        name: np.load(args.data / name, mmap_mode="r") for name in expected_shapes
+    }
+    for name, expected in expected_shapes.items():
+        if arrays[name].shape != expected:
+            raise ValueError(
+                f"pilot data {name} shape drifted: {arrays[name].shape}"
+            )
+    selection = remaining_pilot_selection(
+        arrays["table_iv_order.npy"],
+        test_rows=arrays["x_test.npy"].shape[0],
+        original_group_rows=750_767,
+        seed=args.seed,
+    )
+    verify_remaining_pilot_identities(
+        selection,
+        labels=arrays["y_test.npy"],
+        attacks=arrays["test_attack_id.npy"],
+        sources=arrays["test_source_row.npy"],
+        original_group_rows=750_767,
+    )
+    configuration: dict[str, object] = {
+        "contract": REMAINING_FEASIBILITY_CONTRACT,
+        "architecture_contract": REMAINING_PAPER_CONTRACT,
+        "eligibility": "operational_X_not_numerical_evidence",
+        "model": args.model,
+        "seed": args.seed,
+        "seed_streams": remaining_pilot_seed_streams(args.seed),
+        "fit_rows": PILOT_TRAIN_ROWS,
+        "score_rows": PILOT_SCORE_ROWS,
+        "source_days_with_all_attack_siblings": PILOT_SOURCE_DAYS,
+        "synthetic_score_rows": PILOT_SYNTHETIC_ROWS,
+        "epochs": PILOT_EPOCHS,
+        "batch_size": PILOT_BATCH_SIZE,
+        "score_batch_candidates": list(PILOT_SCORE_BATCHES),
+        "fit_seconds_limit": PILOT_FIT_SECONDS_LIMIT,
+        "projection_safety_factor": PILOT_PROJECTION_SAFETY_FACTOR,
+        "full_hour_limit": PILOT_FULL_HOUR_LIMIT,
+        "learning_rate": (
+            0.01 if SPECS[args.model].optimizer == "SGD" else 0.001
+        ),
+        "decoder_completion": (
+            "latent_step_1_zeros_steps_2_48_top_encoder_state_first_decoder_only"
+            if args.model in {"lstm_sae", "lstm_vae"}
+            else None
+        ),
+        "attention_completion": (
+            "autoregressive_previous_reconstruction_decoder_query_additive_attention_concat_top_state_only"
+            if args.model == "lstm_aea"
+            else None
+        ),
+        "vae_completion": (
+            {
+                "objective": "per_example_sum_squared_error_plus_sum_analytic_kl_batch_mean",
+                "primary_score": "kernel_mean_mc10_low_probability",
+                "preserved_scores": [
+                    "kernel_mean_mc10",
+                    "kernel_sum_mc10",
+                    "deterministic_mse",
+                    "deterministic_mse_plus_kl",
+                ],
+                "score_directions": ["printed_low", "contradictory_high"],
+                "mc_1_10_100_interface_rows": 256,
+                "full_anchor_mc_1_10_100_rows": PILOT_SCORE_ROWS,
+                "normalized_fixed_unit_joint_density_maximum": float(
+                    (2.0 * np.pi) ** -24
+                ),
+                "printed_cutoff_exceeds_normalized_density_maximum": True,
+            }
+            if args.model.endswith("_vae")
+            else None
+        ),
+        "data_metadata_sha256": sha256(metadata_path),
+        "git_commit": git_commit(),
+        "implementation_sources": {
+            name: sha256(reproduction_dir / name)
+            for name in (
+                "remaining_models.py",
+                "run_experiment.py",
+                "run_remaining_model_pilot.sbatch",
+            )
+        },
+    }
+    configuration["attempt_id"] = stable_id(configuration)
+    run = (
+        args.output
+        / "feasibility"
+        / args.model
+        / f"seed_{args.seed}_{configuration['attempt_id']}"
+    )
+    run.mkdir(parents=True, exist_ok=True)
+    if (run / "result.json").is_file() or (run / "failure.json").is_file():
+        raise RuntimeError(f"immutable pilot attempt already exists: {run}")
+    save_json(run / "config.json", configuration)
+    np.savez(run / "selection.npz", **selection)
+    total_started = time.perf_counter()
+    try:
+        x_fit = np.asarray(
+            arrays["x_train.npy"][selection["fit"]], dtype=np.float32
+        )
+        x_score = np.asarray(
+            arrays["x_test.npy"][selection["score"]], dtype=np.float32
+        )
+        y_score = np.asarray(arrays["y_test.npy"][selection["score"]], dtype=np.int8)
+        if not np.isfinite(x_fit).all() or not np.isfinite(x_score).all():
+            raise FloatingPointError("pilot inputs contain nonfinite values")
+        determinism = configure_remaining_pilot_determinism()
+        streams = remaining_pilot_seed_streams(args.seed)
+        torch.cuda.reset_peak_memory_stats()
+        bundle = build_remaining_paper_model(
+            args.model,
+            seed=streams["initialization"],
+            latent_seed=streams["latent_training"],
+        )
+        initial_weight_sha = weight_digest(bundle.model)
+        initial_scores, initial_score_seconds = score_remaining_bundle(
+            bundle,
+            x_score[:256],
+            batch_size=128,
+            monte_carlo_samples=1,
+            scoring_seed=streams["scoring"],
+        )
+        trace = FeasibilityTrace()
+        keras.utils.set_random_seed(streams["shuffle"])
+        fit_started = time.perf_counter()
+        if args.model.endswith("_vae"):
+            history = bundle.model.fit(
+                x_fit,
+                epochs=PILOT_EPOCHS,
+                batch_size=PILOT_BATCH_SIZE,
+                shuffle=True,
+                callbacks=[trace],
+                verbose=2,
+            )
+        else:
+            history = bundle.model.fit(
+                x_fit,
+                x_fit,
+                epochs=PILOT_EPOCHS,
+                batch_size=PILOT_BATCH_SIZE,
+                shuffle=True,
+                callbacks=[trace],
+                verbose=2,
+            )
+        fit_seconds = time.perf_counter() - fit_started
+        bundle.model.save_weights(run / "model.weights.h5")
+        fitted_weight_sha = weight_digest(bundle.model)
+        if trace.budget_stopped or len(trace.epochs) != PILOT_EPOCHS:
+            raise TimeoutError(
+                "pilot did not complete both epochs inside its 5,400-second fit allocation"
+            )
+        if fitted_weight_sha == initial_weight_sha:
+            raise AssertionError("pilot weights did not update")
+        del bundle
+        keras.backend.clear_session()
+        bundle = build_remaining_paper_model(
+            args.model,
+            seed=streams["initialization"],
+            latent_seed=streams["latent_training"],
+        )
+        bundle.model.load_weights(run / "model.weights.h5")
+        reloaded_weight_sha = weight_digest(bundle.model)
+        if reloaded_weight_sha != fitted_weight_sha:
+            raise AssertionError("saved-weight reload changed the fitted weights")
+
+        safe: list[tuple[int, dict[str, np.ndarray], float]] = []
+        scoring_failures: list[dict[str, object]] = []
+        for candidate in PILOT_SCORE_BATCHES:
+            try:
+                candidate_scores, seconds = score_remaining_bundle(
+                    bundle,
+                    x_score,
+                    batch_size=candidate,
+                    monte_carlo_samples=(10 if args.model.endswith("_vae") else 1),
+                    scoring_seed=streams["scoring"],
+                )
+                safe.append((candidate, candidate_scores, seconds))
+                if len(safe) == 2:
+                    break
+            except (RuntimeError, torch.cuda.OutOfMemoryError) as exc:
+                if "out of memory" not in str(exc).lower():
+                    raise
+                scoring_failures.append(
+                    {"batch_size": candidate, "error": str(exc)}
+                )
+                torch.cuda.empty_cache()
+        if len(safe) < 2:
+            raise RuntimeError("fewer than two inference batches were memory-safe")
+        score_agreement = {
+            key: float(np.max(np.abs(safe[0][1][key] - safe[1][1][key])))
+            for key in safe[0][1]
+        }
+        if max(score_agreement.values()) > 1e-6:
+            raise AssertionError(
+                f"score batches disagree beyond 1e-6: {score_agreement}"
+            )
+        selected_batch, selected_scores, selected_score_seconds = safe[0]
+        np.savez(
+            run / "scores.npz",
+            labels=y_score,
+            **{key: value for key, value in selected_scores.items()},
+        )
+        score_summaries = {
+            key: {
+                "minimum": float(np.min(value)),
+                "median": float(np.median(value)),
+                "maximum": float(np.max(value)),
+            }
+            for key, value in selected_scores.items()
+        }
+        metrics: dict[str, object]
+        if args.model.endswith("_vae"):
+            metrics = {
+                "kernel_mean_mc10_printed_low": confusion_metrics(
+                    y_score,
+                    selected_scores["kernel_mean"],
+                    threshold=SPECS[args.model].threshold,
+                    direction="lower",
+                ),
+                "kernel_mean_mc10_contradictory_high": confusion_metrics(
+                    y_score,
+                    selected_scores["kernel_mean"],
+                    threshold=SPECS[args.model].threshold,
+                    direction="higher",
+                ),
+            }
+            stability: dict[str, object] = {}
+            for draws in (1, 10, 100):
+                draw_scores, seconds = score_remaining_bundle(
+                    bundle,
+                    x_score[:256],
+                    batch_size=min(selected_batch, 128),
+                    monte_carlo_samples=draws,
+                    scoring_seed=streams["scoring"],
+                )
+                stability[f"mc{draws}"] = {
+                    "seconds": seconds,
+                    "kernel_mean": {
+                        "minimum": float(draw_scores["kernel_mean"].min()),
+                        "median": float(np.median(draw_scores["kernel_mean"])),
+                        "maximum": float(draw_scores["kernel_mean"].max()),
+                    },
+                }
+        else:
+            metrics = {
+                "printed": confusion_metrics(
+                    y_score,
+                    selected_scores["primary"],
+                    threshold=SPECS[args.model].threshold,
+                    direction=SPECS[args.model].anomaly_direction,
+                )
+            }
+            stability = {}
+
+        memory = _memory_snapshot()
+        pilot_steps_per_epoch = PILOT_TRAIN_ROWS / PILOT_BATCH_SIZE
+        full_steps_per_epoch = 1_500_523 / PILOT_BATCH_SIZE
+        conservative_epoch_seconds = (
+            max(float(row["seconds"]) for row in trace.epochs)
+            * full_steps_per_epoch
+            / pilot_steps_per_epoch
+        )
+        conservative_score_seconds = (
+            selected_score_seconds * 8_884_989 / PILOT_SCORE_ROWS
+        )
+        projected_min_hours = PILOT_PROJECTION_SAFETY_FACTOR * (
+            10 * conservative_epoch_seconds + conservative_score_seconds
+        ) / 3600
+        projected_max_hours = PILOT_PROJECTION_SAFETY_FACTOR * (
+            100 * conservative_epoch_seconds + conservative_score_seconds
+        ) / 3600
+        gpu_fraction = memory["peak_gpu_fraction"]
+        gpu_reserved_fraction = memory["peak_gpu_reserved_fraction"]
+        gates = {
+            "two_epochs_complete": len(trace.epochs) == PILOT_EPOCHS,
+            "weights_updated": fitted_weight_sha != initial_weight_sha,
+            "saved_weights_reload_exact": reloaded_weight_sha == fitted_weight_sha,
+            "two_safe_score_batches": len(safe) >= 2,
+            "score_agreement_atol_1e-6": max(score_agreement.values()) <= 1e-6,
+            "peak_rss_at_most_75_percent": memory["peak_rss_fraction"] <= 0.75,
+            "peak_gpu_at_most_75_percent": (
+                gpu_fraction is not None
+                and gpu_reserved_fraction is not None
+                and max(gpu_fraction, gpu_reserved_fraction) <= 0.75
+            ),
+            "projected_100_epoch_total_at_most_72_hours": projected_max_hours
+            <= PILOT_FULL_HOUR_LIMIT,
+        }
+        result = {
+            "status": "passed" if all(gates.values()) else "gate_failed",
+            "eligibility": "operational_X_not_numerical_evidence",
+            "configuration": configuration,
+            "git_commit": git_commit(),
+            "runtime": {
+                "python": sys.version,
+                "platform": platform.platform(),
+                "keras": keras.__version__,
+                "torch": torch.__version__,
+                "numpy": np.__version__,
+                "sklearn": sklearn.__version__,
+                "cuda_device": torch.cuda.get_device_name(0),
+                "determinism": determinism,
+                "slurm": {
+                    key: os.environ.get(key)
+                    for key in (
+                        "SLURM_JOB_ID",
+                        "SLURM_JOB_PARTITION",
+                        "SLURM_CPUS_PER_TASK",
+                        "SLURM_MEM_PER_NODE",
+                    )
+                },
+            },
+            "data": {
+                "path": str(args.data.resolve()),
+                "metadata_sha256": sha256(metadata_path),
+                "input_sha256": input_sha256,
+                "selection_sha256": sha256(run / "selection.npz"),
+                "counts": {
+                    "fit": int(x_fit.shape[0]),
+                    "score": int(x_score.shape[0]),
+                    "score_benign": int(np.count_nonzero(y_score == 0)),
+                    "score_malicious": int(np.count_nonzero(y_score == 1)),
+                },
+            },
+            "model": {
+                "parameters": int(bundle.model.count_params()),
+                "expected_parameters": REMAINING_PARAMETER_COUNTS[args.model],
+                "inventory": layer_inventory(bundle.model),
+                "initial_weight_sha256": initial_weight_sha,
+                "fitted_weight_sha256": fitted_weight_sha,
+                "reloaded_weight_sha256": reloaded_weight_sha,
+            },
+            "training": {
+                "history": {
+                    key: [float(value) for value in values]
+                    for key, values in history.history.items()
+                },
+                "trace": trace.epochs,
+                "updates": len(trace.batch_seconds),
+                "fit_seconds": fit_seconds,
+                "budget_stopped": trace.budget_stopped,
+            },
+            "scoring": {
+                "initial_mc1_256_rows_seconds": initial_score_seconds,
+                "selected_batch": selected_batch,
+                "safe_batches": [row[0] for row in safe],
+                "safe_batch_seconds": {str(row[0]): row[2] for row in safe},
+                "memory_failures": scoring_failures,
+                "agreement_max_absolute": score_agreement,
+                "summaries": score_summaries,
+                "metrics": metrics,
+                "mc_stability_256_rows": stability,
+            },
+            "projection": {
+                "method": "1.5_times_slowest_pilot_epoch_scaled_by_steps_plus_primary_score_scaled_by_rows",
+                "minimum_10_epoch_hours": projected_min_hours,
+                "worst_case_100_epoch_hours": projected_max_hours,
+            },
+            "memory": memory,
+            "gates": gates,
+            "timing_seconds": {"total": time.perf_counter() - total_started},
+            "artifacts": {
+                name: {
+                    "path": filename,
+                    "sha256": sha256(run / filename),
+                }
+                for name, filename in {
+                    "config": "config.json",
+                    "selection": "selection.npz",
+                    "weights": "model.weights.h5",
+                    "scores": "scores.npz",
+                }.items()
+            },
+        }
+        save_json(run / "result.json", result)
+        print(json.dumps({"status": result["status"], "gates": gates}, indent=2))
+        print(f"saved immutable feasibility attempt: {run}")
+        return 0 if result["status"] == "passed" else 3
+    except Exception as exc:
+        preserved_artifacts = {
+            path.name: sha256(path)
+            for path in run.iterdir()
+            if path.is_file() and path.name != "failure.json"
+        }
+        save_json(
+            run / "failure.json",
+            {
+                "status": "failed",
+                "eligibility": "operational_X_not_numerical_evidence",
+                "configuration": configuration,
+                "git_commit": git_commit(),
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+                "memory": _memory_snapshot(),
+                "elapsed_seconds": time.perf_counter() - total_started,
+                "preserved_artifact_sha256": preserved_artifacts,
+            },
+        )
+        raise
 
 
 def recover_failed_scoring(
@@ -1292,9 +2148,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument(
         "--contract",
-        choices=(CLEAN_READER_CONTRACT, "exploratory"),
+        choices=(
+            CLEAN_READER_CONTRACT,
+            REMAINING_FEASIBILITY_CONTRACT,
+            "exploratory",
+        ),
         default=CLEAN_READER_CONTRACT,
-        help="clean-reader-v1 fails closed on every approved anchor field",
+        help="named contracts fail closed on every approved field",
     )
     parser.add_argument(
         "--model", choices=(*tuple(SPECS), *BENCHMARKS), default="fc_sae"
@@ -1374,11 +2234,24 @@ def main() -> int:
                 "clean-reader-v1 contract mismatch:\n- "
                 + "\n- ".join(contract_errors)
             )
+    if args.contract == REMAINING_FEASIBILITY_CONTRACT:
+        contract_errors = remaining_pilot_contract_errors(args, metadata)
+        if contract_errors:
+            raise ValueError(
+                "remaining-paper-feasibility-v1 contract mismatch:\n- "
+                + "\n- ".join(contract_errors)
+            )
     if args.recover_scoring is not None:
         return recover_failed_scoring(
             args.recover_scoring,
             args.data,
             score_batch_override=args.recovery_score_batch,
+        )
+    if args.contract == REMAINING_FEASIBILITY_CONTRACT:
+        return run_remaining_pilot(
+            args,
+            metadata=metadata,
+            metadata_path=metadata_path,
         )
     if args.test_view == "adasyn" and metadata.get("configuration", {}).get(
         "test_adasyn"
