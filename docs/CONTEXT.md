@@ -63,6 +63,18 @@ The complete resolver also exposed missing metadata entries for
 `test_attack_id.npy` and `test_source_row.npy`; the same exact anchor supplied
 all three absent hashes and the actual bytes matched.
 
+**Current approved action:** score-only recovery for the preserved LSTM-SAE and
+LSTM-VAE attempts, governed by `REMAINING_SCORE_RECOVERY.md` and
+`docs/plans/2026-09-01-recurrent-score-recovery.md`. Score batches
+256/128/64/32 on the same 12,119 rows; record score drift, printed-cutoff label
+changes, complete metrics, ROC envelopes, and fixed-threshold transfer. No
+training, FC-VAE anchor, AEA change, gate replacement, or publication. Stop for
+discussion after both results and audits.
+The frozen implementation passed all 251 repository tests (140 study plus 111
+root), strict data verification, Python compilation, shell syntax checking, and
+the whitespace gate. The original implementation and feasibility-record hashes
+remain exact.
+
 **Earlier completed Sigmoid work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see
 `SIGMOID_FIT_FINDING.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`.

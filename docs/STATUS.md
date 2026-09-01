@@ -9,6 +9,19 @@
 
 ## Current project state
 
+- **Recurrent score-only recovery approved and locally verified:** after discussing
+  the feasibility wave, the user approved two cheap diagnostics using the
+  preserved LSTM-SAE and LSTM-VAE weights. The exact contract is
+  [`REMAINING_SCORE_RECOVERY.md`](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY.md).
+  It scores the same 12,119 rows at batches 256/128/64/32 and compares printed
+  decisions, metrics, ROC envelopes, and fixed-threshold transfer. It performs
+  no training and does not relax or replace the original gate. Stop for
+  discussion after both audited results; FC-VAE, AEA, and publication remain
+  untouched. The frozen scorer and wrapper pass all 251 repository tests (140
+  study tests and 111 root tests), strict data verification, Python compilation,
+  shell syntax checking, and `git diff --check`. The original paper-facing
+  implementation and committed feasibility-record hashes remain unchanged.
+
 - **Remaining-model feasibility wave complete; stop for discussion:** new
   immutable jobs `385552`--`385555` ran exact commit `052ac37` after the
   approved manifest-source repair. FC-VAE passed all operational gates and has
