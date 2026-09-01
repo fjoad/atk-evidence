@@ -19,9 +19,14 @@
   occurred, and zero scores were calculated; allocation exposure was about
   0.077 GPU-hours. Preserve the identical remote logs and see
   [`REMAINING_PILOT_FINDING.md`](../studies/atk-2022-deep-autoencoder/REMAINING_PILOT_FINDING.md).
-  Stop for discussion. The narrow proposed repair retains byte verification but
-  permits the committed audited anchor result to supply an expected hash when
-  the matching cache metadata lacks one. Do not repair or resubmit yet.
+  The user approved the narrow repair on 2026-09-01: retain byte verification
+  but permit the exact committed audited anchor result to supply an expected
+  hash only when it names the exact matching cache metadata. The repair is in
+  local verification; do not resubmit until a new tested commit is frozen.
+  Local verification now passes 245 deterministic tests (140 study, 105 root),
+  and the strict verifier selects the complete ScienceDB semantic-equivalence
+  branch. The resolver records the source of every expected checksum and uses
+  the eligible anchor only for the missing `table_iv_order.npy` entry.
 
 - **Four-model feasibility instrument frozen at `0ca6cc4`:** the user accepted
   all five choices in the remaining-paper checkpoint on 2026-09-01. The new

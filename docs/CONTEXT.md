@@ -45,7 +45,12 @@ committed record, so this is a manifest-source bug, not corrupt data. Zero
 models/updates/scores; 278 GPU-seconds total. Preserve
 `REMAINING_PILOT_FINDING.md` and
 `results/remaining_pilot_preflight_20260901.json`. Discuss the narrow
-anchor-manifest fallback before any code repair or retry.
+anchor-manifest fallback before any code repair or retry. The user approved
+that exact repair on 2026-09-01. It must verify the committed anchor-result hash
+and matching metadata hash, record every manifest source, and create a new
+tested commit and immutable attempts; every other field remains frozen. The
+narrow repair passes 245 deterministic tests (140 study, 105 root), and strict
+data verification selects the complete ScienceDB semantic-equivalence branch.
 
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see

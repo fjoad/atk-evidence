@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -19,6 +21,92 @@ import run_experiment  # noqa: E402
 
 
 class RemainingPaperPilotTests(unittest.TestCase):
+    def test_checksum_fallback_is_bound_to_anchor_and_metadata_hashes(self) -> None:
+        metadata_sha = "a" * 64
+        metadata = {"files": {"x.npy": {"sha256": "b" * 64}}}
+        with tempfile.TemporaryDirectory() as temporary:
+            anchor = Path(temporary) / "result.json"
+            anchor.write_text(
+                json.dumps(
+                    {
+                        "data": {
+                            "metadata_sha256": metadata_sha,
+                            "files": {"order.npy": "c" * 64},
+                        }
+                    }
+                )
+            )
+            anchor_sha = run_experiment.sha256(anchor)
+            expected, sources, identity = (
+                run_experiment.remaining_pilot_checksum_manifest(
+                    metadata,
+                    metadata_sha,
+                    ("x.npy", "order.npy"),
+                    anchor_result_path=anchor,
+                    anchor_result_sha256=anchor_sha,
+                )
+            )
+            self.assertEqual(expected, {"x.npy": "b" * 64, "order.npy": "c" * 64})
+            self.assertEqual(
+                sources,
+                {
+                    "x.npy": "prepared_metadata",
+                    "order.npy": "eligible_anchor_result",
+                },
+            )
+            self.assertEqual(identity["sha256"], anchor_sha)
+            with self.assertRaisesRegex(ValueError, "different prepared metadata"):
+                run_experiment.remaining_pilot_checksum_manifest(
+                    metadata,
+                    "d" * 64,
+                    ("order.npy",),
+                    anchor_result_path=anchor,
+                    anchor_result_sha256=anchor_sha,
+                )
+            with self.assertRaisesRegex(ValueError, "record drifted"):
+                run_experiment.remaining_pilot_checksum_manifest(
+                    metadata,
+                    metadata_sha,
+                    ("order.npy",),
+                    anchor_result_path=anchor,
+                    anchor_result_sha256="e" * 64,
+                )
+
+    def test_committed_checksum_anchor_is_exact(self) -> None:
+        self.assertEqual(
+            run_experiment.sha256(run_experiment.PILOT_CHECKSUM_ANCHOR),
+            run_experiment.PILOT_CHECKSUM_ANCHOR_SHA256,
+        )
+        anchor = json.loads(run_experiment.PILOT_CHECKSUM_ANCHOR.read_text())
+        self.assertEqual(
+            anchor["data"]["files"]["table_iv_order.npy"],
+            "f5acf853f2efdcc5e237cdf137cd17590fc0712f8151798de65f5b034f351643",
+        )
+        metadata_path = (
+            ROOT
+            / "studies/atk-2022-deep-autoencoder/results/"
+            "clean_reader_anchor_20260831/metadata.json"
+        )
+        metadata = json.loads(metadata_path.read_text())
+        expected, sources, identity = (
+            run_experiment.remaining_pilot_checksum_manifest(
+                metadata,
+                run_experiment.sha256(metadata_path),
+                ("x_train.npy", "table_iv_order.npy"),
+            )
+        )
+        self.assertEqual(sources["x_train.npy"], "prepared_metadata")
+        self.assertEqual(
+            sources["table_iv_order.npy"], "eligible_anchor_result"
+        )
+        self.assertEqual(
+            expected["table_iv_order.npy"],
+            anchor["data"]["files"]["table_iv_order.npy"],
+        )
+        self.assertEqual(
+            identity["metadata_sha256"], run_experiment.sha256(metadata_path)
+        )
+
     def test_slurm_wrapper_cannot_submit_a_full_anchor(self) -> None:
         wrapper = (REPRODUCTION / "run_remaining_model_pilot.sbatch").read_text()
         for required in (

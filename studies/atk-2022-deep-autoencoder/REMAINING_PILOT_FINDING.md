@@ -69,3 +69,11 @@ This repair does not change data, selection, model, objective, score, budget,
 or promotion gates. It requires a new code commit and new immutable pilot
 attempts. No retry is authorized or implied by this finding; discuss first.
 
+## Discussion outcome
+
+The user approved this exact narrow repair on 2026-09-01. The approval does not
+reclassify or erase jobs 385544--385547. A new tested commit and new immutable
+attempt identities are required before resubmission. The repaired resolver
+passes 245 deterministic tests (140 study, 105 root), including checks against
+the exact committed anchor and archived prepared metadata; strict data
+verification selects the complete ScienceDB semantic-equivalence branch.

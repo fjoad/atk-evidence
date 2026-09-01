@@ -57,6 +57,13 @@ PILOT_SCORE_BATCHES = (256, 128, 64, 32)
 PILOT_PROJECTION_SAFETY_FACTOR = 1.5
 PILOT_FULL_HOUR_LIMIT = 72.0
 PILOT_FIT_SECONDS_LIMIT = 5_400.0
+PILOT_CHECKSUM_ANCHOR = (
+    REPO
+    / "studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/result.json"
+)
+PILOT_CHECKSUM_ANCHOR_SHA256 = (
+    "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154"
+)
 REPORTED = {
     "fc_sae": {"DR": 81, "FA": 15, "SP": 85, "PR": 81, "ACC": 83, "F1": 81, "AUC": 81},
     "lstm_sae": {"DR": 85, "FA": 13, "SP": 87, "PR": 85, "ACC": 86, "F1": 85, "AUC": 82},
@@ -168,6 +175,74 @@ def save_json(path: Path, payload: dict[str, object]) -> None:
     temporary = path.with_suffix(path.suffix + ".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n")
     temporary.replace(path)
+
+
+def remaining_pilot_checksum_manifest(
+    metadata: dict[str, object],
+    metadata_sha256: str,
+    required_names: tuple[str, ...],
+    *,
+    anchor_result_path: Path = PILOT_CHECKSUM_ANCHOR,
+    anchor_result_sha256: str = PILOT_CHECKSUM_ANCHOR_SHA256,
+) -> tuple[dict[str, str], dict[str, str], dict[str, str] | None]:
+    """Resolve expected hashes without weakening the prepared-data gate.
+
+    Prepared metadata is primary. A missing entry may come only from the
+    frozen eligible anchor after both that record and its metadata identity
+    have been verified.
+    """
+
+    metadata_files = metadata.get("files", {})
+    if not isinstance(metadata_files, dict):
+        raise ValueError("prepared metadata files manifest is not a mapping")
+
+    expected: dict[str, str] = {}
+    sources: dict[str, str] = {}
+    missing: list[str] = []
+    for name in required_names:
+        entry = metadata_files.get(name)
+        value = entry.get("sha256") if isinstance(entry, dict) else entry
+        if isinstance(value, str) and len(value) == 64:
+            expected[name] = value
+            sources[name] = "prepared_metadata"
+        else:
+            missing.append(name)
+
+    anchor_identity: dict[str, str] | None = None
+    if missing:
+        observed_anchor_sha = sha256(anchor_result_path)
+        if observed_anchor_sha != anchor_result_sha256:
+            raise ValueError(
+                "eligible anchor checksum-manifest record drifted: "
+                f"{observed_anchor_sha}"
+            )
+        anchor = json.loads(anchor_result_path.read_text())
+        anchor_data = anchor.get("data", {})
+        if anchor_data.get("metadata_sha256") != metadata_sha256:
+            raise ValueError(
+                "eligible anchor checksum manifest names different prepared metadata"
+            )
+        anchor_files = anchor_data.get("files", {})
+        if not isinstance(anchor_files, dict):
+            raise ValueError("eligible anchor files manifest is not a mapping")
+        for name in missing:
+            value = anchor_files.get(name)
+            if not isinstance(value, str) or len(value) != 64:
+                raise ValueError(
+                    f"no audited expected checksum is available for {name}"
+                )
+            expected[name] = value
+            sources[name] = "eligible_anchor_result"
+        try:
+            recorded_anchor_path = str(anchor_result_path.relative_to(REPO))
+        except ValueError:
+            recorded_anchor_path = str(anchor_result_path.resolve())
+        anchor_identity = {
+            "path": recorded_anchor_path,
+            "sha256": observed_anchor_sha,
+            "metadata_sha256": metadata_sha256,
+        }
+    return expected, sources, anchor_identity
 
 
 class MinimumEpochEarlyStopping(keras.callbacks.Callback):
@@ -838,15 +913,17 @@ def run_remaining_pilot(
         "test_attack_id.npy": (8_884_989,),
         "test_source_row.npy": (8_884_989,),
     }
-    metadata_files = metadata.get("files", {})
+    metadata_sha = sha256(metadata_path)
+    expected_checksums, checksum_sources, checksum_anchor = (
+        remaining_pilot_checksum_manifest(
+            metadata,
+            metadata_sha,
+            tuple(expected_shapes),
+        )
+    )
     input_sha256: dict[str, str] = {}
     for name in expected_shapes:
-        entry = metadata_files.get(name)
-        expected_sha = (
-            entry.get("sha256") if isinstance(entry, dict) else entry
-        )
-        if not isinstance(expected_sha, str) or len(expected_sha) != 64:
-            raise ValueError(f"prepared metadata omits the checksum for {name}")
+        expected_sha = expected_checksums[name]
         observed_sha = sha256(args.data / name)
         if observed_sha != expected_sha:
             raise ValueError(
@@ -925,7 +1002,11 @@ def run_remaining_pilot(
             if args.model.endswith("_vae")
             else None
         ),
-        "data_metadata_sha256": sha256(metadata_path),
+        "data_metadata_sha256": metadata_sha,
+        "checksum_manifest": {
+            "sources": checksum_sources,
+            "eligible_anchor_fallback": checksum_anchor,
+        },
         "git_commit": git_commit(),
         "implementation_sources": {
             name: sha256(reproduction_dir / name)
@@ -1167,7 +1248,9 @@ def run_remaining_pilot(
             },
             "data": {
                 "path": str(args.data.resolve()),
-                "metadata_sha256": sha256(metadata_path),
+                "metadata_sha256": metadata_sha,
+                "checksum_manifest_sources": checksum_sources,
+                "checksum_anchor": checksum_anchor,
                 "input_sha256": input_sha256,
                 "selection_sha256": sha256(run / "selection.npz"),
                 "counts": {

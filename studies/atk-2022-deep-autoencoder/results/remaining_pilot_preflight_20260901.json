@@ -51,5 +51,6 @@
     "385546": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862",
     "385547": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862"
   },
-  "decision": "stop_for_discussion_before_repair_or_retry"
+  "decision": "stop_for_discussion_before_repair_or_retry",
+  "discussion_outcome": "user_approved_exact_narrow_manifest_source_repair_on_2026-09-01"
 }

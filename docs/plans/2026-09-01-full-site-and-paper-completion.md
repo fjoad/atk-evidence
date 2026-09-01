@@ -90,6 +90,13 @@ matches the eligible anchor record exactly. No model was built or scored. See
 `REMAINING_PILOT_FINDING.md`; stop for discussion before the proposed narrow
 manifest-source repair and any new immutable attempts.
 
+The user approved that exact repair on 2026-09-01. It is now in local
+verification. The repaired gate passes 245 deterministic tests (140 study, 105
+root), and strict data verification selects the complete ScienceDB
+semantic-equivalence branch. No data, model, training, scoring, resource, or
+promotion field changed. Freeze and synchronize a new commit before creating
+new immutable pilot attempts.
+
 ## D. Mechanism program - pending Table III anchors
 
 Run the predeclared matched FC/LSTM comparison and temporal-structure
