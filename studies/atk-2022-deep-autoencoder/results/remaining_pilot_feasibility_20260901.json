@@ -1,0 +1,158 @@
+{
+  "status": "discussion_required",
+  "date": "2026-09-01",
+  "eligibility": "operational_X_not_N_M_or_A",
+  "git_commit": "052ac373b77786ad58829b0ffe35568e971bb92d",
+  "contract": "remaining-paper-feasibility-v1",
+  "common": {
+    "seed": 20260824,
+    "epochs": 2,
+    "batch_size": 32,
+    "fit_rows": 32768,
+    "score_rows": 12119,
+    "source_days_with_all_attack_siblings": 1024,
+    "synthetic_score_rows": 4951,
+    "prepared_metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+    "eligible_anchor_result_sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+    "checksum_sources": {
+      "x_train.npy": "prepared_metadata",
+      "x_test.npy": "prepared_metadata",
+      "y_test.npy": "prepared_metadata",
+      "table_iv_order.npy": "eligible_anchor_result",
+      "test_attack_id.npy": "eligible_anchor_result",
+      "test_source_row.npy": "eligible_anchor_result"
+    },
+    "implementation_sha256": {
+      "remaining_models.py": "d0d9c42f3b7c846f6f6f1b579fb9fa3b114e3b523fda84dc86754e57c78cb35d",
+      "run_experiment.py": "5443060ee7fefeeaf37a687371652325303230c371eaa2c8d8c423eb1865436f",
+      "run_remaining_model_pilot.sbatch": "679120883f71d046403468d1f62c47b6be9ac4f7170294954fcea09fa21291fa"
+    }
+  },
+  "jobs": [
+    {
+      "job_id": 385552,
+      "model": "lstm_sae",
+      "node": "crirdcmgpu002",
+      "slurm_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed_seconds": 464,
+      "attempt_id": "5f53ca7217aa",
+      "attempt_status": "failed",
+      "completed_updates": 2048,
+      "epoch_losses_from_log": [1.5899, 1.4972],
+      "failed_gate": "score_agreement_atol_1e-6",
+      "agreement_max_absolute": {
+        "deterministic_mse": 1.8380262108763645e-05,
+        "primary": 1.8380262108763645e-05
+      },
+      "peak_rss_fraction": 0.023219505945841473,
+      "peak_gpu_reserved_fraction": 0.04687355723627328,
+      "artifacts_sha256": {
+        "config.json": "1fc10e0d940c35c40c30a0ef292b87a1c51bc43b8311813261b56cd87734ad71",
+        "failure.json": "49aea6a2b7f6ab491445846170156a12637f85d7a53d67c97e1770472d4590e6",
+        "model.weights.h5": "b26dc72463c75e8e1af73955e7e3021b023a3c80234ea0c20b5218f05ac01b62",
+        "selection.npz": "5e9a718e6012645296b725ee9e898d5e0cf9542f5d12a1960efa77a3d620e93a",
+        "slurm_log": "c6c8b840ae366c0f7ea2d5ef6b105ff17d189debd82920d9efaed6fd74accf64"
+      }
+    },
+    {
+      "job_id": 385553,
+      "model": "fc_vae",
+      "node": "crirdcmgpu002",
+      "slurm_state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 76,
+      "attempt_id": "cb6ee52f7b32",
+      "attempt_status": "passed",
+      "completed_updates": 2048,
+      "fit_seconds": 43.75104524195194,
+      "epoch_losses": [90.4320297241211, 90.32013702392578],
+      "largest_agreement_max_absolute": 8.881387403292251e-09,
+      "projected_100_epoch_total_hours": 44.81059873779094,
+      "peak_rss_fraction": 0.02278180917104085,
+      "peak_gpu_reserved_fraction": 0.005909560224630443,
+      "all_saved_arrays_finite": true,
+      "artifacts_sha256": {
+        "config.json": "64c29310299201ba3387029eecd0d2fc2141ef2760eab4d14d28a41c13204218",
+        "result.json": "34ce00c137969fa6ba2ba701660e6c6de5ff0554168f0d54f3dc31a80333f033",
+        "model.weights.h5": "fb811ed93b1bc2cfcbcb952cc3f689feeefe75663f4bf4ac3396258849dfa156",
+        "scores.npz": "8c154417d4d28afb5b9f5dac295763a58d98f61a21d9e94c714c3bdaef54d3b2",
+        "selection.npz": "5e9a718e6012645296b725ee9e898d5e0cf9542f5d12a1960efa77a3d620e93a",
+        "slurm_log": "7078f057c6b69f6dbe028f327a5e41bed27c98b73d9abc8614d0f26f6587c976"
+      }
+    },
+    {
+      "job_id": 385554,
+      "model": "lstm_vae",
+      "node": "crimv3srv041",
+      "slurm_state": "FAILED",
+      "exit_code": "1:0",
+      "elapsed_seconds": 289,
+      "attempt_id": "1d6360ddcead",
+      "attempt_status": "failed",
+      "completed_updates": 2048,
+      "epoch_losses_from_log": [85.3018, 68.5680],
+      "failed_gate": "score_agreement_atol_1e-6",
+      "agreement_max_absolute": {
+        "deterministic_mse": 6.789432136500295e-07,
+        "deterministic_mse_plus_kl": 1.966813361342634e-06,
+        "kernel_mean": 1.1779597763883487e-07,
+        "kernel_sum": 2.470431028633868e-07,
+        "primary": 1.1779597763883487e-07
+      },
+      "peak_rss_fraction": 0.023030559221903484,
+      "peak_gpu_reserved_fraction": 0.03048696159933617,
+      "artifacts_sha256": {
+        "config.json": "b8c798a37cc9e7a3221d8c869c4b598ee4c501ba23969c5d9a71a8227d332db6",
+        "failure.json": "5d21e425cbaded402e7df24b40c7d5ee13b368751dd586fef6b2bd56212695d4",
+        "model.weights.h5": "11953b8dd4b681f27ebbd2a9fb49ff29397577fce1081487b47f4759dcb5344e",
+        "selection.npz": "5e9a718e6012645296b725ee9e898d5e0cf9542f5d12a1960efa77a3d620e93a",
+        "slurm_log": "13d2adbd93fcf8fbd9357fc03ca041bd4302e0a63bfc8f2e051e05a2ed098c3d"
+      }
+    },
+    {
+      "job_id": 385555,
+      "model": "lstm_aea",
+      "node": "crimv3srv041",
+      "slurm_state": "FAILED",
+      "exit_code": "3:0",
+      "elapsed_seconds": 2051,
+      "attempt_id": "c2e9399f1385",
+      "attempt_status": "gate_failed",
+      "completed_updates": 2048,
+      "fit_seconds": 1964.9482729360461,
+      "epoch_losses": [1.810738444328308, 1.8033026456832886],
+      "largest_agreement_max_absolute": 7.03463314266628e-08,
+      "failed_gate": "projected_100_epoch_total_at_most_72_hours",
+      "projected_minimum_10_epoch_hours": 193.26282230081878,
+      "projected_100_epoch_total_hours": 1879.9254389388498,
+      "peak_rss_fraction": 0.022095322608947754,
+      "peak_gpu_reserved_fraction": 0.049664243895692795,
+      "all_saved_arrays_finite": true,
+      "artifacts_sha256": {
+        "config.json": "33d9c0286ee01714781084d23768b40f7c54f8d6a3b60a26a39e1e0e10ed9915",
+        "result.json": "e601501b96f745030c2e70db6576a02de4a59e227ace018cb647d93c95a25dc6",
+        "model.weights.h5": "eef3cd222d19476ffc0bd8b3b16bdc9cd22dabd6b5806d95910752e6756ea08a",
+        "scores.npz": "e673d246056caf5dfeffb98b546740816b08484216e8802973b9cf82def37b52",
+        "selection.npz": "5e9a718e6012645296b725ee9e898d5e0cf9542f5d12a1960efa77a3d620e93a",
+        "slurm_log": "8201477e624967bd4c00c87a034e09b6ec08761063e1b4a087798513dca9e528"
+      }
+    }
+  ],
+  "total_gpu_seconds": 2880,
+  "total_gpu_hours": 0.8,
+  "audit": {
+    "transfer": "remote and local derived-data trees retain all attempt files",
+    "recorded_artifact_hashes_match_local_bytes": true,
+    "all_saved_numeric_arrays_finite": true,
+    "remote_login_numpy_audit": "killed before output; read-only; no artifact mutation",
+    "local_numpy_audit": "passed"
+  },
+  "promotion": {
+    "fc_vae": "eligible_for_discussion",
+    "lstm_sae": "blocked_by_score_agreement_gate",
+    "lstm_vae": "blocked_by_score_agreement_gate",
+    "lstm_aea": "blocked_by_runtime_projection_gate"
+  },
+  "decision": "stop_for_discussion_before_full_anchor_retry_repair_or_publication"
+}

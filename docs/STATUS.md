@@ -9,6 +9,22 @@
 
 ## Current project state
 
+- **Remaining-model feasibility wave complete; stop for discussion:** new
+  immutable jobs `385552`--`385555` ran exact commit `052ac37` after the
+  approved manifest-source repair. FC-VAE passed all operational gates and has
+  a conservative 44.81-hour full-anchor projection. LSTM-SAE stopped because
+  its two inference batches differed by `1.838e-5`; LSTM-VAE stopped because
+  one auxiliary score differed by `1.967e-6`, although its primary score
+  differed by only `1.178e-7`; both used a frozen `1e-6` all-score tolerance.
+  LSTM-AEA passed update, reload, score, and memory gates but projects to
+  1,879.93 hours for 100 full-data epochs, far above the 72-hour cap. All saved
+  arrays are finite and every transferred artifact hash matches. The wave used
+  0.8 GPU-hours. This is operational `X`, not paper-result `N`, `M`, or `A`
+  evidence. See
+  [`REMAINING_FEASIBILITY_FINDING.md`](../studies/atk-2022-deep-autoencoder/REMAINING_FEASIBILITY_FINDING.md).
+  Do not promote FC-VAE, alter the recurrent tolerance, change AEA execution,
+  or publish pilot metrics before discussion.
+
 - **First four-model feasibility wave stopped at the checksum manifest gate:**
   jobs `385544`--`385547` all failed before model construction because the
   prepared cache metadata omits a checksum entry for `table_iv_order.npy`.
@@ -21,12 +37,14 @@
   [`REMAINING_PILOT_FINDING.md`](../studies/atk-2022-deep-autoencoder/REMAINING_PILOT_FINDING.md).
   The user approved the narrow repair on 2026-09-01: retain byte verification
   but permit the exact committed audited anchor result to supply an expected
-  hash only when it names the exact matching cache metadata. The repair is in
-  local verification; do not resubmit until a new tested commit is frozen.
+  hash only when it names the exact matching cache metadata. The repair was
+  frozen at `052ac37` before the new immutable jobs above were submitted.
   Local verification now passes 245 deterministic tests (140 study, 105 root),
   and the strict verifier selects the complete ScienceDB semantic-equivalence
-  branch. The resolver records the source of every expected checksum and uses
-  the eligible anchor only for the missing `table_iv_order.npy` entry.
+  branch. The resolver records the source of every expected checksum. The
+  completed resolution showed three absent entries: `table_iv_order.npy`,
+  `test_attack_id.npy`, and `test_source_row.npy`; all three came from the same
+  exact eligible anchor and matched the actual bytes.
 
 - **Four-model feasibility instrument frozen at `0ca6cc4`:** the user accepted
   all five choices in the remaining-paper checkpoint on 2026-09-01. The new
@@ -44,8 +62,9 @@
   10/100-epoch projection. All 243 deterministic tests pass (140 study, 103
   root), including historical-source hash guards, and the strict verifier
   selects the complete ScienceDB semantic-equivalence branch. No pilot or paper
-  result has run yet. The commit is pushed and synchronized to Panther; the
-  first pilot wave's preflight outcome is recorded above.
+  result had run at the v1 freeze. The commit was pushed and synchronized to
+  Panther; the two immutable pilot waves and current outcomes are recorded
+  above.
 
 - **Full-site publication complete:** the user
   requested publishing the two completed Sigmoid follow-ups across the full

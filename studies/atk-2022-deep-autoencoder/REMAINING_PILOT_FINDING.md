@@ -77,3 +77,13 @@ attempt identities are required before resubmission. The repaired resolver
 passes 245 deterministic tests (140 study, 105 root), including checks against
 the exact committed anchor and archived prepared metadata; strict data
 verification selects the complete ScienceDB semantic-equivalence branch.
+
+## Post-repair manifest correction
+
+The original jobs stopped at the first missing entry and therefore exposed
+only `table_iv_order.npy`. The complete repaired resolution subsequently showed
+that the cache metadata also omits `test_attack_id.npy` and
+`test_source_row.npy`. All three actual files match the hashes in the same
+eligible anchor after its record and metadata identities are verified. This is
+the same approved missing-entry fallback, not a change to input bytes. See
+`REMAINING_FEASIBILITY_FINDING.md` for the new immutable attempts.

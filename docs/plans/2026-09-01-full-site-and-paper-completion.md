@@ -90,12 +90,19 @@ matches the eligible anchor record exactly. No model was built or scored. See
 `REMAINING_PILOT_FINDING.md`; stop for discussion before the proposed narrow
 manifest-source repair and any new immutable attempts.
 
-The user approved that exact repair on 2026-09-01. It is now in local
-verification. The repaired gate passes 245 deterministic tests (140 study, 105
-root), and strict data verification selects the complete ScienceDB
-semantic-equivalence branch. No data, model, training, scoring, resource, or
-promotion field changed. Freeze and synchronize a new commit before creating
-new immutable pilot attempts.
+The user approved that exact repair on 2026-09-01. The repaired gate passed 245
+deterministic tests (140 study, 105 root), and strict data verification selected
+the complete ScienceDB semantic-equivalence branch. No data, model, training,
+scoring, resource, or promotion field changed. It was frozen and synchronized
+before new immutable pilot attempts were created.
+
+The repair was frozen at `052ac37`, pushed, and synchronized. New jobs
+`385552`--`385555` crossed the input gate and completed their bounded attempts.
+FC-VAE passed all gates. LSTM-SAE and LSTM-VAE stopped at the frozen `1e-6`
+all-score batch-agreement gate; LSTM-AEA stopped at the 72-hour projection gate
+with a 1,879.93-hour conservative estimate. All saved arrays and transferred
+artifact hashes passed audit. Stop for discussion before promoting FC-VAE or
+changing any failed gate. See `REMAINING_FEASIBILITY_FINDING.md`.
 
 ## D. Mechanism program - pending Table III anchors
 

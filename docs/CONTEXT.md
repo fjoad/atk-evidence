@@ -14,7 +14,7 @@ Historical breadth remains exploratory/quarantined. Publication commit
 files match local bytes. The bundle passed 235 deterministic tests, data
 identity selected the verified ScienceDB branch, and all five PDF pages were
 visually inspected. Phase A and the Phase-B checkpoint are complete; Phase C's
-feasibility instrument is in local verification.
+feasibility wave is complete and stopped at the discussion checkpoint below.
 
 **Phase-B checkpoint, 2026-09-01:** the direct-paper reconstruction is saved in
 `studies/atk-2022-deep-autoencoder/REMAINING_PAPER_CONTRACT.md`. The paper fixes
@@ -51,8 +51,19 @@ and matching metadata hash, record every manifest source, and create a new
 tested commit and immutable attempts; every other field remains frozen. The
 narrow repair passes 245 deterministic tests (140 study, 105 root), and strict
 data verification selects the complete ScienceDB semantic-equivalence branch.
+New jobs `385552`--`385555` then completed: FC-VAE passed every feasibility
+gate (44.81-hour conservative full-anchor projection); LSTM-SAE failed the
+`1e-6` all-score batch-agreement gate at `1.838e-5`; LSTM-VAE failed only its
+auxiliary MSE-plus-KL score at `1.967e-6` while its primary differed by
+`1.178e-7`; LSTM-AEA passed all but runtime, projecting to 1,879.93 hours for
+100 full-data epochs. All arrays are finite and transferred artifact hashes
+match. Total exposure was 0.8 GPU-hours. This is operational `X`; stop for
+discussion before promotion, tolerance changes, AEA changes, or publication.
+The complete resolver also exposed missing metadata entries for
+`test_attack_id.npy` and `test_source_row.npy`; the same exact anchor supplied
+all three absent hashes and the actual bytes matched.
 
-**Newest completed work:** the user requested testing Sigmoid plus another
+**Earlier completed Sigmoid work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see
 `SIGMOID_FIT_FINDING.md` / `docs/plans/2026-08-31-small-sigmoid-fit.md`.
 Frozen `cc9af5e`, 230 pre-run tests, CPU job `385198` completed `0:0`.
