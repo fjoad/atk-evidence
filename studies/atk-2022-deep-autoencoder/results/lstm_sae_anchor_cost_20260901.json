@@ -1,5 +1,5 @@
 {
-  "status": "h200_cost_pilot_pending",
+  "status": "h200_cost_pilot_ineligible",
   "date": "2026-09-01",
   "eligibility": "operational_X_not_N_M_or_A",
   "model": "lstm_sae",
@@ -44,5 +44,37 @@
     "whitespace_check_passed": true,
     "historical_source_hashes_unchanged": true
   },
-  "next_decision": "run_one_h200_cost_pilot_then_promote_full_anchor_only_if_every_gate_passes"
+  "submission": {
+    "job_id": 385602,
+    "partition": "gpu-H200",
+    "requested_gpus": 1,
+    "requested_time": "02:00:00",
+    "submitted_commit": "93ecd0d898349822187c5a22bb61ba0d26ff3730",
+    "slurm_qos": "gpulimit",
+    "state": "CANCELLED",
+    "exit_code": "0:0",
+    "elapsed": "00:00:00",
+    "gpu_seconds": 0,
+    "pending_reason": "Job's QOS not permitted to use this partition",
+    "account_association_qos": ["gpulimit"],
+    "partition_allowed_qos": [
+      "h200_qos",
+      "h200_qos_8_gpus",
+      "h200_qos_16_gpus",
+      "h200_qos_32_gpus",
+      "h200_qos_reserve",
+      "h200_hbku_qos",
+      "h200_intern_qos"
+    ],
+    "training_started": false,
+    "scores_computed": false,
+    "artifacts_created": false,
+    "interpretation": "operational infrastructure ineligibility only; not an experimental result"
+  },
+  "promotion": {
+    "h200_cost_gate_observed": false,
+    "full_lstm_sae_anchor_eligible": false,
+    "reason": "The sole approved H200 pilot could not enter the partition, so the required <=72-hour projection was not observed. The measured A16 projection remains above the gate."
+  },
+  "next_decision": "stop_without_full_anchor_and_discuss_whether_to_seek_hardware_authorization_or_redefine_the_compute_budget"
 }

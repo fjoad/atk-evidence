@@ -1763,6 +1763,27 @@ and repeated experiments determine technical conclusions.
   [promotion contract](../studies/atk-2022-deep-autoencoder/LSTM_SAE_ANCHOR_PROMOTION.md),
   [cost record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_anchor_cost_20260901.json).
 
+### H200 cost pilot blocked before execution — 2026-09-01
+
+- **Attempt:** exact frozen commit `93ecd0d` was synchronized to Panther and
+  job `385602` requested one H200 for at most two hours.
+- **Observed infrastructure state:** the account association exposes only QOS
+  `gpulimit`; the H200 partition accepts dedicated H200 QOS values. Slurm held
+  the job as not permitted. It was canceled with zero elapsed GPU time.
+- **Scientific boundary:** no model was built, no epoch ran, and no score or
+  experimental artifact exists. This is operational `X`, not `N`, `M`, or `A`
+  evidence and not a stronger claim about the paper.
+- **Decision:** the H200 promotion gates were not measured. Because the only
+  measured A16 projection remains above 72 hours, the conditional full
+  LSTM-SAE anchor is not eligible under the frozen plan.
+- **Remaining choices:** obtain authorized faster hardware, change the declared
+  compute ceiling, or define an explicitly partial run. Each would require a
+  new prospective decision.
+- **Sources:**
+  [operational finding](../studies/atk-2022-deep-autoencoder/H200_COST_FINDING.md),
+  [cost record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_anchor_cost_20260901.json),
+  [completed plan](plans/2026-09-01-lstm-sae-anchor-promotion.md).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

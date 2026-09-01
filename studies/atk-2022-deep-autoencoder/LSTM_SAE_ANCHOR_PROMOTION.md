@@ -2,8 +2,10 @@
 
 **Date:** 2026-09-01
 
-**Status:** approved for one operational H200 cost pilot. The full anchor is
-conditional on the frozen promotion gates below.
+**Status:** closed without promotion. The approved H200 pilot was submitted as
+job `385602`, but the account's `gpulimit` QOS is not permitted on the H200
+partition. It consumed zero GPU time and produced no experimental result. The
+full anchor remains ineligible under the frozen promotion gates below.
 
 **Local freeze gate:** all 256 repository tests (140 study and 116 root),
 strict data verification, Python compilation, shell syntax, and whitespace
@@ -80,3 +82,12 @@ GPU count, memory, timeout, or change model/data/training semantics. If all
 pass, freeze a separate full-anchor implementation and wrapper, pass the full
 repository/data gates, and launch one watched 72-hour attempt. No result from
 the cost pilot is numerical paper evidence.
+
+## Observed operational outcome
+
+The exact frozen commit was synchronized and submitted once. Slurm held job
+`385602` with “Job's QOS not permitted to use this partition.” The account
+association exposes only `gpulimit`, whereas the partition lists dedicated
+H200 QOS values. The job was canceled with zero elapsed compute. No gate above
+was measured, so the conditional full-anchor route did not open. See
+`H200_COST_FINDING.md` and `results/lstm_sae_anchor_cost_20260901.json`.

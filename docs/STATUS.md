@@ -11,20 +11,23 @@ a conditional continuation within
 
 ## Current project state
 
-- **LSTM-SAE full-anchor promotion is conditional on a new hardware cost
-  check:** the preserved A16 pilot projects approximately 42.79 hours for the
+- **LSTM-SAE full-anchor promotion closed without a run:** the preserved A16
+  pilot projects approximately 42.79 hours for the
   minimum ten epochs and 417.14 hours for the possible 100 epochs under the
   frozen 1.5-times formula. It therefore fails the existing 72-hour full-anchor
   gate. The user approved carrying out the proposed costing and anchor only if
-  affordable. One at-most-two-hour, single-H200 timing pilot is now governed by
-  [`LSTM_SAE_ANCHOR_PROMOTION.md`](../studies/atk-2022-deep-autoencoder/LSTM_SAE_ANCHOR_PROMOTION.md).
-  It changes no data, model, batch, optimizer, seed, or GPU count and cannot
-  produce numerical paper evidence. The original `1e-6` score failure remains
-  preserved; the new adaptive decision-level rule is explicit. Launch the
-  72-hour anchor only if every cost-pilot gate passes; otherwise stop.
-  The frozen implementation passes all 256 repository tests (140 study and 116
-  root), strict data verification, compilation, shell syntax, and whitespace
-  checks. Historical paper-facing source hashes remain exact.
+  affordable. The at-most-two-hour, single-H200 timing pilot governed by
+  [`LSTM_SAE_ANCHOR_PROMOTION.md`](../studies/atk-2022-deep-autoencoder/LSTM_SAE_ANCHOR_PROMOTION.md)
+  was submitted once as job `385602` at exact commit `93ecd0d`. Slurm held it
+  because the account's `gpulimit` QOS is not permitted on the H200 partition;
+  it was canceled with zero elapsed GPU time. No model, epoch, score, or
+  experimental artifact was produced. Because the required faster-hardware
+  projection was not observed and the A16 projection fails, the frozen rule
+  blocks the full anchor. This is infrastructure ineligibility, not evidence
+  about the paper. See the
+  [`finding`](../studies/atk-2022-deep-autoencoder/H200_COST_FINDING.md).
+  Continuing requires a new choice about hardware authorization, compute
+  ceiling, or an explicitly partial run.
 
 - **Implausibility/fabrication language clarified:** systematic failure over a
   finite faithful completion and search envelope can warrant “highly
@@ -630,15 +633,14 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Discuss the new, locally saved Sigmoid findings: the printed 0.58 cutoff
-   still fails, but the complete-evaluation bound no longer excludes the target
-   with a changed cutoff. The original-row limit must not be generalized across
-   the synthetic benign evaluation population.
-2. Decide whether a tiny properly trained Sigmoid comparison could distinguish
-   the remaining explanations. No learned model has yet realized the bound's
-   opening; failure of two label-blind rules does not rule training out.
-3. Stop experimental execution and public updates pending discussion. No
-   further training, seed, branch, report edit, or push is approved.
+1. Discuss the H200 infrastructure ineligibility and choose whether to seek an
+   authorized faster partition, change the 72-hour compute ceiling, or define a
+   clearly labeled partial anchor.
+2. Do not launch the full LSTM-SAE on the A16: its frozen worst-case projection
+   is about 417.14 hours, so it does not satisfy the approved gate.
+3. Stop experimental execution and public updates pending that decision. No
+   FC-VAE, LSTM-VAE, AEA, mechanism wave, table fit, seed, or publication is
+   approved under the completed promotion plan.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

@@ -121,6 +121,13 @@ operational `X`; the full `CR-ISET-LSTMSAE-01` anchor launches only if the new
 100-epoch projection and every other gate pass. This is not authorization for
 another model or a partial anchor.
 
+The frozen H200 pilot was submitted as job `385602`, but the account's only
+QOS is not permitted on the H200 partition. It was canceled while pending with
+zero GPU time and produced no model result. Because the required timing gate
+was not observed and the A16 projection fails, the conditional full anchor is
+not launched. See `H200_COST_FINDING.md`; a new resource or budget decision is
+required before Phase C continues.
+
 ## D. Mechanism program - pending Table III anchors
 
 Run the predeclared matched FC/LSTM comparison and temporal-structure

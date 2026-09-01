@@ -48,8 +48,10 @@ frozen seeds only after one complete anchor.
 **Current operational update, 2026-09-01:** the two-epoch exact-cache pilot
 improved objective from 1.5899 to 1.4972 and therefore does not show a plateau.
 Its A16 timing projects to 42.79 hours for ten epochs and 417.14 hours for the
-100-epoch ceiling. One unchanged-method H200 cost pilot is pending; it tests
-affordability, not whether optimization would ultimately rescue performance.
+100-epoch ceiling. The unchanged-method H200 cost pilot did not execute:
+Slurm job `385602` was held because the account QOS is not permitted on the
+partition and was canceled with zero GPU time. Affordability on H200 therefore
+remains unmeasured; this does not update the optimization explanation.
 
 **Feeds:** `N` implementation/failure interpretation, `M` matched-fitting test,
 `A` learning-curve envelope.
@@ -268,8 +270,9 @@ would still not establish universal impossibility.
 The recurrent two-epoch score recovery adds no plateau: its fixed pilot scores
 remain far below the target and batch arithmetic does not rescue them, but the
 training objective was still improving. The A16 full-anchor projection exceeds
-the approved budget; the predeclared H200 cost pilot will decide whether one
-clean-reader LSTM-SAE learning curve is operationally attainable.
+the approved budget. The predeclared H200 cost pilot could not enter the
+partition because the account lacks an allowed QOS, so no new learning curve
+was produced and the full anchor was not promoted.
 
 ## Ordered test map
 
