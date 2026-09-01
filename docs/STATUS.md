@@ -9,7 +9,21 @@
 
 ## Current project state
 
-- **Four-model feasibility instrument in local verification:** the user accepted
+- **First four-model feasibility wave stopped at the checksum manifest gate:**
+  jobs `385544`--`385547` all failed before model construction because the
+  prepared cache metadata omits a checksum entry for `table_iv_order.npy`.
+  The file is present and its directly observed SHA-256, `f5acf853...f351643`,
+  exactly matches the eligible FC-SAE anchor's audited record. This is an
+  instrument manifest-source defect, not evidence of corrupt data or a model
+  outcome. Across all four jobs, zero models were built, zero training updates
+  occurred, and zero scores were calculated; allocation exposure was about
+  0.077 GPU-hours. Preserve the identical remote logs and see
+  [`REMAINING_PILOT_FINDING.md`](../studies/atk-2022-deep-autoencoder/REMAINING_PILOT_FINDING.md).
+  Stop for discussion. The narrow proposed repair retains byte verification but
+  permits the committed audited anchor result to supply an expected hash when
+  the matching cache metadata lacks one. Do not repair or resubmit yet.
+
+- **Four-model feasibility instrument frozen at `0ca6cc4`:** the user accepted
   all five choices in the remaining-paper checkpoint on 2026-09-01. The new
   `remaining-paper-v1` implementation is isolated in
   `reproduction/remaining_models.py`, so the earlier Sigmoid result's recorded
@@ -25,8 +39,8 @@
   10/100-epoch projection. All 243 deterministic tests pass (140 study, 103
   root), including historical-source hash guards, and the strict verifier
   selects the complete ScienceDB semantic-equivalence branch. No pilot or paper
-  result has run yet. Freeze and push the implementation commit, then submit
-  exactly four `gpu-short` jobs through the pilot-only wrapper.
+  result has run yet. The commit is pushed and synchronized to Panther; the
+  first pilot wave's preflight outcome is recorded above.
 
 - **Full-site publication complete:** the user
   requested publishing the two completed Sigmoid follow-ups across the full

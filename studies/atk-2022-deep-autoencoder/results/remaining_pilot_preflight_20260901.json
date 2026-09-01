@@ -1,0 +1,55 @@
+{
+  "status": "failed_preflight",
+  "date": "2026-09-01",
+  "eligibility": "operational_X_not_N_M_or_A",
+  "git_commit": "0ca6cc4737d37f5d87a7dc156a1b06ea7ca88730",
+  "jobs": [
+    {
+      "job_id": 385544,
+      "model": "lstm_sae",
+      "node": "crirdcmgpu002",
+      "elapsed_seconds": 93,
+      "exit_code": "1:0"
+    },
+    {
+      "job_id": 385545,
+      "model": "fc_vae",
+      "node": "crirdcmgpu002",
+      "elapsed_seconds": 93,
+      "exit_code": "1:0"
+    },
+    {
+      "job_id": 385546,
+      "model": "lstm_vae",
+      "node": "crimv3srv041",
+      "elapsed_seconds": 46,
+      "exit_code": "1:0"
+    },
+    {
+      "job_id": 385547,
+      "model": "lstm_aea",
+      "node": "crimv3srv041",
+      "elapsed_seconds": 46,
+      "exit_code": "1:0"
+    }
+  ],
+  "total_gpu_seconds": 278,
+  "models_built": 0,
+  "training_updates": 0,
+  "scores_calculated": 0,
+  "common_error": "prepared metadata omits the checksum for table_iv_order.npy",
+  "prepared_metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+  "eligible_anchor_result": {
+    "path": "studies/atk-2022-deep-autoencoder/results/clean_reader_anchor_20260831/result.json",
+    "sha256": "ae07b42ef6c84242ca9b39db8b8828694d6d4df6859abdee090fc0a613a69154",
+    "recorded_table_iv_order_sha256": "f5acf853f2efdcc5e237cdf137cd17590fc0712f8151798de65f5b034f351643"
+  },
+  "observed_table_iv_order_sha256": "f5acf853f2efdcc5e237cdf137cd17590fc0712f8151798de65f5b034f351643",
+  "remote_log_sha256": {
+    "385544": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862",
+    "385545": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862",
+    "385546": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862",
+    "385547": "f45ab54fb1a6c22bff45a2dfdf955f814a58348ed77de3b9a2ca072a90bfb862"
+  },
+  "decision": "stop_for_discussion_before_repair_or_retry"
+}

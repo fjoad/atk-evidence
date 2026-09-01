@@ -81,7 +81,14 @@ operational pilots, not full anchors.
 Local verification is complete: 140 study tests and 103 root/public tests pass,
 the strict data verifier selects the complete ScienceDB semantic-equivalence
 branch, and the historical source hash guard passes. Commit/push and exact
-Panther synchronization remain before submission.
+Panther synchronization were required before submission.
+
+Commit `0ca6cc4` was pushed and synchronized. The first four jobs
+(`385544`--`385547`) all stopped at the same pre-model checksum gate because
+cache metadata omits `table_iv_order.npy`'s checksum. The file's observed hash
+matches the eligible anchor record exactly. No model was built or scored. See
+`REMAINING_PILOT_FINDING.md`; stop for discussion before the proposed narrow
+manifest-source repair and any new immutable attempts.
 
 ## D. Mechanism program - pending Table III anchors
 

@@ -37,8 +37,15 @@ all 12,119 rows and exercises MC1/10/100 on 256 interface rows; the primary
 full anchor must still perform the contract's 12,119-row MC stability check.
 All 243 deterministic tests pass (140 study, 103 root), the historical model
 source hash remains exact, and strict data verification selects the complete
-ScienceDB semantic-equivalence branch. No pilot has run yet; commit before
-Panther sync.
+ScienceDB semantic-equivalence branch. Frozen/pushed commit `0ca6cc4` was
+synchronized to Panther. Jobs `385544`--`385547` then all stopped before model
+construction: cache `metadata.json` omits the expected checksum entry for
+`table_iv_order.npy`. Its actual hash exactly matches the eligible anchor's
+committed record, so this is a manifest-source bug, not corrupt data. Zero
+models/updates/scores; 278 GPU-seconds total. Preserve
+`REMAINING_PILOT_FINDING.md` and
+`results/remaining_pilot_preflight_20260901.json`. Discuss the narrow
+anchor-manifest fallback before any code repair or retry.
 
 **Newest completed work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see
