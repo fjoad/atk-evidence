@@ -96,6 +96,30 @@ class RemainingScoreRecoveryTests(unittest.TestCase):
         self.assertNotIn("fc_vae)", wrapper)
         self.assertNotIn("lstm_aea)", wrapper)
 
+    def test_execution_record_preserves_the_bounded_outcome(self) -> None:
+        record = json.loads(
+            (STUDY / "results/recurrent_score_recovery_20260901.json").read_text()
+        )
+        jobs = {job["model"]: job for job in record["jobs"]}
+        self.assertEqual(record["eligibility"], "operational_X_not_N_M_or_A")
+        self.assertTrue(record["common"]["no_training"])
+        self.assertFalse(record["audit"]["original_score_gate_rewritten"])
+        self.assertEqual(jobs["lstm_sae"]["maximum_printed_cutoff_label_changes"], 0)
+        self.assertEqual(jobs["lstm_vae"]["maximum_printed_cutoff_label_changes"], 0)
+        self.assertEqual(
+            jobs["lstm_sae"]["maximum_fixed_threshold_transfer_label_changes"], 1
+        )
+        self.assertEqual(
+            jobs["lstm_vae"]["maximum_fixed_threshold_transfer_label_changes"], 1
+        )
+        self.assertAlmostEqual(
+            jobs["lstm_vae"]["maximum_auc_delta_percentage_points"],
+            2.1792189684788354e-05,
+        )
+        finding = (STUDY / "REMAINING_SCORE_RECOVERY_FINDING.md").read_text()
+        self.assertIn("near decision-invariance, not exact invariance", finding)
+        self.assertIn("It is **not** a Table-III reproduction result", finding)
+
 
 if __name__ == "__main__":
     unittest.main()

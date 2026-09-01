@@ -104,6 +104,15 @@ with a 1,879.93-hour conservative estimate. All saved arrays and transferred
 artifact hashes passed audit. Stop for discussion before promoting FC-VAE or
 changing any failed gate. See `REMAINING_FEASIBILITY_FINDING.md`.
 
+After that discussion, the user approved exactly two score-only recoveries for
+the preserved recurrent weights. Jobs `385583` and `385584` completed `0:0`
+without training. Printed-cutoff labels and metrics, best balanced accuracy,
+and FA-capped outcomes were stable across batches; VAE AUC moved by at most
+`0.0000217922` percentage points. Literal transfer of a batch-256 ROC cutoff
+can flip one boundary row. The original gate has not been replaced. See
+`REMAINING_SCORE_RECOVERY_FINDING.md`; stop for discussion before promotion or
+another Phase-C run.
+
 ## D. Mechanism program - pending Table III anchors
 
 Run the predeclared matched FC/LSTM comparison and temporal-structure

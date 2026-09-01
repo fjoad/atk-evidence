@@ -63,17 +63,20 @@ The complete resolver also exposed missing metadata entries for
 `test_attack_id.npy` and `test_source_row.npy`; the same exact anchor supplied
 all three absent hashes and the actual bytes matched.
 
-**Current approved action:** score-only recovery for the preserved LSTM-SAE and
-LSTM-VAE attempts, governed by `REMAINING_SCORE_RECOVERY.md` and
-`docs/plans/2026-09-01-recurrent-score-recovery.md`. Score batches
-256/128/64/32 on the same 12,119 rows; record score drift, printed-cutoff label
-changes, complete metrics, ROC envelopes, and fixed-threshold transfer. No
-training, FC-VAE anchor, AEA change, gate replacement, or publication. Stop for
-discussion after both results and audits.
-The frozen implementation passed all 251 repository tests (140 study plus 111
-root), strict data verification, Python compilation, shell syntax checking, and
-the whitespace gate. The original implementation and feasibility-record hashes
-remain exact.
+**Newest result; discussion required:** the approved score-only recovery is
+complete. Jobs `385583` (LSTM-SAE) and `385584` (LSTM-VAE) ran commit
+`43abc09`, completed `0:0`, and used no training. Across score batches
+256/128/64/32, printed-cutoff labels and metrics were identical. SAE's ROC
+summary was identical. VAE AUC moved at most `0.0000217922` percentage points;
+best balanced accuracy and FA-capped DR/FA stayed identical. An exact
+batch-256 ROC cutoff transferred to another batch can change one boundary row,
+so preserve “near decision-invariance,” not absolute invariance. The original
+`1e-6` all-score gate remains failed and unchanged. All transferred hashes,
+array shapes, and finite checks passed; 227 GPU-seconds total. Post-result
+verification passes all 252 tests (140 study and 112 root) and the strict data
+gate. See
+`REMAINING_SCORE_RECOVERY_FINDING.md` and the completed bounded plan. Stop
+before gate replacement, promotion, retraining, FC-VAE, AEA, or publication.
 
 **Earlier completed Sigmoid work:** the user requested testing Sigmoid plus another
 cutoff. The bounded paired fit is complete and stopped for discussion; see

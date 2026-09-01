@@ -5,22 +5,28 @@
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md)
+[`plans/2026-09-01-recurrent-score-recovery.md`](plans/2026-09-01-recurrent-score-recovery.md),
+a completed bounded step within
+[`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md).
 
 ## Current project state
 
-- **Recurrent score-only recovery approved and locally verified:** after discussing
-  the feasibility wave, the user approved two cheap diagnostics using the
-  preserved LSTM-SAE and LSTM-VAE weights. The exact contract is
-  [`REMAINING_SCORE_RECOVERY.md`](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY.md).
-  It scores the same 12,119 rows at batches 256/128/64/32 and compares printed
-  decisions, metrics, ROC envelopes, and fixed-threshold transfer. It performs
-  no training and does not relax or replace the original gate. Stop for
-  discussion after both audited results; FC-VAE, AEA, and publication remain
-  untouched. The frozen scorer and wrapper pass all 251 repository tests (140
-  study tests and 111 root tests), strict data verification, Python compilation,
-  shell syntax checking, and `git diff --check`. The original paper-facing
-  implementation and committed feasibility-record hashes remain unchanged.
+- **Recurrent score-only recovery complete; stop for discussion:** jobs
+  `385583` and `385584` reloaded the exact preserved LSTM-SAE and LSTM-VAE
+  weights and scored the same 12,119 rows at batches 256/128/64/32. No training
+  occurred. At the printed cutoffs, no labels or metrics changed across any
+  batch. LSTM-SAE's ROC envelope was identical; LSTM-VAE's maximum AUC drift
+  was `0.0000217922` percentage points, with identical best balanced accuracy
+  and FA-capped DR/FA. Transferring an exact batch-256 ROC cutoff can flip one
+  boundary row, so the result is near decision-invariance rather than universal
+  exact invariance. The original all-score `1e-6` failures remain preserved;
+  promotion requires a prospective rule discussed with the user. Both jobs
+  completed `0:0`, all hashes/shapes/finite checks pass, and exposure was 227
+  GPU-seconds. Post-result verification passes all 252 repository tests (140
+  study and 112 root) plus the strict data gate. See the
+  [`finding`](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY_FINDING.md).
+  Do not retrain, promote, publish, launch FC-VAE, or change AEA before this
+  discussion.
 
 - **Remaining-model feasibility wave complete; stop for discussion:** new
   immutable jobs `385552`--`385555` ran exact commit `052ac37` after the

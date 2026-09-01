@@ -1703,6 +1703,42 @@ and repeated experiments determine technical conclusions.
   [finding](../studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md),
   [records](../studies/atk-2022-deep-autoencoder/results/sigmoid_fit_20260831/).
 
+### Recurrent feasibility score differences at decision level — 2026-09-01
+
+- **Former status:** LSTM-SAE and LSTM-VAE completed both feasibility epochs
+  but remained blocked by the frozen absolute `1e-6` all-score batch-agreement
+  gate. Whether the observed floating-point drift changed a classification or
+  performance conclusion was unknown.
+- **New operational `X` evidence:** jobs `385583` and `385584` reloaded the
+  exact saved weights and the same 12,119 score rows, with no training, and
+  evaluated batches 256/128/64/32. Largest primary-score differences were
+  `2.0113942e-5` for LSTM-SAE and `3.0121445e-5` for LSTM-VAE. At the printed
+  cutoffs, all labels and seven metrics were identical across every batch.
+- **ROC result:** SAE's AUC, best balanced accuracy, and FA-capped optima were
+  identical. VAE AUC drifted by at most `0.0000217922` percentage points;
+  best balanced accuracy and the best DR/FA at FA<=15% and <=15.5% remained
+  identical. Literal batch-256 cutoff transfer can flip one boundary row, so
+  the evidence supports near decision-invariance, not exact invariance for
+  every threshold.
+- **Current interpretation:** batch arithmetic does not explain or rescue the
+  poor scores of these two saved pilots. The finding is sufficient to discuss
+  a prospective decision-level feasibility rule, but the original all-score
+  gate remains a preserved failure. No promotion follows automatically.
+- **Limits:** the weights came from truncated two-epoch pilot fits. Their large
+  gap from the paper target is context, not a Table-III numerical reproduction,
+  mechanism result, plateau, all-weights limit, or general-population claim.
+- **Integrity and stop:** both jobs completed `0:0`; source/input/artifact
+  hashes, shapes, and finite checks passed. Total exposure was 227 GPU-seconds.
+  Stop before gate replacement, promotion, retraining, FC-VAE, AEA, mechanism
+  work, or publication.
+- **Verification:** all 252 post-result repository tests (140 study and 112
+  root) and strict data verification pass; original implementation and source
+  record hashes remain exact.
+- **Sources:**
+  [frozen contract](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY.md),
+  [finding](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY_FINDING.md),
+  [execution record](../studies/atk-2022-deep-autoencoder/results/recurrent_score_recovery_20260901.json).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

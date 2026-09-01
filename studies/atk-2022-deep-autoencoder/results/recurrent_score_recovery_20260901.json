@@ -1,0 +1,144 @@
+{
+  "status": "discussion_required",
+  "date": "2026-09-01",
+  "eligibility": "operational_X_not_N_M_or_A",
+  "contract": "remaining-score-recovery-v1",
+  "diagnostic_commit": "43abc093e35a57e219a019156d9924e5f4c52f10",
+  "source_commit": "052ac373b77786ad58829b0ffe35568e971bb92d",
+  "source_record_sha256": "ab1f62e32956e0160d5251ecf7bdbb95a4f64cde56378eb4bc2590c524ea2d79",
+  "common": {
+    "no_training": true,
+    "score_rows": 12119,
+    "benign_rows": 5975,
+    "malicious_rows": 6144,
+    "score_batches": [256, 128, 64, 32],
+    "fa_caps_percent": [15.0, 15.5],
+    "contract_sha256": "b116922024604ee8380a76fa455eabef55573489da4bb5fbff379b7e19311478",
+    "script_sha256": "add6cf827d670db55bce67b51083722d12603b80384ae29d766c8515f1c7d57e",
+    "prepared_metadata_sha256": "5f3e9d8ea038f8dddede879f73f420a679124cd24a5d2311a2e7e4838a9e869e",
+    "source_selection_sha256": "5e9a718e6012645296b725ee9e898d5e0cf9542f5d12a1960efa77a3d620e93a",
+    "source_implementation_sha256": {
+      "remaining_models.py": "d0d9c42f3b7c846f6f6f1b579fb9fa3b114e3b523fda84dc86754e57c78cb35d",
+      "run_experiment.py": "5443060ee7fefeeaf37a687371652325303230c371eaa2c8d8c423eb1865436f"
+    }
+  },
+  "jobs": [
+    {
+      "job_id": 385583,
+      "model": "lstm_sae",
+      "node": "crirdcmgpu002",
+      "slurm_state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 74,
+      "scorer_seconds": 53.44396771490574,
+      "source_attempt_id": "5f53ca7217aa",
+      "diagnostic_attempt_id": "da115decf4b1",
+      "source_weights_sha256": "b26dc72463c75e8e1af73955e7e3021b023a3c80234ea0c20b5218f05ac01b62",
+      "output_directory": "data/derived/atk-2022-deep-autoencoder/reproduction/remaining-paper-v1-results/score_recovery/lstm_sae/source_5f53ca7217aa_da115decf4b1",
+      "maximum_primary_absolute_difference": 2.011394238810027e-05,
+      "maximum_primary_p99_absolute_difference": 3.5801721125494554e-08,
+      "maximum_primary_difference_over_score_range": 6.413602239699731e-07,
+      "maximum_printed_cutoff_label_changes": 0,
+      "maximum_classification_metric_delta_percentage_points": 0.0,
+      "maximum_auc_delta_percentage_points": 0.0,
+      "maximum_best_balanced_accuracy_delta_percentage_points": 0.0,
+      "maximum_independently_optimized_fa_cap_delta_percentage_points": 0.0,
+      "maximum_fixed_threshold_transfer_label_changes": 1,
+      "batch_256_printed": {
+        "threshold": 0.61,
+        "direction": "higher",
+        "DR": 21.761067708333336,
+        "FA": 44.0,
+        "ACC": 38.88053385416667,
+        "F1": 26.449060336300693,
+        "AUC": 36.78040691466178,
+        "best_DR_at_FA_at_most_15": 9.016927083333332,
+        "reversed_best_DR_at_FA_at_most_15": 26.350911458333332
+      },
+      "artifacts_sha256": {
+        "config.json": "e5e36e3c28d70bbabc37e93e19cb93e72ac7a3e48c6475033d602d30f39a8247",
+        "result.json": "824d5c20d486b0943c497cd6dbdf43c0d98c04a9e4d98ae788258c38409f0654",
+        "scores_by_batch.npz": "8d5b18cacb682cff2fb1fe35cd9eac3521bfeff168c4b2e7f008bc6e3767970e",
+        "slurm_log": "d69a55270a13147f96c1c94d007d3afe681985c8b9a1f95697c7e1a49c7d382b"
+      }
+    },
+    {
+      "job_id": 385584,
+      "model": "lstm_vae",
+      "node": "crirdcmgpu002",
+      "slurm_state": "COMPLETED",
+      "exit_code": "0:0",
+      "elapsed_seconds": 153,
+      "scorer_seconds": 133.40203277766705,
+      "source_attempt_id": "1d6360ddcead",
+      "diagnostic_attempt_id": "984193611845",
+      "source_weights_sha256": "11953b8dd4b681f27ebbd2a9fb49ff29397577fce1081487b47f4759dcb5344e",
+      "output_directory": "data/derived/atk-2022-deep-autoencoder/reproduction/remaining-paper-v1-results/score_recovery/lstm_vae/source_1d6360ddcead_984193611845",
+      "maximum_primary_absolute_difference": 3.0121444726027846e-05,
+      "maximum_primary_p99_absolute_difference": 1.4246100902859378e-06,
+      "maximum_primary_difference_over_score_range": 3.024761656387606e-05,
+      "maximum_auxiliary_mse_plus_kl_absolute_difference": 0.0006113426847861314,
+      "maximum_printed_cutoff_label_changes": 0,
+      "maximum_classification_metric_delta_percentage_points": 0.0,
+      "maximum_auc_delta_percentage_points": 2.1792189684788354e-05,
+      "maximum_best_balanced_accuracy_delta_percentage_points": 0.0,
+      "maximum_independently_optimized_fa_cap_delta_percentage_points": 0.0,
+      "maximum_fixed_threshold_transfer_label_changes": 1,
+      "batch_256_printed": {
+        "threshold": 0.47,
+        "direction": "lower",
+        "DR": 10.074869791666668,
+        "FA": 17.322175732217573,
+        "ACC": 46.37634702972455,
+        "F1": 15.875865606565787,
+        "AUC": 36.631420523884245,
+        "best_DR_at_FA_at_most_15": 9.244791666666668,
+        "reversed_best_DR_at_FA_at_most_15": 26.529947916666668
+      },
+      "artifacts_sha256": {
+        "config.json": "c2f545dc81d365e7960c6fa4867d92fbdbb991f802bc16f82bd16c1750cf16f6",
+        "result.json": "f1b7c732349425703277bea41c1e724eb2231114a58031e08af19b7500dc9e7d",
+        "scores_by_batch.npz": "a3958ff9a9ac8631402f5c4d9f1212039f30f81da24ca14755b08e46148c15e0",
+        "slurm_log": "c48e6bd66a9e0ddd5aaecca6fea10d353de3a54b9a22788d0c4d4ce97f6534f3"
+      }
+    }
+  ],
+  "fixed_threshold_transfer": {
+    "maximum_changed_labels": 1,
+    "lstm_sae_example": {
+      "view": "printed_FA_at_most_15_batch_256_cutoff",
+      "changed_class": "benign",
+      "batch_256_FA": 14.995815899581592,
+      "other_batch_FA": 14.979079497907948,
+      "DR_unchanged": 9.016927083333332
+    },
+    "lstm_vae_example": {
+      "view": "printed_FA_at_most_15_batch_256_cutoff",
+      "changed_class": "malicious",
+      "batch_256_DR": 9.244791666666668,
+      "other_batch_DR": 9.228515625,
+      "FA_unchanged": 14.995815899581592
+    }
+  },
+  "audit": {
+    "source_identities_match": true,
+    "input_hashes_match": true,
+    "source_implementation_hashes_match": true,
+    "remote_and_local_log_hashes_match": true,
+    "saved_artifact_hashes_match": true,
+    "saved_arrays_have_declared_shapes": true,
+    "all_saved_numeric_arrays_finite": true,
+    "post_result_tests": {
+      "study": 140,
+      "root": 112,
+      "total": 252,
+      "passed": true
+    },
+    "strict_data_verification_passed": true,
+    "original_score_gate_rewritten": false,
+    "total_gpu_seconds": 227,
+    "total_gpu_hours": 0.06305555555555556
+  },
+  "interpretation": "batch differences are operationally negligible for printed-cutoff and ROC-envelope conclusions on these saved weights and rows; one-row effects remain under literal transferred thresholds",
+  "decision": "stop_for_discussion_before_gate_change_promotion_retraining_or_publication"
+}
