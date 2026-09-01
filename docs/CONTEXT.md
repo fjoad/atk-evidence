@@ -1,26 +1,29 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-01
+**Last updated:** 2026-09-02
 
 **Newest direction; paper time is the budget:** the user explicitly rejected
 faster or additional GPUs as a rescue. Table IV reports 183 minutes for
 full-ISET LSTM-SAE training while omitting hardware, GPU count, epochs, batch,
 versions, stopping, timing boundary, and repetitions. Contemporaneous primary
-records place K80/V100 devices in the plausible institutional range. An
-official Raad2 GPU guide contains an account prompt closely matching the first
-author and Raad2 uses V100s; this supports access, not proof of the paper's
-device. Freeze exactly one V100-16GB, one seed, batch 32, exact full data/model,
-and 10,980 seconds of fitting followed by full scoring. No H200/A100,
-multi-GPU, retry, or longer fit. See `PAPER_TIME_BUDGET_CONTRACT.md` and
+Texas A&M records place K80/V100 devices in the plausible available range but
+do not identify the paper's actual device. Freeze exactly one V100-16GB, one
+seed, batch 32, exact full data/model, and 10,980 seconds of fitting followed
+by full scoring. No H200/A100, multi-GPU, retry, or longer fit. See
+`PAPER_TIME_BUDGET_CONTRACT.md` and
 `docs/plans/2026-09-01-paper-time-budget.md`.
 
-**Live execution:** the frozen paper-time runner was committed as `46f0ddd`
-after 261 tests and strict data verification. Panther Slurm job `385632`
-started 2026-09-01 15:20:59 Asia/Qatar on one V100-16GB. Its initial
-configuration artifact matches the frozen commit, data cardinalities, source
-hashes, batch 32, seed 20260824, and 10,980-second fit budget; training entered
-epoch 1. Do not submit a retry. After completion, transfer and audit the
-artifacts and discuss the result before any website change.
+**Newest completed result; discussion required:** the frozen paper-time runner
+at `46f0ddd` completed as Panther job `385632` on one V100-16GB. The exact
+183-minute fit completed 1.268 epoch-equivalents. Printed-cutoff DR/FA/AUC are
+16.62%/31.91%/40.30%; at `FA<=13%`, maximum DR is 7.00% in the paper direction
+and 23.02% reversed, versus the reported 85%. No cutoff recovers the corner.
+All 8,884,989 finite scores, hashes, counts, and AUCs passed independent audit.
+One V100 epoch took 143.883 minutes; ten project to 23.98 hours, 7.86 times the
+paper budget. Loss still declined, so preserve bounded time/completion and
+“ordinary additional training is implausible,” not unlimited-time
+impossibility. See `PAPER_TIME_BUDGET_FINDING.md`. Do not submit a retry or
+change the website before discussion.
 
 **Superseded hardware-promotion result:** after discussing what would make a
 result highly implausible versus fabricated, the user authorized the proposed

@@ -1,4 +1,5 @@
 import importlib.util
+import json
 import os
 from pathlib import Path
 import unittest
@@ -17,6 +18,13 @@ WRAPPER = (
 )
 CONTRACT = (
     ROOT / "studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md"
+)
+FINDING = (
+    ROOT / "studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md"
+)
+RESULT = (
+    ROOT
+    / "studies/atk-2022-deep-autoencoder/results/lstm_sae_paper_time_20260901.json"
 )
 
 
@@ -68,6 +76,24 @@ class LstmSaePaperTimeTests(unittest.TestCase):
         envelope = self.module.score_envelope(labels, scores, direction="higher")
         self.assertFalse(envelope["reported_corner_reached"])
         self.assertFalse(envelope["rounded_corner_reached"])
+
+    def test_completed_record_preserves_exact_bounded_result(self):
+        record = json.loads(RESULT.read_text())
+        self.assertEqual(record["status"], "completed_audited_discussion_required")
+        self.assertEqual(record["execution"]["slurm_job_id"], "385632")
+        self.assertAlmostEqual(record["execution"]["fit_seconds"], 10980.464234024286)
+        self.assertAlmostEqual(record["observed"]["printed_cutoff"]["DR"], 16.615274778992685)
+        self.assertAlmostEqual(record["observed"]["reversed_direction_DR_at_FA_13"], 23.020524343771104)
+        self.assertFalse(record["observed"]["reported_corner_reached_at_any_cutoff"])
+        self.assertTrue(record["post_run_audit"]["all_scores_finite"])
+        self.assertTrue(record["post_run_audit"]["artifact_hashes_match"])
+
+    def test_finding_keeps_time_failure_and_unlimited_time_separate(self):
+        text = FINDING.read_text()
+        self.assertIn("No cutoff or score-direction reversal rescues", text)
+        self.assertIn("7.86 times the paper's entire 183-minute budget", text)
+        self.assertIn("Impossible for all training durations", text)
+        self.assertIn("earned by these checkpoints", text)
 
 
 if __name__ == "__main__":

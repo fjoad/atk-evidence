@@ -1789,11 +1789,9 @@ and repeated experiments determine technical conclusions.
 - **Paper fact:** Table IV reports 183 minutes for full-ISET LSTM-SAE training.
   The paper names Keras Sequential but not hardware, GPU count, epochs, batch,
   versions, stopping rule, timing boundary, or repetitions.
-- **Hardware inference:** official 2020-2021 institutional records expose K80
-  and V100 systems. An official Raad2 GPU guide contains an account prompt
-  closely matching the first author, and Raad2 uses V100 GPUs. This supports
-  access to the system, not that the paper ran there. One V100 is the most
-  charitable specific period-consistent test; multiple GPUs and H200/A100 are
+- **Hardware inference:** official 2020-2021 Texas A&M records expose K80 and
+  V100 systems. The paper does not identify which resource it used. One V100
+  is a favorable period-consistent test; multiple GPUs and H200/A100 are
   excluded.
 - **A16 arithmetic:** 218 seconds for 32,768 rows scales to 166.379 minutes for
   one 1,500,523-row epoch. Thus 183 minutes holds about 1.10 projected A16
@@ -1805,6 +1803,29 @@ and repeated experiments determine technical conclusions.
   [contract](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md),
   [machine record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_paper_time_20260901.json),
   [active plan](plans/2026-09-01-paper-time-budget.md).
+
+### Paper-time LSTM-SAE result — 2026-09-02
+
+- **Question:** can the written full-data LSTM-SAE produce its reported row
+  inside Table IV's 183-minute training time on one favorable V100?
+- **Observed:** the exact clock completed 1.268 epoch-equivalents. At the
+  printed cutoff, DR/FA/AUC are 16.62%/31.91%/40.30%, versus 85%/13%/82%.
+  At `FA<=13%`, maximum DR is 7.00% in the paper direction and 23.02% after
+  reversal. No cutoff recovers the reported corner.
+- **Runtime:** one measured V100 epoch took 143.883 minutes, only 1.16 times
+  faster than the A16 projection. Ten epochs project to 23.98 hours, or 7.86
+  paper-time budgets. The paper itself omits epochs.
+- **Audit:** all 8,884,989 scores are finite; transferred hashes, class counts,
+  confusion counts, and both AUC directions independently reproduce the saved
+  result.
+- **Boundary:** the result is unattainable for this declared completion inside
+  the reported time, and threshold/direction rescue is closed for its fixed
+  scores. Ordinary extra training has no observed trajectory toward the
+  target. Loss still improved, so unlimited-time impossibility and author
+  intent remain unproven.
+- **Sources:**
+  [finding](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md),
+  [machine record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_paper_time_20260901.json).
 
 ## How to add a learning
 

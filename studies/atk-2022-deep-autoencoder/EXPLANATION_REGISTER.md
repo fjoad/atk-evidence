@@ -412,3 +412,32 @@ The user subsequently requested testing the remaining alternative. The
 The finite fitted-model cutoff rescue is closed; the broader Sigmoid
 alternative remains unresolved. All outcomes are local. Stop for discussion
 before publication or any additional experiment.
+
+## Paper-time LSTM-SAE follow-up — 2026-09-02, awaiting discussion
+
+The user approved one exact full-data V100 execution bounded by Table IV's
+183-minute training time. Frozen commit `46f0ddd`, job `385632`, completed and
+passed independent artifact/score audit. See
+[PAPER_TIME_BUDGET_FINDING.md](PAPER_TIME_BUDGET_FINDING.md).
+
+- **Hardware/runtime explanation:** strongly weakened for the declared
+  implementation. A measured full V100 epoch took 143.883 minutes, only 1.16
+  times faster than the A16 projection. Ten epochs project to 23.98 hours, or
+  7.86 paper-time budgets. The paper does not state epochs, so this is a limit
+  on the predeclared completion, not a transcription of an author epoch claim.
+- **Threshold/direction explanation:** closed for the fitted score vector. At
+  `FA<=13%`, maximum DR is 7.00% in the paper direction and 23.02% reversed,
+  versus 85%. No cutoff recovers the reported corner.
+- **Numerical explanation:** the printed row is far away: DR/FA/AUC are
+  16.62%/31.91%/40.30%, versus 85%/13%/82%. This is not seed uncertainty or a
+  rounding-scale discrepancy for the observed model.
+- **Longer training:** ordinary extra time is now implausible as a simple
+  explanation, because the gap is 61.98 DR points even under favorable
+  reversal and the separate two-epoch sample fit shows the same qualitative
+  behavior. Unlimited-time impossibility remains open: loss still decreased
+  and no intermediate full-population ROC checkpoints were saved.
+- **Undocumented procedure/reporting/intent:** unresolved. The result does not
+  identify an author implementation or distinguish an omitted material method
+  from reporting error or fabrication.
+
+Stop before publication, another epoch, seed, model, or table.

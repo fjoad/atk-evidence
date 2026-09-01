@@ -1,5 +1,5 @@
 {
-  "status": "executing",
+  "status": "completed_audited_discussion_required",
   "date": "2026-09-01",
   "contract": "lstm-sae-paper-time-v1",
   "evidence_scope": "time_bounded_N_and_A_for_one_declared_completion",
@@ -23,13 +23,11 @@
   "hardware_inference": {
     "status": "inference_not_author_fact",
     "plausible_period_range": ["NVIDIA K80", "NVIDIA V100"],
-    "strongest_specific_clue": "The official Raad2 GPU guide contains an account prompt closely matching the first author's name; Raad2 GPU nodes use V100s.",
+    "strongest_specific_clue": "Texas A&M exposed K80 and V100 resources during the relevant period; the paper does not identify which resource it used.",
     "selected_test_device": "one NVIDIA V100 16GB",
     "selection_reason": "Use the strongest specific contemporaneous clue without adding GPU count or post-period H200/A100 hardware.",
     "sources": [
       "https://hprc.tamu.edu/files/training/2020/Spring/Intro_to_HPRC_clusters_2020_spring.pdf",
-      "https://rccg.hbku.edu.qa/wiki/Systems",
-      "https://rccl.hbku.edu.qa/wiki/Raad2-gpu/Getting_Started",
       "https://images.nvidia.com/content/Solutions/data-center/vgpu-a16-datasheet.pdf",
       "https://www.nvidia.com/en-gb/data-center/tesla-v100/"
     ]
@@ -74,7 +72,55 @@
     "node": "crimv3mgpu005",
     "gpu_allocation": "one v100_16GB",
     "attempt_id": "b92c9fa92866",
-    "initial_audit": "configuration_identity_passed_and_epoch_1_entered"
+    "initial_audit": "configuration_identity_passed_and_epoch_1_entered",
+    "slurm_state": "COMPLETED",
+    "exit_code": "0:0",
+    "elapsed_seconds": 13403,
+    "fit_seconds": 10980.464234024286,
+    "score_seconds": 2109.5917267501354,
+    "updates": 59464,
+    "complete_epochs": 1,
+    "partial_epoch_fraction": 0.2681054337626887
   },
-  "next_decision": "wait_transfer_audit_then_discuss_before_publication"
+  "observed": {
+    "printed_cutoff": {
+      "DR": 16.615274778992685,
+      "FA": 31.91160963631752,
+      "SP": 68.08839036368248,
+      "PR": 34.87166776001908,
+      "ACC": 42.35183257133758,
+      "F1": 22.506768250821768,
+      "AUC": 40.304733701896616
+    },
+    "paper_direction_DR_at_FA_13": 6.9952905939303855,
+    "reversed_direction_DR_at_FA_13": 23.020524343771104,
+    "reversed_direction_AUC": 59.69526629810338,
+    "reported_corner_reached_at_any_cutoff": false,
+    "paper_direction_smallest_maximum_gap_points": 41.695266298103384,
+    "reversed_direction_smallest_maximum_gap_points": 30.994742930247945,
+    "full_v100_epoch_minutes": 143.8826866419365,
+    "v100_speedup_over_a16_projection": 1.1563503238892292,
+    "projected_v100_10_epoch_hours": 23.980447773656085,
+    "ten_epoch_paper_budget_multiple": 7.862441893001995
+  },
+  "post_run_audit": {
+    "score_rows": 8884989,
+    "score_dtype": "float32",
+    "all_scores_finite": true,
+    "benign_labels": 4380387,
+    "malicious_labels": 4504602,
+    "artifact_hashes_match": true,
+    "confusion_counts_recomputed": true,
+    "auc_recomputed": true,
+    "study_tests_passed": 140,
+    "root_tests_passed": 123,
+    "total_tests_passed": 263,
+    "strict_data_verification": "passed_with_sciencedb_semantic_equivalence",
+    "scores_sha256": "4593437681d36c6565f94ec9e67643dca01c1ae6eea40ac90f3e330974ef942a",
+    "weights_sha256": "bbf45d2751b81b0be0d40acac5de8f37f541982cea244335d3e83245fdee54ce",
+    "slurm_log_sha256": "aae340c8b0fbad8d5bed37d271cf59374cf0d69352d18a613c7c716d3ba49423"
+  },
+  "conclusion": "The reported LSTM-SAE result did not arise from this declared implementation within the paper's 183-minute training budget on one V100. No cutoff or score reversal rescues the fixed fitted scores. Ordinary additional training has no observed trajectory toward the target, but unlimited-time impossibility is not proven.",
+  "finding": "studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md",
+  "next_decision": "discuss_before_publication_or_more_experiment"
 }

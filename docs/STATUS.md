@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-01
+**Last updated:** 2026-09-02
 
 **Branch:** `main`
 
@@ -11,22 +11,26 @@ which supersedes the hardware-promotion plan and remains a continuation within
 
 ## Current project state
 
-- **The single paper-time execution is running:** frozen commit `46f0ddd` is
-  executing as Panther Slurm job `385632`, which started 2026-09-01 15:20:59
-  Asia/Qatar on exactly one V100-16GB. The configuration artifact records the
-  expected 1,500,523 fit rows, 8,884,989 score rows, batch 32, seed 20260824,
-  source hashes, and 10,980-second fit limit. Training entered epoch 1. No
-  retry is authorized. The fitting clock should end at approximately 18:24;
-  full scoring and the fixed-score threshold audit follow outside that clock.
+- **The single paper-time execution is complete and audited:** frozen commit
+  `46f0ddd`, Panther job `385632`, completed `0:0` on one V100-16GB. Exactly
+  183 minutes produced one full epoch plus 26.81% of epoch two. At the printed
+  cutoff, measured DR/FA/AUC were 16.62%/31.91%/40.30%, versus the paper's
+  85%/13%/82%. At `FA<=13%`, the best DR is 7.00% in the paper direction and
+  23.02% after reversal. No one of 7,036,998 score boundaries recovers the
+  reported corner. All 8,884,989 scores are finite; transferred hashes, class
+  counts, confusion counts, and AUCs independently match. A full V100 epoch
+  took 143.883 minutes, only 1.16 times faster than the A16 projection; ten
+  epochs project to 23.98 training hours, or 7.86 paper-time budgets. Loss was
+  still declining, so unlimited-time impossibility is not proven. See
+  [`PAPER_TIME_BUDGET_FINDING.md`](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md).
 
 - **Paper-time LSTM-SAE run is frozen on one contemporaneous GPU:** the
   user rejected faster or additional hardware as a rescue. Table IV reports
   183 minutes for full-ISET LSTM-SAE training, but the paper omits hardware,
   GPU count, epochs, batch, versions, stopping, timing boundary, and repeats.
-  Contemporaneous institutional records place K80 and V100 devices in the
-  plausible range; an official Raad2 guide contains an account prompt closely
-  matching the first author, and Raad2's GPU nodes are V100s. That supports
-  access, not use in the unpublished experiment. The new contract therefore
+  Contemporaneous Texas A&M records place K80 and V100 devices in the
+  plausible available range without identifying the unpublished run's actual
+  device. The contract therefore
   allows exactly one V100-16GB, exact full clean-reader data/model, batch 32,
   seed 20260824, and 10,980 seconds of fitting followed by fresh reload and
   complete scoring. It forbids H200/A100, multiple GPUs, retries, and a longer
@@ -662,10 +666,9 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Let Panther Slurm job `385632` complete without intervention. No second GPU,
-   newer GPU, retry, seed, or longer fit is allowed.
-2. Transfer and audit the full scores, then stop to discuss the finding before
-   updating the public report. No other model or experiment is approved.
+1. Discuss the completed paper-time finding and its exact conclusion boundary.
+2. Do not update the public report, add a GPU, retry, seed, model, table, or
+   longer budget until that discussion authorizes a next action.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the
