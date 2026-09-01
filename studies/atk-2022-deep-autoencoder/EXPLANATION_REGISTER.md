@@ -53,6 +53,13 @@ Slurm job `385602` was held because the account QOS is not permitted on the
 partition and was canceled with zero GPU time. Affordability on H200 therefore
 remains unmeasured; this does not update the optimization explanation.
 
+**Subsequent time-budget test:** the user rejected newer/additional hardware.
+The paper reports 183 minutes for full-ISET LSTM-SAE training. Contemporaneous
+records support a K80-to-V100 access range, with the strongest specific clue
+favoring V100. One full-data V100 fit capped at exactly that training budget is
+pending. Its learning curve can update E1 only within that declared envelope;
+it cannot establish author hardware or universal optimization behavior.
+
 **Feeds:** `N` implementation/failure interpretation, `M` matched-fitting test,
 `A` learning-curve envelope.
 

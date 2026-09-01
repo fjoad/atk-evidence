@@ -128,6 +128,13 @@ was not observed and the A16 projection fails, the conditional full anchor is
 not launched. See `H200_COST_FINDING.md`; a new resource or budget decision is
 required before Phase C continues.
 
+The user then rejected faster/additional hardware and redirected the audit to
+the paper's own Table-IV time claim. The active continuation is
+`docs/plans/2026-09-01-paper-time-budget.md`: one V100-16GB, one seed, exact
+full LSTM-SAE data/model, and 183 minutes of fitting followed by full scoring.
+Contemporaneous records make V100 the strongest specific hardware clue, but do
+not establish what the authors used. No other Phase-C model is included.
+
 ## D. Mechanism program - pending Table III anchors
 
 Run the predeclared matched FC/LSTM comparison and temporal-structure

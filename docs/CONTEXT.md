@@ -2,8 +2,20 @@
 
 **Last updated:** 2026-09-01
 
-**Newest result; promotion blocked by hardware authorization:** after discussing what would make
-a result highly implausible versus fabricated, the user authorized the proposed
+**Newest direction; paper time is the budget:** the user explicitly rejected
+faster or additional GPUs as a rescue. Table IV reports 183 minutes for
+full-ISET LSTM-SAE training while omitting hardware, GPU count, epochs, batch,
+versions, stopping, timing boundary, and repetitions. Contemporaneous primary
+records place K80/V100 devices in the plausible institutional range. An
+official Raad2 GPU guide contains an account prompt closely matching the first
+author and Raad2 uses V100s; this supports access, not proof of the paper's
+device. Freeze exactly one V100-16GB, one seed, batch 32, exact full data/model,
+and 10,980 seconds of fitting followed by full scoring. No H200/A100,
+multi-GPU, retry, or longer fit. See `PAPER_TIME_BUDGET_CONTRACT.md` and
+`docs/plans/2026-09-01-paper-time-budget.md`.
+
+**Superseded hardware-promotion result:** after discussing what would make a
+result highly implausible versus fabricated, the user authorized the proposed
 prospective LSTM-SAE gate, cost check, and one full anchor if affordable. The
 preserved A16 pilot projects 42.7902 hours for ten epochs and 417.1425 hours for
 100, so it fails the frozen 72-hour gate. The approved single-H200 pilot was
@@ -13,8 +25,9 @@ partition. It was canceled while pending with zero GPU time. No model, epoch,
 score, or artifact was produced. The required projection was therefore not
 observed, so the full anchor was not promoted. This is operational `X`, not
 paper evidence. No other model, mechanism wave, table, seed, or publication is
-included. Discuss hardware authorization, the compute ceiling, or a declared
-partial run before more execution. See
+included. The later paper-time direction closes hardware authorization as a
+next step and replaces it with a fixed, historically plausible time envelope.
+See
 `LSTM_SAE_ANCHOR_PROMOTION.md` and
 `H200_COST_FINDING.md` and
 `docs/plans/2026-09-01-lstm-sae-anchor-promotion.md`. The evidentiary language

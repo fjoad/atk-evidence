@@ -1784,6 +1784,28 @@ and repeated experiments determine technical conclusions.
   [cost record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_anchor_cost_20260901.json),
   [completed plan](plans/2026-09-01-lstm-sae-anchor-promotion.md).
 
+### Paper-time hardware and runtime inference — 2026-09-01
+
+- **Paper fact:** Table IV reports 183 minutes for full-ISET LSTM-SAE training.
+  The paper names Keras Sequential but not hardware, GPU count, epochs, batch,
+  versions, stopping rule, timing boundary, or repetitions.
+- **Hardware inference:** official 2020-2021 institutional records expose K80
+  and V100 systems. An official Raad2 GPU guide contains an account prompt
+  closely matching the first author, and Raad2 uses V100 GPUs. This supports
+  access to the system, not that the paper ran there. One V100 is the most
+  charitable specific period-consistent test; multiple GPUs and H200/A100 are
+  excluded.
+- **A16 arithmetic:** 218 seconds for 32,768 rows scales to 166.379 minutes for
+  one 1,500,523-row epoch. Thus 183 minutes holds about 1.10 projected A16
+  epochs, and the declared ten-epoch completion cannot fit. This does not by
+  itself prove the reported metrics unattainable inside the time budget.
+- **Smallest discriminating action:** one full-data LSTM-SAE fit capped at
+  10,980 seconds on one V100-16GB, then fresh reload and complete scoring.
+- **Sources:**
+  [contract](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md),
+  [machine record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_paper_time_20260901.json),
+  [active plan](plans/2026-09-01-paper-time-budget.md).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

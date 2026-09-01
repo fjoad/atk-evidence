@@ -1,0 +1,71 @@
+{
+  "status": "frozen_pending_execution",
+  "date": "2026-09-01",
+  "contract": "lstm-sae-paper-time-v1",
+  "evidence_scope": "time_bounded_N_and_A_for_one_declared_completion",
+  "paper_claim": {
+    "model": "LSTM-SAE",
+    "training_minutes_full_iset": 183,
+    "table": "Table IV",
+    "printed_page": 4116,
+    "named_software": "Keras Sequential API",
+    "unreported": [
+      "hardware",
+      "gpu_count",
+      "epochs",
+      "batch_size",
+      "software_versions",
+      "stopping_rule",
+      "timing_boundary",
+      "repetitions"
+    ]
+  },
+  "hardware_inference": {
+    "status": "inference_not_author_fact",
+    "plausible_period_range": ["NVIDIA K80", "NVIDIA V100"],
+    "strongest_specific_clue": "The official Raad2 GPU guide contains an account prompt closely matching the first author's name; Raad2 GPU nodes use V100s.",
+    "selected_test_device": "one NVIDIA V100 16GB",
+    "selection_reason": "Use the strongest specific contemporaneous clue without adding GPU count or post-period H200/A100 hardware.",
+    "sources": [
+      "https://hprc.tamu.edu/files/training/2020/Spring/Intro_to_HPRC_clusters_2020_spring.pdf",
+      "https://rccg.hbku.edu.qa/wiki/Systems",
+      "https://rccl.hbku.edu.qa/wiki/Raad2-gpu/Getting_Started",
+      "https://images.nvidia.com/content/Solutions/data-center/vgpu-a16-datasheet.pdf",
+      "https://www.nvidia.com/en-gb/data-center/tesla-v100/"
+    ]
+  },
+  "measured_a16_projection": {
+    "pilot_rows": 32768,
+    "slower_epoch_seconds": 218.0,
+    "full_fit_rows": 1500523,
+    "projected_full_epoch_seconds": 9982.727478027344,
+    "projected_full_epoch_minutes": 166.37879130045573,
+    "projected_epochs_in_183_minutes": 1.099899803759771,
+    "raw_10_epoch_hours": 27.729798550075956,
+    "conclusion": "The predeclared ten-epoch completion cannot fit inside 183 minutes on the measured A16 throughput. This does not prove a performance target impossible."
+  },
+  "frozen_attempt": {
+    "model_contract": "CR-ISET-LSTMSAE-01",
+    "fit_rows": 1500523,
+    "score_rows": 8884989,
+    "seed": 20260824,
+    "batch_size": 32,
+    "fit_seconds_limit": 10980,
+    "gpu_type": "v100_16GB",
+    "gpu_count": 1,
+    "maximum_epochs": 100,
+    "score_after_training_clock": true,
+    "retry_count": 0,
+    "additional_gpu_allowed": false,
+    "h200_or_a100_allowed": false
+  },
+  "pre_run_verification": {
+    "study_tests_passed": 140,
+    "root_tests_passed": 121,
+    "total_tests_passed": 261,
+    "strict_data_verification": "passed_with_sciencedb_semantic_equivalence",
+    "run_experiment_sha256": "5443060ee7fefeeaf37a687371652325303230c371eaa2c8d8c423eb1865436f",
+    "remaining_models_sha256": "d0d9c42f3b7c846f6f6f1b579fb9fa3b114e3b523fda84dc86754e57c78cb35d"
+  },
+  "next_decision": "commit_sync_and_run_exactly_once"
+}

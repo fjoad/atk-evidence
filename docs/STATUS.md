@@ -5,11 +5,32 @@
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-09-01-lstm-sae-anchor-promotion.md`](plans/2026-09-01-lstm-sae-anchor-promotion.md),
-a conditional continuation within
+[`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md),
+which supersedes the hardware-promotion plan and remains a continuation within
 [`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md).
 
 ## Current project state
+
+- **Paper-time LSTM-SAE run is frozen on one contemporaneous GPU:** the
+  user rejected faster or additional hardware as a rescue. Table IV reports
+  183 minutes for full-ISET LSTM-SAE training, but the paper omits hardware,
+  GPU count, epochs, batch, versions, stopping, timing boundary, and repeats.
+  Contemporaneous institutional records place K80 and V100 devices in the
+  plausible range; an official Raad2 guide contains an account prompt closely
+  matching the first author, and Raad2's GPU nodes are V100s. That supports
+  access, not use in the unpublished experiment. The new contract therefore
+  allows exactly one V100-16GB, exact full clean-reader data/model, batch 32,
+  seed 20260824, and 10,980 seconds of fitting followed by fresh reload and
+  complete scoring. It forbids H200/A100, multiple GPUs, retries, and a longer
+  budget. See
+  [`PAPER_TIME_BUDGET_CONTRACT.md`](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md).
+
+- **A16 runtime boundary:** the measured slower pilot epoch scales to 166.379
+  minutes for 1,500,523 fitting rows. The paper's 183 minutes therefore holds
+  about 1.10 projected A16 epochs before scoring. The predeclared ten-epoch
+  completion cannot fit in that time on the measured A16. This is a runtime
+  result, not yet evidence that the metric target is impossible within 183
+  minutes. The time-capped full-data run is needed for that numerical question.
 
 - **LSTM-SAE full-anchor promotion closed without a run:** the preserved A16
   pilot projects approximately 42.79 hours for the
@@ -26,8 +47,8 @@ a conditional continuation within
   blocks the full anchor. This is infrastructure ineligibility, not evidence
   about the paper. See the
   [`finding`](../studies/atk-2022-deep-autoencoder/H200_COST_FINDING.md).
-  Continuing requires a new choice about hardware authorization, compute
-  ceiling, or an explicitly partial run.
+  The later user decision explicitly rejects hardware authorization and a
+  larger GPU count. The new paper-time plan above replaces that route.
 
 - **Implausibility/fabrication language clarified:** systematic failure over a
   finite faithful completion and search envelope can warrant “highly
@@ -633,14 +654,11 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Discuss the H200 infrastructure ineligibility and choose whether to seek an
-   authorized faster partition, change the 72-hour compute ceiling, or define a
-   clearly labeled partial anchor.
-2. Do not launch the full LSTM-SAE on the A16: its frozen worst-case projection
-   is about 417.14 hours, so it does not satisfy the approved gate.
-3. Stop experimental execution and public updates pending that decision. No
-   FC-VAE, LSTM-VAE, AEA, mechanism wave, table fit, seed, or publication is
-   approved under the completed promotion plan.
+1. Commit and synchronize the locally verified single-V100, 183-minute
+   time-bounded LSTM-SAE runner, then execute it exactly once.
+2. No second GPU, newer GPU, retry, seed, or longer fit is allowed.
+3. Transfer and audit the full scores, then stop to discuss the finding before
+   updating the public report. No other model or experiment is approved.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the

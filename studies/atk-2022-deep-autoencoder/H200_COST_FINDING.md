@@ -38,6 +38,12 @@ launched. Continuing would require a new decision: obtain authorized faster
 hardware, increase the compute ceiling, or explicitly define a bounded partial
 run. None of those is silently substituted for the promised full anchor.
 
+**Subsequent decision:** the user rejected faster or additional hardware. The
+separate `PAPER_TIME_BUDGET_CONTRACT.md` instead treats the paper's reported
+183-minute LSTM-SAE training time as the fit budget on one plausible
+contemporaneous V100. That later decision does not change this zero-compute
+H200 record.
+
 ## Boundary
 
 The failed scheduling request says nothing about the truth of the paper's
