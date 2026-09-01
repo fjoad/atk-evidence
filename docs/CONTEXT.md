@@ -13,7 +13,7 @@ by full scoring. No H200/A100, multi-GPU, retry, or longer fit. See
 `PAPER_TIME_BUDGET_CONTRACT.md` and
 `docs/plans/2026-09-01-paper-time-budget.md`.
 
-**Newest completed result; discussion required:** the frozen paper-time runner
+**Newest completed result; publication authorized:** the frozen paper-time runner
 at `46f0ddd` completed as Panther job `385632` on one V100-16GB. The exact
 183-minute fit completed 1.268 epoch-equivalents. Printed-cutoff DR/FA/AUC are
 16.62%/31.91%/40.30%; at `FA<=13%`, maximum DR is 7.00% in the paper direction
@@ -22,8 +22,15 @@ All 8,884,989 finite scores, hashes, counts, and AUCs passed independent audit.
 One V100 epoch took 143.883 minutes; ten project to 23.98 hours, 7.86 times the
 paper budget. Loss still declined, so preserve bounded time/completion and
 “ordinary additional training is implausible,” not unlimited-time
-impossibility. See `PAPER_TIME_BUDGET_FINDING.md`. Do not submit a retry or
-change the website before discussion.
+impossibility. See `PAPER_TIME_BUDGET_FINDING.md`. The result discussion is
+complete. The current HTML report, homepage, and README now explain the full
+row, exhaustive cutoff result, runtime evidence, alternatives, and limits; the
+older PDF is explicitly labeled as ending on 1 September. Do not submit a
+retry or another experiment. Stop after deployment to discuss whether the next
+question should be mechanism, breadth-first remaining-model gates, or a
+longer-time attainability test. Publication verification passes all 265 tests
+(140 study and 125 root), strict data identity, source/link checks, and
+whitespace checks.
 
 **Superseded hardware-promotion result:** after discussing what would make a
 result highly implausible versus fabricated, the user authorized the proposed

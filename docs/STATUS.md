@@ -24,6 +24,17 @@ which supersedes the hardware-promotion plan and remains a continuation within
   still declining, so unlimited-time impossibility is not proven. See
   [`PAPER_TIME_BUDGET_FINDING.md`](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md).
 
+- **The paper-time finding is included in the current public account:** after
+  the required result discussion, the user authorized publication. The current
+  HTML report, homepage, README, and legacy-page warning show the complete
+  seven-metric row, exhaustive cutoff result, measured V100 runtime, plausible
+  explanations, and bounded conclusion. The PDF remains the FC-SAE report
+  through 1 September and is labeled accordingly; it is not represented as
+  containing this newer result. All 265 deterministic tests (140 study and 125
+  root), strict data verification, static links, source references, and
+  whitespace checks pass. Stop after deployment and discuss the next scientific
+  question. No new experiment is authorized by publication.
+
 - **Paper-time LSTM-SAE run is frozen on one contemporaneous GPU:** the
   user rejected faster or additional hardware as a rescue. Table IV reports
   183 minutes for full-ISET LSTM-SAE training, but the paper omits hardware,
@@ -37,12 +48,12 @@ which supersedes the hardware-promotion plan and remains a continuation within
   budget. See
   [`PAPER_TIME_BUDGET_CONTRACT.md`](../studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md).
 
-- **A16 runtime boundary:** the measured slower pilot epoch scales to 166.379
+- **Superseded A16 runtime projection:** the measured slower pilot epoch scales to 166.379
   minutes for 1,500,523 fitting rows. The paper's 183 minutes therefore holds
   about 1.10 projected A16 epochs before scoring. The predeclared ten-epoch
-  completion cannot fit in that time on the measured A16. This is a runtime
-  result, not yet evidence that the metric target is impossible within 183
-  minutes. The time-capped full-data run is needed for that numerical question.
+  completion cannot fit in that time on the measured A16. The subsequent V100
+  execution above supplied the time-capped numerical result; preserve this A16
+  arithmetic only as the earlier comparison, not as the current stopping point.
 
 - **LSTM-SAE full-anchor promotion closed without a run:** the preserved A16
   pilot projects approximately 42.79 hours for the

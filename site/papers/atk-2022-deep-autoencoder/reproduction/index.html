@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Reproducing an electricity-theft detector — ATK Evidence</title>
-  <meta name="description" content="The audited FC-SAE reproduction, conditional Softmax proof, source checks, and the trained Sigmoid result after every cutoff was tested.">
+  <meta name="description" content="Audited FC-SAE and time-bounded LSTM-SAE reproductions, complete cutoff checks, runtime evidence, and explicit conclusion limits.">
   <meta property="og:title" content="Reproducing an electricity-theft detector">
-  <meta property="og:description" content="A documented run reached 40.18% rather than 83%. A Softmax proof excludes the target under fixed assumptions; a small trained Sigmoid model also remained far below it.">
+  <meta property="og:description" content="FC-SAE reached 40.18% rather than 83%. LSTM-SAE reached 16.62% detection rather than 85% inside the paper's reported training time on one V100.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Reproducing an electricity-theft detector">
-  <meta name="twitter:description" content="Paper, code, audited mismatch, conditional output-domain proof, and a trained Sigmoid check with every cutoff enumerated.">
+  <meta name="twitter:description" content="Paper, code, audited FC-SAE and LSTM-SAE mismatches, every-cutoff checks, and measured runtime evidence.">
   <link rel="stylesheet" href="../../../styles.css">
 </head>
 <body>
@@ -22,25 +22,26 @@
     <header>
       <div class="eyebrow">Electricity-theft study · Reproduction and diagnostic follow-up</div>
       <h1>Reproducing an electricity-theft detector</h1>
-      <p class="lede">What happened when we implemented the FC-SAE model described by Takiddin et al. and tested its Table III result on the named Irish electricity data.</p>
-      <p class="meta">Research in progress · Full run completed 30 August 2026 · Diagnostic follow-ups checked 1 September 2026</p>
+      <p class="lede">What happened when we implemented the FC-SAE and LSTM-SAE models described by Takiddin et al. and tested their Table III results on the named Irish electricity data.</p>
+      <p class="meta">Research in progress · FC-SAE run completed 30 August 2026 · LSTM-SAE paper-time run audited 2 September 2026</p>
     </header>
     <section class="abstract" aria-labelledby="abstract">
       <h2 id="abstract">Abstract</h2>
       <p>We implemented the paper's fully connected simple autoencoder (FC-SAE), recording the choices needed where the method was incomplete. The audited run reached 40.18% balanced accuracy rather than 83%. We then bounded the performance of any Softmax reconstruction on the same prepared data: even outputs chosen with knowledge of the labels stay below 50.93%. This excludes a weight, seed, or cutoff change as a rescue under those fixed assumptions. The trained score nevertheless makes small, nonzero improvements over simple controls. The result is a conditional limit on this preparation and scoring combination, not a finding about author intent or every possible interpretation of the paper.</p>
       <p>A return to the source confirmed that Softmax, MSE scoring, and the 0.58 cutoff are explicit. Two additional normalization readings still cap detection below 34% at that cutoff, versus 81% reported. A more permissive Sigmoid range left a different-cutoff rescue mathematically open on the complete evaluation, so we trained one small matched Sigmoid control. Even after enumerating every cutoff, it detected only 9.75% of attacks at at most 15% false alarms, or 25.39% with the score direction reversed. This closes cutoff rescue for that fitted model and sample—not every possible Sigmoid training procedure.</p>
+      <p>We then tested LSTM-SAE inside Table IV's reported 183-minute full-ISET training time on one V100. At the printed cutoff it detected 16.62% of attacks with 31.91% false alarms, versus 85% and 13% reported. At the paper's false-alarm rate, exhaustive cutoff selection recovered only 7.00% detection, or 23.02% after reversing the score. One V100 epoch took 143.88 minutes; ten epochs project to 23.98 hours. This excludes the reported result for this declared implementation inside the reported time. It does not prove unlimited-time impossibility or identify the authors' unpublished procedure.</p>
     </section>
 
     <nav class="contents" aria-label="Report contents"><ol>
       <li><a href="#question">1. Question</a></li><li><a href="#methods">2. Paper to code</a></li><li><a href="#setup">3. Setup</a></li>
       <li><a href="#results">4. Results</a></li><li><a href="#checks">5. Checks</a></li><li><a href="#sandbox">6. Earlier small tests</a></li>
-      <li><a href="#bound">7. Performance bound</a></li><li><a href="#source-assumptions">7a. Source assumptions</a></li><li><a href="#sigmoid-range">7b. Sigmoid range</a></li><li><a href="#sigmoid-fit">7c. Trained Sigmoid</a></li><li><a href="#useful-work">8. Useful work</a></li><li><a href="#explanations">9. Explanations</a></li><li><a href="#limitations">10. Limits</a></li><li><a href="#next">11. Next questions</a></li><li><a href="#references">References</a></li>
+      <li><a href="#bound">7. Performance bound</a></li><li><a href="#source-assumptions">7a. Source assumptions</a></li><li><a href="#sigmoid-range">7b. Sigmoid range</a></li><li><a href="#sigmoid-fit">7c. Trained Sigmoid</a></li><li><a href="#lstm-paper-time">7d. LSTM-SAE in 183 minutes</a></li><li><a href="#useful-work">8. Useful work</a></li><li><a href="#explanations">9. Explanations</a></li><li><a href="#limitations">10. Limits</a></li><li><a href="#next">11. Next questions</a></li><li><a href="#references">References</a></li>
     </ol></nav>
 
     <section aria-labelledby="question">
       <h2 id="question"><span class="section-index">1</span>What are we trying to reproduce?</h2>
       <p>An autoencoder learns to copy its input. In this paper, the input is a day of electricity readings. The proposed detector learns from normal days, then treats a large copying error as evidence of theft. The idea is that an altered day should look unfamiliar and be harder to reconstruct.</p>
-      <p>Takiddin et al. compare five autoencoders and several other detectors. Their simplest proposed model is the fully connected simple autoencoder, or FC-SAE. We began with its result on the Irish Smart Energy Trial data, called ISET in the paper: <strong>Table III, printed page 4116</strong>. This report covers that row only. <a href="#ref-paper">[1]</a></p>
+      <p>Takiddin et al. compare five autoencoders and several other detectors. Their simplest proposed model is the fully connected simple autoencoder, or FC-SAE. We began with its ISET result in <strong>Table III, printed page 4116</strong>. This report now covers that complete FC-SAE row and one separately declared LSTM-SAE reproduction bounded by Table IV's 183-minute training claim. The other proposed-model rows remain incomplete. <a href="#ref-paper">[1]</a></p>
       <p>Our question was whether a reader could implement the written method, state the necessary assumptions, and obtain the reported result. No author implementation was available to us. We did not try configurations until one approached the published number.</p>
     </section>
 
@@ -276,6 +277,48 @@
       <p>At the paper's 0.58 cutoff, this fitted Sigmoid control detected 25.24414% of attacks with 47.02929% false alarms. A label-blind cutoff obtained only from benign calibration data gave 7.12891% detection and 9.92469% false alarms. Neither is the reported pair.</p>
       <div class="note warning"><p><strong>This is not a universal Sigmoid impossibility proof.</strong> Sigmoid's benign calibration MSE improved from 1.61028 after epoch 1 to 1.33863 after epoch 10, and its best checkpoint was the last epoch tested. We have not shown a long-run plateau, a result over other weights or samples, or that more data and training cannot change the ranking. What is proved is narrower: no cutoff rescues these two fitted score vectors on this sampled evaluation.</p></div>
       <p class="meta">Both models completed all 640 requested updates. The small paired analysis took 24.81 seconds; total CPU allocation, including the pilot, startup, and inspection, was 3 minutes 52 seconds. Every initial, selected, and failure outcome is preserved locally with hashes. This control changes the paper's selected output and is exploratory, not Table III reproduction.</p>
+
+      <h3 id="lstm-paper-time">7d. Can LSTM-SAE produce its row inside the paper's reported time?</h3>
+      <div class="note research-question"><p><strong>We asked:</strong> <em>if we give the written LSTM-SAE the full data and exactly Table IV's 183-minute training budget on a favorable period-appropriate GPU, does it produce the reported Table III result?</em></p></div>
+      <p>The paper reports 183 minutes for full-ISET LSTM-SAE training. It identifies Keras Sequential but does not report the hardware, GPU count, epoch count, batch size, software versions, stopping rule, timing boundary, or repetitions. Contemporary Texas A&amp;M records list K80 and V100 resources. We therefore selected <strong>one V100-16GB</strong> as a favorable single-device proxy—never multiple GPUs or newer A100/H200 hardware. Availability is not evidence of which machine the authors actually used. <a href="#ref-paper-time">[12]</a></p>
+      <p>The executable source reading uses the paper's 500- and 300-unit LSTM encoder, 300- and 500-unit decoder, Sigmoid activations, dropout 0.2, Adam, MSE, batch 32, the same 1,500,523 benign fitting profiles and 8,884,989 scored profiles, and seed 20260824. Because the paper does not specify the recurrent decoder schedule, the declared completion puts the final encoder state at the decoder's first step, then zeros, and initializes only the first decoder layer from the encoder state. That choice was frozen before the result. <a href="#ref-paper-time">Paper, code, contract, and finding [12]</a>.</p>
+      <div class="table-wrap"><table id="lstm-paper-time-result">
+        <caption>Table 8d. Complete LSTM-SAE Table III row at the printed high-MSE cutoff of 0.61. Percentages. One V100, one seed, full prepared data, and exactly 183 minutes of fitting.</caption>
+        <thead><tr><th scope="col">Measure</th><th scope="col" class="number">Paper</th><th scope="col" class="number">Our run</th></tr></thead>
+        <tbody>
+          <tr data-lstm="DR"><th scope="row">Detection rate</th><td class="number">85.00</td><td class="number">16.62</td></tr>
+          <tr data-lstm="FA"><th scope="row">False-alarm rate ↓</th><td class="number">13.00</td><td class="number">31.91</td></tr>
+          <tr data-lstm="SP"><th scope="row">Specificity</th><td class="number">87.00</td><td class="number">68.09</td></tr>
+          <tr data-lstm="PR"><th scope="row">Precision</th><td class="number">85.00</td><td class="number">34.87</td></tr>
+          <tr data-lstm="ACC"><th scope="row">Balanced accuracy</th><td class="number">86.00</td><td class="number">42.35</td></tr>
+          <tr data-lstm="F1"><th scope="row">F1</th><td class="number">85.00</td><td class="number">22.51</td></tr>
+          <tr data-lstm="AUC"><th scope="row">AUC</th><td class="number">82.00</td><td class="number">40.30</td></tr>
+        </tbody>
+      </table></div>
+      <p><strong>This is not a small numerical miss.</strong> In the paper's direction the score ranks attacks worse than chance. Reversing the direction improves AUC only to 59.70%.</p>
+      <div class="table-wrap"><table id="lstm-paper-time-envelope">
+        <caption>Table 8e. Exact threshold envelope on the fixed 8,884,989-row score vector. The paper reports 85% detection with 13% false alarms.</caption>
+        <thead><tr><th scope="col">Alarm rule</th><th scope="col" class="number">Best detection at FA ≤13%</th><th scope="col" class="number">Shortfall from 85%</th><th scope="col" class="number">AUC</th></tr></thead>
+        <tbody>
+          <tr><th scope="row">Paper direction: high error means attack</th><td class="number">7.00%</td><td class="number">78.00 points</td><td class="number">40.30%</td></tr>
+          <tr><th scope="row">Favorable diagnostic reversal: low error means attack</th><td class="number">23.02%</td><td class="number">61.98 points</td><td class="number">59.70%</td></tr>
+        </tbody>
+      </table></div>
+      <p>We evaluated all <strong>7,036,998</strong> distinct score boundaries. No cutoff recovers the reported operating point. In the favorable reversed direction, reaching 79.34% detection requires 61.91% false alarms—not 13%. This means threshold selection and score orientation cannot explain the fixed fitted result. A materially different model would have to produce a materially different ranking.</p>
+      <div class="table-wrap"><table id="lstm-paper-time-runtime">
+        <caption>Table 8f. Measured runtime evidence. Scoring and threshold enumeration occurred after the 183-minute fitting clock.</caption>
+        <tbody>
+          <tr><th scope="row">Updates completed in 183 minutes</th><td>59,464: one full epoch plus 26.81% of epoch two</td></tr>
+          <tr><th scope="row">Measured V100 full epoch</th><td>143.88 minutes</td></tr>
+          <tr><th scope="row">Earlier measured-throughput A16 projection</th><td>166.38 minutes per full epoch</td></tr>
+          <tr><th scope="row">Measured V100 advantage</th><td>about 1.16 times faster—not an order-of-magnitude rescue</td></tr>
+          <tr><th scope="row">Ten epochs at measured V100 throughput</th><td>23.98 hours before scoring, or 7.86 paper-time budgets</td></tr>
+          <tr><th scope="row">Full scoring time</th><td>35.16 minutes for 8,884,989 rows</td></tr>
+        </tbody>
+      </table></div>
+      <p>The paper does not report an epoch count. Therefore, the runtime conclusion concerns our predeclared ten-epoch completion: it cannot fit inside 183 minutes on the measured implementation. We do not attribute a ten-epoch claim to the authors.</p>
+      <div class="note warning"><p><strong>What longer training can and cannot explain.</strong> The target is excluded for this implementation inside the paper's time and for every cutoff of the resulting scores. The reconstruction loss was still decreasing, so this is not an unlimited-time impossibility theorem. However, the target would require a 61.98-point detection improvement even after favorable score reversal, a separate two-epoch sampled fit showed the same qualitative behavior, and ten epochs require roughly eight reported-time budgets. Ordinary additional training has no observed trajectory toward the published operating point.</p></div>
+      <p><strong>Our bounded conclusion:</strong> the reported LSTM-SAE result did not arise from this declared implementation within the paper's reported 183-minute training budget on one V100. No cutoff or score-direction reversal rescues the fixed fitted scores. This makes ordinary additional training an implausible explanation; it does not identify an unpublished implementation, reporting error, fabrication, or author intent.</p>
     </section>
 
     <section aria-labelledby="useful-work">
@@ -321,14 +364,15 @@
       <p>The output-domain check closes one large family of explanations: a different seed or better optimization cannot rescue the target while the prepared inputs and Softmax/MSE scoring remain fixed. It does not tell us which assumption differs from the authors' experiment.</p>
       <div class="table-wrap">
         <table>
-          <caption>Table 11. Explanations after the diagnostic and small fitted-Sigmoid rounds. Remaining architecture tests are proposals, not completed results.</caption>
+          <caption>Table 11. Explanations after the FC-SAE diagnostics, fitted-Sigmoid control, and time-bounded LSTM-SAE reproduction.</caption>
           <thead><tr><th scope="col">Possible explanation</th><th scope="col">Evidence so far</th><th scope="col">Useful next distinction</th></tr></thead>
           <tbody>
             <tr><th scope="row">The prepared inputs and output/scoring combination limit performance</th><td>The label-aware bound excludes the reported target, for every weight and seed under the fixed assumptions. Two further normalization readings still cannot reach detection at 0.58.</td><td>Separate the remaining data assumptions from changes to explicit output and scoring choices.</td></tr>
             <tr><th scope="row">The cutoff is the main problem</th><td>Ruled out for these fixed scores: every cutoff still falls short, including reversed direction.</td><td>Separate changes to the score itself from changes to its cutoff.</td></tr>
             <tr><th scope="row">A data, preprocessing, or source-reading choice matters</th><td>Softmax and MSE are explicit; the normalization statistics are not. Two additional scalings do not rescue detection at 0.58. A complete-data Sigmoid range leaves another-cutoff rescue open, but one small genuinely fitted Sigmoid model did not realize it.</td><td>Freeze the finite remaining source-supported model and data interpretations before further full runs.</td></tr>
-            <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>Cannot explain a match under the fixed preparation/Softmax/MSE assumptions. This does not estimate variability under different assumptions.</td><td>Do not repeat seeds to answer a question the bound already closes.</td></tr>
-            <tr><th scope="row">The task offers little benefit from extra architecture</th><td>Aggregate score gains are small, but attack-specific effects and within-energy rankings are nonzero. No new architecture contrast has been run.</td><td>A matched component test would be needed to identify the claimed mechanism.</td></tr>
+            <tr><th scope="row">Optimization or run-to-run variation explains the gap</th><td>Cannot explain FC-SAE under the fixed geometric bound. LSTM-SAE is one seed, but its favorable reversed score remains 61.98 detection points short at the paper's false-alarm rate.</td><td>Do not repeat seeds without a predeclared reason that could plausibly alter the score ranking by that scale.</td></tr>
+            <tr><th scope="row">Different hardware explains the LSTM-SAE result</th><td>The measured V100 epoch is only 1.16 times faster than the A16 projection. A ten-epoch completion projects to 23.98 hours, not 183 minutes.</td><td>Hardware no longer explains this declared completion; undocumented epochs, batching, model code, or a different procedure remain possible.</td></tr>
+            <tr><th scope="row">The task offers little benefit from extra architecture</th><td>FC-SAE aggregate gains are small, and the LSTM-SAE paper-time row is poor, but these are not a matched FC-versus-LSTM causal contrast.</td><td>A matched component test and temporal-destruction control would be needed to identify the claimed recurrence mechanism.</td></tr>
             <tr><th scope="row">The paper omits a consequential procedure or contains a reporting error</th><td>Missing settings and contradictory instructions make this possible; a reproduction failure cannot identify what the authors ran.</td><td>Look for source-supported clarifications or author artifacts. Do not infer undocumented code from whichever change improves our score.</td></tr>
           </tbody>
         </table>
@@ -338,22 +382,22 @@
 
     <section aria-labelledby="limitations">
       <h2 id="limitations"><span class="section-index">10</span>What this study cannot yet conclude</h2>
-      <p><strong>Numerical result:</strong> the audited run did not reproduce this row. <strong>Mechanism:</strong> the trained score has nonzero effects, but the paper's architectural explanation remains untested by a matched comparison. <strong>Attainability:</strong> the target is impossible under the fixed prepared inputs, Softmax output, and MSE score; a small Sigmoid replacement also failed, but broader Sigmoid training and other source interpretations remain unresolved.</p>
+      <p><strong>Numerical result:</strong> neither audited proposed-model result reproduced its Table III row. <strong>Mechanism:</strong> FC-SAE has nonzero score effects, but the paper's recurrence explanation remains untested by a matched comparison. <strong>Attainability:</strong> the FC-SAE target is impossible under the fixed prepared inputs, Softmax output, and MSE score. The LSTM-SAE target is not attained by its declared implementation within the paper's 183-minute training time, and no cutoff rescues its fitted scores.</p>
       <p>There are no seed-level confidence intervals here. Many rows share a customer or an original profile; synthetic examples add further dependence. Treating all 8.9 million rows as independent would overstate precision. A narrow interval for one fixed model would not, by itself, rule out another fitted model.</p>
-      <p>The complete-evaluation bound concerns every allowed Softmax reconstruction on the fixed prepared inputs. The follow-up extends the fixed-cutoff detection exclusion to two more normalization readings on unchanged attacks. The first range table concerns original rows; the subsequent full-evaluation range check and small trained control are explicitly separate. Untested normalizations, customer populations, data representations, longer Sigmoid training, and scoring procedures remain outside these conclusions. Elapsed compute time is not evidence that the authors could not have obtained their result. No claim about intent or their unobserved implementation follows.</p>
+      <p>The complete-evaluation bound concerns every allowed Softmax reconstruction on the fixed prepared inputs. The follow-up extends the fixed-cutoff detection exclusion to two more normalization readings on unchanged attacks. The first range table concerns original rows; the subsequent full-evaluation range check and small trained control are explicitly separate. Untested normalizations, customer populations, data representations, longer Sigmoid training, and scoring procedures remain outside these conclusions. For LSTM-SAE, the loss was still decreasing and intermediate full-population score checkpoints were not saved; the run therefore does not prove unlimited-time impossibility. It does directly test the paper's reported time for this declared method. No claim about intent or the unobserved author implementation follows.</p>
       <p>The previous electricity notes and report contain older exploratory runs under different assumptions, including omitted test-set ADASYN. They remain available, but they are not silently counted as additional seeds of this experiment. The water-network study is separate evidence and is not used to strengthen this finding.</p>
     </section>
 
     <section aria-labelledby="next">
       <h2 id="next"><span class="section-index">11</span>What would be worth checking next?</h2>
-      <p>The source review, complete Sigmoid range calculation, and one small fitted Sigmoid pair are complete. The full paper has not been formally reproduced: only the FC-SAE Table III row has completed the current clean-reader exact-data path. Earlier all-model breadth remains exploratory because later fidelity work quarantined it.</p>
+      <p>The source review, complete Sigmoid range calculation, small fitted Sigmoid pair, and one full-data paper-time LSTM-SAE execution are complete. The full paper has not been formally reproduced: FC-SAE has one complete clean-reader anchor, while LSTM-SAE has one separately bounded 183-minute execution. Earlier all-model breadth remains exploratory because later fidelity work quarantined it.</p>
       <ol>
-        <li><strong>Finish the proposed Table III family.</strong> Freeze and run clean-reader anchors for LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA on the same audited data path, with each model's source ambiguities visible.</li>
-        <li><strong>Test the claimed mechanism separately.</strong> Compare matched FC/LSTM models and destroy temporal structure under a predeclared effect criterion. A source-configured ranking alone cannot identify recurrence or attention as the cause.</li>
-        <li><strong>Complete Tables IV and V from eligible models.</strong> Reuse preserved weights where the table meaning permits, then run only genuinely missing data-size or experiment-identity branches.</li>
+        <li><strong>Test the claimed mechanism separately.</strong> Compare matched FC/LSTM models and destroy temporal structure under a predeclared effect criterion. A source-configured ranking alone cannot identify recurrence as the cause.</li>
+        <li><strong>Finish the remaining proposed Table III family.</strong> Decide whether FC-VAE, LSTM-VAE, and LSTM-AEA clean-reader anchors have enough information value to justify their measured costs and source ambiguities.</li>
+        <li><strong>Complete only discriminating parts of Tables IV and V.</strong> The new timing result already constrains LSTM-SAE. Reuse preserved eligible weights where table identity permits; do not rerun rows that answer no remaining question.</li>
         <li><strong>Return to Table II's literal failure.</strong> The SGCC source supplies 1,034 daily values while the models require 48 half-hour inputs. Execute only the finite source-supported mappings frozen before outcomes; do not call any repair literal.</li>
       </ol>
-      <p>These remaining clean-reader architecture and table experiments have <strong>not been run</strong> in the evidence reported on this page. Before cluster execution, their exact models, loss/score branches, data identities, seeds, statistical units, compute budgets, promotion rules, and stopping rules will be frozen and reviewed. The completed bound is conditional, not a years-of-search estimate.</p>
+      <p>The remaining FC-VAE, LSTM-VAE, LSTM-AEA, matched-mechanism, and table experiments have <strong>not been run</strong> as clean-reader confirmatory results on this page. No option is automatically next. Before cluster execution, its exact question, model, data identity, seed, statistical unit, compute budget, promotion rule, and stopping rule must be frozen and reviewed.</p>
     </section>
 
     <section aria-labelledby="conclusion">
@@ -361,6 +405,7 @@
       <p>Following one documented reading, we obtained a large and audited mismatch for the FC-SAE result on ISET. The follow-up establishes a stronger conditional result: even label-aware optimal Softmax reconstructions cannot reach the reported row on the fixed prepared data using MSE. A new seed or longer training cannot change that limit.</p>
       <p>At the same time, the trained score makes small beneficial changes and captures distinctions beyond the simple controls tested. “The target is unattainable under these assumptions” and “the model does nothing useful” are different claims; the evidence supports the first, not the second. Other source interpretations and the cause of the published discrepancy remain open.</p>
       <p>The source review strengthens that conditional conclusion: the main restrictions are explicitly written, and the two tested normalization alternatives do not remove the detection shortfall. Sigmoid shows why an open geometric region is not an achieved result: its complete-data range permits the pair at another cutoff, yet the small genuinely trained model remains far below it even after every threshold is tested. Because its calibration loss was still improving, this is not a universal or long-run Sigmoid impossibility result. We cannot infer what the authors implemented.</p>
+      <p>The LSTM-SAE result adds independent numerical and runtime evidence. On one V100, the written implementation remains far below every reported metric after the paper's entire 183-minute training budget; exhaustive cutoff selection and score reversal do not rescue it. The same hardware completes only 1.268 epoch-equivalents in that time, and ten epochs project to 23.98 hours. The reported result is therefore not attained by this declared implementation inside the paper's own time. Ordinary extra training is an implausible explanation for the observed gap, but unlimited-time impossibility and author intent remain unproven.</p>
     </section>
 
     <section aria-labelledby="references">
@@ -377,10 +422,11 @@
         <li id="ref-assumptions"><a href="https://github.com/fjoad/atk-evidence/blob/b76cb02/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_CHECK.md">Frozen source map and normalization/range checks</a>; <a href="https://github.com/fjoad/atk-evidence/blob/b76cb02/studies/atk-2022-deep-autoencoder/checks/source_assumption_check.py">analysis code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/decb136/studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/full.json">unmodified complete results</a>; <a href="https://github.com/fjoad/atk-evidence/blob/decb136/studies/atk-2022-deep-autoencoder/results/source_assumption_20260831/execution.json">execution record</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md">finding and scope</a>. The pilot and full pass completed once, without training or regenerating synthetic examples.</li>
         <li id="ref-sigmoid-range"><a href="https://github.com/fjoad/atk-evidence/blob/9d6c31b/studies/atk-2022-deep-autoencoder/SIGMOID_SANITY.md">Frozen complete-evaluation Sigmoid range check</a>; <a href="https://github.com/fjoad/atk-evidence/blob/9d6c31b/studies/atk-2022-deep-autoencoder/checks/sigmoid_sanity.py">analysis code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md">finding</a>. This calculation used all 8,884,989 prepared rows and trained no model.</li>
         <li id="ref-sigmoid-fit"><a href="https://github.com/fjoad/atk-evidence/blob/cc9af5e/studies/atk-2022-deep-autoencoder/SIGMOID_FIT_CHECK.md">Frozen paired-fit setup</a>; <a href="https://github.com/fjoad/atk-evidence/blob/cc9af5e/studies/atk-2022-deep-autoencoder/checks/sigmoid_fit_check.py">training and enumeration code</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md">finding and limits</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/results/sigmoid_fit_20260831/small.json">complete saved summary</a>. This is an exploratory small fit, not numerical reproduction.</li>
+        <li id="ref-paper-time"><a href="https://github.com/fjoad/atk-evidence/blob/46f0ddd3ab99f4117c644b40f959193593bb063a/studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_CONTRACT.md">Frozen paper-time contract</a>; <a href="https://github.com/fjoad/atk-evidence/blob/46f0ddd3ab99f4117c644b40f959193593bb063a/studies/atk-2022-deep-autoencoder/reproduction/remaining_models.py#L230-L321">LSTM-SAE model construction</a>; <a href="https://github.com/fjoad/atk-evidence/blob/46f0ddd3ab99f4117c644b40f959193593bb063a/studies/atk-2022-deep-autoencoder/checks/lstm_sae_paper_time.py#L304-L460">fitting, scoring, and audit runner</a>; <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/results/lstm_sae_paper_time_20260901.json">audited machine summary</a>; and <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md">finding and conclusion boundary</a>. Hardware availability context: <a href="https://hprc.tamu.edu/files/training/2020/Spring/Intro_to_HPRC_clusters_2020_spring.pdf">Texas A&amp;M HPRC overview</a>. Availability does not identify the unpublished experiment's device.</li>
       </ol>
     </section>
   </article>
-  <footer><p><a href="../../../">All studies</a> · <a href="../">Earlier electricity notes</a> · <a href="../../../reports/atk-2022-deep-autoencoder.pdf">Download the current report PDF</a></p><p>ATK Evidence · Updated 1 September 2026. This is an in-progress research report, not a peer-reviewed publication. Corrections and alternative explanations are part of the record.</p></footer>
+  <footer><p><a href="../../../">All studies</a> · <a href="../">Earlier electricity notes</a> · <a href="../../../reports/atk-2022-deep-autoencoder.pdf">FC-SAE report through 1 September (PDF)</a></p><p>ATK Evidence · Updated 2 September 2026. This is an in-progress research report, not a peer-reviewed publication. Corrections and alternative explanations are part of the record.</p></footer>
 </main>
 </body>
 </html>

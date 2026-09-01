@@ -35,11 +35,16 @@ inside that envelope.
    configuration artifact passed the initial identity audit. The job completed
    `0:0`; every artifact was transferred and independently audited. See
    `PAPER_TIME_BUDGET_FINDING.md`.
-6. **Pending after discussion:** update the current website, README, status,
-   context, evidence register, and explanation register. Publish only claims
-   earned by the run.
-7. **In progress:** stop for discussion. Do not add a GPU, seed, model, table,
-   or longer budget.
+6. **Complete:** after discussing the audited result, publish the full metric
+   row, exhaustive cutoff envelope, measured V100 runtime, plausible
+   explanations, and conclusion boundary in the current HTML report, homepage,
+   and README. The older PDF is labeled as ending on 1 September rather than
+   presented as current. All 265 deterministic tests, strict data verification,
+   static links, and source-reference checks pass. No new scientific result was
+   generated for this step.
+7. **Complete:** the required discussion occurred and the user authorized this
+   bounded publication. Stop after deployment to choose the next scientific
+   question. Do not add a GPU, seed, model, table, or longer budget.
 
 The intended conclusion is bounded: whether the reported result arises from
 this declared completion within the paper's reported training time on one

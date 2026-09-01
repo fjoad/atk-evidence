@@ -24,6 +24,7 @@ DIAGNOSTICS = STUDY / "results/post_anchor_20260831"
 ASSUMPTIONS = STUDY / "results/source_assumption_20260831"
 SIGMOID_RANGE = STUDY / "results/sigmoid_sanity_20260831"
 SIGMOID_FIT = STUDY / "results/sigmoid_fit_20260831"
+PAPER_TIME = STUDY / "results/lstm_sae_paper_time_20260901.json"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
 REPORT_SOURCE = ROOT / "reports/atk-2022-deep-autoencoder/main.tex"
 
@@ -41,6 +42,7 @@ class Page(HTMLParser):
         self.scalings = {}
         self.ranges = {}
         self.fits = {}
+        self.lstm = {}
         self.h1_count = 0
         self.row = None
         self.row_group = None
@@ -64,7 +66,7 @@ class Page(HTMLParser):
             groups = {"metric": self.metrics, "bound": self.bounds,
                       "control": self.controls, "gain": self.gains,
                       "scaling": self.scalings, "range": self.ranges,
-                      "fit": self.fits}
+                      "fit": self.fits, "lstm": self.lstm}
             for name, group in groups.items():
                 if f"data-{name}" in attrs:
                     self.row = attrs[f"data-{name}"]
@@ -106,6 +108,7 @@ class PublicReportTests(unittest.TestCase):
         cls.assumptions = json.loads((ASSUMPTIONS / "full.json").read_text())
         cls.sigmoid_range = json.loads((SIGMOID_RANGE / "full.json").read_text())
         cls.sigmoid_fit = json.loads((SIGMOID_FIT / "small.json").read_text())
+        cls.paper_time = json.loads(PAPER_TIME.read_text())
 
     def test_complete_current_result_matches_saved_metrics(self):
         rows = self.pages[REPORT].metrics
@@ -120,6 +123,37 @@ class PublicReportTests(unittest.TestCase):
         for metric in ("DR", "FA", "SP", "PR", "ACC", "F1", "AUC"):
             pair = f"{self.result['reported_table_3'][metric]:.2f}% | {self.result['metrics'][metric]:.2f}%"
             self.assertIn(pair, readme)
+
+    def test_paper_time_lstm_result_matches_audited_record(self):
+        rows = self.pages[REPORT].lstm
+        expected = {"DR", "FA", "SP", "PR", "ACC", "F1", "AUC"}
+        self.assertEqual(set(rows), expected)
+        reported = self.paper_time["paper_claim"]
+        observed = self.paper_time["observed"]
+        targets = {"DR": 85, "FA": 13, "SP": 87, "PR": 85,
+                   "ACC": 86, "F1": 85, "AUC": 82}
+        for metric in expected:
+            self.assertEqual(rows[metric][1], f"{targets[metric]:.2f}")
+            self.assertEqual(rows[metric][2], f"{observed['printed_cutoff'][metric]:.2f}")
+        self.assertEqual(reported["training_minutes_full_iset"], 183)
+        self.assertFalse(observed["reported_corner_reached_at_any_cutoff"])
+        self.assertIn("7,036,998", self.report_text)
+        self.assertIn("23.02%", self.report_text)
+        self.assertIn("23.98 hours", self.report_text)
+        self.assertIn("1.16 times faster", self.report_text)
+        self.assertIn("unlimited-time impossibility", self.report_text)
+
+    def test_current_entry_points_publish_paper_time_lstm_finding(self):
+        home = (SITE / "index.html").read_text()
+        readme = (ROOT / "README.md").read_text()
+        legacy = (SITE / "papers/atk-2022-deep-autoencoder/index.html").read_text()
+        for text in (home, readme):
+            for value in ("16.62", "31.91", "23.02", "23.98"):
+                self.assertIn(value, text)
+            self.assertIn("unlimited-time impossibility", text)
+            self.assertIn("183 minutes", text)
+        self.assertIn("paper-time LSTM-SAE", legacy)
+        self.assertIn("FC-SAE scientific report through 1 September", legacy)
 
     def test_static_links_and_fragments_resolve(self):
         for source, page in self.pages.items():

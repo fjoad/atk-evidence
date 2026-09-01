@@ -58,6 +58,38 @@ all Sigmoid training procedures fail: calibration loss was still improving at
 the final epoch. The [paired finding](studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md)
 preserves both the failure and that open possibility.
 
+We also tested the paper's LSTM-SAE inside Table IV's reported **183-minute**
+full-ISET training time. The paper does not name its hardware or epoch count.
+Our predeclared implementation used one V100-16GB, batch 32, one seed, the
+full prepared data, and exactly 183 minutes of fitting. It completed 1.268
+epoch-equivalents. All 8,884,989 saved scores were finite and passed the
+independent count, hash, metric, and AUC audit.
+
+| LSTM-SAE measure | Paper | Our 183-minute run |
+|---|---:|---:|
+| Attack detection | 85.00% | 16.62% |
+| False alarms — lower is better | 13.00% | 31.91% |
+| Specificity | 87.00% | 68.09% |
+| Precision | 85.00% | 34.87% |
+| Balanced accuracy | 86.00% | 42.35% |
+| F1 | 85.00% | 22.51% |
+| AUC | 82.00% | 40.30% |
+
+We evaluated all 7,036,998 distinct cutoff boundaries. At no more than 13%
+false alarms, the best detection was **7.00%** in the paper's score direction
+and **23.02%** after favorably reversing it, versus 85%. No cutoff rescues
+these fitted scores. One V100 epoch took 143.88 minutes; ten epochs in our
+declared completion project to **23.98 hours**, or 7.86 paper-time budgets.
+The paper itself does not state ten epochs.
+
+The bounded conclusion is that the reported LSTM-SAE result did not arise from
+this declared implementation within the paper's reported time. Its loss was
+still decreasing, so this is not a proof of unlimited-time impossibility or a
+claim about the unpublished author implementation or intent. The
+[paper-time finding](studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md)
+and [readable explanation](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/#lstm-paper-time)
+preserve the full result and its limits.
+
 That does **not** mean the model does nothing useful. On original customer
 rows, its balanced-accuracy gain over zero reconstruction is 0.89 percentage
 points (conditional 95% interval: 0.80–0.98). It also ranks attacks better than
@@ -110,7 +142,7 @@ limitations, and corrections are kept visible. We do not infer author intent.
 The scientific code for the current experiment is under
 [studies/atk-2022-deep-autoencoder/reproduction/](studies/atk-2022-deep-autoencoder/reproduction/).
 It contains the download, data preparation, model, training, and analysis files.
-The report links the exact revision used for the run.
+The report links the exact revisions used for the runs.
 
 ```bash
 git clone https://github.com/fjoad/atk-evidence.git
