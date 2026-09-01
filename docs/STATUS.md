@@ -5,11 +5,33 @@
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-09-01-recurrent-score-recovery.md`](plans/2026-09-01-recurrent-score-recovery.md),
-a completed bounded step within
+[`plans/2026-09-01-lstm-sae-anchor-promotion.md`](plans/2026-09-01-lstm-sae-anchor-promotion.md),
+a conditional continuation within
 [`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md).
 
 ## Current project state
+
+- **LSTM-SAE full-anchor promotion is conditional on a new hardware cost
+  check:** the preserved A16 pilot projects approximately 42.79 hours for the
+  minimum ten epochs and 417.14 hours for the possible 100 epochs under the
+  frozen 1.5-times formula. It therefore fails the existing 72-hour full-anchor
+  gate. The user approved carrying out the proposed costing and anchor only if
+  affordable. One at-most-two-hour, single-H200 timing pilot is now governed by
+  [`LSTM_SAE_ANCHOR_PROMOTION.md`](../studies/atk-2022-deep-autoencoder/LSTM_SAE_ANCHOR_PROMOTION.md).
+  It changes no data, model, batch, optimizer, seed, or GPU count and cannot
+  produce numerical paper evidence. The original `1e-6` score failure remains
+  preserved; the new adaptive decision-level rule is explicit. Launch the
+  72-hour anchor only if every cost-pilot gate passes; otherwise stop.
+  The frozen implementation passes all 256 repository tests (140 study and 116
+  root), strict data verification, compilation, shell syntax, and whitespace
+  checks. Historical paper-facing source hashes remain exact.
+
+- **Implausibility/fabrication language clarified:** systematic failure over a
+  finite faithful completion and search envelope can warrant “highly
+  implausible within the declared envelope.” “Made up” additionally requires
+  forensic evidence that separates intent from omitted procedures, leakage,
+  and reporting errors. See the
+  [decision](decisions/2026-09-01-implausibility-and-fabrication-boundary.md).
 
 - **Recurrent score-only recovery complete; stop for discussion:** jobs
   `385583` and `385584` reloaded the exact preserved LSTM-SAE and LSTM-VAE

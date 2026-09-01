@@ -45,6 +45,12 @@ gradients; require matched benign fitting success; then vary only predeclared
 optimization budget or optimizer as `C`, never as reproduction. Test multiple
 frozen seeds only after one complete anchor.
 
+**Current operational update, 2026-09-01:** the two-epoch exact-cache pilot
+improved objective from 1.5899 to 1.4972 and therefore does not show a plateau.
+Its A16 timing projects to 42.79 hours for ten epochs and 417.14 hours for the
+100-epoch ceiling. One unchanged-method H200 cost pilot is pending; it tests
+affordability, not whether optimization would ultimately rescue performance.
+
 **Feeds:** `N` implementation/failure interpretation, `M` matched-fitting test,
 `A` learning-curve envelope.
 
@@ -258,6 +264,12 @@ than empirical implausibility within that fixed space. Other source-supported
 preparations, output domains, and scores remain `OPEN`; no broader empirical
 envelope or years-of-search estimate has been measured. Empirical saturation
 would still not establish universal impossibility.
+
+The recurrent two-epoch score recovery adds no plateau: its fixed pilot scores
+remain far below the target and batch arithmetic does not rescue them, but the
+training objective was still improving. The A16 full-anchor projection exceeds
+the approved budget; the predeclared H200 cost pilot will decide whether one
+clean-reader LSTM-SAE learning curve is operationally attainable.
 
 ## Ordered test map
 

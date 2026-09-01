@@ -1739,6 +1739,30 @@ and repeated experiments determine technical conclusions.
   [finding](../studies/atk-2022-deep-autoencoder/REMAINING_SCORE_RECOVERY_FINDING.md),
   [execution record](../studies/atk-2022-deep-autoencoder/results/recurrent_score_recovery_20260901.json).
 
+### Evidentiary language and LSTM-SAE anchor cost checkpoint — 2026-09-01
+
+- **Language decision:** systematic non-reproduction, mechanism failure, and a
+  stable finite attainability envelope may warrant “highly implausible within
+  the declared envelope.” A fabrication claim additionally needs forensic
+  evidence distinguishing deliberate reporting from omissions, leakage,
+  metric/table mistakes, or transcription errors.
+- **Existing operational cost:** A16 epochs 218/207 seconds on 32,768 rows and
+  batch-256 scoring 3.913664639 seconds on 12,119 rows imply 42.7902 hours for
+  ten full-data epochs and 417.1425 hours for 100 under the frozen 1.5-times
+  projection. The existing 72-hour gate fails by a wide margin.
+- **Smallest discriminating action:** one unchanged-method, single-H200,
+  at-most-two-hour cost pilot. It does not alter batch, data, architecture,
+  optimizer, seed, or GPU count. It produces operational `X`, never a paper
+  metric.
+- **Prospective boundary:** only an H200 worst-case 100-epoch projection <=72
+  hours, finite updates/reload, <=75% memory, and the explicit adaptive
+  decision-stability gates can promote one full LSTM-SAE anchor. Failure stops
+  the sequence rather than converting a partial fit into a full result.
+- **Sources:**
+  [language decision](decisions/2026-09-01-implausibility-and-fabrication-boundary.md),
+  [promotion contract](../studies/atk-2022-deep-autoencoder/LSTM_SAE_ANCHOR_PROMOTION.md),
+  [cost record](../studies/atk-2022-deep-autoencoder/results/lstm_sae_anchor_cost_20260901.json).
+
 ## How to add a learning
 
 Use: former belief/status; evidence; root cause if isolated; current conclusion

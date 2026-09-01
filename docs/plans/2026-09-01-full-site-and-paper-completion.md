@@ -113,6 +113,14 @@ can flip one boundary row. The original gate has not been replaced. See
 `REMAINING_SCORE_RECOVERY_FINDING.md`; stop for discussion before promotion or
 another Phase-C run.
 
+The next discussion authorized costing and one LSTM-SAE anchor only if it fits
+the existing ceiling. The A16 evidence projects 417.14 hours for the possible
+100 epochs, so it is not eligible on that measured device. One unchanged-method
+single-H200 cost pilot is frozen in `LSTM_SAE_ANCHOR_PROMOTION.md`. It is
+operational `X`; the full `CR-ISET-LSTMSAE-01` anchor launches only if the new
+100-epoch projection and every other gate pass. This is not authorization for
+another model or a partial anchor.
+
 ## D. Mechanism program - pending Table III anchors
 
 Run the predeclared matched FC/LSTM comparison and temporal-structure

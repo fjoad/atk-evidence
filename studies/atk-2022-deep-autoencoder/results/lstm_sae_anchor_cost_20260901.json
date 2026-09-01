@@ -1,0 +1,48 @@
+{
+  "status": "h200_cost_pilot_pending",
+  "date": "2026-09-01",
+  "eligibility": "operational_X_not_N_M_or_A",
+  "model": "lstm_sae",
+  "source_pilot": {
+    "job_id": 385552,
+    "attempt_id": "5f53ca7217aa",
+    "device": "NVIDIA A16",
+    "fit_rows": 32768,
+    "batch_size": 32,
+    "epoch_seconds_from_log": [218.0, 207.0],
+    "slurm_log_sha256": "c6c8b840ae366c0f7ea2d5ef6b105ff17d189debd82920d9efaed6fd74accf64"
+  },
+  "source_score_recovery": {
+    "job_id": 385583,
+    "attempt_id": "da115decf4b1",
+    "batch_256_rows": 12119,
+    "batch_256_seconds": 3.9136646389961243,
+    "result_sha256": "824d5c20d486b0943c497cd6dbdf43c0d98c04a9e4d98ae788258c38409f0654"
+  },
+  "projection": {
+    "full_fit_rows": 1500523,
+    "full_score_rows": 8884989,
+    "safety_factor": 1.5,
+    "slowest_pilot_epoch_seconds": 218.0,
+    "projected_full_epoch_seconds": 9982.727478027344,
+    "projected_full_score_seconds": 2869.285194089408,
+    "minimum_10_epoch_hours": 42.79023332265118,
+    "worst_case_100_epoch_hours": 417.14251374867655,
+    "full_hour_limit": 72.0,
+    "a16_passes_worst_case_gate": false,
+    "maximum_pilot_epoch_seconds_needed_for_100_epoch_gate_with_a16_score_time": 37.10899241637801,
+    "minimum_speedup_needed_from_218_second_epoch": 5.874586880558524
+  },
+  "pre_run_verification": {
+    "study_tests": 140,
+    "root_tests": 116,
+    "total_tests": 256,
+    "all_tests_passed": true,
+    "strict_data_verification_passed": true,
+    "python_compilation_passed": true,
+    "shell_syntax_passed": true,
+    "whitespace_check_passed": true,
+    "historical_source_hashes_unchanged": true
+  },
+  "next_decision": "run_one_h200_cost_pilot_then_promote_full_anchor_only_if_every_gate_passes"
+}

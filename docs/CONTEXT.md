@@ -2,6 +2,25 @@
 
 **Last updated:** 2026-09-01
 
+**Newest direction; conditional execution:** after discussing what would make
+a result highly implausible versus fabricated, the user authorized the proposed
+prospective LSTM-SAE gate, cost check, and one full anchor if affordable. The
+preserved A16 pilot projects 42.7902 hours for ten epochs and 417.1425 hours for
+100, so it fails the frozen 72-hour gate. The active dated contract permits one
+single-H200, at-most-two-hour cost pilot with unchanged scientific fields. A
+full anchor may be implemented and launched only if the H200 result passes the
+same conservative 100-epoch <=72-hour gate plus the adaptive decision-stability
+and memory gates. Otherwise preserve the operational result and stop. No other
+model, mechanism wave, table, seed, or publication is included. See
+`LSTM_SAE_ANCHOR_PROMOTION.md` and
+`docs/plans/2026-09-01-lstm-sae-anchor-promotion.md`. The evidentiary language
+boundary is saved in
+`docs/decisions/2026-09-01-implausibility-and-fabrication-boundary.md`.
+The bounded instrument is locally ready: all 256 repository tests (140 study
+and 116 root), strict data verification, compilation, shell syntax, and
+whitespace checks pass. Historical `run_experiment.py` and
+`remaining_models.py` hashes remain unchanged.
+
 **Newest direction, 2026-09-01:** update and publish the full site with the
 completed Sigmoid evidence first, then finish the paper audit. Active plan:
 `docs/plans/2026-09-01-full-site-and-paper-completion.md`. Publication includes
