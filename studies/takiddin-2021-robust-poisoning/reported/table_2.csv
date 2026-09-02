@@ -1,0 +1,8 @@
+parameter,aea,feed_forward,gru
+layers,6,6,8
+neurons,"500|300|200",500,300
+optimizer,SGD,Adamax,Adam
+dropout,0,0,0.2
+weight_constraint,1,3,5
+hidden_activation,Sigmoid,ReLU,ReLU
+output_activation,Sigmoid,Sigmoid,Softmax

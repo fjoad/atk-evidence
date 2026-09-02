@@ -5,11 +5,27 @@
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md),
-which supersedes the hardware-promotion plan and remains a continuation within
-[`plans/2026-09-01-full-site-and-paper-completion.md`](plans/2026-09-01-full-site-and-paper-completion.md).
+[`plans/2026-09-02-robust-poisoning-source-audit.md`](plans/2026-09-02-robust-poisoning-source-audit.md).
+Paper 1 is frozen after its completed paper-time result and publication; its
+last execution plan remains
+[`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Paper 3 source-only audit authorized:** the next independent paper is
+  Takiddin et al., “Robust Electricity Theft Detection Against Data Poisoning
+  Attacks in Smart Grids,” *IEEE Transactions on Smart Grid* 12(3), 2021, DOI
+  `10.1109/TSG.2020.3047864`. The exact ten-page local PDF has SHA-256
+  `03a372fb...3d4a4ff` and has been visually inspected in full. The current
+  authorization is limited to source reconstruction, Tables II–V
+  transcription, the `A/B/Z/S` causal map, and a preregistered static metric
+  audit. No data preparation, model implementation, training, scoring, or
+  cluster submission is authorized. The paper itself names 50 epochs, batch
+  100, an RTX 2070, approximately 1.5–3 hours for deep models, three hours for
+  ensemble averaging, and four hours for the sequential ensemble. Any later
+  run must treat those as part of the claim and freeze a favorable
+  period-appropriate calibration before execution if the named GPU is
+  unavailable. Do not use newer/additional hardware or retries as a rescue.
 
 - **The single paper-time execution is complete and audited:** frozen commit
   `46f0ddd`, Panther job `385632`, completed `0:0` on one V100-16GB. Exactly
@@ -677,9 +693,12 @@ and hashes are local. Its score/eligibility audit is unfinished.
 
 ## Exact next action
 
-1. Discuss the completed paper-time finding and its exact conclusion boundary.
-2. Do not update the public report, add a GPU, retry, seed, model, table, or
-   longer budget until that discussion authorizes a next action.
+1. Commit the Paper-3 source specification, exact Tables II–V transcription,
+   arithmetic-audit contract, and paper-time rule before calculating results.
+2. Run the deterministic static audit once, preserve matches and failures, and
+   stop for discussion.
+3. Do not prepare data, implement/train a model, submit a cluster job, or update
+   the public site at this checkpoint.
 
 The former next action—one-factor population/split/scaling/threshold/Attack-3
 execution followed by repeated seeds—is superseded. It may return only if the
@@ -689,7 +708,7 @@ new plan promotes it after the trusted clean-reader anchor.
 
 - the historical 921-configuration branch matrix;
 - new scheduling, manifest, DDP, or workflow infrastructure;
-- Paper 2 execution;
+- Paper 1 or Paper 2 execution;
 - website or LaTeX polishing;
 - the corrected preferred detector; and
 - cross-paper conclusions.

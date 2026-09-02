@@ -2,6 +2,23 @@
 
 **Last updated:** 2026-09-02
 
+**Newest direction; Paper 3 source-only:** the user selected Takiddin et al.,
+“Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart
+Grids” (IEEE TSG 2021, DOI `10.1109/TSG.2020.3047864`) as the next independent
+audit. The ten-page PDF SHA-256 is `03a372fb...3d4a4ff`; all pages, Tables I–V,
+Figures 1–3, and Algorithm 1 were visually inspected. Active plan:
+`docs/plans/2026-09-02-robust-poisoning-source-audit.md`. Authorization stops
+after the source specification, causal map, exact table transcription, and
+predeclared static arithmetic finding. No data preparation, implementation,
+training, scoring, cluster submission, or cross-paper conclusion is authorized.
+The paper explicitly reports 50 epochs, batch 100, NVIDIA RTX 2070, roughly
+one hour for shallow models, 1.5–3 hours for deep models, three hours for
+ensemble averaging, four hours for the sequential ensemble, and about two
+seconds per online decision. Treat these as target constraints. If an RTX 2070
+is unavailable, freeze a favorable contemporaneous-device calibration before
+results; never rescue a miss with a modern/additional GPU, retry, or longer
+budget. Paper 1 remains frozen and transfers no verdict.
+
 **Newest direction; paper time is the budget:** the user explicitly rejected
 faster or additional GPUs as a rescue. Table IV reports 183 minutes for
 full-ISET LSTM-SAE training while omitting hardware, GPU count, epochs, batch,
