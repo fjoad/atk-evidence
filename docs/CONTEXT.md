@@ -2,15 +2,24 @@
 
 **Last updated:** 2026-09-02
 
-**Newest direction; Paper 3 source-only:** the user selected Takiddin et al.,
+**Newest result; Paper 3 source-only:** the user selected Takiddin et al.,
 “Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart
 Grids” (IEEE TSG 2021, DOI `10.1109/TSG.2020.3047864`) as the next independent
 audit. The ten-page PDF SHA-256 is `03a372fb...3d4a4ff`; all pages, Tables I–V,
 Figures 1–3, and Algorithm 1 were visually inspected. Active plan:
-`docs/plans/2026-09-02-robust-poisoning-source-audit.md`. Authorization stops
-after the source specification, causal map, exact table transcription, and
-predeclared static arithmetic finding. No data preparation, implementation,
-training, scoring, cluster submission, or cross-paper conclusion is authorized.
+`docs/plans/2026-09-02-robust-poisoning-source-audit.md`. The source
+specification, causal map, and all 476 Table III–V metric cells were frozen
+before the static arithmetic check. Results: SP 68/68 pass, F1 67/68, balanced
+ACC 68/68, balanced PR 10/68, and the any-prevalence screen 65/68. Table V's
+sequential-ensemble rows at 0%, 10%, and 30% poisoning cannot reconcile
+DR/FA/PR with DR/FA/ACC under any one prevalence within one-decimal rounding.
+This is a source-level internal inconsistency; it is not trained
+non-reproduction, a mechanism result, or an intent claim. Preserve
+`SOURCE_AUDIT_FINDING.md`, `EXPLANATION_REGISTER.md`, the corrected result hash
+`a9113f6b...c52da56`, and the first reporting-incomplete attempt. The approved
+source phase is complete and stopped for discussion. No data preparation,
+implementation, training, scoring, cluster submission, or cross-paper
+conclusion is authorized.
 The paper explicitly reports 50 epochs, batch 100, NVIDIA RTX 2070, roughly
 one hour for shallow models, 1.5–3 hours for deep models, three hours for
 ensemble averaging, four hours for the sequential ensemble, and about two

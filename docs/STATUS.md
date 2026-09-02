@@ -12,20 +12,29 @@ last execution plan remains
 
 ## Current project state
 
-- **Paper 3 source-only audit authorized:** the next independent paper is
+- **Paper 3 source-only audit complete; stopped for discussion:** the next
+  independent paper is
   Takiddin et al., “Robust Electricity Theft Detection Against Data Poisoning
   Attacks in Smart Grids,” *IEEE Transactions on Smart Grid* 12(3), 2021, DOI
   `10.1109/TSG.2020.3047864`. The exact ten-page local PDF has SHA-256
-  `03a372fb...3d4a4ff` and has been visually inspected in full. The current
-  authorization is limited to source reconstruction, Tables II–V
-  transcription, the `A/B/Z/S` causal map, and a preregistered static metric
-  audit. No data preparation, model implementation, training, scoring, or
-  cluster submission is authorized. The paper itself names 50 epochs, batch
-  100, an RTX 2070, approximately 1.5–3 hours for deep models, three hours for
-  ensemble averaging, and four hours for the sequential ensemble. Any later
-  run must treat those as part of the claim and freeze a favorable
-  period-appropriate calibration before execution if the named GPU is
-  unavailable. Do not use newer/additional hardware or retries as a rescue.
+  `03a372fb...3d4a4ff` and was visually inspected in full. All 476 metric cells
+  in Tables III–V were frozen before a one-decimal interval audit. SP passed
+  68/68, F1 67/68, balanced ACC 68/68, and balanced PR 10/68. More strongly,
+  the sequential-ensemble rows at 0%, 10%, and 30% poisoning have disjoint
+  prevalences implied by DR/FA/PR versus DR/FA/ACC; no one evaluation
+  population reconciles those printed metrics within rounding. This is an
+  internal source inconsistency, not a trained non-reproduction or intent
+  finding. See the
+  [`source finding`](../studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md)
+  and
+  [`explanation register`](../studies/takiddin-2021-robust-poisoning/EXPLANATION_REGISTER.md).
+  No data preparation, model implementation, training, scoring, or cluster
+  submission occurred or is authorized. The paper names 50 epochs, batch 100,
+  an RTX 2070, about one hour for shallow models, 1.5–3 hours for deep models,
+  three hours for ensemble averaging, and four hours for the sequential
+  ensemble. Treat those as part of any later claim; if the named GPU is
+  unavailable, freeze a favorable period-appropriate calibration before
+  execution. Do not use newer/additional hardware or retries as a rescue.
 
 - **The single paper-time execution is complete and audited:** frozen commit
   `46f0ddd`, Panther job `385632`, completed `0:0` on one V100-16GB. Exactly

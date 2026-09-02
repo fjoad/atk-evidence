@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-02
 
-**Status:** Approved; source-only checkpoint in progress
+**Status:** Complete; stopped at the source-only checkpoint for discussion
 
 **Evidence question:** source reconstruction and cheap numerical (`N`)
 consistency checks. No trained-model finding is authorized.
@@ -88,20 +88,20 @@ retry merely because the declared result missed.
 
 - [x] Transcribe Tables II–V independently from the rendered pages.
 - [x] Verify model, metric, and poisoning-level coverage.
-- [ ] Freeze the transcription before executing the arithmetic checker.
+- [x] Freeze the transcription before executing the arithmetic checker.
 
 ### 3. Static arithmetic audit
 
-- [ ] Apply the predeclared one-decimal rounding intervals.
-- [ ] Check `SP = 100 - FA`.
-- [ ] Check `F1 = harmonic_mean(DR, PR)`.
-- [ ] Check balanced-test `ACC = (DR + SP)/2`.
-- [ ] Check balanced-test `PR = DR/(DR + FA)`.
-- [ ] Compare prevalence ranges implied independently by precision and
+- [x] Apply the predeclared one-decimal rounding intervals.
+- [x] Check `SP = 100 - FA`.
+- [x] Check `F1 = harmonic_mean(DR, PR)`.
+- [x] Check balanced-test `ACC = (DR + SP)/2`.
+- [x] Check balanced-test `PR = DR/(DR + FA)`.
+- [x] Compare prevalence ranges implied independently by precision and
   accuracy, without assuming balance.
-- [ ] Recalculate prose degradation and model-order claims from the printed
+- [x] Recalculate prose degradation and model-order claims from the printed
   tables.
-- [ ] Preserve both matches and failures in a machine-readable record.
+- [x] Preserve both matches and failures in a machine-readable record.
 
 ### CHECKPOINT: source-only discussion
 
@@ -121,14 +121,14 @@ projected RTX-2070 cost before authorizing any data preparation or training.
 
 ## Verification
 
-- [ ] Every consequential source statement has a page/section/table locator.
-- [ ] Printed, interpreted, controlled, and exploratory work remain separate.
-- [ ] Tables III–V contain all 476 printed metric cells exactly once.
-- [ ] Static audit has deterministic tests and a machine-readable result.
-- [ ] No experimental preparation, training, or scoring occurred locally.
-- [ ] Repository test suite passes.
-- [ ] `docs/STATUS.md` and `docs/CONTEXT.md` name this checkpoint.
-- [ ] Changes are committed before any later execution contract is written.
+- [x] Every consequential source statement has a page/section/table locator.
+- [x] Printed, interpreted, controlled, and exploratory work remain separate.
+- [x] Tables III–V contain all 476 printed metric cells exactly once.
+- [x] Static audit has deterministic tests and a machine-readable result.
+- [x] No experimental preparation, training, or scoring occurred locally.
+- [x] Repository test suite passes.
+- [x] `docs/STATUS.md` and `docs/CONTEXT.md` name this checkpoint.
+- [x] Changes are committed before any later execution contract is written.
 
 ## Finish condition
 

@@ -9,8 +9,9 @@ ordinary language.
 |---|---|
 | What happened? | [Paper 1 clean-reader finding](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md) |
 | Where are we now? | [STATUS](STATUS.md) |
-| What happens next? | [Active Paper 3 source-audit plan](plans/2026-09-02-robust-poisoning-source-audit.md) |
-| What explanations remain? | [Explanation register](../studies/atk-2022-deep-autoencoder/EXPLANATION_REGISTER.md) |
+| What happens next? | [Paper 3 source-audit checkpoint](plans/2026-09-02-robust-poisoning-source-audit.md) |
+| What did the Paper 3 source audit find? | [Source-audit finding](../studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md) |
+| What explanations remain for Paper 3? | [Paper 3 explanation register](../studies/takiddin-2021-robust-poisoning/EXPLANATION_REGISTER.md) |
 | What must survive a handoff? | [CONTEXT](CONTEXT.md) |
 | Why did a conclusion change? | [Evidence and learnings](EVIDENCE-AND-LEARNINGS.md) |
 

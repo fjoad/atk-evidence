@@ -91,6 +91,41 @@ class RobustPoisoningSourceAuditTests(unittest.TestCase):
             result.pop("created_utc")
         self.assertEqual(preserved, fresh)
 
+    def test_preserved_outcomes_match_the_finding(self) -> None:
+        result = json.loads(RESULT_PATH.read_text(encoding="utf-8"))
+        expected = {
+            "specificity": {"pass": 68, "fail": 0, "total": 68},
+            "f1": {"pass": 67, "fail": 1, "total": 68},
+            "balanced_accuracy": {"pass": 68, "fail": 0, "total": 68},
+            "balanced_precision": {"pass": 10, "fail": 58, "total": 68},
+            "any_prevalence_screen": {"pass": 65, "fail": 3, "total": 68},
+        }
+        self.assertEqual(result["summary"], expected)
+
+        any_prevalence_failures = {
+            (row["table"], row["model"], row["poisoning"])
+            for row in result["rows"]
+            if not row["any_prevalence_screen"]["pass"]
+        }
+        self.assertEqual(
+            any_prevalence_failures,
+            {
+                ("table_5", "sequential_ensemble", "p0"),
+                ("table_5", "sequential_ensemble", "p10"),
+                ("table_5", "sequential_ensemble", "p30"),
+            },
+        )
+
+        f1_failures = {
+            (row["table"], row["model"], row["poisoning"])
+            for row in result["rows"]
+            if not row["f1"]["pass"]
+        }
+        self.assertEqual(
+            f1_failures,
+            {("table_3", "random_forest", "p20")},
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

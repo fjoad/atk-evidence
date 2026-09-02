@@ -1,0 +1,3837 @@
+{
+  "coverage": {
+    "expected_metric_cells": 476,
+    "expected_rows": 68,
+    "metric_cells": 476,
+    "rows": 68
+  },
+  "created_utc": "2026-09-02T17:46:55.839598+00:00",
+  "evidence_class": "C/N source-only",
+  "input_sha256": {
+    "studies/takiddin-2021-robust-poisoning/METHOD.md": "0783450b1afc422d75c138ddedfe4c73bd815b606f2dc6a8048aef45a10df111",
+    "studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_CONTRACT.md": "6feca9ad02da3783abbb9e5d1a0d2d47005c686e90404b228c68755b525c3f9f",
+    "studies/takiddin-2021-robust-poisoning/checks/source_table_audit.py": "0b04da4f69d914ecd903a423eed49c83556f865654c7811a2020cf3bd3ce2d87",
+    "studies/takiddin-2021-robust-poisoning/reported/table_2.csv": "5caa104740526c2c12acc6427471882b388aac6e7d68f940290980cb3c1a6ba6",
+    "studies/takiddin-2021-robust-poisoning/reported/table_3.csv": "d15ccc19d4a774a6eeaa191087274d93a823d7e2d801c2c7de6ec6d87d3890eb",
+    "studies/takiddin-2021-robust-poisoning/reported/table_4.csv": "6159efe489d448fd97759d6df2e01d5123a0cac300c18dc501e0fae9dc3b8e1b",
+    "studies/takiddin-2021-robust-poisoning/reported/table_5.csv": "620f255de634625b7add8e219b1b01e47972297078772d5d1a78166faed641d5"
+  },
+  "limitations": [
+    "A failed balanced identity is conditional on the paper's stated balancing procedure.",
+    "The any-prevalence screen is one-sided: disjoint implied ranges prove incompatibility, but overlap does not prove an integer confusion matrix exists.",
+    "AUC is not determined by one operating point and was not checked algebraically.",
+    "This source-only calculation does not identify how any number was produced or establish author intent."
+  ],
+  "pdf_sha256": "03a372fb5ee129799d43a50e6bec8f86fb108e9f8bdc85350e3ffe3e13d4a4ff",
+  "prose_calculations": {
+    "aea_gt_gru_gt_feed_forward_generalized_dr": {
+      "p0": true,
+      "p10": true,
+      "p20": true,
+      "p30": true
+    },
+    "ensemble_averaging_dr_drop_from_p0_percentage_points": {
+      "p10": 3.299999999999997,
+      "p20": 7.5,
+      "p30": 13.299999999999997
+    },
+    "ensemble_averaging_dr_drop_from_p0_relative_percent": {
+      "p10": 3.488372093023253,
+      "p20": 7.928118393234673,
+      "p30": 14.05919661733615
+    },
+    "mean_customer_specific_dr_drop_from_p0_percentage_points": {
+      "p10": 4.542857142857143,
+      "p20": 9.914285714285711,
+      "p30": 16.328571428571426
+    },
+    "mean_deep_minus_shallow_generalized_dr_percentage_points": {
+      "p0": 6.208333333333343,
+      "p10": 6.558333333333323,
+      "p20": 7.025000000000006,
+      "p30": 7.783333333333331
+    },
+    "mean_generalized_dr_drop_from_p0_percentage_points": {
+      "p10": 4.300000000000002,
+      "p20": 9.200000000000001,
+      "p30": 14.900000000000002
+    },
+    "mean_generalized_minus_customer_specific_dr_percentage_points": {
+      "p0": 2.6000000000000023,
+      "p10": 2.842857142857144,
+      "p20": 3.3142857142857127,
+      "p30": 4.028571428571427
+    },
+    "mean_stepwise_dr_drop_percentage_points": {
+      "table_3": {
+        "p0_to_p10": 4.300000000000002,
+        "p10_to_p20": 4.8999999999999995,
+        "p20_to_p30": 5.700000000000001
+      },
+      "table_4": {
+        "p0_to_p10": 4.542857142857143,
+        "p10_to_p20": 5.371428571428568,
+        "p20_to_p30": 6.4142857142857155
+      }
+    },
+    "p30_sequential_minus_baseline_percentage_points": {
+      "aea": {
+        "ACC": 12.0,
+        "AUC": 11.700000000000003,
+        "DR": 11.400000000000006,
+        "F1": 11.700000000000003,
+        "FA": -12.599999999999998,
+        "PR": 12.100000000000009,
+        "SP": 12.600000000000009
+      },
+      "ensemble_averaging": {
+        "ACC": 11.5,
+        "AUC": 10.599999999999994,
+        "DR": 10.900000000000006,
+        "F1": 10.900000000000006,
+        "FA": -12.0,
+        "PR": 10.900000000000006,
+        "SP": 12.0
+      }
+    },
+    "per_model_dr_drop_from_p0_percentage_points": {
+      "table_3": {
+        "adaboost": {
+          "p10": 4.5,
+          "p20": 9.5,
+          "p30": 15.600000000000009
+        },
+        "aea": {
+          "p10": 3.8999999999999915,
+          "p20": 8.299999999999997,
+          "p30": 13.299999999999997
+        },
+        "arima": {
+          "p10": 4.5,
+          "p20": 9.700000000000003,
+          "p30": 15.799999999999997
+        },
+        "feed_forward": {
+          "p10": 4.299999999999997,
+          "p20": 9.200000000000003,
+          "p30": 14.799999999999997
+        },
+        "gru": {
+          "p10": 4.1000000000000085,
+          "p20": 8.700000000000003,
+          "p30": 13.900000000000006
+        },
+        "random_forest": {
+          "p10": 4.400000000000006,
+          "p20": 9.5,
+          "p30": 15.400000000000006
+        },
+        "svm": {
+          "p10": 4.400000000000006,
+          "p20": 9.5,
+          "p30": 15.5
+        }
+      },
+      "table_4": {
+        "adaboost": {
+          "p10": 4.700000000000003,
+          "p20": 10.299999999999997,
+          "p30": 17.0
+        },
+        "aea": {
+          "p10": 4.299999999999997,
+          "p20": 9.299999999999997,
+          "p30": 15.299999999999997
+        },
+        "arima": {
+          "p10": 4.699999999999989,
+          "p20": 10.299999999999997,
+          "p30": 16.89999999999999
+        },
+        "feed_forward": {
+          "p10": 4.400000000000006,
+          "p20": 9.600000000000009,
+          "p30": 15.900000000000006
+        },
+        "gru": {
+          "p10": 4.400000000000006,
+          "p20": 9.599999999999994,
+          "p30": 15.799999999999997
+        },
+        "random_forest": {
+          "p10": 4.799999999999997,
+          "p20": 10.399999999999991,
+          "p30": 17.099999999999994
+        },
+        "svm": {
+          "p10": 4.5,
+          "p20": 9.899999999999991,
+          "p30": 16.299999999999997
+        }
+      },
+      "table_5": {
+        "aea": {
+          "p10": 3.8999999999999915,
+          "p20": 8.299999999999997,
+          "p30": 13.299999999999997
+        },
+        "ensemble_averaging": {
+          "p10": 3.299999999999997,
+          "p20": 7.5,
+          "p30": 13.299999999999997
+        },
+        "sequential_ensemble": {
+          "p10": 0.9000000000000057,
+          "p20": 1.9000000000000057,
+          "p30": 3.0
+        }
+      }
+    },
+    "sequential_dr_drop_from_p0_percentage_points": {
+      "p10": 0.9000000000000057,
+      "p20": 1.9000000000000057,
+      "p30": 3.0
+    },
+    "sequential_dr_drop_from_p0_relative_percent": {
+      "p10": 0.9453781512605102,
+      "p20": 1.995798319327737,
+      "p30": 3.1512605042016806
+    }
+  },
+  "rounding_half_width_percentage_points": 0.05,
+  "rows": [
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49375764007591605,
+          0.4971830985915496
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          82.25,
+          82.35000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          82.31462925851703,
+          82.41482965931864
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          82.09996954933005,
+          82.19996958637469
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 82.3,
+        "AUC": 81.4,
+        "DR": 82.2,
+        "F1": 82.1,
+        "FA": 17.6,
+        "PR": 82.1,
+        "SP": 82.4
+      },
+      "specificity": {
+        "derived_range": [
+          82.35,
+          82.45
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4736842105263024,
+          0.5789473684210598
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4747106292794259,
+          0.4776995305164322
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          78.69999999999999,
+          78.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          79.2558613659531,
+          79.35779816513762
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          77.69996782496781,
+          77.79996786632391
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 78.7,
+        "AUC": 78.6,
+        "DR": 77.8,
+        "F1": 77.7,
+        "FA": 20.3,
+        "PR": 77.7,
+        "SP": 79.7
+      },
+      "specificity": {
+        "derived_range": [
+          79.64999999999999,
+          79.75
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.44444444444443215,
+          0.6666666666666983
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5043634830002592,
+          0.5069469496227744
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          73.1,
+          73.20000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          73.30978809283552,
+          73.4106962663976
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          73.19586748633878,
+          73.29587312414735
+        ],
+        "pass": false
+      },
+      "model": "random_forest",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 73.1,
+        "AUC": 73.9,
+        "DR": 72.7,
+        "F1": 72.7,
+        "FA": 26.4,
+        "PR": 73.8,
+        "SP": 73.6
+      },
+      "specificity": {
+        "derived_range": [
+          73.55,
+          73.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49737632953615685,
+          0.49962518740629697
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          66.69999999999999,
+          66.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          66.68331668331668,
+          66.7832167832168
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          66.6498499624906,
+          66.74985018726593
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 66.7,
+        "AUC": 66.7,
+        "DR": 66.8,
+        "F1": 66.7,
+        "FA": 33.3,
+        "PR": 66.6,
+        "SP": 66.7
+      },
+      "specificity": {
+        "derived_range": [
+          66.65,
+          66.75
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48638620143548894,
+          0.49044254256388414
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          85.75,
+          85.85000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          85.82164328657315,
+          85.92184368737476
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          85.44953188999413,
+          85.54953243717125
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 85.8,
+        "AUC": 85.0,
+        "DR": 85.7,
+        "F1": 85.5,
+        "FA": 14.1,
+        "PR": 85.3,
+        "SP": 85.9
+      },
+      "specificity": {
+        "derived_range": [
+          85.85,
+          85.95
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000444
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49134113325107204,
+          0.49463806970509405
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          81.35,
+          81.45000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          81.47590361445782,
+          81.57630522088354
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          81.0999691738594,
+          81.19996921182266
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 81.4,
+        "AUC": 82.1,
+        "DR": 81.2,
+        "F1": 81.1,
+        "FA": 18.4,
+        "PR": 81.1,
+        "SP": 81.6
+      },
+      "specificity": {
+        "derived_range": [
+          81.55,
+          81.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.39999999999994884,
+          0.8000000000000341
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49192830414400346,
+          0.4947033898305086
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          76.39999999999999,
+          76.50000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          76.53266331658291,
+          76.63316582914574
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          76.0999671484888,
+          76.19996719160106
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 76.4,
+        "AUC": 77.3,
+        "DR": 76.2,
+        "F1": 76.1,
+        "FA": 23.3,
+        "PR": 76.1,
+        "SP": 76.7
+      },
+      "specificity": {
+        "derived_range": [
+          76.64999999999999,
+          76.75
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49761678640328955,
+          0.5000000000000002
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          70.04999999999998,
+          70.15
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          70.05,
+          70.15
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          69.99996428571427,
+          70.09996433666193
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 70.1,
+        "AUC": 70.0,
+        "DR": 70.1,
+        "F1": 70.0,
+        "FA": 29.9,
+        "PR": 70.0,
+        "SP": 70.1
+      },
+      "specificity": {
+        "derived_range": [
+          70.05,
+          70.15
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4858568055226018,
+          0.4903801175537435
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          87.64999999999998,
+          87.75
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          87.57485029940119,
+          87.67465069860279
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          87.39859839816933,
+          87.49860000000001
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 87.7,
+        "AUC": 87.1,
+        "DR": 87.8,
+        "F1": 87.4,
+        "FA": 12.4,
+        "PR": 87.1,
+        "SP": 87.6
+      },
+      "specificity": {
+        "derived_range": [
+          87.55,
+          87.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4943596047720534,
+          0.4979193945518206
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          83.19999999999999,
+          83.30000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          83.16683316683316,
+          83.26673326673325
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          83.09972924187724,
+          83.1997295673077
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 83.2,
+        "AUC": 84.2,
+        "DR": 83.3,
+        "F1": 83.1,
+        "FA": 16.8,
+        "PR": 83.0,
+        "SP": 83.2
+      },
+      "specificity": {
+        "derived_range": [
+          83.14999999999999,
+          83.25
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.502277904328018,
+          0.5051955433459886
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          77.94999999999999,
+          78.05000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          77.8942115768463,
+          77.99401197604791
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          78.0999679897567,
+          78.19996803069054
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 78.0,
+        "AUC": 79.1,
+        "DR": 78.1,
+        "F1": 78.1,
+        "FA": 22.1,
+        "PR": 78.2,
+        "SP": 77.9
+      },
+      "specificity": {
+        "derived_range": [
+          77.85,
+          77.95
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000444
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.503552397868561,
+          0.5060224702481837
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          71.74999999999999,
+          71.85000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          71.66334661354581,
+          71.76294820717132
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          71.99996527777776,
+          72.09996532593621
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 71.8,
+        "AUC": 72.1,
+        "DR": 72.0,
+        "F1": 72.0,
+        "FA": 28.4,
+        "PR": 72.1,
+        "SP": 71.6
+      },
+      "specificity": {
+        "derived_range": [
+          71.55,
+          71.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333330967,
+          0.6666666666667062
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4779334111500191,
+          0.48321029352208006
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          89.44999999999999,
+          89.55000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          89.68812877263582,
+          89.7887323943662
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          89.04988770353734,
+          89.14988782950086
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 89.5,
+        "AUC": 89.5,
+        "DR": 89.2,
+        "F1": 89.1,
+        "FA": 10.2,
+        "PR": 89.0,
+        "SP": 89.8
+      },
+      "specificity": {
+        "derived_range": [
+          89.75,
+          89.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857141406,
+          0.7142857142857462
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48048702219142236,
+          0.4844098850601872
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          85.1,
+          85.20000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          85.34743202416918,
+          85.44813695871096
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          84.59973404255318,
+          84.69973435655254
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 85.1,
+        "AUC": 85.7,
+        "DR": 84.8,
+        "F1": 84.6,
+        "FA": 14.5,
+        "PR": 84.5,
+        "SP": 85.5
+      },
+      "specificity": {
+        "derived_range": [
+          85.45,
+          85.55
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857140246,
+          0.7142857142857462
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48658959121082895,
+          0.48971099624060177
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          80.0,
+          80.10000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          80.21148036253776,
+          80.31218529707957
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          79.54987429289754,
+          79.64987445072192
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 80.0,
+        "AUC": 79.8,
+        "DR": 79.7,
+        "F1": 79.6,
+        "FA": 19.6,
+        "PR": 79.5,
+        "SP": 80.4
+      },
+      "specificity": {
+        "derived_range": [
+          80.35,
+          80.45
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333330967,
+          0.6666666666667062
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4968085426813216,
+          0.4994198540861002
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          73.94999999999999,
+          74.05000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          74.09456740442656,
+          74.19517102615696
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          73.79969512195122,
+          73.89969553450611
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 74.0,
+        "AUC": 74.0,
+        "DR": 73.7,
+        "F1": 73.8,
+        "FA": 25.7,
+        "PR": 74.0,
+        "SP": 74.3
+      },
+      "specificity": {
+        "derived_range": [
+          74.25,
+          74.35000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.47679046232837424,
+          0.48252222152178065
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          90.69999999999999,
+          90.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          90.65934065934064,
+          90.75924075924075
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          90.34822910902045,
+          90.44823106688779
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 90.7,
+        "AUC": 91.1,
+        "DR": 90.8,
+        "F1": 90.4,
+        "FA": 9.3,
+        "PR": 90.0,
+        "SP": 90.7
+      },
+      "specificity": {
+        "derived_range": [
+          90.64999999999999,
+          90.75
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4978591353904184,
+          0.5021408646095815
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          86.44999999999999,
+          86.55000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          86.44999999999999,
+          86.55000000000001
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          86.44999999999999,
+          86.55000000000001
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 86.5,
+        "AUC": 86.4,
+        "DR": 86.5,
+        "F1": 86.5,
+        "FA": 13.5,
+        "PR": 86.5,
+        "SP": 86.5
+      },
+      "specificity": {
+        "derived_range": [
+          86.45,
+          86.55
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4980355343744197,
+          0.5013513513513516
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          81.49999999999999,
+          81.60000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          81.46853146853145,
+          81.56843156843158
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          81.49996932515336,
+          81.59996936274511
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 81.5,
+        "AUC": 81.3,
+        "DR": 81.6,
+        "F1": 81.5,
+        "FA": 18.5,
+        "PR": 81.5,
+        "SP": 81.5
+      },
+      "specificity": {
+        "derived_range": [
+          81.44999999999999,
+          81.55000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000444
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5000406644572308,
+          0.5027570502002726
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          75.74999999999999,
+          75.85000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          75.64741035856574,
+          75.74701195219124
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          75.84986816084374,
+          75.94986833443055
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 75.8,
+        "AUC": 76.1,
+        "DR": 76.0,
+        "F1": 75.9,
+        "FA": 24.4,
+        "PR": 75.8,
+        "SP": 75.6
+      },
+      "specificity": {
+        "derived_range": [
+          75.55,
+          75.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.3749999999999911,
+          0.6250000000000311
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.46497843821755874,
+          0.47241379310344855
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          92.75,
+          92.85000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          93.09475806451614,
+          93.19556451612904
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          92.29997291440954,
+          92.39997294372296
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 92.8,
+        "AUC": 92.1,
+        "DR": 92.4,
+        "F1": 92.3,
+        "FA": 6.8,
+        "PR": 92.3,
+        "SP": 93.2
+      },
+      "specificity": {
+        "derived_range": [
+          93.15,
+          93.25
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4444444444444164,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4872722113142714,
+          0.492362265115685
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          88.69999999999999,
+          88.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          89.05146316851663,
+          89.1523713420787
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          88.44954776710004,
+          88.54954827780915
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 88.7,
+        "AUC": 88.2,
+        "DR": 88.3,
+        "F1": 88.5,
+        "FA": 10.8,
+        "PR": 88.7,
+        "SP": 89.2
+      },
+      "specificity": {
+        "derived_range": [
+          89.14999999999999,
+          89.25
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.39999999999997726,
+          0.6000000000000171
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4878163788258377,
+          0.4916075575801572
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          84.14999999999999,
+          84.25000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          84.4949494949495,
+          84.5959595959596
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          83.79973150357995,
+          83.89973182359954
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 84.2,
+        "AUC": 83.8,
+        "DR": 83.7,
+        "F1": 83.8,
+        "FA": 15.3,
+        "PR": 84.0,
+        "SP": 84.7
+      },
+      "specificity": {
+        "derived_range": [
+          84.64999999999999,
+          84.75
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4444444444444164,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49526008119905957,
+          0.4982989459417386
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          78.89999999999999,
+          79.00000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          79.16246215943491,
+          79.26337033299697
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          78.69920584498092,
+          78.79920685279188
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 78.9,
+        "AUC": 79.4,
+        "DR": 78.5,
+        "F1": 78.7,
+        "FA": 20.6,
+        "PR": 79.0,
+        "SP": 79.4
+      },
+      "specificity": {
+        "derived_range": [
+          79.35,
+          79.45
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857139374,
+          0.7142857142857258
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48210268100500464,
+          0.49197936489058103
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          94.39999999999998,
+          94.5
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          94.71299093655588,
+          94.81369587109768
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          94.24957559681697,
+          94.34957604663488
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 94.4,
+        "AUC": 94.0,
+        "DR": 94.1,
+        "F1": 94.3,
+        "FA": 5.2,
+        "PR": 94.5,
+        "SP": 94.8
+      },
+      "specificity": {
+        "derived_range": [
+          94.75,
+          94.85
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333330967,
+          0.6666666666667062
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4841269841269836,
+          0.4899717708721133
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          90.44999999999999,
+          90.55000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          90.69416498993965,
+          90.79476861167004
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          90.19997228381374,
+          90.29997231450722
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 90.5,
+        "AUC": 90.1,
+        "DR": 90.2,
+        "F1": 90.2,
+        "FA": 9.2,
+        "PR": 90.3,
+        "SP": 90.8
+      },
+      "specificity": {
+        "derived_range": [
+          90.75,
+          90.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857141406,
+          0.7142857142857462
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4732236564826826,
+          0.47733940783900536
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          86.1,
+          86.20000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          86.3544813695871,
+          86.45518630412889
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          85.44894675248683,
+          85.54894798363532
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 86.1,
+        "AUC": 85.9,
+        "DR": 85.8,
+        "F1": 85.5,
+        "FA": 13.5,
+        "PR": 85.2,
+        "SP": 86.5
+      },
+      "specificity": {
+        "derived_range": [
+          86.45,
+          86.55
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.37499999999997335,
+          0.62500000000002
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48452120467117354,
+          0.4877856289368483
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          81.14999999999998,
+          81.25
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          81.40120967741935,
+          81.50201612903227
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          80.64987600743954,
+          80.74987616099074
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 81.2,
+        "AUC": 80.3,
+        "DR": 80.8,
+        "F1": 80.7,
+        "FA": 18.4,
+        "PR": 80.6,
+        "SP": 81.6
+      },
+      "specificity": {
+        "derived_range": [
+          81.55,
+          81.65
+        ],
+        "pass": true
+      },
+      "table": "table_3"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4666666666666547,
+          0.6000000000000133
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.47236777086810144,
+          0.47545035524917184
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          79.79999999999998,
+          79.9
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          80.25380710659898,
+          80.3553299492386
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          78.79920685279185,
+          78.89920785804817
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 79.8,
+        "AUC": 79.1,
+        "DR": 79.1,
+        "F1": 78.8,
+        "FA": 19.4,
+        "PR": 78.6,
+        "SP": 80.6
+      },
+      "specificity": {
+        "derived_range": [
+          80.55,
+          80.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4545454545454381,
+          0.6363636363636551
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49299045308183326,
+          0.49566565341367647
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          74.79999999999998,
+          74.9
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          75.07583417593527,
+          75.17694641051568
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          74.44946272666218,
+          74.54946344735077
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 74.8,
+        "AUC": 75.0,
+        "DR": 74.3,
+        "F1": 74.5,
+        "FA": 24.6,
+        "PR": 74.7,
+        "SP": 75.4
+      },
+      "specificity": {
+        "derived_range": [
+          75.35,
+          75.45
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4285714285714126,
+          0.571428571428583
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4897074749775716,
+          0.49207341119730474
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          69.35,
+          69.45000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          69.62474645030426,
+          69.72616632860041
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          68.74985454545453,
+          68.8498547567175
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 69.4,
+        "AUC": 69.3,
+        "DR": 68.7,
+        "F1": 68.8,
+        "FA": 29.9,
+        "PR": 68.9,
+        "SP": 70.1
+      },
+      "specificity": {
+        "derived_range": [
+          70.05,
+          70.15
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4827586206896525,
+          0.5517241379310377
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48438706750611316,
+          0.48656736731685957
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          63.39999999999999,
+          63.500000000000014
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          63.800205973223484,
+          63.90319258496396
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          62.198995176848875,
+          62.29899678972713
+        ],
+        "pass": true
+      },
+      "model": "random_forest",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 63.4,
+        "AUC": 62.1,
+        "DR": 62.0,
+        "F1": 62.2,
+        "FA": 35.1,
+        "PR": 62.5,
+        "SP": 64.9
+      },
+      "specificity": {
+        "derived_range": [
+          64.85,
+          64.95
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4444444444444164,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4765037065664193,
+          0.47999989459297104
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          82.89999999999999,
+          83.00000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          83.19878910191724,
+          83.29969727547933
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          82.1992396593674,
+          82.29924058323209
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 82.9,
+        "AUC": 82.3,
+        "DR": 82.5,
+        "F1": 82.2,
+        "FA": 16.6,
+        "PR": 82.0,
+        "SP": 83.4
+      },
+      "specificity": {
+        "derived_range": [
+          83.35,
+          83.45
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.3999999999999858,
+          0.6000000000000227
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.491360488634689,
+          0.494322113989329
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          78.24999999999999,
+          78.35000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          78.53535353535352,
+          78.63636363636364
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          77.89971116816432,
+          77.99971153846155
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 78.3,
+        "AUC": 78.3,
+        "DR": 77.8,
+        "F1": 77.9,
+        "FA": 21.2,
+        "PR": 78.1,
+        "SP": 78.8
+      },
+      "specificity": {
+        "derived_range": [
+          78.75,
+          78.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.39999999999997726,
+          0.6000000000000171
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4895806249088382,
+          0.4921044120165144
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          72.64999999999999,
+          72.75000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          72.87878787878788,
+          72.979797979798
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          72.14999999999999,
+          72.25000000000001
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 72.7,
+        "AUC": 72.7,
+        "DR": 72.2,
+        "F1": 72.2,
+        "FA": 26.8,
+        "PR": 72.2,
+        "SP": 73.2
+      },
+      "specificity": {
+        "derived_range": [
+          73.14999999999999,
+          73.25
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.43749999999999056,
+          0.5625000000000144
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49143968076006894,
+          0.49369323829267625
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          66.24999999999999,
+          66.35000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          66.51422764227642,
+          66.6158536585366
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          65.6493907083016,
+          65.74939163498101
+        ],
+        "pass": true
+      },
+      "model": "adaboost",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 66.3,
+        "AUC": 65.4,
+        "DR": 65.5,
+        "F1": 65.7,
+        "FA": 32.9,
+        "PR": 65.9,
+        "SP": 67.1
+      },
+      "specificity": {
+        "derived_range": [
+          67.05,
+          67.15
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.37499999999997335,
+          0.62500000000002
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4752749121194511,
+          0.4791442779881965
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          84.94999999999999,
+          85.05000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          85.23185483870967,
+          85.33266129032258
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          84.29925860023722,
+          84.39925947867299
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 85.0,
+        "AUC": 84.3,
+        "DR": 84.6,
+        "F1": 84.3,
+        "FA": 14.6,
+        "PR": 84.1,
+        "SP": 85.4
+      },
+      "specificity": {
+        "derived_range": [
+          85.35,
+          85.45
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.37499999999998,
+          0.6250000000000311
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48982188295165363,
+          0.49299166925262006
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          80.25,
+          80.35000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          80.49395161290322,
+          80.59475806451613
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          79.8999687108886,
+          79.99996875000001
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 80.3,
+        "AUC": 80.1,
+        "DR": 79.9,
+        "F1": 79.9,
+        "FA": 19.3,
+        "PR": 80.0,
+        "SP": 80.7
+      },
+      "specificity": {
+        "derived_range": [
+          80.64999999999999,
+          80.75
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4444444444444164,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48585708293957103,
+          0.4884992553617935
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          74.69999999999999,
+          74.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          74.92431886982844,
+          75.02522704339052
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          74.09969635627529,
+          74.19969676549866
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 74.7,
+        "AUC": 74.2,
+        "DR": 74.3,
+        "F1": 74.1,
+        "FA": 24.8,
+        "PR": 74.0,
+        "SP": 75.2
+      },
+      "specificity": {
+        "derived_range": [
+          75.14999999999999,
+          75.25
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4545454545454381,
+          0.6363636363636551
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49246974967903073,
+          0.494786933605492
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          68.19999999999999,
+          68.30000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          68.40242669362992,
+          68.50353892821033
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          67.74985239852397,
+          67.84985261606485
+        ],
+        "pass": true
+      },
+      "model": "arima",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 68.2,
+        "AUC": 67.8,
+        "DR": 67.7,
+        "F1": 67.8,
+        "FA": 31.2,
+        "PR": 67.9,
+        "SP": 68.8
+      },
+      "specificity": {
+        "derived_range": [
+          68.75,
+          68.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.3999999999999659,
+          0.8000000000000398
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4856465443165061,
+          0.49015748031496104
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          87.29999999999998,
+          87.4
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          87.48743718592964,
+          87.58793969849246
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          86.9999712643678,
+          87.09997129735936
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 87.3,
+        "AUC": 87.2,
+        "DR": 87.1,
+        "F1": 87.0,
+        "FA": 12.4,
+        "PR": 87.0,
+        "SP": 87.6
+      },
+      "specificity": {
+        "derived_range": [
+          87.55,
+          87.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000533
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4821617315512418,
+          0.48562514644750915
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          82.74999999999999,
+          82.85000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          82.88152610441766,
+          82.98192771084338
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          82.24890577507598,
+          82.34890710382516
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 82.8,
+        "AUC": 82.5,
+        "DR": 82.6,
+        "F1": 82.3,
+        "FA": 17.0,
+        "PR": 82.0,
+        "SP": 83.0
+      },
+      "specificity": {
+        "derived_range": [
+          82.94999999999999,
+          83.05000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000444
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4984192318157668,
+          0.5012928248222368
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          77.35,
+          77.45000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          77.45983935742971,
+          77.56024096385543
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          77.29970892626132,
+          77.3997093023256
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 77.4,
+        "AUC": 77.3,
+        "DR": 77.2,
+        "F1": 77.3,
+        "FA": 22.4,
+        "PR": 77.5,
+        "SP": 77.6
+      },
+      "specificity": {
+        "derived_range": [
+          77.55,
+          77.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.3999999999999659,
+          0.8000000000000398
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49810054102464313,
+          0.5005413903638634
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          70.99999999999999,
+          71.10000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          71.10552763819095,
+          71.20603015075378
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          70.89968265162199,
+          70.99968309859156
+        ],
+        "pass": true
+      },
+      "model": "svm",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 71.0,
+        "AUC": 70.9,
+        "DR": 70.8,
+        "F1": 70.9,
+        "FA": 28.7,
+        "PR": 71.1,
+        "SP": 71.3
+      },
+      "specificity": {
+        "derived_range": [
+          71.25,
+          71.35000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.2499999999999467,
+          0.7500000000000444
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5013086808351228,
+          0.5061833953213447
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          88.44999999999999,
+          88.55000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          88.29681274900399,
+          88.3964143426295
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          88.54988706945228,
+          88.64988719684153
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 88.5,
+        "AUC": 88.6,
+        "DR": 88.7,
+        "F1": 88.6,
+        "FA": 11.7,
+        "PR": 88.5,
+        "SP": 88.3
+      },
+      "specificity": {
+        "derived_range": [
+          88.25,
+          88.35000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.1999999999999602,
+          0.6000000000000398
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5003644435915128,
+          0.5040642530262772
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          83.99999999999999,
+          84.10000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          83.83084577114427,
+          83.93034825870647
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          84.0997324613555,
+          84.19973277909739
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 84.0,
+        "AUC": 85.8,
+        "DR": 84.3,
+        "F1": 84.1,
+        "FA": 16.2,
+        "PR": 84.0,
+        "SP": 83.8
+      },
+      "specificity": {
+        "derived_range": [
+          83.75,
+          83.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333329385,
+          0.6666666666667062
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.502571794060359,
+          0.5055521301489436
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          78.74999999999999,
+          78.85000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          78.57852882703776,
+          78.67793240556661
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          78.9498733375554,
+          79.04987349778622
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 78.8,
+        "AUC": 78.5,
+        "DR": 79.1,
+        "F1": 79.0,
+        "FA": 21.5,
+        "PR": 78.9,
+        "SP": 78.5
+      },
+      "specificity": {
+        "derived_range": [
+          78.44999999999999,
+          78.55000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.1999999999999602,
+          0.6000000000000398
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4982782369146004,
+          0.5007752662058661
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          72.49999999999999,
+          72.60000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          72.38805970149252,
+          72.48756218905474
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          72.54944865609924,
+          72.64944941500346
+        ],
+        "pass": true
+      },
+      "model": "feed_forward",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 72.5,
+        "AUC": 72.4,
+        "DR": 72.8,
+        "F1": 72.6,
+        "FA": 27.7,
+        "PR": 72.4,
+        "SP": 72.3
+      },
+      "specificity": {
+        "derived_range": [
+          72.25,
+          72.35000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4999999999999645,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5015929370789849,
+          0.5070035233608275
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          89.74999999999999,
+          89.85000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          89.59163346613545,
+          89.69123505976097
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          89.84988870339453,
+          89.94988882712619
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 89.9,
+        "AUC": 89.7,
+        "DR": 90.0,
+        "F1": 89.9,
+        "FA": 10.4,
+        "PR": 89.8,
+        "SP": 89.6
+      },
+      "specificity": {
+        "derived_range": [
+          89.55,
+          89.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          0.6666666666667614
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5011278797462018,
+          0.5051369863013702
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          85.39999999999998,
+          85.5
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          85.29411764705883,
+          85.39381854436691
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          85.49997076023391,
+          85.59997079439253
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 85.4,
+        "AUC": 85.8,
+        "DR": 85.6,
+        "F1": 85.5,
+        "FA": 14.7,
+        "PR": 85.5,
+        "SP": 85.3
+      },
+      "specificity": {
+        "derived_range": [
+          85.25,
+          85.35000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          0.6666666666667298
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5006403507393494,
+          0.5037878787878789
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          80.19999999999999,
+          80.30000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          80.10967098703888,
+          80.20937188434696
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          80.2999688667497,
+          80.39996890547266
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 80.2,
+        "AUC": 80.3,
+        "DR": 80.4,
+        "F1": 80.3,
+        "FA": 19.9,
+        "PR": 80.3,
+        "SP": 80.1
+      },
+      "specificity": {
+        "derived_range": [
+          80.05,
+          80.15
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          0.6666666666667298
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49898785425101194,
+          0.5015820079780348
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          74.0,
+          74.10000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          73.92821535393819,
+          74.02791625124627
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          74.04986495611072,
+          74.14986513823332
+        ],
+        "pass": true
+      },
+      "model": "gru",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 74.0,
+        "AUC": 74.0,
+        "DR": 74.2,
+        "F1": 74.1,
+        "FA": 26.1,
+        "PR": 74.0,
+        "SP": 73.9
+      },
+      "specificity": {
+        "derived_range": [
+          73.85,
+          73.95
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          0.6666666666667298
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49918389553862835,
+          0.5057886094147754
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          91.79999999999998,
+          91.9
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          91.67497507477566,
+          91.77467597208376
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          91.84989112683722,
+          91.94989124524197
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 91.8,
+        "AUC": 91.4,
+        "DR": 92.0,
+        "F1": 91.9,
+        "FA": 8.3,
+        "PR": 91.8,
+        "SP": 91.7
+      },
+      "specificity": {
+        "derived_range": [
+          91.64999999999999,
+          91.75
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49512783836938995,
+          0.49971461187214644
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          87.6,
+          87.70000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          87.56243756243757,
+          87.66233766233768
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          87.54988577955454,
+          87.64988590986881
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 87.6,
+        "AUC": 87.3,
+        "DR": 87.7,
+        "F1": 87.6,
+        "FA": 12.4,
+        "PR": 87.5,
+        "SP": 87.6
+      },
+      "specificity": {
+        "derived_range": [
+          87.55,
+          87.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49795826481192357,
+          0.5014367816091956
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          82.6,
+          82.70000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          82.56743256743258,
+          82.66733266733267
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          82.59996973365615,
+          82.69996977025393
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 82.6,
+        "AUC": 82.6,
+        "DR": 82.7,
+        "F1": 82.6,
+        "FA": 17.4,
+        "PR": 82.6,
+        "SP": 82.6
+      },
+      "specificity": {
+        "derived_range": [
+          82.55,
+          82.65
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.37499999999998,
+          0.6250000000000377
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.5069204654056491,
+          0.5098088549423494
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          77.04999999999998,
+          77.15
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          77.26814516129032,
+          77.36895161290323
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          77.24533980582522,
+          77.34534583063996
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 77.1,
+        "AUC": 77.3,
+        "DR": 76.7,
+        "F1": 77.2,
+        "FA": 22.5,
+        "PR": 77.9,
+        "SP": 77.5
+      },
+      "specificity": {
+        "derived_range": [
+          77.44999999999999,
+          77.55000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_4"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857139374,
+          0.7142857142857258
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48210268100500464,
+          0.49197936489058103
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          94.39999999999998,
+          94.5
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          94.71299093655588,
+          94.81369587109768
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          94.24957559681697,
+          94.34957604663488
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 94.4,
+        "AUC": 94.0,
+        "DR": 94.1,
+        "F1": 94.3,
+        "FA": 5.2,
+        "PR": 94.5,
+        "SP": 94.8
+      },
+      "specificity": {
+        "derived_range": [
+          94.75,
+          94.85
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333330967,
+          0.6666666666667062
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4841269841269836,
+          0.4899717708721133
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          90.44999999999999,
+          90.55000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          90.69416498993965,
+          90.79476861167004
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          90.19997228381374,
+          90.29997231450722
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 90.5,
+        "AUC": 90.1,
+        "DR": 90.2,
+        "F1": 90.2,
+        "FA": 9.2,
+        "PR": 90.3,
+        "SP": 90.8
+      },
+      "specificity": {
+        "derived_range": [
+          90.75,
+          90.85000000000001
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.42857142857141406,
+          0.7142857142857462
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4732236564826826,
+          0.47733940783900536
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          86.1,
+          86.20000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          86.3544813695871,
+          86.45518630412889
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          85.44894675248683,
+          85.54894798363532
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 86.1,
+        "AUC": 85.9,
+        "DR": 85.8,
+        "F1": 85.5,
+        "FA": 13.5,
+        "PR": 85.2,
+        "SP": 86.5
+      },
+      "specificity": {
+        "derived_range": [
+          86.45,
+          86.55
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.37499999999997335,
+          0.62500000000002
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48452120467117354,
+          0.4877856289368483
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          81.14999999999998,
+          81.25
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          81.40120967741935,
+          81.50201612903227
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          80.64987600743954,
+          80.74987616099074
+        ],
+        "pass": true
+      },
+      "model": "aea",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 81.2,
+        "AUC": 80.3,
+        "DR": 80.8,
+        "F1": 80.7,
+        "FA": 18.4,
+        "PR": 80.6,
+        "SP": 81.6
+      },
+      "specificity": {
+        "derived_range": [
+          81.55,
+          81.65
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.33333333333330173,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.48032484528004143,
+          0.4909540131238782
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          94.85,
+          94.95000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          95.12072434607646,
+          95.22132796780683
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          94.69976240760295,
+          94.79976265822785
+        ],
+        "pass": true
+      },
+      "model": "ensemble_averaging",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 94.9,
+        "AUC": 94.6,
+        "DR": 94.6,
+        "F1": 94.7,
+        "FA": 4.8,
+        "PR": 94.9,
+        "SP": 95.2
+      },
+      "specificity": {
+        "derived_range": [
+          95.15,
+          95.25
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4877495206947101,
+          0.4940116289998186
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          91.29999999999998,
+          91.4
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          91.34134134134133,
+          91.44144144144144
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          91.14989029072954,
+          91.24989041095893
+        ],
+        "pass": true
+      },
+      "model": "ensemble_averaging",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 91.3,
+        "AUC": 91.2,
+        "DR": 91.3,
+        "F1": 91.2,
+        "FA": 8.6,
+        "PR": 91.1,
+        "SP": 91.4
+      },
+      "specificity": {
+        "derived_range": [
+          91.35,
+          91.45
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.0,
+          1.0
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4977749940481086,
+          0.5022250059518912
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          87.04999999999998,
+          87.15
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          87.05,
+          87.15
+        ],
+        "pass": true
+      },
+      "f1": {
+        "derived_range": [
+          87.04999999999998,
+          87.15
+        ],
+        "pass": true
+      },
+      "model": "ensemble_averaging",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 87.1,
+        "AUC": 87.0,
+        "DR": 87.1,
+        "F1": 87.1,
+        "FA": 12.9,
+        "PR": 87.1,
+        "SP": 87.1
+      },
+      "specificity": {
+        "derived_range": [
+          87.05,
+          87.15
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4444444444444164,
+          0.6666666666666825
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.49428160234356344,
+          0.4976726243395978
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          81.69999999999999,
+          81.80000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          81.98789101917254,
+          82.08879919273461
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          81.49923312883433,
+          81.59923406862745
+        ],
+        "pass": true
+      },
+      "model": "ensemble_averaging",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 81.7,
+        "AUC": 81.4,
+        "DR": 81.3,
+        "F1": 81.5,
+        "FA": 17.8,
+        "PR": 81.8,
+        "SP": 82.2
+      },
+      "specificity": {
+        "derived_range": [
+          82.14999999999999,
+          82.25
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4736842105263099,
+          0.5789473684210672
+        ],
+        "pass": false,
+        "precision_implied_range": [
+          0.3911596138929577,
+          0.40537230450960426
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          96.1,
+          96.20000000000002
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          96.99286442405709,
+          97.0948012232416
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          95.3495804929208,
+          95.44958093242536
+        ],
+        "pass": true
+      },
+      "model": "sequential_ensemble",
+      "poisoning": "p0",
+      "printed": {
+        "ACC": 96.1,
+        "AUC": 97.4,
+        "DR": 95.2,
+        "F1": 95.4,
+        "FA": 2.9,
+        "PR": 95.6,
+        "SP": 97.1
+      },
+      "specificity": {
+        "derived_range": [
+          97.05,
+          97.15
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4499999999999925,
+          0.5500000000000081
+        ],
+        "pass": false,
+        "precision_implied_range": [
+          0.42108476553244945,
+          0.4331085391415298
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          95.24999999999999,
+          95.35000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          96.17346938775509,
+          96.27551020408161
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          94.59870507399575,
+          94.69870644139388
+        ],
+        "pass": true
+      },
+      "model": "sequential_ensemble",
+      "poisoning": "p10",
+      "printed": {
+        "ACC": 95.3,
+        "AUC": 95.2,
+        "DR": 94.3,
+        "F1": 94.6,
+        "FA": 3.7,
+        "PR": 95.0,
+        "SP": 96.3
+      },
+      "specificity": {
+        "derived_range": [
+          96.25,
+          96.35
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4499999999999925,
+          0.5500000000000081
+        ],
+        "pass": true,
+        "precision_implied_range": [
+          0.4494884746544953,
+          0.4596420604599887
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          94.24999999999999,
+          94.35000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          95.15306122448979,
+          95.25510204081631
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          93.74733333333333,
+          93.84733617474696
+        ],
+        "pass": true
+      },
+      "model": "sequential_ensemble",
+      "poisoning": "p20",
+      "printed": {
+        "ACC": 94.3,
+        "AUC": 93.1,
+        "DR": 93.3,
+        "F1": 93.8,
+        "FA": 4.7,
+        "PR": 94.3,
+        "SP": 95.3
+      },
+      "specificity": {
+        "derived_range": [
+          95.25,
+          95.35
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    },
+    {
+      "any_prevalence_screen": {
+        "accuracy_implied_range": [
+          0.4499999999999925,
+          0.5500000000000081
+        ],
+        "pass": false,
+        "precision_implied_range": [
+          0.43999710928950425,
+          0.4481694096268616
+        ]
+      },
+      "balanced_accuracy": {
+        "derived_range": [
+          93.14999999999999,
+          93.25000000000001
+        ],
+        "pass": true
+      },
+      "balanced_precision": {
+        "derived_range": [
+          94.03061224489797,
+          94.13265306122449
+        ],
+        "pass": false
+      },
+      "f1": {
+        "derived_range": [
+          92.39932359307359,
+          92.49932432432433
+        ],
+        "pass": true
+      },
+      "model": "sequential_ensemble",
+      "poisoning": "p30",
+      "printed": {
+        "ACC": 93.2,
+        "AUC": 92.0,
+        "DR": 92.2,
+        "F1": 92.4,
+        "FA": 5.8,
+        "PR": 92.7,
+        "SP": 94.2
+      },
+      "specificity": {
+        "derived_range": [
+          94.15,
+          94.25
+        ],
+        "pass": true
+      },
+      "table": "table_5"
+    }
+  ],
+  "schema_version": 1,
+  "study_id": "takiddin-2021-robust-poisoning",
+  "summary": {
+    "any_prevalence_screen": {
+      "fail": 3,
+      "pass": 65,
+      "total": 68
+    },
+    "balanced_accuracy": {
+      "fail": 0,
+      "pass": 68,
+      "total": 68
+    },
+    "balanced_precision": {
+      "fail": 58,
+      "pass": 10,
+      "total": 68
+    },
+    "f1": {
+      "fail": 1,
+      "pass": 67,
+      "total": 68
+    },
+    "specificity": {
+      "fail": 0,
+      "pass": 68,
+      "total": 68
+    }
+  }
+}
