@@ -61,6 +61,27 @@ class RobustPoisoningSourceAuditTests(unittest.TestCase):
         self.assertFalse(result["balanced_precision"]["pass"])
         self.assertFalse(result["any_prevalence_screen"]["pass"])
 
+    def test_prose_calculations_cover_every_declared_comparison(self) -> None:
+        tables = {
+            table_id: AUDIT.load_table(table_id)
+            for table_id in AUDIT.EXPECTED_MODELS
+        }
+        prose = AUDIT.prose_calculations(tables)
+        self.assertEqual(
+            set(prose["per_model_dr_drop_from_p0_percentage_points"]),
+            {"table_3", "table_4", "table_5"},
+        )
+        self.assertEqual(
+            set(prose["mean_stepwise_dr_drop_percentage_points"]),
+            {"table_3", "table_4"},
+        )
+        self.assertEqual(
+            set(prose["p30_sequential_minus_baseline_percentage_points"]),
+            {"aea", "ensemble_averaging"},
+        )
+        for comparison in prose["p30_sequential_minus_baseline_percentage_points"].values():
+            self.assertEqual(set(comparison), set(AUDIT.METRICS))
+
     def test_preserved_result_matches_fresh_calculation(self) -> None:
         if not RESULT_PATH.exists():
             self.skipTest("source audit result has not been generated yet")

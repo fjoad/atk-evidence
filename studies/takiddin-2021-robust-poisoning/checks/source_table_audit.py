@@ -261,6 +261,7 @@ def prose_calculations(
     all_benchmarks = EXPECTED_MODELS["table_3"]
     shallow = ("random_forest", "adaboost", "arima", "svm")
     deep = ("feed_forward", "gru", "aea")
+    transitions = (("p0", "p10"), ("p10", "p20"), ("p20", "p30"))
 
     def dr(table: dict[str, dict[str, dict[str, float]]], model: str, level: str) -> float:
         return table[model]["DR"][level]
@@ -300,20 +301,68 @@ def prose_calculations(
         for level in LEVELS[1:]
     }
 
+    per_model_dr_drop = {
+        table_id: {
+            model: {
+                level: dr(table, model, "p0") - dr(table, model, level)
+                for level in LEVELS[1:]
+            }
+            for model in table
+        }
+        for table_id, table in tables.items()
+    }
+    mean_stepwise_dr_drop = {
+        "table_3": {
+            f"{start}_to_{end}": mean(
+                dr(generalized, model, start) - dr(generalized, model, end)
+                for model in all_benchmarks
+            )
+            for start, end in transitions
+        },
+        "table_4": {
+            f"{start}_to_{end}": mean(
+                dr(customer, model, start) - dr(customer, model, end)
+                for model in all_benchmarks
+            )
+            for start, end in transitions
+        },
+    }
+    ensemble_averaging_drop_pp = {
+        level: dr(proposed, "ensemble_averaging", "p0")
+        - dr(proposed, "ensemble_averaging", level)
+        for level in LEVELS[1:]
+    }
+    ensemble_averaging_drop_relative = {
+        level: 100.0
+        * (
+            dr(proposed, "ensemble_averaging", "p0")
+            - dr(proposed, "ensemble_averaging", level)
+        )
+        / dr(proposed, "ensemble_averaging", "p0")
+        for level in LEVELS[1:]
+    }
+    p30_sequential_differences = {
+        baseline: {
+            metric: proposed["sequential_ensemble"][metric]["p30"]
+            - proposed[baseline][metric]["p30"]
+            for metric in METRICS
+        }
+        for baseline in ("aea", "ensemble_averaging")
+    }
+
     return {
+        "per_model_dr_drop_from_p0_percentage_points": per_model_dr_drop,
         "mean_generalized_dr_drop_from_p0_percentage_points": generalized_drop,
         "mean_customer_specific_dr_drop_from_p0_percentage_points": customer_drop,
+        "mean_stepwise_dr_drop_percentage_points": mean_stepwise_dr_drop,
         "mean_generalized_minus_customer_specific_dr_percentage_points": generalized_advantage,
         "mean_deep_minus_shallow_generalized_dr_percentage_points": deep_minus_shallow,
         "aea_gt_gru_gt_feed_forward_generalized_dr": aea_gru_feed_forward_order,
         "sequential_dr_drop_from_p0_percentage_points": sequential_drop_pp,
         "sequential_dr_drop_from_p0_relative_percent": sequential_drop_relative_percent,
-        "p30_sequential_minus_aea_dr_percentage_points": dr(proposed, "sequential_ensemble", "p30")
-        - dr(proposed, "aea", "p30"),
-        "p30_sequential_minus_ensemble_averaging_dr_percentage_points": dr(
-            proposed, "sequential_ensemble", "p30"
-        )
-        - dr(proposed, "ensemble_averaging", "p30"),
+        "ensemble_averaging_dr_drop_from_p0_percentage_points": ensemble_averaging_drop_pp,
+        "ensemble_averaging_dr_drop_from_p0_relative_percent": ensemble_averaging_drop_relative,
+        "p30_sequential_minus_baseline_percentage_points": p30_sequential_differences,
     }
 
 
