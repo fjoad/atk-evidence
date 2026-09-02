@@ -336,6 +336,7 @@ def build_audit() -> dict[str, object]:
     input_paths = [
         STUDY_DIR / "METHOD.md",
         STUDY_DIR / "SOURCE_AUDIT_CONTRACT.md",
+        Path(__file__).resolve(),
         *(REPORTED_DIR / f"{table_id}.csv" for table_id in ("table_2", *EXPECTED_MODELS)),
     ]
     return {
