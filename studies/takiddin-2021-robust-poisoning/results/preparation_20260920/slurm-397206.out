@@ -1,0 +1,24 @@
+read File1.txt.zip; rows scanned=9
+read File2.txt.zip; rows scanned=17
+read File3.txt.zip; rows scanned=25
+read File4.txt.zip; rows scanned=33
+read File5.txt.zip; rows scanned=41
+read File6.txt.zip; rows scanned=49
+----------------------------------------------------------------------
+Ran 13 tests in 2.271s
+
+OK
+read File1.txt.zip; rows scanned=24465838
+read File2.txt.zip; rows scanned=48973138
+read File3.txt.zip; rows scanned=73367486
+read File4.txt.zip; rows scanned=97985454
+read File5.txt.zip; rows scanned=122556984
+read File6.txt.zip; rows scanned=157992996
+{"name": "generalized-two-class-p00", "train": 4464, "test": 2232, "seconds": 0.1333231683820486}
+{"name": "generalized-two-class-p30", "train": 4464, "test": 2232, "seconds": 0.032572491094470024}
+{"name": "generalized-novelty-p00", "train": 373, "test": 6704, "seconds": 0.019868506118655205}
+{"name": "generalized-novelty-p30", "train": 373, "test": 6704, "seconds": 0.016819655895233154}
+{"name": "customer-specific-two-class-p00", "train": 224, "test": 112, "seconds": 0.005884723737835884}
+{"name": "customer-specific-two-class-p30", "train": 224, "test": 112, "seconds": 0.011309145018458366}
+{"name": "customer-specific-novelty-p00", "train": 18, "test": 336, "seconds": 0.012105027213692665}
+{"name": "customer-specific-novelty-p30", "train": 18, "test": 336, "seconds": 0.01161232776939869}

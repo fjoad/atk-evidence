@@ -2,29 +2,32 @@
 
 **Date:** 2026-09-20
 
-**State:** revised research direction and plan; no new experiment launched
+**State:** steps 1-2 complete, including a bounded preparation check; no detector trained
 
 ## Current execution: steps 1 and 2
 
 The user has authorized source/data resolution and implementation of the shared
 preparation pipeline. Work now covers:
 
-- [ ] Independently verify online dataset identity, the locally available raw
+- [x] Independently verify online dataset identity, the locally available raw
   bytes, documentation, and cited attack definitions.
-- [ ] Record one explicit initial setup and all material unresolved alternatives
+- [x] Record one explicit initial setup and all material unresolved alternatives
   before preparing research data.
-- [ ] Implement acquisition/verification and preparation for novelty and
+- [x] Implement acquisition/verification and preparation for novelty and
   two-class models with customer/day/attack/poison/synthetic provenance.
-- [ ] Check parsing, attacks, splitting, scaling, ADASYN, and poisoning on
+- [x] Check parsing, attacks, splitting, scaling, ADASYN, and poisoning on
   hand-checkable local software fixtures, including direct library parity.
-- [ ] Run a bounded preparation-only check on Panther if authentication is
+- [x] Run a bounded preparation-only check on Panther if authentication is
   available; otherwise report precisely that research-data execution is pending.
-- [ ] Update the journal, generated website, status, and checks; commit.
+- [x] Update the journal, generated website, status, and checks; commit.
 
 No detector fitting, score comparison, seed sweep, or full ADASYN allocation
 is included in these two steps. Local tests use constructed software fixtures;
-all real-data preparation remains on cluster compute nodes. A September 20
-read-only SSH attempt reached Panther but failed noninteractive authentication.
+all real-data preparation remains on cluster compute nodes. Password login
+subsequently succeeded. Frozen commit 30ce6c4 ran as CPU job 397206 and finished
+0:0 in 2:16. Twenty customers and 560 daily profiles produced eight completed
+preparation cases; all 224 saved arrays passed independent artifact checks.
+See the journal and results/preparation_20260920 under this study.
 
 ## Direction
 
@@ -36,8 +39,9 @@ with the reported settings. Do not investigate speculative number-generation
 patterns, author intent, or invented-data scenarios in this phase.
 
 This plan replaces the completed September 2 source-only plan as Paper 3's
-current direction. The present turn is a source review and plan, not a job
-submission. Existing results and source freezes remain preserved. Paper 1's
+current direction. The initial turn established the plan; the user subsequently
+authorized steps 1-2, whose completed preparation check is recorded above.
+Existing results and source freezes remain preserved. Paper 1's
 experiments and any work in its separate task are outside this plan.
 
 ## Source and complete coverage
@@ -231,14 +235,17 @@ Primary hardware references consulted on September 20:
 - [NVIDIA V100 specifications](https://www.nvidia.com/en-in/data-center/v100/): 16/32 GB variants, 900 GB/s for V100, 14 TFLOPS FP32 for PCIe.
 - [NVIDIA A16 specifications](https://www.nvidia.com/en-gb/data-center/products/a16-gpu/): four separate 16 GB GPUs, 200 GB/s each.
 
-Panther responded to SSH on September 20, but the noninteractive attempt failed
-authentication. Existing notes document interactive password login. No current
-queue or GPU-availability claim has been verified, and no job was submitted.
+The initial noninteractive SSH attempt failed authentication. The subsequent
+authorized password login succeeded; the sources and matching software were
+present, and Slurm listed V100-16GB resources. CPU job 397206 completed the
+preparation check. No GPU was allocated or benchmarked for this paper.
 
 ## Deliverable
 
 A reported-versus-measured account covering every listed model, with visible
 setup assumptions, complete and partial table coverage distinguished, every
 attempt retained, and uncertainty appropriate to the data and repetition
-structure. The conclusion follows the measurements. Current work is the plan;
-implementation and experiment execution are subsequent steps.
+structure. The conclusion follows the measurements. Model implementation and
+performance experiments are subsequent steps. Source
+verification, pipeline implementation, and the bounded preparation check are
+complete; full-population preparation has not been executed.

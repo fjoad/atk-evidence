@@ -32,6 +32,7 @@ def load(name, path):
 D = load("robust_source_data", REPRO / "download_data.py")
 with patch.dict(sys.modules, {"download_data": D}):
     P = load("robust_preparation", REPRO / "prepare_data.py")
+A = load("robust_artifact_verifier", REPRO.parent / "checks/verify_prepared_artifacts.py")
 
 
 class RobustPreparationTests(unittest.TestCase):
@@ -199,6 +200,31 @@ class RobustPreparationTests(unittest.TestCase):
         with patch.dict(os.environ, {}, clear=True):
             with self.assertRaisesRegex(RuntimeError, "Slurm"):
                 P.require_compute()
+
+    def test_artifact_verifier_accepts_round_trip_and_rejects_changed_bytes(self):
+        arrays, record = P.prepare(self.x, self.meter, self.day, mode="two-class")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            name = "generalized-two-class-p00"
+            P.save_arrays(root / name, arrays, record)
+            (root / "summary.json").write_text(json.dumps({
+                "status": "complete", "code_commit": "software-fixture", "job_id": None,
+                "runs": [{"name": name}],
+            }))
+            self.assertEqual(A.verify(root)["status"], "verified")
+            target = root / name / "train_x.npy"
+            changed = np.load(target)
+            changed[0, 0] += 1
+            np.save(target, changed, allow_pickle=False)
+            with self.assertRaises(AssertionError):
+                A.verify(root)
+
+    def test_artifact_verifier_rejects_incomplete_attempt(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            (path / "summary.json").write_text('{"status":"started"}')
+            with self.assertRaisesRegex(ValueError, "did not complete"):
+                A.verify(path)
 
 
 if __name__ == "__main__":

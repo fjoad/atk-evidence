@@ -12,7 +12,7 @@ execution plan here is
 
 ## Current project state
 
-- **Paper 3 steps 1-2 implemented; preparation check pending:** the user
+- **Paper 3 steps 1-2 complete; preparation verified:** the user
   authorized data/source resolution and preparation. The six local CER ZIPs
   now pass fresh official metadata, checksum, and CRC checks. A fresh mapping
   comparison matches all 6,445 allocation rows; the exact 3,000 author IDs
@@ -20,9 +20,19 @@ execution plan here is
   acquisition/verification and preparation files pass 13 software-fixture
   tests, including stock-ADASYN parity and full synthetic ancestry. Panther
   password login succeeded; the raw sources and matching package versions
-  are present. The next action is a frozen, preparation-only CPU job for
-  20 customers and 28 complete days each, capped at 15 minutes/4 CPUs/16 GiB.
-  No training or score experiment is part of this phase.
+  are present. Frozen commit 30ce6c4 completed as CPU job 397206 (0:0) in 2:16,
+  within its 15-minute/4-CPU/16-GiB budget, with no GPU. It scanned 157,992,996
+  source readings, retained 560 profiles (20 customers x 28 complete days),
+  and completed eight preparation cases. All 224 saved arrays passed hash,
+  shape, label, scaler, ancestry, and overlap checks after transfer. At nominal
+  30%, the declared generalized two-class operation changed 15.12% of all
+  training rows, versus 29.91% for the customer-specific example. The novelty
+  completion produced 108 shared attack identities across train/test; this
+  ambiguity is explicit, not silently corrected. See the
+  [preparation record](../studies/takiddin-2021-robust-poisoning/results/preparation_20260920/README.md).
+  No detector was trained or scored, and full-population preparation did not
+  run. The full repository suite passed 284 tests before execution; the
+  cluster repeated and passed all 13 preparation fixtures.
 
 - **Choose extra runs by what they resolve:** the user explicitly rejects
   automatic seed repetitions or wider searches after a large mismatch.

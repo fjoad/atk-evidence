@@ -1,0 +1,626 @@
+{
+  "code_commit": "30ce6c4a8ea4a12c4a03091134e1ea18cccd3d5c",
+  "created_utc": "2026-09-19T23:25:10.537456+00:00",
+  "elapsed_seconds": 55.66274637170136,
+  "fixture": false,
+  "job_id": "397206",
+  "parser": {
+    "admitted_days": 10658,
+    "candidate_days": 10718,
+    "days_with_duplicate_slots": 0,
+    "days_with_extra_slots": 40,
+    "excluded_days": 60,
+    "input_rows": 514504,
+    "scanned_rows": 157992996
+  },
+  "runs": [
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 20,
+      "elapsed_seconds": 0.1333231683820486,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "two-class",
+      "name": "generalized-two-class-p00",
+      "order": [
+        "benign-and-attacks",
+        "pool-ADASYN",
+        "row-split",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.0,
+        "changed_fraction_of_training": 0.0,
+        "changed_rows": 0,
+        "eligible_rows": 2255,
+        "operation": "label-flip",
+        "rate": 0.0,
+        "scope": "generalized",
+        "selected_customer_count": 0,
+        "selection_denominator": "selected-customers",
+        "training_rows": 4464
+      },
+      "profiles": 560,
+      "rate": 0.0,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          3336,
+          3360
+        ],
+        "generated": 2776,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "generalized",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 528,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 1306,
+        "train_synthetic_test_parent": 1186
+      },
+      "test_rows": 2232,
+      "test_true_counts": [
+        1127,
+        1105
+      ],
+      "train_observed_counts": [
+        2209,
+        2255
+      ],
+      "train_true_counts": [
+        2209,
+        2255
+      ],
+      "training_rows": 4464
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 20,
+      "elapsed_seconds": 0.032572491094470024,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "two-class",
+      "name": "generalized-two-class-p30",
+      "order": [
+        "benign-and-attacks",
+        "pool-ADASYN",
+        "row-split",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.29933481152993346,
+        "changed_fraction_of_training": 0.15120967741935484,
+        "changed_rows": 675,
+        "eligible_rows": 2255,
+        "operation": "label-flip",
+        "rate": 0.3,
+        "scope": "generalized",
+        "selected_customer_count": 6,
+        "selection_denominator": "selected-customers",
+        "training_rows": 4464
+      },
+      "profiles": 560,
+      "rate": 0.3,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          3336,
+          3360
+        ],
+        "generated": 2776,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "generalized",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 528,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 1306,
+        "train_synthetic_test_parent": 1186
+      },
+      "test_rows": 2232,
+      "test_true_counts": [
+        1127,
+        1105
+      ],
+      "train_observed_counts": [
+        2884,
+        1580
+      ],
+      "train_true_counts": [
+        2209,
+        2255
+      ],
+      "training_rows": 4464
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 20,
+      "elapsed_seconds": 0.019868506118655205,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "novelty",
+      "name": "generalized-novelty-p00",
+      "order": [
+        "benign-split",
+        "all-attacks-to-test",
+        "test-ADASYN",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.0,
+        "changed_fraction_of_training": 0.0,
+        "changed_rows": 0,
+        "eligible_rows": 373,
+        "operation": "replace-with-attack",
+        "rate": 0.0,
+        "scope": "generalized",
+        "selected_customer_count": 0,
+        "selection_denominator": "selected-customers",
+        "training_rows": 373
+      },
+      "profiles": 560,
+      "rate": 0.0,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          3344,
+          3360
+        ],
+        "generated": 3157,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "generalized",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 373,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 0,
+        "train_synthetic_test_parent": 0
+      },
+      "test_rows": 6704,
+      "test_true_counts": [
+        3344,
+        3360
+      ],
+      "train_observed_counts": [
+        373,
+        0
+      ],
+      "train_true_counts": [
+        373,
+        0
+      ],
+      "training_rows": 373
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 20,
+      "elapsed_seconds": 0.016819655895233154,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "novelty",
+      "name": "generalized-novelty-p30",
+      "order": [
+        "benign-split",
+        "all-attacks-to-test",
+        "test-ADASYN",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.289544235924933,
+        "changed_fraction_of_training": 0.289544235924933,
+        "changed_rows": 108,
+        "eligible_rows": 373,
+        "operation": "replace-with-attack",
+        "rate": 0.3,
+        "scope": "generalized",
+        "selected_customer_count": 6,
+        "selection_denominator": "selected-customers",
+        "training_rows": 373
+      },
+      "profiles": 560,
+      "rate": 0.3,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          3344,
+          3360
+        ],
+        "generated": 3157,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "generalized",
+      "seed": 20260920,
+      "shared_original_row_identities": 108,
+      "shared_source_days": 373,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 0,
+        "train_synthetic_test_parent": 0
+      },
+      "test_rows": 6704,
+      "test_true_counts": [
+        3344,
+        3360
+      ],
+      "train_observed_counts": [
+        373,
+        0
+      ],
+      "train_true_counts": [
+        265,
+        108
+      ],
+      "training_rows": 373
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 1,
+      "elapsed_seconds": 0.005884723737835884,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "two-class",
+      "name": "customer-specific-two-class-p00",
+      "order": [
+        "benign-and-attacks",
+        "pool-ADASYN",
+        "row-split",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.0,
+        "changed_fraction_of_training": 0.0,
+        "changed_rows": 0,
+        "eligible_rows": 111,
+        "operation": "label-flip",
+        "rate": 0.0,
+        "scope": "customer-specific",
+        "selected_customer_count": 0,
+        "selection_denominator": "all-training",
+        "training_rows": 224
+      },
+      "profiles": 28,
+      "rate": 0.0,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          168,
+          168
+        ],
+        "generated": 140,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "customer-specific",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 28,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 59,
+        "train_synthetic_test_parent": 61
+      },
+      "test_rows": 112,
+      "test_true_counts": [
+        55,
+        57
+      ],
+      "train_observed_counts": [
+        113,
+        111
+      ],
+      "train_true_counts": [
+        113,
+        111
+      ],
+      "training_rows": 224
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 1,
+      "elapsed_seconds": 0.011309145018458366,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "two-class",
+      "name": "customer-specific-two-class-p30",
+      "order": [
+        "benign-and-attacks",
+        "pool-ADASYN",
+        "row-split",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.6036036036036037,
+        "changed_fraction_of_training": 0.29910714285714285,
+        "changed_rows": 67,
+        "eligible_rows": 111,
+        "operation": "label-flip",
+        "rate": 0.3,
+        "scope": "customer-specific",
+        "selected_customer_count": 0,
+        "selection_denominator": "all-training",
+        "training_rows": 224
+      },
+      "profiles": 28,
+      "rate": 0.3,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          168,
+          168
+        ],
+        "generated": 140,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "customer-specific",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 28,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 59,
+        "train_synthetic_test_parent": 61
+      },
+      "test_rows": 112,
+      "test_true_counts": [
+        55,
+        57
+      ],
+      "train_observed_counts": [
+        180,
+        44
+      ],
+      "train_true_counts": [
+        113,
+        111
+      ],
+      "training_rows": 224
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 1,
+      "elapsed_seconds": 0.012105027213692665,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "novelty",
+      "name": "customer-specific-novelty-p00",
+      "order": [
+        "benign-split",
+        "all-attacks-to-test",
+        "test-ADASYN",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.0,
+        "changed_fraction_of_training": 0.0,
+        "changed_rows": 0,
+        "eligible_rows": 18,
+        "operation": "replace-with-attack",
+        "rate": 0.0,
+        "scope": "customer-specific",
+        "selected_customer_count": 0,
+        "selection_denominator": "all-training",
+        "training_rows": 18
+      },
+      "profiles": 28,
+      "rate": 0.0,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          168,
+          168
+        ],
+        "generated": 158,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "customer-specific",
+      "seed": 20260920,
+      "shared_original_row_identities": 0,
+      "shared_source_days": 18,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 0,
+        "train_synthetic_test_parent": 0
+      },
+      "test_rows": 336,
+      "test_true_counts": [
+        168,
+        168
+      ],
+      "train_observed_counts": [
+        18,
+        0
+      ],
+      "train_true_counts": [
+        18,
+        0
+      ],
+      "training_rows": 18
+    },
+    {
+      "alpha_scope": "customer",
+      "bypass": "duration-first",
+      "customer_count": 1,
+      "elapsed_seconds": 0.01161232776939869,
+      "interpretation": "explicit completion of PREPARATION.md; not exact author sample identity",
+      "mode": "novelty",
+      "name": "customer-specific-novelty-p30",
+      "order": [
+        "benign-split",
+        "all-attacks-to-test",
+        "test-ADASYN",
+        "training-poison",
+        "train-fit-scaler"
+      ],
+      "poisoning": {
+        "changed_fraction_of_eligible": 0.2777777777777778,
+        "changed_fraction_of_training": 0.2777777777777778,
+        "changed_rows": 5,
+        "eligible_rows": 18,
+        "operation": "replace-with-attack",
+        "rate": 0.3,
+        "scope": "customer-specific",
+        "selected_customer_count": 0,
+        "selection_denominator": "all-training",
+        "training_rows": 18
+      },
+      "profiles": 28,
+      "rate": 0.3,
+      "resampling": {
+        "all_interpolations_verified": true,
+        "class_counts": [
+          168,
+          168
+        ],
+        "generated": 158,
+        "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+        "neighbors": 5,
+        "seed": 3658779020
+      },
+      "scope": "customer-specific",
+      "seed": 20260920,
+      "shared_original_row_identities": 5,
+      "shared_source_days": 18,
+      "synthetic_parent_crossings": {
+        "test_synthetic_train_parent": 0,
+        "train_synthetic_test_parent": 0
+      },
+      "test_rows": 336,
+      "test_true_counts": [
+        168,
+        168
+      ],
+      "train_observed_counts": [
+        18,
+        0
+      ],
+      "train_true_counts": [
+        13,
+        5
+      ],
+      "training_rows": 18
+    }
+  ],
+  "selection": {
+    "customers": 20,
+    "day_start": 195,
+    "day_stop": 222,
+    "first_complete_days_per_customer": 28,
+    "profiles": 560,
+    "requested_day_range": [
+      1,
+      999
+    ],
+    "seed": 20260920
+  },
+  "source": {
+    "alternate_record": "https://doi.org/10.57760/sciencedb.17619",
+    "checked_utc": "2026-09-19T23:25:22.153700+00:00",
+    "files": [
+      {
+        "bytes": 101978611,
+        "filename": "File1.txt.zip",
+        "md5": "00203f66f3f5e5201b20ed160b787684",
+        "member": "File1.txt",
+        "sha256": "6225f207304e92e3c2e2a580a45080ec5dd0fba0f156bd3aa281b0c7517d3c32",
+        "status": "verified",
+        "uncompressed_bytes": 412330430
+      },
+      {
+        "bytes": 102197028,
+        "filename": "File2.txt.zip",
+        "md5": "5e3af1474d3c8976e2e1e0f8c1969507",
+        "member": "File2.txt",
+        "sha256": "08526e96656806e1cf5a3051174eb3b52b9b996dd83268c631bc8f8a133dd123",
+        "status": "verified",
+        "uncompressed_bytes": 412872266
+      },
+      {
+        "bytes": 101624145,
+        "filename": "File3.txt.zip",
+        "md5": "b537785f8b37cb3e89103600d39da8ff",
+        "member": "File3.txt",
+        "sha256": "07062d9a6d356aa852e73cea0bfda07554a816e8e6305c44dfa664d8aee6b3ef",
+        "status": "verified",
+        "uncompressed_bytes": 411309460
+      },
+      {
+        "bytes": 102401577,
+        "filename": "File4.txt.zip",
+        "md5": "53ec9e70c1610b74ae72417cc010a0c3",
+        "member": "File4.txt",
+        "sha256": "86e826fc85b1eb11048f846935a71da893e63e2717f3a66b5098316eb1a32e03",
+        "status": "verified",
+        "uncompressed_bytes": 415164843
+      },
+      {
+        "bytes": 102257883,
+        "filename": "File5.txt.zip",
+        "md5": "6f8c7c9dfba3bbfbff0e5f1703e122fc",
+        "member": "File5.txt",
+        "sha256": "3efc1f56170de93c987655c2c5764cde64b924feb3dd810b658988f87138f678",
+        "status": "verified",
+        "uncompressed_bytes": 414075955
+      },
+      {
+        "bytes": 147826765,
+        "filename": "File6.txt.zip",
+        "md5": "c0a435d0359974f23ce434b5e838e251",
+        "member": "File6.txt",
+        "sha256": "064e0be33cdf56c17e345ba63b02f31bd9ba8ae221bdfc2146464bc04e13208d",
+        "status": "verified",
+        "uncompressed_bytes": 597031006
+      },
+      {
+        "category_counts": {
+          "1": 4225,
+          "2": 485,
+          "3": 1735
+        },
+        "filename": "SME_and_Residential_allocations.csv",
+        "md5": "89263f89253cf56b857079986ae73096",
+        "rows": 6445,
+        "sha256": "96298be047f34ba91fe281c899b440d2b28747b4f102af6f239dbbd93dd354d4",
+        "status": "verified"
+      }
+    ],
+    "official_metadata_url": "https://issda.ucd.ie/api/datasets/:persistentId/?persistentId=doi:10.7929/ISSDA/BX59EU",
+    "official_record": "https://doi.org/10.7929/ISSDA/BX59EU",
+    "online_metadata_checked": false,
+    "ready": true,
+    "scope": "source byte identity; paper's exact 3000-customer subset is unknown",
+    "source_branch": "verified-consumption-with-crosschecked-allocation-csv",
+    "zip_crc_checked": false
+  },
+  "source_hashes": {
+    "PREPARATION.md": "7537b5f61a9ca9ef3dc4df7277ef90d08c86852f1a88dfb0c23780d4c0e0b524",
+    "download_data.py": "ac09f0980690fac99af19a1bf1e09da217a00904e175f02f3409230a672c5e82",
+    "prepare_data.py": "2061987541a9060e1cce184b1f81a8f3dfe913a631b00119a05267ed52b7fdbb"
+  },
+  "status": "complete",
+  "versions": {
+    "imblearn": "0.14.2",
+    "numpy": "2.5.1",
+    "pandas": "3.0.3",
+    "python": "3.12.2",
+    "sklearn": "1.9.0"
+  }
+}

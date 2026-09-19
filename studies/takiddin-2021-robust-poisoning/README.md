@@ -22,16 +22,19 @@ The user requested a fresh all-model reproduction on September 20. The
 covers all seven baselines, both ensembles, all poison levels, and generalized
 and customer-specific results. Correct data preparation and ordinary library
 implementations with the reported settings are the first priority. The new
-phase has reached reading and planning; no data or model execution has begun.
+phase has reached verified source acquisition and preparation implementation.
+The bounded preparation check completed on Panther as job 397206 at frozen
+commit 30ce6c4: eight cases passed in 2:16, and all 224 saved arrays passed the
+artifact audit. See the [result](results/preparation_20260920/README.md).
+No detector has been implemented or trained in this phase.
 
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
 sequential-ensemble rows cannot reconcile DR, FA, PR, and ACC at any class
 prevalence within one-decimal rounding. This is a source-level internal
-inconsistency, not a trained non-reproduction or an inference about intent. No
-dataset has been prepared and no model has been implemented, trained, or
-scored for this study.
+inconsistency, not a trained non-reproduction or an inference about intent.
+No dataset or model execution occurred in that historical phase.
 
 The study is independent of the earlier electricity-theft audit. Shared
 authors, data, attacks, or terminology may motivate checks but cannot transfer
@@ -41,6 +44,9 @@ a result or verdict.
 
 - [`RESEARCH_LOG.md`](RESEARCH_LOG.md): the readable, dated investigation.
 - [`CODE_AVAILABILITY.md`](CODE_AVAILABILITY.md): reproducible code search and access limits.
+- [`PREPARATION.md`](PREPARATION.md): the initial executable data choices and
+  bounded cluster check.
+- [`DATA_SOURCES.md`](DATA_SOURCES.md): fresh source identity and allocation checks.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.
@@ -86,3 +92,25 @@ pinned in the repository environment:
 
 Edit the Markdown source, including its `Updated:` date, rather than the
 generated HTML. The page is a local draft until a site deployment is requested.
+
+## Preparation commands
+
+Verify existing inputs against official metadata and archive integrity:
+
+```bash
+.venv/bin/python studies/takiddin-2021-robust-poisoning/reproduction/download_data.py --online --check-crc
+```
+
+Run hand-checkable software fixtures locally:
+
+```bash
+.venv/bin/python -m unittest tests.test_robust_preparation -v
+```
+
+Real-data preparation refuses to run outside a Slurm allocation. The short
+`reproduction/run_preparation_check.sbatch` wrapper takes the checkout,
+revision, raw-data directory, Python environment, and new output directory as
+explicit environment inputs. It prepares 20 customers and 28 complete days
+each at 0% and 30% poisoning on both paths, including one customer-specific
+example. Prepared arrays stay in ignored data directories. Existing output
+directories are never overwritten.

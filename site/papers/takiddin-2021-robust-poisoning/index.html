@@ -29,9 +29,10 @@ Data Poisoning Attacks in Smart Grids</em>, by Takiddin and colleagues (2021).
 We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.</p>
-<p><strong>Where we are, 20 September 2026:</strong> we have read the complete paper, checked
-for released code, and identified the choices needed to implement it. Model
-experiments for this study have not started. The questions below are open.</p>
+<p><strong>Where we are, 20 September 2026:</strong> the data are verified, the preparation
+choices are recorded, and the first small preparation check on the real data
+has passed. It exposed how our stated choices affect overlap and poisoning
+strength. Model experiments for this study have not started.</p>
 <p>The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
 to simulate theft. It then deliberately gives some theft examples the wrong
@@ -46,7 +47,7 @@ from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -257,11 +258,40 @@ their first 28 complete days, both paths at 0% and 30% poisoning, and one
 customer-specific example. Its budget is 15 minutes on four CPU cores with
 16 GiB of memory. No detector will be trained. This will check that the
 pipeline works on the actual files and expose its real counts and overlap.</p>
+<h2 id="20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</h2>
+<p>The cluster job finished successfully in 2 minutes 16 seconds using CPU
+resources only. It read all six source archives, selected 20 customers, and
+kept their first 28 complete days: 560 original daily profiles. Both
+preparation paths completed at 0% and 30% poisoning, together with a
+single-customer example for each path.</p>
+<p>After copying the outputs back, we checked all 224 saved array files. Their
+hashes, labels, class counts, scaling, and synthetic-parent calculations agree
+with the saved records. These checks establish that the preparation did what
+we specified. They do not supply a model-performance result.</p>
+<p>The outputs make two consequences concrete. First, selecting 30% of customers
+in the generalized two-class setup changed 675 of 4,464 training labels:
+<strong>15.12% of training rows</strong>. Selecting 30% of all training rows in the
+customer-specific interpretation changed 67 of 224 labels: <strong>29.91%</strong>. These
+are different corruption strengths, despite both being labeled “30%.”
+The paper's wording leaves this distinction unresolved, so any comparison of
+the two detector types will have to acknowledge it.</p>
+<p>Second, synthetic examples can have parents across the two-class train/test
+split. We recorded 1,306 links from synthetic test examples to original
+training examples in the generalized setup. Separately, our novelty-poisoning
+completion placed 108 identical attack profiles in both training and testing.
+These are observations about this implementation of the recorded choices.
+They do not show which choices the authors used or how much the overlap changes
+detection performance.</p>
+<p><strong>What changed:</strong> we now have verified data and an executable preparation
+pipeline, plus concrete checks for two ways the setup could affect the claimed
+comparison. We can begin model implementation without hiding those choices.
+The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/results/preparation_20260920/README.md">complete preparation record</a>
+contains the counts, timings, verification, and original program output.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
-<p>First, settle the dataset, poisoning operation, and the remaining source
-choices. Then build the models with ordinary libraries and the paper's
-selected settings. Small checks must show that the implementations receive
-the intended data, update correctly, and calculate the metrics correctly.</p>
+<p>Next, build the models with ordinary libraries and the paper's selected
+settings, starting with the simplest baselines. Check that each model receives
+the intended preparation, updates correctly, and calculates metrics correctly.
+Resolve any remaining source choices before running the affected model.</p>
 <p>The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
 We will measure the actual cost on the cluster before scheduling the tables.

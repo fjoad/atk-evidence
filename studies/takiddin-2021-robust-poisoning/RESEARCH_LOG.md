@@ -8,9 +8,10 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-**Where we are, 20 September 2026:** we have read the complete paper, checked
-for released code, and identified the choices needed to implement it. Model
-experiments for this study have not started. The questions below are open.
+**Where we are, 20 September 2026:** the data are verified, the preparation
+choices are recorded, and the first small preparation check on the real data
+has passed. It exposed how our stated choices affect overlap and poisoning
+strength. Model experiments for this study have not started.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -283,12 +284,47 @@ customer-specific example. Its budget is 15 minutes on four CPU cores with
 16 GiB of memory. No detector will be trained. This will check that the
 pipeline works on the actual files and expose its real counts and overlap.
 
+## 20 September — The first preparation check passed, and exposed two choices
+
+The cluster job finished successfully in 2 minutes 16 seconds using CPU
+resources only. It read all six source archives, selected 20 customers, and
+kept their first 28 complete days: 560 original daily profiles. Both
+preparation paths completed at 0% and 30% poisoning, together with a
+single-customer example for each path.
+
+After copying the outputs back, we checked all 224 saved array files. Their
+hashes, labels, class counts, scaling, and synthetic-parent calculations agree
+with the saved records. These checks establish that the preparation did what
+we specified. They do not supply a model-performance result.
+
+The outputs make two consequences concrete. First, selecting 30% of customers
+in the generalized two-class setup changed 675 of 4,464 training labels:
+**15.12% of training rows**. Selecting 30% of all training rows in the
+customer-specific interpretation changed 67 of 224 labels: **29.91%**. These
+are different corruption strengths, despite both being labeled “30%.”
+The paper's wording leaves this distinction unresolved, so any comparison of
+the two detector types will have to acknowledge it.
+
+Second, synthetic examples can have parents across the two-class train/test
+split. We recorded 1,306 links from synthetic test examples to original
+training examples in the generalized setup. Separately, our novelty-poisoning
+completion placed 108 identical attack profiles in both training and testing.
+These are observations about this implementation of the recorded choices.
+They do not show which choices the authors used or how much the overlap changes
+detection performance.
+
+**What changed:** we now have verified data and an executable preparation
+pipeline, plus concrete checks for two ways the setup could affect the claimed
+comparison. We can begin model implementation without hiding those choices.
+The [complete preparation record](results/preparation_20260920/README.md)
+contains the counts, timings, verification, and original program output.
+
 ## What we will do next
 
-First, settle the dataset, poisoning operation, and the remaining source
-choices. Then build the models with ordinary libraries and the paper's
-selected settings. Small checks must show that the implementations receive
-the intended data, update correctly, and calculate the metrics correctly.
+Next, build the models with ordinary libraries and the paper's selected
+settings, starting with the simplest baselines. Check that each model receives
+the intended preparation, updates correctly, and calculates metrics correctly.
+Resolve any remaining source choices before running the affected model.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).

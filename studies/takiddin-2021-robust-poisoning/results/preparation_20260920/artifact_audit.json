@@ -1,0 +1,72 @@
+{
+  "checks": [
+    "all saved array hashes, shapes, dtypes and finite values",
+    "true/observed labels and confusion-independent class counts",
+    "training-fitted scaler mean and every standardized input",
+    "every synthetic interpolation and benign parent",
+    "reported train/test identity overlap",
+    "fixed raw test population across poison levels"
+  ],
+  "code_commit": "30ce6c4a8ea4a12c4a03091134e1ea18cccd3d5c",
+  "job_id": "397206",
+  "runs": [
+    {
+      "changed_rows": 0,
+      "files": 28,
+      "name": "generalized-two-class-p00",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 675,
+      "files": 28,
+      "name": "generalized-two-class-p30",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 0,
+      "files": 28,
+      "name": "generalized-novelty-p00",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 108,
+      "files": 28,
+      "name": "generalized-novelty-p30",
+      "original_identity_overlap": 108,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 0,
+      "files": 28,
+      "name": "customer-specific-two-class-p00",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 67,
+      "files": 28,
+      "name": "customer-specific-two-class-p30",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 0,
+      "files": 28,
+      "name": "customer-specific-novelty-p00",
+      "original_identity_overlap": 0,
+      "status": "verified"
+    },
+    {
+      "changed_rows": 5,
+      "files": 28,
+      "name": "customer-specific-novelty-p30",
+      "original_identity_overlap": 5,
+      "status": "verified"
+    }
+  ],
+  "status": "verified",
+  "summary_sha256": "5c8a8c27ac65a25da031ba45c41d4fab755a0d813fb0a409b45a366fcdd0a6db"
+}

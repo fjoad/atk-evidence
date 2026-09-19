@@ -13,9 +13,19 @@ reproduction directory pass 13 fixture tests. ADASYN values come from the
 stock library, with recorded neighbors and verified synthetic ancestry.
 Novelty contamination plus all-M testing has measured-identity overlap by
 construction, explicitly retained and reported. Panther login succeeded;
-matching packages/raw sources are present. Pending: freeze code, then one
-15-minute CPU-only preparation check (20 customers x 28 days, both paths,
-0/30%, one customer-specific example). No detector training or scoring.
+matching packages/raw sources are present. Frozen commit 30ce6c4 passed 284
+tests and completed as CPU job 397206, exit 0:0, in 2:16 (15-minute cap,
+4 CPUs, 16 GiB, no GPU). The wrapper passed all 13 fixtures, then scanned all
+157,992,996 readings and retained 560 profiles (20 x first 28 complete days).
+Eight cases completed and all 224 saved arrays passed an independent artifact
+audit. Generalized two-class nominal 30% flips 675/4464 rows (15.12%); the
+customer-specific denominator flips 67/224 (29.91%). Novelty contamination
+shares 108 attack identities with testing in the generalized case, five in the
+single-customer case. Synthetic-parent split crossings are also recorded.
+These are preparation observations under declared choices, not performance
+results or identified author behavior. See results/preparation_20260920.
+No detector training/scoring or full-population preparation occurred. The
+Panther code ran in an isolated checkout; Paper 1's checkout is unchanged.
 Never persist authentication secrets in this record or repository.
 
 **Run-selection rule, September 20:** a gross mismatch must trigger diagnosis,
