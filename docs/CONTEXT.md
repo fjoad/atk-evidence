@@ -1,12 +1,31 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-02
+**Last updated:** 2026-09-20
 
-**Newest result; Paper 3 source-only:** the user selected Takiddin et al.,
+**Current Paper 3 direction, September 20:** restart the reasoning from the
+paper and reproduce every baseline and proposed model using standard libraries
+and the reported settings. All seven baselines, both ensembles, all four
+poison levels, and generalized/customer-specific tables are in scope. Plan:
+`docs/plans/2026-09-20-robust-all-model-reproduction.md`. This turn is reading
+and planning; no new experiment ran. The first priority is verified ISET data,
+explicit poisoning/preparation, and faithful ordinary implementations. Fresh
+visual reading verified Equation (1)'s duplicated log(p) term and the
+sequential network's classification-only stated objective. Standard BCE is a
+plausible correction; pretraining and reconstruction-loss alternatives need
+explicit treatment. Table IV averages customers, which matters for nonlinear
+metric identities. Earlier findings are preserved and must be reassessed,
+not inherited as conclusions. Skip speculative numerical-pattern or
+fabricated-data investigations. Prefer one V100-16GB when available, benchmark
+actual throughput, and record both 50-epoch completion and performance at the
+paper's reported time under a finite prospective budget. Panther responded to
+SSH, but noninteractive authentication failed; no current GPU availability
+was checked. Paper 1's separate task is outside this plan.
+
+**Historical September 2 result; Paper 3 source-only:** the user selected Takiddin et al.,
 “Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart
 Grids” (IEEE TSG 2021, DOI `10.1109/TSG.2020.3047864`) as the next independent
 audit. The ten-page PDF SHA-256 is `03a372fb...3d4a4ff`; all pages, Tables I–V,
-Figures 1–3, and Algorithm 1 were visually inspected. Active plan:
+Figures 1–3, and Algorithm 1 were visually inspected. Historical plan:
 `docs/plans/2026-09-02-robust-poisoning-source-audit.md`. The source
 specification, causal map, and all 476 Table III–V metric cells were frozen
 before the static arithmetic check. Results: SP 68/68 pass, F1 67/68, balanced
@@ -17,16 +36,14 @@ This is a source-level internal inconsistency; it is not trained
 non-reproduction, a mechanism result, or an intent claim. Preserve
 `SOURCE_AUDIT_FINDING.md`, `EXPLANATION_REGISTER.md`, the corrected result hash
 `a9113f6b...c52da56`, and the first reporting-incomplete attempt. The approved
-source phase is complete and stopped for discussion. No data preparation,
-implementation, training, scoring, cluster submission, or cross-paper
-conclusion is authorized.
+source phase completed and stopped for discussion. No data preparation,
+implementation, training, scoring, or cluster submission occurred in that
+phase. The current September 20 direction appears above.
 The paper explicitly reports 50 epochs, batch 100, NVIDIA RTX 2070, roughly
 one hour for shallow models, 1.5–3 hours for deep models, three hours for
 ensemble averaging, four hours for the sequential ensemble, and about two
-seconds per online decision. Treat these as target constraints. If an RTX 2070
-is unavailable, freeze a favorable contemporaneous-device calibration before
-results; never rescue a miss with a modern/additional GPU, retry, or longer
-budget. Paper 1 remains frozen and transfers no verdict.
+seconds per online decision. Preserve these source statements. The September
+20 plan governs later hardware and budget choices. Paper 1 transfers no verdict.
 
 **Newest direction; paper time is the budget:** the user explicitly rejected
 faster or additional GPUs as a rescue. Table IV reports 183 minutes for

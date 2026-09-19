@@ -9,7 +9,7 @@ ordinary language.
 |---|---|
 | What happened? | [Paper 1 clean-reader finding](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md) |
 | Where are we now? | [STATUS](STATUS.md) |
-| What happens next? | [Paper 3 source-audit checkpoint](plans/2026-09-02-robust-poisoning-source-audit.md) |
+| What happens next? | [Paper 3 all-model reproduction plan](plans/2026-09-20-robust-all-model-reproduction.md) |
 | What did the Paper 3 source audit find? | [Source-audit finding](../studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md) |
 | What explanations remain for Paper 3? | [Paper 3 explanation register](../studies/takiddin-2021-robust-poisoning/EXPLANATION_REGISTER.md) |
 | What must survive a handoff? | [CONTEXT](CONTEXT.md) |
@@ -33,7 +33,7 @@ to repeat that work. Follow only the active plan named in STATUS.
 The July plans describe earlier implementation and execution paths. They remain
 available because deleting them would erase changes of interpretation and
 failed approaches. Paper 1's clean-reader and paper-time plans now describe a
-completed frozen audit stage; the Paper 3 source-audit plan is current.
+completed audit stage; the Paper 3 all-model reproduction plan is current.
 
 Agent-specific files contain no unique scientific facts. [AGENTS.md](../AGENTS.md)
 is the short working guide; there are no charter recovery commands.

@@ -10,7 +10,14 @@ DOI: `10.1109/TSG.2020.3047864`
 
 ## Current state
 
-The source-only audit is complete and stopped for discussion. The paper was
+The user requested a fresh all-model reproduction on September 20. The
+[current plan](../../docs/plans/2026-09-20-robust-all-model-reproduction.md)
+covers all seven baselines, both ensembles, all poison levels, and generalized
+and customer-specific results. Correct data preparation and ordinary library
+implementations with the reported settings are the first priority. The new
+phase has reached reading and planning; no data or model execution has begun.
+
+The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
 sequential-ensemble rows cannot reconcile DR, FA, PR, and ACC at any class
@@ -32,7 +39,8 @@ a result or verdict.
   result, limitations, and compute boundary.
 - [`EXPLANATION_REGISTER.md`](EXPLANATION_REGISTER.md): live competing
   explanations and discriminating evidence.
-- [`../../docs/plans/2026-09-02-robust-poisoning-source-audit.md`](../../docs/plans/2026-09-02-robust-poisoning-source-audit.md): active authorization and stop rule.
+- [Current all-model plan](../../docs/plans/2026-09-20-robust-all-model-reproduction.md): revised scope, source issues, and execution sequence.
+- [Historical source-audit plan](../../docs/plans/2026-09-02-robust-poisoning-source-audit.md): completed source-only authorization and provenance.
 
 ## Experimental boundary
 
@@ -43,5 +51,6 @@ sequential ensemble. A later numerical attempt must treat those statements as
 part of the target rather than escaping a mismatch with newer or additional
 hardware.
 
-The source-only stop is now active. Data preparation and all training require a
-new reviewed contract and cluster authorization.
+The September 20 plan replaces the earlier source-only stopping point as the
+research direction. It prioritizes explicit setup choices, measured costs,
+and finite execution budgets before training.

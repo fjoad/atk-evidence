@@ -1,18 +1,32 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-02
+**Last updated:** 2026-09-20
 
 **Branch:** `main`
 
 **Active plan:**
-[`plans/2026-09-02-robust-poisoning-source-audit.md`](plans/2026-09-02-robust-poisoning-source-audit.md).
-Paper 1 is frozen after its completed paper-time result and publication; its
-last execution plan remains
+[`plans/2026-09-20-robust-all-model-reproduction.md`](plans/2026-09-20-robust-all-model-reproduction.md)
+for Paper 3. Paper 1's separate task is outside this plan; its last recorded
+execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
 
-- **Paper 3 source-only audit complete; stopped for discussion:** the next
+- **Paper 3 fresh all-model direction, September 20:** the user requests
+  direct reproduction of all seven baselines and both ensembles, including
+  generalized and customer-specific results at all four poison levels. The
+  setup and ordinary library implementations come first; earlier conclusions
+  must be independently checked. The new plan records fresh source issues,
+  model coverage, measured Panther costing, and finite statistical follow-up.
+  It supersedes the earlier source-only stopping point as the research
+  direction. This turn completed reading and planning; no new data preparation,
+  implementation, training, or submission occurred. Panther is reachable but
+  the noninteractive login lacks authentication; current GPU availability is
+  unverified. Speculation about fabricated datasets or numerical patterns is
+  outside this phase. Preserve the historical source findings below without
+  treating them as results of the new investigation.
+
+- **Historical September 2 source-only checkpoint:** the next
   independent paper is
   Takiddin et al., “Robust Electricity Theft Detection Against Data Poisoning
   Attacks in Smart Grids,” *IEEE Transactions on Smart Grid* 12(3), 2021, DOI
@@ -29,12 +43,11 @@ last execution plan remains
   and
   [`explanation register`](../studies/takiddin-2021-robust-poisoning/EXPLANATION_REGISTER.md).
   No data preparation, model implementation, training, scoring, or cluster
-  submission occurred or is authorized. The paper names 50 epochs, batch 100,
+  submission occurred in that phase. The paper names 50 epochs, batch 100,
   an RTX 2070, about one hour for shallow models, 1.5–3 hours for deep models,
   three hours for ensemble averaging, and four hours for the sequential
-  ensemble. Treat those as part of any later claim; if the named GPU is
-  unavailable, freeze a favorable period-appropriate calibration before
-  execution. Do not use newer/additional hardware or retries as a rescue.
+  ensemble. The September 20 plan now governs how later implementation,
+  throughput measurements, finite budgets, and runtime comparisons proceed.
 
 - **The single paper-time execution is complete and audited:** frozen commit
   `46f0ddd`, Panther job `385632`, completed `0:0` on one V100-16GB. Exactly
