@@ -201,6 +201,35 @@ The [dated search record](CODE_AVAILABILITY.md) preserves the queries, links,
 results, and access limits. We can now proceed with a reconstruction from the
 paper while remaining able to inspect any implementation found later.
 
+## 20 September — A large gap should change the next question
+
+We also agreed on a rule for avoiding uninformative reruns. Suppose a model
+achieved 30% against a reported 90%. These are hypothetical numbers, not a
+result from this study. Our first response would be to investigate the gap
+before launching three more training seeds.
+
+We would first inspect the saved data, labels, scores, metric calculations,
+and training history. Did the model receive the intended examples? Did its
+weights update? Are we measuring the same quantity? Does a simple control
+reveal a shared preparation problem? These checks can identify a mistake that
+repeated training would simply reproduce.
+
+The next experiment then needs a specific purpose. If the proposed explanation
+is a poor cutoff, inspecting the saved scores may answer it without retraining.
+If an unstable fit could explain the discrepancy, a bounded repetition can
+test that. If learning is still improving, a measured extension may answer a
+different question from changing the seed.
+
+**Our decision:** before an extra run, write down the explanation it tests,
+the outcomes that would change our next decision, and its maximum cost and
+stopping rule. If neither outcome would change what we do or can conclude, we
+should not spend the compute.
+
+Repetitions still matter when we estimate variability or test a statistical
+claim. A large gap does not tell us how variable the model is. The point is to
+use repetitions to answer that question deliberately, after establishing a
+sound setup. Testing all reported models remains part of the plan.
+
 ## What we will do next
 
 First, settle the dataset, poisoning operation, and the remaining source

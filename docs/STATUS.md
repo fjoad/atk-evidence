@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **Choose extra runs by what they resolve:** the user explicitly rejects
+  automatic seed repetitions or wider searches after a large mismatch.
+  Diagnose the setup and training first, then use the cheapest check that
+  distinguishes a named explanation. Record decision-changing outcomes,
+  maximum cost, and stopping before extra compute. Repetitions remain part
+  of justified statistical confirmation; all reported models stay in scope.
+  The active plan and journal now preserve this rule.
+
 - **Paper 3 journal and code search, September 20:** a dated
   [research journal](../studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md)
   records the four fresh source issues, the revised all-model scope, the code

@@ -46,7 +46,7 @@ from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -191,6 +191,29 @@ that code was never released or explain why it was unavailable to us.</p>
 <p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/CODE_AVAILABILITY.md">dated search record</a> preserves the queries, links,
 results, and access limits. We can now proceed with a reconstruction from the
 paper while remaining able to inspect any implementation found later.</p>
+<h2 id="20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</h2>
+<p>We also agreed on a rule for avoiding uninformative reruns. Suppose a model
+achieved 30% against a reported 90%. These are hypothetical numbers, not a
+result from this study. Our first response would be to investigate the gap
+before launching three more training seeds.</p>
+<p>We would first inspect the saved data, labels, scores, metric calculations,
+and training history. Did the model receive the intended examples? Did its
+weights update? Are we measuring the same quantity? Does a simple control
+reveal a shared preparation problem? These checks can identify a mistake that
+repeated training would simply reproduce.</p>
+<p>The next experiment then needs a specific purpose. If the proposed explanation
+is a poor cutoff, inspecting the saved scores may answer it without retraining.
+If an unstable fit could explain the discrepancy, a bounded repetition can
+test that. If learning is still improving, a measured extension may answer a
+different question from changing the seed.</p>
+<p><strong>Our decision:</strong> before an extra run, write down the explanation it tests,
+the outcomes that would change our next decision, and its maximum cost and
+stopping rule. If neither outcome would change what we do or can conclude, we
+should not spend the compute.</p>
+<p>Repetitions still matter when we estimate variability or test a statistical
+claim. A large gap does not tell us how variable the model is. The point is to
+use repetitions to answer that question deliberately, after establishing a
+sound setup. Testing all reported models remains part of the plan.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
 <p>First, settle the dataset, poisoning operation, and the remaining source
 choices. Then build the models with ordinary libraries and the paper's

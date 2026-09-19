@@ -100,6 +100,39 @@ Testing only the proposed detector does not satisfy this scope.
    support that question. Preserve any reproduced or stronger-than-published
    results as plainly as failures.
 
+## Choose extra runs by the question they resolve
+
+A large mismatch does not automatically trigger three more seeds, a wider
+grid, a longer fit, or another model family. A hypothetical 30% result against
+90% reported first triggers diagnosis. This is an operating example, not a
+measured result for this paper.
+
+1. Inspect preserved inputs, labels, splits, scaling, metric definitions,
+   confusion counts, and score direction. Confirm actual training updates and
+   loss behavior; compare with simple and positive controls. Look for a shared
+   pipeline defect before reproducing it across more expensive runs.
+2. Name the competing explanations and choose the cheapest check whose outcomes
+   would distinguish them. A fixed-score threshold enumeration may settle a
+   cutoff question; a label/gradient fixture may settle a training-code defect.
+   A failure common to many models warrants a shared-setup check first.
+3. Before an additional experiment, record its question, competing predictions,
+   the observation that would change the next decision, maximum cost, and stop
+   rule in the journal. Skip a run if neither outcome would change the next
+   action or the supported conclusion. Preserve unresolved uncertainty rather
+   than extending the search indefinitely.
+4. Repetitions serve a named purpose: quantifying run-to-run variability,
+   checking a credible instability explanation, estimating a matched effect,
+   or testing a predeclared statistical claim. A large gap alone does not
+   prove that seed variation is small; conversely, more seeds do not repair a
+   wrong setup or make a narrow implementation representative of all methods.
+
+All reported models and poisoning levels remain in scope. Planned coverage is
+distinct from automatic retries of a failing cell. Existing setup checks and
+operational failures must be understood before scaling the next affected runs.
+
+Documentation follows each material decision in the same change; avoid
+turning a routine step into a new framework or a separate lengthy report.
+
 ## September 20 documentation and website follow-through
 
 - [x] Complete and save the code-availability search.

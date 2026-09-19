@@ -2,6 +2,16 @@
 
 **Last updated:** 2026-09-20
 
+**Run-selection rule, September 20:** a gross mismatch must trigger diagnosis,
+not an automatic three-seed retry, larger grid, or longer fit. Inspect shared
+setup, saved scores, metrics, actual updates, and controls first. Every extra
+experiment must name its question, competing predictions, decision-changing
+outcome, maximum cost, and stop rule. Repetitions remain appropriate for a
+credible instability explanation or a predeclared uncertainty/statistical
+question. A large gap does not itself prove low seed variability. All reported
+models remain in scope; this rule limits uninformative retries. It is recorded
+in the active plan and the canonical journal, which feeds the website draft.
+
 **Journal requirement, September 20:** the user wants the actual research
 route recorded internally and on the site: what we thought, why we chose a
 check, what happened, and what changed. Canonical editable source:
