@@ -2,6 +2,24 @@
 
 **Last updated:** 2026-09-20
 
+**Journal requirement, September 20:** the user wants the actual research
+route recorded internally and on the site: what we thought, why we chose a
+check, what happened, and what changed. Canonical editable source:
+`studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md`; render with
+`scripts/render_robust_journal.py` (or `--check`). It preserves the four source
+issues including the duplicated log(p) loss, explicitly marks unrun tests,
+and includes a retrospective note on the earlier arithmetic audit. A local
+website journal and homepage links are drafted but not deployed. Tone:
+introductory-statistics undergraduate, connected prose and evidence, minimal
+analogy; follow `docs/WEBSITE-JOURNAL-BRIEF.md`. The live homepage, current
+report, expanded bound, earlier notes, water study, water PDF route, and
+GitHub evidence link were visited in the browser. No matching public code
+was found in the exact-title/DOI GitHub searches, author listing, and Zenodo
+DOI search. IEEE's verification barrier prevented supplement inspection.
+Preserve `CODE_AVAILABILITY.md`; absence from this search says nothing about
+intent. No model experiment ran. Update the journal with every material step;
+append corrections instead of silently overwriting the reasoning history.
+
 **Current Paper 3 direction, September 20:** restart the reasoning from the
 paper and reproduce every baseline and proposed model using standard libraries
 and the reported settings. All seven baselines, both ensembles, all four

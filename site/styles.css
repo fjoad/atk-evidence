@@ -27,6 +27,14 @@ a:focus-visible, summary:focus-visible { outline: 3px solid var(--blue); outline
 .site-header nav { display: flex; gap: 22px; font-size: .85rem; }
 main { max-width: 980px; margin: auto; padding: 62px 30px 80px; }
 main.home { max-width: 940px; }
+main.journal { max-width: 820px; }
+.journal h2 { border-top: 1px solid var(--line); padding-top: 30px; margin-top: 46px; font-size: 1.55rem; }
+.journal .contents ol { display: block; padding-left: 1.2em; list-style: decimal; }
+.journal .contents p { color: var(--muted); margin-bottom: .6em; }
+.journal .contents li { margin-bottom: .5em; }
+.journal pre { white-space: pre-wrap; overflow-wrap: anywhere; }
+.journal table { font-variant-numeric: tabular-nums; }
+.journal td:not(:first-child), .journal th:not(:first-child) { text-align: right; }
 h1, h2, h3 { font-weight: 500; line-height: 1.18; }
 h1 { font-size: clamp(2.2rem, 5.2vw, 3.65rem); letter-spacing: -.035em; margin: 14px 0 22px; max-width: 900px; }
 h2 { margin: 50px 0 18px; font-size: 1.85rem; letter-spacing: -.02em; }

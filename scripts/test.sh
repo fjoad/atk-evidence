@@ -42,3 +42,4 @@ fi
   cd "$REPO_ROOT"
   "$PYTHON_EXECUTABLE" -m unittest discover -s tests -v
 )
+"$PYTHON_EXECUTABLE" "$REPO_ROOT/scripts/render_robust_journal.py" --check

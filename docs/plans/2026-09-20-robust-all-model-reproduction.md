@@ -49,6 +49,12 @@ Testing only the proposed detector does not satisfy this scope.
 
 ## Sequence
 
+0. **Check for released code first.** Search the paper, publisher record,
+   author publication pages, GitHub, and relevant artifact repositories using
+   the exact title and DOI. Record queries, checked links, candidate identity,
+   and access limits. If code is located, compare it with the paper before
+   running it. A search that finds nothing establishes only that no public
+   implementation was located in the checked sources.
 1. **Resolve the shared setup.** Verify ISET source bytes, the residential
    population, daily profiles, attack functions and their parameters, scaling,
    split identities, ADASYN placement, and poisoning definitions. The paper
@@ -93,6 +99,33 @@ Testing only the proposed detector does not satisfy this scope.
    Investigate learning or capacity plateaus only when measured trajectories
    support that question. Preserve any reproduced or stronger-than-published
    results as plainly as failures.
+
+## September 20 documentation and website follow-through
+
+- [x] Complete and save the code-availability search.
+- [x] Click through the live GitHub Pages site and record the reader journey,
+  current/legacy page boundaries, and problems relevant to the requested rewrite.
+- [x] Maintain a dated study journal with source locations, assumptions,
+  questions, checks, outcomes, and the next concrete step; include Equation (1).
+- [x] Save a website writing brief for an undergraduate taking introductory
+  statistics and a plain-language draft explaining the current source issues.
+- [x] Build and visually verify a local journal page from the study log,
+  preserving dated questions, observations, corrections, and unrun checks.
+- [x] Link these records from current status and commit the documentation.
+
+The user's follow-up requests the research-log format both internally and on
+the website. Build a local journal page for this paper and link it from the
+study index as the first concrete example. The broader site overhaul remains
+later work. Keep writing alongside research so the explanation is ready when
+its supporting evidence is ready. This work does not deploy the local draft.
+
+Completed records: `studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md`,
+`CODE_AVAILABILITY.md`, and `docs/WEBSITE-JOURNAL-BRIEF.md`. The journal's
+generated page is under `site/papers/takiddin-2021-robust-poisoning/` and its
+renderer has a `--check` mode in the normal repository test command. The live
+site walkthrough and local draft navigation were checked in the browser;
+25 existing site/registry checks passed. No model experiment or deployment
+occurred.
 
 ## Fresh source issues that must be resolved
 

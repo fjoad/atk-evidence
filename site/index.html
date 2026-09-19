@@ -29,8 +29,12 @@
   <p class="lede">We read a paper, implement the method it describes, and compare our results with the published ones. When they differ, we try to understand why.</p>
   <p>These pages show that work: the instructions we followed, the choices we had to make, the code we ran, and the evidence for each conclusion. A successful reproduction matters just as much as an unsuccessful one.</p>
 
+  <aside class="note" aria-label="New research journal">
+    <p><strong>New journal: learning from corrupted labels.</strong> We are starting a fresh reconstruction of the 2021 poisoning paper. Follow the source questions, the code search, and the experiments we plan to run. <a href="papers/takiddin-2021-robust-poisoning/">Read the research journal</a>.</p>
+  </aside>
+
   <section aria-labelledby="latest">
-    <h2 id="latest">Latest: an electricity-theft detector</h2>
+    <h2 id="latest">Completed experiments: an electricity-theft detector</h2>
     <p>We rebuilt the simplest autoencoder in Takiddin et al. (2022) and tested it on the named Irish electricity data. This first run did not reproduce the FC-SAE row in Table III.</p>
     <div class="table-wrap">
       <table class="results" data-result="clean-reader-20260831">
@@ -80,6 +84,11 @@
         <p>Ahasan et al., <cite>EUSIPCO</cite>, 2025. An earlier study examines the reported numbers, simple detectors, and the role of graph structure. Its results and corrections remain available; no new experiments are included in this update.</p>
         <div class="actions"><a href="papers/tlstgt-2025-water/">Read the earlier study</a><a href="reports/tlstgt-2025-water.pdf">Earlier report (PDF)</a></div>
       </li>
+      <li>
+        <h3>3. Electricity-theft detection with corrupted training labels</h3>
+        <p>Takiddin et al., <cite>IEEE Transactions on Smart Grid</cite>, 2021. A dated research journal follows our reconstruction of all seven baselines and both ensembles. Current stage: reading the source and defining the experiments; model runs have not started.</p>
+        <div class="actions"><a href="papers/takiddin-2021-robust-poisoning/">Follow the research journal</a></div>
+      </li>
     </ol>
   </section>
 
@@ -98,7 +107,7 @@
     <h2 id="disclosure">Disclosure</h2>
     <p>Faaiz Joad, a maintainer of this project, is a co-author of the water-network paper. That relationship is relevant when reading the second study. Its page includes corrections to our analysis. Neither study claims to establish author intent.</p>
   </section>
-  <footer><p>ATK Evidence · Research in progress · Updated 2 September 2026</p><p><a href="https://github.com/fjoad/atk-evidence">Source code and research records</a>. Original datasets and paper PDFs are not redistributed here; the linked PDFs are our reports.</p></footer>
+  <footer><p>ATK Evidence · Research in progress · Journal added 20 September 2026; previous experiment summaries through 2 September</p><p><a href="https://github.com/fjoad/atk-evidence">Source code and research records</a>. Original datasets and paper PDFs are not redistributed here; the linked PDFs are our reports.</p></footer>
 </main>
 </body>
 </html>

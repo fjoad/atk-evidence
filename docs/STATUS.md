@@ -12,6 +12,21 @@ execution plan here is
 
 ## Current project state
 
+- **Paper 3 journal and code search, September 20:** a dated
+  [research journal](../studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md)
+  records the four fresh source issues, the revised all-model scope, the code
+  search, and the next unrun checks. The exact-title/DOI GitHub code searches
+  and Zenodo DOI search returned no matching artifact; the author listing
+  links the paper and DOI. IEEE supplementary material could not be inspected
+  past its verification barrier. See the
+  [search record](../studies/takiddin-2021-robust-poisoning/CODE_AVAILABILITY.md).
+  A browser walkthrough of the deployed site informed the
+  [journal writing brief](WEBSITE-JOURNAL-BRIEF.md). A local Paper 3 website
+  page is generated from the same Markdown and linked from the homepage.
+  This is a draft, not a deployment. Append reasons, attempts, outcomes, and
+  corrections as the research proceeds; write for introductory-statistics
+  readers, with the full evidence linked. No Paper 3 model experiment ran.
+
 - **Paper 3 fresh all-model direction, September 20:** the user requests
   direct reproduction of all seven baselines and both ensembles, including
   generalized and customer-specific results at all four poison levels. The

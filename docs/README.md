@@ -10,6 +10,8 @@ ordinary language.
 | What happened? | [Paper 1 clean-reader finding](../studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md) |
 | Where are we now? | [STATUS](STATUS.md) |
 | What happens next? | [Paper 3 all-model reproduction plan](plans/2026-09-20-robust-all-model-reproduction.md) |
+| How is the investigation developing? | [Paper 3 research journal](../studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md) |
+| Was code released for Paper 3? | [Code-availability search](../studies/takiddin-2021-robust-poisoning/CODE_AVAILABILITY.md) |
 | What did the Paper 3 source audit find? | [Source-audit finding](../studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md) |
 | What explanations remain for Paper 3? | [Paper 3 explanation register](../studies/takiddin-2021-robust-poisoning/EXPLANATION_REGISTER.md) |
 | What must survive a handoff? | [CONTEXT](CONTEXT.md) |
@@ -23,6 +25,8 @@ ordinary language.
 - [Evidence frame](decisions/2026-08-20-three-part-evidence-frame.md): the
   detailed definitions and conclusion ladder.
 - [Getting started](GETTING_STARTED.md): environment and data access.
+- [Website journal brief](WEBSITE-JOURNAL-BRIEF.md): live-site walkthrough,
+  audience, and how to write the ongoing investigation.
 
 ## History
 

@@ -10,6 +10,13 @@ DOI: `10.1109/TSG.2020.3047864`
 
 ## Current state
 
+The [research journal](RESEARCH_LOG.md) now records the route through the
+investigation in chronological entries: observations, current explanations,
+planned checks, outcomes, and corrections. It is also the editable source for
+the draft website journal. The [code search](CODE_AVAILABILITY.md) found no
+matching public implementation in the checked sources on September 20;
+publisher supplement access remains unverified.
+
 The user requested a fresh all-model reproduction on September 20. The
 [current plan](../../docs/plans/2026-09-20-robust-all-model-reproduction.md)
 covers all seven baselines, both ensembles, all poison levels, and generalized
@@ -32,6 +39,8 @@ a result or verdict.
 
 ## Read next
 
+- [`RESEARCH_LOG.md`](RESEARCH_LOG.md): the readable, dated investigation.
+- [`CODE_AVAILABILITY.md`](CODE_AVAILABILITY.md): reproducible code search and access limits.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.
@@ -54,3 +63,26 @@ hardware.
 The September 20 plan replaces the earlier source-only stopping point as the
 research direction. It prioritizes explicit setup choices, measured costs,
 and finite execution budgets before training.
+
+## Keep the journal current
+
+Write each material question or experiment's rationale before running it and
+append its outcome afterward. Record a change of mind as a dated correction
+that links to the affected entry. Distinguish reconstructed historical entries
+from contemporaneous notes. Preserve successful matches and failed attempts.
+
+The journal targets an undergraduate taking introductory statistics. Use
+ordinary definitions and concrete consequences; link detailed configurations,
+data identities, code, and uncertainty calculations. See the
+[website brief](../../docs/WEBSITE-JOURNAL-BRIEF.md).
+
+The static page is generated from the journal with the Markdown parser already
+pinned in the repository environment:
+
+```bash
+.venv/bin/python scripts/render_robust_journal.py
+.venv/bin/python scripts/render_robust_journal.py --check
+```
+
+Edit the Markdown source, including its `Updated:` date, rather than the
+generated HTML. The page is a local draft until a site deployment is requested.
