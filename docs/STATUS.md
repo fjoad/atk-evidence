@@ -12,6 +12,18 @@ execution plan here is
 
 ## Current project state
 
+- **Paper 3 steps 1-2 implemented; preparation check pending:** the user
+  authorized data/source resolution and preparation. The six local CER ZIPs
+  now pass fresh official metadata, checksum, and CRC checks. A fresh mapping
+  comparison matches all 6,445 allocation rows; the exact 3,000 author IDs
+  remain unknown. PREPARATION.md declares the initial choices. New direct
+  acquisition/verification and preparation files pass 13 software-fixture
+  tests, including stock-ADASYN parity and full synthetic ancestry. Panther
+  password login succeeded; the raw sources and matching package versions
+  are present. The next action is a frozen, preparation-only CPU job for
+  20 customers and 28 complete days each, capped at 15 minutes/4 CPUs/16 GiB.
+  No training or score experiment is part of this phase.
+
 - **Choose extra runs by what they resolve:** the user explicitly rejects
   automatic seed repetitions or wider searches after a large mismatch.
   Diagnose the setup and training first, then use the cheapest check that

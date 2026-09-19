@@ -2,6 +2,22 @@
 
 **Last updated:** 2026-09-20
 
+**Paper 3 preparation implementation:** user approved steps 1 and 2. Fresh
+official ISSDA metadata, six ZIP identities, and CRCs pass; the allocation
+CSV independently matches 6,445 workbook rows, including 4,225 residential
+IDs. Author's 3,000-ID selection remains unknown. Jokar's thesis Chapter 5,
+p.117, supplies attack factor ranges and duration context; target attack
+numbering and half-hour coordinates control. PREPARATION.md declares all
+initial choices. download_data.py and prepare_data.py under the Paper 3
+reproduction directory pass 13 fixture tests. ADASYN values come from the
+stock library, with recorded neighbors and verified synthetic ancestry.
+Novelty contamination plus all-M testing has measured-identity overlap by
+construction, explicitly retained and reported. Panther login succeeded;
+matching packages/raw sources are present. Pending: freeze code, then one
+15-minute CPU-only preparation check (20 customers x 28 days, both paths,
+0/30%, one customer-specific example). No detector training or scoring.
+Never persist authentication secrets in this record or repository.
+
 **Run-selection rule, September 20:** a gross mismatch must trigger diagnosis,
 not an automatic three-seed retry, larger grid, or longer fit. Inspect shared
 setup, saved scores, metrics, actual updates, and controls first. Every extra

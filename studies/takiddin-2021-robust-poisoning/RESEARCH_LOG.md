@@ -230,6 +230,59 @@ claim. A large gap does not tell us how variable the model is. The point is to
 use repetitions to answer that question deliberately, after establishing a
 sound setup. Testing all reported models remains part of the plan.
 
+## 20 September — Finding the data and checking the attack definitions
+
+The consumption archives were already present locally and on the cluster.
+We independently checked them against the current official ISSDA metadata:
+all six filenames, file sizes, and checksums match, and the compressed files
+pass their integrity checks. The customer-type CSV contains 4,225 residential
+meters. We compared its allocation information with a separate public workbook;
+all 6,445 rows match. Our initial workbook reader mistakenly assumed a header
+row. Checking the first row exposed that mistake, and including it resolved
+the apparent mismatch.
+
+The paper never identifies its 3,000 customers. We will select them using a
+fixed random seed before looking at performance, and identify that as our
+choice. Matching the source files does not recover the authors' exact sample.
+The [data-source record](DATA_SOURCES.md) preserves both facts.
+
+We also found the cited attack study in its author's thesis. Chapter 5,
+page 117, confirms uniform reduction factors between 0.1 and 0.8 and a bypass
+lasting four to 24 hours. That study used hourly profiles. Our target uses
+half-hourly readings and numbers the mean-based attacks differently. We follow
+the target's equations and record how we translate durations and endpoints.
+
+These checks let us write the [initial preparation contract](PREPARATION.md).
+It states the split, scaling, balancing, poisoning operation, and remaining
+alternatives before any model outcome is available.
+
+## 20 September — Checking the preparation code before using it
+
+We implemented the novelty and two-class preparation paths and checked them
+on constructed software fixtures. Thirteen tests passed. They cover the six
+attacks, incomplete and duplicated days, records crossing file boundaries,
+poisoning, training-only scaling, and saving/reloading the prepared arrays.
+
+We use the standard ADASYN implementation for its generated values. Recording
+its neighbor choices and replaying its seeded interpolation draws lets us
+retain both parent examples for every synthetic row. The instrumented output
+matches the uninstrumented library exactly in the test, and every generated
+row is checked against its recorded parents.
+
+The implementation also makes a source ambiguity visible. A novelty detector
+starts with only benign training examples. To interpret poisoning, we replace
+selected training examples with attack versions while leaving their training
+labels as benign. If we also retain all six attack populations in testing,
+some training attack profiles occur in the test pool. The code measures that
+overlap. This is a consequence of our declared completion; the paper does not
+explain how its own implementation resolved it.
+
+The next check is a small preparation-only cluster job: 20 seeded customers,
+their first 28 complete days, both paths at 0% and 30% poisoning, and one
+customer-specific example. Its budget is 15 minutes on four CPU cores with
+16 GiB of memory. No detector will be trained. This will check that the
+pipeline works on the actual files and expose its real counts and overlap.
+
 ## What we will do next
 
 First, settle the dataset, poisoning operation, and the remaining source

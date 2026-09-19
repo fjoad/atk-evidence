@@ -4,6 +4,28 @@
 
 **State:** revised research direction and plan; no new experiment launched
 
+## Current execution: steps 1 and 2
+
+The user has authorized source/data resolution and implementation of the shared
+preparation pipeline. Work now covers:
+
+- [ ] Independently verify online dataset identity, the locally available raw
+  bytes, documentation, and cited attack definitions.
+- [ ] Record one explicit initial setup and all material unresolved alternatives
+  before preparing research data.
+- [ ] Implement acquisition/verification and preparation for novelty and
+  two-class models with customer/day/attack/poison/synthetic provenance.
+- [ ] Check parsing, attacks, splitting, scaling, ADASYN, and poisoning on
+  hand-checkable local software fixtures, including direct library parity.
+- [ ] Run a bounded preparation-only check on Panther if authentication is
+  available; otherwise report precisely that research-data execution is pending.
+- [ ] Update the journal, generated website, status, and checks; commit.
+
+No detector fitting, score comparison, seed sweep, or full ADASYN allocation
+is included in these two steps. Local tests use constructed software fixtures;
+all real-data preparation remains on cluster compute nodes. A September 20
+read-only SSH attempt reached Panther but failed noninteractive authentication.
+
 ## Direction
 
 The user requests a fresh investigation of the paper's actual experiments,

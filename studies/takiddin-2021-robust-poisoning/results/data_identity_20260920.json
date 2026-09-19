@@ -1,0 +1,79 @@
+{
+  "alternate_record": "https://doi.org/10.57760/sciencedb.17619",
+  "checked_utc": "2026-09-19T23:15:01.757812+00:00",
+  "files": [
+    {
+      "bytes": 101978611,
+      "filename": "File1.txt.zip",
+      "md5": "00203f66f3f5e5201b20ed160b787684",
+      "member": "File1.txt",
+      "sha256": "6225f207304e92e3c2e2a580a45080ec5dd0fba0f156bd3aa281b0c7517d3c32",
+      "status": "verified",
+      "uncompressed_bytes": 412330430
+    },
+    {
+      "bytes": 102197028,
+      "filename": "File2.txt.zip",
+      "md5": "5e3af1474d3c8976e2e1e0f8c1969507",
+      "member": "File2.txt",
+      "sha256": "08526e96656806e1cf5a3051174eb3b52b9b996dd83268c631bc8f8a133dd123",
+      "status": "verified",
+      "uncompressed_bytes": 412872266
+    },
+    {
+      "bytes": 101624145,
+      "filename": "File3.txt.zip",
+      "md5": "b537785f8b37cb3e89103600d39da8ff",
+      "member": "File3.txt",
+      "sha256": "07062d9a6d356aa852e73cea0bfda07554a816e8e6305c44dfa664d8aee6b3ef",
+      "status": "verified",
+      "uncompressed_bytes": 411309460
+    },
+    {
+      "bytes": 102401577,
+      "filename": "File4.txt.zip",
+      "md5": "53ec9e70c1610b74ae72417cc010a0c3",
+      "member": "File4.txt",
+      "sha256": "86e826fc85b1eb11048f846935a71da893e63e2717f3a66b5098316eb1a32e03",
+      "status": "verified",
+      "uncompressed_bytes": 415164843
+    },
+    {
+      "bytes": 102257883,
+      "filename": "File5.txt.zip",
+      "md5": "6f8c7c9dfba3bbfbff0e5f1703e122fc",
+      "member": "File5.txt",
+      "sha256": "3efc1f56170de93c987655c2c5764cde64b924feb3dd810b658988f87138f678",
+      "status": "verified",
+      "uncompressed_bytes": 414075955
+    },
+    {
+      "bytes": 147826765,
+      "filename": "File6.txt.zip",
+      "md5": "c0a435d0359974f23ce434b5e838e251",
+      "member": "File6.txt",
+      "sha256": "064e0be33cdf56c17e345ba63b02f31bd9ba8ae221bdfc2146464bc04e13208d",
+      "status": "verified",
+      "uncompressed_bytes": 597031006
+    },
+    {
+      "category_counts": {
+        "1": 4225,
+        "2": 485,
+        "3": 1735
+      },
+      "filename": "SME_and_Residential_allocations.csv",
+      "md5": "89263f89253cf56b857079986ae73096",
+      "rows": 6445,
+      "sha256": "96298be047f34ba91fe281c899b440d2b28747b4f102af6f239dbbd93dd354d4",
+      "status": "verified"
+    }
+  ],
+  "official_metadata_url": "https://issda.ucd.ie/api/datasets/:persistentId/?persistentId=doi:10.7929/ISSDA/BX59EU",
+  "official_record": "https://doi.org/10.7929/ISSDA/BX59EU",
+  "online_metadata_checked": true,
+  "ready": true,
+  "scope": "source byte identity; paper's exact 3000-customer subset is unknown",
+  "source_branch": "verified-consumption-with-crosschecked-allocation-csv",
+  "zip_crc_checked": true
+}
