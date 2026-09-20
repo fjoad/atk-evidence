@@ -1,0 +1,264 @@
+{
+  "analysis": {
+    "benign_strata": {
+      "original": {
+        "FA": 8.743169398907105,
+        "false_alarms": 16,
+        "n": 183
+      },
+      "synthetic": {
+        "FA": null,
+        "false_alarms": 0,
+        "n": 0
+      }
+    },
+    "controls": {
+      "constant_training_prior": {
+        "ACC": 14.20807453416149,
+        "AUC": 50.0,
+        "DR": 0.0,
+        "F1": 0.0,
+        "FA": 0.0,
+        "FN": 1105,
+        "FP": 0,
+        "PR": null,
+        "SP": 100.0,
+        "TN": 183,
+        "TP": 0,
+        "balanced_accuracy": 50.0,
+        "n": 1288
+      },
+      "negative_daily_mean": {
+        "AUC": 65.43382043864204,
+        "definition": "negative mean raw daily kWh; no learned parameter",
+        "thresholds": {
+          "at_false_alarm_caps": {
+            "17.6": {
+              "DR": 34.751131221719454,
+              "FA": 17.48633879781421,
+              "threshold": -0.13617950635186085
+            },
+            "33.3": {
+              "DR": 57.1945701357466,
+              "FA": 32.78688524590164,
+              "threshold": -0.257152844647256
+            }
+          },
+          "best_balanced_accuracy": 63.6342506737878,
+          "boundary_count": 1219,
+          "rule": "score >= threshold; null threshold denotes no alarms"
+        }
+      }
+    },
+    "original_rows": {
+      "ACC": 67.77950310559007,
+      "AUC": 84.37751897732612,
+      "DR": 63.89140271493213,
+      "F1": 77.28516694033935,
+      "FA": 8.743169398907105,
+      "FN": 399,
+      "FP": 16,
+      "PR": 97.78393351800554,
+      "SP": 91.2568306010929,
+      "TN": 167,
+      "TP": 706,
+      "balanced_accuracy": 77.57411665801251,
+      "n": 1288
+    },
+    "per_attack": {
+      "1": {
+        "DR": 49.473684210526315,
+        "detected": 94,
+        "n": 190
+      },
+      "2": {
+        "DR": 57.06214689265537,
+        "detected": 101,
+        "n": 177
+      },
+      "3": {
+        "DR": 84.29319371727749,
+        "detected": 161,
+        "n": 191
+      },
+      "4": {
+        "DR": 66.08187134502924,
+        "detected": 113,
+        "n": 171
+      },
+      "5": {
+        "DR": 66.13756613756614,
+        "detected": 125,
+        "n": 189
+      },
+      "6": {
+        "DR": 59.893048128342244,
+        "detected": 112,
+        "n": 187
+      }
+    },
+    "primary": {
+      "ACC": 67.77950310559007,
+      "AUC": 84.37751897732612,
+      "DR": 63.89140271493213,
+      "F1": 77.28516694033935,
+      "FA": 8.743169398907105,
+      "FN": 399,
+      "FP": 16,
+      "PR": 97.78393351800554,
+      "SP": 91.2568306010929,
+      "TN": 167,
+      "TP": 706,
+      "balanced_accuracy": 77.57411665801251,
+      "n": 1288
+    },
+    "thresholds": {
+      "diagnostic_reversal": {
+        "at_false_alarm_caps": {
+          "17.6": {
+            "DR": 5.067873303167421,
+            "FA": 16.939890710382514,
+            "threshold": -0.11
+          },
+          "33.3": {
+            "DR": 7.0588235294117645,
+            "FA": 30.601092896174865,
+            "threshold": -0.16
+          }
+        },
+        "best_balanced_accuracy": 50.0,
+        "boundary_count": 133,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      },
+      "higher_probability": {
+        "at_false_alarm_caps": {
+          "17.6": {
+            "DR": 75.65610859728507,
+            "FA": 17.48633879781421,
+            "threshold": 0.42
+          },
+          "33.3": {
+            "DR": 85.42986425339366,
+            "FA": 32.78688524590164,
+            "threshold": 0.30528571428571427
+          }
+        },
+        "best_balanced_accuracy": 79.41547362955271,
+        "boundary_count": 133,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      }
+    }
+  },
+  "case": "B-p30",
+  "code_commit": "e6e03599f9f6d5274c2c52121563d69d599aa403",
+  "fitting_parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": null,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": 4,
+    "oob_score": false,
+    "random_state": 20260920,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "forest": {
+    "depth_max": 32,
+    "depth_min": 20,
+    "total_nodes": 88152,
+    "trees": 100
+  },
+  "input_metadata_sha256": "b4d7b988d1e691a00c052a16360562204c1116dc9f4a00db9bd8af3592cc6c3e",
+  "model": "random_forest",
+  "output_sha256": {
+    "model.joblib": "04ef19359b862e23954e7788936fc29ca31aac093776db5e4db1273e5601e247",
+    "predictions.npz": "ed5d8e795d59b03bd15bb4c74bc69279551125069d2f37b4bd0309c056b8f83d"
+  },
+  "poisoning_rate": 0.3,
+  "preparation": {
+    "lineage": {
+      "all_synthetic_parents_in_training": true,
+      "original_row_overlap": 0,
+      "shared_source_days": 528,
+      "synthetic_parent_crossings": 0
+    },
+    "poisoning": {
+      "changed_fraction_of_eligible": 0.29933481152993346,
+      "changed_fraction_of_training": 0.14894086496028244,
+      "changed_rows": 675,
+      "eligible_rows": 2255,
+      "operation": "label-flip",
+      "rate": 0.3,
+      "scope": "generalized",
+      "selected_customer_count": 6,
+      "selection_denominator": "selected-customers",
+      "training_rows": 4532
+    },
+    "rate": 0.3,
+    "scope": "controlled pilot",
+    "test_rows": 1288,
+    "test_true_counts": [
+      183,
+      1105
+    ],
+    "test_uid_sha256": "cf7d5a10ec21f11727551a9be2305e071baa0f1d97ab79d0be9e5208424734de",
+    "train_observed_counts": [
+      2952,
+      1580
+    ],
+    "train_true_counts": [
+      2277,
+      2255
+    ],
+    "training_rows": 4532
+  },
+  "reload": {
+    "identical_predictions": true,
+    "identical_probabilities": true
+  },
+  "resampling": {
+    "all_interpolations_verified": true,
+    "class_counts": [
+      2277,
+      2255
+    ],
+    "generated": 1900,
+    "implementation": "unmodified imbalanced-learn ADASYN with recorded neighbor queries",
+    "neighbors": 5,
+    "seed": 3658779020
+  },
+  "scope": "controlled pilot arm B; not Table III reproduction",
+  "scoring_workers": 1,
+  "seed": 20260920,
+  "source_sha256": {
+    "SPLIT_RESAMPLING_CHECK.md": "ec62dd911122eec2477e8ec5d538078216989aca8695730006dfbb50b8f21437",
+    "checks/split_resampling.py": "57628dba83c60e8daf4143477ed593724b81786d6a4640d4361bf31f2f17d16f",
+    "reported/table_3.csv": "d15ccc19d4a774a6eeaa191087274d93a823d7e2d801c2c7de6ec6d87d3890eb",
+    "reproduction/analyze_results.py": "27a337522eb5d56c10aa2f0ef8fe5b36ee7a6c1a62a0c0466b35830185b8ee11",
+    "reproduction/models.py": "e91370ea27d4ca38c8e2fd54bbfebce816c214431292713e929fec97a2bc8399",
+    "reproduction/prepare_data.py": "2061987541a9060e1cce184b1f81a8f3dfe913a631b00119a05267ed52b7fdbb",
+    "reproduction/run_experiment.py": "eb77d628bffcd171e5c6dd3206944c4da02a07f18d2e3677ab96cc8a1591df80"
+  },
+  "status": "complete",
+  "timing_seconds": {
+    "fit": 0.5827196310274303,
+    "reload": 0.10606909496709704,
+    "score": 0.1362716150470078
+  },
+  "training": {
+    "distinct_positive_probabilities": 116,
+    "observed_label_accuracy": 99.93380406001765,
+    "true_label_accuracy": 85.1721094439541
+  },
+  "training_prior": 0.34863195057369817
+}

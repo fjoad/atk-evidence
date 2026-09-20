@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; first random-forest pilot completed on 20 September
+**Status:** active; random-forest pilot and matched controls completed on 20 September
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -140,7 +140,8 @@ validated calibration. No claim about every model or the authors' choices.
 
 ## E13 — resampling and dependent splits contribute to the strong pilot result
 
-**Status:** open; dependence and stratum differences observed.
+**Status:** resampling-policy contribution supported in this pilot; an
+additional collapse under source-day grouping was not observed.
 
 At p00, original versus synthetic benign FA is 6.56% versus 2.33%;
 at p30, 2.19% versus 0.11%. Training/test synthetic-parent crossings were
@@ -148,3 +149,22 @@ already recorded. Original-row AUC remains high, but removing synthetic test
 rows does not remove training contamination or shared source days. A matched
 preparation control, with the same model and an explicit comparison population,
 would test this explanation. More seeds of the existing setup do not isolate it.
+
+**September 20 controlled result:** on the same 445 original test rows,
+moving synthesis into training lowers AUC from 98.31606 to 91.84157 at p00
+and from 90.98094 to 81.98823 at p30. The larger 1,288-row A/B comparison
+gives the same direction (-5.78765/-8.00682 points). Synthetic values and
+training counts also change; this identifies a policy effect, not leakage
+alone. Grouping whole source days raises AUC by 1.33925/0.98358 relative to
+training-only synthesis on the original row split. C retains AUC
+93.18082/82.97181, versus the simple daily-mean reference's 67.62975.
+This weakens the explanation that these two dependence paths account for all
+useful discrimination. It does not establish equivalence, unseen-customer
+generalization, or full-data reproduction. See the
+[matched-control record](results/split_control_20260920/README.md).
+
+The threshold explanation also remains material but incomplete in C: default
+DR drops 31.86528 points with poisoning, versus 21.24352 at the common
+17.6% FA cap; AUC falls 10.20901 points. No automatic repetition is justified
+merely to reverse the observed result. Continue to a separately specified model
+question rather than turn this pilot into an undeclared search.

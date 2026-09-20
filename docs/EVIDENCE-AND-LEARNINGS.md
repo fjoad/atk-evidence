@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-08-24
+**Last updated:** 2026-09-20
 
 ## Purpose
 
@@ -24,6 +24,39 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: a working baseline, a preparation effect, and a surviving opening
+
+**Added September 20; earlier records below remain historical.**
+
+- **Former hypothesis:** published performance might be unattainable even
+  for ordinary baselines. The first forest's strong pilot result then raised
+  the narrower explanation that pre-split ADASYN and shared source days
+  accounted for its useful discrimination.
+- **Discriminating evidence:** the original pair learned high AUC. A frozen
+  four-fit control compared identical original test rows using the original
+  saved scores (A), training-only synthesis on the same original split (B),
+  and training-only synthesis after grouping whole source days (C). Common
+  A/B/C AUC was 98.32/91.84/93.18 at p00 and 90.98/81.99/82.97 at p30.
+  Cluster and local artifact checks passed. The larger A/B original-row
+  comparison agreed in direction.
+- **Current conclusion:** **OBSERVED** — the resampling policy materially
+  changes performance in this pilot. **OBSERVED** — C does not collapse
+  further and remains above constant/daily-mean references. An assumption
+  that this baseline cannot learn, or that the two checked dependence paths
+  explain all its discrimination, is weakened for this construction.
+- **Causal limits:** synthesis also changes generated examples and counts;
+  grouping changes training membership. One seed, 20 dependent customers,
+  and 59 common benign test rows do not isolate leakage alone, establish
+  equivalence, justify population confidence, or test unseen customers.
+  Threshold diagnostics use test labels; they are not validated calibration.
+- **Decision:** stop this diagnostic. A separately specified next model
+  answers a different question; extra seeds should not be used merely to
+  seek a result that fits the initial suspicion. All reported models remain
+  in scope, and favorable outcomes must be preserved as clearly as failures.
+- **Record:** [matched control](../studies/takiddin-2021-robust-poisoning/results/split_control_20260920/README.md),
+  [first forest](../studies/takiddin-2021-robust-poisoning/results/rf_pilot_20260920/README.md),
+  [chronological journal](../studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md).
 
 ### Program-level reproducibility hypothesis
 

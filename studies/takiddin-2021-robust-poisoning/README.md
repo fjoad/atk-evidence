@@ -33,6 +33,13 @@ much of the detection decline. This is a small pilot with the documented
 preparation dependence, not full Table III reproduction. See the
 [first-baseline record](results/rf_pilot_20260920/README.md).
 
+The matched preparation control also completed (job 398164, four new fits).
+On identical original test rows, training-only ADASYN lowers AUC by 6.47/8.99
+points at 0%/30% poisoning. Whole-source-day grouping produces no further
+collapse: AUC remains 93.18/82.97. This supports a bounded preparation-policy
+effect while preserving evidence that the baseline works. See the
+[matched-control record](results/split_control_20260920/README.md).
+
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
@@ -53,6 +60,7 @@ a result or verdict.
   bounded cluster check.
 - [`DATA_SOURCES.md`](DATA_SOURCES.md): fresh source identity and allocation checks.
 - [`FIRST_BASELINE.md`](FIRST_BASELINE.md): frozen forest, metric, and diagnostic choices.
+- [`SPLIT_RESAMPLING_CHECK.md`](SPLIT_RESAMPLING_CHECK.md): frozen matched controls and stopping rule.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

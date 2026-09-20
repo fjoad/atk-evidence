@@ -58,6 +58,21 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+Paper 3's September 20 all-model investigation is active under the plan in
+STATUS. Its preparation, first forest pair, and user-approved matched controls
+are complete. The four-fit control (frozen e6e0359, job 398164) found that
+training-only resampling lowers AUC on matched rows, while whole-source-day
+grouping does not cause a further collapse. C retains AUC 93.18/82.97 at
+0%/30% poisoning. All saved-artifact checks passed. This is one 20-customer
+pilot, not full-paper reproduction or evidence of intent. Stop this diagnostic;
+the proposed next distinct question is a separately specified AdaBoost pair.
+See the [control record](studies/takiddin-2021-robust-poisoning/results/split_control_20260920/README.md).
+No additional model or seed is authorized by this summary alone. The website
+changes are local drafts, not deployed. Preserve the original preparation,
+baseline, control contract, code, and outputs.
+
+### Separate Paper 1 checkpoints
+
 The source-assumption findings are published at `dc37bbe`; subsequent Sigmoid
 checks are saved locally. The approved
 [small paired fit](docs/plans/2026-08-31-small-sigmoid-fit.md) is complete.
@@ -68,7 +83,7 @@ calibration loss still improved; no long-run plateau is established. Stop
 for discussion before another experiment or publication. See
 [the finding](studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md).
 
-Paper 1 is the only active experiment. Its first clean-reader FC-SAE run is
+Paper 1's first clean-reader FC-SAE run is
 complete and audited. The result did not reproduce Table III under the declared
 implementation and one seed. The completed follow-up excludes the target for
 any weights under the fixed prepared inputs, Softmax output, and MSE score.

@@ -1,0 +1,1780 @@
+{
+  "all_original_evaluation": {
+    "p00": {
+      "A": {
+        "benign_strata": {
+          "original": {
+            "FA": 6.557377049180328,
+            "false_alarms": 12,
+            "n": 183
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 85.7919254658385,
+            "AUC": 50.0,
+            "DR": 100.0,
+            "F1": 92.35269536147096,
+            "FA": 100.0,
+            "FN": 0,
+            "FP": 183,
+            "PR": 85.7919254658385,
+            "SP": 0.0,
+            "TN": 0,
+            "TP": 1105,
+            "balanced_accuracy": 50.0,
+            "n": 1288
+          },
+          "negative_daily_mean": {
+            "AUC": 65.43382043864204,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 34.751131221719454,
+                  "FA": 17.48633879781421,
+                  "threshold": -0.13617950635186085
+                },
+                "33.3": {
+                  "DR": 57.1945701357466,
+                  "FA": 32.78688524590164,
+                  "threshold": -0.257152844647256
+                }
+              },
+              "best_balanced_accuracy": 63.6342506737878,
+              "boundary_count": 1219,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 92.46894409937889,
+          "AUC": 97.79714660138961,
+          "DR": 92.3076923076923,
+          "F1": 95.46092653252222,
+          "FA": 6.557377049180328,
+          "FN": 85,
+          "FP": 12,
+          "PR": 98.83720930232558,
+          "SP": 93.44262295081967,
+          "TN": 171,
+          "TP": 1020,
+          "balanced_accuracy": 92.875157629256,
+          "n": 1288
+        },
+        "per_attack": {
+          "1": {
+            "DR": 78.42105263157895,
+            "detected": 149,
+            "n": 190
+          },
+          "2": {
+            "DR": 88.13559322033899,
+            "detected": 156,
+            "n": 177
+          },
+          "3": {
+            "DR": 100.0,
+            "detected": 191,
+            "n": 191
+          },
+          "4": {
+            "DR": 97.07602339181287,
+            "detected": 166,
+            "n": 171
+          },
+          "5": {
+            "DR": 97.88359788359789,
+            "detected": 185,
+            "n": 189
+          },
+          "6": {
+            "DR": 92.51336898395722,
+            "detected": 173,
+            "n": 187
+          }
+        },
+        "primary": {
+          "ACC": 92.46894409937889,
+          "AUC": 97.79714660138961,
+          "DR": 92.3076923076923,
+          "F1": 95.46092653252222,
+          "FA": 6.557377049180328,
+          "FN": 85,
+          "FP": 12,
+          "PR": 98.83720930232558,
+          "SP": 93.44262295081967,
+          "TN": 171,
+          "TP": 1020,
+          "balanced_accuracy": 92.875157629256,
+          "n": 1288
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 0.18099547511312217,
+                "FA": 16.939890710382514,
+                "threshold": -0.03
+              },
+              "33.3": {
+                "DR": 0.18099547511312217,
+                "FA": 16.939890710382514,
+                "threshold": -0.03
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 111,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 96.01809954751131,
+                "FA": 15.846994535519126,
+                "threshold": 0.35
+              },
+              "33.3": {
+                "DR": 97.82805429864253,
+                "FA": 32.240437158469945,
+                "threshold": 0.24
+              }
+            },
+            "best_balanced_accuracy": 93.3466854585466,
+            "boundary_count": 111,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "B": {
+        "benign_strata": {
+          "original": {
+            "FA": 28.415300546448087,
+            "false_alarms": 52,
+            "n": 183
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 14.20807453416149,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 1105,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 183,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 1288
+          },
+          "negative_daily_mean": {
+            "AUC": 65.43382043864204,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 34.751131221719454,
+                  "FA": 17.48633879781421,
+                  "threshold": -0.13617950635186085
+                },
+                "33.3": {
+                  "DR": 57.1945701357466,
+                  "FA": 32.78688524590164,
+                  "threshold": -0.257152844647256
+                }
+              },
+              "best_balanced_accuracy": 63.6342506737878,
+              "boundary_count": 1219,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 90.21739130434783,
+          "AUC": 92.0094948445961,
+          "DR": 93.30316742081448,
+          "F1": 94.24131627056673,
+          "FA": 28.415300546448087,
+          "FN": 74,
+          "FP": 52,
+          "PR": 95.19852262234534,
+          "SP": 71.5846994535519,
+          "TN": 131,
+          "TP": 1031,
+          "balanced_accuracy": 82.44393343718319,
+          "n": 1288
+        },
+        "per_attack": {
+          "1": {
+            "DR": 79.47368421052632,
+            "detected": 151,
+            "n": 190
+          },
+          "2": {
+            "DR": 90.96045197740114,
+            "detected": 161,
+            "n": 177
+          },
+          "3": {
+            "DR": 100.0,
+            "detected": 191,
+            "n": 191
+          },
+          "4": {
+            "DR": 96.49122807017544,
+            "detected": 165,
+            "n": 171
+          },
+          "5": {
+            "DR": 99.47089947089947,
+            "detected": 188,
+            "n": 189
+          },
+          "6": {
+            "DR": 93.58288770053476,
+            "detected": 175,
+            "n": 187
+          }
+        },
+        "primary": {
+          "ACC": 90.21739130434783,
+          "AUC": 92.0094948445961,
+          "DR": 93.30316742081448,
+          "F1": 94.24131627056673,
+          "FA": 28.415300546448087,
+          "FN": 74,
+          "FP": 52,
+          "PR": 95.19852262234534,
+          "SP": 71.5846994535519,
+          "TN": 131,
+          "TP": 1031,
+          "balanced_accuracy": 82.44393343718319,
+          "n": 1288
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 0.7239819004524887,
+                "FA": 15.846994535519126,
+                "threshold": -0.12
+              },
+              "33.3": {
+                "DR": 1.3574660633484164,
+                "FA": 32.240437158469945,
+                "threshold": -0.22
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 110,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 88.86877828054298,
+                "FA": 17.48633879781421,
+                "threshold": 0.62
+              },
+              "33.3": {
+                "DR": 94.02714932126696,
+                "FA": 31.693989071038253,
+                "threshold": 0.47
+              }
+            },
+            "best_balanced_accuracy": 85.92611824048662,
+            "boundary_count": 110,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      }
+    },
+    "p30": {
+      "A": {
+        "benign_strata": {
+          "original": {
+            "FA": 2.185792349726776,
+            "false_alarms": 4,
+            "n": 183
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 14.20807453416149,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 1105,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 183,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 1288
+          },
+          "negative_daily_mean": {
+            "AUC": 65.43382043864204,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 34.751131221719454,
+                  "FA": 17.48633879781421,
+                  "threshold": -0.13617950635186085
+                },
+                "33.3": {
+                  "DR": 57.1945701357466,
+                  "FA": 32.78688524590164,
+                  "threshold": -0.257152844647256
+                }
+              },
+              "best_balanced_accuracy": 63.6342506737878,
+              "boundary_count": 1219,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 66.38198757763975,
+          "AUC": 92.38434339687956,
+          "DR": 61.1764705882353,
+          "F1": 75.74229691876751,
+          "FA": 2.185792349726776,
+          "FN": 429,
+          "FP": 4,
+          "PR": 99.41176470588235,
+          "SP": 97.81420765027322,
+          "TN": 179,
+          "TP": 676,
+          "balanced_accuracy": 79.49533911925425,
+          "n": 1288
+        },
+        "per_attack": {
+          "1": {
+            "DR": 49.473684210526315,
+            "detected": 94,
+            "n": 190
+          },
+          "2": {
+            "DR": 50.847457627118644,
+            "detected": 90,
+            "n": 177
+          },
+          "3": {
+            "DR": 79.58115183246073,
+            "detected": 152,
+            "n": 191
+          },
+          "4": {
+            "DR": 66.08187134502924,
+            "detected": 113,
+            "n": 171
+          },
+          "5": {
+            "DR": 60.84656084656085,
+            "detected": 115,
+            "n": 189
+          },
+          "6": {
+            "DR": 59.893048128342244,
+            "detected": 112,
+            "n": 187
+          }
+        },
+        "primary": {
+          "ACC": 66.38198757763975,
+          "AUC": 92.38434339687956,
+          "DR": 61.1764705882353,
+          "F1": 75.74229691876751,
+          "FA": 2.185792349726776,
+          "FN": 429,
+          "FP": 4,
+          "PR": 99.41176470588235,
+          "SP": 97.81420765027322,
+          "TN": 179,
+          "TP": 676,
+          "balanced_accuracy": 79.49533911925425,
+          "n": 1288
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 2.8959276018099547,
+                "FA": 14.207650273224044,
+                "threshold": -0.02
+              },
+              "33.3": {
+                "DR": 3.8914027149321266,
+                "FA": 30.05464480874317,
+                "threshold": -0.05
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 135,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 87.87330316742081,
+                "FA": 16.939890710382514,
+                "threshold": 0.26
+              },
+              "33.3": {
+                "DR": 93.03167420814479,
+                "FA": 32.240437158469945,
+                "threshold": 0.17
+              }
+            },
+            "best_balanced_accuracy": 88.4407684889845,
+            "boundary_count": 135,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "B": {
+        "benign_strata": {
+          "original": {
+            "FA": 8.743169398907105,
+            "false_alarms": 16,
+            "n": 183
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 14.20807453416149,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 1105,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 183,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 1288
+          },
+          "negative_daily_mean": {
+            "AUC": 65.43382043864204,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 34.751131221719454,
+                  "FA": 17.48633879781421,
+                  "threshold": -0.13617950635186085
+                },
+                "33.3": {
+                  "DR": 57.1945701357466,
+                  "FA": 32.78688524590164,
+                  "threshold": -0.257152844647256
+                }
+              },
+              "best_balanced_accuracy": 63.6342506737878,
+              "boundary_count": 1219,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 67.77950310559007,
+          "AUC": 84.37751897732612,
+          "DR": 63.89140271493213,
+          "F1": 77.28516694033935,
+          "FA": 8.743169398907105,
+          "FN": 399,
+          "FP": 16,
+          "PR": 97.78393351800554,
+          "SP": 91.2568306010929,
+          "TN": 167,
+          "TP": 706,
+          "balanced_accuracy": 77.57411665801251,
+          "n": 1288
+        },
+        "per_attack": {
+          "1": {
+            "DR": 49.473684210526315,
+            "detected": 94,
+            "n": 190
+          },
+          "2": {
+            "DR": 57.06214689265537,
+            "detected": 101,
+            "n": 177
+          },
+          "3": {
+            "DR": 84.29319371727749,
+            "detected": 161,
+            "n": 191
+          },
+          "4": {
+            "DR": 66.08187134502924,
+            "detected": 113,
+            "n": 171
+          },
+          "5": {
+            "DR": 66.13756613756614,
+            "detected": 125,
+            "n": 189
+          },
+          "6": {
+            "DR": 59.893048128342244,
+            "detected": 112,
+            "n": 187
+          }
+        },
+        "primary": {
+          "ACC": 67.77950310559007,
+          "AUC": 84.37751897732612,
+          "DR": 63.89140271493213,
+          "F1": 77.28516694033935,
+          "FA": 8.743169398907105,
+          "FN": 399,
+          "FP": 16,
+          "PR": 97.78393351800554,
+          "SP": 91.2568306010929,
+          "TN": 167,
+          "TP": 706,
+          "balanced_accuracy": 77.57411665801251,
+          "n": 1288
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 5.067873303167421,
+                "FA": 16.939890710382514,
+                "threshold": -0.11
+              },
+              "33.3": {
+                "DR": 7.0588235294117645,
+                "FA": 30.601092896174865,
+                "threshold": -0.16
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 133,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 75.65610859728507,
+                "FA": 17.48633879781421,
+                "threshold": 0.42
+              },
+              "33.3": {
+                "DR": 85.42986425339366,
+                "FA": 32.78688524590164,
+                "threshold": 0.30528571428571427
+              }
+            },
+            "best_balanced_accuracy": 79.41547362955271,
+            "boundary_count": 133,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      }
+    }
+  },
+  "baseline_retrained": false,
+  "code_commit": "e6e03599f9f6d5274c2c52121563d69d599aa403",
+  "common_evaluation": {
+    "p00": {
+      "A": {
+        "benign_strata": {
+          "original": {
+            "FA": 3.389830508474576,
+            "false_alarms": 2,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 86.74157303370787,
+            "AUC": 50.0,
+            "DR": 100.0,
+            "F1": 92.90012033694344,
+            "FA": 100.0,
+            "FN": 0,
+            "FP": 59,
+            "PR": 86.74157303370787,
+            "SP": 0.0,
+            "TN": 0,
+            "TP": 386,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 93.03370786516854,
+          "AUC": 98.3160621761658,
+          "DR": 92.48704663212435,
+          "F1": 95.83892617449665,
+          "FA": 3.389830508474576,
+          "FN": 29,
+          "FP": 2,
+          "PR": 99.44289693593315,
+          "SP": 96.61016949152543,
+          "TN": 57,
+          "TP": 357,
+          "balanced_accuracy": 94.5486080618249,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 81.42857142857143,
+            "detected": 57,
+            "n": 70
+          },
+          "2": {
+            "DR": 85.0,
+            "detected": 51,
+            "n": 60
+          },
+          "3": {
+            "DR": 100.0,
+            "detected": 61,
+            "n": 61
+          },
+          "4": {
+            "DR": 98.4375,
+            "detected": 63,
+            "n": 64
+          },
+          "5": {
+            "DR": 96.875,
+            "detected": 62,
+            "n": 64
+          },
+          "6": {
+            "DR": 94.02985074626865,
+            "detected": 63,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 93.03370786516854,
+          "AUC": 98.3160621761658,
+          "DR": 92.48704663212435,
+          "F1": 95.83892617449665,
+          "FA": 3.389830508474576,
+          "FN": 29,
+          "FP": 2,
+          "PR": 99.44289693593315,
+          "SP": 96.61016949152543,
+          "TN": 57,
+          "TP": 357,
+          "balanced_accuracy": 94.5486080618249,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 0.0,
+                "FA": 0.0,
+                "threshold": null
+              },
+              "33.3": {
+                "DR": 0.0,
+                "FA": 0.0,
+                "threshold": null
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 93,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 96.6321243523316,
+                "FA": 13.559322033898304,
+                "threshold": 0.38
+              },
+              "33.3": {
+                "DR": 97.92746113989638,
+                "FA": 32.20338983050847,
+                "threshold": 0.26
+              }
+            },
+            "best_balanced_accuracy": 94.81865284974094,
+            "boundary_count": 93,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "B": {
+        "benign_strata": {
+          "original": {
+            "FA": 33.898305084745765,
+            "false_alarms": 20,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 13.258426966292134,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 386,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 59,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 90.33707865168539,
+          "AUC": 91.84157372442259,
+          "DR": 94.04145077720207,
+          "F1": 94.40832249674902,
+          "FA": 33.898305084745765,
+          "FN": 23,
+          "FP": 20,
+          "PR": 94.7780678851175,
+          "SP": 66.10169491525424,
+          "TN": 39,
+          "TP": 363,
+          "balanced_accuracy": 80.07157284622815,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 82.85714285714286,
+            "detected": 58,
+            "n": 70
+          },
+          "2": {
+            "DR": 91.66666666666667,
+            "detected": 55,
+            "n": 60
+          },
+          "3": {
+            "DR": 100.0,
+            "detected": 61,
+            "n": 61
+          },
+          "4": {
+            "DR": 98.4375,
+            "detected": 63,
+            "n": 64
+          },
+          "5": {
+            "DR": 98.4375,
+            "detected": 63,
+            "n": 64
+          },
+          "6": {
+            "DR": 94.02985074626865,
+            "detected": 63,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 90.33707865168539,
+          "AUC": 91.84157372442259,
+          "DR": 94.04145077720207,
+          "F1": 94.40832249674902,
+          "FA": 33.898305084745765,
+          "FN": 23,
+          "FP": 20,
+          "PR": 94.7780678851175,
+          "SP": 66.10169491525424,
+          "TN": 39,
+          "TP": 363,
+          "balanced_accuracy": 80.07157284622815,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 0.7772020725388601,
+                "FA": 13.559322033898304,
+                "threshold": -0.11
+              },
+              "33.3": {
+                "DR": 1.0362694300518136,
+                "FA": 30.508474576271187,
+                "threshold": -0.2
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 88,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 86.78756476683938,
+                "FA": 16.94915254237288,
+                "threshold": 0.66
+              },
+              "33.3": {
+                "DR": 93.78238341968913,
+                "FA": 32.20338983050847,
+                "threshold": 0.52
+              }
+            },
+            "best_balanced_accuracy": 85.50759638183894,
+            "boundary_count": 88,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "C": {
+        "benign_strata": {
+          "original": {
+            "FA": 32.20338983050848,
+            "false_alarms": 19,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 13.258426966292134,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 386,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 59,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 90.78651685393258,
+          "AUC": 93.18082023359973,
+          "DR": 94.30051813471502,
+          "F1": 94.66840052015604,
+          "FA": 32.20338983050848,
+          "FN": 22,
+          "FP": 19,
+          "PR": 95.03916449086162,
+          "SP": 67.79661016949153,
+          "TN": 40,
+          "TP": 364,
+          "balanced_accuracy": 81.04856415210327,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 87.14285714285714,
+            "detected": 61,
+            "n": 70
+          },
+          "2": {
+            "DR": 90.0,
+            "detected": 54,
+            "n": 60
+          },
+          "3": {
+            "DR": 100.0,
+            "detected": 61,
+            "n": 61
+          },
+          "4": {
+            "DR": 96.875,
+            "detected": 62,
+            "n": 64
+          },
+          "5": {
+            "DR": 98.4375,
+            "detected": 63,
+            "n": 64
+          },
+          "6": {
+            "DR": 94.02985074626865,
+            "detected": 63,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 90.78651685393258,
+          "AUC": 93.18082023359973,
+          "DR": 94.30051813471502,
+          "F1": 94.66840052015604,
+          "FA": 32.20338983050848,
+          "FN": 22,
+          "FP": 19,
+          "PR": 95.03916449086162,
+          "SP": 67.79661016949153,
+          "TN": 40,
+          "TP": 364,
+          "balanced_accuracy": 81.04856415210327,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 0.0,
+                "FA": 0.0,
+                "threshold": null
+              },
+              "33.3": {
+                "DR": 0.2590673575129534,
+                "FA": 32.20338983050847,
+                "threshold": -0.2
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 88,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 91.19170984455958,
+                "FA": 15.254237288135593,
+                "threshold": 0.62
+              },
+              "33.3": {
+                "DR": 94.30051813471503,
+                "FA": 32.20338983050847,
+                "threshold": 0.51
+              }
+            },
+            "best_balanced_accuracy": 87.968736278212,
+            "boundary_count": 88,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      }
+    },
+    "p30": {
+      "A": {
+        "benign_strata": {
+          "original": {
+            "FA": 1.694915254237288,
+            "false_alarms": 1,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 13.258426966292134,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 386,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 59,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 67.86516853932584,
+          "AUC": 90.98094318082023,
+          "DR": 63.21243523316062,
+          "F1": 77.33755942947703,
+          "FA": 1.694915254237288,
+          "FN": 142,
+          "FP": 1,
+          "PR": 99.59183673469387,
+          "SP": 98.30508474576271,
+          "TN": 58,
+          "TP": 244,
+          "balanced_accuracy": 80.75875998946167,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 51.42857142857143,
+            "detected": 36,
+            "n": 70
+          },
+          "2": {
+            "DR": 46.666666666666664,
+            "detected": 28,
+            "n": 60
+          },
+          "3": {
+            "DR": 83.60655737704919,
+            "detected": 51,
+            "n": 61
+          },
+          "4": {
+            "DR": 68.75,
+            "detected": 44,
+            "n": 64
+          },
+          "5": {
+            "DR": 71.875,
+            "detected": 46,
+            "n": 64
+          },
+          "6": {
+            "DR": 58.208955223880594,
+            "detected": 39,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 67.86516853932584,
+          "AUC": 90.98094318082023,
+          "DR": 63.21243523316062,
+          "F1": 77.33755942947703,
+          "FA": 1.694915254237288,
+          "FN": 142,
+          "FP": 1,
+          "PR": 99.59183673469387,
+          "SP": 98.30508474576271,
+          "TN": 58,
+          "TP": 244,
+          "balanced_accuracy": 80.75875998946167,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 3.3678756476683938,
+                "FA": 5.084745762711865,
+                "threshold": -0.0
+              },
+              "33.3": {
+                "DR": 4.404145077720207,
+                "FA": 28.8135593220339,
+                "threshold": -0.04
+              }
+            },
+            "best_balanced_accuracy": 50.0,
+            "boundary_count": 112,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 84.97409326424871,
+                "FA": 16.94915254237288,
+                "threshold": 0.29
+              },
+              "33.3": {
+                "DR": 91.45077720207254,
+                "FA": 28.8135593220339,
+                "threshold": 0.21
+              }
+            },
+            "best_balanced_accuracy": 87.80187933608501,
+            "boundary_count": 112,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "B": {
+        "benign_strata": {
+          "original": {
+            "FA": 15.254237288135593,
+            "false_alarms": 9,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 13.258426966292134,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 386,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 59,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 66.51685393258427,
+          "AUC": 81.98823219460789,
+          "DR": 63.73056994818653,
+          "F1": 76.75507020280811,
+          "FA": 15.254237288135593,
+          "FN": 140,
+          "FP": 9,
+          "PR": 96.47058823529412,
+          "SP": 84.7457627118644,
+          "TN": 50,
+          "TP": 246,
+          "balanced_accuracy": 74.23816633002546,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 51.42857142857143,
+            "detected": 36,
+            "n": 70
+          },
+          "2": {
+            "DR": 53.333333333333336,
+            "detected": 32,
+            "n": 60
+          },
+          "3": {
+            "DR": 85.24590163934427,
+            "detected": 52,
+            "n": 61
+          },
+          "4": {
+            "DR": 68.75,
+            "detected": 44,
+            "n": 64
+          },
+          "5": {
+            "DR": 71.875,
+            "detected": 46,
+            "n": 64
+          },
+          "6": {
+            "DR": 53.73134328358209,
+            "detected": 36,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 66.51685393258427,
+          "AUC": 81.98823219460789,
+          "DR": 63.73056994818653,
+          "F1": 76.75507020280811,
+          "FA": 15.254237288135593,
+          "FN": 140,
+          "FP": 9,
+          "PR": 96.47058823529412,
+          "SP": 84.7457627118644,
+          "TN": 50,
+          "TP": 246,
+          "balanced_accuracy": 74.23816633002546,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 5.958549222797927,
+                "FA": 13.559322033898304,
+                "threshold": -0.11
+              },
+              "33.3": {
+                "DR": 7.512953367875648,
+                "FA": 32.20338983050847,
+                "threshold": -0.17
+              }
+            },
+            "best_balanced_accuracy": 50.24808992710986,
+            "boundary_count": 112,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 70.72538860103627,
+                "FA": 16.94915254237288,
+                "threshold": 0.47
+              },
+              "33.3": {
+                "DR": 83.16062176165802,
+                "FA": 30.508474576271187,
+                "threshold": 0.35
+              }
+            },
+            "best_balanced_accuracy": 77.65434267146748,
+            "boundary_count": 112,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      },
+      "C": {
+        "benign_strata": {
+          "original": {
+            "FA": 11.864406779661017,
+            "false_alarms": 7,
+            "n": 59
+          },
+          "synthetic": {
+            "FA": null,
+            "false_alarms": 0,
+            "n": 0
+          }
+        },
+        "controls": {
+          "constant_training_prior": {
+            "ACC": 13.258426966292134,
+            "AUC": 50.0,
+            "DR": 0.0,
+            "F1": 0.0,
+            "FA": 0.0,
+            "FN": 386,
+            "FP": 0,
+            "PR": null,
+            "SP": 100.0,
+            "TN": 59,
+            "TP": 0,
+            "balanced_accuracy": 50.0,
+            "n": 445
+          },
+          "negative_daily_mean": {
+            "AUC": 67.62975322736453,
+            "definition": "negative mean raw daily kWh; no learned parameter",
+            "thresholds": {
+              "at_false_alarm_caps": {
+                "17.6": {
+                  "DR": 47.15025906735752,
+                  "FA": 16.94915254237288,
+                  "threshold": -0.19937837201481065
+                },
+                "33.3": {
+                  "DR": 59.067357512953365,
+                  "FA": 32.20338983050847,
+                  "threshold": -0.27408334612846375
+                }
+              },
+              "best_balanced_accuracy": 65.73724422587162,
+              "boundary_count": 423,
+              "rule": "score >= threshold; null threshold denotes no alarms"
+            }
+          }
+        },
+        "original_rows": {
+          "ACC": 65.84269662921348,
+          "AUC": 82.97180995872486,
+          "DR": 62.43523316062176,
+          "F1": 76.02523659305994,
+          "FA": 11.864406779661017,
+          "FN": 145,
+          "FP": 7,
+          "PR": 97.1774193548387,
+          "SP": 88.13559322033899,
+          "TN": 52,
+          "TP": 241,
+          "balanced_accuracy": 75.28541319048037,
+          "n": 445
+        },
+        "per_attack": {
+          "1": {
+            "DR": 57.142857142857146,
+            "detected": 40,
+            "n": 70
+          },
+          "2": {
+            "DR": 45.0,
+            "detected": 27,
+            "n": 60
+          },
+          "3": {
+            "DR": 80.32786885245902,
+            "detected": 49,
+            "n": 61
+          },
+          "4": {
+            "DR": 65.625,
+            "detected": 42,
+            "n": 64
+          },
+          "5": {
+            "DR": 65.625,
+            "detected": 42,
+            "n": 64
+          },
+          "6": {
+            "DR": 61.19402985074627,
+            "detected": 41,
+            "n": 67
+          }
+        },
+        "primary": {
+          "ACC": 65.84269662921348,
+          "AUC": 82.97180995872486,
+          "DR": 62.43523316062176,
+          "F1": 76.02523659305994,
+          "FA": 11.864406779661017,
+          "FN": 145,
+          "FP": 7,
+          "PR": 97.1774193548387,
+          "SP": 88.13559322033899,
+          "TN": 52,
+          "TP": 241,
+          "balanced_accuracy": 75.28541319048037,
+          "n": 445
+        },
+        "thresholds": {
+          "diagnostic_reversal": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 4.922279792746114,
+                "FA": 8.47457627118644,
+                "threshold": -0.06
+              },
+              "33.3": {
+                "DR": 7.253886010362693,
+                "FA": 32.20338983050847,
+                "threshold": -0.17
+              }
+            },
+            "best_balanced_accuracy": 50.118556248353386,
+            "boundary_count": 109,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          },
+          "higher_probability": {
+            "at_false_alarm_caps": {
+              "17.6": {
+                "DR": 69.94818652849742,
+                "FA": 16.94915254237288,
+                "threshold": 0.46
+              },
+              "33.3": {
+                "DR": 82.38341968911918,
+                "FA": 32.20338983050847,
+                "threshold": 0.36
+              }
+            },
+            "best_balanced_accuracy": 77.00667427768508,
+            "boundary_count": 109,
+            "rule": "score >= threshold; null threshold denotes no alarms"
+          }
+        }
+      }
+    }
+  },
+  "created_utc": "2026-09-20T13:03:27.373779+00:00",
+  "deltas": {
+    "p00": {
+      "all_original_B_minus_A_points": {
+        "ACC": -2.25155279503106,
+        "AUC": -5.787651756793508,
+        "DR": 0.9954751131221684,
+        "F1": -1.219610261955495,
+        "FA": 21.85792349726776,
+        "PR": -3.638686679980239,
+        "SP": -21.857923497267763
+      },
+      "common_B_minus_A_points": {
+        "ACC": -2.696629213483149,
+        "AUC": -6.474488451743213,
+        "DR": 1.5544041450777257,
+        "F1": -1.4306036777476265,
+        "FA": 30.50847457627119,
+        "PR": -4.664829050815655,
+        "SP": -30.508474576271183
+      },
+      "common_C_minus_B_points": {
+        "ACC": 0.4494382022471939,
+        "AUC": 1.3392465091771442,
+        "DR": 0.2590673575129472,
+        "F1": 0.2600780234070186,
+        "FA": -1.6949152542372872,
+        "PR": 0.26109660574412885,
+        "SP": 1.6949152542372872
+      }
+    },
+    "p30": {
+      "all_original_B_minus_A_points": {
+        "ACC": 1.3975155279503184,
+        "AUC": -8.006824419553439,
+        "DR": 2.71493212669683,
+        "F1": 1.5428700215718436,
+        "FA": 6.557377049180328,
+        "PR": -1.627831187876808,
+        "SP": -6.557377049180317
+      },
+      "common_B_minus_A_points": {
+        "ACC": -1.3483146067415674,
+        "AUC": -8.992710986212344,
+        "DR": 0.5181347150259086,
+        "F1": -0.5824892266689119,
+        "FA": 13.559322033898304,
+        "PR": -3.121248499399755,
+        "SP": -13.559322033898312
+      },
+      "common_C_minus_B_points": {
+        "ACC": -0.6741573033707908,
+        "AUC": 0.9835777641169727,
+        "DR": -1.2953367875647643,
+        "F1": -0.7298336097481695,
+        "FA": -3.389830508474576,
+        "PR": 0.7068311195445887,
+        "SP": 3.3898305084745886
+      }
+    }
+  },
+  "design": {
+    "common_evaluation_class_counts": [
+      59,
+      386
+    ],
+    "common_evaluation_customers": 20,
+    "common_evaluation_rows": 445,
+    "common_evaluation_source_days": 175,
+    "common_uid_sha256": "b00edc65f38fd81313ff86affbaa85ea8f4e431f42066a35ebb68abdb04da549",
+    "day_training_groups": 373,
+    "day_training_originals": 2611,
+    "day_training_uid_sha256": "80a4edf1228848dae171287b918b4c4c2e9a2de323e10251f0f7c0d6156e956e",
+    "grouping_rng_role": 501,
+    "heldout_day_groups": 187,
+    "original_evaluation_rows": 1288,
+    "original_pool_rows": 3920,
+    "original_test_uid_sha256": "cf7d5a10ec21f11727551a9be2305e071baa0f1d97ab79d0be9e5208424734de",
+    "root_seed": 20260920,
+    "row_training_originals": 2632,
+    "source_customers": 20,
+    "source_days": 560
+  },
+  "elapsed_seconds": 6.313415416982025,
+  "identity_sha256": {
+    "common_uids.npy": "bc8330df4cf83fb7eec2aecbf31f4f49cfa31a39a552387ab351500a3429037c",
+    "original_test_uids.npy": "8c40e15c4a9ae879d45b8f919f36d3f3ffc267e14d03c12f5bffc063e072b4e4"
+  },
+  "process_peak_rss_kib": 248240,
+  "runs": [
+    {
+      "case": "B-p00",
+      "fit_seconds": 0.6668921569362283,
+      "preparation": {
+        "lineage": {
+          "all_synthetic_parents_in_training": true,
+          "original_row_overlap": 0,
+          "shared_source_days": 528,
+          "synthetic_parent_crossings": 0
+        },
+        "poisoning": {
+          "changed_fraction_of_eligible": 0.0,
+          "changed_fraction_of_training": 0.0,
+          "changed_rows": 0,
+          "eligible_rows": 2255,
+          "operation": "label-flip",
+          "rate": 0.0,
+          "scope": "generalized",
+          "selected_customer_count": 0,
+          "selection_denominator": "selected-customers",
+          "training_rows": 4532
+        },
+        "rate": 0.0,
+        "scope": "controlled pilot",
+        "test_rows": 1288,
+        "test_true_counts": [
+          183,
+          1105
+        ],
+        "test_uid_sha256": "cf7d5a10ec21f11727551a9be2305e071baa0f1d97ab79d0be9e5208424734de",
+        "train_observed_counts": [
+          2277,
+          2255
+        ],
+        "train_true_counts": [
+          2277,
+          2255
+        ],
+        "training_rows": 4532
+      }
+    },
+    {
+      "case": "B-p30",
+      "fit_seconds": 0.5827196310274303,
+      "preparation": {
+        "lineage": {
+          "all_synthetic_parents_in_training": true,
+          "original_row_overlap": 0,
+          "shared_source_days": 528,
+          "synthetic_parent_crossings": 0
+        },
+        "poisoning": {
+          "changed_fraction_of_eligible": 0.29933481152993346,
+          "changed_fraction_of_training": 0.14894086496028244,
+          "changed_rows": 675,
+          "eligible_rows": 2255,
+          "operation": "label-flip",
+          "rate": 0.3,
+          "scope": "generalized",
+          "selected_customer_count": 6,
+          "selection_denominator": "selected-customers",
+          "training_rows": 4532
+        },
+        "rate": 0.3,
+        "scope": "controlled pilot",
+        "test_rows": 1288,
+        "test_true_counts": [
+          183,
+          1105
+        ],
+        "test_uid_sha256": "cf7d5a10ec21f11727551a9be2305e071baa0f1d97ab79d0be9e5208424734de",
+        "train_observed_counts": [
+          2952,
+          1580
+        ],
+        "train_true_counts": [
+          2277,
+          2255
+        ],
+        "training_rows": 4532
+      }
+    },
+    {
+      "case": "C-p00",
+      "fit_seconds": 0.5665448606014252,
+      "preparation": {
+        "lineage": {
+          "all_synthetic_parents_in_training": true,
+          "original_row_overlap": 0,
+          "shared_source_days": 0,
+          "synthetic_parent_crossings": 0
+        },
+        "poisoning": {
+          "changed_fraction_of_eligible": 0.0,
+          "changed_fraction_of_training": 0.0,
+          "changed_rows": 0,
+          "eligible_rows": 2238,
+          "operation": "label-flip",
+          "rate": 0.0,
+          "scope": "generalized",
+          "selected_customer_count": 0,
+          "selection_denominator": "selected-customers",
+          "training_rows": 4538
+        },
+        "rate": 0.0,
+        "scope": "controlled pilot",
+        "test_rows": 445,
+        "test_true_counts": [
+          59,
+          386
+        ],
+        "test_uid_sha256": "b00edc65f38fd81313ff86affbaa85ea8f4e431f42066a35ebb68abdb04da549",
+        "train_observed_counts": [
+          2300,
+          2238
+        ],
+        "train_true_counts": [
+          2300,
+          2238
+        ],
+        "training_rows": 4538
+      }
+    },
+    {
+      "case": "C-p30",
+      "fit_seconds": 0.6140174269676208,
+      "preparation": {
+        "lineage": {
+          "all_synthetic_parents_in_training": true,
+          "original_row_overlap": 0,
+          "shared_source_days": 0,
+          "synthetic_parent_crossings": 0
+        },
+        "poisoning": {
+          "changed_fraction_of_eligible": 0.3109919571045576,
+          "changed_fraction_of_training": 0.15337152930806522,
+          "changed_rows": 696,
+          "eligible_rows": 2238,
+          "operation": "label-flip",
+          "rate": 0.3,
+          "scope": "generalized",
+          "selected_customer_count": 6,
+          "selection_denominator": "selected-customers",
+          "training_rows": 4538
+        },
+        "rate": 0.3,
+        "scope": "controlled pilot",
+        "test_rows": 445,
+        "test_true_counts": [
+          59,
+          386
+        ],
+        "test_uid_sha256": "b00edc65f38fd81313ff86affbaa85ea8f4e431f42066a35ebb68abdb04da549",
+        "train_observed_counts": [
+          2996,
+          1542
+        ],
+        "train_true_counts": [
+          2300,
+          2238
+        ],
+        "training_rows": 4538
+      }
+    }
+  ],
+  "scope": "controlled pilot; not full paper reproduction",
+  "slurm_job_id": "398164",
+  "status": "complete",
+  "versions": {
+    "imblearn": "0.14.2",
+    "numpy": "2.5.1",
+    "python": "3.12.2",
+    "sklearn": "1.9.0"
+  }
+}

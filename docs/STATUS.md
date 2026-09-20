@@ -12,13 +12,25 @@ execution plan here is
 
 ## Current project state
 
-- **Matched Paper 3 split/resampling control in implementation:** the user
-  authorized the named follow-up. SPLIT_RESAMPLING_CHECK.md defines A as saved
-  predictions, B as training-only ADASYN on the same original row split, and C
-  as training-only ADASYN after a whole-source-day split. All three are compared
-  on the same outcome-blind intersection of original held-out rows. Eight
-  fixture tests pass. Four new fits at 0%/30% are planned in one 15-minute,
-  four-CPU, 16-GiB job. No new controlled result has been observed yet.
+- **Matched Paper 3 split/resampling control complete and audited:** frozen
+  e6e0359 passed all 304 repository tests; CPU job 398164 completed 0:0 in
+  1:48 (15-minute cap, four CPUs, 16 GiB, no GPU). A reuses the saved forest;
+  B uses training-only ADASYN on the same original split; C groups complete
+  source days before training-only ADASYN. Four new fits use the same model,
+  seed, attack vectors, and poisoning-customer selection. On the same 445
+  original test rows, A/B/C AUC is 98.32/91.84/93.18 at p00 and
+  90.98/81.99/82.97 at p30. Resampling placement has a material observed
+  effect; grouping days causes no further collapse here. C retains useful
+  discrimination but poisoning lowers its AUC by 10.21 points. At the common
+  17.6% FA cap, C's best saved-score DR is 91.19/69.95. All 112 input arrays,
+  hashes, scaling/labels, matched evaluation, training-only ancestry,
+  source-day exclusion, save/reload, and recomputed metrics passed cluster
+  and local audits. Only 59 common benign rows; no population inference,
+  unseen-customer claim, or full-paper reproduction. Stop this diagnostic;
+  an explicitly specified AdaBoost pair is the proposed next distinct model
+  question, not an automatic seed repeat. See the
+  [control record](../studies/takiddin-2021-robust-poisoning/results/split_control_20260920/README.md).
+  The journal and website draft are updated locally; nothing was deployed.
 
 - **First Paper 3 baseline complete and audited:** the user authorized the next
   steps. FIRST_BASELINE.md fixes the stock 100-tree forest, exact pilot-input

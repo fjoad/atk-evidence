@@ -1,0 +1,11 @@
+{
+  "C_source_days_disjoint": true,
+  "all_arms_have_identical_evaluation": true,
+  "common_evaluation_rows": 445,
+  "input_arrays_checked": 112,
+  "new_fits": 4,
+  "slurm_job_id": "398164",
+  "status": "verified",
+  "summary_sha256": "fba6d6cdb790b74a73a54fd756907655817cc93c121380a17c2dfb7beb5ca866",
+  "synthetic_ancestry_confined_to_training": true
+}

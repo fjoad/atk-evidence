@@ -9,10 +9,11 @@ can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
 **Where we are, 20 September 2026:** the data are verified, the preparation
-choices are recorded, and the first random-forest pilot has completed. It
-performs well without poisoning. With poisoning, its default detection falls,
-but its scores retain considerable ability to distinguish attacks. We are
-examining what the setup and decision cutoff contribute before scaling up.
+choices are recorded, and the first random-forest pilot and matched preparation
+controls have completed. Generating synthetic data before splitting materially
+improves the apparent performance in this pilot. Removing that access and
+holding out whole source days makes the evaluation stricter, but useful
+discrimination survives. The full paper and its other models remain untested.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -440,12 +441,77 @@ preparations at two poisoning levels—inside one 15-minute CPU allocation.
 If performance remains high, that outcome will be recorded too. At the time
 of this entry, these controls have not been fitted on the real observations.
 
+## 20 September — Preparation matters, but the baseline does not collapse
+
+The four controlled fits completed on Panther in one CPU job. We reused the
+original forest's predictions and compared all three preparations on the same
+445 original test examples: 386 attacks and 59 normal examples. The shared
+test set was chosen from identities before inspecting scores. All customers
+still come from the same 20-customer pilot.
+
+Here are the ranking results on those identical examples:
+
+| Preparation | AUC without poisoning | AUC with 30% of customers selected |
+|---|---:|---:|
+| A: generate synthetic examples before splitting | 98.32% | 90.98% |
+| B: generate them from training examples only | 91.84% | 81.99% |
+| C: also keep whole source days out of training | 93.18% | 82.97% |
+
+The first change matters. AUC drops by 6.47 and 8.99 percentage points.
+False alarms rise from 3.39% to 33.90% without poisoning, and from 1.69%
+to 15.25% with it. On the larger 1,288-row original test set shared by A/B,
+the same comparison also lowers AUC and raises false alarms. The effect is
+not merely that synthetic test examples were easier: neither side of these
+comparisons includes synthetic test rows.
+
+We should not label the whole difference a precise measurement of leakage.
+Moving synthesis into training also changes the generated values and slightly
+changes the final training count. A and B contain 4,464 and 4,532 training
+rows. The result identifies a consequential preparation policy, with those
+changes included.
+
+The second change did **not** cause a further collapse. C's AUC is slightly
+higher than B's in both conditions. This is one split, and grouping changes
+training membership too; it does not prove related days never matter. It does
+show useful learning after these two sources of dependence are removed.
+The simple daily-consumption reference has AUC 67.63% here, compared with
+C's 93.18% and 82.97%.
+
+The detection/false-alarm trade-off still matters. In C, default detection is
+94.30% without poisoning and 62.44% with it, but false alarms also change
+from 32.20% to 11.86%. At a common maximum of 17.6% false alarms, the best
+cutoffs on the saved scores give detection of 91.19% and 69.95%. These are
+test-label-chosen diagnostic cutoffs, not thresholds validated on fresh data.
+Poisoning still damages ranking: C's AUC falls by 10.21 points.
+
+**What changed in our thinking:** the original preparation contributes to
+the unusually favorable first result, but it does not explain all useful
+discrimination. We have evidence for a narrower setup criticism, not evidence
+that this baseline cannot work. We will not repeat seeds simply to look for
+a worse result or assume this finding transfers to another model.
+
+The common evaluation has only 59 normal examples, so each extra false alarm
+moves its rate by about 1.69 percentage points. Customers and related days
+are dependent; no population confidence interval is claimed. C tests held-out
+days from the same customer cohort, not new customers or a later time period.
+This is still a controlled pilot, not a reproduction of the full paper.
+
+All four models passed save/reload checks. The cluster verified all 112 new
+input arrays, training-only synthetic parents, matching test values and labels,
+and zero shared source days in C. All matched results were recomputed from
+saved predictions. The [complete record](results/split_control_20260920/README.md)
+includes every metric, the actual poisoning fractions, timing, and audit files.
+The job took 1 minute 48 seconds within its 15-minute limit; no additional
+model or seed was run after seeing the outcomes.
+
 ## What we will do next
 
-The random-forest implementation is now checked. Before scaling its result,
-define a matched check of the split/resampling effect. Continue implementing
-the remaining baselines with their reported settings, resolving source choices
-before each affected run. The objective remains coverage of the complete paper.
+The random forest and this matched preparation check are complete. The next
+distinct question is whether another reported shallow baseline shows similar
+poisoning and cutoff behavior on the original verified pipeline. A bounded
+AdaBoost pair is the proposed next step, after recording its library/version
+choices. We have not launched it. Continue through the remaining models with
+their reported settings; the objective remains coverage of the complete paper.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
@@ -473,6 +539,6 @@ changed.
 - [Historical arithmetic finding](SOURCE_AUDIT_FINDING.md)
 - [This journal's editable source](RESEARCH_LOG.md)
 
-This journal contains source observations, an algebraic check, and planned
-experiments. It does not yet contain a trained reproduction result for this
-paper.
+This journal contains source observations, an algebraic check, verified
+preparation, a fitted random-forest pilot, and controlled follow-up results.
+It does not yet contain a full-population reproduction of this paper.

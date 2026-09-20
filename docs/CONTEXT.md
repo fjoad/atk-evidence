@@ -2,16 +2,27 @@
 
 **Last updated:** 2026-09-20
 
-**Current matched-control step:** user authorized the split/resampling check.
-SPLIT_RESAMPLING_CHECK.md freezes reference A (saved RF scores), B (same
-original train/test rows, train-only ADASYN), and C (whole source days grouped,
-then train-only ADASYN). Shared evaluation E is the intersection of A's
-original test rows and C's seeded held-out days (seed 20260920, RNG role 501).
-All arms use exactly E; A/B also use the larger original test set. Same forest,
-seed, and poisoning customers; generated samples and training membership/counts
-can change and must be reported. Eight fixture tests pass. Plan four new fits
-in one 15-minute CPU job (4 CPUs, 16 GiB). No controlled result yet. Preserve
-the original preparation and models; do not quietly rewrite the first pilot.
+**Current matched-control step, completed:** SPLIT_RESAMPLING_CHECK.md and
+code frozen at e6e0359; all 304 tests passed. User-authorized CPU job 398164
+completed 0:0 in 1:48, within 15 minutes/4 CPUs/16 GiB, no GPU. A reuses old
+RF scores; B preserves original rows but applies train-only ADASYN; C holds
+out whole source days before train-only ADASYN. Exactly four new fits,
+unchanged forest/seed/attacks/poisoning-customer selection. Common evaluation E
+uses 445 original rows (386 attacks, 59 benign), 175 days, 20 customers,
+selected by identities using seed 20260920/role 501. A/B/C AUC is
+98.31606/91.84157/93.18082 at p00 and 90.98094/81.98823/82.97181 at p30.
+The larger 1,288-original-row A/B comparison agrees in direction. Resampling
+policy matters, but C does not collapse further and stays above daily-mean
+AUC 67.62975. C's best DR at FA<=17.6% is 91.19171/69.94819; its AUC
+falls 10.20901 points with poisoning. Training counts A/B/C 4464/4532/4538;
+p30 flips 675/675/696 rows, same six customers. All 112 arrays, ancestry,
+scaling/labels, common evaluation, C day exclusion, model reloads, and score
+metrics passed cluster/local audits. Summary SHA256 fba6d6cd...b5ca866.
+See results/split_control_20260920. No CI, unseen-customer claim, or full-data
+reproduction. Preserve all original/control scientific files and outputs.
+Stop this diagnostic; proposed next question is a specified AdaBoost pair,
+not repeated seeds. No next model was launched. Journal/site draft updated
+locally, not deployed. Panther main checkout and Paper 1 remain unchanged.
 
 **Current first-baseline step:** user authorized the next steps after verified
 preparation. FIRST_BASELINE.md freezes the 100-tree scikit-learn 1.9.0 forest,

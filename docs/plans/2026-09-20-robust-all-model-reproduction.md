@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** preparation and first paired random-forest pilot complete and audited
+**State:** preparation, first forest pair, and matched preparation controls complete and audited
 
 ## Current execution: matched split/resampling check
 
@@ -16,13 +16,23 @@ of original test rows; also compare A/B on the complete original test set.
   unchanged model/seed, counts to report, and finite budget.
 - [x] Implement and fixture-test identity matching, ancestry checks, and
   source-day exclusion without altering the original preparation or fits.
-- [ ] Run exactly four new fits (B/C at 0%/30%) in one CPU job capped at
+- [x] Run exactly four new fits (B/C at 0%/30%) in one CPU job capped at
   15 minutes, four CPUs, 16 GiB, no GPU.
-- [ ] Audit the outputs, record all outcomes and remaining limitations, and
+- [x] Audit the outputs, record all outcomes and remaining limitations, and
   update the journal before choosing another experiment.
 
 See SPLIT_RESAMPLING_CHECK.md for the pre-outcome contract. This is a small
 controlled diagnostic, not full paper reproduction or a seed sweep.
+
+Outcome: frozen e6e0359 passed 304 tests; job 398164 completed 0:0 in 1:48.
+All 112 input arrays and saved outputs passed cluster and local audits. On the
+same 445 original rows, training-only synthesis lowers AUC by 6.47/8.99
+points at p00/p30. Grouped days cause no further collapse (C AUC 93.18/82.97).
+This supports a preparation-policy effect, not universal baseline failure.
+Stop this diagnostic. Proposed next distinct question: an explicitly specified
+AdaBoost pair on the original verified pilot, with library/version choices
+resolved before execution. No further model was launched. See the journal
+and results/split_control_20260920.
 
 ## Current execution: first baseline
 
