@@ -47,6 +47,14 @@ at p00 and 46.43/5.06/83.74 at p30 on the original pilot. At the paper's
 70.1% printed. This is a cutoff diagnostic, not full-data reproduction or
 validated calibration. See the [AdaBoost record](results/adaboost_pilot_20260920/README.md).
 
+The initial sigmoid SVM pair is complete too (September 21, job 398709,
+frozen e698173). AUC is 65.64/63.38 at p00/p30. At the paper's respective
+false-alarm caps, no cutoff or reversal reaches its detection targets:
+best DR 19.37/33.48 versus 89.2/73.7. Both fits report solver success and
+pass artifact checks, but their training accuracy is weak too. The next
+question is a bounded read-only kernel/solution diagnostic, not extra seeds.
+See the [SVM record](results/svm_pilot_20260921/README.md).
+
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
@@ -69,6 +77,7 @@ a result or verdict.
 - [`FIRST_BASELINE.md`](FIRST_BASELINE.md): frozen forest, metric, and diagnostic choices.
 - [`SPLIT_RESAMPLING_CHECK.md`](SPLIT_RESAMPLING_CHECK.md): frozen matched controls and stopping rule.
 - [`ADABOOST_PILOT.md`](ADABOOST_PILOT.md): historical algorithm completion, fixed pair, and verification.
+- [`SVM_PILOT.md`](SVM_PILOT.md): printed sigmoid kernel, omitted-setting completion, and raw scores.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

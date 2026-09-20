@@ -8,12 +8,12 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-**Where we are, 20 September 2026:** the data are verified, the preparation
-choices are recorded, and random-forest and AdaBoost pilots have completed.
-Both learn useful signals, and both show why default detection must be read
-alongside false alarms and ranking. Matched forest controls also show that
-preparation materially affects performance without explaining all useful
-discrimination. The full-population paper and its remaining models are untested.
+**Where we are, 21 September 2026:** three shallow-model pilots are complete.
+Forest and AdaBoost learn useful signals, but the initial sigmoid SVM performs
+poorly and no cutoff on its saved scores reaches the reported operating points.
+Our next question is why that SVM setup is weak, before spending more on it.
+Matched forest controls also show that preparation matters. These are small,
+dependent pilot samples; full-population reproduction remains incomplete.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -643,14 +643,76 @@ All seven SVM tests passed. The saved forest-control and AdaBoost audits also
 still match their preserved records exactly. The SVM pair can now be frozen
 and submitted without changing any earlier result.
 
+## 21 September — The SVM is weak, and moving the cutoff does not close the gap
+
+Both SVM fits completed on Panther, passed exact save/reload checks, and
+reported successful solver termination. The full job took two minutes inside
+the 15-minute budget. No additional setting or seed was tried after the result.
+
+| Training condition | Attacks detected | False alarms | Ranking AUC |
+|---|---:|---:|---:|
+| No poisoning | 62.08% | 39.40% | 65.64% |
+| 30% of customers selected for poisoning | 39.46% | 31.14% | 63.38% |
+
+This is different from the earlier two baselines. A simple score using only
+daily consumption averages has AUC 66.20% on these same rows. The fitted
+SVM does not improve on that reference in AUC here, although that numerical
+comparison is not a statistical equivalence test.
+
+We then used the checks fixed before fitting. Every cutoff on each saved
+score vector was considered, in both directions. Without poisoning, allowing
+at most the paper's 10.2% false alarms gives only 19.37% detection, versus
+89.2% reported. With poisoning, allowing its 25.7% false alarms gives 33.48%,
+versus 73.7%. Favorably reversing the score direction does not rescue either
+corner. There are 2,224 cutoff boundaries per model, so this is not a failure
+to guess a good threshold.
+
+**What we can say now:** these particular fitted scores cannot recover the
+paper's corresponding detection/false-alarm points on this pilot. This is a
+substantial, measured mismatch under the recorded implementation. It does not
+establish that every sigmoid SVM or every reasonable missing parameter must
+fail, and this pilot does not have the paper's full population.
+
+We also checked whether this looks like a broken training call. The solver
+reports success after 1,168 and 1,115 iterations; the fitted models contain
+1,689 and 1,901 support vectors. Scores are finite and varied, their direction
+matches native labels, and the positive and corrupted-label software examples
+work. Yet training accuracy against the observed labels is only 63.33% and
+59.72%. The weakness is already present during training, not only on held-out
+examples. Solver success alone does not mean the model found the best possible
+sigmoid-kernel solution.
+
+One easy software-default explanation also becomes more specific. The measured
+gamma is about 0.02083333352, while the older 'auto' choice would give
+0.02083333333 because these inputs have 48 standardized features. They are
+almost equal here. That is not proof that refitting with the other choice
+would be identical, but it gives little reason to start a broad default sweep.
+
+The next useful question is the sigmoid kernel and the solution it produced.
+A kernel defines how the SVM compares examples. We can independently rebuild
+the saved margins from the fitted model and inspect a fixed small kernel
+matrix before fitting anything else. The [LIBSVM authors warn](https://www.csie.ntu.edu.tw/~cjlin/libsvm/faq.html)
+that sigmoid kernels can lack a mathematical property needed for the usual
+convex optimization guarantee. We have not measured that property here, and
+its absence alone would not prove why performance is poor. It is a concrete
+diagnostic question, not a reason to silently replace the printed kernel.
+
+The [SVM record](results/svm_pilot_20260921/README.md) preserves all seven
+metrics, every cutoff comparison, training diagnostics, dependencies, warnings,
+and timings. The cluster and local audits agree byte for byte on both the
+comparison and the input/output checks. All 20 consumed arrays and the 675
+changed training labels match the frozen preparation. No new experiment was
+launched after these observations.
+
 ## What we will do next
 
-The next proposed model is the paper's SVM: C=1 and a sigmoid kernel. Its
-omitted gamma, coefficient, and decision-score choices need to be recorded
-before another bounded 0%/30% pair on the same original inputs. We have not
-launched that experiment. It tests a different reported baseline; repeating
-AdaBoost seeds would not answer that question. The objective remains coverage
-of every baseline and proposed model, followed by justified full-data depth.
+First specify a bounded, read-only SVM diagnostic: replay its saved decision
+scores and inspect kernel behavior on a fixed training subset. Freeze the
+subset, numerical tolerances, budget, and stop rule before execution. That
+answers a different question from trying more seeds or simply enlarging this
+weak fit. Any later parameter alternative remains a separately recorded run.
+The remaining baselines and proposed models stay in scope; this diagnostic
+does not replace the goal of complete coverage and justified full-data depth.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
@@ -679,5 +741,5 @@ changed.
 - [This journal's editable source](RESEARCH_LOG.md)
 
 This journal contains source observations, an algebraic check, verified
-preparation, fitted random-forest and AdaBoost pilots, and forest controls.
+preparation, fitted forest/AdaBoost/SVM pilots, and forest controls.
 It does not yet contain a full-population reproduction of this paper.

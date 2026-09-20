@@ -12,13 +12,24 @@ execution plan here is
 
 ## Current project state
 
-- **SVM pair in implementation, September 21:** user approved the next model.
-  SVM_PILOT.md fixes C=1, sigmoid, gamma='scale', coef0=0, no probability
-  calibration, native labels/raw margins, sklearn 1.9.0 and matching pinned
-  dependencies. Reuse original p00/p30 arrays, two fits only, one 15-minute
-  CPU job (4 CPUs/16 GiB/no GPU). Preserve old models and source revisions.
-  No SVM research-data result yet; score cutoff and convergence checks are
-  fixed before fitting. Alternative settings remain unrun.
+- **SVM pair complete and audited, September 21:** frozen e698173, job
+  398709, completed 0:0 in two minutes within 15 minutes/4 CPUs/16 GiB,
+  no GPU. C=1, sigmoid, gamma='scale', coef0=0, no calibration, original
+  inputs. DR/FA/AUC is 62.08/39.40/65.64 at p00 and 39.46/31.14/63.38
+  at p30. Every cutoff and reversal misses the corresponding printed corner:
+  best DR 19.36652 at FA<=10.2% versus 89.2%, and 33.48416 at FA<=25.7%
+  versus 73.7%. Both solvers report success, but training accuracy is only
+  63.33/59.72%. Gamma is nearly 1/48; other parameter completions remain
+  untested. All input/output, identity/label, reload, and metric checks passed;
+  local comparison and pair-audit files match cluster bytes. Pre-freeze suite:
+  314 pass, four AdaBoost fit tests skipped there but passed in their isolated
+  environment; all seven SVM tests passed locally/on compute. An old method-
+  document provenance test was repaired without changing its calculations or
+  historical evidence. Stop the pair; next proposed step is a bounded,
+  read-only score replay/kernel diagnostic on fixed saved inputs, not new
+  seeds or fits. Kernel geometry and the cause of poor performance are not
+  established. See the [SVM record](../studies/takiddin-2021-robust-poisoning/results/svm_pilot_20260921/README.md).
+  The journal/site draft is updated locally; nothing was deployed.
 
 - **AdaBoost pair complete and audited:** frozen d47a6de, CPU job 398348,
   completed 0:0 in 14 seconds within 15 minutes/4 CPUs/16 GiB, no GPU.

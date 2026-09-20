@@ -2,16 +2,31 @@
 
 **Last updated:** 2026-09-21
 
-**Current SVM step:** user approved next model September 21. SVM_PILOT.md
-fixes C=1, sigmoid, gamma='scale', coef0=0, probability=False, native labels
-and raw decision margins (zero tie maps to class 1), tol=.001 and no internal
-iteration cap. External budget 15 minutes/4 CPUs/16 GiB/no GPU; exactly two
-original p00/p30 fits, seed 20260920. Existing local/Panther packages match
-requirements-svm.txt: sklearn 1.9.0, NumPy 2.5.1, SciPy 1.18.0, joblib 1.5.3,
-threadpoolctl 3.6.0. Expected probability-parameter deprecation is recorded;
-nonconvergence is separately a failed attempt. No fitted result yet.
-Do not add kernels, gamma variants, calibration, seeds, or corrected inputs
-without a named follow-up question. Preserve historical artifacts/revisions.
+**Current SVM step, completed September 21:** user-approved original p00/p30
+pair frozen e698173, job 398709, completed 0:0 in 2:00 under 15 minutes,
+4 CPUs, 16 GiB, no GPU. C=1, sigmoid, gamma='scale', coef0=0, no probability
+calibration, tol=.001, seed 20260920. Raw decision scores are preserved without
+probability transformation; native predictions agree (zero tie maps to 1;
+no actual test ties at 0). DR/FA/AUC 62.08145/39.39663/65.64194 at p00 and
+39.45701/31.14463/63.38126 at p30. At corresponding paper FA caps 10.2/25.7%,
+best saved-score DR 19.36652/33.48416 versus 89.2/73.7; reversal does not help.
+All 2,224 score boundaries/model inspected. Both fit_status=0, iterations
+1168/1115, support vectors 1689/1901; observed-label train ACC 63.33/59.72.
+Fits 5.019/5.106 sec. Gamma 0.020833333524383626 versus auto 1/48 differs
+relatively 9.17e-9, not proof of identical refits. Simple daily-mean AUC 66.19624.
+All 20 consumed arrays, hashes, 675 flips, paired features/IDs/labels, raw-score
+reload, and metrics pass; local comparison AND pair-audit match cluster bytes.
+314 main-suite tests pass, 4 Ada fit tests skipped there and passed in their
+isolated env; 7 SVM tests pass locally/on compute. An old source-audit test
+was repaired to verify original/corrected METHOD documents at their explicit
+Git revisions; arithmetic and historical evidence remain unchanged.
+See results/svm_pilot_20260921. Stop the pair; next proposed question is a
+bounded read-only score replay/kernel diagnostic with fixed sampling and
+tolerances, not new seeds/fits. Kernel spectrum and cause remain unmeasured.
+No alternate kernel/gamma/coef0/calibration/preparation or next model ran.
+requirements-svm.txt pins sklearn 1.9.0, numpy 2.5.1, scipy 1.18.0, joblib 1.5.3,
+threadpoolctl 3.6.0. Expected parameter/pickle deprecations retained; no actual
+fit convergence warning. Journal/site draft updated, not deployed.
 
 **Current AdaBoost step, completed:** user-approved pair frozen at d47a6de,
 job 398348, completed 0:0 in 14 seconds (15-minute cap, 4 CPUs, 16 GiB,

@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-20
+**Last updated:** 2026-09-21
 
 ## Purpose
 
@@ -24,6 +24,32 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: the first sigmoid SVM misses beyond a cutoff explanation
+
+**Added September 21 after the frozen SVM pair.**
+
+- **Question:** does the printed C=1/sigmoid model with ordinary declared
+  defaults learn on the original pilot, and can threshold choice explain gaps?
+- **Evidence:** frozen e698173, job 398709; AUC 65.64/63.38, native DR 62.08/
+  39.46 with FA 39.40/31.14. Across every fixed-score boundary and reversal,
+  best DR at the respective printed caps is 19.37/33.48 versus 89.2/73.7.
+  Both solver statuses are successful and artifacts pass; training accuracy
+  is only 63.33/59.72. Forest/AdaBoost work much better on these same rows.
+- **Conclusion:** **VERIFIED for these scores/rows** — changing cutoff or
+  score orientation cannot recover the corresponding printed corners.
+  **OPEN** — why this sigmoid setup learns poorly, and what other omitted
+  settings/full data would do. Do not generalize the fixed-score exclusion to
+  all SVMs or transfer either the good or poor result to another model.
+- **Decision:** propose a bounded read-only reconstruction of saved margins
+  and fixed-subset kernel inspection before more fitting. The general known
+  possibility of non-positive-definite sigmoid kernels is a motivation, not
+  a measurement or established explanation for this model's failure.
+- **Preserved correction:** the full test suite caught yesterday's method-
+  note hash change. The regression test now verifies original and corrected
+  document revisions separately while preserving all arithmetic comparisons;
+  the old result was not regenerated or overwritten.
+- **Record:** [SVM pilot](../studies/takiddin-2021-robust-poisoning/results/svm_pilot_20260921/README.md).
 
 ### Paper 3: AdaBoost's low default detection is not an all-cutoff failure
 

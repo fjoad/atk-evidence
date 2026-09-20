@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** preparation, forest pair/controls, and first AdaBoost pair complete and audited
+**State:** preparation, forest/AdaBoost/SVM pairs, and forest controls complete and audited
 
 ## Current execution: first SVM pair, September 21
 
@@ -17,9 +17,19 @@ kernel changes, corrected preparation, or repeated fits after seeing outcomes.
 - [x] Extend the direct implementation and prove stock-library parity,
   corrupted-label use, raw-margin metrics/ties, convergence reporting, and
   exact save/reload on constructed software fixtures.
-- [ ] Freeze and run the bounded pair on Panther, preserving all attempts.
-- [ ] Recheck artifacts and historical audits; record the complete outcome,
+- [x] Freeze and run the bounded pair on Panther, preserving all attempts.
+- [x] Recheck artifacts and historical audits; record the complete outcome,
   next justified question, journal/site draft, and handoff state; commit.
+
+Outcome: e698173, job 398709, completed 0:0 in 2 minutes. Both fits and all
+artifact checks passed, but AUC 65.64/63.38 is weak; all cutoffs/reversals
+miss the corresponding printed operating corners. Best DR 19.37/33.48 at
+FA caps 10.2/25.7%, versus 89.2/73.7. Weak training accuracy remains despite
+solver success. Stop this pair. Proposed next step: freeze a read-only
+support-vector score replay and fixed-subset sigmoid-kernel diagnostic,
+including numerical tolerances and a bounded compute allocation. This has not
+run and does not authorize another fit or parameter sweep. See the journal
+and results/svm_pilot_20260921.
 
 ## Current execution: first AdaBoost pair
 

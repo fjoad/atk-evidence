@@ -58,6 +58,20 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user-approved first sigmoid SVM pair is complete (e698173, job 398709).
+Its original-pilot AUC is 65.64/63.38 at p00/p30; at the corresponding printed
+FA caps 10.2/25.7%, best saved-score DR is 19.37/33.48 versus 89.2/73.7.
+Neither any cutoff nor favorable score reversal rescues these fitted models
+on these rows. Both solvers and artifact audits passed; training accuracy is
+weak too. Other parameters/full data are not excluded. Stop this pair. The
+next proposed question is bounded read-only score replay and sigmoid-kernel
+inspection on a fixed subset, not extra seeds/fits. No kernel spectrum has
+been measured. See the [SVM record](studies/takiddin-2021-robust-poisoning/results/svm_pilot_20260921/README.md).
+Preserve raw scores, original inputs, all fitted models, contracts, and frozen
+Git revisions. Journal/site updates remain local drafts, not deployed.
+
+### Earlier AdaBoost checkpoint
+
 The user-approved first AdaBoost pair is complete (d47a6de, job 398348).
 Its historical SAMME.R completion gives AUC 90.71/83.74 at p00/p30 on the
 original pilot. Default DR drops to 46.43% under poisoning, but saved-score

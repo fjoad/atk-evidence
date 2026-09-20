@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; forest pilot/controls and first AdaBoost pair completed on 20 September
+**Status:** active; forest/AdaBoost pilots, forest controls, and first SVM pair complete
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -187,3 +187,28 @@ printed ordering. Different runtime versions, unspecified model choices,
 twenty dependent customers, pre-split synthesis, and one seed limit the
 inference. No extra seed or alternate AdaBoost setting was run to change the
 outcome. See the [AdaBoost record](results/adaboost_pilot_20260920/README.md).
+
+## E15 — a cutoff or reversed score rescues the first sigmoid SVM
+
+**Status:** excluded for these two fitted models and sampled test rows at
+the corresponding printed corners; not excluded for other SVM configurations.
+
+Frozen e698173, job 398709: AUC 65.64194/63.38126 at p00/p30; default
+DR 62.08145/39.45701 and FA 39.39663/31.14463. All 2,224 boundaries in
+both directions were inspected. At p00 FA<=10.2%, best DR is 19.36652,
+versus 89.2 printed; at p30 FA<=25.7%, best DR is 33.48416 versus 73.7.
+Reversal reaches only 1.90045/5.70136 at those respective caps.
+
+Both solvers report success, saved-score orientation and reload agree, and
+positive/corrupted-label fixtures pass. But observed-label training accuracy
+is only 63.32885/59.72222. Numeric gamma is nearly 1/48 on these standardized
+inputs; that observation does not prove all parameter completions equivalent.
+The simple daily-mean score has AUC 66.19624 on the same test rows, while
+forest/AdaBoost rank substantially better. A universal shared-task failure
+therefore does not follow from the weak SVM.
+
+The next proposed explanation check is read-only replay of support-vector
+margins plus inspection of the declared sigmoid kernel on a fixed small
+subset. Kernel geometry is not yet measured and no cause is established.
+No extra fit, parameter, calibration, or seed has been tried. See the
+[SVM record](results/svm_pilot_20260921/README.md).

@@ -1,0 +1,364 @@
+{
+  "actual_poisoning": {
+    "changed_fraction_of_eligible": 0.0,
+    "changed_fraction_of_training": 0.0,
+    "changed_rows": 0,
+    "eligible_rows": 2255,
+    "operation": "label-flip",
+    "rate": 0.0,
+    "scope": "generalized",
+    "selected_customer_count": 0,
+    "selection_denominator": "selected-customers",
+    "training_rows": 4464
+  },
+  "analysis": {
+    "benign_strata": {
+      "original": {
+        "FA": 37.704918032786885,
+        "false_alarms": 69,
+        "n": 183
+      },
+      "synthetic": {
+        "FA": 39.72457627118644,
+        "false_alarms": 375,
+        "n": 944
+      }
+    },
+    "controls": {
+      "constant_training_prior": {
+        "ACC": 49.507168458781365,
+        "AUC": 50.0,
+        "DR": 100.0,
+        "F1": 66.22715013485167,
+        "FA": 100.0,
+        "FN": 0,
+        "FP": 1127,
+        "PR": 49.507168458781365,
+        "SP": 0.0,
+        "TN": 0,
+        "TP": 1105,
+        "balanced_accuracy": 50.0,
+        "n": 2232
+      },
+      "negative_daily_mean": {
+        "AUC": 66.19624438404125,
+        "definition": "negative mean raw daily kWh; no learned parameter",
+        "thresholds": {
+          "at_false_alarm_caps": {
+            "10.2": {
+              "DR": 26.968325791855204,
+              "FA": 10.02661934338953,
+              "threshold": -0.10132398339919746
+            },
+            "17.6": {
+              "DR": 36.199095022624434,
+              "FA": 17.213842058562555,
+              "threshold": -0.1451458343459914
+            },
+            "25.7": {
+              "DR": 52.94117647058824,
+              "FA": 25.643300798580306,
+              "threshold": -0.2258865097343611
+            },
+            "33.3": {
+              "DR": 59.90950226244344,
+              "FA": 33.09671694764862,
+              "threshold": -0.27408334612846375
+            }
+          },
+          "best_balanced_accuracy": 64.12350893534672,
+          "boundary_count": 2163,
+          "rule": "score >= threshold; null threshold denotes no alarms"
+        }
+      }
+    },
+    "original_rows": {
+      "ACC": 62.11180124223603,
+      "AUC": 66.56479489652102,
+      "DR": 62.081447963800905,
+      "F1": 73.76344086021506,
+      "FA": 37.704918032786885,
+      "FN": 419,
+      "FP": 69,
+      "PR": 90.86092715231788,
+      "SP": 62.295081967213115,
+      "TN": 114,
+      "TP": 686,
+      "balanced_accuracy": 62.18826496550701,
+      "n": 1288
+    },
+    "per_attack": {
+      "1": {
+        "DR": 65.26315789473684,
+        "detected": 124,
+        "n": 190
+      },
+      "2": {
+        "DR": 74.57627118644068,
+        "detected": 132,
+        "n": 177
+      },
+      "3": {
+        "DR": 49.738219895287955,
+        "detected": 95,
+        "n": 191
+      },
+      "4": {
+        "DR": 50.292397660818715,
+        "detected": 86,
+        "n": 171
+      },
+      "5": {
+        "DR": 74.60317460317461,
+        "detected": 141,
+        "n": 189
+      },
+      "6": {
+        "DR": 57.75401069518717,
+        "detected": 108,
+        "n": 187
+      }
+    },
+    "primary": {
+      "ACC": 61.33512544802868,
+      "AUC": 65.64193570404751,
+      "DR": 62.081447963800905,
+      "F1": 61.38702460850112,
+      "FA": 39.39662821650399,
+      "FN": 419,
+      "FP": 444,
+      "PR": 60.70796460176991,
+      "SP": 60.60337178349601,
+      "TN": 683,
+      "TP": 686,
+      "balanced_accuracy": 61.34240987364846,
+      "n": 2232
+    },
+    "thresholds": {
+      "diagnostic_reversal": {
+        "at_false_alarm_caps": {
+          "10.2": {
+            "DR": 1.9004524886877827,
+            "FA": 8.429458740017747,
+            "threshold": 57.41712610909916
+          },
+          "17.6": {
+            "DR": 2.8959276018099547,
+            "FA": 17.213842058562555,
+            "threshold": 46.847588216863905
+          },
+          "25.7": {
+            "DR": 4.253393665158371,
+            "FA": 25.554569653948533,
+            "threshold": 40.255875167935756
+          },
+          "33.3": {
+            "DR": 7.330316742081449,
+            "FA": 33.18544809228039,
+            "threshold": 33.13597415367903
+          }
+        },
+        "best_balanced_accuracy": 51.92293639863973,
+        "boundary_count": 2224,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      },
+      "higher_decision_score": {
+        "at_false_alarm_caps": {
+          "10.2": {
+            "DR": 19.366515837104075,
+            "FA": 10.115350488021296,
+            "threshold": 20.003036341190395
+          },
+          "17.6": {
+            "DR": 27.42081447963801,
+            "FA": 17.56876663708962,
+            "threshold": 15.909055758448508
+          },
+          "25.7": {
+            "DR": 35.83710407239819,
+            "FA": 25.643300798580306,
+            "threshold": 12.737031409335797
+          },
+          "33.3": {
+            "DR": 51.31221719457013,
+            "FA": 33.18544809228039,
+            "threshold": 6.090083709885635
+          }
+        },
+        "best_balanced_accuracy": 65.10453010635693,
+        "boundary_count": 2224,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      }
+    }
+  },
+  "case": "generalized-two-class-p00",
+  "code_commit": "e69817379a28752c909ac4fc45b15e380dbed1c4",
+  "created_utc": "2026-09-20T22:06:17.492393+00:00",
+  "elapsed_seconds": 17.09936989005655,
+  "false_alarm_caps": [
+    10.2,
+    17.6,
+    25.7,
+    33.3
+  ],
+  "fitting_parameters": {
+    "C": 1.0,
+    "break_ties": false,
+    "cache_size": 200,
+    "class_weight": null,
+    "coef0": 0.0,
+    "decision_function_shape": "ovr",
+    "degree": 3,
+    "gamma": "scale",
+    "kernel": "sigmoid",
+    "max_iter": -1,
+    "probability": false,
+    "random_state": 20260920,
+    "shrinking": true,
+    "tol": 0.001,
+    "verbose": false
+  },
+  "input_load_seconds": 0.5310710747726262,
+  "input_sha256": {
+    "test_attack": "4f240126b1db6db76baa5f97bc4f06452c4faa8604f6c20ee2a6776f9d9dcba4",
+    "test_observed_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_raw_x": "5614e473ca8c6023b1333014e8d115e695850d2a5d15fc37102ddf772e353b49",
+    "test_synthetic": "1727c42471409e6e6f1b738763cc6486a3237145fb0896a5d527b21f334cf402",
+    "test_true_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_uid": "ca54dcf6a8b5bf03ac4c0830bcc66dff1aac62d16b6fb2a0d1e9a2393e5cf08b",
+    "test_x": "7314ee291f270c49e59a0075c573f1869bb93cc965dac47b11065d5e99fab3da",
+    "train_observed_y": "2d24504474403783fcb30d2c751b37ddc5f88183c10066fd15b43cbbf26a9da4",
+    "train_true_y": "2d24504474403783fcb30d2c751b37ddc5f88183c10066fd15b43cbbf26a9da4",
+    "train_x": "098b3cabfb1fad82bbe0751c1b36ebbeeb05ec6dfafcbea6bf158774d6799dbe"
+  },
+  "model": "svm",
+  "output_sha256": {
+    "model.joblib": "d2f10348811f3e08a2dd55a2427c54ed60dfb52dccb3ddb28e8bc9e073b8e434",
+    "predictions.npz": "dff23cb3669d9a21efe6ffc01f023bc5805322671b6bfef05e89c9bcb893d2db"
+  },
+  "poisoning_rate": 0.0,
+  "preparation_metadata_sha256": "1c2e5ebfee9584c160fee209851e7f685d8c8d7971922d62a63960bc6308c3de",
+  "preparation_overlap": {
+    "test_synthetic_train_parent": 1306,
+    "train_synthetic_test_parent": 1186
+  },
+  "process_peak_rss_kib": 221816,
+  "reload": {
+    "identical_decision_scores": true,
+    "identical_predictions": true
+  },
+  "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+  "score_definition": "native SVC.decision_function; class 1 if margin >= 0; not a probability",
+  "scoring_workers": 1,
+  "seed": 20260920,
+  "slurm_job_id": "398709",
+  "source_sha256": {
+    "SVM_PILOT.md": "aa44aeed4c8a71ffea5db90e3d689773e1221f7ee3897fb3a1c7d62dbfabaabc",
+    "reported/table_3.csv": "d15ccc19d4a774a6eeaa191087274d93a823d7e2d801c2c7de6ec6d87d3890eb",
+    "reproduction/analyze_results.py": "3ec0c6a92b01192ad5cc1b38bcbe034abb7aed6db8411b62ff6f0b0e86e5b49b",
+    "reproduction/models.py": "deaa2fc202cd1c45cc4bde0d2ee1cea3bf82bca5c3f2e2e608870698e26846a1",
+    "reproduction/run_experiment.py": "4ce166edff653ca44213fe07046b6b146043dff4061e286f9fecf434470c6347",
+    "requirements-svm.txt": "478d1d7754255f287ea359749a0bca7cfe04d274441d0df74190e38fdfb3551c"
+  },
+  "status": "complete",
+  "svm": {
+    "distinct_test_margins": 2223,
+    "fit_status": 0,
+    "gamma_auto_context": 0.020833333333333332,
+    "gamma_numeric": 0.020833333524383626,
+    "intercept": [
+      -13.785518459977132
+    ],
+    "iterations": [
+      1168
+    ],
+    "probability_calibration": false,
+    "support_vectors_per_class": [
+      844,
+      845
+    ],
+    "test_margin_max": 317.36957006907005,
+    "test_margin_min": -99.80037059173873,
+    "training_variance_float64": 0.9999999908295861,
+    "zero_margin_test_rows": 0
+  },
+  "test_rows": 2232,
+  "timing_seconds": {
+    "fit": 5.018774959258735,
+    "reload": 2.8942184187471867,
+    "score": 8.374904199037701
+  },
+  "training": {
+    "distinct_decision_scores": 4443,
+    "observed_label_accuracy": 63.32885304659498,
+    "true_label_accuracy": 63.32885304659498
+  },
+  "training_prior": 0.505152329749104,
+  "training_rows": 4464,
+  "versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.5.1",
+    "python": "3.12.2",
+    "scipy": "1.18.0",
+    "sklearn": "1.9.0",
+    "threadpoolctl": "3.6.0"
+  },
+  "warnings": [
+    {
+      "category": "FutureWarning",
+      "message": "The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`"
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    },
+    {
+      "category": "DeprecationWarning",
+      "message": "Setting the shape on a NumPy array has been deprecated in NumPy 2.5.\nAs an alternative, you can create a new view using np.reshape (with copy=False if needed)."
+    }
+  ]
+}
