@@ -1,6 +1,6 @@
 # Can this detector learn from corrupted labels?
 
-Updated: 2026-09-20
+Updated: 2026-09-21
 
 This is our working journal for *Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids*, by Takiddin and colleagues (2021).
@@ -605,6 +605,43 @@ We stop this pair here. The original setup still contains pre-split synthetic
 dependence, and the corrected forest result cannot be transferred to AdaBoost.
 This is one seed and twenty dependent customers, not full-paper reproduction,
 a confidence interval, or an explanation of how the authors produced numbers.
+
+## 21 September — Specifying the SVM without adding hidden training
+
+The next approved pair is the paper's SVM. We rechecked the printed C=1 and
+sigmoid kernel on page 2679 and the seven target metrics on page 2681.
+The omitted gamma and coefficient need a declared completion. We chose the
+ordinary gamma='scale' and coef0=0 settings; the actual numeric gamma will be
+saved. The model uses the same original p00/p30 inputs as the other baselines.
+
+The score needs care too. A normal SVM produces a signed decision score,
+not a probability. Enabling probability estimates would add internal
+calibration fits and may disagree with its ordinary predictions. We will
+therefore retain native labels and unmodified decision scores for ranking
+and cutoff checks. The historical [SVC documentation](https://scikit-learn.org/0.24/modules/generated/sklearn.svm.SVC.html)
+supports these default choices; it does not identify the authors' settings.
+
+Constructed examples check native-library agreement, correct use of poisoned
+labels, positive learning, score direction, exact zero-score ties, and model
+reloads. A deliberately iteration-limited fixture checks that nonconvergence
+is exposed; it is not a research-data result. The [SVM contract](SVM_PILOT.md)
+freezes the two fits, original data, one seed, and 15-minute CPU budget.
+There will be no automatic alternate kernel, gamma, calibration, or extra
+seed after inspecting performance. No SVM research-data result is known yet.
+
+The full software suite caught a provenance-test problem left by yesterday's
+source-note correction. The historical table audit included the old method
+document's hash, while its regression test compared against today's corrected
+document. All arithmetic outputs were unchanged. We repaired the test to
+verify each document at its recorded Git revision and still require exact
+agreement for every calculation and other source hash. The historical audit
+and corrected note both remain intact; this was not a failed model experiment.
+
+After that repair, the full suite passed 314 tests; four AdaBoost fit tests
+were skipped in the main environment and passed in their isolated environment.
+All seven SVM tests passed. The saved forest-control and AdaBoost audits also
+still match their preserved records exactly. The SVM pair can now be frozen
+and submitted without changing any earlier result.
 
 ## What we will do next
 

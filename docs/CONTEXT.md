@@ -1,6 +1,17 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-20
+**Last updated:** 2026-09-21
+
+**Current SVM step:** user approved next model September 21. SVM_PILOT.md
+fixes C=1, sigmoid, gamma='scale', coef0=0, probability=False, native labels
+and raw decision margins (zero tie maps to class 1), tol=.001 and no internal
+iteration cap. External budget 15 minutes/4 CPUs/16 GiB/no GPU; exactly two
+original p00/p30 fits, seed 20260920. Existing local/Panther packages match
+requirements-svm.txt: sklearn 1.9.0, NumPy 2.5.1, SciPy 1.18.0, joblib 1.5.3,
+threadpoolctl 3.6.0. Expected probability-parameter deprecation is recorded;
+nonconvergence is separately a failed attempt. No fitted result yet.
+Do not add kernels, gamma variants, calibration, seeds, or corrected inputs
+without a named follow-up question. Preserve historical artifacts/revisions.
 
 **Current AdaBoost step, completed:** user-approved pair frozen at d47a6de,
 job 398348, completed 0:0 in 14 seconds (15-minute cap, 4 CPUs, 16 GiB,

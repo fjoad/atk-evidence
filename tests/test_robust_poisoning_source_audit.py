@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
+import subprocess
 import sys
 import unittest
 from pathlib import Path
@@ -89,6 +91,15 @@ class RobustPoisoningSourceAuditTests(unittest.TestCase):
         fresh = AUDIT.build_audit()
         for result in (preserved, fresh):
             result.pop("created_utc")
+        # The September 20 correction only clarifies the stated tree family.
+        # Preserve the original source hash, check both documented revisions,
+        # and still compare every arithmetic output and all other input hashes.
+        method = "studies/takiddin-2021-robust-poisoning/METHOD.md"
+        for result, revision in ((preserved, "5e92700d750f766e0cfc752ea4df2f7e8d2627d1"),
+                                 (fresh, "d47a6de4a60840b6806b409f88f47ac6a102a118")):
+            content = subprocess.check_output(["git", "-C", str(REPO_ROOT),
+                                               "show", f"{revision}:{method}"])
+            self.assertEqual(result["input_sha256"].pop(method), hashlib.sha256(content).hexdigest())
         self.assertEqual(preserved, fresh)
 
     def test_preserved_outcomes_match_the_finding(self) -> None:

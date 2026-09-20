@@ -2,6 +2,7 @@
 
 import sklearn
 from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
+from sklearn.svm import SVC
 
 
 def random_forest(seed: int = 20260920, workers: int = 4) -> RandomForestClassifier:
@@ -37,3 +38,11 @@ def adaboost(seed: int = 20260920) -> AdaBoostClassifier:
         estimator=None,  # Stock depth-one decision tree; fitted parameters saved.
         n_estimators=50, learning_rate=1.0, algorithm="SAMME.R", random_state=seed,
     )
+
+
+def svm(seed: int = 20260920) -> SVC:
+    """III-C p.2679: C=1, sigmoid; omissions fixed in SVM_PILOT.md."""
+    return SVC(C=1.0, kernel="sigmoid", degree=3, gamma="scale", coef0=0.0,
+               shrinking=True, probability=False, tol=0.001, cache_size=200,
+               class_weight=None, verbose=False, max_iter=-1,
+               decision_function_shape="ovr", break_ties=False, random_state=seed)

@@ -17,7 +17,7 @@ import sklearn
 import scipy
 import threadpoolctl
 
-from models import adaboost, random_forest
+from models import adaboost, random_forest, svm
 from analyze_results import analyze_scores, digest
 
 
@@ -60,9 +60,65 @@ def load_preparation(directory):
     return arrays, metadata, identities
 
 
+def fit_svm(arrays, output, *, seed):
+    """Native labels plus raw margins; no extra probability-calibration fits."""
+    output = Path(output)
+    model = svm(seed)
+    tick = time.perf_counter()
+    model.fit(arrays["train_x"], arrays["train_observed_y"])
+    fit_seconds = time.perf_counter() - tick
+    if not np.array_equal(model.classes_, [0, 1]):
+        raise ValueError("Unexpected SVM class order")
+    tick = time.perf_counter()
+    margins = model.decision_function(arrays["test_x"])
+    predictions = model.predict(arrays["test_x"])
+    train_margins = model.decision_function(arrays["train_x"])
+    train_predictions = model.predict(arrays["train_x"])
+    score_seconds = time.perf_counter() - tick
+    model_path = output / "model.joblib"
+    joblib.dump(model, model_path)
+    tick = time.perf_counter()
+    restored = joblib.load(model_path)  # Only our just-written artifact.
+    np.testing.assert_array_equal(margins, restored.decision_function(arrays["test_x"]))
+    np.testing.assert_array_equal(predictions, restored.predict(arrays["test_x"]))
+    reload_seconds = time.perf_counter() - tick
+    saved = {"decision_scores": margins, "predictions": predictions,
+             "labels": arrays["test_true_y"], "uid": arrays["test_uid"],
+             "synthetic": arrays["test_synthetic"], "attack": arrays["test_attack"],
+             "negative_daily_mean": -arrays["test_raw_x"].mean(axis=1, dtype=np.float64)}
+    np.savez_compressed(output / "predictions.npz", **saved)
+    prior = float(arrays["train_observed_y"].mean())
+    caps = (10.2, 17.6, 25.7, 33.3)
+    report = {
+        "training_prior": prior, "fitting_parameters": model.get_params(),
+        "scoring_workers": 1, "false_alarm_caps": list(caps),
+        "score_definition": "native SVC.decision_function; class 1 if margin >= 0; not a probability",
+        "timing_seconds": {"fit": fit_seconds, "score": score_seconds, "reload": reload_seconds},
+        "reload": {"identical_decision_scores": True, "identical_predictions": True},
+        "training": {
+            "observed_label_accuracy": 100 * float(np.mean(train_predictions == arrays["train_observed_y"])),
+            "true_label_accuracy": 100 * float(np.mean(train_predictions == arrays["train_true_y"])),
+            "distinct_decision_scores": len(np.unique(train_margins)),
+        },
+        "svm": {"fit_status": int(model.fit_status_), "iterations": model.n_iter_.tolist(),
+                "support_vectors_per_class": model.n_support_.tolist(),
+                "gamma_numeric": float(model._gamma), "gamma_auto_context": 1. / arrays["train_x"].shape[1],
+                "training_variance_float64": float(arrays["train_x"].astype(np.float64).var()),
+                "intercept": model.intercept_.tolist(), "probability_calibration": False,
+                "test_margin_min": float(margins.min()), "test_margin_max": float(margins.max()),
+                "zero_margin_test_rows": int(np.count_nonzero(margins == 0)),
+                "distinct_test_margins": len(np.unique(margins))},
+        "analysis": analyze_scores(saved, prior, caps),
+        "output_sha256": {name: digest(output / name) for name in ("model.joblib", "predictions.npz")},
+    }
+    return report
+
+
 def fit_one(arrays, output, *, seed, workers, model_name="random_forest"):
     """Also used on constructed fixtures; real input is gated by main()."""
     output = Path(output)
+    if model_name == "svm":
+        return fit_svm(arrays, output, seed=seed)
     if model_name not in ("random_forest", "adaboost"):
         raise ValueError("Unknown model")
     model = random_forest(seed, workers) if model_name == "random_forest" else adaboost(seed)
@@ -142,14 +198,16 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--model", choices=("random_forest", "adaboost"), default="random_forest")
+    parser.add_argument("--model", choices=("random_forest", "adaboost", "svm"), default="random_forest")
     args = parser.parse_args()
     require_compute()
-    required_version = "1.9.0" if args.model == "random_forest" else "1.5.2"
+    required_version = "1.5.2" if args.model == "adaboost" else "1.9.0"
     if sklearn.__version__ != required_version:
         raise RuntimeError(f"{args.model} is frozen to scikit-learn {required_version}")
     if args.model == "adaboost" and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("1.26.4", "1.13.1", "1.4.2", "3.5.0"):
         raise RuntimeError("AdaBoost numerical dependencies differ from the frozen environment")
+    if args.model == "svm" and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("2.5.1", "1.18.0", "1.5.3", "3.6.0"):
+        raise RuntimeError("SVM numerical dependencies differ from the frozen environment")
     args.output.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
     result_path = args.output / "result.json"
@@ -164,13 +222,16 @@ def main():
         "source_sha256": {str(path.relative_to(STUDY)): digest(path) for path in (
             Path(__file__), Path(__file__).with_name("models.py"),
             Path(__file__).with_name("analyze_results.py"),
-            STUDY / ("FIRST_BASELINE.md" if args.model == "random_forest" else "ADABOOST_PILOT.md"),
+            STUDY / {"random_forest": "FIRST_BASELINE.md", "adaboost": "ADABOOST_PILOT.md", "svm": "SVM_PILOT.md"}[args.model],
             STUDY / "reported/table_3.csv",
         )},
     }
     if args.model == "adaboost":
         record["source_sha256"]["requirements-adaboost.txt"] = digest(STUDY / "requirements-adaboost.txt")
+    if args.model == "svm":
+        record["source_sha256"]["requirements-svm.txt"] = digest(STUDY / "requirements-svm.txt")
     result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
+    captured = []
     try:
         tick = time.perf_counter()
         arrays, metadata, identities = load_preparation(args.data)
@@ -183,11 +244,14 @@ def main():
             warnings.simplefilter("always")
             record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model))
         record["warnings"] = [{"category": w.category.__name__, "message": str(w.message)} for w in captured]
+        if args.model == "svm" and record["svm"]["fit_status"] != 0:
+            raise RuntimeError("SVM did not converge; preserve artifacts but do not label the fit complete")
         record["status"] = "complete"
     except Exception as exc:
         record.update(status="failed", error_type=type(exc).__name__, error=str(exc))
         raise
     finally:
+        record["warnings"] = [{"category": w.category.__name__, "message": str(w.message)} for w in captured]
         record["elapsed_seconds"] = time.perf_counter() - started
         record["process_peak_rss_kib"] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         result_path.write_text(json.dumps(record, indent=2, sort_keys=True, allow_nan=False) + "\n")

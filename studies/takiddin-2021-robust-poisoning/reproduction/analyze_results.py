@@ -84,15 +84,26 @@ def reported_row(rate, model="random_forest"):
 def analyze_scores(arrays, training_prior, caps=(17.6, 33.3)):
     labels = arrays["labels"]
     predictions = arrays["predictions"]
-    probability = arrays["probabilities"]
-    if probability.shape != (len(labels), 2) or not np.isfinite(probability).all():
-        raise ValueError("Expected finite class-0/class-1 probabilities")
-    if not np.all((probability >= 0) & (probability <= 1)):
-        raise ValueError("Probabilities outside [0,1]")
-    np.testing.assert_allclose(probability.sum(axis=1), 1, atol=1e-12, rtol=0)
-    if not np.array_equal(predictions, np.argmax(probability, axis=1)):
-        raise ValueError("Saved predictions disagree with library class argmax")
-    scores = probability[:, 1]
+    if "decision_scores" in arrays:
+        if "probabilities" in arrays:
+            raise ValueError("Ambiguous saved score representation")
+        scores = arrays["decision_scores"]
+        if scores.shape != (len(labels),) or not np.isfinite(scores).all():
+            raise ValueError("Expected finite binary decision margins")
+        if not np.array_equal(predictions, scores >= 0):
+            raise ValueError("Saved SVM predictions disagree with margin >= 0")
+        score_key = "higher_decision_score"
+    else:
+        probability = arrays["probabilities"]
+        if probability.shape != (len(labels), 2) or not np.isfinite(probability).all():
+            raise ValueError("Expected finite class-0/class-1 probabilities")
+        if not np.all((probability >= 0) & (probability <= 1)):
+            raise ValueError("Probabilities outside [0,1]")
+        np.testing.assert_allclose(probability.sum(axis=1), 1, atol=1e-12, rtol=0)
+        if not np.array_equal(predictions, np.argmax(probability, axis=1)):
+            raise ValueError("Saved predictions disagree with library class argmax")
+        scores = probability[:, 1]
+        score_key = "higher_probability"
     original = ~arrays["synthetic"]
     primary = metrics(labels, predictions, scores)
     prior_scores = np.full(len(labels), training_prior)
@@ -116,7 +127,7 @@ def analyze_scores(arrays, training_prior, caps=(17.6, 33.3)):
         "original_rows": metrics(labels[original], predictions[original], scores[original]),
         "per_attack": per_attack, "benign_strata": benign,
         "thresholds": {
-            "higher_probability": threshold_summary(labels, scores, caps),
+            score_key: threshold_summary(labels, scores, caps),
             "diagnostic_reversal": threshold_summary(labels, -scores, caps),
         },
         "controls": {

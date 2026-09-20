@@ -4,6 +4,23 @@
 
 **State:** preparation, forest pair/controls, and first AdaBoost pair complete and audited
 
+## Current execution: first SVM pair, September 21
+
+User approved the next step. Freeze C=1 and the printed sigmoid kernel with
+explicit completions for gamma, coefficient, stopping, and decision scores.
+Use the same original p00/p30 prepared arrays, one seed, two fits, one CPU job
+capped at 15 minutes/4 CPUs/16 GiB/no GPU. Do not add probability calibration,
+kernel changes, corrected preparation, or repeated fits after seeing outcomes.
+
+- [x] Record the source settings and omissions, score semantics, targets,
+  software version, diagnostics, and stopping in SVM_PILOT.md.
+- [x] Extend the direct implementation and prove stock-library parity,
+  corrupted-label use, raw-margin metrics/ties, convergence reporting, and
+  exact save/reload on constructed software fixtures.
+- [ ] Freeze and run the bounded pair on Panther, preserving all attempts.
+- [ ] Recheck artifacts and historical audits; record the complete outcome,
+  next justified question, journal/site draft, and handoff state; commit.
+
 ## Current execution: first AdaBoost pair
 
 User approved the proposed next model. Run one 0%/30% pair on the unchanged

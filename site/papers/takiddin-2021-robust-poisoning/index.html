@@ -22,7 +22,7 @@
   <nav aria-label="Main navigation"><a href="../../#studies">All studies</a><a href="#inspect-the-record">Evidence &amp; sources</a></nav>
 </header>
 <main class="journal" id="main">
-  <div class="eyebrow">Study 3 · Research journal · Updated 20 September 2026</div>
+  <div class="eyebrow">Study 3 · Research journal · Updated 21 September 2026</div>
 <h1 id="can-this-detector-learn-from-corrupted-labels">Can this detector learn from corrupted labels?</h1>
 <p>This is our working journal for <em>Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids</em>, by Takiddin and colleagues (2021).
@@ -49,7 +49,7 @@ from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -582,6 +582,37 @@ fit or outcome-dependent retry.</p>
 dependence, and the corrected forest result cannot be transferred to AdaBoost.
 This is one seed and twenty dependent customers, not full-paper reproduction,
 a confidence interval, or an explanation of how the authors produced numbers.</p>
+<h2 id="21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</h2>
+<p>The next approved pair is the paper's SVM. We rechecked the printed C=1 and
+sigmoid kernel on page 2679 and the seven target metrics on page 2681.
+The omitted gamma and coefficient need a declared completion. We chose the
+ordinary gamma='scale' and coef0=0 settings; the actual numeric gamma will be
+saved. The model uses the same original p00/p30 inputs as the other baselines.</p>
+<p>The score needs care too. A normal SVM produces a signed decision score,
+not a probability. Enabling probability estimates would add internal
+calibration fits and may disagree with its ordinary predictions. We will
+therefore retain native labels and unmodified decision scores for ranking
+and cutoff checks. The historical <a href="https://scikit-learn.org/0.24/modules/generated/sklearn.svm.SVC.html">SVC documentation</a>
+supports these default choices; it does not identify the authors' settings.</p>
+<p>Constructed examples check native-library agreement, correct use of poisoned
+labels, positive learning, score direction, exact zero-score ties, and model
+reloads. A deliberately iteration-limited fixture checks that nonconvergence
+is exposed; it is not a research-data result. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SVM_PILOT.md">SVM contract</a>
+freezes the two fits, original data, one seed, and 15-minute CPU budget.
+There will be no automatic alternate kernel, gamma, calibration, or extra
+seed after inspecting performance. No SVM research-data result is known yet.</p>
+<p>The full software suite caught a provenance-test problem left by yesterday's
+source-note correction. The historical table audit included the old method
+document's hash, while its regression test compared against today's corrected
+document. All arithmetic outputs were unchanged. We repaired the test to
+verify each document at its recorded Git revision and still require exact
+agreement for every calculation and other source hash. The historical audit
+and corrected note both remain intact; this was not a failed model experiment.</p>
+<p>After that repair, the full suite passed 314 tests; four AdaBoost fit tests
+were skipped in the main environment and passed in their isolated environment.
+All seven SVM tests passed. The saved forest-control and AdaBoost audits also
+still match their preserved records exactly. The SVM pair can now be frozen
+and submitted without changing any earlier result.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
 <p>The next proposed model is the paper's SVM: C=1 and a sigmoid kernel. Its
 omitted gamma, coefficient, and decision-score choices need to be recorded

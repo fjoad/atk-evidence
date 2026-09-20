@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-20
+**Last updated:** 2026-09-21
 
 **Branch:** `main`
 
@@ -11,6 +11,14 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **SVM pair in implementation, September 21:** user approved the next model.
+  SVM_PILOT.md fixes C=1, sigmoid, gamma='scale', coef0=0, no probability
+  calibration, native labels/raw margins, sklearn 1.9.0 and matching pinned
+  dependencies. Reuse original p00/p30 arrays, two fits only, one 15-minute
+  CPU job (4 CPUs/16 GiB/no GPU). Preserve old models and source revisions.
+  No SVM research-data result yet; score cutoff and convergence checks are
+  fixed before fitting. Alternative settings remain unrun.
 
 - **AdaBoost pair complete and audited:** frozen d47a6de, CPU job 398348,
   completed 0:0 in 14 seconds within 15 minutes/4 CPUs/16 GiB, no GPU.
