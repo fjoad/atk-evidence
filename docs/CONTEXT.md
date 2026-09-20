@@ -2,6 +2,16 @@
 
 **Last updated:** 2026-09-20
 
+**Current first-baseline step:** user authorized the next steps after verified
+preparation. FIRST_BASELINE.md freezes the 100-tree scikit-learn 1.9.0 forest,
+defaults/seed, paired prepared p00/p30 hashes, ordinary accuracy, simple
+controls, per-attack/benign-stratum results, all-cutoff diagnostics, and
+save/reload agreement. One 15-minute, four-CPU, 16-GiB job is planned for two
+fits on the existing 20-customer/28-day pilot. No data regeneration or sweep.
+The new direct models.py/run_experiment.py/analyze_results.py are being
+fixture-tested; no real fit has run yet. Report good results as plainly as
+failures; the pilot is not full Table III reproduction.
+
 **Paper 3 preparation implementation:** user approved steps 1 and 2. Fresh
 official ISSDA metadata, six ZIP identities, and CRCs pass; the allocation
 CSV independently matches 6,445 workbook rows, including 4,225 residential

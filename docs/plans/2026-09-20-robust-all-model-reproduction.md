@@ -4,6 +4,26 @@
 
 **State:** steps 1-2 complete, including a bounded preparation check; no detector trained
 
+## Current execution: first baseline
+
+The user has authorized the next steps. Implement the 100-tree random forest
+and direct training/analysis files, then run one bounded pair on the existing
+generalized two-class 0%/30% pilot inputs. The question is whether the faithful
+library model learns, saves/reloads correctly, and produces interpretable
+metrics on the verified pipeline. This is not full Table III reproduction.
+
+- [ ] Record exact estimator defaults, metrics, controls, saved-score checks,
+  source identities, and the finite allocation before fitting.
+- [ ] Implement and fixture-test the model, runner, and analysis.
+- [ ] Freeze and run one CPU job: two RF fits, one seed, unchanged pilot data;
+  at most 15 minutes, four CPUs, 16 GiB, no GPU.
+- [ ] Verify predictions and artifacts, inspect the result, and update the
+  journal and explanation register before choosing further runs.
+
+No seed sweep, data regeneration, full-data run, or additional model family
+is included in this first baseline check. A match or stronger performance
+must be reported plainly alongside failures.
+
 ## Current execution: steps 1 and 2
 
 The user has authorized source/data resolution and implementation of the shared

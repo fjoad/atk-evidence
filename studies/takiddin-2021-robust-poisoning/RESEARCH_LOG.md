@@ -319,6 +319,36 @@ comparison. We can begin model implementation without hiding those choices.
 The [complete preparation record](results/preparation_20260920/README.md)
 contains the counts, timings, verification, and original program output.
 
+## 20 September — Giving the first baseline a specific question
+
+The next step is the paper's random forest with 100 trees. We have recorded
+its complete settings and the exact prepared inputs before fitting it. The
+first pair will use the existing 0% and 30% generalized two-class samples.
+That is enough to check the model and inspect its behavior, but it is a small
+pilot rather than a reproduction of the paper's full population.
+
+We checked the metric definitions again. This paper's accuracy counts all
+correct predictions divided by all examples. Balanced accuracy averages the
+two classes' success rates. They can differ when the classes are unequal, so
+we report the paper's ordinary accuracy and keep balanced accuracy separately.
+
+Before using real data, constructed software examples check that the forest
+learns an obvious class difference and that flipping training labels changes
+what it learns. This checks that our training call actually uses the corrupted
+labels. Saved models must give identical predictions after reloading.
+
+We will record all seven metrics, performance by attack type, and false
+alarms on original versus synthetic benign examples. A constant prediction
+and a simple daily-consumption score provide reference points. Inspecting
+every score cutoff will help distinguish poor ranking from a poor choice of
+decision threshold, without retraining.
+
+The [first-baseline contract](FIRST_BASELINE.md) fixes the two fits, one seed,
+and a 15-minute CPU allocation. If the forest works well, we will report it.
+If it works poorly, these saved checks should tell us which explanation to
+investigate before spending more compute. No fitted result is available at
+the time of this entry.
+
 ## What we will do next
 
 Next, build the models with ordinary libraries and the paper's selected

@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **First Paper 3 baseline in implementation:** the user authorized the next
+  steps. FIRST_BASELINE.md fixes the stock 100-tree forest, exact pilot-input
+  identities, ordinary-accuracy convention, controls, and one CPU-only pair
+  at 0%/30% poisoning. New model/runner/analysis files are being verified on
+  constructed fixtures before code freeze and a 15-minute, four-CPU run.
+  This is a small first-model check, not full Table III reproduction. No
+  detector has yet been fitted on the real data at this checkpoint.
+
 - **Paper 3 steps 1-2 complete; preparation verified:** the user
   authorized data/source resolution and preparation. The six local CER ZIPs
   now pass fresh official metadata, checksum, and CRC checks. A fresh mapping
