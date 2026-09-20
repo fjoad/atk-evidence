@@ -12,6 +12,15 @@ execution plan here is
 
 ## Current project state
 
+- **AdaBoost pair in implementation:** user approved the next model. The
+  pre-outcome ADABOOST_PILOT.md fixes 50 depth-one trees, SAMME.R, learning
+  rate 1, seed 20260920, stock sklearn 1.5.2 in an isolated environment, and
+  unchanged original p00/p30 inputs. Two fits only; 15-minute/4-CPU/16-GiB
+  budget, no GPU. The 2020-era default algorithm is preserved without claiming
+  the authors' exact software. No fitted result yet. Environment bootstrap
+  was killed on the login node, so setup moved to CPU job 398338; this is not
+  a research-data fit. Existing environments and results are unchanged.
+
 - **Matched Paper 3 split/resampling control complete and audited:** frozen
   e6e0359 passed all 304 repository tests; CPU job 398164 completed 0:0 in
   1:48 (15-minute cap, four CPUs, 16 GiB, no GPU). A reuses the saved forest;

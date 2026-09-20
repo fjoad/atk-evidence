@@ -504,6 +504,47 @@ includes every metric, the actual poisoning fractions, timing, and audit files.
 The job took 1 minute 48 seconds within its 15-minute limit; no additional
 model or seed was run after seeing the outcomes.
 
+## 20 September — Pinning down the next baseline before fitting it
+
+The next approved model is AdaBoost. The paper specifies decision-tree weak
+learners (p.2678) and 50 estimators (p.2679), but not tree depth, learning rate,
+algorithm variant, or software version. We will reuse the original two-class
+pilot exactly, at 0% and 30% customer poisoning. We will not replace its
+preparation with the stricter forest controls and call that the printed method.
+
+This rereading also corrects our earlier source note: the paper does identify
+decision trees as the weak-learner family. It is their depth and other settings
+that remain unspecified, not the family itself.
+
+There is a consequential software choice here. The
+[historical scikit-learn default](https://scikit-learn.org/0.24/modules/generated/sklearn.ensemble.AdaBoostClassifier.html)
+was SAMME.R with depth-one trees and learning rate 1. Current versions no
+longer provide that variant. We chose stock scikit-learn 1.5.2 in a separate
+pinned environment because it still provides SAMME.R. That is an explicit
+completion, not a claim to know the authors' software or reproduce every
+detail of an older library. The alternative SAMME algorithm remains untested.
+
+The [AdaBoost contract](ADABOOST_PILOT.md) fixes two fits, one seed, and a
+15-minute CPU budget. We will record all seven metrics, original/synthetic
+breakdowns, simple controls, and cutoff diagnostics at both AdaBoost's printed
+false-alarm rates and the previous forest's rates. The saved weak learners
+must show actual training and survive exact save/reload checks. A perfect
+fit may legitimately stop before 50 trees; we will report the actual count.
+No performance on the research observations is known at this point.
+
+Adding another model extends the same direct implementation files. Earlier
+experiments remain bound to their immutable Git revisions and saved hashes,
+not retroactively rewritten to match today's code. Historical audits now
+check those revision bytes when a file has since been extended.
+
+All seven AdaBoost fixture tests passed in the pinned environment. The main
+repository suite passed 307 tests, with four AdaBoost fit tests skipped there
+because they require that separate environment; those four passed in it.
+The earlier forest-control audit still matches its saved output exactly.
+Panther's login node killed the environment bootstrap before any fit; setup
+then completed in a separate 67-second, one-CPU allocation. No research-data
+experiment was part of that setup job.
+
 ## What we will do next
 
 The random forest and this matched preparation check are complete. The next

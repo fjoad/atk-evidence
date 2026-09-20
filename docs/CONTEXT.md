@@ -2,6 +2,16 @@
 
 **Last updated:** 2026-09-20
 
+**Current AdaBoost step:** user approved the proposed next pair. Contract
+ADABOOST_PILOT.md: same original p00/p30 inputs, 50 depth-one trees, SAMME.R,
+learning_rate1, seed20260920, isolated sklearn1.5.2/numpy1.26.4/scipy1.13.1/
+joblib1.4.2/threadpoolctl3.5.0. Alternative SAMME unrun. Two fits in one
+15-minute,4-CPU,16-GiB CPU job. No empirical result yet. Login-node venv setup
+was killed, so environment setup moved to CPU job398338 (one CPU,4GiB,10min;
+no research fitting). Direct files are extended additively; source hashes of
+old results are checked against their recorded immutable commits when today's
+file differs. Do not rewrite old outputs or silently reinterpret old scores.
+
 **Current matched-control step, completed:** SPLIT_RESAMPLING_CHECK.md and
 code frozen at e6e0359; all 304 tests passed. User-authorized CPU job 398164
 completed 0:0 in 1:48, within 15 minutes/4 CPUs/16 GiB, no GPU. A reuses old

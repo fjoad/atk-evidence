@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fit one declared random forest on one preserved preparation, on Slurm only."""
+"""Fit one declared shallow detector on one preserved preparation, on Slurm only."""
 
 import argparse
 from datetime import datetime, timezone
@@ -7,13 +7,17 @@ import json
 import os
 from pathlib import Path
 import platform
+import resource
 import time
+import warnings
 
 import joblib
 import numpy as np
 import sklearn
+import scipy
+import threadpoolctl
 
-from models import random_forest
+from models import adaboost, random_forest
 from analyze_results import analyze_scores, digest
 
 
@@ -35,7 +39,7 @@ def load_preparation(directory):
         raise ValueError("Prepared metadata differs from the frozen pilot")
     metadata = json.loads(meta_path.read_text())
     if metadata["mode"] != "two-class" or metadata["scope"] != "generalized":
-        raise ValueError("Random forest requires the generalized two-class preparation")
+        raise ValueError("This pilot requires the generalized two-class preparation")
     arrays, identities = {}, {}
     for name in INPUTS:
         path = directory / (name + ".npy")
@@ -56,18 +60,23 @@ def load_preparation(directory):
     return arrays, metadata, identities
 
 
-def fit_one(arrays, output, *, seed, workers):
+def fit_one(arrays, output, *, seed, workers, model_name="random_forest"):
     """Also used on constructed fixtures; real input is gated by main()."""
     output = Path(output)
-    model = random_forest(seed, workers)
+    if model_name not in ("random_forest", "adaboost"):
+        raise ValueError("Unknown model")
+    model = random_forest(seed, workers) if model_name == "random_forest" else adaboost(seed)
     fitting_parameters = model.get_params()
     clock = time.perf_counter()
     # True labels must never be supplied to fit() under poisoned training.
     model.fit(arrays["train_x"], arrays["train_observed_y"])
     fit_seconds = time.perf_counter() - clock
-    if not np.array_equal(model.classes_, [0, 1]) or len(model.estimators_) != 100:
+    valid_trees = (len(model.estimators_) == 100 if model_name == "random_forest"
+                   else 1 <= len(model.estimators_) <= 50)
+    if not np.array_equal(model.classes_, [0, 1]) or not valid_trees:
         raise ValueError("Unexpected fitted class or tree inventory")
-    model.set_params(n_jobs=1)
+    if model_name == "random_forest":
+        model.set_params(n_jobs=1)
     clock = time.perf_counter()
     probabilities = model.predict_proba(arrays["test_x"])
     predictions = model.predict(arrays["test_x"])
@@ -91,6 +100,7 @@ def fit_one(arrays, output, *, seed, workers):
     }
     np.savez_compressed(output / "predictions.npz", **saved)
     prior = float(arrays["train_observed_y"].mean())
+    caps = (14.1, 17.6, 29.9, 33.3) if model_name == "adaboost" else (17.6, 33.3)
     report = {
         "training_prior": prior, "fitting_parameters": fitting_parameters,
         "scoring_workers": 1,
@@ -105,9 +115,21 @@ def fit_one(arrays, output, *, seed, workers):
                    "depth_min": min(tree.tree_.max_depth for tree in model.estimators_),
                    "depth_max": max(tree.tree_.max_depth for tree in model.estimators_),
                    "total_nodes": sum(tree.tree_.node_count for tree in model.estimators_)},
-        "analysis": analyze_scores(saved, prior),
+        "analysis": analyze_scores(saved, prior, caps),
         "output_sha256": {name: digest(output / name) for name in ("model.joblib", "predictions.npz")},
     }
+    if model_name == "adaboost":
+        report["false_alarm_caps"] = list(caps)
+        report["boosting"] = report.pop("forest")
+        count = len(model.estimators_)
+        errors, weights = model.estimator_errors_[:count], model.estimator_weights_[:count]
+        if (not np.isfinite(errors).all() or not np.isfinite(weights).all()
+                or report["boosting"]["depth_max"] > 1):
+            raise ValueError("Invalid fitted AdaBoost weak learners")
+        report["boosting"].update(algorithm=model.algorithm,
+            base_estimator_parameters=model.estimator_.get_params(),
+            estimator_errors=errors.tolist(), estimator_weights=weights.tolist(),
+            stopped_before_maximum=count < 50)
     return report
 
 
@@ -120,26 +142,34 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--model", choices=("random_forest", "adaboost"), default="random_forest")
     args = parser.parse_args()
     require_compute()
-    if sklearn.__version__ != "1.9.0":
-        raise RuntimeError("First baseline is frozen to scikit-learn 1.9.0")
+    required_version = "1.9.0" if args.model == "random_forest" else "1.5.2"
+    if sklearn.__version__ != required_version:
+        raise RuntimeError(f"{args.model} is frozen to scikit-learn {required_version}")
+    if args.model == "adaboost" and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("1.26.4", "1.13.1", "1.4.2", "3.5.0"):
+        raise RuntimeError("AdaBoost numerical dependencies differ from the frozen environment")
     args.output.mkdir(parents=True, exist_ok=False)
     started = time.perf_counter()
     result_path = args.output / "result.json"
     record = {
-        "status": "started", "model": "random_forest", "case": args.data.name,
+        "status": "started", "model": args.model, "case": args.data.name,
         "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
         "created_utc": datetime.now(timezone.utc).isoformat(),
         "code_commit": os.environ.get("EXPECTED_COMMIT"), "slurm_job_id": os.environ["SLURM_JOB_ID"],
         "seed": 20260920, "versions": {"python": platform.python_version(), "numpy": np.__version__,
-                                       "sklearn": sklearn.__version__, "joblib": joblib.__version__},
+                                       "sklearn": sklearn.__version__, "joblib": joblib.__version__,
+                                       "scipy": scipy.__version__, "threadpoolctl": threadpoolctl.__version__},
         "source_sha256": {str(path.relative_to(STUDY)): digest(path) for path in (
             Path(__file__), Path(__file__).with_name("models.py"),
-            Path(__file__).with_name("analyze_results.py"), STUDY / "FIRST_BASELINE.md",
+            Path(__file__).with_name("analyze_results.py"),
+            STUDY / ("FIRST_BASELINE.md" if args.model == "random_forest" else "ADABOOST_PILOT.md"),
             STUDY / "reported/table_3.csv",
         )},
     }
+    if args.model == "adaboost":
+        record["source_sha256"]["requirements-adaboost.txt"] = digest(STUDY / "requirements-adaboost.txt")
     result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     try:
         tick = time.perf_counter()
@@ -149,13 +179,17 @@ def main():
                       poisoning_rate=metadata["rate"], actual_poisoning=metadata["poisoning"],
                       preparation_overlap=metadata["synthetic_parent_crossings"],
                       training_rows=len(arrays["train_x"]), test_rows=len(arrays["test_x"]))
-        record.update(fit_one(arrays, args.output, seed=20260920, workers=4))
+        with warnings.catch_warnings(record=True) as captured:
+            warnings.simplefilter("always")
+            record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model))
+        record["warnings"] = [{"category": w.category.__name__, "message": str(w.message)} for w in captured]
         record["status"] = "complete"
     except Exception as exc:
         record.update(status="failed", error_type=type(exc).__name__, error=str(exc))
         raise
     finally:
         record["elapsed_seconds"] = time.perf_counter() - started
+        record["process_peak_rss_kib"] = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
         result_path.write_text(json.dumps(record, indent=2, sort_keys=True, allow_nan=False) + "\n")
     print(json.dumps({"case": record["case"], "status": record["status"],
                       "metrics": record["analysis"]["primary"], "seconds": record["timing_seconds"]}), flush=True)

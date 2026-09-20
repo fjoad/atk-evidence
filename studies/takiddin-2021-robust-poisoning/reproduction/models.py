@@ -1,6 +1,7 @@
 """Direct implementations of the paper's detectors, added as they are tested."""
 
-from sklearn.ensemble import RandomForestClassifier
+import sklearn
+from sklearn.ensemble import AdaBoostClassifier, RandomForestClassifier
 
 
 def random_forest(seed: int = 20260920, workers: int = 4) -> RandomForestClassifier:
@@ -25,4 +26,14 @@ def random_forest(seed: int = 20260920, workers: int = 4) -> RandomForestClassif
         ccp_alpha=0.0,
         max_samples=None,
         monotonic_cst=None,
+    )
+
+
+def adaboost(seed: int = 20260920) -> AdaBoostClassifier:
+    """III-B.2(b)/III-C: 50 trees; historical defaults declared in ADABOOST_PILOT."""
+    if sklearn.__version__ != "1.5.2":
+        raise RuntimeError("SAMME.R requires the pinned AdaBoost scikit-learn 1.5.2 environment")
+    return AdaBoostClassifier(
+        estimator=None,  # Stock depth-one decision tree; fitted parameters saved.
+        n_estimators=50, learning_rate=1.0, algorithm="SAMME.R", random_state=seed,
     )

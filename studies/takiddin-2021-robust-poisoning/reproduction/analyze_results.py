@@ -6,6 +6,8 @@ import csv
 import hashlib
 import json
 from pathlib import Path
+import re
+import subprocess
 
 import numpy as np
 from sklearn.metrics import roc_auc_score, roc_curve
@@ -69,17 +71,17 @@ def threshold_summary(labels, scores, caps=(17.6, 33.3)):
     return output
 
 
-def reported_row(rate):
+def reported_row(rate, model="random_forest"):
     column = f"p{round(100 * rate)}"
     with (STUDY / "reported/table_3.csv").open() as stream:
         result = {r["metric"]: float(r[column]) for r in csv.DictReader(stream)
-                  if r["model"] == "random_forest"}
+                  if r["model"] == model}
     if set(result) != set(METRICS):
         raise ValueError("Incomplete paper target row")
     return result
 
 
-def analyze_scores(arrays, training_prior):
+def analyze_scores(arrays, training_prior, caps=(17.6, 33.3)):
     labels = arrays["labels"]
     predictions = arrays["predictions"]
     probability = arrays["probabilities"]
@@ -114,18 +116,34 @@ def analyze_scores(arrays, training_prior):
         "original_rows": metrics(labels[original], predictions[original], scores[original]),
         "per_attack": per_attack, "benign_strata": benign,
         "thresholds": {
-            "higher_probability": threshold_summary(labels, scores),
-            "diagnostic_reversal": threshold_summary(labels, -scores),
+            "higher_probability": threshold_summary(labels, scores, caps),
+            "diagnostic_reversal": threshold_summary(labels, -scores, caps),
         },
         "controls": {
             "constant_training_prior": metrics(labels, prior_predictions, prior_scores),
             "negative_daily_mean": {
                 "definition": "negative mean raw daily kWh; no learned parameter",
                 "AUC": 100 * float(roc_auc_score(labels, arrays["negative_daily_mean"])),
-                "thresholds": threshold_summary(labels, arrays["negative_daily_mean"]),
+                "thresholds": threshold_summary(labels, arrays["negative_daily_mean"], caps),
             },
         },
     }
+
+
+def verify_source(relative, expected, commit):
+    """Old evidence binds to its immutable Git revision, not today's extension."""
+    path = (STUDY / relative).resolve()
+    if not path.is_relative_to(STUDY):
+        raise ValueError(f"Invalid source path: {relative}")
+    if path.is_file() and digest(path) == expected:
+        return
+    if not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit):
+        raise ValueError(f"Analysis/source revision mismatch: {relative}")
+    root = STUDY.parents[1]
+    source = subprocess.run(["git", "-C", str(root), "show", f"{commit}:{path.relative_to(root)}"],
+                            check=False, capture_output=True)
+    if source.returncode or hashlib.sha256(source.stdout).hexdigest() != expected:
+        raise ValueError(f"Analysis/source revision mismatch: {relative}")
 
 
 def audit_result(directory):
@@ -134,18 +152,16 @@ def audit_result(directory):
     if result["status"] != "complete":
         raise ValueError("Only a completed fit can be audited")
     for relative, expected in result.get("source_sha256", {}).items():
-        path = (STUDY / relative).resolve()
-        if not path.is_relative_to(STUDY) or digest(path) != expected:
-            raise ValueError(f"Analysis/source revision mismatch: {relative}")
+        verify_source(relative, expected, result.get("code_commit"))
     for name, expected in result["output_sha256"].items():
         if digest(directory / name) != expected:
             raise ValueError(f"Output hash mismatch: {name}")
     with np.load(directory / "predictions.npz", allow_pickle=False) as archive:
         arrays = {key: archive[key] for key in archive.files}
-    recomputed = analyze_scores(arrays, result["training_prior"])
+    recomputed = analyze_scores(arrays, result["training_prior"], result.get("false_alarm_caps", (17.6, 33.3)))
     if recomputed != result["analysis"]:
         raise ValueError("Saved metrics/diagnostics differ from saved predictions")
-    target = reported_row(result["poisoning_rate"])
+    target = reported_row(result["poisoning_rate"], result.get("model", "random_forest"))
     return {
         "status": "verified", "case": result["case"], "code_commit": result["code_commit"],
         "scope": result["scope"], "reported_full_data_context": target,

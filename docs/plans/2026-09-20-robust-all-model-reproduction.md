@@ -4,6 +4,25 @@
 
 **State:** preparation, first forest pair, and matched preparation controls complete and audited
 
+## Current execution: first AdaBoost pair
+
+User approved the proposed next model. Run one 0%/30% pair on the unchanged
+original generalized two-class pilot. This asks whether the next shallow
+baseline learns useful discrimination and whether poisoning changes ranking,
+default decisions, or both. It is not full-data reproduction.
+
+- [x] Freeze paper settings, historical-library completion, targets, and budget.
+- [x] Add AdaBoost to the direct implementation, prove it on constructed
+  inputs in its pinned environment, and keep historical forest audits valid.
+- [ ] Run two fits, one seed, one CPU job: 15 minutes, four CPUs, 16 GiB,
+  no GPU. No new preparation, seed search, or alternate algorithm fit.
+- [ ] Audit all artifacts, compare all metrics and fixed-score cutoffs, update
+  the journal/site draft and handoff records, and commit. Do not publish.
+
+See ADABOOST_PILOT.md. Historical scientific revisions remain immutable in
+Git; additive implementation updates must validate old source hashes against
+each recorded commit, never rewrite old results to match today's files.
+
 ## Current execution: matched split/resampling check
 
 The user authorized the proposed follow-up. Keep the existing random-forest

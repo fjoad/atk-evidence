@@ -163,8 +163,11 @@ reconstructed value, output projection, or reconstruction-loss expression.
 ### Two-class detectors
 
 - **Random forest:** 100 estimators; other tree and sampling settings omitted.
-- **AdaBoost:** 50 estimators; base estimator, learning rate, and algorithm
-  settings omitted.
+- **AdaBoost:** 50 estimators and decision-tree weak learners (III-B.2(b),
+  p.2678); tree depth, learning rate, and algorithm variant omitted.
+  September 20 correction: the earlier note said the base estimator was
+  omitted, overlooking the explicit decision-tree family. The initial
+  executable completion is separately frozen in ADABOOST_PILOT.md.
 - **SVM:** `C=1.0`, Sigmoid kernel; gamma, coefficient, and probability/decision
   score handling omitted.
 - **Feed-forward:** six hidden layers, 500 neurons per layer, Adamax, dropout
