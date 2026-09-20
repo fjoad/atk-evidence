@@ -408,6 +408,38 @@ seven metrics, the paper's full-data values for context, per-attack results,
 simple controls, timings, and artifact checks. All input/output hashes passed;
 the locally recomputed comparison matches the cluster's file byte for byte.
 
+## 20 September — Separating two possible effects of preparation
+
+We decided to follow the resampling question with two controlled changes,
+using the same 20 customers, original days, existing attacks, forest settings,
+and seed. The previous forest predictions remain the reference; we will not
+retrain them.
+
+First, we will keep the original training and test examples in their existing
+places, but generate additional training examples using training data only.
+This removes access to test examples during synthesis. ADASYN's rounding can
+change the final training count slightly, so we will record the actual counts.
+
+Second, we will assign whole source days to training or testing. A normal day
+and its six altered versions will stay together. This tests whether training
+on related versions of a test day contributed to the earlier performance.
+It still uses the same customer cohort; it does not test new customers.
+
+Changing the split also changes which rows can be evaluated safely. We will
+therefore compare all three versions on the intersection of the earlier
+original test set and the newly held-out days. The rule for selecting that
+intersection is fixed before inspecting predictions. Every comparison will
+use identical test rows and true labels. We will also compare the first two
+versions on the larger original test set they share.
+
+Eight constructed-input tests passed. They verify matching identities and
+ordering, intact attack families, training-only synthetic parents, unchanged
+test labels, and removal of source-day overlap where required. The
+[control contract](SPLIT_RESAMPLING_CHECK.md) fixes four new fits—two
+preparations at two poisoning levels—inside one 15-minute CPU allocation.
+If performance remains high, that outcome will be recorded too. At the time
+of this entry, these controls have not been fitted on the real observations.
+
 ## What we will do next
 
 The random-forest implementation is now checked. Before scaling its result,

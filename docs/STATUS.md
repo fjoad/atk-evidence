@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **Matched Paper 3 split/resampling control in implementation:** the user
+  authorized the named follow-up. SPLIT_RESAMPLING_CHECK.md defines A as saved
+  predictions, B as training-only ADASYN on the same original row split, and C
+  as training-only ADASYN after a whole-source-day split. All three are compared
+  on the same outcome-blind intersection of original held-out rows. Eight
+  fixture tests pass. Four new fits at 0%/30% are planned in one 15-minute,
+  four-CPU, 16-GiB job. No new controlled result has been observed yet.
+
 - **First Paper 3 baseline complete and audited:** the user authorized the next
   steps. FIRST_BASELINE.md fixes the stock 100-tree forest, exact pilot-input
   identities, ordinary-accuracy convention, controls, and one CPU-only pair

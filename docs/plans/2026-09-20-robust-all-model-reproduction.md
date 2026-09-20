@@ -4,6 +4,26 @@
 
 **State:** preparation and first paired random-forest pilot complete and audited
 
+## Current execution: matched split/resampling check
+
+The user authorized the proposed follow-up. Keep the existing random-forest
+fits as reference A. Add B with the same original train/test identities but
+ADASYN applied to training only. Add C with whole source days held out and
+training-only ADASYN. Compare all three on the same predeclared intersection
+of original test rows; also compare A/B on the complete original test set.
+
+- [x] Freeze the evaluation population rule, controlled interventions,
+  unchanged model/seed, counts to report, and finite budget.
+- [x] Implement and fixture-test identity matching, ancestry checks, and
+  source-day exclusion without altering the original preparation or fits.
+- [ ] Run exactly four new fits (B/C at 0%/30%) in one CPU job capped at
+  15 minutes, four CPUs, 16 GiB, no GPU.
+- [ ] Audit the outputs, record all outcomes and remaining limitations, and
+  update the journal before choosing another experiment.
+
+See SPLIT_RESAMPLING_CHECK.md for the pre-outcome contract. This is a small
+controlled diagnostic, not full paper reproduction or a seed sweep.
+
 ## Current execution: first baseline
 
 The user has authorized the next steps. Implement the 100-tree random forest

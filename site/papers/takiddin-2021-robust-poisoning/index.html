@@ -48,7 +48,7 @@ from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -378,6 +378,32 @@ scope.</p>
 seven metrics, the paper's full-data values for context, per-attack results,
 simple controls, timings, and artifact checks. All input/output hashes passed;
 the locally recomputed comparison matches the cluster's file byte for byte.</p>
+<h2 id="20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</h2>
+<p>We decided to follow the resampling question with two controlled changes,
+using the same 20 customers, original days, existing attacks, forest settings,
+and seed. The previous forest predictions remain the reference; we will not
+retrain them.</p>
+<p>First, we will keep the original training and test examples in their existing
+places, but generate additional training examples using training data only.
+This removes access to test examples during synthesis. ADASYN's rounding can
+change the final training count slightly, so we will record the actual counts.</p>
+<p>Second, we will assign whole source days to training or testing. A normal day
+and its six altered versions will stay together. This tests whether training
+on related versions of a test day contributed to the earlier performance.
+It still uses the same customer cohort; it does not test new customers.</p>
+<p>Changing the split also changes which rows can be evaluated safely. We will
+therefore compare all three versions on the intersection of the earlier
+original test set and the newly held-out days. The rule for selecting that
+intersection is fixed before inspecting predictions. Every comparison will
+use identical test rows and true labels. We will also compare the first two
+versions on the larger original test set they share.</p>
+<p>Eight constructed-input tests passed. They verify matching identities and
+ordering, intact attack families, training-only synthetic parents, unchanged
+test labels, and removal of source-day overlap where required. The
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SPLIT_RESAMPLING_CHECK.md">control contract</a> fixes four new fits—two
+preparations at two poisoning levels—inside one 15-minute CPU allocation.
+If performance remains high, that outcome will be recorded too. At the time
+of this entry, these controls have not been fitted on the real observations.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
 <p>The random-forest implementation is now checked. Before scaling its result,
 define a matched check of the split/resampling effect. Continue implementing

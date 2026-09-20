@@ -2,6 +2,17 @@
 
 **Last updated:** 2026-09-20
 
+**Current matched-control step:** user authorized the split/resampling check.
+SPLIT_RESAMPLING_CHECK.md freezes reference A (saved RF scores), B (same
+original train/test rows, train-only ADASYN), and C (whole source days grouped,
+then train-only ADASYN). Shared evaluation E is the intersection of A's
+original test rows and C's seeded held-out days (seed 20260920, RNG role 501).
+All arms use exactly E; A/B also use the larger original test set. Same forest,
+seed, and poisoning customers; generated samples and training membership/counts
+can change and must be reported. Eight fixture tests pass. Plan four new fits
+in one 15-minute CPU job (4 CPUs, 16 GiB). No controlled result yet. Preserve
+the original preparation and models; do not quietly rewrite the first pilot.
+
 **Current first-baseline step:** user authorized the next steps after verified
 preparation. FIRST_BASELINE.md freezes the 100-tree scikit-learn 1.9.0 forest,
 defaults/seed, paired prepared p00/p30 hashes, ordinary accuracy, simple
