@@ -8,9 +8,20 @@ defaults/seed, paired prepared p00/p30 hashes, ordinary accuracy, simple
 controls, per-attack/benign-stratum results, all-cutoff diagnostics, and
 save/reload agreement. One 15-minute, four-CPU, 16-GiB job is planned for two
 fits on the existing 20-customer/28-day pilot. No data regeneration or sweep.
-The new direct models.py/run_experiment.py/analyze_results.py are being
-fixture-tested; no real fit has run yet. Report good results as plainly as
-failures; the pilot is not full Table III reproduction.
+The direct models.py/run_experiment.py/analyze_results.py passed the full
+296-test suite and were frozen at 48e979a. CPU job 397217 completed 0:0 in
+16 seconds. The two forest fits took 0.649/0.566 seconds. DR/FA/AUC are
+92.31/3.02/98.55 at p00 and 61.18/0.44/94.36 at p30. At FA<=17.6%, the
+best saved-score DR is 97.29/92.04%; at FA<=33.3%, 99.19/95.02%. The
+default DR decline is not loss of all useful ranking. These test-label-chosen
+cutoffs are diagnostics, not validated calibration. Both fits pass exact
+save/reload; hashes and metrics passed, and local/cluster comparison files
+match byte-for-byte. See results/rf_pilot_20260920 and the new journal entry.
+Original benign FA differs from synthetic FA (6.56 vs 2.33 at p00), and the
+pre-split parent dependence remains. A matched split/resampling check is the
+next useful diagnostic before scaling. No automatic extra seed or family sweep
+ran. This useful baseline result must be reported plainly; it is not full
+Table III reproduction or a population confidence statement.
 
 **Paper 3 preparation implementation:** user approved steps 1 and 2. Fresh
 official ISSDA metadata, six ZIP identities, and CRCs pass; the allocation

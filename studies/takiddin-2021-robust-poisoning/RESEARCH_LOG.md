@@ -9,9 +9,10 @@ can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
 **Where we are, 20 September 2026:** the data are verified, the preparation
-choices are recorded, and the first small preparation check on the real data
-has passed. It exposed how our stated choices affect overlap and poisoning
-strength. Model experiments for this study have not started.
+choices are recorded, and the first random-forest pilot has completed. It
+performs well without poisoning. With poisoning, its default detection falls,
+but its scores retain considerable ability to distinguish attacks. We are
+examining what the setup and decision cutoff contribute before scaling up.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -349,12 +350,70 @@ If it works poorly, these saved checks should tell us which explanation to
 investigate before spending more compute. No fitted result is available at
 the time of this entry.
 
+## 20 September — The first baseline works, and the cutoff changes the story
+
+The first two random-forest fits finished successfully. Each used 100 trees,
+4,464 training rows, and the same 2,232 test rows. The entire CPU job took
+16 seconds; the individual fits each took less than a second. Both saved
+models produced identical probabilities and predictions after reloading.
+
+Here is what happened on this small, 20-customer pilot:
+
+| Training condition | Attacks detected | False alarms | Ranking AUC |
+|---|---:|---:|---:|
+| No poisoning | 92.31% | 3.02% | 98.55% |
+| 30% of customers selected for poisoning | 61.18% | 0.44% | 94.36% |
+
+Detection is the fraction of theft examples flagged. False alarms are the
+fraction of normal examples flagged. AUC describes how well scores rank theft
+above normal examples across possible cutoffs; 50% is chance-level ranking.
+
+**This changes our working expectation.** The unpoisoned forest performs well,
+including against the two simple controls we tried. We cannot carry forward
+an assumption that every baseline will perform badly. These measurements are
+on a small construction, so they also cannot establish that the paper's
+full-data results have been reproduced.
+
+The poisoning result initially looks much worse if we read only detection:
+it falls by 31.13 percentage points. But false alarms also fall, and AUC
+remains high. That led us to the cutoff checks recorded before this run.
+
+Using the already saved scores, and allowing at most 17.6% false alarms,
+detection can reach 97.29% without poisoning and 92.04% with poisoning—a
+5.25-point difference. At the 33.3% false-alarm cap, the corresponding
+detection rates are 99.19% and 95.02%. No model was retrained for this check.
+It shows that much of the default-decision decline can be changed by moving
+the cutoff, while some ranking deterioration remains.
+
+We chose these favorable cutoffs using the test answers. That makes them
+diagnostic limits for these scores, rather than thresholds we have validated
+for future data. Still, they rule out an interpretation that the poisoned
+forest has lost all useful discrimination in this pilot.
+
+The original/synthetic breakdown raises the next question. Without poisoning,
+false alarms are 6.56% on original normal examples and 2.33% on generated
+normal examples. With poisoning, they are 2.19% and 0.11%. The original-row
+AUC remains high too, but excluding generated test rows from a calculation
+does not undo their use during training or their relationships across the
+split.
+
+**Our next question:** how much of the strong performance depends on that
+split and resampling procedure? A matched preparation control would address
+it directly. Repeating training seeds on the same construction would address
+a different uncertainty. The remaining baseline and proposed models stay in
+scope.
+
+The [first-baseline record](results/rf_pilot_20260920/README.md) preserves all
+seven metrics, the paper's full-data values for context, per-attack results,
+simple controls, timings, and artifact checks. All input/output hashes passed;
+the locally recomputed comparison matches the cluster's file byte for byte.
+
 ## What we will do next
 
-Next, build the models with ordinary libraries and the paper's selected
-settings, starting with the simplest baselines. Check that each model receives
-the intended preparation, updates correctly, and calculates metrics correctly.
-Resolve any remaining source choices before running the affected model.
+The random-forest implementation is now checked. Before scaling its result,
+define a matched check of the split/resampling effect. Continue implementing
+the remaining baselines with their reported settings, resolving source choices
+before each affected run. The objective remains coverage of the complete paper.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).

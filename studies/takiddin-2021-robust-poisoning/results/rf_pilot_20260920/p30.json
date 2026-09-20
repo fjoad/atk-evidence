@@ -1,0 +1,254 @@
+{
+  "actual_poisoning": {
+    "changed_fraction_of_eligible": 0.29933481152993346,
+    "changed_fraction_of_training": 0.15120967741935484,
+    "changed_rows": 675,
+    "eligible_rows": 2255,
+    "operation": "label-flip",
+    "rate": 0.3,
+    "scope": "generalized",
+    "selected_customer_count": 6,
+    "selection_denominator": "selected-customers",
+    "training_rows": 4464
+  },
+  "analysis": {
+    "benign_strata": {
+      "original": {
+        "FA": 2.185792349726776,
+        "false_alarms": 4,
+        "n": 183
+      },
+      "synthetic": {
+        "FA": 0.1059322033898305,
+        "false_alarms": 1,
+        "n": 944
+      }
+    },
+    "controls": {
+      "constant_training_prior": {
+        "ACC": 50.492831541218635,
+        "AUC": 50.0,
+        "DR": 0.0,
+        "F1": 0.0,
+        "FA": 0.0,
+        "FN": 1105,
+        "FP": 0,
+        "PR": null,
+        "SP": 100.0,
+        "TN": 1127,
+        "TP": 0,
+        "balanced_accuracy": 50.0,
+        "n": 2232
+      },
+      "negative_daily_mean": {
+        "AUC": 66.19624438404125,
+        "definition": "negative mean raw daily kWh; no learned parameter",
+        "thresholds": {
+          "at_false_alarm_caps": {
+            "17.6": {
+              "DR": 36.199095022624434,
+              "FA": 17.213842058562555,
+              "threshold": -0.1451458343459914
+            },
+            "33.3": {
+              "DR": 59.90950226244344,
+              "FA": 33.09671694764862,
+              "threshold": -0.27408334612846375
+            }
+          },
+          "best_balanced_accuracy": 64.12350893534672,
+          "boundary_count": 2163,
+          "rule": "score >= threshold; null threshold denotes no alarms"
+        }
+      }
+    },
+    "original_rows": {
+      "ACC": 66.38198757763975,
+      "AUC": 92.38434339687956,
+      "DR": 61.1764705882353,
+      "F1": 75.74229691876751,
+      "FA": 2.185792349726776,
+      "FN": 429,
+      "FP": 4,
+      "PR": 99.41176470588235,
+      "SP": 97.81420765027322,
+      "TN": 179,
+      "TP": 676,
+      "balanced_accuracy": 79.49533911925425,
+      "n": 1288
+    },
+    "per_attack": {
+      "1": {
+        "DR": 49.473684210526315,
+        "detected": 94,
+        "n": 190
+      },
+      "2": {
+        "DR": 50.847457627118644,
+        "detected": 90,
+        "n": 177
+      },
+      "3": {
+        "DR": 79.58115183246073,
+        "detected": 152,
+        "n": 191
+      },
+      "4": {
+        "DR": 66.08187134502924,
+        "detected": 113,
+        "n": 171
+      },
+      "5": {
+        "DR": 60.84656084656085,
+        "detected": 115,
+        "n": 189
+      },
+      "6": {
+        "DR": 59.893048128342244,
+        "detected": 112,
+        "n": 187
+      }
+    },
+    "primary": {
+      "ACC": 80.55555555555556,
+      "AUC": 94.36071418533972,
+      "DR": 61.1764705882353,
+      "F1": 75.69988801791713,
+      "FA": 0.44365572315882873,
+      "FN": 429,
+      "FP": 5,
+      "PR": 99.26578560939794,
+      "SP": 99.55634427684117,
+      "TN": 1122,
+      "TP": 676,
+      "balanced_accuracy": 80.36640743253824,
+      "n": 2232
+    },
+    "thresholds": {
+      "diagnostic_reversal": {
+        "at_false_alarm_caps": {
+          "17.6": {
+            "DR": 2.6244343891402715,
+            "FA": 9.316770186335404,
+            "threshold": -0.0
+          },
+          "33.3": {
+            "DR": 3.167420814479638,
+            "FA": 31.8544809228039,
+            "threshold": -0.03
+          }
+        },
+        "best_balanced_accuracy": 50.0,
+        "boundary_count": 136,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      },
+      "higher_probability": {
+        "at_false_alarm_caps": {
+          "17.6": {
+            "DR": 92.03619909502262,
+            "FA": 16.149068322981368,
+            "threshold": 0.19
+          },
+          "33.3": {
+            "DR": 95.02262443438913,
+            "FA": 31.49955634427684,
+            "threshold": 0.12
+          }
+        },
+        "best_balanced_accuracy": 90.01834847651435,
+        "boundary_count": 136,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      }
+    }
+  },
+  "case": "generalized-two-class-p30",
+  "code_commit": "48e979a2b10dd7343c9b8b4ed94bd7c76ae78674",
+  "created_utc": "2026-09-20T01:46:25.147044+00:00",
+  "elapsed_seconds": 0.9510250501334667,
+  "fitting_parameters": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "class_weight": null,
+    "criterion": "gini",
+    "max_depth": null,
+    "max_features": "sqrt",
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 1,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 100,
+    "n_jobs": 4,
+    "oob_score": false,
+    "random_state": 20260920,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "forest": {
+    "depth_max": 34,
+    "depth_min": 20,
+    "total_nodes": 90442,
+    "trees": 100
+  },
+  "input_load_seconds": 0.019419308751821518,
+  "input_sha256": {
+    "test_attack": "4f240126b1db6db76baa5f97bc4f06452c4faa8604f6c20ee2a6776f9d9dcba4",
+    "test_observed_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_raw_x": "5614e473ca8c6023b1333014e8d115e695850d2a5d15fc37102ddf772e353b49",
+    "test_synthetic": "1727c42471409e6e6f1b738763cc6486a3237145fb0896a5d527b21f334cf402",
+    "test_true_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_uid": "ca54dcf6a8b5bf03ac4c0830bcc66dff1aac62d16b6fb2a0d1e9a2393e5cf08b",
+    "test_x": "7314ee291f270c49e59a0075c573f1869bb93cc965dac47b11065d5e99fab3da",
+    "train_observed_y": "76bbc5177684ae654eb9d49ecfe5e7726b131987e677fc2c09f293d9ff009b9a",
+    "train_true_y": "2d24504474403783fcb30d2c751b37ddc5f88183c10066fd15b43cbbf26a9da4",
+    "train_x": "098b3cabfb1fad82bbe0751c1b36ebbeeb05ec6dfafcbea6bf158774d6799dbe"
+  },
+  "model": "random_forest",
+  "output_sha256": {
+    "model.joblib": "5527f3ceb25ab44d4067d177f7aa5af1470153d1e295db5384c0dbf18c56cb75",
+    "predictions.npz": "7895c2317e4c8abae6e9ab5be47af7abb86fe684f045bfa650db6cb3edc23d20"
+  },
+  "poisoning_rate": 0.3,
+  "preparation_metadata_sha256": "9ac0faeea220e62ed5af13e39deb174a190cc69749786c38ea58240e5031f21a",
+  "preparation_overlap": {
+    "test_synthetic_train_parent": 1306,
+    "train_synthetic_test_parent": 1186
+  },
+  "reload": {
+    "identical_predictions": true,
+    "identical_probabilities": true
+  },
+  "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+  "scoring_workers": 1,
+  "seed": 20260920,
+  "slurm_job_id": "397217",
+  "source_sha256": {
+    "FIRST_BASELINE.md": "bafd62e3c97826afce58aea9faac840b3947e5184a67ed28f87a4a95788745bf",
+    "reported/table_3.csv": "d15ccc19d4a774a6eeaa191087274d93a823d7e2d801c2c7de6ec6d87d3890eb",
+    "reproduction/analyze_results.py": "27a337522eb5d56c10aa2f0ef8fe5b36ee7a6c1a62a0c0466b35830185b8ee11",
+    "reproduction/models.py": "e91370ea27d4ca38c8e2fd54bbfebce816c214431292713e929fec97a2bc8399",
+    "reproduction/run_experiment.py": "eb77d628bffcd171e5c6dd3206944c4da02a07f18d2e3677ab96cc8a1591df80"
+  },
+  "status": "complete",
+  "test_rows": 2232,
+  "timing_seconds": {
+    "fit": 0.5658954251557589,
+    "reload": 0.11259282752871513,
+    "score": 0.15152746438980103
+  },
+  "training": {
+    "distinct_positive_probabilities": 121,
+    "observed_label_accuracy": 99.93279569892472,
+    "true_label_accuracy": 84.94623655913979
+  },
+  "training_prior": 0.3539426523297491,
+  "training_rows": 4464,
+  "versions": {
+    "joblib": "1.5.3",
+    "numpy": "2.5.1",
+    "python": "3.12.2",
+    "sklearn": "1.9.0"
+  }
+}

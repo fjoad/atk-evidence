@@ -26,7 +26,12 @@ phase has reached verified source acquisition and preparation implementation.
 The bounded preparation check completed on Panther as job 397206 at frozen
 commit 30ce6c4: eight cases passed in 2:16, and all 224 saved arrays passed the
 artifact audit. See the [result](results/preparation_20260920/README.md).
-No detector has been implemented or trained in this phase.
+The first 100-tree random-forest pair has now completed too (job 397217):
+92.31% detection/3.02% false alarms without poisoning and 61.18%/0.44% at
+nominal 30% poisoning. Ranking remains strong, and cutoff diagnostics recover
+much of the detection decline. This is a small pilot with the documented
+preparation dependence, not full Table III reproduction. See the
+[first-baseline record](results/rf_pilot_20260920/README.md).
 
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
@@ -47,6 +52,7 @@ a result or verdict.
 - [`PREPARATION.md`](PREPARATION.md): the initial executable data choices and
   bounded cluster check.
 - [`DATA_SOURCES.md`](DATA_SOURCES.md): fresh source identity and allocation checks.
+- [`FIRST_BASELINE.md`](FIRST_BASELINE.md): frozen forest, metric, and diagnostic choices.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

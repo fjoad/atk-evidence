@@ -2,8 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; source-only result complete, experimental explanations
-untested
+**Status:** active; first random-forest pilot completed on 20 September
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -89,6 +88,13 @@ The table arithmetic broadly supports the prose ordering and degradation
 descriptions, but no data were prepared and no model was run. Later testing
 must preserve the exact-data, poison-construction, seed, and paper-time bounds.
 
+**September 20 update:** one paired 100-tree forest pilot on 20 customers
+learned strong discrimination. At p00, DR/FA/AUC are 92.31/3.02/98.55;
+at p30, 61.18/0.44/94.36. This supports baseline viability in that
+construction and weakens an expectation of universally poor baseline behavior
+there. It does not establish the full-population table or its cross-model
+ordering. The source sample and original/synthetic dependence remain material.
+
 ## E9 — the sequential architecture causes robustness through its staged
 components
 
@@ -116,3 +122,29 @@ The paper explicitly names one RTX 2070, 50 epochs, batch 100, and model-family
 training times of roughly one to four hours. Those constraints are frozen for
 a later prospective check. No throughput measurement has occurred in this
 study.
+
+**September 20 update:** the two small CPU forest fits took 0.649 and 0.566
+seconds; the complete job took 16 seconds. This measures pilot cost only,
+not the one-hour full-data claim, neural throughput, or an RTX-2070 workload.
+
+## E12 — poisoning changes the decision cutoff's behavior while ranking survives
+
+**Status:** supported within the paired RF pilot.
+
+Default detection drops 31.13 points, but at the same 17.6% false-alarm cap,
+the best detection on the saved scores drops only 5.25 points. AUC decreases
+4.19 points. Threshold/calibration behavior can explain a substantial part
+of the default-decision decline; some ranking deterioration remains.
+Cutoffs were chosen using test labels as diagnostics, not independently
+validated calibration. No claim about every model or the authors' choices.
+
+## E13 — resampling and dependent splits contribute to the strong pilot result
+
+**Status:** open; dependence and stratum differences observed.
+
+At p00, original versus synthetic benign FA is 6.56% versus 2.33%;
+at p30, 2.19% versus 0.11%. Training/test synthetic-parent crossings were
+already recorded. Original-row AUC remains high, but removing synthetic test
+rows does not remove training contamination or shared source days. A matched
+preparation control, with the same model and an explicit comparison population,
+would test this explanation. More seeds of the existing setup do not isolate it.

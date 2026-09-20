@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** steps 1-2 complete, including a bounded preparation check; no detector trained
+**State:** preparation and first paired random-forest pilot complete and audited
 
 ## Current execution: first baseline
 
@@ -12,17 +12,23 @@ generalized two-class 0%/30% pilot inputs. The question is whether the faithful
 library model learns, saves/reloads correctly, and produces interpretable
 metrics on the verified pipeline. This is not full Table III reproduction.
 
-- [ ] Record exact estimator defaults, metrics, controls, saved-score checks,
+- [x] Record exact estimator defaults, metrics, controls, saved-score checks,
   source identities, and the finite allocation before fitting.
-- [ ] Implement and fixture-test the model, runner, and analysis.
-- [ ] Freeze and run one CPU job: two RF fits, one seed, unchanged pilot data;
+- [x] Implement and fixture-test the model, runner, and analysis.
+- [x] Freeze and run one CPU job: two RF fits, one seed, unchanged pilot data;
   at most 15 minutes, four CPUs, 16 GiB, no GPU.
-- [ ] Verify predictions and artifacts, inspect the result, and update the
+- [x] Verify predictions and artifacts, inspect the result, and update the
   journal and explanation register before choosing further runs.
 
 No seed sweep, data regeneration, full-data run, or additional model family
 is included in this first baseline check. A match or stronger performance
 must be reported plainly alongside failures.
+
+Outcome: frozen 48e979a, job 397217, completed 0:0 in 16 seconds. The pilot
+shows strong random-forest discrimination and a material cutoff effect under
+poisoning. A matched split/resampling check is the named next diagnostic;
+another seed of the same construction does not resolve that question. See
+the journal and the preserved results/rf_pilot_20260920 record.
 
 ## Current execution: steps 1 and 2
 
@@ -265,7 +271,7 @@ preparation check. No GPU was allocated or benchmarked for this paper.
 A reported-versus-measured account covering every listed model, with visible
 setup assumptions, complete and partial table coverage distinguished, every
 attempt retained, and uncertainty appropriate to the data and repetition
-structure. The conclusion follows the measurements. Model implementation and
-performance experiments are subsequent steps. Source
-verification, pipeline implementation, and the bounded preparation check are
-complete; full-population preparation has not been executed.
+structure. The conclusion follows the measurements. Source verification,
+pipeline implementation, and the first paired forest pilot are complete.
+Full-population preparation and the remaining detector implementations have
+not been executed. The pilot does not supply a complete-paper verdict.

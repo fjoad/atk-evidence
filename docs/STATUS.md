@@ -12,13 +12,21 @@ execution plan here is
 
 ## Current project state
 
-- **First Paper 3 baseline in implementation:** the user authorized the next
+- **First Paper 3 baseline complete and audited:** the user authorized the next
   steps. FIRST_BASELINE.md fixes the stock 100-tree forest, exact pilot-input
   identities, ordinary-accuracy convention, controls, and one CPU-only pair
-  at 0%/30% poisoning. New model/runner/analysis files are being verified on
-  constructed fixtures before code freeze and a 15-minute, four-CPU run.
-  This is a small first-model check, not full Table III reproduction. No
-  detector has yet been fitted on the real data at this checkpoint.
+  at 0%/30% poisoning. Frozen commit 48e979a passed all 296 repository tests
+  and completed as CPU job 397217 (0:0) in 16 seconds, with four CPUs and no
+  GPU. The forest learned strong pilot discrimination: DR/FA/AUC are
+  92.31/3.02/98.55 at p00 and 61.18/0.44/94.36 at p30. At the common 17.6%
+  FA cap, best saved-score DR is 97.29% and 92.04%, so threshold behavior is
+  material to the default-decision decline. Every input/output hash, fresh
+  reload, and saved-metric check passed; local and cluster comparison files
+  match byte-for-byte. This is a 20-customer pilot with pre-split synthetic
+  dependence, not full Table III reproduction. The next useful question is
+  the contribution of the split/resampling procedure before scaling, not an
+  automatic extra seed. See the
+  [first-baseline record](../studies/takiddin-2021-robust-poisoning/results/rf_pilot_20260920/README.md).
 
 - **Paper 3 steps 1-2 complete; preparation verified:** the user
   authorized data/source resolution and preparation. The six local CER ZIPs
@@ -38,8 +46,8 @@ execution plan here is
   completion produced 108 shared attack identities across train/test; this
   ambiguity is explicit, not silently corrected. See the
   [preparation record](../studies/takiddin-2021-robust-poisoning/results/preparation_20260920/README.md).
-  No detector was trained or scored, and full-population preparation did not
-  run. The full repository suite passed 284 tests before execution; the
+  No detector was trained or scored in that preparation job, and full-population
+  preparation did not run. The suite passed 284 tests before execution; the
   cluster repeated and passed all 13 preparation fixtures.
 
 - **Choose extra runs by what they resolve:** the user explicitly rejects

@@ -30,9 +30,10 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.</p>
 <p><strong>Where we are, 20 September 2026:</strong> the data are verified, the preparation
-choices are recorded, and the first small preparation check on the real data
-has passed. It exposed how our stated choices affect overlap and poisoning
-strength. Model experiments for this study have not started.</p>
+choices are recorded, and the first random-forest pilot has completed. It
+performs well without poisoning. With poisoning, its default detection falls,
+but its scores retain considerable ability to distinguish attacks. We are
+examining what the setup and decision cutoff contribute before scaling up.</p>
 <p>The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
 to simulate theft. It then deliberately gives some theft examples the wrong
@@ -47,7 +48,7 @@ from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -311,11 +312,77 @@ and a 15-minute CPU allocation. If the forest works well, we will report it.
 If it works poorly, these saved checks should tell us which explanation to
 investigate before spending more compute. No fitted result is available at
 the time of this entry.</p>
+<h2 id="20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</h2>
+<p>The first two random-forest fits finished successfully. Each used 100 trees,
+4,464 training rows, and the same 2,232 test rows. The entire CPU job took
+16 seconds; the individual fits each took less than a second. Both saved
+models produced identical probabilities and predictions after reloading.</p>
+<p>Here is what happened on this small, 20-customer pilot:</p>
+<table>
+<thead>
+<tr>
+<th>Training condition</th>
+<th style="text-align:right">Attacks detected</th>
+<th style="text-align:right">False alarms</th>
+<th style="text-align:right">Ranking AUC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No poisoning</td>
+<td style="text-align:right">92.31%</td>
+<td style="text-align:right">3.02%</td>
+<td style="text-align:right">98.55%</td>
+</tr>
+<tr>
+<td>30% of customers selected for poisoning</td>
+<td style="text-align:right">61.18%</td>
+<td style="text-align:right">0.44%</td>
+<td style="text-align:right">94.36%</td>
+</tr>
+</tbody>
+</table>
+<p>Detection is the fraction of theft examples flagged. False alarms are the
+fraction of normal examples flagged. AUC describes how well scores rank theft
+above normal examples across possible cutoffs; 50% is chance-level ranking.</p>
+<p><strong>This changes our working expectation.</strong> The unpoisoned forest performs well,
+including against the two simple controls we tried. We cannot carry forward
+an assumption that every baseline will perform badly. These measurements are
+on a small construction, so they also cannot establish that the paper's
+full-data results have been reproduced.</p>
+<p>The poisoning result initially looks much worse if we read only detection:
+it falls by 31.13 percentage points. But false alarms also fall, and AUC
+remains high. That led us to the cutoff checks recorded before this run.</p>
+<p>Using the already saved scores, and allowing at most 17.6% false alarms,
+detection can reach 97.29% without poisoning and 92.04% with poisoning—a
+5.25-point difference. At the 33.3% false-alarm cap, the corresponding
+detection rates are 99.19% and 95.02%. No model was retrained for this check.
+It shows that much of the default-decision decline can be changed by moving
+the cutoff, while some ranking deterioration remains.</p>
+<p>We chose these favorable cutoffs using the test answers. That makes them
+diagnostic limits for these scores, rather than thresholds we have validated
+for future data. Still, they rule out an interpretation that the poisoned
+forest has lost all useful discrimination in this pilot.</p>
+<p>The original/synthetic breakdown raises the next question. Without poisoning,
+false alarms are 6.56% on original normal examples and 2.33% on generated
+normal examples. With poisoning, they are 2.19% and 0.11%. The original-row
+AUC remains high too, but excluding generated test rows from a calculation
+does not undo their use during training or their relationships across the
+split.</p>
+<p><strong>Our next question:</strong> how much of the strong performance depends on that
+split and resampling procedure? A matched preparation control would address
+it directly. Repeating training seeds on the same construction would address
+a different uncertainty. The remaining baseline and proposed models stay in
+scope.</p>
+<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/results/rf_pilot_20260920/README.md">first-baseline record</a> preserves all
+seven metrics, the paper's full-data values for context, per-attack results,
+simple controls, timings, and artifact checks. All input/output hashes passed;
+the locally recomputed comparison matches the cluster's file byte for byte.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
-<p>Next, build the models with ordinary libraries and the paper's selected
-settings, starting with the simplest baselines. Check that each model receives
-the intended preparation, updates correctly, and calculates metrics correctly.
-Resolve any remaining source choices before running the affected model.</p>
+<p>The random-forest implementation is now checked. Before scaling its result,
+define a matched check of the split/resampling effect. Continue implementing
+the remaining baselines with their reported settings, resolving source choices
+before each affected run. The objective remains coverage of the complete paper.</p>
 <p>The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
 We will measure the actual cost on the cluster before scheduling the tables.
