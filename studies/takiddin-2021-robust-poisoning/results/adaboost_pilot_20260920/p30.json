@@ -1,0 +1,407 @@
+{
+  "actual_poisoning": {
+    "changed_fraction_of_eligible": 0.29933481152993346,
+    "changed_fraction_of_training": 0.15120967741935484,
+    "changed_rows": 675,
+    "eligible_rows": 2255,
+    "operation": "label-flip",
+    "rate": 0.3,
+    "scope": "generalized",
+    "selected_customer_count": 6,
+    "selection_denominator": "selected-customers",
+    "training_rows": 4464
+  },
+  "analysis": {
+    "benign_strata": {
+      "original": {
+        "FA": 6.0109289617486334,
+        "false_alarms": 11,
+        "n": 183
+      },
+      "synthetic": {
+        "FA": 4.872881355932203,
+        "false_alarms": 46,
+        "n": 944
+      }
+    },
+    "controls": {
+      "constant_training_prior": {
+        "ACC": 50.492831541218635,
+        "AUC": 50.0,
+        "DR": 0.0,
+        "F1": 0.0,
+        "FA": 0.0,
+        "FN": 1105,
+        "FP": 0,
+        "PR": null,
+        "SP": 100.0,
+        "TN": 1127,
+        "TP": 0,
+        "balanced_accuracy": 50.0,
+        "n": 2232
+      },
+      "negative_daily_mean": {
+        "AUC": 66.19624438404125,
+        "definition": "negative mean raw daily kWh; no learned parameter",
+        "thresholds": {
+          "at_false_alarm_caps": {
+            "14.1": {
+              "DR": 31.94570135746606,
+              "FA": 14.019520851818989,
+              "threshold": -0.12011347291991115
+            },
+            "17.6": {
+              "DR": 36.199095022624434,
+              "FA": 17.213842058562555,
+              "threshold": -0.1451458343459914
+            },
+            "29.9": {
+              "DR": 57.10407239819004,
+              "FA": 29.547471162378,
+              "threshold": -0.2556687288839991
+            },
+            "33.3": {
+              "DR": 59.90950226244344,
+              "FA": 33.09671694764862,
+              "threshold": -0.27408334612846375
+            }
+          },
+          "best_balanced_accuracy": 64.12350893534672,
+          "boundary_count": 2163,
+          "rule": "score >= threshold; null threshold denotes no alarms"
+        }
+      }
+    },
+    "original_rows": {
+      "ACC": 53.183229813664596,
+      "AUC": 82.48769873649334,
+      "DR": 46.425339366515836,
+      "F1": 62.98342541436464,
+      "FA": 6.0109289617486334,
+      "FN": 592,
+      "FP": 11,
+      "PR": 97.90076335877863,
+      "SP": 93.98907103825137,
+      "TN": 172,
+      "TP": 513,
+      "balanced_accuracy": 70.2072052023836,
+      "n": 1288
+    },
+    "per_attack": {
+      "1": {
+        "DR": 43.1578947368421,
+        "detected": 82,
+        "n": 190
+      },
+      "2": {
+        "DR": 37.85310734463277,
+        "detected": 67,
+        "n": 177
+      },
+      "3": {
+        "DR": 67.53926701570681,
+        "detected": 129,
+        "n": 191
+      },
+      "4": {
+        "DR": 45.02923976608187,
+        "detected": 77,
+        "n": 171
+      },
+      "5": {
+        "DR": 38.095238095238095,
+        "detected": 72,
+        "n": 189
+      },
+      "6": {
+        "DR": 45.98930481283423,
+        "detected": 86,
+        "n": 187
+      }
+    },
+    "primary": {
+      "ACC": 70.92293906810036,
+      "AUC": 83.73955602307812,
+      "DR": 46.425339366515836,
+      "F1": 61.25373134328358,
+      "FA": 5.057675244010648,
+      "FN": 592,
+      "FP": 57,
+      "PR": 90.0,
+      "SP": 94.94232475598935,
+      "TN": 1070,
+      "TP": 513,
+      "balanced_accuracy": 70.68383206125259,
+      "n": 2232
+    },
+    "thresholds": {
+      "diagnostic_reversal": {
+        "at_false_alarm_caps": {
+          "14.1": {
+            "DR": 1.3574660633484164,
+            "FA": 14.019520851818989,
+            "threshold": -0.482737300893198
+          },
+          "17.6": {
+            "DR": 1.9909502262443437,
+            "FA": 17.213842058562555,
+            "threshold": -0.48385689973455837
+          },
+          "29.9": {
+            "DR": 5.248868778280543,
+            "FA": 29.37000887311446,
+            "threshold": -0.48689247507519046
+          },
+          "33.3": {
+            "DR": 6.515837104072399,
+            "FA": 33.09671694764862,
+            "threshold": -0.4878410487538268
+          }
+        },
+        "best_balanced_accuracy": 50.04524886877828,
+        "boundary_count": 1528,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      },
+      "higher_probability": {
+        "at_false_alarm_caps": {
+          "14.1": {
+            "DR": 67.33031674208145,
+            "FA": 14.019520851818989,
+            "threshold": 0.49630509203634765
+          },
+          "17.6": {
+            "DR": 71.4027149321267,
+            "FA": 17.56876663708962,
+            "threshold": 0.49534778591509226
+          },
+          "29.9": {
+            "DR": 80.4524886877828,
+            "FA": 29.724933451641526,
+            "threshold": 0.49318771142771367
+          },
+          "33.3": {
+            "DR": 82.98642533936652,
+            "FA": 32.56433007985803,
+            "threshold": 0.4927142461810339
+          }
+        },
+        "best_balanced_accuracy": 77.57077412904961,
+        "boundary_count": 1528,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      }
+    }
+  },
+  "boosting": {
+    "algorithm": "SAMME.R",
+    "base_estimator_parameters": {
+      "ccp_alpha": 0.0,
+      "class_weight": null,
+      "criterion": "gini",
+      "max_depth": 1,
+      "max_features": null,
+      "max_leaf_nodes": null,
+      "min_impurity_decrease": 0.0,
+      "min_samples_leaf": 1,
+      "min_samples_split": 2,
+      "min_weight_fraction_leaf": 0.0,
+      "monotonic_cst": null,
+      "random_state": null,
+      "splitter": "best"
+    },
+    "depth_max": 1,
+    "depth_min": 1,
+    "estimator_errors": [
+      0.30667562724014347,
+      0.37743364415908476,
+      0.429834076146966,
+      0.44927145598670515,
+      0.42289211118649384,
+      0.4628589759826002,
+      0.4367425118526836,
+      0.47228143919566373,
+      0.4392650526443026,
+      0.4621734247616592,
+      0.4503355270154686,
+      0.4373015081322515,
+      0.46887642733677515,
+      0.45681038489552184,
+      0.4462572195931761,
+      0.4795398752712844,
+      0.48629169485820667,
+      0.4731950606046891,
+      0.4740931563704905,
+      0.4685576278836419,
+      0.4896412836531237,
+      0.46297192378780405,
+      0.45496018994772136,
+      0.46639615339099716,
+      0.4690912557163366,
+      0.4720203815626426,
+      0.46102080517470745,
+      0.4788281284363575,
+      0.46158886720916004,
+      0.46048520287872574,
+      0.4739224780858226,
+      0.49151917148772717,
+      0.4946506975712675,
+      0.49132204464477536,
+      0.47478504420463646,
+      0.4637704510832452,
+      0.46707644976271273,
+      0.4656180595550806,
+      0.4711572685329446,
+      0.47547098456438114,
+      0.4869770546569492,
+      0.48128175962359143,
+      0.46838220155205157,
+      0.46990650906124243,
+      0.48060537877640636,
+      0.4835827981630361,
+      0.47065356598401337,
+      0.46756719612927977,
+      0.47755082276258204,
+      0.48257201308005626
+    ],
+    "estimator_weights": [
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0,
+      1.0
+    ],
+    "stopped_before_maximum": false,
+    "total_nodes": 150,
+    "trees": 50
+  },
+  "case": "generalized-two-class-p30",
+  "code_commit": "d47a6de4a60840b6806b409f88f47ac6a102a118",
+  "created_utc": "2026-09-20T15:15:07.412333+00:00",
+  "elapsed_seconds": 2.3503813296556473,
+  "false_alarm_caps": [
+    14.1,
+    17.6,
+    29.9,
+    33.3
+  ],
+  "fitting_parameters": {
+    "algorithm": "SAMME.R",
+    "estimator": null,
+    "learning_rate": 1.0,
+    "n_estimators": 50,
+    "random_state": 20260920
+  },
+  "input_load_seconds": 0.6410767436027527,
+  "input_sha256": {
+    "test_attack": "4f240126b1db6db76baa5f97bc4f06452c4faa8604f6c20ee2a6776f9d9dcba4",
+    "test_observed_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_raw_x": "5614e473ca8c6023b1333014e8d115e695850d2a5d15fc37102ddf772e353b49",
+    "test_synthetic": "1727c42471409e6e6f1b738763cc6486a3237145fb0896a5d527b21f334cf402",
+    "test_true_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_uid": "ca54dcf6a8b5bf03ac4c0830bcc66dff1aac62d16b6fb2a0d1e9a2393e5cf08b",
+    "test_x": "7314ee291f270c49e59a0075c573f1869bb93cc965dac47b11065d5e99fab3da",
+    "train_observed_y": "76bbc5177684ae654eb9d49ecfe5e7726b131987e677fc2c09f293d9ff009b9a",
+    "train_true_y": "2d24504474403783fcb30d2c751b37ddc5f88183c10066fd15b43cbbf26a9da4",
+    "train_x": "098b3cabfb1fad82bbe0751c1b36ebbeeb05ec6dfafcbea6bf158774d6799dbe"
+  },
+  "model": "adaboost",
+  "output_sha256": {
+    "model.joblib": "6a785be4916431da35ec647da414605a013baf0842616dd89690895e0adecde2",
+    "predictions.npz": "badf0881e62bd77ed2e429604dcb0e9f4fcb3e4b823ce9c7b2437aeba77d78b6"
+  },
+  "poisoning_rate": 0.3,
+  "preparation_metadata_sha256": "9ac0faeea220e62ed5af13e39deb174a190cc69749786c38ea58240e5031f21a",
+  "preparation_overlap": {
+    "test_synthetic_train_parent": 1306,
+    "train_synthetic_test_parent": 1186
+  },
+  "process_peak_rss_kib": 117888,
+  "reload": {
+    "identical_predictions": true,
+    "identical_probabilities": true
+  },
+  "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+  "scoring_workers": 1,
+  "seed": 20260920,
+  "slurm_job_id": "398348",
+  "source_sha256": {
+    "ADABOOST_PILOT.md": "bff7aa91821713a89296bd838b8a2955c5cfca0ce63b2d53082408e1c69f1cf1",
+    "reported/table_3.csv": "d15ccc19d4a774a6eeaa191087274d93a823d7e2d801c2c7de6ec6d87d3890eb",
+    "reproduction/analyze_results.py": "8c7c493d6efbf13c28111be2e05bc3a4868c83f6b18e61b9c7108746d89e6215",
+    "reproduction/models.py": "f6f7da6c7a1fd832ed306dd4a1ff514fd2ee75fbb3007d5176ad27586ced17c6",
+    "reproduction/run_experiment.py": "cca4e47252aaf45d366285ca96622b15981202e1249975db761f575d138f639d",
+    "requirements-adaboost.txt": "5744387d1b68c94a77df0fe03152b18a65129d28f8191d82bce9a23de5a581de"
+  },
+  "status": "complete",
+  "test_rows": 2232,
+  "timing_seconds": {
+    "fit": 1.502600535750389,
+    "reload": 0.09213760495185852,
+    "score": 0.061162084341049194
+  },
+  "training": {
+    "distinct_positive_probabilities": 2712,
+    "observed_label_accuracy": 79.74910394265234,
+    "true_label_accuracy": 73.31989247311827
+  },
+  "training_prior": 0.3539426523297491,
+  "training_rows": 4464,
+  "versions": {
+    "joblib": "1.4.2",
+    "numpy": "1.26.4",
+    "python": "3.12.2",
+    "scipy": "1.13.1",
+    "sklearn": "1.5.2",
+    "threadpoolctl": "3.5.0"
+  },
+  "warnings": [
+    {
+      "category": "FutureWarning",
+      "message": "The SAMME.R algorithm (the default) is deprecated and will be removed in 1.6. Use the SAMME algorithm to circumvent this warning."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+Collecting numpy==1.26.4
+  Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (61 kB)
+Collecting scipy==1.13.1
+  Downloading scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (60 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 60.6/60.6 kB 399.9 kB/s eta 0:00:00
+Collecting scikit-learn==1.5.2
+  Downloading scikit_learn-1.5.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (13 kB)
+Collecting joblib==1.4.2
+  Using cached joblib-1.4.2-py3-none-any.whl.metadata (5.4 kB)
+Collecting threadpoolctl==3.5.0
+  Using cached threadpoolctl-3.5.0-py3-none-any.whl.metadata (13 kB)
+Using cached numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (18.0 MB)
+Downloading scipy-1.13.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (38.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 38.2/38.2 MB 18.9 MB/s eta 0:00:00
+Downloading scikit_learn-1.5.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (12.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 12.9/12.9 MB 23.8 MB/s eta 0:00:00
+Using cached joblib-1.4.2-py3-none-any.whl (301 kB)
+Using cached threadpoolctl-3.5.0-py3-none-any.whl (18 kB)
+Installing collected packages: threadpoolctl, numpy, joblib, scipy, scikit-learn
+Successfully installed joblib-1.4.2 numpy-1.26.4 scikit-learn-1.5.2 scipy-1.13.1 threadpoolctl-3.5.0
+
+[notice] A new release of pip is available: 24.0 -> 26.2.1
+[notice] To update, run: /export/home/fjoad/atk-evidence/data/environments/robust-adaboost-1.5.2/bin/python -m pip install --upgrade pip

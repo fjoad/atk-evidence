@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** preparation, first forest pair, and matched preparation controls complete and audited
+**State:** preparation, forest pair/controls, and first AdaBoost pair complete and audited
 
 ## Current execution: first AdaBoost pair
 
@@ -14,14 +14,23 @@ default decisions, or both. It is not full-data reproduction.
 - [x] Freeze paper settings, historical-library completion, targets, and budget.
 - [x] Add AdaBoost to the direct implementation, prove it on constructed
   inputs in its pinned environment, and keep historical forest audits valid.
-- [ ] Run two fits, one seed, one CPU job: 15 minutes, four CPUs, 16 GiB,
+- [x] Run two fits, one seed, one CPU job: 15 minutes, four CPUs, 16 GiB,
   no GPU. No new preparation, seed search, or alternate algorithm fit.
-- [ ] Audit all artifacts, compare all metrics and fixed-score cutoffs, update
+- [x] Audit all artifacts, compare all metrics and fixed-score cutoffs, update
   the journal/site draft and handoff records, and commit. Do not publish.
 
 See ADABOOST_PILOT.md. Historical scientific revisions remain immutable in
 Git; additive implementation updates must validate old source hashes against
 each recorded commit, never rewrite old results to match today's files.
+
+Outcome: frozen d47a6de, job 398348, completed 0:0 in 14 seconds. Both
+50-tree fits passed persistence, input/output, and metric audits. AUC is
+90.70692/83.73956; default DR 81.08597/46.42534. At FA<=29.9%, poisoned
+DR can reach 80.45249, so the default gap is not wholesale loss of ranking.
+Pre-split dependence and missing source choices remain. Stop this pair.
+The next proposed model is SVM (C=1, sigmoid), after freezing gamma,
+coefficient, and score choices. See results/adaboost_pilot_20260920 and the
+journal. No subsequent model, seed, or alternate AdaBoost algorithm ran.
 
 ## Current execution: matched split/resampling check
 

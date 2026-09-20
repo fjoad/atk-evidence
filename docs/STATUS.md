@@ -12,14 +12,26 @@ execution plan here is
 
 ## Current project state
 
-- **AdaBoost pair in implementation:** user approved the next model. The
-  pre-outcome ADABOOST_PILOT.md fixes 50 depth-one trees, SAMME.R, learning
-  rate 1, seed 20260920, stock sklearn 1.5.2 in an isolated environment, and
-  unchanged original p00/p30 inputs. Two fits only; 15-minute/4-CPU/16-GiB
-  budget, no GPU. The 2020-era default algorithm is preserved without claiming
-  the authors' exact software. No fitted result yet. Environment bootstrap
-  was killed on the login node, so setup moved to CPU job 398338; this is not
-  a research-data fit. Existing environments and results are unchanged.
+- **AdaBoost pair complete and audited:** frozen d47a6de, CPU job 398348,
+  completed 0:0 in 14 seconds within 15 minutes/4 CPUs/16 GiB, no GPU.
+  Stock sklearn 1.5.2 SAMME.R, 50 depth-one trees, learning rate 1, seed
+  20260920, unchanged original inputs. DR/FA/AUC is 81.09/15.17/90.71 at
+  p00 and 46.43/5.06/83.74 at p30. At FA<=29.9%, poisoned saved-score DR
+  reaches 80.45%, above the paper's 70.1%; at p00 FA<=14.1%, best DR is
+  80.72%, below 85.7% printed. The complete pattern is not recovered in
+  this pilot, nor is universal failure established. AUC falls 6.97 points;
+  default detection's 34.66-point decline includes a large cutoff effect.
+  Both fits used all 50 trees and passed exact save/reload; all 20 consumed
+  arrays, metadata, paired features/labels/identities, outputs, and metrics
+  passed the artifact audit. Local and cluster comparisons are byte-identical.
+  Before freeze: 307 repository tests passed, four environment-specific fit
+  tests skipped there; all seven AdaBoost tests passed locally in the pinned
+  environment and on the compute node. Setup job 398338 separately completed
+  in 67 seconds after login-node bootstrap was killed, with no research fits.
+  Stop this pair; a source-specified SVM pair is the proposed next model.
+  See the [AdaBoost record](../studies/takiddin-2021-robust-poisoning/results/adaboost_pilot_20260920/README.md).
+  Old scientific revisions/outputs remain preserved; the journal/site draft
+  is updated locally and nothing was published.
 
 - **Matched Paper 3 split/resampling control complete and audited:** frozen
   e6e0359 passed all 304 repository tests; CPU job 398164 completed 0:0 in

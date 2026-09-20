@@ -58,6 +58,21 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user-approved first AdaBoost pair is complete (d47a6de, job 398348).
+Its historical SAMME.R completion gives AUC 90.71/83.74 at p00/p30 on the
+original pilot. Default DR drops to 46.43% under poisoning, but saved-score
+DR reaches 80.45% within FA<=29.9%. Useful ranking survives; the complete
+printed pattern is not reproduced by this small pilot. All artifact checks
+passed. Stop this pair; next proposed model is a separately specified SVM
+pair, not automatic AdaBoost seeds or alternative settings. See the
+[record](studies/takiddin-2021-robust-poisoning/results/adaboost_pilot_20260920/README.md).
+The direct files now support both baselines. Preserve historical scientific
+revisions in Git and verify old source hashes against their recorded commits;
+never rewrite old evidence to match the latest implementation. Local website
+drafts are not published. Paper 1 is unchanged by this work.
+
+### Earlier Paper 3 checkpoints
+
 Paper 3's September 20 all-model investigation is active under the plan in
 STATUS. Its preparation, first forest pair, and user-approved matched controls
 are complete. The four-fit control (frozen e6e0359, job 398164) found that

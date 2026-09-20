@@ -40,6 +40,13 @@ collapse: AUC remains 93.18/82.97. This supports a bounded preparation-policy
 effect while preserving evidence that the baseline works. See the
 [matched-control record](results/split_control_20260920/README.md).
 
+The first AdaBoost pair is also complete and audited (job 398348, frozen
+d47a6de). The historical SAMME.R completion gives DR/FA/AUC 81.09/15.17/90.71
+at p00 and 46.43/5.06/83.74 at p30 on the original pilot. At the paper's
+29.9% FA cap, the poisoned saved scores can reach 80.45% detection, versus
+70.1% printed. This is a cutoff diagnostic, not full-data reproduction or
+validated calibration. See the [AdaBoost record](results/adaboost_pilot_20260920/README.md).
+
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
@@ -61,6 +68,7 @@ a result or verdict.
 - [`DATA_SOURCES.md`](DATA_SOURCES.md): fresh source identity and allocation checks.
 - [`FIRST_BASELINE.md`](FIRST_BASELINE.md): frozen forest, metric, and diagnostic choices.
 - [`SPLIT_RESAMPLING_CHECK.md`](SPLIT_RESAMPLING_CHECK.md): frozen matched controls and stopping rule.
+- [`ADABOOST_PILOT.md`](ADABOOST_PILOT.md): historical algorithm completion, fixed pair, and verification.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

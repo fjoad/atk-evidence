@@ -25,6 +25,31 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: AdaBoost's low default detection is not an all-cutoff failure
+
+**Added September 20 after the frozen AdaBoost pair.**
+
+- **Question:** does another ordinary shallow model learn on the original
+  pipeline, and does poisoning change ranking or merely its operating point?
+- **Evidence:** stock SAMME.R/50 depth-one trees gives p00/p30
+  DR 81.09/46.43, FA 15.17/5.06, AUC 90.71/83.74. At the common 14.1%
+  FA cap DR is 80.72/67.33; at 29.9%, 88.78/80.45. Both fits and the
+  saved-artifact audit passed, with no performance-selected retry.
+- **Current conclusion:** **OBSERVED** — ranking deteriorates but stays
+  useful. Default DR's 34.66-point drop cannot stand for an all-cutoff
+  failure. Poisoned fixed scores can exceed the printed 70.1% DR within
+  FA<=29.9%; unpoisoned scores cannot reach 85.7% within FA<=14.1%.
+  Neither partial outcome reproduces or excludes a full-population row.
+- **Correction and limits:** our earlier method note overlooked the explicit
+  decision-tree family; depth and algorithm details remain omitted. The
+  isolated sklearn 1.5.2 implementation retains a historical default algorithm
+  but is not the authors' identified stack. One seed, dependent pilot rows,
+  pre-split synthesis, and test-chosen cutoffs bound the conclusion.
+- **Decision:** stop the pair. A specified SVM pair is the proposed next
+  distinct model question; deeper trees, SAMME, and seeds were not silently
+  searched. Preserve the supportive result as plainly as the differences.
+- **Record:** [AdaBoost pilot](../studies/takiddin-2021-robust-poisoning/results/adaboost_pilot_20260920/README.md).
+
 ### Paper 3: a working baseline, a preparation effect, and a surviving opening
 
 **Added September 20; earlier records below remain historical.**

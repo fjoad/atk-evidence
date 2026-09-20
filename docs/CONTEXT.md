@@ -2,15 +2,31 @@
 
 **Last updated:** 2026-09-20
 
-**Current AdaBoost step:** user approved the proposed next pair. Contract
-ADABOOST_PILOT.md: same original p00/p30 inputs, 50 depth-one trees, SAMME.R,
-learning_rate1, seed20260920, isolated sklearn1.5.2/numpy1.26.4/scipy1.13.1/
-joblib1.4.2/threadpoolctl3.5.0. Alternative SAMME unrun. Two fits in one
-15-minute,4-CPU,16-GiB CPU job. No empirical result yet. Login-node venv setup
-was killed, so environment setup moved to CPU job398338 (one CPU,4GiB,10min;
-no research fitting). Direct files are extended additively; source hashes of
-old results are checked against their recorded immutable commits when today's
-file differs. Do not rewrite old outputs or silently reinterpret old scores.
+**Current AdaBoost step, completed:** user-approved pair frozen at d47a6de,
+job 398348, completed 0:0 in 14 seconds (15-minute cap, 4 CPUs, 16 GiB,
+no GPU). ADABOOST_PILOT.md uses original p00/p30 arrays and stock sklearn
+1.5.2 SAMME.R, learning rate 1, seed 20260920, depth-one trees. Both fits
+used all 50, taking 1.494/1.503 seconds; exact reload passed. NumPy 1.26.4,
+SciPy 1.13.1, joblib 1.4.2, threadpoolctl 3.5.0 isolated from the RF env.
+DR/FA/AUC 81.08597/15.17303/90.70692 at p00 and
+46.42534/5.05768/83.73956 at p30. At FA caps 14.1/29.9%, best DR is
+80.72398/88.77828 at p00, 67.33032/80.45249 at p30. Default DR drops
+34.66063 points but AUC drops 6.96736; thresholds explain part, not all.
+The poisoned fixed scores can exceed the printed operating corner; unpoisoned
+ones miss it. This is a dependent 20-customer pilot, not full reproduction,
+validated calibration, or an all-configuration bound. All 20 consumed arrays,
+metadata, paired features/IDs/labels, 675 flips, output hashes, and metrics
+passed local checks; local comparison equals cluster bytes. Pre-freeze main
+suite: 307 pass, 4 Ada fit tests skipped; pinned environment and compute node
+each passed all 7 Ada tests. Separate setup job 398338 took 67 seconds after
+login-node venv bootstrap was killed; no research fit there. Expected library
+deprecation warning retained. Source correction: tree family is explicit in
+III-B.2(b), only depth/details omitted. Old source hashes now check recorded
+immutable commits when today's direct implementation files differ; old runs
+and contracts were not overwritten. See results/adaboost_pilot_20260920.
+Stop this pair; next proposed model is SVM with omitted gamma/coefficient/score
+choices frozen first. No SVM or alternate Ada algorithm/depth/seed ran.
+Journal/site draft updated locally, not deployed.
 
 **Current matched-control step, completed:** SPLIT_RESAMPLING_CHECK.md and
 code frozen at e6e0359; all 304 tests passed. User-authorized CPU job 398164

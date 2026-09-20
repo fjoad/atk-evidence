@@ -9,11 +9,11 @@ can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
 **Where we are, 20 September 2026:** the data are verified, the preparation
-choices are recorded, and the first random-forest pilot and matched preparation
-controls have completed. Generating synthetic data before splitting materially
-improves the apparent performance in this pilot. Removing that access and
-holding out whole source days makes the evaluation stricter, but useful
-discrimination survives. The full paper and its other models remain untested.
+choices are recorded, and random-forest and AdaBoost pilots have completed.
+Both learn useful signals, and both show why default detection must be read
+alongside false alarms and ranking. Matched forest controls also show that
+preparation materially affects performance without explaining all useful
+discrimination. The full-population paper and its remaining models are untested.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -545,14 +545,75 @@ Panther's login node killed the environment bootstrap before any fit; setup
 then completed in a separate 67-second, one-CPU allocation. No research-data
 experiment was part of that setup job.
 
+## 20 September — AdaBoost learns too, and a low detection rate needs context
+
+Both AdaBoost fits completed successfully, each using all 50 depth-one trees.
+They used exactly the original pilot's 4,464 training and 2,232 test examples;
+the only difference between the pair was the declared poisoning of training
+labels. Each fit took about 1.5 seconds. The complete CPU job took 14 seconds.
+
+| Training condition | Attacks detected | False alarms | Ranking AUC |
+|---|---:|---:|---:|
+| No poisoning | 81.09% | 15.17% | 90.71% |
+| 30% of customers selected for poisoning | 46.43% | 5.06% | 83.74% |
+
+The poisoned detector's 46.43% detection is well below the paper's 70.1%.
+But it also makes far fewer false alarms than the paper's 29.9%. Those are
+different operating points, so detection alone is not enough to explain the
+gap. The saved-score checks were designed for exactly this situation.
+
+Allowing at most 29.9% false alarms, the poisoned model's existing scores
+can reach 80.45% detection, above the printed 70.1%. At a tighter 17.6%
+cap, they can reach 71.40%. We did not retrain the model to obtain these
+values. Moving the cutoff changes which scores become alarms.
+
+This does not erase the effect of poisoning. At the same 14.1% false-alarm
+cap, detection falls from 80.72% without poisoning to 67.33% with it.
+AUC falls by 6.97 percentage points. There is genuine ranking deterioration,
+but the 34.66-point default-detection decline overstates it if interpreted as
+the loss of all useful discrimination.
+
+The other direction matters too: without poisoning, no cutoff on these saved
+scores reaches the paper's 85.7% detection within its 14.1% false-alarm
+allowance. The best is 80.72%. A favorable poisoned-score comparison therefore
+does not reproduce the whole table pattern. Nor does this small unpoisoned
+gap establish that another fit or the full population cannot reach it.
+
+These cutoffs use the test answers, so they remain diagnostic possibilities,
+not thresholds validated for future data. The full seven-metric comparison
+is in the [AdaBoost record](results/adaboost_pilot_20260920/README.md).
+Its ordinary accuracy at 30% poisoning, 70.92%, is close to the paper's
+70.1%, while detection, false alarms, and other metrics differ. One close
+number is not a reproduced result.
+
+**What this changes:** useful baseline behavior is no longer just something
+we saw with a forest. AdaBoost also beats the constant and daily-consumption
+references. The forest ranks better than AdaBoost on this same pilot, reversing
+their printed AUC ordering; that observation still needs the full-data and
+software-choice caveats. We cannot jump from either successful pilot to the
+paper's complete results, or from a low default detection rate to impossibility.
+
+All seven AdaBoost software checks passed on the compute node. Both models
+gave identical predictions and probabilities after reloading. After transfer,
+the input hashes, unchanged paired features/test identities, 675 changed
+training labels, saved predictions, and recomputed metrics passed the audit.
+The local comparison matches the cluster file byte for byte. The expected
+library deprecation warning is preserved; there was no failed experimental
+fit or outcome-dependent retry.
+
+We stop this pair here. The original setup still contains pre-split synthetic
+dependence, and the corrected forest result cannot be transferred to AdaBoost.
+This is one seed and twenty dependent customers, not full-paper reproduction,
+a confidence interval, or an explanation of how the authors produced numbers.
+
 ## What we will do next
 
-The random forest and this matched preparation check are complete. The next
-distinct question is whether another reported shallow baseline shows similar
-poisoning and cutoff behavior on the original verified pipeline. A bounded
-AdaBoost pair is the proposed next step, after recording its library/version
-choices. We have not launched it. Continue through the remaining models with
-their reported settings; the objective remains coverage of the complete paper.
+The next proposed model is the paper's SVM: C=1 and a sigmoid kernel. Its
+omitted gamma, coefficient, and decision-score choices need to be recorded
+before another bounded 0%/30% pair on the same original inputs. We have not
+launched that experiment. It tests a different reported baseline; repeating
+AdaBoost seeds would not answer that question. The objective remains coverage
+of every baseline and proposed model, followed by justified full-data depth.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
@@ -581,5 +642,5 @@ changed.
 - [This journal's editable source](RESEARCH_LOG.md)
 
 This journal contains source observations, an algebraic check, verified
-preparation, a fitted random-forest pilot, and controlled follow-up results.
+preparation, fitted random-forest and AdaBoost pilots, and forest controls.
 It does not yet contain a full-population reproduction of this paper.

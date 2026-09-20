@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; random-forest pilot and matched controls completed on 20 September
+**Status:** active; forest pilot/controls and first AdaBoost pair completed on 20 September
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -168,3 +168,22 @@ DR drops 31.86528 points with poisoning, versus 21.24352 at the common
 17.6% FA cap; AUC falls 10.20901 points. No automatic repetition is justified
 merely to reverse the observed result. Continue to a separately specified model
 question rather than turn this pilot into an undeclared search.
+
+## E14 — the forest's useful ranking and cutoff effect are unique to that model
+
+**Status:** weakened for the original pilot by a second baseline, not generally excluded.
+
+The stock historical-algorithm AdaBoost pair (d47a6de, job 398348) gives
+DR/FA/AUC 81.09/15.17/90.71 at p00 and 46.43/5.06/83.74 at p30.
+At the common 14.1% FA cap, saved-score DR is 80.72/67.33; at 29.9%,
+88.78/80.45. Ranking deteriorates but remains useful; the 34.66-point
+default-DR decline is not a complete loss of discrimination. The poisoned
+scores can exceed the printed 70.1% DR within its 29.9% FA allowance, while
+the unpoisoned scores cannot reach 85.7% DR within 14.1% FA. Neither partial
+comparison is full-population reproduction or an all-model limit.
+
+The forest exceeds AdaBoost AUC on these identical pilot rows, opposite their
+printed ordering. Different runtime versions, unspecified model choices,
+twenty dependent customers, pre-split synthesis, and one seed limit the
+inference. No extra seed or alternate AdaBoost setting was run to change the
+outcome. See the [AdaBoost record](results/adaboost_pilot_20260920/README.md).
