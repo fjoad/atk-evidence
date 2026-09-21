@@ -3,6 +3,7 @@
 **Last updated:** 2026-09-21
 
 **Current feed-forward step, ready but network-blocked:** user approved pair;
+code frozen at b5da23a7a5392d2c28b81d037869bfff637b4a48. No GPU submission.
 FEED_FORWARD_PILOT.md defines 48→6xDense500/ReLU→1 Sigmoid, Adamax lr.002,
 betas.9/.999,eps 1e-7, MaxNorm 3 axis 0/all Dense kernels, no bias constraint,
 dropout 0,float32, standard BCE repair, seed 20260920, 50 epochs/batch 100,
@@ -16,6 +17,7 @@ CPU setup job 398992 was last RUNNING at 8:36 downloading NVIDIA dependencies.
 QCRI VPN then DISCONNECTED, panther DNS failed, 10.2.19.87 TCP/SSH timed out.
 Final setup status UNKNOWN. Do not duplicate setup or claim its completion;
 first inspect sacct/log on reconnect. No GPU job or real-data neural fit yet.
+Setup log: /export/home/fjoad/atk-evidence/data/environments/feed-forward-env-20260921-398992.out.
 Approved GPU pair: V100-16GB, 4 CPUs, 16 GiB, 20 min with seven-minute fit
 guards; requireGPU update/placement before data, no CPU fallback. Save epochs,
 weights, configs, probabilities, norms and hardware; verify in pinned env.

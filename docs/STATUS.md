@@ -13,7 +13,7 @@ execution plan here is
 ## Current project state
 
 - **Feed-forward instrument ready; Panther access unavailable:** user-approved
-  pair is implemented under FEED_FORWARD_PILOT.md: six Dense 500/ReLU hidden
+  pair is frozen at b5da23a under FEED_FORWARD_PILOT.md: six Dense 500/ReLU hidden
   layers, one Sigmoid, Adamax(.002), MaxNorm 3(axis 0), no dropout, 50 epochs/
   batch 100, and explicit standard-BCE repair on original p00/p30 arrays.
   Main suite: 327 pass/10 isolated-environment skips. All 8 TensorFlow and 7

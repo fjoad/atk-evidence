@@ -839,7 +839,7 @@ tests passed in those environments. The earlier SVM diagnostic still verifies
 against its original record. None of these software examples is a result on
 the electricity observations.
 
-Panther's dependency installation was submitted as CPU job398992 and was
+Panther's dependency installation was submitted as CPU job 398992 and was
 downloading NVIDIA libraries when the QCRI VPN disconnected. Hostname lookup
 and direct-IP checks then failed. The setup job may continue independently,
 but we cannot yet verify its final status. No research-data neural fit or GPU
@@ -847,6 +847,10 @@ job has been submitted, and this interruption says nothing about the paper.
 We have saved the implementation and pre-outcome contract. On reconnect, first
 check the existing setup job, then the GPU preflight; do not duplicate jobs
 or substitute a local real-data fit.
+
+The scientific implementation and pre-outcome contract are frozen at b5da23a.
+The unresolved access step is not a detector result or a change to the agreed
+experiment. Nothing has been published.
 
 ## What we will do next
 

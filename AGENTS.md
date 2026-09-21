@@ -67,7 +67,7 @@ repair, 50 epochs/batch 100, original p00/p30 inputs, and one V100-16GB pair
 inside 20 minutes with seven-minute fit guards. GPU preflight and fixtures
 must pass before real inputs; no CPU fallback. Resume this already-approved
 pair when access returns, but do not add seeds or alternative settings.
-The implementation and assumptions are preserved for the pending code freeze.
+The implementation and assumptions are frozen at b5da23a7a5392d2c28b81d037869bfff637b4a48.
 All prior results remain unchanged. Nothing is published.
 
 ### Earlier read-only SVM checkpoint
