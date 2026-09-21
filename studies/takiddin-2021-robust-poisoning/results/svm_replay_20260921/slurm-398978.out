@@ -1,0 +1,44 @@
+test_complete_read_only_pipeline_and_audit_on_constructed_artifacts (tests.test_robust_svm_replay.ReplayTests.test_complete_read_only_pipeline_and_audit_on_constructed_artifacts) ... /export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+ok
+test_compute_guard_and_no_fit_call (tests.test_robust_svm_replay.ReplayTests.test_compute_guard_and_no_fit_call) ... ok
+test_hand_calculation_and_chunks (tests.test_robust_svm_replay.ReplayTests.test_hand_calculation_and_chunks) ... ok
+test_incomplete_artifact_is_not_a_verified_result (tests.test_robust_svm_replay.ReplayTests.test_incomplete_artifact_is_not_a_verified_result) ... ok
+test_native_model_binding_replay_and_wrong_intercept (tests.test_robust_svm_replay.ReplayTests.test_native_model_binding_replay_and_wrong_intercept) ... /export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/sklearn/svm/_base.py:239: FutureWarning: The `probability` parameter was deprecated in 1.9 and will be removed in version 1.11. Use `CalibratedClassifierCV(SVC(), ensemble=False)` instead of `SVC(probability=True)`
+  warnings.warn(
+ok
+test_negative_constant_direction_does_not_imply_dual_curvature (tests.test_robust_svm_replay.ReplayTests.test_negative_constant_direction_does_not_imply_dual_curvature) ... ok
+test_negative_zero_sum_direction_survives_dual_mapping (tests.test_robust_svm_replay.ReplayTests.test_negative_zero_sum_direction_survives_dual_mapping) ... ok
+test_psd_matrix_has_no_resolved_negative_eigenvalues (tests.test_robust_svm_replay.ReplayTests.test_psd_matrix_has_no_resolved_negative_eigenvalues) ... ok
+test_roundoff_and_invalid_matrices (tests.test_robust_svm_replay.ReplayTests.test_roundoff_and_invalid_matrices) ... ok
+test_selection_is_identity_based_not_input_order (tests.test_robust_svm_replay.ReplayTests.test_selection_is_identity_based_not_input_order) ... ok
+test_zero_margin_roundoff_is_explicit (tests.test_robust_svm_replay.ReplayTests.test_zero_margin_roundoff_is_explicit) ... ok
+
+----------------------------------------------------------------------
+Ran 11 tests in 1.002s
+
+OK
+{"case": "p00", "replay": {"model_binding": {"support_rows_verified": 1689, "maximum_alpha": 1.0, "dual_coefficient_sum_absolute": 0.0}, "train": {"rows": 4464, "max_absolute_error": 1.5347723092418164e-12, "max_error_tolerance_ratio": 4.5260894173780236e-05, "near_zero_native_margins": 0, "prediction_disagreements": 0, "disagreements_outside_near_zero": 0}, "test": {"rows": 2232, "max_absolute_error": 1.5347723092418164e-12, "max_error_tolerance_ratio": 3.932127279305309e-05, "near_zero_native_margins": 0, "prediction_disagreements": 0, "disagreements_outside_near_zero": 0}, "training_accuracy": {"observed_label_accuracy": 63.32885304659498, "true_label_accuracy": 63.32885304659498}}}
+{"case": "p30", "replay": {"model_binding": {"support_rows_verified": 1901, "maximum_alpha": 1.0, "dual_coefficient_sum_absolute": 0.0}, "train": {"rows": 4464, "max_absolute_error": 1.6768808563938364e-12, "max_error_tolerance_ratio": 7.086632120923131e-05, "near_zero_native_margins": 0, "prediction_disagreements": 0, "disagreements_outside_near_zero": 0}, "test": {"rows": 2232, "max_absolute_error": 1.3358203432289883e-12, "max_error_tolerance_ratio": 6.044043735496858e-05, "near_zero_native_margins": 0, "prediction_disagreements": 0, "disagreements_outside_near_zero": 0}, "training_accuracy": {"observed_label_accuracy": 59.72222222222222, "true_label_accuracy": 55.488351254480285}}}
+{
+  "diagnostic_arrays": 3,
+  "experimental_fits": 0,
+  "kernel_rows": 512,
+  "replay_rows_checked": 13392,
+  "result_sha256": "cdc43fa588918149794f91d4cb509aa9991b3d48e9f643c787c1411e97918013",
+  "status": "verified"
+}

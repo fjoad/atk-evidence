@@ -12,13 +12,24 @@ execution plan here is
 
 ## Current project state
 
-- **Read-only SVM diagnostic in implementation:** user approved score replay
-  and fixed-subset kernel inspection. SVM_REPLAY.md freezes both original
-  models/inputs, full train/test replay, one 512-row identity-selected subset,
-  raw/centered spectra and equality-direction checks, and numerical tolerances.
-  Budget: one 10-minute/1-CPU/8-GiB job, no GPU and zero experimental fits.
-  No new kernel setting, subset search, or cause-of-performance claim. The
-  empirical diagnostic has not run; original scientific files remain unchanged.
+- **Read-only SVM diagnostic complete and audited:** frozen 4665e07, job 398978,
+  completed 0:0 in 32 seconds; diagnostic took 5.61 seconds, zero experimental
+  fits. All 13,392 manual/native score evaluations agree within 1.68e-12,
+  with no label disagreements or near-zero ambiguity. Original files unchanged.
+  The fixed 512-row kernel has 366 negative eigenvalues; minimum -23.45098,
+  centered minimum -19.96835, versus tolerances about 1.5e-8. The centered
+  witness obeys both label-mapped dual equalities (residual 2.05e-15), so the
+  usual concave-dual guarantee is unavailable for this setup. This does NOT
+  establish the cause of accuracy loss, fitted-point suboptimality, or failure
+  under other parameters. All three diagnostic archives and witnesses pass;
+  local/cluster audit outputs are byte-identical and the old SVM audit matches.
+  Request 1 CPU/8 GiB/10 min; Slurm allocated 2 logical CPUs on a two-thread/core
+  node, while CPUs/Task and numerical-library threads stayed 1. No GPU.
+  Before freeze 325 tests passed with 4 Ada fit tests skipped there and passed
+  in their separate environment; 11 diagnostic tests passed locally/on compute.
+  Stop this diagnostic; keep finite SVM sensitivity open and specify the
+  feed-forward baseline next for model coverage. No new fit or publication.
+  See the [diagnostic record](../studies/takiddin-2021-robust-poisoning/results/svm_replay_20260921/README.md).
 
 - **SVM pair complete and audited, September 21:** frozen e698173, job
   398709, completed 0:0 in two minutes within 15 minutes/4 CPUs/16 GiB,

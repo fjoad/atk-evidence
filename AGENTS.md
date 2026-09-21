@@ -58,6 +58,22 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The approved read-only SVM follow-up is complete (4665e07, job 398978),
+with zero experimental fits. All 13,392 manually reconstructed/native scores
+agree within 1.68e-12 and all labels match. The fixed 512-row sigmoid kernel
+has large negative directions, including under the dual equality constraint
+(centered minimum -19.97 versus tolerance 1.48e-8). Thus the usual concave-dual
+guarantee is unavailable here; fitted-point suboptimality, performance cause,
+and failure of other settings are NOT established. Original artifacts remain
+unchanged and all diagnostic audits pass. See the
+[record](studies/takiddin-2021-robust-poisoning/results/svm_replay_20260921/README.md).
+Stop this diagnostic. Next proposed coverage step is a separately specified
+feed-forward pilot with the standard cross-entropy repair explicit; SVM
+parameter sensitivity remains open. No new fit is authorized by this summary.
+Website changes remain local drafts; no deployment occurred.
+
+### Earlier SVM checkpoint
+
 The user-approved first sigmoid SVM pair is complete (e698173, job 398709).
 Its original-pilot AUC is 65.64/63.38 at p00/p30; at the corresponding printed
 FA caps 10.2/25.7%, best saved-score DR is 19.37/33.48 versus 89.2/73.7.

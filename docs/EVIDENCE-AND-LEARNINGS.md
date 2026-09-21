@@ -25,6 +25,27 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: score replay verified; nonconcave sigmoid geometry observed
+
+**Added September 21 after the frozen read-only diagnostic.**
+
+- **Question:** does a score-reconstruction error explain weak SVM behavior,
+  and does the declared kernel satisfy the usual optimization-shape condition?
+- **Evidence:** job 398978/frozen 4665e07 reconstructs 13,392 scores within
+  1.68e-12 with all labels identical. The fixed 512-row kernel has minimum
+  eigenvalue -23.45098; after centering it is -19.96835, versus tolerance
+  about 1.5e-8. A zero-sum witness maps to both label-constrained dual
+  directions, with equality residual about 2.05e-15. No original file changed.
+- **Conclusion:** **VERIFIED to the declared tolerance** — the saved score
+  formula/sign/binding is consistent. **OBSERVED numerically** — the usual
+  concave-dual guarantee fails for this fixed kernel. **OPEN** — whether the
+  actual fitted point is suboptimal, why accuracy is poor, and whether other
+  omitted settings would recover the results. Geometry is not causation.
+- **Decision:** stop this diagnostic, retain finite parameter sensitivity as
+  unresolved, and propose the feed-forward baseline for the next coverage
+  step. No extra fit or selected subset was used to manufacture a result.
+- **Record:** [read-only SVM diagnostic](../studies/takiddin-2021-robust-poisoning/results/svm_replay_20260921/README.md).
+
 ### Paper 3: the first sigmoid SVM misses beyond a cutoff explanation
 
 **Added September 21 after the frozen SVM pair.**

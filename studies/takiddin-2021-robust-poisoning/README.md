@@ -55,6 +55,14 @@ pass artifact checks, but their training accuracy is weak too. The next
 question is a bounded read-only kernel/solution diagnostic, not extra seeds.
 See the [SVM record](results/svm_pilot_20260921/README.md).
 
+The read-only SVM follow-up is complete (job 398978, frozen 4665e07).
+All 13,392 manual/native score evaluations agree to about 1.7e-12 with no
+label differences. The fixed 512-row kernel has large negative directions,
+including under the dual equality constraint. This removes the usual
+optimization-shape guarantee for this setup but does not establish the cause
+of its accuracy or rule out other parameters. Original artifacts are unchanged;
+no detector was refitted. See the [diagnostic record](results/svm_replay_20260921/README.md).
+
 The historical source-only audit completed on September 2. The paper was
 identified, fingerprinted, and visually inspected in full; the method, causal
 claims, and Tables II–V are frozen. A preregistered audit found that three
@@ -78,6 +86,7 @@ a result or verdict.
 - [`SPLIT_RESAMPLING_CHECK.md`](SPLIT_RESAMPLING_CHECK.md): frozen matched controls and stopping rule.
 - [`ADABOOST_PILOT.md`](ADABOOST_PILOT.md): historical algorithm completion, fixed pair, and verification.
 - [`SVM_PILOT.md`](SVM_PILOT.md): printed sigmoid kernel, omitted-setting completion, and raw scores.
+- [`SVM_REPLAY.md`](SVM_REPLAY.md): frozen independent replay and constrained kernel checks.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

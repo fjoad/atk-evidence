@@ -2,16 +2,28 @@
 
 **Last updated:** 2026-09-21
 
-**Current read-only SVM follow-up:** user approved. SVM_REPLAY.md freezes
-independent manual/libsvm score replay on all original train/test rows for
-p00/p30, plus raw/centered sigmoid spectra on one 512-row training subset
-(sorted unique UID, rng SeedSequence([20260921,601]), sample then UID order).
-Score tolerance 1e-8+1e-10*abs(native); spectral tolerance 1e-10*max(1,radius).
-Check a centered negative witness also obeys both label-mapped dual equalities;
-do not claim fitted-box feasibility, KKT failure, global suboptimality or causal
-performance loss. One job, 10 minutes, 1 CPU, 8 GiB, no GPU, zero experimental
-fits; original five scientific files/models untouched. No empirical spectrum
-yet; see the active plan. Local work is fixtures/artifact verification only.
+**Current read-only SVM follow-up, complete:** frozen 4665e07, job 398978,
+completed 0:0 in 32 seconds; program 5.61120 seconds, zero experimental fits.
+Manual/libsvm replay on 13,392 train/test row-model pairs: largest error
+1.67688e-12, no prediction disagreement or near-zero ambiguity, native test
+scores exactly match originals. Support vectors/coefficients/labels bind
+correctly; all original input/model/score hashes unchanged. Fixed 512-row subset
+(UID rule, seed20260921/role601) has 309 originals/203 synthetics; observed
+benign/attack251/261 at p00,341/171 at p30. K min=-23.45098; centered min=
+-19.96835; both have366 resolved negative eigenvalues at about 1.5e-8 tolerance.
+Centered witness obeys both dual equalities (residual 2.05e-15), so the usual
+concave-dual guarantee does not apply here. Do NOT infer global suboptimality,
+KKT failure, a feasible improvement at the fitted box boundary, caused accuracy
+loss, or all-parameter impossibility. Three archives/witnesses audited locally;
+audit matches cluster bytes, old SVM audit still matches. Requested 1 CPU,
+8 GiB,10 min; scheduler allocated 2 logical CPUs on a two-thread/core node;
+CPUs/Task=1 and numerical threads=1. Peak process RSS215816 KiB. No GPU.
+325 tests passed before freeze,4 Ada fits skipped there and passed separately;
+11 diagnostic tests pass locally/on compute. Result SHA cdc43fa5...7918013.
+See results/svm_replay_20260921. Stop this diagnostic. Next proposed coverage
+step: specify feed-forward baseline and bounded pilot with standard BCE repair
+explicit; finite SVM gamma/coef0 sensitivity remains open. No new detector
+fit, parameter search, or publication occurred. Local journal/site updated.
 
 **Current SVM step, completed September 21:** user-approved original p00/p30
 pair frozen e698173, job 398709, completed 0:0 in 2:00 under 15 minutes,

@@ -9,11 +9,11 @@ can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
 **Where we are, 21 September 2026:** three shallow-model pilots are complete.
-Forest and AdaBoost learn useful signals, but the initial sigmoid SVM performs
-poorly and no cutoff on its saved scores reaches the reported operating points.
-Our next question is why that SVM setup is weak, before spending more on it.
-Matched forest controls also show that preparation matters. These are small,
-dependent pilot samples; full-population reproduction remains incomplete.
+Forest and AdaBoost learn useful signals; the initial sigmoid SVM is weak.
+A read-only follow-up confirms its score calculation and finds that this
+kernel lacks the usual optimization-shape guarantee. That does not establish
+the cause of poor accuracy. These are small, dependent pilot samples;
+full-population reproduction remains incomplete.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -737,15 +737,70 @@ tests; four AdaBoost fit tests were skipped there and passed in their separate
 environment. The old SVM artifact audit still matches exactly. The diagnostic
 is ready to freeze and run once on the compute node.
 
+## 21 September — The scores check out; the kernel has a separate problem
+
+The read-only diagnostic completed without refitting either SVM. We calculated
+all training and test scores independently from the saved support vectors,
+coefficients, and sigmoid formula, then compared them with the library and
+the original saved test results.
+
+Across 13,392 row/model evaluations, the largest difference was about
+0.0000000000017. Every predicted label agreed, and none was close enough to
+zero for rounding to make the label ambiguous. Support vectors matched their
+original training rows, and the earlier accuracy calculations were unchanged.
+So a wrong formula, score direction, or corrupted saved output does not explain
+the weak result in these checked artifacts.
+
+The fixed kernel subset contained 512 rows: 309 original and 203 synthetic.
+The same selection rule chose it before the kernel was inspected. We found
+366 clearly negative eigenvalues. The most negative was about -23.45, against
+a numerical tolerance of about 0.000000015. Removing the constant direction
+still left a minimum around -19.97. The corresponding direction obeyed the
+SVM equality constraint under both poisoning-label assignments.
+
+An eigenvalue is a way to check how a matrix behaves along a particular
+direction. Here the negative directions matter because the usual SVM
+optimization guarantee depends on the kernel having the appropriate shape.
+Our declared sigmoid setup does not satisfy that condition on these inputs.
+The solver's earlier success flag therefore cannot certify that it found a
+global optimum. This is a measured property of this setup, not just the
+general warning in the [LIBSVM documentation](https://www.csie.ntu.edu.tw/~cjlin/libsvm/faq.html).
+
+**Two conclusions must stay separate.** The score calculation is verified.
+The kernel's optimization geometry is problematic for the usual guarantee.
+We have not shown that this geometry caused a particular number of missed
+attacks, that the fitted point admits a better feasible solution nearby, or
+that different omitted gamma/coefficient settings would fail. A matrix
+diagnostic is not a replacement for those experiments.
+
+The entire job took 32 seconds; the diagnostic itself took 5.61 seconds.
+We requested one CPU, and Slurm allocated two logical CPUs on a machine with
+two threads per core; the program used one numerical-library thread. The
+actual allocation is recorded rather than described as one allocated logical
+CPU. There were no GPU allocations or experimental fits.
+
+All original input/model/score hashes stayed unchanged. The transferred
+diagnostic arrays passed the independent audit, including reconstructing the
+subset and checking the negative-direction witnesses. The local audit matches
+the cluster record byte for byte. The [complete diagnostic record](results/svm_replay_20260921/README.md)
+contains the formulas, tolerances, spectra, constraints, timing, and limits.
+
+**Decision:** this closes the score-replay question and records a concrete
+optimization concern. We will keep a finite SVM parameter sensitivity as an
+unresolved follow-up, not declare the entire SVM family impossible. To continue
+the requested model coverage, the next proposed step is the feed-forward
+baseline with its loss completion stated explicitly. No parameter search or
+neural fit was launched after this diagnostic.
+
 ## What we will do next
 
-First specify a bounded, read-only SVM diagnostic: replay its saved decision
-scores and inspect kernel behavior on a fixed training subset. Freeze the
-subset, numerical tolerances, budget, and stop rule before execution. That
-answers a different question from trying more seeds or simply enlarging this
-weak fit. Any later parameter alternative remains a separately recorded run.
-The remaining baselines and proposed models stay in scope; this diagnostic
-does not replace the goal of complete coverage and justified full-data depth.
+Specify the feed-forward baseline: six hidden layers of 500 neurons and the
+paper's other reported settings, with the standard cross-entropy repair clearly
+separated from its printed label-independent expression. Freeze omitted
+initialization/optimizer details and a bounded hardware check before fitting.
+The objective remains coverage of every baseline and proposed model. SVM
+parameter sensitivity remains open and would require its own finite question;
+we have not silently searched it or treated the diagnostic as full reproduction.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
@@ -774,5 +829,6 @@ changed.
 - [This journal's editable source](RESEARCH_LOG.md)
 
 This journal contains source observations, an algebraic check, verified
-preparation, fitted forest/AdaBoost/SVM pilots, and forest controls.
+preparation, fitted forest/AdaBoost/SVM pilots, forest controls, and a read-only
+SVM follow-up.
 It does not yet contain a full-population reproduction of this paper.

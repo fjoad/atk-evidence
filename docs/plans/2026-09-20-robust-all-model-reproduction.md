@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** preparation, forest/AdaBoost/SVM pairs, and forest controls complete and audited
+**State:** preparation, three shallow-model pairs, forest controls, and read-only SVM diagnostic complete and audited
 
 ## Current execution: read-only SVM replay and kernel diagnostic
 
@@ -14,9 +14,20 @@ decision scores, then inspect one outcome-independent 512-row training kernel.
   spectral checks, interpretations, and finite budget in SVM_REPLAY.md.
 - [x] Implement a direct read-only check and constructed-fixture tests;
   preserve all original scientific files and fitted outputs.
-- [ ] Freeze and run one CPU job, 10 minutes/1 CPU/8 GiB/no GPU, zero fits.
-- [ ] Verify saved diagnostic artifacts, record supportive or adverse results
+- [x] Freeze and run one CPU job, 10 minutes/1 CPU/8 GiB/no GPU, zero fits.
+- [x] Verify saved diagnostic artifacts, record supportive or adverse results
   and remaining limits, update journal/site/handoff records, and commit.
+
+Outcome: 4665e07, job 398978, completed 0:0 in 32 seconds; zero experimental
+fits. Score reconstruction agrees within 1.68e-12 with all labels unchanged.
+Fixed 512-row kernel min=-23.45; centered min=-19.97, far below the declared
+tolerances. The latter witnesses equality-constrained negative curvature,
+not fitted-solution suboptimality or caused performance loss. All artifacts
+and original-file nonmutation checks pass. Actual Slurm allocation 2 logical
+CPUs despite 1 requested, with one numerical thread; 8 GiB/no GPU.
+Stop. Proposed next coverage step is the feed-forward baseline, with its
+cross-entropy repair and other completions frozen first. Keep a finite SVM
+parameter-sensitivity question open; no further fits are authorized here.
 
 ## Current execution: first SVM pair, September 21
 

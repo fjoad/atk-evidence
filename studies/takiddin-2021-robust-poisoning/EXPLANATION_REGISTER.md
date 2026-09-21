@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; forest/AdaBoost pilots, forest controls, and first SVM pair complete
+**Status:** active; three shallow pilots, forest controls, and read-only SVM follow-up complete
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -212,3 +212,33 @@ margins plus inspection of the declared sigmoid kernel on a fixed small
 subset. Kernel geometry is not yet measured and no cause is established.
 No extra fit, parameter, calibration, or seed has been tried. See the
 [SVM record](results/svm_pilot_20260921/README.md).
+
+## E16 — the weak SVM result comes from an incorrect score reconstruction
+
+**Status:** excluded to the frozen numerical tolerance for the saved artifacts.
+
+Read-only job 398978, frozen 4665e07, independently reconstructed13,392
+train/test row-model scores. Maximum error is 1.67688e-12; all labels agree
+with no near-zero ambiguous margins. Native replay exactly matches saved
+test scores/labels. Support-row bindings, coefficient signs/bounds/equality,
+training accuracy, and original artifact hashes pass. This closes the stated
+formula/sign/persistence explanation here, not every possible implementation
+or source-reading error. See the [diagnostic record](results/svm_replay_20260921/README.md).
+
+## E17 — the declared sigmoid kernel satisfies the usual convex-dual conditions
+
+**Status:** contradicted numerically on the fixed training kernel; performance
+causation and fitted-solution suboptimality remain unestablished.
+
+The identity-selected512-row subset has 366 resolved negative eigenvalues,
+minimum -23.45098 with tolerance 1.48403e-8. After centering, minimum -19.96835
+persists, with a zero-sum witness satisfying both label-mapped dual equalities
+(residual about 2.05e-15). This negative direction embeds in the full fixed
+training matrix, so the usual concave-dual argument is unavailable here.
+No KKT test, feasible improvement at the fitted box boundary, global-optimum
+comparison, or alternate parameters were evaluated. Do not turn the property
+into an identified cause of the observed accuracy or an all-SVM exclusion.
+
+The diagnostic is complete; retain parameter sensitivity as open. Proposed
+next coverage step is a separately specified feed-forward pilot, not an
+unbounded SVM search. No new model has been fitted in this follow-up.
