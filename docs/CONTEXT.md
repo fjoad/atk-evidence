@@ -2,6 +2,17 @@
 
 **Last updated:** 2026-09-21
 
+**Current read-only SVM follow-up:** user approved. SVM_REPLAY.md freezes
+independent manual/libsvm score replay on all original train/test rows for
+p00/p30, plus raw/centered sigmoid spectra on one 512-row training subset
+(sorted unique UID, rng SeedSequence([20260921,601]), sample then UID order).
+Score tolerance 1e-8+1e-10*abs(native); spectral tolerance 1e-10*max(1,radius).
+Check a centered negative witness also obeys both label-mapped dual equalities;
+do not claim fitted-box feasibility, KKT failure, global suboptimality or causal
+performance loss. One job, 10 minutes, 1 CPU, 8 GiB, no GPU, zero experimental
+fits; original five scientific files/models untouched. No empirical spectrum
+yet; see the active plan. Local work is fixtures/artifact verification only.
+
 **Current SVM step, completed September 21:** user-approved original p00/p30
 pair frozen e698173, job 398709, completed 0:0 in 2:00 under 15 minutes,
 4 CPUs, 16 GiB, no GPU. C=1, sigmoid, gamma='scale', coef0=0, no probability

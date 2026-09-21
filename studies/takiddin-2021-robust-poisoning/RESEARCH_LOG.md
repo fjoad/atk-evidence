@@ -704,6 +704,39 @@ comparison and the input/output checks. All 20 consumed arrays and the 675
 changed training labels match the frozen preparation. No new experiment was
 launched after these observations.
 
+## 21 September — Separating score replay from kernel behavior
+
+We approved a read-only follow-up, with no new detector fits. The first check
+will independently reconstruct each saved score from its support vectors,
+coefficients, and the printed sigmoid-kernel formula. Fresh library scores
+must also match the saved arrays. This checks whether a calculation or
+interpretation mistake is hiding behind the weak result.
+
+The second check uses one fixed sample of 512 training rows, selected by a
+seeded identity rule before inspecting the kernel. It includes whatever
+original and synthetic rows that rule selects. We will inspect the matrix
+describing similarity between those rows, including whether it has negative
+directions large enough to distinguish from floating-point noise.
+
+We will also remove the constant direction and check the SVM's equality
+constraint. This matters because an arbitrary negative eigenvalue alone is
+not enough to establish negative curvature along the allowed directions.
+Even a negative result in this stronger check would not prove that the fitted
+model found a bad local solution or that another sigmoid setting must fail.
+
+The [diagnostic contract](SVM_REPLAY.md) fixes the input/model hashes,
+selection rule, numerical tolerances, and a ten-minute, one-CPU budget.
+Software fixtures test hand-calculated scores, native-library agreement,
+positive and negative matrix examples, zero-sum directions, and complete
+artifact verification. The original models and five implementation files
+remain unchanged. No empirical kernel spectrum has been inspected yet.
+
+All 11 diagnostic fixtures passed, including a complete read-only run and
+artifact audit on constructed data. The full repository suite passed 325
+tests; four AdaBoost fit tests were skipped there and passed in their separate
+environment. The old SVM artifact audit still matches exactly. The diagnostic
+is ready to freeze and run once on the compute node.
+
 ## What we will do next
 
 First specify a bounded, read-only SVM diagnostic: replay its saved decision

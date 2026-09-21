@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **Read-only SVM diagnostic in implementation:** user approved score replay
+  and fixed-subset kernel inspection. SVM_REPLAY.md freezes both original
+  models/inputs, full train/test replay, one 512-row identity-selected subset,
+  raw/centered spectra and equality-direction checks, and numerical tolerances.
+  Budget: one 10-minute/1-CPU/8-GiB job, no GPU and zero experimental fits.
+  No new kernel setting, subset search, or cause-of-performance claim. The
+  empirical diagnostic has not run; original scientific files remain unchanged.
+
 - **SVM pair complete and audited, September 21:** frozen e698173, job
   398709, completed 0:0 in two minutes within 15 minutes/4 CPUs/16 GiB,
   no GPU. C=1, sigmoid, gamma='scale', coef0=0, no calibration, original

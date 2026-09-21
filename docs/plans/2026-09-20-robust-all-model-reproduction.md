@@ -4,6 +4,20 @@
 
 **State:** preparation, forest/AdaBoost/SVM pairs, and forest controls complete and audited
 
+## Current execution: read-only SVM replay and kernel diagnostic
+
+User approved this follow-up. No model fitting, parameter alternative, or new
+data preparation. Independently reconstruct both saved models' train/test
+decision scores, then inspect one outcome-independent 512-row training kernel.
+
+- [x] Freeze input/model identities, subset rule, numerical tolerances,
+  spectral checks, interpretations, and finite budget in SVM_REPLAY.md.
+- [x] Implement a direct read-only check and constructed-fixture tests;
+  preserve all original scientific files and fitted outputs.
+- [ ] Freeze and run one CPU job, 10 minutes/1 CPU/8 GiB/no GPU, zero fits.
+- [ ] Verify saved diagnostic artifacts, record supportive or adverse results
+  and remaining limits, update journal/site/handoff records, and commit.
+
 ## Current execution: first SVM pair, September 21
 
 User approved the next step. Freeze C=1 and the printed sigmoid kernel with
