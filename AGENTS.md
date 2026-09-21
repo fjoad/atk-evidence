@@ -58,6 +58,20 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user-approved feed-forward pair is implemented and locally fixture-tested,
+but no research-data neural fit or GPU job has been submitted. The QCRI VPN
+disconnected during CPU environment setup job 398992; its final status is
+unknown. On reconnect inspect that existing job/log before retrying setup.
+FEED_FORWARD_PILOT.md fixes the six 500-neuron hidden layers and standard BCE
+repair, 50 epochs/batch 100, original p00/p30 inputs, and one V100-16GB pair
+inside 20 minutes with seven-minute fit guards. GPU preflight and fixtures
+must pass before real inputs; no CPU fallback. Resume this already-approved
+pair when access returns, but do not add seeds or alternative settings.
+The implementation and assumptions are preserved for the pending code freeze.
+All prior results remain unchanged. Nothing is published.
+
+### Earlier read-only SVM checkpoint
+
 The approved read-only SVM follow-up is complete (4665e07, job 398978),
 with zero experimental fits. All 13,392 manually reconstructed/native scores
 agree within 1.68e-12 and all labels match. The fixed 512-row sigmoid kernel

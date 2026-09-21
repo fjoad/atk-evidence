@@ -12,6 +12,20 @@ execution plan here is
 
 ## Current project state
 
+- **Feed-forward instrument ready; Panther access unavailable:** user-approved
+  pair is implemented under FEED_FORWARD_PILOT.md: six Dense 500/ReLU hidden
+  layers, one Sigmoid, Adamax(.002), MaxNorm 3(axis 0), no dropout, 50 epochs/
+  batch 100, and explicit standard-BCE repair on original p00/p30 arrays.
+  Main suite: 327 pass/10 isolated-environment skips. All 8 TensorFlow and 7
+  AdaBoost fixtures pass separately; old SVM diagnostic audit still matches.
+  CPU setup job 398992 was last observed running at 8:36 while downloading
+  NVIDIA dependencies; final state is UNKNOWN after the QCRI VPN disconnected.
+  Both DNS and direct-IP connectivity failed. No research-data neural fit or
+  GPU job has been submitted. On reconnect, inspect that job/log before any
+  setup retry. The approved pair remains one V100-16GB/4-CPU/16-GiB job,
+  20-minute outer cap/seven-minute fit guards, with GPU preflight and fixtures
+  required before research inputs. No CPU fallback, seed search or publication.
+
 - **Read-only SVM diagnostic complete and audited:** frozen 4665e07, job 398978,
   completed 0:0 in 32 seconds; diagnostic took 5.61 seconds, zero experimental
   fits. All 13,392 manual/native score evaluations agree within 1.68e-12,

@@ -15,6 +15,10 @@ kernel lacks the usual optimization-shape guarantee. That does not establish
 the cause of poor accuracy. These are small, dependent pilot samples;
 full-population reproduction remains incomplete.
 
+The feed-forward implementation now passes local software checks. Its GPU
+pilot is pending restoration of Panther access after a VPN disconnection;
+there is no research-data neural result yet.
+
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
 to simulate theft. It then deliberately gives some theft examples the wrong
@@ -791,6 +795,58 @@ unresolved follow-up, not declare the entire SVM family impossible. To continue
 the requested model coverage, the next proposed step is the feed-forward
 baseline with its loss completion stated explicitly. No parameter search or
 neural fit was launched after this diagnostic.
+
+## 21 September — Moving to the feed-forward baseline
+
+The next approved model has six hidden layers of 500 neurons. We visually
+rechecked ReLU hidden activations, Sigmoid output, Adamax, no dropout,
+weight constraint 3, 50 epochs and batch size 100 in the paper.
+
+This is where the loss error becomes executable. The printed binary expression
+loses its label; constructed gradient checks confirm that changing the label
+does not change its gradient. The initial pilot will use the obvious standard
+binary-cross-entropy repair. That is recorded as an interpretation, not quietly
+called the printed loss.
+
+We also fixed the omitted details before seeing performance. The binary output
+has one unit. We interpret the weight constraint as incoming-weight MaxNorm(3)
+on every Dense kernel. Adamax uses learning rate 0.002, matching historical
+Keras's default rather than today's 0.001; the paper does not identify its
+learning rate. Initialization, shuffling, dtype, threshold, and constraint
+coverage are specified in the [feed-forward contract](FEED_FORWARD_PILOT.md).
+
+The isolated TensorFlow/Keras environment leaves earlier environments intact.
+The research job must verify a real V100 GPU and a constructed update before
+loading the original pilot inputs. It will train only the unchanged 0%/30%
+pair, with matching initial-weight hashes, final epoch 50 rather than a
+test-selected checkpoint, and a 20-minute outer budget. Epoch histories,
+updates, weight changes, norms, timing, and exact reload agreement will be saved.
+The local constructed tests pass, including correct and corrupted labels;
+there is no research-data neural result yet.
+
+## 21 September — The neural instrument is ready; cluster access interrupted
+
+The local checks are complete. All eight TensorFlow fixtures passed, including
+an actual optimizer update that projects deliberately oversized weights back
+inside the norm bound. The repaired model learns constructed labels and their
+reversed versions, starts from identical paired weights, and gives identical
+predictions after saving and reloading. The printed loss's label-independent
+gradient is preserved separately.
+
+The main repository suite passed 327 tests, with ten tests skipped because
+they require isolated environments. All eight neural tests and seven AdaBoost
+tests passed in those environments. The earlier SVM diagnostic still verifies
+against its original record. None of these software examples is a result on
+the electricity observations.
+
+Panther's dependency installation was submitted as CPU job398992 and was
+downloading NVIDIA libraries when the QCRI VPN disconnected. Hostname lookup
+and direct-IP checks then failed. The setup job may continue independently,
+but we cannot yet verify its final status. No research-data neural fit or GPU
+job has been submitted, and this interruption says nothing about the paper.
+We have saved the implementation and pre-outcome contract. On reconnect, first
+check the existing setup job, then the GPU preflight; do not duplicate jobs
+or substitute a local real-data fit.
 
 ## What we will do next
 

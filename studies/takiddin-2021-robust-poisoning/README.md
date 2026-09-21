@@ -10,6 +10,12 @@ DOI: `10.1109/TSG.2020.3047864`
 
 ## Current state
 
+The feed-forward instrument is implemented and passes local software checks;
+its explicit loss/default completion is in [FEED_FORWARD_PILOT.md](FEED_FORWARD_PILOT.md).
+No research-data neural fit has run. Panther access was lost when the QCRI
+VPN disconnected during dependency setup job 398992; its final status must be
+checked before proceeding. The approved GPU pair remains pending.
+
 The [research journal](RESEARCH_LOG.md) now records the route through the
 investigation in chronological entries: observations, current explanations,
 planned checks, outcomes, and corrections. It is also the editable source for
@@ -87,6 +93,7 @@ a result or verdict.
 - [`ADABOOST_PILOT.md`](ADABOOST_PILOT.md): historical algorithm completion, fixed pair, and verification.
 - [`SVM_PILOT.md`](SVM_PILOT.md): printed sigmoid kernel, omitted-setting completion, and raw scores.
 - [`SVM_REPLAY.md`](SVM_REPLAY.md): frozen independent replay and constrained kernel checks.
+- [`FEED_FORWARD_PILOT.md`](FEED_FORWARD_PILOT.md): neural architecture, loss repair, defaults and finite budget.
 - [`METHOD.md`](METHOD.md): paper-derived experiment and causal specification.
 - [`SOURCE_AUDIT_CONTRACT.md`](SOURCE_AUDIT_CONTRACT.md): checks frozen before
   the printed values are analyzed.

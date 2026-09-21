@@ -42,6 +42,22 @@ def verify(preparation, attempt):
         raise ValueError("Model/settings changed within the pair")
     if rows[0]["code_commit"] != rows[1]["code_commit"] or rows[0]["versions"] != rows[1]["versions"]:
         raise ValueError("Code/runtime changed within the pair")
+    if rows[0]["model"] == "feed_forward":
+        from run_experiment import weight_hash
+        for level, record in zip(("p00", "p30"), rows):
+            with np.load(attempt / level / "initial_weights.npz", allow_pickle=False) as initial:
+                weights = [initial[f"weight_{i}"] for i in range(len(initial.files))]
+                if weight_hash(weights) != record["neural"]["initial_weights_sha256"]:
+                    raise ValueError("Initial weight identity differs")
+            history = json.loads((attempt / level / "history.json").read_text())
+            if (len(history) != 50 or [r["epoch"] for r in history] != list(range(1, 51))
+                    or [r["optimizer_updates"] for r in history] != [45 * e for e in range(1, 51)]
+                    or not record["neural"]["training_complete"]):
+                raise ValueError("Neural training schedule differs from contract")
+            if not all(np.isfinite(r["loss"]) and np.isfinite(r["binary_accuracy"]) for r in history):
+                raise ValueError("Invalid neural training history")
+        if rows[0]["neural"]["initial_weights_sha256"] != rows[1]["neural"]["initial_weights_sha256"]:
+            raise ValueError("Neural initializations differ across the poison pair")
     changed = int(np.count_nonzero(loaded["p00"]["train_observed_y"] != loaded["p30"]["train_observed_y"]))
     if changed != 675:
         raise ValueError("Unexpected label change count")

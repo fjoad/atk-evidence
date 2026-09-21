@@ -4,6 +4,38 @@
 
 **State:** preparation, three shallow-model pairs, forest controls, and read-only SVM diagnostic complete and audited
 
+## Current execution: feed-forward pilot
+
+User approved the next coverage step. Recheck the paper's six 500-neuron
+hidden layers, ReLU/Sigmoid, Adamax, constraint3, no dropout, 50 epochs and
+batch 100. Freeze an explicitly repaired binary-cross-entropy completion,
+optimizer/initializer/constraint defaults, and the original p00/p30 inputs.
+
+- [x] Freeze source settings, omissions, software versions, GPU preflight,
+  metrics, budget and stopping in FEED_FORWARD_PILOT.md.
+- [x] Add the neural builder/runner to the direct implementation; verify
+  the literal loss defect and repaired learning on constructed examples.
+- [ ] Establish an isolated TensorFlow environment and verify one allocated
+  GPU with a constructed update before loading research data.
+- [ ] Freeze and run only the two approved 50-epoch pilot fits, one seed,
+  within one 20-minute GPU job; preserve partial/failed attempts.
+- [ ] Audit weights, scores, histories, paired initialization and data,
+  record the outcome and next question in the journal/site, and commit.
+
+Environment installation has a separate bounded CPU setup allocation and
+does not count as a paper experiment. No full-data run, extra seed, alternate
+loss training branch, or SVM parameter search is included.
+
+Local implementation and tests are complete: 327 main-suite tests pass with
+10 environment-specific skips; all 8 neural fixtures and 7 AdaBoost fixtures
+pass in their isolated environments. The old SVM diagnostic audit still
+matches. CPU dependency-setup job 398992 was last observed running at 8:36
+while downloading NVIDIA libraries. The QCRI VPN then disconnected, DNS
+resolution failed, and direct-IP TCP/SSH checks timed out. Setup's final state
+is unknown; do not submit it again without checking Slurm/logs on reconnect.
+No research-data feed-forward fit or GPU job has been submitted. Resume the
+approved bounded pair only after verifying setup and the GPU preflight.
+
 ## Current execution: read-only SVM replay and kernel diagnostic
 
 User approved this follow-up. No model fitting, parameter alternative, or new
