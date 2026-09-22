@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; three shallow pilots, forest controls, and read-only SVM follow-up complete
+**Status:** active; four model pairs, forest controls, and read-only SVM follow-up complete
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -242,3 +242,30 @@ into an identified cause of the observed accuracy or an all-SVM exclusion.
 The diagnostic is complete; retain parameter sensitivity as open. Proposed
 next coverage step is a separately specified feed-forward pilot, not an
 unbounded SVM search. No new model has been fitted in this follow-up.
+
+## E18 — the low default feed-forward detection excludes the reported corner
+
+**Status:** contradicted for the saved repaired-BCE pilot scores; no complete
+row or full-population reproduction is established.
+
+Frozen b5da23a/job 400825: 50 epochs each, identical initial weights and the
+original inputs. DR/FA/AUC 89.14/7.45/96.35 at p00 and 51.58/0.53/90.89
+at p30. At FA<=9.3%, unpoisoned DR 90.76923 rounds to 90.8, matching the
+printed detection with lower FA. At FA<=24.4%, poisoned DR 88.86878 exceeds
+76.0. The whole metric pattern differs: p30 accuracy rounds to 75.8 as printed,
+but detection, FA, precision, F1 and AUC do not. Test-selected cutoffs are not
+validated calibration. AUC drops 5.46415 points; useful ranking survives.
+See the [feed-forward record](results/feed_forward_pilot_20260922/README.md).
+
+## E19 — poisoning/balancing order contributes to the repeated cutoff pattern
+
+**Status:** open, not causally measured.
+
+Forest, AdaBoost and repaired feed-forward show lower default detection and
+lower FA under the declared one-sided label corruption, with substantial
+remaining ranking. In this preparation, balancing precedes the 675 label flips,
+so observed training class proportions change. The paper leaves this relative
+order incomplete. This is a named shared-setup question worth specifying before
+further costly model coverage, not proof of which order the authors used.
+Any controlled run needs an explicit intervention, unchanged evaluation,
+budget and stopping rule first. No such comparison was silently launched.

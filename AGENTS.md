@@ -58,17 +58,18 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-The user-approved feed-forward pair is implemented and locally fixture-tested,
-but no research-data neural fit or GPU job has been submitted. The QCRI VPN
-disconnected during CPU environment setup job 398992; its final status is
-unknown. On reconnect inspect that existing job/log before retrying setup.
-FEED_FORWARD_PILOT.md fixes the six 500-neuron hidden layers and standard BCE
-repair, 50 epochs/batch 100, original p00/p30 inputs, and one V100-16GB pair
-inside 20 minutes with seven-minute fit guards. GPU preflight and fixtures
-must pass before real inputs; no CPU fallback. Resume this already-approved
-pair when access returns, but do not add seeds or alternative settings.
-The implementation and assumptions are frozen at b5da23a7a5392d2c28b81d037869bfff637b4a48.
-All prior results remain unchanged. Nothing is published.
+The approved feed-forward pair is complete and audited (b5da23a, job 400825).
+Setup job 398992 had completed successfully and was not repeated after access
+returned. Both repaired-BCE models finished 50 epochs on one V100-16GB with
+paired initial weights. AUC 96.35/90.89 at p00/p30; within the corresponding
+printed FA caps, best DR 90.76923/88.86878 meets 90.8 to rounding and exceeds
+76.0. This is a working pilot, not full-row/full-population reproduction or
+validated calibration. All artifact/history/reload checks pass. See the
+[record](studies/takiddin-2021-robust-poisoning/results/feed_forward_pilot_20260922/README.md).
+Stop the pair. Next proposed question is the shared poisoning/balancing order
+and observed class proportions; specify any controlled check before running it.
+No additional experiment is authorized by this summary. All original models,
+contracts and inputs remain preserved; website changes are local drafts only.
 
 ### Earlier read-only SVM checkpoint
 

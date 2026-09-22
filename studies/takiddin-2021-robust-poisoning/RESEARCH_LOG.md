@@ -1,6 +1,6 @@
 # Can this detector learn from corrupted labels?
 
-Updated: 2026-09-21
+Updated: 2026-09-22
 
 This is our working journal for *Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids*, by Takiddin and colleagues (2021).
@@ -8,16 +8,11 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-**Where we are, 21 September 2026:** three shallow-model pilots are complete.
-Forest and AdaBoost learn useful signals; the initial sigmoid SVM is weak.
-A read-only follow-up confirms its score calculation and finds that this
-kernel lacks the usual optimization-shape guarantee. That does not establish
-the cause of poor accuracy. These are small, dependent pilot samples;
-full-population reproduction remains incomplete.
-
-The feed-forward implementation now passes local software checks. Its GPU
-pilot is pending restoration of Panther access after a VPN disconnection;
-there is no research-data neural result yet.
+**Where we are, 22 September 2026:** the feed-forward GPU pair has joined the
+three shallow-model pilots. The repaired neural baseline learns useful ranking,
+including under poisoning, although its default operating points differ from
+the paper. Forest and AdaBoost work well too; the initial sigmoid SVM is weak.
+These are small, dependent pilot samples, not full-population reproduction.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -852,15 +847,86 @@ The scientific implementation and pre-outcome contract are frozen at b5da23a.
 The unresolved access step is not a detector result or a change to the agreed
 experiment. Nothing has been published.
 
+## 22 September — Access restored; the existing setup finished
+
+The QCRI VPN and Panther connection are available again. We checked the
+existing dependency job before doing anything else: job398992 completed
+successfully in12 minutes54 seconds, within its15-minute limit. Its log
+confirms the pinned TensorFlow/Keras and NVIDIA libraries installed. We did
+not rerun setup or substitute a different runtime.
+
+The approved feed-forward pair will now resume from frozen commit b5da23a.
+The V100 check and constructed fixtures remain mandatory before research data
+are loaded. There is still no research-data neural result at this entry.
+
+## 22 September — The repaired feed-forward model learns
+
+Both feed-forward fits finished all 50 epochs on one V100-16GB GPU. Each
+performed 2,250 updates, and their initial-weight hashes were identical.
+They used the same original training/test rows and the declared change in
+observed labels. Every saved model reproduced its test probabilities exactly
+after loading again, and the transferred artifacts passed the local audit.
+
+| Training condition | Attacks detected | False alarms | Ranking AUC |
+|---|---:|---:|---:|
+| No poisoning | 89.14% | 7.45% | 96.35% |
+| 30% of customers selected for poisoning | 51.58% | 0.53% | 90.89% |
+
+The default poisoned detection is below the paper's 76.0%, but false alarms
+are also far below its 24.4%. The saved-score checks again change what that
+comparison means. Within a 24.4% false-alarm allowance, the poisoned scores
+can reach 88.87% detection. Without poisoning, a 9.3% false-alarm allowance
+gives 90.77% detection, which rounds to the paper's 90.8%, with fewer false
+alarms. Treating the tiny difference from displayed 90.8 as a failure would
+ignore the precision at which the paper reports its values.
+
+These favorable cutoffs use the test answers and are not validated deployment
+thresholds. They show that the corresponding detection/false-alarm behavior
+is not out of reach for this fitted pilot. They do not reproduce the entire
+table: the AUC and other metrics differ, and our population is much smaller.
+
+One numerical coincidence makes the distinction particularly clear. Poisoned
+ordinary accuracy is 75.76%, rounding to the paper's 75.8%, while detection,
+false alarms, precision, F1 and AUC differ substantially. A matching accuracy
+cell is not a reproduced experiment.
+
+Poisoning still causes a measurable deterioration. AUC falls by 5.46 points.
+At a common 9.3% false-alarm cap, detection falls by 13.30 points; at 24.4%,
+it falls by 6.61. Both are smaller than the 37.56-point default-detection
+decline. We need to distinguish useful ranking, a chosen cutoff, and a whole
+reported operating point instead of reducing them to one success/failure label.
+
+The training record shows genuine updates. Loss moves from about 0.525 to
+0.086 without poisoning and from 0.584 to 0.135 with it. Under poisoning,
+final training accuracy against the corrupted labels is 93.15%, versus
+79.28% against their uncorrupted truth. The network was trained on the declared
+corrupted labels, not secretly given the clean answers. The histories still
+change near epoch 50; no unlimited-time plateau is established.
+
+The complete job took 3 minutes 28 seconds, including software checks and
+startup. The two fits took 18.28 and 17.76 seconds. This measures cost on
+the 20-customer pilot, not the paper's full-data 1.5–3-hour claim or an exact
+V100-to-RTX2070 speed ratio. The original setup job had finished while VPN
+access was unavailable; it was checked and reused rather than repeated.
+
+**What changed:** the obvious cross-entropy repair gives another working
+baseline. Its full metric pattern differs from the publication, but we cannot
+use the low default poisoned detection to claim that the reported corner is
+unattainable. All seven metrics, epoch histories, hardware, warnings, and
+verification are preserved in the [feed-forward record](results/feed_forward_pilot_20260922/README.md).
+No extra fit or setting was tried after seeing these results.
+
 ## What we will do next
 
-Specify the feed-forward baseline: six hidden layers of 500 neurons and the
-paper's other reported settings, with the standard cross-entropy repair clearly
-separated from its printed label-independent expression. Freeze omitted
-initialization/optimizer details and a bounded hardware check before fitting.
-The objective remains coverage of every baseline and proposed model. SVM
-parameter sensitivity remains open and would require its own finite question;
-we have not silently searched it or treated the diagnostic as full reproduction.
+Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
+reduces default detection and false alarms while useful ranking remains.
+The next proposed check is the shared setup, especially whether poisoning
+happens before or after balancing and how that changes the observed class
+proportions. This is an unresolved source detail, not a measured explanation
+yet. First specify the alternatives and what a small controlled comparison
+would distinguish; do not silently regenerate the original data or launch a
+search. The remaining models, including GRU, ARIMA, AEA and the ensembles,
+stay in scope. SVM parameter sensitivity also remains open.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).
@@ -889,6 +955,6 @@ changed.
 - [This journal's editable source](RESEARCH_LOG.md)
 
 This journal contains source observations, an algebraic check, verified
-preparation, fitted forest/AdaBoost/SVM pilots, forest controls, and a read-only
-SVM follow-up.
+preparation, fitted forest/AdaBoost/SVM/feed-forward pilots, forest controls,
+and a read-only SVM follow-up.
 It does not yet contain a full-population reproduction of this paper.

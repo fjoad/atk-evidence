@@ -1,28 +1,31 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-21
+**Last updated:** 2026-09-22
 
-**Current feed-forward step, ready but network-blocked:** user approved pair;
-code frozen at b5da23a7a5392d2c28b81d037869bfff637b4a48. No GPU submission.
-FEED_FORWARD_PILOT.md defines 48→6xDense500/ReLU→1 Sigmoid, Adamax lr.002,
-betas.9/.999,eps 1e-7, MaxNorm 3 axis 0/all Dense kernels, no bias constraint,
-dropout 0,float32, standard BCE repair, seed 20260920, 50 epochs/batch 100,
-original p00/p30 arrays. Initial-weight hashes must match; no best-epoch
-selection. Implementation complete; 327 main tests pass/10 skips, all 8 TF
-and 7 AdaBoost fixtures pass in isolated environments. Historical SVM audit
-still matches. Local TF environment: tmp/robust-feedforward-venv.
-Panther environment target: /export/home/fjoad/atk-evidence/data/environments/
-robust-feed-forward-2.16.2 (TensorFlow 2.16.2/Keras 3.4.1 + NVIDIA pip libraries).
-CPU setup job 398992 was last RUNNING at 8:36 downloading NVIDIA dependencies.
-QCRI VPN then DISCONNECTED, panther DNS failed, 10.2.19.87 TCP/SSH timed out.
-Final setup status UNKNOWN. Do not duplicate setup or claim its completion;
-first inspect sacct/log on reconnect. No GPU job or real-data neural fit yet.
-Setup log: /export/home/fjoad/atk-evidence/data/environments/feed-forward-env-20260921-398992.out.
-Approved GPU pair: V100-16GB, 4 CPUs, 16 GiB, 20 min with seven-minute fit
-guards; requireGPU update/placement before data, no CPU fallback. Save epochs,
-weights, configs, probabilities, norms and hardware; verify in pinned env.
-No further scientific authority needed to finish this already-approved pair
-once access is restored. No broader search or publication is authorized.
+**Current feed-forward pair, complete September 22:** VPN/SSH restored;
+setup job 398992 completed 0:0 in 12:54, not rerun. Frozen b5da23a ran as
+GPU job 400825, completed 0:0 in 3:28 on V100-PCIE-16GB (driver 570.133.07),
+4 CPUs/16 GiB, within 20 minutes. Both repaired-BCE fits completed 50 epochs,
+batch 100; 2,250 updates, identical initial weight hash a86bd4ec...bc0d74;
+same original p00/p30 arrays and 675 changed labels. DR/FA/AUC
+89.14027/7.45342/96.35480 and 51.58371/0.53239/90.89064. At FA<=9.3%,
+p00 DR 90.76923 rounds to 90.8 printed; at FA<=24.4%, p30 DR 88.86878 exceeds
+76.0. Default DR drop 37.55656 versus common 9.3/24.4-cap drops 13.30317/
+6.60633; AUC drop 5.46415. No full-row reproduction or population inference.
+All 50 histories/updates, model reloads, paired weights, 20 consumed input arrays,
+labels/IDs, hashes and metrics pass; local/cluster comparison AND audit files
+are byte-identical. All 8 neural fixtures passed on GPU. Fits 18.284/17.763s,
+TF allocator peaks 28.30/28.49 MB (not total VRAM); no full-data timing claim.
+Source: six 500-ReLU layers→1 Sigmoid, Adamax 0.002, MaxNorm 3 axis 0, no dropout,
+seed 20260920, float32, explicit BCE repair. TF 2.16.2/Keras 3.4.1 pinned env.
+Local interpreter tmp/robust-feedforward-venv/bin/python; Panther env remains
+/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2.
+See results/feed_forward_pilot_20260922; result hashes f28ef620...e3c3c7b3
+and 2256d0ab...0a689861. Original models/arrays untouched; all weights/probabilities
+remain ignored. Stop the pair. Next proposed question: shared poisoning versus
+balancing order and changed observed class proportions, before any controlled
+run. No new experiment is approved by this summary. Other models and SVM
+sensitivity remain open. Journal/site draft updated locally, not published.
 
 **Current read-only SVM follow-up, complete:** frozen 4665e07, job 398978,
 completed 0:0 in 32 seconds; program 5.61120 seconds, zero experimental fits.

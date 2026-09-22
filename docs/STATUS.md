@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-21
+**Last updated:** 2026-09-22
 
 **Branch:** `main`
 
@@ -12,19 +12,24 @@ execution plan here is
 
 ## Current project state
 
-- **Feed-forward instrument ready; Panther access unavailable:** user-approved
-  pair is frozen at b5da23a under FEED_FORWARD_PILOT.md: six Dense 500/ReLU hidden
-  layers, one Sigmoid, Adamax(.002), MaxNorm 3(axis 0), no dropout, 50 epochs/
-  batch 100, and explicit standard-BCE repair on original p00/p30 arrays.
-  Main suite: 327 pass/10 isolated-environment skips. All 8 TensorFlow and 7
-  AdaBoost fixtures pass separately; old SVM diagnostic audit still matches.
-  CPU setup job 398992 was last observed running at 8:36 while downloading
-  NVIDIA dependencies; final state is UNKNOWN after the QCRI VPN disconnected.
-  Both DNS and direct-IP connectivity failed. No research-data neural fit or
-  GPU job has been submitted. On reconnect, inspect that job/log before any
-  setup retry. The approved pair remains one V100-16GB/4-CPU/16-GiB job,
-  20-minute outer cap/seven-minute fit guards, with GPU preflight and fixtures
-  required before research inputs. No CPU fallback, seed search or publication.
+- **Feed-forward pair complete and audited, September 22:** access restored;
+  existing setup job 398992 completed 0:0 in 12:54 and was not repeated.
+  Frozen b5da23a ran as job 400825, completed 0:0 in 3:28 on one V100-PCIE-16GB,
+  four CPUs/16 GiB, within 20 minutes. Both standard-BCE-repair models finished
+  50 epochs/2,250 updates with identical initial weights, using the original
+  p00/p30 arrays. DR/FA/AUC is 89.14/7.45/96.35 at p00 and
+  51.58/0.53/90.89 at p30. At FA<=9.3%, unpoisoned saved-score DR 90.76923
+  rounds to the printed 90.8 with lower FA; at FA<=24.4%, poisoned DR 88.86878
+  exceeds 76.0 printed. This is not full-row or full-population reproduction.
+  Default DR drops 37.56 points; AUC drops 5.46 and common-cap DR drops are
+  much smaller. Models, scores, all 50 epoch records, paired initialization,
+  inputs/labels and metrics passed; local comparison and pair-audit files
+  match cluster bytes. All eight neural fixtures and GPU preflight passed.
+  Fits took 18.28/17.76 seconds; this does not test full-data runtime claims.
+  Stop this pair. Proposed next step: review poisoning/balancing order and
+  observed class proportions before specifying a small controlled comparison.
+  No additional fit, data regeneration, search or publication occurred. See
+  [the feed-forward record](../studies/takiddin-2021-robust-poisoning/results/feed_forward_pilot_20260922/README.md).
 
 - **Read-only SVM diagnostic complete and audited:** frozen 4665e07, job 398978,
   completed 0:0 in 32 seconds; diagnostic took 5.61 seconds, zero experimental

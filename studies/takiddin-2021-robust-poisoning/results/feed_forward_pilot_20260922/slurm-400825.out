@@ -1,0 +1,131 @@
+test_paper_target_is_not_another_baseline (tests.test_robust_feed_forward.FeedForwardContractTests.test_paper_target_is_not_another_baseline) ... ok
+test_printed_binary_algebra_cancels_labels (tests.test_robust_feed_forward.FeedForwardContractTests.test_printed_binary_algebra_cancels_labels) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-09-22 13:44:37.592212: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-22 13:44:39.401701: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-22 13:44:39.420949: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-22 13:45:04.798360: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_correct_and_corrupted_labels_learn_and_reload (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_correct_and_corrupted_labels_learn_and_reload) ... {"training_epoch": {"epoch": 1, "seconds": 6.436217404901981, "loss": 0.1373940259218216, "binary_accuracy": 0.949999988079071, "optimizer_updates": 8}}
+{"training_epoch": {"epoch": 1, "seconds": 1.6680651679635048, "loss": 0.16089512407779694, "binary_accuracy": 0.9166666865348816, "optimizer_updates": 8}}
+ok
+test_initialization_is_paired_but_layers_are_not_identical (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_initialization_is_paired_but_layers_are_not_identical) ... ok
+test_literal_and_repaired_losses_have_different_label_gradients (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_literal_and_repaired_losses_have_different_label_gradients) ... ok
+test_maxnorm_projects_incoming_vectors (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_maxnorm_projects_incoming_vectors) ... ok
+test_source_architecture_optimizer_and_parameter_count (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_source_architecture_optimizer_and_parameter_count) ... ok
+test_time_guard_preserves_a_partial_epoch_history (tests.test_robust_feed_forward.FeedForwardTensorFlowTests.test_time_guard_preserves_a_partial_epoch_history) ... {"training_epoch": {"epoch": 1, "seconds": 1.7146178558468819, "loss": 0.6567594408988953, "binary_accuracy": 0.5, "optimizer_updates": 2}}
+ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 100.894s
+
+OK
+2026-09-22 13:46:17.587607: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-22 13:46:17.612933: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-22 13:46:17.612987: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-22 13:46:19.756719: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"training_epoch": {"epoch": 1, "seconds": 3.887616403400898, "loss": 0.5248540639877319, "binary_accuracy": 0.751568078994751, "optimizer_updates": 45}}
+{"training_epoch": {"epoch": 10, "seconds": 0.24657171964645386, "loss": 0.17952467501163483, "binary_accuracy": 0.9155465960502625, "optimizer_updates": 450}}
+{"training_epoch": {"epoch": 20, "seconds": 0.31974904984235764, "loss": 0.1249212697148323, "binary_accuracy": 0.9408602118492126, "optimizer_updates": 900}}
+{"training_epoch": {"epoch": 30, "seconds": 0.3018503710627556, "loss": 0.10952149331569672, "binary_accuracy": 0.9466845989227295, "optimizer_updates": 1350}}
+{"training_epoch": {"epoch": 40, "seconds": 0.3038715794682503, "loss": 0.0890650600194931, "binary_accuracy": 0.9538530707359314, "optimizer_updates": 1800}}
+{"training_epoch": {"epoch": 50, "seconds": 0.24920419603586197, "loss": 0.08565989881753922, "binary_accuracy": 0.9543010592460632, "optimizer_updates": 2250}}
+{"case": "generalized-two-class-p00", "status": "complete", "metrics": {"n": 2232, "TP": 985, "FN": 120, "FP": 84, "TN": 1043, "DR": 89.14027149321267, "FA": 7.453416149068323, "SP": 92.54658385093168, "PR": 92.1421889616464, "ACC": 90.86021505376344, "F1": 90.6163753449862, "AUC": 96.35479609904164, "balanced_accuracy": 90.84342767207218}, "seconds": {"fit": 18.283862709999084, "score": 0.48923325538635254, "reload": 0.4445016086101532}}
+2026-09-22 13:46:47.459654: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-22 13:46:47.484275: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-22 13:46:47.484325: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-22 13:46:49.550549: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"training_epoch": {"epoch": 1, "seconds": 3.8835796788334846, "loss": 0.5836503505706787, "binary_accuracy": 0.7009408473968506, "optimizer_updates": 45}}
+{"training_epoch": {"epoch": 10, "seconds": 0.2703782021999359, "loss": 0.23181600868701935, "binary_accuracy": 0.884856641292572, "optimizer_updates": 450}}
+{"training_epoch": {"epoch": 20, "seconds": 0.2682511806488037, "loss": 0.18153095245361328, "binary_accuracy": 0.9106183052062988, "optimizer_updates": 900}}
+{"training_epoch": {"epoch": 30, "seconds": 0.2374155893921852, "loss": 0.1571677029132843, "binary_accuracy": 0.9229390621185303, "optimizer_updates": 1350}}
+{"training_epoch": {"epoch": 40, "seconds": 0.28571370989084244, "loss": 0.1619625836610794, "binary_accuracy": 0.9274193644523621, "optimizer_updates": 1800}}
+{"training_epoch": {"epoch": 50, "seconds": 0.3052482381463051, "loss": 0.13509143888950348, "binary_accuracy": 0.9352598786354065, "optimizer_updates": 2250}}
+{"case": "generalized-two-class-p30", "status": "complete", "metrics": {"n": 2232, "TP": 570, "FN": 535, "FP": 6, "TN": 1121, "DR": 51.58371040723982, "FA": 0.5323868677905945, "SP": 99.46761313220941, "PR": 98.95833333333333, "ACC": 75.76164874551971, "F1": 67.81677572873289, "AUC": 90.89064388297126, "balanced_accuracy": 75.52566176972462}, "seconds": {"fit": 17.763144329190254, "score": 0.45716919004917145, "reload": 0.4665125459432602}}
+{
+  "attempts": [
+    {
+      "case": "generalized-two-class-p00",
+      "code_commit": "b5da23a7a5392d2c28b81d037869bfff637b4a48",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": 0.16021505376343725,
+        "AUC": 5.254796099041641,
+        "DR": -1.6597285067873315,
+        "F1": 0.21637534498619004,
+        "FA": -1.8465838509316779,
+        "PR": 2.142188961646397,
+        "SP": 1.8465838509316796
+      },
+      "pilot_primary": {
+        "ACC": 90.86021505376344,
+        "AUC": 96.35479609904164,
+        "DR": 89.14027149321267,
+        "F1": 90.6163753449862,
+        "FA": 7.453416149068323,
+        "FN": 120,
+        "FP": 84,
+        "PR": 92.1421889616464,
+        "SP": 92.54658385093168,
+        "TN": 1043,
+        "TP": 985,
+        "balanced_accuracy": 90.84342767207218,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 90.7,
+        "AUC": 91.1,
+        "DR": 90.8,
+        "F1": 90.4,
+        "FA": 9.3,
+        "PR": 90.0,
+        "SP": 90.7
+      },
+      "result_sha256": "f28ef620ee45ffde721c07442fc4f966582c2a395c5cf7a84a29f83fe3c3c7b3",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    },
+    {
+      "case": "generalized-two-class-p30",
+      "code_commit": "b5da23a7a5392d2c28b81d037869bfff637b4a48",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -0.038351254480289754,
+        "AUC": 14.790643882971267,
+        "DR": -24.41628959276018,
+        "F1": -8.083224271267113,
+        "FA": -23.867613132209403,
+        "PR": 23.15833333333333,
+        "SP": 23.867613132209414
+      },
+      "pilot_primary": {
+        "ACC": 75.76164874551971,
+        "AUC": 90.89064388297126,
+        "DR": 51.58371040723982,
+        "F1": 67.81677572873289,
+        "FA": 0.5323868677905945,
+        "FN": 535,
+        "FP": 6,
+        "PR": 98.95833333333333,
+        "SP": 99.46761313220941,
+        "TN": 1121,
+        "TP": 570,
+        "balanced_accuracy": 75.52566176972462,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 75.8,
+        "AUC": 76.1,
+        "DR": 76.0,
+        "F1": 75.9,
+        "FA": 24.4,
+        "PR": 75.8,
+        "SP": 75.6
+      },
+      "result_sha256": "2256d0aba16bfb32dfdbe8a70bbfb98d51beae8882246a3d40e964a40a689861",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    }
+  ],
+  "scope": "first-baseline pilot, not full Table III reproduction"
+}

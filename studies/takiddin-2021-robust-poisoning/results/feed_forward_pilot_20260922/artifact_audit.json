@@ -1,0 +1,95 @@
+{
+  "attempts": {
+    "p00": {
+      "case": "generalized-two-class-p00",
+      "code_commit": "b5da23a7a5392d2c28b81d037869bfff637b4a48",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": 0.16021505376343725,
+        "AUC": 5.254796099041641,
+        "DR": -1.6597285067873315,
+        "F1": 0.21637534498619004,
+        "FA": -1.8465838509316779,
+        "PR": 2.142188961646397,
+        "SP": 1.8465838509316796
+      },
+      "pilot_primary": {
+        "ACC": 90.86021505376344,
+        "AUC": 96.35479609904164,
+        "DR": 89.14027149321267,
+        "F1": 90.6163753449862,
+        "FA": 7.453416149068323,
+        "FN": 120,
+        "FP": 84,
+        "PR": 92.1421889616464,
+        "SP": 92.54658385093168,
+        "TN": 1043,
+        "TP": 985,
+        "balanced_accuracy": 90.84342767207218,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 90.7,
+        "AUC": 91.1,
+        "DR": 90.8,
+        "F1": 90.4,
+        "FA": 9.3,
+        "PR": 90.0,
+        "SP": 90.7
+      },
+      "result_sha256": "f28ef620ee45ffde721c07442fc4f966582c2a395c5cf7a84a29f83fe3c3c7b3",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    },
+    "p30": {
+      "case": "generalized-two-class-p30",
+      "code_commit": "b5da23a7a5392d2c28b81d037869bfff637b4a48",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -0.038351254480289754,
+        "AUC": 14.790643882971267,
+        "DR": -24.41628959276018,
+        "F1": -8.083224271267113,
+        "FA": -23.867613132209403,
+        "PR": 23.15833333333333,
+        "SP": 23.867613132209414
+      },
+      "pilot_primary": {
+        "ACC": 75.76164874551971,
+        "AUC": 90.89064388297126,
+        "DR": 51.58371040723982,
+        "F1": 67.81677572873289,
+        "FA": 0.5323868677905945,
+        "FN": 535,
+        "FP": 6,
+        "PR": 98.95833333333333,
+        "SP": 99.46761313220941,
+        "TN": 1121,
+        "TP": 570,
+        "balanced_accuracy": 75.52566176972462,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 75.8,
+        "AUC": 76.1,
+        "DR": 76.0,
+        "F1": 75.9,
+        "FA": 24.4,
+        "PR": 75.8,
+        "SP": 75.6
+      },
+      "result_sha256": "2256d0aba16bfb32dfdbe8a70bbfb98d51beae8882246a3d40e964a40a689861",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    }
+  },
+  "changed_training_labels": 675,
+  "code_commit": "b5da23a7a5392d2c28b81d037869bfff637b4a48",
+  "features_and_test_identities_match": true,
+  "input_arrays_checked": 20,
+  "model": "feed_forward",
+  "predictions_bound_to_prepared_labels": true,
+  "status": "verified",
+  "test_rows": 2232,
+  "training_rows": 4464
+}

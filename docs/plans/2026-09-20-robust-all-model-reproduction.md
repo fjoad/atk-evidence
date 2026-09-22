@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** preparation, three shallow-model pairs, forest controls, and read-only SVM diagnostic complete and audited
+**State:** four model pairs, forest controls, and read-only SVM diagnostic complete and audited
 
 ## Current execution: feed-forward pilot
 
@@ -15,11 +15,11 @@ optimizer/initializer/constraint defaults, and the original p00/p30 inputs.
   metrics, budget and stopping in FEED_FORWARD_PILOT.md.
 - [x] Add the neural builder/runner to the direct implementation; verify
   the literal loss defect and repaired learning on constructed examples.
-- [ ] Establish an isolated TensorFlow environment and verify one allocated
+- [x] Establish an isolated TensorFlow environment and verify one allocated
   GPU with a constructed update before loading research data.
-- [ ] Freeze and run only the two approved 50-epoch pilot fits, one seed,
+- [x] Freeze and run only the two approved 50-epoch pilot fits, one seed,
   within one 20-minute GPU job; preserve partial/failed attempts.
-- [ ] Audit weights, scores, histories, paired initialization and data,
+- [x] Audit weights, scores, histories, paired initialization and data,
   record the outcome and next question in the journal/site, and commit.
 
 Environment installation has a separate bounded CPU setup allocation and
@@ -35,6 +35,22 @@ resolution failed, and direct-IP TCP/SSH checks timed out. Setup's final state
 is unknown; do not submit it again without checking Slurm/logs on reconnect.
 No research-data feed-forward fit or GPU job has been submitted. Resume the
 approved bounded pair only after verifying setup and the GPU preflight.
+
+September 22 resume: VPN/SSH access restored. Existing CPU setup job 398992
+completed 0:0 in 12:54; its log confirms the pinned TensorFlow/Keras and NVIDIA
+libraries installed. No active account jobs and no feed-forward attempt
+directory were observed before dispatch. Resume the unchanged b5da23a pair;
+GPU preflight/fixtures still gate research inputs. No setup retry is needed.
+
+Completed: b5da23a, job 400825, exit0:0 in 3:28 on one V100-16GB. Both
+50-epoch fits completed 2,250 updates, with paired initial weights and unchanged
+inputs. AUC 96.35/90.89; default DR 89.14/51.58. Within the printed FA caps,
+best DR 90.76923/88.86878 meets p00's displayed 90.8 to rounding and exceeds
+p30's 76.0. All artifact/history/reload checks pass; no full-row/population
+reproduction claim. Stop this pair. Proposed next step is a focused review of
+poisoning versus balancing order and observed class proportions, then a frozen
+small controlled comparison only if it answers a named uncertainty. No new
+fit, preparation or parameter sweep ran. Other reported models remain in scope.
 
 ## Current execution: read-only SVM replay and kernel diagnostic
 

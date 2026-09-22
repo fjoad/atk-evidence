@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-21
+**Last updated:** 2026-09-22
 
 ## Purpose
 
@@ -24,6 +24,27 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: the repaired feed-forward baseline is viable on the pilot
+
+**Added September 22 after the completed frozen GPU pair.**
+
+- **Question:** does the six-layer feed-forward model learn under the obvious
+  BCE repair, and does poisoned default detection represent its ranking limit?
+- **Evidence:** b5da23a/job 400825 completed 50 epochs at both levels with
+  identical initial weights. DR/FA/AUC 89.14/7.45/96.35 and 51.58/0.53/90.89.
+  Within respective printed FA caps, best DR 90.76923/88.86878 meets the
+  unpoisoned displayed 90.8 to rounding and exceeds poisoned76.0. All audits
+  pass. The p30 accuracy also rounds to 75.8, but its other metrics differ.
+- **Conclusion:** **OBSERVED** — the explicit repair learns a useful neural
+  signal; the default gap is not an all-cutoff exclusion. **OPEN** — full data,
+  other completions, uncertainty, full-row reproduction, and claimed mechanism.
+  Do not present a rounding-sized DR difference as a failure or one matching
+  accuracy as reproduction.
+- **Decision:** stop the pair. Specify the shared poisoning/balancing-order
+  question before a controlled run. Three working baselines make that a more
+  informative next question than automatic seed retries of this construction.
+- **Record:** [feed-forward pilot](../studies/takiddin-2021-robust-poisoning/results/feed_forward_pilot_20260922/README.md).
 
 ### Paper 3: score replay verified; nonconcave sigmoid geometry observed
 

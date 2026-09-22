@@ -10,11 +10,14 @@ DOI: `10.1109/TSG.2020.3047864`
 
 ## Current state
 
-The feed-forward instrument is implemented and passes local software checks;
-its explicit loss/default completion is in [FEED_FORWARD_PILOT.md](FEED_FORWARD_PILOT.md).
-No research-data neural fit has run. Panther access was lost when the QCRI
-VPN disconnected during dependency setup job 398992; its final status must be
-checked before proceeding. The approved GPU pair remains pending.
+The feed-forward pair is complete and audited (September 22, job 400825,
+frozen b5da23a). Both repaired-BCE models completed 50 epochs on one V100-16GB
+with identical initial weights. AUC is 96.35/90.89 at p00/p30. At the paper's
+respective FA caps, best DR 90.76923/88.86878 meets displayed 90.8 to rounding
+and exceeds 76.0. The full metric rows and population are not reproduced by
+this pilot. See the [record](results/feed_forward_pilot_20260922/README.md)
+and [pre-outcome contract](FEED_FORWARD_PILOT.md). The existing environment
+setup completed during the VPN outage and was checked rather than repeated.
 
 The [research journal](RESEARCH_LOG.md) now records the route through the
 investigation in chronological entries: observations, current explanations,
