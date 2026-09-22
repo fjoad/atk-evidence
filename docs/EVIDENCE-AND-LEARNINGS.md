@@ -25,6 +25,29 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: working baselines change the question, not the whole-paper verdict
+
+**Added September 22 during source review for the next control; no new fit.**
+
+Forest, AdaBoost and repaired feed-forward learning useful pilot rankings is
+evidence against the initial broad expectation that these implementations
+would all fail. It does not establish the complete published pattern or the
+proposed reconstruction mechanism. The weak SVM is also retained without
+letting one baseline decide the whole paper.
+
+**OPEN:** poisoning versus balancing order. Pages 2677-2678 do not explicitly
+settle it. The current completion is defensible, not a proved implementation
+mistake. A before/after ADASYN comparison necessarily changes generated
+features/counts as well as label proportions; calling it a pure prior test
+would overstate identification. Moreover, interpolating mislabeled attacks
+can produce synthetic rows whose ground truth is not established. The new
+control keeps these training-only and marks unknown truth explicitly.
+
+**Decision:** freeze exactly one forest contrast against saved B-p30 and an
+exact zero-poison preparation guard. Ten constructed fixtures pass, but the
+VPN blocks Panther and no new research-data operation has run. The experiment
+remains pending; favorable, null or adverse outcomes will all be retained.
+
 ### Paper 3: the repaired feed-forward baseline is viable on the pilot
 
 **Added September 22 after the completed frozen GPU pair.**

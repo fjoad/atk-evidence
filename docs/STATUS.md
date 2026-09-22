@@ -12,6 +12,24 @@ execution plan here is
 
 ## Current project state
 
+- **Poisoning/balancing control specified and locally tested, September 22:**
+  the user asked to continue. Re-read/visually checked III-A.2-3, pp. 2677-2678.
+  The original ordering remains a reasonable completion, not an identified bug.
+  `POISON_BALANCE_CHECK.md` specifies one new forest fit: poison original
+  training labels before training-only ADASYN, compared with preserved B-p30,
+  on the same 1,288 original test rows. Same customers/attacks/seed/model;
+  zero-poison preparation must exactly match B-p00 before fitting. Mixed or
+  malicious-parent synthetic training rows have explicitly unknown truth.
+  This tests the whole resampling policy, not class proportions alone.
+  Ten constructed fixtures pass; full suite 337 pass / 10 environment-specific
+  skips. Both B references and all 56 input arrays still verify unchanged.
+  QCRI VPN is disconnected; hostname lookup
+  fails and direct-IP TCP/22 times out. **No research-data preparation, new
+  scoring, fit or job submission occurred.** Freeze the tested code and resume
+  this one 15-minute/4-CPU/16-GiB/no-GPU control when access returns; inspect
+  scheduler/output state before submission. No new settings or seeds.
+  [Current step](plans/2026-09-22-poison-balance-control.md). Website is local only.
+
 - **Feed-forward pair complete and audited, September 22:** access restored;
   existing setup job 398992 completed 0:0 in 12:54 and was not repeated.
   Frozen b5da23a ran as job 400825, completed 0:0 in 3:28 on one V100-PCIE-16GB,

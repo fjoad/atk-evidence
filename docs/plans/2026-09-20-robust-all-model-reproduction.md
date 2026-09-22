@@ -4,6 +4,20 @@
 
 **State:** four model pairs, forest controls, and read-only SVM diagnostic complete and audited
 
+## Current execution: poisoning versus balancing order
+
+The user asked to continue after the supportive feed-forward result. Source
+review finds the original completion remains reasonable, but the relative
+order is not explicitly settled. The [bounded step plan](2026-09-22-poison-balance-control.md)
+and `POISON_BALANCE_CHECK.md` specify one new forest fit versus saved B-p30,
+same original evaluation, and a zero-poison preparation-parity guard with no
+extra fit. The direct check and ten constructed fixtures are implemented.
+This is a controlled resampling-policy contrast, not a pure class-prior test.
+Mixed-parent synthetic truth is unknown, never a fabricated clean test label.
+Panther is unreachable with QCRI VPN disconnected; no experimental preparation,
+fit, scoring or job submission has occurred. Freeze locally and resume only
+the one bounded CPU control when access returns. No extra seed or publication.
+
 ## Current execution: feed-forward pilot
 
 User approved the next coverage step. Recheck the paper's six 500-neuron

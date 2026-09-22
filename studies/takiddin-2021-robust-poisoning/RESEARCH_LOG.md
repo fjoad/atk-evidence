@@ -13,6 +13,8 @@ three shallow-model pilots. The repaired neural baseline learns useful ranking,
 including under poisoning, although its default operating points differ from
 the paper. Forest and AdaBoost work well too; the initial sigmoid SVM is weak.
 These are small, dependent pilot samples, not full-population reproduction.
+The next poisoning/balancing-order comparison is specified and software-tested,
+but has not run: the cluster's VPN connection is unavailable.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -916,15 +918,70 @@ unattainable. All seven metrics, epoch histories, hardware, warnings, and
 verification are preserved in the [feed-forward record](results/feed_forward_pilot_20260922/README.md).
 No extra fit or setting was tried after seeing these results.
 
+## 22 September — Testing the order without changing the test answers
+
+The working baselines should change our starting expectation. The claim that
+these methods simply cannot learn this task is becoming less plausible.
+That is different from concluding that the entire paper is correct: the full
+reported pattern, larger population and proposed reconstruction mechanism
+still need their own tests. We keep the supportive results alongside the weak
+SVM result, rather than choosing either as a verdict on everything.
+
+The next question comes from a pattern shared by forest, AdaBoost and
+feed-forward. After poisoning, each detects fewer attacks at its default
+decision rule, but also raises fewer false alarms. Useful rankings remain.
+Does the order of corrupting labels and balancing classes contribute?
+
+We went back to pages 2677-2678. Section III-A.2 describes balancing before
+splitting. Section III-A.3 then describes malicious training examples labeled
+benign, without explicitly saying where that corruption belongs relative to
+balancing. Our original order is a reasonable reading, not a discovered bug.
+
+Here is the smallest comparison we have specified. Reuse the earlier
+training-only forest control, which balanced clean labels and then poisoned
+them. Fit just one new forest that poisons first and balances the observed
+labels afterward. Keep the same original examples, six selected customers,
+675 label changes, seed and model settings. Evaluate both on exactly the same
+1,288 original test rows: 1,105 attacks and 183 benign examples. No new seed.
+
+Why use the earlier training-only control? Applying poison before full-pool
+balancing could change the synthetic test set as well as the training set.
+It could also create a supposedly benign test example by interpolating a
+genuinely benign observation with a mislabeled attack. Its true label is not
+established. We cannot resolve that ambiguity by declaring it benign because
+the sampler called it benign. The new control generates such examples only
+for training, records both parents, and marks their true class unknown.
+
+In the saved control, the observed training counts after poisoning are
+2,952 labeled benign and 1,580 labeled attack. In the new order, the original
+rows have 1,052 labeled benign and 1,580 labeled attack before synthesis.
+ADASYN will try to balance those observed classes; its actual rounded output
+counts will be reported, not adjusted to a desired result.
+
+This test changes more than class proportions: the synthetic values, number
+of training rows, forest bootstrap samples and training-fitted scale can also
+change. We will call it an **order-of-operations control**, not proof that
+class proportions alone caused the earlier pattern. Detection, false alarms,
+ranking AUC and detection at the same false-alarm limits will be compared.
+A positive, small or adverse change will all be recorded without more tries
+to obtain a preferred outcome.
+
+Before the one new fit, a zero-poison check must recover every prepared array
+from the earlier clean control exactly. The local implementation passes ten
+constructed software tests, including that parity check, stock-sampler agreement,
+label provenance, unchanged evaluation, and model save/reload. These are not
+new findings on electricity data. Panther is currently unreachable because
+the QCRI VPN is disconnected; no new research preparation, score or fit has
+been produced. The [fixed comparison](POISON_BALANCE_CHECK.md) permits one
+15-minute CPU allocation when access returns, and then stops for analysis.
+
 ## What we will do next
 
 Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
 reduces default detection and false alarms while useful ranking remains.
-The next proposed check is the shared setup, especially whether poisoning
-happens before or after balancing and how that changes the observed class
-proportions. This is an unresolved source detail, not a measured explanation
-yet. First specify the alternatives and what a small controlled comparison
-would distinguish; do not silently regenerate the original data or launch a
+The next check is the now-specified one-fit order-of-operations control above,
+once cluster access returns. This is still an unresolved source detail, not
+a measured explanation. Do not regenerate the original data or launch a
 search. The remaining models, including GRU, ARIMA, AEA and the ensembles,
 stay in scope. SVM parameter sensitivity also remains open.
 

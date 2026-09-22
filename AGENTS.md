@@ -58,6 +58,23 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user-approved next shared-setup check is specified in
+`studies/takiddin-2021-robust-poisoning/POISON_BALANCE_CHECK.md` and implemented
+in `checks/poison_balance.py`. One new forest fit compares poison-before-
+training-only-ADASYN against saved B-p30 on the same 1,288 original test rows.
+A zero-poison preparation-parity guard reuses B-p00 without refitting. Ten
+constructed fixtures pass. Mixed/malicious-parent synthetic rows have unknown
+truth and never enter evaluation. This is a resampling-policy contrast, not
+an isolated class-prior effect or a literal reproduction. QCRI VPN is currently
+disconnected and Panther is unreachable; no new research-data preparation,
+scoring, fit or job was submitted. Resume only this frozen one-fit CPU control
+when access returns, after checking scheduler/output state, within 15 minutes,
+4 CPUs/16 GiB/no GPU. Do not add seeds or settings. Original inputs/results
+remain untouched; nothing is published. See the
+[step plan](docs/plans/2026-09-22-poison-balance-control.md).
+
+### Earlier feed-forward checkpoint
+
 The approved feed-forward pair is complete and audited (b5da23a, job 400825).
 Setup job 398992 had completed successfully and was not repeated after access
 returned. Both repaired-BCE models finished 50 epochs on one V100-16GB with

@@ -2,6 +2,24 @@
 
 **Last updated:** 2026-09-22
 
+**Current next step, September 22:** user asked to continue; source review
+and code for one poisoning-before-balancing forest control are ready for
+freeze. See POISON_BALANCE_CHECK.md and checks/poison_balance.py. Compare new
+D-p30 with saved split-control-20260920-attempt1/B-p30; reuse B-p00 as context,
+requiring all 28 zero-poison prepared arrays identical before any fit. Same
+2,632 originals, 675 flips/six customers, seed20260920, 100 trees, 1,288 clean
+original test rows. Only training ADASYN order changes; generated features,
+counts/bootstrap and fitted scale can change too, so this does not isolate
+class priors. Stock ADASYN sees observed labels; preserve both true parent
+UIDs, mark synthetic truth/attack -1 if either parent is truly malicious.
+Never evaluate unknown-truth synthetic rows or report their truth accuracy.
+Ten constructed fixtures pass; full main suite 337 pass/10 environment skips.
+Old B results and 56 input arrays reverified unchanged. QCRI VPN disconnected, DNS fails and bounded
+direct-IP TCP/22 fails. No new real-data preparation/scoring/fit/job submitted.
+On reconnect resume the frozen one-fit control only, 4 CPUs/16 GiB/15 min/no
+GPU; check existing jobs/attempt paths before dispatch. No wider search or
+publication. Original direct files and all historical artifacts unchanged.
+
 **Current feed-forward pair, complete September 22:** VPN/SSH restored;
 setup job 398992 completed 0:0 in 12:54, not rerun. Frozen b5da23a ran as
 GPU job 400825, completed 0:0 in 3:28 on V100-PCIE-16GB (driver 570.133.07),

@@ -269,3 +269,13 @@ order incomplete. This is a named shared-setup question worth specifying before
 further costly model coverage, not proof of which order the authors used.
 Any controlled run needs an explicit intervention, unchanged evaluation,
 budget and stopping rule first. No such comparison was silently launched.
+
+September 22 source/design update: III-A.2-3 does not explicitly settle the
+relative order, so the original completion is not an identified coding error.
+`POISON_BALANCE_CHECK.md` now specifies D-p30 versus saved B-p30, using the
+same original training/evaluation rows and training-only synthesis in both
+arms. This changes synthesis geometry/counts as well as observed proportions;
+it will not identify a class-prior-only effect. Synthetic rows with any truly
+malicious parent have unknown truth and remain training-only. Zero-poison
+array parity gates the single fit. Code passes ten constructed fixtures;
+Panther is inaccessible and no real-data control has run. E19 remains open.
