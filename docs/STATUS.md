@@ -25,8 +25,8 @@ execution plan here is
   skips. Both B references and all 56 input arrays still verify unchanged.
   QCRI VPN is disconnected; hostname lookup
   fails and direct-IP TCP/22 times out. **No research-data preparation, new
-  scoring, fit or job submission occurred.** Freeze the tested code and resume
-  this one 15-minute/4-CPU/16-GiB/no-GPU control when access returns; inspect
+  scoring, fit or job submission occurred.** Scientific freeze: `9b23b32`.
+  Resume this one 15-minute/4-CPU/16-GiB/no-GPU control when access returns; inspect
   scheduler/output state before submission. No new settings or seeds.
   [Current step](plans/2026-09-22-poison-balance-control.md). Website is local only.
 

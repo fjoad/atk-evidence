@@ -72,6 +72,8 @@ when access returns, after checking scheduler/output state, within 15 minutes,
 4 CPUs/16 GiB/no GPU. Do not add seeds or settings. Original inputs/results
 remain untouched; nothing is published. See the
 [step plan](docs/plans/2026-09-22-poison-balance-control.md).
+The scientific contract/code are frozen at
+`9b23b329aaefe76c9a1559691366ecdb424acd3f`; use that revision for execution.
 
 ### Earlier feed-forward checkpoint
 

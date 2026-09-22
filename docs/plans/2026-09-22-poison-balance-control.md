@@ -34,6 +34,9 @@ local journal's new-entry navigation and final layout were visually checked.
 
 ## Resume without changing the experiment
 
+Scientific contract/code freeze: `9b23b329aaefe76c9a1559691366ecdb424acd3f`.
+Later handoff documentation commits do not replace that execution revision.
+
 On reconnect, inspect account jobs and existing output paths before submitting.
 Use the frozen scientific commit in a new isolated Panther worktree; do not
 alter the Panther main checkout or any prior attempt. Main interpreter:

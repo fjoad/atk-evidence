@@ -3,8 +3,9 @@
 **Last updated:** 2026-09-22
 
 **Current next step, September 22:** user asked to continue; source review
-and code for one poisoning-before-balancing forest control are ready for
-freeze. See POISON_BALANCE_CHECK.md and checks/poison_balance.py. Compare new
+and code for one poisoning-before-balancing forest control are frozen at
+9b23b329aaefe76c9a1559691366ecdb424acd3f. See POISON_BALANCE_CHECK.md and
+checks/poison_balance.py. Compare new
 D-p30 with saved split-control-20260920-attempt1/B-p30; reuse B-p00 as context,
 requiring all 28 zero-poison prepared arrays identical before any fit. Same
 2,632 originals, 675 flips/six customers, seed20260920, 100 trees, 1,288 clean
