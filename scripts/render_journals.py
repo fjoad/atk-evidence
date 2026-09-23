@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from datetime import date
 from html import escape
+import hashlib
 from pathlib import Path
 import posixpath
 import re
@@ -17,6 +18,7 @@ from markdown_it import MarkdownIt
 
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
+STYLE_VERSION = hashlib.sha256((SITE / "notebook.css").read_bytes()).hexdigest()[:12]
 PAPERS = tomllib.loads((ROOT / "studies/registry.toml").read_text())["studies"]
 MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
 ENTRY_PREFIX = re.compile(
@@ -27,6 +29,18 @@ ENTRY_PREFIX = re.compile(
 def section_title(heading: str) -> str:
     """Dates remain in source records and legacy anchors, not the reading flow."""
     return ENTRY_PREFIX.sub("", heading)
+
+
+def render_index() -> str:
+    """Keep the authored index; refresh only its stylesheet cache key."""
+    source = (SITE / "index.html").read_text(encoding="utf-8")
+    rendered, count = re.subn(
+        r'href="notebook\.css(?:\?v=[0-9a-f]+)?"',
+        f'href="notebook.css?v={STYLE_VERSION}"', source,
+    )
+    if count != 1:
+        raise ValueError("Index needs exactly one notebook stylesheet")
+    return rendered
 
 
 def render(study_id: str) -> str:
@@ -111,7 +125,7 @@ def render(study_id: str) -> str:
   <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/{study_id}/">
   <meta name="twitter:title" content="{page_title}">
   <meta name="twitter:description" content="{description}">
-  <link rel="stylesheet" href="../../notebook.css">
+  <link rel="stylesheet" href="../../notebook.css?v={STYLE_VERSION}">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -131,6 +145,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--check", action="store_true", help="Check that the site matches its source without writing")
     args = parser.parse_args()
+    index = SITE / "index.html"
+    rendered_index = render_index()
+    if args.check and index.read_text(encoding="utf-8") != rendered_index:
+        print("Index stylesheet version is stale; run scripts/render_journals.py")
+        return 1
+    if not args.check:
+        index.write_text(rendered_index, encoding="utf-8")
     for paper in PAPERS:
         output = ROOT / paper["page"]
         rendered = render(paper["id"])

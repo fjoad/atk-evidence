@@ -56,13 +56,15 @@ class NotebookSiteTests(unittest.TestCase):
         self.assertNotIn("three papers", content)
         self.assertIn('aria-label="Papers"', content)
         self.assertNotIn('class="number"', content)
+        self.assertEqual(content, renderer.render_index())
+        self.assertIn(f'href="notebook.css?v={renderer.STYLE_VERSION}"', content)
 
     def test_notebooks_link_to_the_index_without_a_fixed_switcher(self):
         for paper in PAPERS:
             with self.subTest(paper=paper["id"]):
                 content = (ROOT / paper["page"]).read_text()
                 self.assertEqual(content, renderer.render(paper["id"]))
-                self.assertIn('href="../../notebook.css"', content)
+                self.assertIn(f'href="../../notebook.css?v={renderer.STYLE_VERSION}"', content)
                 self.assertNotIn("paper-tabs", content)
                 self.assertNotIn("Choose a paper", content)
                 self.assertNotIn("All three papers", content)
