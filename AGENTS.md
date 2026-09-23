@@ -58,6 +58,20 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user has now approved the unchanged GRU's same-seed completion under
+the [new step plan](docs/plans/2026-09-24-gru-completion.md) and
+GRU_COMPLETION.md. One fresh original p00/p30 pair, same seed/model/data and
+50 epochs/batch100, now35min fit guards and85min job on one V100-16GB,
+4CPUs/16GiB. The budget uses actual full-epoch times; old partial outputs and
+900s default remain intact. No claim of exact checkpoint continuation.
+Validate unchanged scientific functions, prior hashes and fixtures, freeze
+code, inspect scheduler/output state, then submit once. Audit initial-weight
+identity and first32 repeated epoch metrics as well as normal pair artifacts.
+No new job yet at this checkpoint. Website remains untouched. This approval
+supersedes the stop-for-budget-decision statements below, not their evidence.
+
+### Audited partial checkpoint
+
 GRU job **402378 has stopped** (checked September 24), FAILED/2:0 after
 22:45: intentional partial-fit exit, not an OOM. P00 reached the 900s guard
 after 32 full epochs plus seven batches of epoch 33 (1,447 updates); p30 never

@@ -2,6 +2,20 @@
 
 **Last updated:** 2026-09-24
 
+**Approved GRU completion:** user said go ahead after the partial-audit report.
+docs/plans/2026-09-24-gru-completion.md and GRU_COMPLETION.md authorize one
+same-seed original p00/p30 restart, unchanged50epochs/batch100/model/data,
+35min guards/85min allocation, one V100-16GB/4CPUs/16GiB. Budget is
+ceil((50*max32full_epoch_seconds)/300)*300=2100s; total2*2100+900=5100s.
+Constructed fixture confirms old timing fixed100 batch versus researchNone
+batch and64-row remainder; timing cause not isolated. No extra GPU timing job.
+Keep original900s default, old720s false gate and original outputs unchanged.
+Fresh initialization rather than pretending unsaved shuffle/dropout state
+continues exactly. Compare newp00 initial hash and first32 loss/accuracy/update
+records with old; differences must be reported, not used to select a run.
+New CLI only exposes guard900/2100 and records budget/contract. No job yet;
+finish tests/freeze, then scheduler/output check and one submission. No website work.
+
 **GRU stopped and audited September 24:** job 402378 FAILED/2:0 in 22:45
 (intentional partial-fit return). P00 hit 900.07785s guard at 32 full epochs
 +7 batches of epoch33, 1447 updates. P30 never started; no pair audit exists.

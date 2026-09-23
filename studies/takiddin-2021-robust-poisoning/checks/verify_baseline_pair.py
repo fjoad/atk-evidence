@@ -45,6 +45,8 @@ def verify(preparation, attempt):
         raise ValueError("Model/settings changed within the pair")
     if rows[0]["code_commit"] != rows[1]["code_commit"] or rows[0]["versions"] != rows[1]["versions"]:
         raise ValueError("Code/runtime changed within the pair")
+    if rows[0].get("execution_budget") != rows[1].get("execution_budget"):
+        raise ValueError("Execution budget changed within the pair")
     if rows[0]["model"] in ("feed_forward", "gru"):
         from run_experiment import weight_hash
         for level, record in zip(("p00", "p30"), rows):

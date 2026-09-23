@@ -12,6 +12,18 @@ execution plan here is
 
 ## Current project state
 
+- **Same-seed GRU completion now approved:** the user asked to proceed with
+  correcting the runtime estimate and budgeting the unchanged 50-epoch pair.
+  The old preflight has fixed batch dimension100; the research pipeline has
+  variable batch dimension and a64-row remainder (constructed fixture check,
+  not an isolated timing cause). Budget uses the32 measured full epochs:
+  50*slowest39.869955s=1993.497735s, rounded to35min per fit;85min job with
+  one V100-16GB/4 CPUs/16 GiB. Restart each case from the same seed, not an
+  unverified checkpoint continuation; retain the earlier partial attempt.
+  Scientific fit/data/device functions are unchanged; only the operational
+  guard/dispatch/recording changes. See [completion plan](plans/2026-09-24-gru-completion.md)
+  and GRU_COMPLETION.md. No new job submitted at this checkpoint; no website work.
+
 - **GRU partial p00 result audited; no active job:** checked September 24.
   Job 402378 ended FAILED/2:0 after 22:45, the intentional partial-fit exit.
   P00 hit its 900s fit guard after 32 full epochs plus seven batches of epoch

@@ -116,7 +116,7 @@ def fit_svm(arrays, output, *, seed):
     return report
 
 
-def fit_one(arrays, output, *, seed, workers, model_name="random_forest"):
+def fit_one(arrays, output, *, seed, workers, model_name="random_forest", gru_fit_limit_seconds=900):
     """Also used on constructed fixtures; real input is gated by main()."""
     output = Path(output)
     if model_name == "svm":
@@ -124,7 +124,7 @@ def fit_one(arrays, output, *, seed, workers, model_name="random_forest"):
     if model_name == "feed_forward":
         return fit_feed_forward(arrays, output, seed=seed)
     if model_name == "gru":
-        return fit_gru(arrays, output, seed=seed)
+        return fit_gru(arrays, output, seed=seed, fit_limit_seconds=gru_fit_limit_seconds)
     if model_name not in ("random_forest", "adaboost"):
         raise ValueError("Unknown model")
     model = random_forest(seed, workers) if model_name == "random_forest" else adaboost(seed)
@@ -512,7 +512,10 @@ def main():
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--model", choices=("random_forest", "adaboost", "svm", "feed_forward", "gru"), default="random_forest")
+    parser.add_argument("--gru-fit-limit-seconds", type=int, choices=(900, 2100), default=900)
     args = parser.parse_args()
+    if args.model != "gru" and args.gru_fit_limit_seconds != 900:
+        parser.error("The GRU completion budget applies only to GRU")
     require_compute()
     required_version = "1.5.2" if args.model in ("adaboost", "feed_forward", "gru") else "1.9.0"
     if sklearn.__version__ != required_version:
@@ -545,6 +548,11 @@ def main():
         record["source_sha256"]["requirements-svm.txt"] = digest(STUDY / "requirements-svm.txt")
     if args.model in ("feed_forward", "gru"):
         record["source_sha256"]["requirements-feed-forward.txt"] = digest(STUDY / "requirements-feed-forward.txt")
+    if args.model == "gru":
+        record["execution_budget"] = {"fit_guard_seconds": args.gru_fit_limit_seconds,
+                                      "epochs": 50, "batch_size": 100}
+        if args.gru_fit_limit_seconds == 2100:
+            record["source_sha256"]["GRU_COMPLETION.md"] = digest(STUDY / "GRU_COMPLETION.md")
     result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     captured = []
     try:
@@ -561,12 +569,13 @@ def main():
                       training_rows=len(arrays["train_x"]), test_rows=len(arrays["test_x"]))
         with warnings.catch_warnings(record=True) as captured:
             warnings.simplefilter("always")
-            record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model))
+            record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model,
+                                  gru_fit_limit_seconds=args.gru_fit_limit_seconds))
         record["warnings"] = [{"category": w.category.__name__, "message": str(w.message)} for w in captured]
         if args.model == "svm" and record["svm"]["fit_status"] != 0:
             raise RuntimeError("SVM did not converge; preserve artifacts but do not label the fit complete")
         if args.model in ("feed_forward", "gru") and not record["neural"]["training_complete"]:
-            record.update(status="partial", stop_reason=("fifteen-minute batch-boundary guard reached" if args.model == "gru" else "seven-minute training guard reached"))
+            record.update(status="partial", stop_reason=(f"{args.gru_fit_limit_seconds}-second batch-boundary guard reached" if args.model == "gru" else "seven-minute training guard reached"))
         else:
             record["status"] = "complete"
     except Exception as exc:

@@ -1,9 +1,11 @@
 """Constructed GRU fixtures only; no CER preparation or inference locally."""
 
 import importlib.util
+import io
 import json
 import os
 from pathlib import Path
+from contextlib import redirect_stderr
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -16,6 +18,17 @@ from tests.test_robust_feed_forward import HAS_TF
 PATH = Path(__file__).resolve().parents[1] / "studies/takiddin-2021-robust-poisoning/checks/gru_preflight.py"
 with patch.dict("sys.modules", {"models": M, "run_experiment": R, "analyze_results": A}):
     G = load("robust_gru_preflight", PATH)
+    C = load("robust_gru_completion", PATH.with_name("gru_completion.py"))
+
+
+def historical_preflight_digest(path):
+    """Fixture the old checkout's source bytes; do not require today's runner to be old."""
+    record = json.loads((G.STUDY / "results/gru_preflight_20260923/preflight.json").read_text())
+    try:
+        relative = str(Path(path).relative_to(G.STUDY))
+    except ValueError:
+        relative = ""
+    return record["source_sha256"].get(relative) or A.digest(path)
 
 
 class GRUContractTests(unittest.TestCase):
@@ -74,8 +87,9 @@ class GRUContractTests(unittest.TestCase):
         path = G.STUDY / "results/gru_preflight_20260923/preflight.json"
         with self.assertRaisesRegex(ValueError, "gate did not pass"):
             G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT)
-        result = G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT,
-                          authorized_runtime_extension=True)
+        with patch.object(G, "digest", side_effect=historical_preflight_digest):
+            result = G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT,
+                              authorized_runtime_extension=True)
         self.assertEqual(result["status"], "verified_with_authorized_exception")
         self.assertFalse(result["original_gate"]["passes"])
         self.assertEqual(result["original_gate"]["ceiling_seconds"], 720)
@@ -107,10 +121,72 @@ class GRUContractTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "only to the approved preflight"):
                 G.verify(path, A.digest(path), G.APPROVED_PREFLIGHT_COMMIT,
                          authorized_runtime_extension=True)
-            with patch.object(G, "APPROVED_PREFLIGHT_SHA256", A.digest(path)):
+            with patch.object(G, "APPROVED_PREFLIGHT_SHA256", A.digest(path)), \
+                    patch.object(G, "digest", side_effect=historical_preflight_digest):
                 with self.assertRaisesRegex(ValueError, "900-second ceiling"):
                     G.verify(path, A.digest(path), G.APPROVED_PREFLIGHT_COMMIT,
                              authorized_runtime_extension=True)
+
+    def test_completion_budget_uses_only_full_epochs_and_rounds_up(self):
+        history = [{"epoch_complete": True, "seconds": 39.86995469033718},
+                   {"epoch_complete": True, "seconds": 25.},
+                   {"epoch_complete": False, "seconds": 9999.}]
+        budget = C.runtime_budget(history)
+        self.assertEqual(budget["full_epochs_measured"], 2)
+        self.assertEqual(budget["fit_guard_seconds"], 2100)
+        self.assertEqual(budget["job_limit_seconds"], 5100)
+        for bad in ([], [{"epoch_complete": True, "seconds": 0.}],
+                    [{"epoch_complete": True, "seconds": float("nan")} ]):
+            with self.assertRaises(ValueError):
+                C.runtime_budget(bad)
+
+    def test_guard_dispatch_changes_no_model_arguments(self):
+        arrays = {"fixture": True}
+        with patch.object(R, "fit_gru", return_value={"fixture": True}) as fit:
+            for guard in (900, 2100):
+                R.fit_one(arrays, "unused", seed=42, workers=1, model_name="gru", gru_fit_limit_seconds=guard)
+                fit.assert_called_with(arrays, Path("unused"), seed=42, fit_limit_seconds=guard)
+            R.fit_one(arrays, "unused", seed=42, workers=1, model_name="gru")
+            fit.assert_called_with(arrays, Path("unused"), seed=42, fit_limit_seconds=900)
+
+    def test_cli_rejects_unapproved_guard_or_other_model_before_compute(self):
+        for model, guard in (("gru", "1800"), ("random_forest", "2100")):
+            with patch("sys.argv", ["runner", "--data", "unused", "--output", "unused",
+                                    "--model", model, "--gru-fit-limit-seconds", guard]), \
+                    redirect_stderr(io.StringIO()):
+                with self.assertRaises(SystemExit) as exc:
+                    R.main()
+                self.assertEqual(exc.exception.code, 2)
+
+    def test_scientific_function_check_rejects_body_changes_not_comments(self):
+        source = "\n".join(f"def {name}():\n    return 1\n" for name in C.UNCHANGED_FUNCTIONS)
+        C.scientific_functions_unchanged(source, "# Operational comment\n" + source)
+        with self.assertRaisesRegex(ValueError, "fit_gru"):
+            C.scientific_functions_unchanged(source, source.replace("return 1", "return 2", 1))
+
+    def test_prefix_comparison_reports_differences_without_selecting(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            old, new = root / "old/p00", root / "new/p00"
+            old.mkdir(parents=True)
+            new.mkdir(parents=True)
+            record = {"neural": {"initial_weights_sha256": "same", "epochs_completed": 50},
+                      "execution_budget": {"fit_guard_seconds": 2100}}
+            history = [{"epoch": i, "loss": .6, "categorical_accuracy": .7,
+                        "optimizer_updates": i * 45, "epoch_complete": True} for i in range(1, 51)]
+            for path in (old, new):
+                (path / "result.json").write_text(json.dumps(record))
+                (path / "history.json").write_text(json.dumps(history))
+            with patch.object(C, "digest", return_value=C.PREVIOUS_SHA256), \
+                    patch.object(C, "audit_result", return_value={"result_sha256": "fixture"}):
+                self.assertTrue(C.compare_prefix(old.parent, new)["first_32_epoch_metrics_match_exactly"])
+                history[2]["loss"] = .5
+                (new / "history.json").write_text(json.dumps(history))
+                self.assertEqual(C.compare_prefix(old.parent, new)["mismatched_epoch_numbers"], [3])
+                record["neural"]["initial_weights_sha256"] = "changed"
+                (new / "result.json").write_text(json.dumps(record))
+                with self.assertRaisesRegex(ValueError, "initialization"):
+                    C.compare_prefix(old.parent, new)
 
 
 @unittest.skipUnless(HAS_TF, "requires isolated TensorFlow environment")
