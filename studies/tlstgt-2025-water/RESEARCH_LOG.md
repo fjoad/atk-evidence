@@ -10,10 +10,9 @@ Takiddin, EUSIPCO (2025).
 paper. This investigation is not independent of the authors. We record our
 own mistakes and the limits of each comparison.
 
-This notebook was reconstructed on 23 September from the
-[evidence log](EVIDENCE.md). Dated entries use dates recorded there; later
-checks without a recorded day retain their source order rather than an
-invented chronology. No water-network experiment was rerun for this page.
+This account follows the [evidence log](EVIDENCE.md), including the problems
+we found, the checks they prompted and the corrections that changed our view.
+No water-network experiment was rerun for this page.
 
 **Earlier investigation, awaiting reassessment.** These results were obtained
 under an earlier workflow. This page reorganizes the existing record and its
@@ -158,7 +157,7 @@ for every gain. The [C12 record](EVIDENCE.md) preserves the configurations.
 
 ## 31 August — Narrowing our own conclusions
 
-The [dated wording correction](EVIDENCE.md#public-wording-correction--2026-08-31)
+The [wording correction](EVIDENCE.md#public-wording-correction--2026-08-31)
 changes how the older results should be read:
 
 - The protocol search is finite, not every possible test size or convention.
@@ -171,7 +170,7 @@ changes how the older results should be read:
 - Flat capacity results and failure on frozen history do not prove that all
   capacities or every possible forecaster must fail.
 
-The earlier evidence entries retain their dated wording. These corrections
+The earlier evidence entries retain their original wording. These corrections
 govern the current interpretation; they do not change the saved measurements.
 
 ## Records and remaining questions

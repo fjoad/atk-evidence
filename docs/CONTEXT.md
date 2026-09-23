@@ -2,6 +2,13 @@
 
 **Last updated:** 2026-09-23
 
+**Latest website preference:** user wants a continuation, without prominent
+dates. Main pages now use descriptive section headings, undated introductions
+and no update-date banners. Internal log dates and published anchor IDs remain
+for provenance/link compatibility; paper publication years are retained.
+No scientific content or archived records change. Follow-up plan:
+docs/plans/2026-09-23-continuous-website.md.
+
 **Website/user direction, September 23:** user approved a quiet index linking
 the three registered papers, notebook pages with claims → starting hypothesis
 → chronological investigation/results/corrections → current conclusion, and

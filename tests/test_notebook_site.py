@@ -18,6 +18,27 @@ spec.loader.exec_module(renderer)
 
 
 class NotebookSiteTests(unittest.TestCase):
+    def test_visible_pages_read_as_a_continuation_not_a_dated_diary(self):
+        pages = [SITE / "index.html", *[ROOT / paper["page"] for paper in PAPERS]]
+        calendar_date = rf"\b\d{{1,2}}(?:[–-]\d{{1,2}})? (?:{renderer.MONTHS})\b"
+        for path in pages:
+            with self.subTest(page=path):
+                visible = Page(path).text
+                self.assertNotRegex(visible, calendar_date)
+                self.assertNotIn("Notebook updated", visible)
+                self.assertNotIn("Notes updated", visible)
+        for heading, expected in (
+            ("20 September — The printed loss loses the label", "The printed loss loses the label"),
+            ("30–31 August — Completing a declared FC-SAE reproduction", "Completing a declared FC-SAE reproduction"),
+            ("24 July and the later arithmetic checks — Do the printed metrics fit?", "Do the printed metrics fit?"),
+            ("Later checks — The graph does help", "The graph does help"),
+        ):
+            self.assertEqual(renderer.section_title(heading), expected)
+        poisoning = (SITE / "papers/takiddin-2021-robust-poisoning/index.html").read_text()
+        self.assertIn('id="20-september-the-printed-loss-loses-the-label"', poisoning)
+        self.assertIn('href="#20-september-the-printed-loss-loses-the-label"', poisoning)
+        self.assertIn('>The printed loss loses the label</h2>', poisoning)
+
     def test_home_is_a_three_paper_index_not_a_result_report(self):
         content = (SITE / "index.html").read_text()
         links = [link for link in Page(SITE / "index.html").links if link.startswith("papers/")]

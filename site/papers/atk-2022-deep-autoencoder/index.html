@@ -22,19 +22,19 @@
   <nav class="paper-tabs" aria-label="Choose a paper"><a href="../atk-2022-deep-autoencoder/" aria-current="page">1. Autoencoders · 2022</a><a href="../tlstgt-2025-water/">2. Water networks · 2025</a><a href="../takiddin-2021-robust-poisoning/">3. Data poisoning · 2021</a></nav>
 </header>
 <main class="journal" id="main">
-  <p class="meta">Paper 1 of 3 · Notebook updated 23 September 2026</p>
+  <p class="meta">Paper 1 of 3</p>
 <h1 id="electricity-theft-with-deep-autoencoders">Electricity theft with deep autoencoders</h1>
 <p>Notes on <em>Deep Autoencoder-Based Anomaly Detection of Electricity Theft
 Cyberattacks in Smart Grids</em>, Takiddin, Ismail, Zafar and Serpedin,
 IEEE Systems Journal (2022). <a href="https://doi.org/10.1109/JSYST.2021.3136683">Publication record</a>.</p>
-<p>This notebook was assembled on 23 September from the preserved dated findings.
-The dates below identify the earlier work, not new experiments performed for
-the website. The full technical report and older accounts remain linked below.</p>
+<p>This account follows the earlier work preserved in the linked findings.
+It reorganizes existing evidence rather than describing new experiments.
+The full technical report and older accounts remain available below.</p>
 <p><strong>Earlier investigation, awaiting reassessment.</strong> These results were obtained
 under an earlier workflow. We are preserving them, not certifying them again
 under the current approach. A fresh reassessment is separate future work;
 the present active investigation is the data-poisoning paper.</p>
-<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#11-august-an-earlier-attempt-left-a-preparation-question-open">11 August — An earlier attempt left a preparation question open</a></li><li><a href="#30-31-august-completing-a-declared-fc-sae-reproduction">30–31 August — Completing a declared FC-SAE reproduction</a></li><li><a href="#31-august-a-conditional-limit-stronger-than-a-failed-seed">31 August — A conditional limit stronger than a failed seed</a></li><li><a href="#31-august-testing-what-the-bound-depends-on">31 August — Testing what the bound depends on</a></li><li><a href="#2-september-giving-lstm-sae-the-paper-s-reported-training-time">2 September — Giving LSTM-SAE the paper&#x27;s reported training time</a></li><li><a href="#records-and-unresolved-coverage">Records and unresolved coverage</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
+<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#11-august-an-earlier-attempt-left-a-preparation-question-open">An earlier attempt left a preparation question open</a></li><li><a href="#30-31-august-completing-a-declared-fc-sae-reproduction">Completing a declared FC-SAE reproduction</a></li><li><a href="#31-august-a-conditional-limit-stronger-than-a-failed-seed">A conditional limit stronger than a failed seed</a></li><li><a href="#31-august-testing-what-the-bound-depends-on">Testing what the bound depends on</a></li><li><a href="#2-september-giving-lstm-sae-the-paper-s-reported-training-time">Giving LSTM-SAE the paper&#x27;s reported training time</a></li><li><a href="#records-and-unresolved-coverage">Records and unresolved coverage</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
 <p>The paper trains autoencoders on normal electricity use. An autoencoder tries
 to reproduce its input. The proposed detection rule treats a sufficiently large
 reconstruction error as evidence of theft. The study compares fully connected,
@@ -51,7 +51,7 @@ A failed fit would not establish that every implementation must fail.</p>
 <p>Three questions gradually separated: do the numbers reproduce, does the
 architecture supply the claimed useful behavior, and can this fixed setup
 reach the reported target at all? They need different evidence.</p>
-<h2 id="11-august-an-earlier-attempt-left-a-preparation-question-open">11 August — An earlier attempt left a preparation question open</h2>
+<h2 id="11-august-an-earlier-attempt-left-a-preparation-question-open">An earlier attempt left a preparation question open</h2>
 <p>The earlier seed-11 experiment detected 26.18% of attacks with 58.22% false
 alarms. However, it omitted the paper's test-set ADASYN operation. It was
 therefore not a complete reconstruction of that evaluation.</p>
@@ -64,7 +64,7 @@ reconstruction rather than treating the first run as the final verdict.</p>
 preserve that route, including assumptions, unsuccessful attempts and its
 conditional calculations. Do not combine those numbers with later runs as if
 they were repetitions of one fixed experiment.</p>
-<h2 id="30-31-august-completing-a-declared-fc-sae-reproduction">30–31 August — Completing a declared FC-SAE reproduction</h2>
+<h2 id="30-31-august-completing-a-declared-fc-sae-reproduction">Completing a declared FC-SAE reproduction</h2>
 <p>The clean-reader experiment completed with the named Irish consumption data,
 declared source interpretations, one seed, and the printed-position test-set
 resampling. It evaluated 8,884,989 rows, including generated benign examples.
@@ -124,7 +124,7 @@ the gap and that boundary.</p>
 <p>The next useful question was not simply whether another seed would help.
 The output layer and score impose restrictions that can be examined without
 training again.</p>
-<h2 id="31-august-a-conditional-limit-stronger-than-a-failed-seed">31 August — A conditional limit stronger than a failed seed</h2>
+<h2 id="31-august-a-conditional-limit-stronger-than-a-failed-seed">A conditional limit stronger than a failed seed</h2>
 <p>Softmax forces each reconstruction to have nonnegative entries that sum to one.
 The prepared consumption values do not generally have that form. We asked:
 even if every example could receive its most favorable allowed reconstruction,
@@ -144,7 +144,7 @@ reconstruction by about 0.89 percentage points, and retained useful ranking
 differences within similar-input-magnitude groups. A small useful contribution
 can coexist with a large structural shortfall. The experiment did not establish
 the claimed recurrent or attention mechanism.</p>
-<h2 id="31-august-testing-what-the-bound-depends-on">31 August — Testing what the bound depends on</h2>
+<h2 id="31-august-testing-what-the-bound-depends-on">Testing what the bound depends on</h2>
 <p>Two additional source-supported scaling readings still capped detection at
 the printed cutoff at 29.81% and 33.96%. They did not exhaust every reasonable
 normalization. Replacing Softmax with a Sigmoid output removed the all-cutoff
@@ -160,7 +160,7 @@ been excluded; a failed small fit only excludes those particular fitted scores.
 The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md">scaling finding</a>,
 <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md">complete Sigmoid range check</a>, and
 <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md">paired-fit finding</a> preserve those separate steps.</p>
-<h2 id="2-september-giving-lstm-sae-the-paper-s-reported-training-time">2 September — Giving LSTM-SAE the paper's reported training time</h2>
+<h2 id="2-september-giving-lstm-sae-the-paper-s-reported-training-time">Giving LSTM-SAE the paper's reported training time</h2>
 <p>The paper reports 183 minutes for full-ISET LSTM-SAE training without stating
 its hardware or epoch count. A separate declared implementation received that
 fitting budget on one V100-16GB. This paper-time LSTM-SAE run scored all
@@ -207,7 +207,7 @@ the clock boundary, hardware, assumptions, saved-score checks and limitations.</
 <h2 id="records-and-unresolved-coverage">Records and unresolved coverage</h2>
 <ul>
 <li><a href="reproduction/index.html">Current technical reproduction report, figures and all comparisons</a>.</li>
-<li><a href="../../reports/atk-2022-deep-autoencoder.pdf">FC-SAE scientific report through 1 September (PDF)</a>; the web report also contains the later LSTM-SAE result.</li>
+<li><a href="../../reports/atk-2022-deep-autoencoder.pdf">Earlier FC-SAE scientific report (PDF)</a>; the web report also contains the later LSTM-SAE result.</li>
 <li><a href="earlier-notes.html">Earlier account and method notes</a>.</li>
 <li><a href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder/results">All study results and execution records</a>.</li>
 </ul>

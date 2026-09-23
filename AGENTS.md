@@ -201,6 +201,10 @@ notebooks, not a project-wide verdict. Each study's `RESEARCH_LOG.md` is the
 editable source; run `scripts/render_journals.py` (or `--check`) for all pages.
 Keep claims, starting hypothesis, evolving checks/results/corrections and a
 current conclusion at the end. Detailed earlier pages remain linked archives.
+The visible pages should read as one continuing investigation, not a dated
+diary: no calendar-prefixed headings or update-date banners. Keep dates in
+source records and preserve existing link anchors; publication years may
+remain to distinguish the papers.
 The user wants the older water/deep-autoencoder work reassessed later under
 the newer approach; preserve their results for now and label them as awaiting
 reassessment. Do not treat a presentation rewrite as renewed scientific

@@ -6,9 +6,9 @@ Notes on *Deep Autoencoder-Based Anomaly Detection of Electricity Theft
 Cyberattacks in Smart Grids*, Takiddin, Ismail, Zafar and Serpedin,
 IEEE Systems Journal (2022). [Publication record](https://doi.org/10.1109/JSYST.2021.3136683).
 
-This notebook was assembled on 23 September from the preserved dated findings.
-The dates below identify the earlier work, not new experiments performed for
-the website. The full technical report and older accounts remain linked below.
+This account follows the earlier work preserved in the linked findings.
+It reorganizes existing evidence rather than describing new experiments.
+The full technical report and older accounts remain available below.
 
 **Earlier investigation, awaiting reassessment.** These results were obtained
 under an earlier workflow. We are preserving them, not certifying them again
@@ -155,7 +155,7 @@ the clock boundary, hardware, assumptions, saved-score checks and limitations.
 ## Records and unresolved coverage
 
 - [Current technical reproduction report, figures and all comparisons](../../site/papers/atk-2022-deep-autoencoder/reproduction/index.html).
-- [FC-SAE scientific report through 1 September (PDF)](../../site/reports/atk-2022-deep-autoencoder.pdf); the web report also contains the later LSTM-SAE result.
+- [Earlier FC-SAE scientific report (PDF)](../../site/reports/atk-2022-deep-autoencoder.pdf); the web report also contains the later LSTM-SAE result.
 - [Earlier account and method notes](../../site/papers/atk-2022-deep-autoencoder/earlier-notes.html).
 - [All study results and execution records](results/).
 

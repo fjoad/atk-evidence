@@ -4,6 +4,17 @@
 
 **Audience:** an undergraduate taking an introductory statistics course.
 
+## Current refinement: a continuous account, not a dated diary
+
+The user does not want calendar dates organizing the visible reading flow.
+Use descriptive headings and natural transitions through the investigation.
+Do not show update-date banners, dated section prefixes or editorial assembly
+dates on the main pages. Publication years still identify the three papers;
+dates remain in internal research logs and linked technical records. The
+renderer keeps the already-published section IDs so old links continue to work.
+This refines the earlier notebook brief below; the scientific sequence and
+corrections remain intact.
+
 ## September 23: agreed three-paper notebook structure
 
 This supersedes the staged first implementation below. The homepage is now a

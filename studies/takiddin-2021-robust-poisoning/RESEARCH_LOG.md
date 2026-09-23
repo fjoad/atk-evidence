@@ -48,7 +48,7 @@ do not rewrite what we thought before the experiments.
 
 ## 2 September — An earlier arithmetic check
 
-*This entry was written retrospectively on 20 September from the saved record.*
+*This first check comes from the earlier saved record.*
 
 An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -214,7 +214,7 @@ the article and PDF but no related software record. These limits are part of
 the result: **we have not located public code**. This search does not establish
 that code was never released or explain why it was unavailable to us.
 
-The [dated search record](CODE_AVAILABILITY.md) preserves the queries, links,
+The [search record](CODE_AVAILABILITY.md) preserves the queries, links,
 results, and access limits. We can now proceed with a reconstruction from the
 paper while remaining able to inspect any implementation found later.
 
@@ -1100,7 +1100,7 @@ This does **not** prove the headline detection rates are unattainable by a
 model. Nor does it exclude independently averaged metrics, columns from
 different evaluations, reporting mistakes or a different undocumented
 procedure. Those possibilities change the meaning of the table and require
-explanation. The [dated source audit](SOURCE_AUDIT_FINDING.md) preserves the
+explanation. The [source audit](SOURCE_AUDIT_FINDING.md) preserves the
 calculation; its broad interpretation must be read with the correction below.
 
 ### Our customer-averaging caveat is essential
@@ -1183,7 +1183,7 @@ training or model sizes; a flat-looking curve alone will not establish a
 universal ceiling.
 
 Future entries will report successful matches, implementation mistakes, and
-changes of mind alongside negative results. We will append dated corrections
+changes of mind alongside negative results. We will add corrections
 and link back to the affected entry, so readers can follow how a conclusion
 changed.
 

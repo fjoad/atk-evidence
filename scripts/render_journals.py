@@ -21,6 +21,15 @@ PAPERS = tomllib.loads((ROOT / "studies/registry.toml").read_text())["studies"]
 LABELS = {"atk-2022-deep-autoencoder": "Autoencoders · 2022",
           "tlstgt-2025-water": "Water networks · 2025",
           "takiddin-2021-robust-poisoning": "Data poisoning · 2021"}
+MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
+ENTRY_PREFIX = re.compile(
+    rf"^(?:\d{{1,2}}(?:[–-]\d{{1,2}})? (?:{MONTHS})(?: and the later arithmetic checks)?|Later checks) — "
+)
+
+
+def section_title(heading: str) -> str:
+    """Dates remain in source records and legacy anchors, not the reading flow."""
+    return ENTRY_PREFIX.sub("", heading)
 
 
 def render(study_id: str) -> str:
@@ -32,8 +41,7 @@ def render(study_id: str) -> str:
     update_line = re.search(r"^Updated: (\d{4}-\d{2}-\d{2})$", source, re.MULTILINE)
     if update_line is None:
         raise ValueError("Journal needs an Updated: YYYY-MM-DD line")
-    updated = date.fromisoformat(update_line.group(1))
-    date_label = f"{updated.day} {updated:%B %Y}"
+    date.fromisoformat(update_line.group(1))  # Validate internal provenance only.
     tokens = markdown.parse(source.replace(update_line.group(0), "", 1))
     contents: list[tuple[str, str]] = []
     heading_ids: set[str] = set()
@@ -46,12 +54,16 @@ def render(study_id: str) -> str:
                 raise ValueError(f"Journal needs distinct, stable headings: {heading}")
             heading_ids.add(slug)
             token.attrSet("id", slug)
+            display_heading = section_title(heading)
+            if display_heading != heading:
+                tokens[index + 1].content = display_heading
+                tokens[index + 1].children = markdown.parseInline(display_heading)[0].children
             if token.tag == "h1":
                 if title:
                     raise ValueError("Journal must have exactly one title")
                 title = heading
             elif token.tag == "h2":
-                contents.append((slug, heading))
+                contents.append((slug, display_heading))
         for child in token.children or []:
             if child.type != "link_open":
                 continue
@@ -114,7 +126,7 @@ def render(study_id: str) -> str:
   <nav class="paper-tabs" aria-label="Choose a paper">{tabs}</nav>
 </header>
 <main class="journal" id="main">
-  <p class="meta">Paper {paper['sequence']} of 3 · Notebook updated {date_label}</p>
+  <p class="meta">Paper {paper['sequence']} of 3</p>
 {body}
   <footer><a href="../../">All three papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/{source_path.relative_to(ROOT)}">Notebook source</a></footer>
 </main>

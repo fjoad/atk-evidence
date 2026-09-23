@@ -22,7 +22,7 @@
   <nav class="paper-tabs" aria-label="Choose a paper"><a href="../atk-2022-deep-autoencoder/">1. Autoencoders · 2022</a><a href="../tlstgt-2025-water/">2. Water networks · 2025</a><a href="../takiddin-2021-robust-poisoning/" aria-current="page">3. Data poisoning · 2021</a></nav>
 </header>
 <main class="journal" id="main">
-  <p class="meta">Paper 3 of 3 · Notebook updated 23 September 2026</p>
+  <p class="meta">Paper 3 of 3</p>
 <h1 id="electricity-theft-with-poisoned-training-labels">Electricity theft with poisoned training labels</h1>
 <p>This is our working journal for <em>Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids</em>, by Takiddin and colleagues (2021).
@@ -33,7 +33,7 @@ test, and how the evidence changes our view.</p>
 twenty customers. The proposed sequential ensemble has not yet been trained.
 The entries below retain both the source concerns and the results that changed
 our initial expectation.</p>
-<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</a></li><li><a href="#21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">21 September — The SVM is weak, and moving the cutoff does not close the gap</a></li><li><a href="#21-september-separating-score-replay-from-kernel-behavior">21 September — Separating score replay from kernel behavior</a></li><li><a href="#21-september-the-scores-check-out-the-kernel-has-a-separate-problem">21 September — The scores check out; the kernel has a separate problem</a></li><li><a href="#21-september-moving-to-the-feed-forward-baseline">21 September — Moving to the feed-forward baseline</a></li><li><a href="#21-september-the-neural-instrument-is-ready-cluster-access-interrupted">21 September — The neural instrument is ready; cluster access interrupted</a></li><li><a href="#22-september-access-restored-the-existing-setup-finished">22 September — Access restored; the existing setup finished</a></li><li><a href="#22-september-the-repaired-feed-forward-model-learns">22 September — The repaired feed-forward model learns</a></li><li><a href="#22-september-testing-the-order-without-changing-the-test-answers">22 September — Testing the order without changing the test answers</a></li><li><a href="#23-september-changing-the-order-does-not-restore-detection">23 September — Changing the order does not restore detection</a></li><li><a href="#23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">23 September — Rechecking the arithmetic and narrowing our criticism</a></li><li><a href="#23-september-taking-stock-before-the-main-ensemble">23 September — Taking stock before the main ensemble</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
+<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#2-september-an-earlier-arithmetic-check">An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#21-september-specifying-the-svm-without-adding-hidden-training">Specifying the SVM without adding hidden training</a></li><li><a href="#21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">The SVM is weak, and moving the cutoff does not close the gap</a></li><li><a href="#21-september-separating-score-replay-from-kernel-behavior">Separating score replay from kernel behavior</a></li><li><a href="#21-september-the-scores-check-out-the-kernel-has-a-separate-problem">The scores check out; the kernel has a separate problem</a></li><li><a href="#21-september-moving-to-the-feed-forward-baseline">Moving to the feed-forward baseline</a></li><li><a href="#21-september-the-neural-instrument-is-ready-cluster-access-interrupted">The neural instrument is ready; cluster access interrupted</a></li><li><a href="#22-september-access-restored-the-existing-setup-finished">Access restored; the existing setup finished</a></li><li><a href="#22-september-the-repaired-feed-forward-model-learns">The repaired feed-forward model learns</a></li><li><a href="#22-september-testing-the-order-without-changing-the-test-answers">Testing the order without changing the test answers</a></li><li><a href="#23-september-changing-the-order-does-not-restore-detection">Changing the order does not restore detection</a></li><li><a href="#23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">Rechecking the arithmetic and narrowing our criticism</a></li><li><a href="#23-september-taking-stock-before-the-main-ensemble">Taking stock before the main ensemble</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
 <p>The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
 to simulate theft. It then deliberately gives some theft examples the wrong
@@ -59,8 +59,8 @@ their numbers. We planned to examine the baselines as well as the proposed
 model, preserve favorable results, and revise the expectation when necessary.</p>
 <p>The original entries remain below. Later corrections and the current conclusion
 do not rewrite what we thought before the experiments.</p>
-<h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
-<p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
+<h2 id="2-september-an-earlier-arithmetic-check">An earlier arithmetic check</h2>
+<p><em>This first check comes from the earlier saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
 the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md">source-audit record</a>. No model was trained in
@@ -73,7 +73,7 @@ holds for one confusion matrix can therefore fail after averaging. We need to
 respect the table's aggregation before interpreting an apparent inconsistency.</p>
 <p>This is one reason to keep a journal: a concern can remain worth examining
 while the explanation for it changes.</p>
-<h2 id="20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</h2>
+<h2 id="20-september-starting-with-the-setup-and-including-every-model">Starting with the setup, and including every model</h2>
 <p>Our working hypothesis is that the published performance will be difficult to
 recover even after plausible missing details are filled in. The investigation
 has to test that expectation.</p>
@@ -84,7 +84,7 @@ both proposed ensembles. Simple baselines are useful checks because their
 implementations leave fewer architectural decisions to resolve.</p>
 <p>The fresh reading produced four questions that affect what we would actually
 run. They are recorded below before any model results are available.</p>
-<h2 id="20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</h2>
+<h2 id="20-september-what-exactly-gets-poisoned">What exactly gets poisoned?</h2>
 <p>Section III-A.3, page 2678, gives two definitions. For a generalized detector,
 the percentage refers to <strong>customers</strong> presenting poisoned data. For a
 customer-specific detector, it refers to <strong>that customer's samples</strong>. Later
@@ -101,7 +101,7 @@ interpretation will be named before its performance is measured.</p>
 <p><strong>Next check:</strong> construct a small, hand-checkable example and verify exactly
 which training rows and labels change. Keep the test labels correct. This
 check has not run yet.</p>
-<h2 id="20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</h2>
+<h2 id="20-september-the-printed-loss-loses-the-label">The printed loss loses the label</h2>
 <p>Equation (1), page 2679, is described as cross-entropy. A loss is the penalty
 the model tries to reduce during training. It should reward a prediction when
 it agrees with the example's label and penalize it when it disagrees.</p>
@@ -126,7 +126,7 @@ cross-entropy as a declared plausible repair when testing the intended
 classifier. Failure of the printed formula alone would not settle whether
 the intended model can reproduce the results. The repaired model has not
 been trained yet.</p>
-<h2 id="20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</h2>
+<h2 id="20-september-what-makes-the-intermediate-output-a-reconstruction">What makes the intermediate output a reconstruction?</h2>
 <p>The proposed network first passes a day's readings through the attention
 autoencoder, then through GRU layers, then through a classifier. Section IV-B,
 page 2682, calls the intermediate output reconstructed data and says the
@@ -147,7 +147,7 @@ training procedure must not silently become the combined model's procedure.</p>
 <p><strong>Next check:</strong> inspect what the intermediate output actually contains and
 whether reconstruction training changes detection or poisoning robustness.
 We have no measurements answering this yet.</p>
-<h2 id="20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</h2>
+<h2 id="20-september-the-evaluation-itself-can-change-the-problem">The evaluation itself can change the problem</h2>
 <p>Section III-A, page 2677, uses ADASYN, a procedure that generates additional
 examples of the less common class. For novelty detectors, the paper adds
 synthetic normal examples to the <strong>test set</strong>. For two-class detectors, it
@@ -190,7 +190,7 @@ for each saved score vector. A cutoff check concerns those particular scores;
 new training can produce a different ordering.</p>
 <p><strong>Next check:</strong> verify the preparation sequence and evaluation populations
 before comparing any models. Neither preparation nor scoring has run yet.</p>
-<h2 id="20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</h2>
+<h2 id="20-september-looking-for-code-before-writing-our-implementation">Looking for code before writing our implementation</h2>
 <p>We checked the paper for a code link, the author's publication listing,
 publisher metadata, GitHub using the exact title and DOI, and Zenodo using
 the DOI. We also searched for a corresponding code archive through the web.
@@ -201,10 +201,10 @@ material area could not be inspected. The accessible Crossref record listed
 the article and PDF but no related software record. These limits are part of
 the result: <strong>we have not located public code</strong>. This search does not establish
 that code was never released or explain why it was unavailable to us.</p>
-<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/CODE_AVAILABILITY.md">dated search record</a> preserves the queries, links,
+<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/CODE_AVAILABILITY.md">search record</a> preserves the queries, links,
 results, and access limits. We can now proceed with a reconstruction from the
 paper while remaining able to inspect any implementation found later.</p>
-<h2 id="20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</h2>
+<h2 id="20-september-a-large-gap-should-change-the-next-question">A large gap should change the next question</h2>
 <p>We also agreed on a rule for avoiding uninformative reruns. Suppose a model
 achieved 30% against a reported 90%. These are hypothetical numbers, not a
 result from this study. Our first response would be to investigate the gap
@@ -227,7 +227,7 @@ should not spend the compute.</p>
 claim. A large gap does not tell us how variable the model is. The point is to
 use repetitions to answer that question deliberately, after establishing a
 sound setup. Testing all reported models remains part of the plan.</p>
-<h2 id="20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</h2>
+<h2 id="20-september-finding-the-data-and-checking-the-attack-definitions">Finding the data and checking the attack definitions</h2>
 <p>The consumption archives were already present locally and on the cluster.
 We independently checked them against the current official ISSDA metadata:
 all six filenames, file sizes, and checksums match, and the compressed files
@@ -248,7 +248,7 @@ the target's equations and record how we translate durations and endpoints.</p>
 <p>These checks let us write the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/PREPARATION.md">initial preparation contract</a>.
 It states the split, scaling, balancing, poisoning operation, and remaining
 alternatives before any model outcome is available.</p>
-<h2 id="20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</h2>
+<h2 id="20-september-checking-the-preparation-code-before-using-it">Checking the preparation code before using it</h2>
 <p>We implemented the novelty and two-class preparation paths and checked them
 on constructed software fixtures. Thirteen tests passed. They cover the six
 attacks, incomplete and duplicated days, records crossing file boundaries,
@@ -270,7 +270,7 @@ their first 28 complete days, both paths at 0% and 30% poisoning, and one
 customer-specific example. Its budget is 15 minutes on four CPU cores with
 16 GiB of memory. No detector will be trained. This will check that the
 pipeline works on the actual files and expose its real counts and overlap.</p>
-<h2 id="20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</h2>
+<h2 id="20-september-the-first-preparation-check-passed-and-exposed-two-choices">The first preparation check passed, and exposed two choices</h2>
 <p>The cluster job finished successfully in 2 minutes 16 seconds using CPU
 resources only. It read all six source archives, selected 20 customers, and
 kept their first 28 complete days: 560 original daily profiles. Both
@@ -299,7 +299,7 @@ pipeline, plus concrete checks for two ways the setup could affect the claimed
 comparison. We can begin model implementation without hiding those choices.
 The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/results/preparation_20260920/README.md">complete preparation record</a>
 contains the counts, timings, verification, and original program output.</p>
-<h2 id="20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</h2>
+<h2 id="20-september-giving-the-first-baseline-a-specific-question">Giving the first baseline a specific question</h2>
 <p>The next step is the paper's random forest with 100 trees. We have recorded
 its complete settings and the exact prepared inputs before fitting it. The
 first pair will use the existing 0% and 30% generalized two-class samples.
@@ -323,7 +323,7 @@ and a 15-minute CPU allocation. If the forest works well, we will report it.
 If it works poorly, these saved checks should tell us which explanation to
 investigate before spending more compute. No fitted result is available at
 the time of this entry.</p>
-<h2 id="20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</h2>
+<h2 id="20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">The first baseline works, and the cutoff changes the story</h2>
 <p>The first two random-forest fits finished successfully. Each used 100 trees,
 4,464 training rows, and the same 2,232 test rows. The entire CPU job took
 16 seconds; the individual fits each took less than a second. Both saved
@@ -389,7 +389,7 @@ scope.</p>
 seven metrics, the paper's full-data values for context, per-attack results,
 simple controls, timings, and artifact checks. All input/output hashes passed;
 the locally recomputed comparison matches the cluster's file byte for byte.</p>
-<h2 id="20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</h2>
+<h2 id="20-september-separating-two-possible-effects-of-preparation">Separating two possible effects of preparation</h2>
 <p>We decided to follow the resampling question with two controlled changes,
 using the same 20 customers, original days, existing attacks, forest settings,
 and seed. The previous forest predictions remain the reference; we will not
@@ -415,7 +415,7 @@ test labels, and removal of source-day overlap where required. The
 preparations at two poisoning levels—inside one 15-minute CPU allocation.
 If performance remains high, that outcome will be recorded too. At the time
 of this entry, these controls have not been fitted on the real observations.</p>
-<h2 id="20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</h2>
+<h2 id="20-september-preparation-matters-but-the-baseline-does-not-collapse">Preparation matters, but the baseline does not collapse</h2>
 <p>The four controlled fits completed on Panther in one CPU job. We reused the
 original forest's predictions and compared all three preparations on the same
 445 original test examples: 386 attacks and 59 normal examples. The shared
@@ -488,7 +488,7 @@ saved predictions. The <a href="https://github.com/fjoad/atk-evidence/blob/main/
 includes every metric, the actual poisoning fractions, timing, and audit files.
 The job took 1 minute 48 seconds within its 15-minute limit; no additional
 model or seed was run after seeing the outcomes.</p>
-<h2 id="20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</h2>
+<h2 id="20-september-pinning-down-the-next-baseline-before-fitting-it">Pinning down the next baseline before fitting it</h2>
 <p>The next approved model is AdaBoost. The paper specifies decision-tree weak
 learners (p.2678) and 50 estimators (p.2679), but not tree depth, learning rate,
 algorithm variant, or software version. We will reuse the original two-class
@@ -522,7 +522,7 @@ The earlier forest-control audit still matches its saved output exactly.
 Panther's login node killed the environment bootstrap before any fit; setup
 then completed in a separate 67-second, one-CPU allocation. No research-data
 experiment was part of that setup job.</p>
-<h2 id="20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</h2>
+<h2 id="20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">AdaBoost learns too, and a low detection rate needs context</h2>
 <p>Both AdaBoost fits completed successfully, each using all 50 depth-one trees.
 They used exactly the original pilot's 4,464 training and 2,232 test examples;
 the only difference between the pair was the declared poisoning of training
@@ -592,7 +592,7 @@ fit or outcome-dependent retry.</p>
 dependence, and the corrected forest result cannot be transferred to AdaBoost.
 This is one seed and twenty dependent customers, not full-paper reproduction,
 a confidence interval, or an explanation of how the authors produced numbers.</p>
-<h2 id="21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</h2>
+<h2 id="21-september-specifying-the-svm-without-adding-hidden-training">Specifying the SVM without adding hidden training</h2>
 <p>The next approved pair is the paper's SVM. We rechecked the printed C=1 and
 sigmoid kernel on page 2679 and the seven target metrics on page 2681.
 The omitted gamma and coefficient need a declared completion. We chose the
@@ -623,7 +623,7 @@ were skipped in the main environment and passed in their isolated environment.
 All seven SVM tests passed. The saved forest-control and AdaBoost audits also
 still match their preserved records exactly. The SVM pair can now be frozen
 and submitted without changing any earlier result.</p>
-<h2 id="21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">21 September — The SVM is weak, and moving the cutoff does not close the gap</h2>
+<h2 id="21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">The SVM is weak, and moving the cutoff does not close the gap</h2>
 <p>Both SVM fits completed on Panther, passed exact save/reload checks, and
 reported successful solver termination. The full job took two minutes inside
 the 15-minute budget. No additional setting or seed was tried after the result.</p>
@@ -694,7 +694,7 @@ and timings. The cluster and local audits agree byte for byte on both the
 comparison and the input/output checks. All 20 consumed arrays and the 675
 changed training labels match the frozen preparation. No new experiment was
 launched after these observations.</p>
-<h2 id="21-september-separating-score-replay-from-kernel-behavior">21 September — Separating score replay from kernel behavior</h2>
+<h2 id="21-september-separating-score-replay-from-kernel-behavior">Separating score replay from kernel behavior</h2>
 <p>We approved a read-only follow-up, with no new detector fits. The first check
 will independently reconstruct each saved score from its support vectors,
 coefficients, and the printed sigmoid-kernel formula. Fresh library scores
@@ -721,7 +721,7 @@ artifact audit on constructed data. The full repository suite passed 325
 tests; four AdaBoost fit tests were skipped there and passed in their separate
 environment. The old SVM artifact audit still matches exactly. The diagnostic
 is ready to freeze and run once on the compute node.</p>
-<h2 id="21-september-the-scores-check-out-the-kernel-has-a-separate-problem">21 September — The scores check out; the kernel has a separate problem</h2>
+<h2 id="21-september-the-scores-check-out-the-kernel-has-a-separate-problem">The scores check out; the kernel has a separate problem</h2>
 <p>The read-only diagnostic completed without refitting either SVM. We calculated
 all training and test scores independently from the saved support vectors,
 coefficients, and sigmoid formula, then compared them with the library and
@@ -767,7 +767,7 @@ unresolved follow-up, not declare the entire SVM family impossible. To continue
 the requested model coverage, the next proposed step is the feed-forward
 baseline with its loss completion stated explicitly. No parameter search or
 neural fit was launched after this diagnostic.</p>
-<h2 id="21-september-moving-to-the-feed-forward-baseline">21 September — Moving to the feed-forward baseline</h2>
+<h2 id="21-september-moving-to-the-feed-forward-baseline">Moving to the feed-forward baseline</h2>
 <p>The next approved model has six hidden layers of 500 neurons. We visually
 rechecked ReLU hidden activations, Sigmoid output, Adamax, no dropout,
 weight constraint 3, 50 epochs and batch size 100 in the paper.</p>
@@ -790,7 +790,7 @@ test-selected checkpoint, and a 20-minute outer budget. Epoch histories,
 updates, weight changes, norms, timing, and exact reload agreement will be saved.
 The local constructed tests pass, including correct and corrupted labels;
 there is no research-data neural result yet.</p>
-<h2 id="21-september-the-neural-instrument-is-ready-cluster-access-interrupted">21 September — The neural instrument is ready; cluster access interrupted</h2>
+<h2 id="21-september-the-neural-instrument-is-ready-cluster-access-interrupted">The neural instrument is ready; cluster access interrupted</h2>
 <p>The local checks are complete. All eight TensorFlow fixtures passed, including
 an actual optimizer update that projects deliberately oversized weights back
 inside the norm bound. The repaired model learns constructed labels and their
@@ -813,7 +813,7 @@ or substitute a local real-data fit.</p>
 <p>The scientific implementation and pre-outcome contract are frozen at b5da23a.
 The unresolved access step is not a detector result or a change to the agreed
 experiment. Nothing has been published.</p>
-<h2 id="22-september-access-restored-the-existing-setup-finished">22 September — Access restored; the existing setup finished</h2>
+<h2 id="22-september-access-restored-the-existing-setup-finished">Access restored; the existing setup finished</h2>
 <p>The QCRI VPN and Panther connection are available again. We checked the
 existing dependency job before doing anything else: job398992 completed
 successfully in12 minutes54 seconds, within its15-minute limit. Its log
@@ -822,7 +822,7 @@ not rerun setup or substitute a different runtime.</p>
 <p>The approved feed-forward pair will now resume from frozen commit b5da23a.
 The V100 check and constructed fixtures remain mandatory before research data
 are loaded. There is still no research-data neural result at this entry.</p>
-<h2 id="22-september-the-repaired-feed-forward-model-learns">22 September — The repaired feed-forward model learns</h2>
+<h2 id="22-september-the-repaired-feed-forward-model-learns">The repaired feed-forward model learns</h2>
 <p>Both feed-forward fits finished all 50 epochs on one V100-16GB GPU. Each
 performed 2,250 updates, and their initial-weight hashes were identical.
 They used the same original training/test rows and the declared change in
@@ -889,7 +889,7 @@ use the low default poisoned detection to claim that the reported corner is
 unattainable. All seven metrics, epoch histories, hardware, warnings, and
 verification are preserved in the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/results/feed_forward_pilot_20260922/README.md">feed-forward record</a>.
 No extra fit or setting was tried after seeing these results.</p>
-<h2 id="22-september-testing-the-order-without-changing-the-test-answers">22 September — Testing the order without changing the test answers</h2>
+<h2 id="22-september-testing-the-order-without-changing-the-test-answers">Testing the order without changing the test answers</h2>
 <p>The working baselines should change our starting expectation. The claim that
 these methods simply cannot learn this task is becoming less plausible.
 That is different from concluding that the entire paper is correct: the full
@@ -937,7 +937,7 @@ new findings on electricity data. Panther is currently unreachable because
 the QCRI VPN is disconnected; no new research preparation, score or fit has
 been produced. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/POISON_BALANCE_CHECK.md">fixed comparison</a> permits one
 15-minute CPU allocation when access returns, and then stops for analysis.</p>
-<h2 id="23-september-changing-the-order-does-not-restore-detection">23 September — Changing the order does not restore detection</h2>
+<h2 id="23-september-changing-the-order-does-not-restore-detection">Changing the order does not restore detection</h2>
 <p>Cluster access returned, and the controlled comparison is now complete. We
 reused the earlier forest that balanced training data before corrupting labels
 and fitted one new forest that corrupted those labels first. Both are judged
@@ -1004,7 +1004,7 @@ file exactly. Earlier inputs, models and results remain unchanged.</p>
 but this particular alternative did not explain away the earlier detection
 pattern. Return to the remaining model coverage, beginning with a separately
 specified GRU baseline. No further model has been started here.</p>
-<h2 id="23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">23 September — Rechecking the arithmetic and narrowing our criticism</h2>
+<h2 id="23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">Rechecking the arithmetic and narrowing our criticism</h2>
 <p>The working baselines do not resolve errors in the printed mathematics. We
 returned to the source and the earlier static audit to separate definite
 calculations from assumptions about how the reported metrics were aggregated.
@@ -1068,7 +1068,7 @@ class balance. The 20% row is not excluded by this stronger check.</p>
 model. Nor does it exclude independently averaged metrics, columns from
 different evaluations, reporting mistakes or a different undocumented
 procedure. Those possibilities change the meaning of the table and require
-explanation. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md">dated source audit</a> preserves the
+explanation. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md">source audit</a> preserves the
 calculation; its broad interpretation must be read with the correction below.</p>
 <h3 id="our-customer-averaging-caveat-is-essential">Our customer-averaging caveat is essential</h3>
 <p>Table IV explicitly averages over customers (page 2680). An average precision
@@ -1094,7 +1094,7 @@ malicious validation population or another scoring rule must be specified.
 The ROC/IQR wording does not uniquely define an executable threshold rule
 either. These are consequential specification gaps, not proofs that no
 reasonable implementation can work. See the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/METHOD.md">source reconstruction</a>.</p>
-<h2 id="23-september-taking-stock-before-the-main-ensemble">23 September — Taking stock before the main ensemble</h2>
+<h2 id="23-september-taking-stock-before-the-main-ensemble">Taking stock before the main ensemble</h2>
 <p>The initial expectation of widespread failure is weakened by the measurements:</p>
 <div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
@@ -1160,7 +1160,7 @@ statistical procedure. An apparent plateau will need evidence across measured
 training or model sizes; a flat-looking curve alone will not establish a
 universal ceiling.</p>
 <p>Future entries will report successful matches, implementation mistakes, and
-changes of mind alongside negative results. We will append dated corrections
+changes of mind alongside negative results. We will add corrections
 and link back to the affected entry, so readers can follow how a conclusion
 changed.</p>
 <h2 id="inspect-the-record">Inspect the record</h2>
