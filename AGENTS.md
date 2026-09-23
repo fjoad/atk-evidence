@@ -58,6 +58,21 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+**GRU completion job402625 is running**, frozen at
+1f847039ea3c5d410db5e9ee194a6625ecd2b54d. One V100-16GB,4CPUs/16GiB,
+85min allocation/35min fit guards, unchanged50epochs/batch100/seed/model/data.
+It is a same-seed restart, not a checkpoint continuation. Old partial remains
+preserved. Check this job and gru-completion-20260924-attempt1 before any
+action; no duplicate submission. Wrapper runs p00/prefix check/p30/audits,
+stopping on partial/failure. No completed research result yet. See
+[running record](studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
+All21 GPU fixtures pass; cluster authorization matches local bytes and p00
+research runner has started. The recorded job remains the only submission.
+After termination preserve/copy/audit and record the next question, not more
+settings/seeds. Website remains untouched. This supersedes older job-state text.
+
+### Completion authorization
+
 The user has now approved the unchanged GRU's same-seed completion under
 the [new step plan](docs/plans/2026-09-24-gru-completion.md) and
 GRU_COMPLETION.md. One fresh original p00/p30 pair, same seed/model/data and

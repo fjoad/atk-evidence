@@ -6,6 +6,13 @@
 
 ## Current execution: GRU pilot
 
+User-approved completion is now running once as job402625 at1f84703.
+See [completion plan](2026-09-24-gru-completion.md):35min guards/85min cap
+from measured epoch times, unchanged model/data/seed/50epoch schedule,
+fresh initialization and explicit prefix comparison with preserved partial.
+No completed new result yet; inspect existing allocation/output before action.
+No website work or publication. This supersedes the budget-decision pause below.
+
 September 24 check: job 402378 stopped at p00's 900s fit guard, 32 full
 epochs plus seven batches of epoch 33; p30 never started. All partial-artifact
 checks pass without promoting it to a completed result. DR 42.99/FA 8.78/AUC 80.82;

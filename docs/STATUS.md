@@ -12,6 +12,21 @@ execution plan here is
 
 ## Current project state
 
+- **GRU completion job402625 is running:** frozen
+  `1f847039ea3c5d410db5e9ee194a6625ecd2b54d`, one V100-16GB on
+  crimv3mgpu005,4 CPUs/16 GiB,85min cap/35min fit guards. Same seed,
+  original data/model and50epochs/batch100, fresh initialization rather than
+  an unverified checkpoint resume. Old partial remains untouched. No completed
+  result yet. The wrapper runs p00, repeated-prefix check, p30 and full audits;
+  stop on partial/failure. Check this job/output, do not duplicate it. See
+  [running record](../studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
+  Local21 GRU+8 FF fixtures pass; main360 pass/17 skips; old audits unchanged.
+  All21 GRU GPU fixtures pass in101.495s; cluster authorization matches local
+  bytes and p00 research runner has started. No completed new result yet.
+  First two full epochs (90 updates) match old loss/accuracy exactly; initial
+  weight archive also matches the original hash. Job continues unchanged.
+  No website changes/publication.
+
 - **Same-seed GRU completion now approved:** the user asked to proceed with
   correcting the runtime estimate and budgeting the unchanged 50-epoch pair.
   The old preflight has fixed batch dimension100; the research pipeline has

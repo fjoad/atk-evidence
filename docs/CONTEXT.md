@@ -2,6 +2,26 @@
 
 **Last updated:** 2026-09-24
 
+**Live completion:** job402625 submitted ONCE and running at freeze
+1f847039ea3c5d410db5e9ee194a6625ecd2b54d, nodecrimv3mgpu005, one
+V100-16GB/4CPUs/16GiB,85min allocation/35min fit guards. Same50epochs,
+batch100,seed20260920, model/data. Remote checkout
+/export/home/fjoad/atk-evidence-paper3-gru-completion-20260924;
+output data/derived/takiddin-2021-robust-poisoning/gru-completion-20260924-attempt1
+under /export/home/fjoad/atk-evidence; log
+/export/home/fjoad/robust-gru-completion-transfer-OceGkq/slurm-402625.out.
+No completed research result yet. Wrapper runs p00, compares old initialization
+and32-epoch prefix, thenp30 andfullaudits; stops on partial/failure. Inspect
+this job/output; do not duplicate. Old partial remains intact. Local21GRU+8FF
+fixtures pass after correcting a Path expectation; main360passes/17skips,
+strict data verification passes; oldGRU/FF audits still match bytes.
+All21 GPU fixtures passed in101.495s; completion_authorization.json matches
+local bytes and p00 research runner started. No completed new fit yet.
+First2 full epochs/90 updates match old loss/accuracy exactly. Initial weight
+archive SHA f9be1638f70706c9580de0b358c200d676443aedc50519394bff378a02dc45d2
+matches old. Job still running; prefix32/pair audits occur after completion.
+No website changes. This supersedes the unsubmitted/stopped-state text below.
+
 **Approved GRU completion:** user said go ahead after the partial-audit report.
 docs/plans/2026-09-24-gru-completion.md and GRU_COMPLETION.md authorize one
 same-seed original p00/p30 restart, unchanged50epochs/batch100/model/data,

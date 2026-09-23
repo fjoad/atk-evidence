@@ -1,0 +1,25 @@
+{
+  "approval_sha256": "31bbff9bd59fbeb6657cc4138723adebc50b09cfc07a171735942a38722430bd",
+  "budget": {
+    "fit_guard_seconds": 2100,
+    "full_epochs_measured": 32,
+    "job_limit_seconds": 5100,
+    "projected_50_epochs_from_mean_seconds": 1399.5391185744666,
+    "projected_50_epochs_from_slowest_seconds": 1993.497734516859,
+    "slowest_epoch_seconds": 39.86995469033718
+  },
+  "initial_weights_sha256_required": "44ef3aeb4e343dbcfa09bd74468cb2085877411c1d2a5ae365ff1364aff0a1b3",
+  "prior_commit": "46966c7e021e964ff582e1eb56422b75cc6a4ec7",
+  "prior_result_sha256": "fa19293a1bac847fd7fb3ab8fe37b25f3ea92f52d88ad8e53cee129bbbdd4602",
+  "status": "verified_same_science_revised_operational_budget",
+  "unchanged_scientific_functions": [
+    "fit_gru",
+    "sequence_inputs",
+    "normalized_softmax",
+    "gru_kernel_norms",
+    "configure_tensorflow",
+    "load_preparation",
+    "weight_hash",
+    "require_compute"
+  ]
+}

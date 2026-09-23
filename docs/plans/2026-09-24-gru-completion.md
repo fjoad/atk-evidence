@@ -8,7 +8,7 @@ The user approved correcting the runtime estimate and budgeting the unchanged
   GRU_COMPLETION.md; expose only the fit guard, not model settings, in the CLI.
 - [x] Verify guard dispatch, unchanged scientific functions, historical audits
   and neural fixtures; freeze code before the new attempt.
-- [ ] Check scheduler/output state; launch one original p00/p30 pair, one
+- [x] Check scheduler/output state; launch one original p00/p30 pair, one
   V100-16GB, four CPUs/16 GiB, 35-minute fit guards, 85-minute allocation.
 - [ ] Preserve/audit all outcomes, compare the unpoisoned run's initial weights
   and first 32 epochs with the earlier attempt, and record the next decision.
@@ -35,3 +35,17 @@ still match their saved files byte-for-byte. The new prerequisite check
 verifies prior hashes and unchanged science and derives2100/5100s from the
 actual history. Before launch, scheduler was empty and only the original
 GRU preflight/partial output directories existed. No website files changed.
+
+Frozen at `1f847039ea3c5d410db5e9ee194a6625ecd2b54d`. Submitted once as
+job402625, running on crimv3mgpu005 with the exact85-minute cap, one
+V100-16GB/four CPUs/16 GiB. Output `gru-completion-20260924-attempt1`.
+See `results/gru_completion_20260924` for paths. Check it before any further
+submission; the wrapper automatically handles both conditions and audits.
+
+Cluster prerequisite/authorization bytes match the local check. All21 GRU
+fixtures pass on GPU in101.495s; the p00 research runner has started. Job
+remains running, with no completed result yet. Do not launch a duplicate.
+
+At the running checkpoint, p00's first two full epochs/90 updates exactly
+match the earlier loss/accuracy values, and the initial-weight archive hash
+matches the old file. The full32-epoch prefix comparison remains pending.
