@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-22
+**Last updated:** 2026-09-23
 
 **Branch:** `main`
 
@@ -11,6 +11,15 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **September 23 resume:** Panther VPN/SSH is restored. The frozen control
+  was submitted once as job 402290 and failed before loading inputs or creating
+  its output directory: the version check referenced `numpy`, imported as `np`.
+  All ten fixtures passed first; zero research fits. Its log/failure record
+  are preserved under `results/poison_balance_20260923`. A narrow startup-only
+  repair and two preflight regression tests are being frozen before resuming
+  the unchanged one-fit contract with a new attempt identity. No parameter,
+  seed, data, sampler or metric change; no scientific result yet.
 
 - **Poisoning/balancing control specified and locally tested, September 22:**
   the user asked to continue. Re-read/visually checked III-A.2-3, pp. 2677-2678.

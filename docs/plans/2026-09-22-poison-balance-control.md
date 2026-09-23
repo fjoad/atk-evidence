@@ -2,6 +2,30 @@
 
 **Date:** 2026-09-22. **State:** specified and locally verified; execution awaits VPN.
 
+September 23 resume: VPN and authenticated Panther access are restored. No
+active account jobs or prior order-control attempt directories were found.
+The original preparation and saved B references are present. Resume the
+unchanged scientific freeze below; ten local fixtures pass again. No new
+scientific result is available at this checkpoint.
+
+Submitted once as CPU job **402290** from frozen `9b23b32`, with output
+`poison-balance-20260923-attempt1` and isolated worktree
+`/export/home/fjoad/atk-evidence-paper3-order-20260923`. The main Panther
+checkout and earlier attempts are untouched. The existing runtime is reused.
+
+Job 402290 failed 1:0 in 57 seconds after all ten fixtures passed. The version
+preflight accessed `globals()['numpy']` although the module is imported as
+`np`, raising KeyError before output-directory creation, input loading,
+preparation or fitting. There are zero research fits from this attempt.
+Preserve its job log. Repair the version-module lookup only, add preflight
+regression tests, and freeze the repair before one resumed allocation. Keep
+the 9b23b32 contract, seed, sampler, forest and analysis unchanged. Use a new
+`attempt2` output identity despite the first directory never being created.
+The resumed allocation is capped at **14:03**, so its maximum plus the first
+job's 57 seconds stays inside the original 15-minute cumulative wall budget.
+This records two scheduler submissions for one planned research fit, not an
+unreported repeat of a model experiment.
+
 The user asked to continue after the feed-forward result. Review the source,
 then freeze the smallest check of the next named shared-setup question (E19).
 

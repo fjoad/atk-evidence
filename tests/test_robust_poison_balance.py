@@ -22,6 +22,18 @@ with patch.dict("sys.modules", {"prepare_data": P, "run_experiment": R,
 
 
 class PoisonBalanceTests(unittest.TestCase):
+    def test_version_preflight_resolves_the_numpy_import_alias(self):
+        self.assertEqual(D.versions(), D.EXPECTED_VERSIONS)
+        self.assertEqual(D.versions()["numpy"], np.__version__)
+
+    def test_incompatible_runtime_stops_before_creating_output(self):
+        with tempfile.TemporaryDirectory() as directory, \
+                patch.object(D, "require_compute"), patch.object(D, "versions", return_value={}):
+            output = Path(directory) / "attempt"
+            with self.assertRaisesRegex(RuntimeError, "frozen main CPU"):
+                D.run(output, output, output)
+            self.assertFalse(output.exists())
+
     @classmethod
     def setUpClass(cls):
         x, meter, day = P.fixture()

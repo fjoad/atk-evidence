@@ -38,7 +38,9 @@ EXPECTED_VERSIONS = {"numpy": "2.5.1", "scipy": "1.18.0", "sklearn": "1.9.0",
 
 
 def versions():
-    return {name: globals()[name].__version__ for name in EXPECTED_VERSIONS}
+    modules = {"numpy": np, "scipy": scipy, "sklearn": sklearn,
+               "imblearn": imblearn, "joblib": joblib, "threadpoolctl": threadpoolctl}
+    return {name: module.__version__ for name, module in modules.items()}
 
 
 def observed_balance(originals, seed):

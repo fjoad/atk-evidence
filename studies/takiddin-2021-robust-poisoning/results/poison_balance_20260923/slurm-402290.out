@@ -1,0 +1,17 @@
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+----------------------------------------------------------------------
+Ran 10 tests in 2.762s
+
+OK
+Traceback (most recent call last):
+  File "/export/home/fjoad/atk-evidence-paper3-order-20260923/studies/takiddin-2021-robust-poisoning/checks/poison_balance.py", line 281, in <module>
+    run(args.preparation, args.baseline, args.output)
+  File "/export/home/fjoad/atk-evidence-paper3-order-20260923/studies/takiddin-2021-robust-poisoning/checks/poison_balance.py", line 214, in run
+    if versions() != EXPECTED_VERSIONS:
+       ^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence-paper3-order-20260923/studies/takiddin-2021-robust-poisoning/checks/poison_balance.py", line 41, in versions
+    return {name: globals()[name].__version__ for name in EXPECTED_VERSIONS}
+                  ~~~~~~~~~^^^^^^
+KeyError: 'numpy'
