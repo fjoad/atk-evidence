@@ -8,6 +8,9 @@ and no update-date banners. Internal log dates and published anchor IDs remain
 for provenance/link compatibility; paper publication years are retained.
 No scientific content or archived records change. Follow-up plan:
 docs/plans/2026-09-23-continuous-website.md.
+Published at 3cd566e; Pages 35852601219 and CI 35852601197 passed. The 31
+focused tests and live-page verification passed. Continue using this undated
+presentation rather than restoring calendar-based section headings.
 
 **Website/user direction, September 23:** user approved a quiet index linking
 the three registered papers, notebook pages with claims → starting hypothesis

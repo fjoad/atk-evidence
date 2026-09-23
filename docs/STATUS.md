@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **Website presentation refinement published:** the user wants a continuing
+  investigation, not dated diary entries. Commit `3cd566e` removes visible
+  calendar prefixes, update-date banners and editorial assembly dates from
+  the main pages. Internal dates, paper publication years, old section links
+  and all scientific results remain intact. The 31 focused checks pass;
+  Pages run 35852601219 and CI run 35852601197 succeeded. Live display verified.
+  See [the refinement plan](plans/2026-09-23-continuous-website.md).
+
 - **Website notebook overhaul published and verified, September 23:**
   the user authorized a simple three-paper index, consistent paper notebooks,
   and publication to the existing GitHub Pages site after checks. Each notebook

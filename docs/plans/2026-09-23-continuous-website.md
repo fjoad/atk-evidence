@@ -9,7 +9,7 @@ records. Preserve published section anchors so old links still work.
 - [x] Adjust the renderer and visible prose; keep internal provenance dates.
 - [x] Add a regression check for undated headings and preserved anchors.
 - [x] Check generated pages, links, tests and browser navigation.
-- [ ] Commit, publish this follow-up to the approved site, and verify it live.
+- [x] Commit, publish this follow-up to the approved site, and verify it live.
 
 No experiment, result or archived technical record changes.
 
@@ -18,3 +18,8 @@ heading prefixes only from display text, keeping existing IDs and in-page
 links. Browser review confirms the undated contents list and page header;
 all scientific display/link tests remain passing. Publication years remain
 as paper identification, not as a timeline for the investigation.
+
+Published `3cd566e7a34a31fe223be85a023b0233534aadc8`. Pages run 35852601219
+and CI run 35852601197 both passed. A browser refresh confirmed the live
+homepage footer, paper header and section headings no longer show calendar
+dates; the existing section IDs remain. No scientific result or archive changed.
