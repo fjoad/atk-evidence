@@ -63,8 +63,12 @@ Constructed preflight job 402376 completed 0:0 in 2:33 on one V100-16GB. All 13
 GRU fixtures pass locally/on GPU, but the slowest-step fit estimate 778.68s
 exceeds the frozen 720s launch gate. The verifier correctly holds the gate;
 no research inputs or fits have run. The user was asked whether to permit
-an explicit exception under the unchanged 40-minute pair/15-minute fit guards;
-await that decision, never report the gate as passed. All source/transfer/
+an explicit exception under the unchanged 40-minute pair/15-minute fit guards.
+The user has now approved that exception: GRU_RUNTIME_EXCEPTION.md raises only
+the launch ceiling to 900s and requires unchanged scientific-file hashes.
+Proceed with the one unchanged pair after checks; never report the original
+720s gate as passed. Preserve partial outcomes and stop after auditing.
+All source/transfer/
 device/norm checks pass; old FF audit remains unchanged. See the
 [preflight record](studies/takiddin-2021-robust-poisoning/results/gru_preflight_20260923/README.md)
 and [GRU plan](docs/plans/2026-09-23-robust-gru.md). Other source readings are

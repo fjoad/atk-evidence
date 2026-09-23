@@ -70,6 +70,48 @@ class GRUContractTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 G.verify(path, A.digest(path), "fixture")
 
+    def test_runtime_exception_preserves_original_failed_gate(self):
+        path = G.STUDY / "results/gru_preflight_20260923/preflight.json"
+        with self.assertRaisesRegex(ValueError, "gate did not pass"):
+            G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT)
+        result = G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT,
+                          authorized_runtime_extension=True)
+        self.assertEqual(result["status"], "verified_with_authorized_exception")
+        self.assertFalse(result["original_gate"]["passes"])
+        self.assertEqual(result["original_gate"]["ceiling_seconds"], 720)
+        self.assertEqual(result["approved_ceiling_seconds"], 900)
+        self.assertTrue(result["scientific_sources_unchanged"])
+
+    def test_runtime_exception_rejects_wrong_identity_and_scientific_drift(self):
+        path = G.STUDY / "results/gru_preflight_20260923/preflight.json"
+        with self.assertRaisesRegex(ValueError, "file changed"):
+            G.verify(path, "wrong", G.APPROVED_PREFLIGHT_COMMIT, authorized_runtime_extension=True)
+        with self.assertRaisesRegex(ValueError, "same frozen code"):
+            G.verify(path, G.APPROVED_PREFLIGHT_SHA256, "wrong", authorized_runtime_extension=True)
+        real_digest = G.digest
+        def drifted_digest(p):
+            return "changed" if Path(p).name == "models.py" else real_digest(p)
+        with patch.object(G, "digest", side_effect=drifted_digest):
+            with self.assertRaisesRegex(ValueError, "Scientific source changed"):
+                G.verify(path, G.APPROVED_PREFLIGHT_SHA256, G.APPROVED_PREFLIGHT_COMMIT,
+                         authorized_runtime_extension=True)
+
+    def test_runtime_exception_has_fixed_identity_and_ceiling(self):
+        original = G.STUDY / "results/gru_preflight_20260923/preflight.json"
+        record = json.loads(original.read_text())
+        record["update_seconds"] = [1.] * 12
+        record["gate"] = G.gate(record["update_seconds"])
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "constructed.json"
+            path.write_text(json.dumps(record))
+            with self.assertRaisesRegex(ValueError, "only to the approved preflight"):
+                G.verify(path, A.digest(path), G.APPROVED_PREFLIGHT_COMMIT,
+                         authorized_runtime_extension=True)
+            with patch.object(G, "APPROVED_PREFLIGHT_SHA256", A.digest(path)):
+                with self.assertRaisesRegex(ValueError, "900-second ceiling"):
+                    G.verify(path, A.digest(path), G.APPROVED_PREFLIGHT_COMMIT,
+                             authorized_runtime_extension=True)
+
 
 @unittest.skipUnless(HAS_TF, "requires isolated TensorFlow environment")
 class GRUTensorFlowTests(unittest.TestCase):

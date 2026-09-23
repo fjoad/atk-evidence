@@ -12,7 +12,7 @@ owned by another session: do not edit or regenerate site pages here.
   historical source revisions and results.
 - [x] Freeze code; run a ten-minute, one-V100 constructed timing preflight
   with no research inputs. Check the predeclared gate before dispatching fits.
-- [ ] If the gate passes, run only the original p00/p30 pair, same seed,
+- [ ] With the explicit runtime exception below, run only the original p00/p30 pair, same seed,
   50 epochs/batch100 within the bounded allocation. Audit the saved artifacts.
 - [ ] Record outcome, limits and the next scientific decision. No publication
   or website work. Do not add seeds/settings in response to the result.
@@ -69,3 +69,21 @@ the unchanged pair under the existing 40-minute allocation and 15-minute
 fit guards. No response has been received at this checkpoint; do not treat
 the gate as passed or start the pair without that decision. Other model
 coverage has not begun. Website and earlier evidence remain untouched.
+
+## Authorized continuation
+
+The user has now explicitly approved proceeding with the unchanged model.
+GRU_RUNTIME_EXCEPTION.md binds the one existing preflight and raises only the
+launch ceiling to 900 seconds. Preserve the original false 720-second gate;
+the 40-minute allocation and 900-second fit guards are unchanged. Add focused
+authorization/drift checks, freeze the launcher revision, check scheduler and
+output state, then submit the pair once and audit it. No new research data
+preparation or repeated timing job is needed.
+
+Resume checks pass: all 16 GRU and 8 feed-forward fixtures in the pinned neural
+environment; 355 main-suite passes with 17 environment-specific skips; strict
+data verification passes the existing source branch. The nine non-neural GRU
+checks include refusal of altered identity/scientific sources and projections
+over 900s. The approved record passes only the explicit exception path; the
+default verifier still refuses it. Scheduler is empty and no GRU pilot output
+exists before dispatch. No computational source or original contract changed.

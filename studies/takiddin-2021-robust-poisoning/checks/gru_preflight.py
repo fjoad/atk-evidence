@@ -14,6 +14,8 @@ import time
 import numpy as np
 
 STUDY = Path(__file__).resolve().parents[1]
+APPROVED_PREFLIGHT_COMMIT = "2d706b103ee03cc705cc3ef3f07718bc3ed7792a"
+APPROVED_PREFLIGHT_SHA256 = "238384ed7e52f1438a9bf66202e850b1afa3b18215019dc8e284021633a3a040"
 sys.path.insert(0, str(STUDY / "reproduction"))
 from models import gru
 from run_experiment import configure_tensorflow, require_compute, normalized_softmax, gru_kernel_norms, weight_hash
@@ -28,7 +30,7 @@ def gate(update_seconds):
             "ceiling_seconds": 720, "passes": projected <= 720}
 
 
-def verify(path, expected_hash, expected_commit):
+def verify(path, expected_hash, expected_commit, *, authorized_runtime_extension=False):
     if digest(path) != expected_hash:
         raise ValueError("Constructed preflight file changed")
     record = json.loads(path.read_text())
@@ -39,6 +41,25 @@ def verify(path, expected_hash, expected_commit):
     if (record["research_inputs_loaded"] or record["parameters"] != 4058702
             or record["optimizer_updates"] != 12 or record["gate"] != gate(record["update_seconds"])):
         raise ValueError("Preflight scope/schedule/gate differs")
+    if authorized_runtime_extension:
+        if (expected_commit != APPROVED_PREFLIGHT_COMMIT
+                or expected_hash != APPROVED_PREFLIGHT_SHA256):
+            raise ValueError("Runtime exception applies only to the approved preflight")
+        # Historical source verification above is not enough: scientific files
+        # in this launch checkout must also remain byte-identical to the freeze.
+        for relative in ("GRU_PILOT.md", "requirements-feed-forward.txt",
+                         "reproduction/models.py", "reproduction/run_experiment.py",
+                         "reproduction/analyze_results.py"):
+            if digest(STUDY / relative) != record["source_sha256"][relative]:
+                raise ValueError("Scientific source changed after approved preflight")
+        projected = record["gate"]["projected_fit_seconds_from_slowest_warm_step"]
+        if projected > 900:
+            raise ValueError("Projection exceeds the authorized 900-second ceiling")
+        approval = STUDY / "GRU_RUNTIME_EXCEPTION.md"
+        return {"status": "verified_with_authorized_exception", "sha256": expected_hash,
+                "preflight_commit": expected_commit, "original_gate": record["gate"],
+                "approved_ceiling_seconds": 900, "scientific_sources_unchanged": True,
+                "approval_document": approval.name, "approval_sha256": digest(approval)}
     if not record["gate"]["passes"]:
         raise ValueError("Constructed runtime gate did not pass; do not load research data")
     return {"status": "verified", "sha256": expected_hash, "gate": record["gate"]}
@@ -138,9 +159,11 @@ if __name__ == "__main__":
     parser.add_argument("--verify", type=Path)
     parser.add_argument("--sha256")
     parser.add_argument("--commit")
+    parser.add_argument("--authorized-runtime-extension", action="store_true")
     args = parser.parse_args()
     if args.verify:
-        print(json.dumps(verify(args.verify, args.sha256, args.commit), sort_keys=True))
+        print(json.dumps(verify(args.verify, args.sha256, args.commit,
+                               authorized_runtime_extension=args.authorized_runtime_extension), sort_keys=True))
     elif args.output:
         result = run(args.output)
         print(json.dumps({"status": result["status"], "gate": result["gate"]}), flush=True)

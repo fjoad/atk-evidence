@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **GRU launch exception approved:** the user explicitly approved continuing
+  after the 778.68s projection exceeded the original 720s gate. Only the launch
+  ceiling becomes 900s; the model, scientific files, inputs, seed, 50 epochs,
+  40-minute allocation and 15-minute fit guards remain unchanged. The original
+  failed gate stays preserved. See GRU_RUNTIME_EXCEPTION.md and the GRU step
+  plan. Verify the exception and current scientific-file hashes before the
+  one p00/p30 submission. No website work is included.
+
 - **GRU constructed preflight complete; research pair not launched:** frozen
   `2d706b103ee03cc705cc3ef3f07718bc3ed7792a`, job 402376, completed 0:0 in
   2:33 on one V100-PCIE-16GB, 4 CPUs/16 GiB. All 13 GRU fixtures pass locally

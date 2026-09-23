@@ -2,6 +2,15 @@
 
 **Last updated:** 2026-09-23
 
+**Authorized resume:** user replied “sure incresae it and keep going” to the
+explicit GRU runtime-gate exception question. Only the launch ceiling is now
+900s; the original 720s failed gate is preserved, not relabeled a pass. Retain
+40min job/15min fit guards and unchanged scientific code/inputs/settings.
+GRU_RUNTIME_EXCEPTION.md binds the preflight SHA/revision below; verifier
+checks historical source and current scientific-file equality. Submit only
+the p00/p30 pair after checks, preserve partial outcomes, audit and stop.
+No website changes. This supersedes the awaiting-user statements below.
+
 **GRU checkpoint:** frozen 2d706b103ee03cc705cc3ef3f07718bc3ed7792a;
 constructed GPU preflight job 402376 completed 0:0 in 153s, V100-PCIE-16GB,
 4 CPUs/16 GiB, node crimv3mgpu005. 13 fixtures pass locally/on GPU. Twelve

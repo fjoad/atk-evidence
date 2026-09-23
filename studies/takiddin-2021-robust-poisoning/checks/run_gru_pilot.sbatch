@@ -13,6 +13,7 @@ set -euo pipefail
 : "${PYTHON_BIN:?set pinned neural interpreter}"
 : "${PREFLIGHT_RESULT:?set constructed timing result}"
 : "${PREFLIGHT_SHA256:?set verified preflight hash}"
+: "${PREFLIGHT_COMMIT:?set original constructed preflight revision}"
 cd "$REPRO_CHECKOUT"
 test "$(git rev-parse HEAD)" = "$EXPECTED_COMMIT"
 test -z "$(git status --porcelain --untracked-files=no)"
@@ -27,10 +28,11 @@ for component in cublas cuda_cupti cuda_nvrtc cuda_runtime cudnn cufft curand cu
     neural_cuda_libs="$neural_cuda_libs$neural_site/nvidia/$component/lib:"
 done
 export LD_LIBRARY_PATH="$neural_cuda_libs${LD_LIBRARY_PATH:-}"
-"$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/checks/gru_preflight.py \
-    --verify "$PREFLIGHT_RESULT" --sha256 "$PREFLIGHT_SHA256" --commit "$EXPECTED_COMMIT"
-"$PYTHON_BIN" -m unittest tests.test_robust_gru -v
 mkdir "$PILOT_OUTPUT"
+"$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/checks/gru_preflight.py \
+    --verify "$PREFLIGHT_RESULT" --sha256 "$PREFLIGHT_SHA256" --commit "$PREFLIGHT_COMMIT" \
+    --authorized-runtime-extension > "$PILOT_OUTPUT/launch_authorization.json"
+"$PYTHON_BIN" -m unittest tests.test_robust_gru -v
 "$PYTHON_BIN" -m pip freeze > "$PILOT_OUTPUT/runtime-packages.txt"
 for level in p00 p30; do
     "$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/reproduction/run_experiment.py \
