@@ -12,6 +12,19 @@ execution plan here is
 
 ## Current project state
 
+- **GRU research continuation approved and implemented locally:** another
+  session now owns website work. This session rechecked target GRU pages and
+  read/visually inspected the complete Nabil et al. reference [26]. GRU_PILOT.md
+  specifies native Keras 8x300, 48x1 sequences, ReLU candidates/sigmoid gates,
+  reset-before, input dropout .2, MaxNorm5 and two-class Softmax/CE repair.
+  Generic tanh/V-projection notation and tensor-shape alternatives remain open.
+  All 13 GRU plus 8 existing feed-forward fixtures pass in the pinned neural
+  environment; old FF artifact audit remains byte-identical. Next: freeze code,
+  run constructed-only 10-minute V100 timing gate, then the original p00/p30
+  pair only if the fixed gate passes (40-minute cap, 15-minute fit guards).
+  No GPU job or research fit submitted yet. See
+  [the GRU plan](plans/2026-09-23-robust-gru.md). No website edits/publication.
+
 - **Open-ended website navigation published:** articles now have only an
   “All papers” link to a growing, unnumbered index. Removed cross-paper tabs,
   “Paper N of 3” labels and fixed-count metadata. Published `616a0c0` includes

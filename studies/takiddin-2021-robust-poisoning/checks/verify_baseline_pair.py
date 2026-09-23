@@ -10,7 +10,7 @@ import numpy as np
 
 STUDY = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(STUDY / "reproduction"))
-from run_experiment import load_preparation
+from run_experiment import load_preparation, normalized_softmax
 from analyze_results import audit_result, digest
 
 
@@ -27,6 +27,9 @@ def verify(preparation, attempt):
         if record["actual_poisoning"] != metadata["poisoning"]:
             raise ValueError("Poisoning record differs from preparation")
         with np.load(directory / "predictions.npz", allow_pickle=False) as scores:
+            if record["model"] == "gru":
+                np.testing.assert_array_equal(scores["probabilities"], normalized_softmax(scores["raw_probabilities"]))
+                np.testing.assert_array_equal(scores["predictions"], np.argmax(scores["raw_probabilities"], axis=1))
             for saved, original in (("labels", "test_true_y"), ("uid", "test_uid"),
                                     ("attack", "test_attack"), ("synthetic", "test_synthetic")):
                 np.testing.assert_array_equal(scores[saved], arrays[original])
@@ -42,7 +45,7 @@ def verify(preparation, attempt):
         raise ValueError("Model/settings changed within the pair")
     if rows[0]["code_commit"] != rows[1]["code_commit"] or rows[0]["versions"] != rows[1]["versions"]:
         raise ValueError("Code/runtime changed within the pair")
-    if rows[0]["model"] == "feed_forward":
+    if rows[0]["model"] in ("feed_forward", "gru"):
         from run_experiment import weight_hash
         for level, record in zip(("p00", "p30"), rows):
             with np.load(attempt / level / "initial_weights.npz", allow_pickle=False) as initial:
@@ -54,8 +57,14 @@ def verify(preparation, attempt):
                     or [r["optimizer_updates"] for r in history] != [45 * e for e in range(1, 51)]
                     or not record["neural"]["training_complete"]):
                 raise ValueError("Neural training schedule differs from contract")
-            if not all(np.isfinite(r["loss"]) and np.isfinite(r["binary_accuracy"]) for r in history):
+            accuracy_key = "categorical_accuracy" if record["model"] == "gru" else "binary_accuracy"
+            if not all(np.isfinite(r["loss"]) and np.isfinite(r[accuracy_key]) for r in history):
                 raise ValueError("Invalid neural training history")
+            if record["model"] == "gru" and (not all(r["epoch_complete"] for r in history)
+                    or record["neural"]["parameters"] != 4058702
+                    or record["neural"]["epochs_completed"] != 50
+                    or record["neural"]["optimizer_updates"] != 2250):
+                raise ValueError("GRU architecture or completed schedule differs")
         if rows[0]["neural"]["initial_weights_sha256"] != rows[1]["neural"]["initial_weights_sha256"]:
             raise ValueError("Neural initializations differ across the poison pair")
     changed = int(np.count_nonzero(loaded["p00"]["train_observed_y"] != loaded["p30"]["train_observed_y"]))

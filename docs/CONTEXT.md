@@ -2,6 +2,24 @@
 
 **Last updated:** 2026-09-23
 
+**Current scientific work:** user approved the GRU-first continuation toward
+AEA/ARIMA/ensembles; website belongs to another session. GRU_PILOT.md fixes
+I-GRU-native-table: 8x300 GRU, 48 time steps x1, ReLU candidate, sigmoid gates,
+reset_after=False, input dropout .2/recurrent 0, MaxNorm 5 both kernels/output,
+Dense 2 Softmax, categorical CE repair, Adam .001, float32, 4,058,702 parameters.
+Reference [26] arXiv 1809.01774 all six pages read/rendered; explicit two outputs
+and corrected log(1-p), but generic tanh/V-softmax equations remain ambiguous.
+Reference source PDF is ignored; hash 253568ec...d749fd4. The target's selected
+settings take precedence; a one-step/48-feature input remains an unrun branch.
+13 GRU and 8 FF neural fixtures pass; old FF audit matches bytes. Constructed
+timing uses model.fit, not repeated train_on_batch (retracing observed locally).
+Before any research fit: freeze code and run only the ten-minute constructed
+GPU preflight; gate 2250*max(ten warmed update times)<=720s. If it passes,
+one 40-minute V100 pair at original p00/p30, seed 20260920, 50 epochs/batch 100,
+15-minute batch guards. No real-data work locally, no extra seeds/settings.
+Panther authenticated; neural env and idle V100s available; no GRU jobs yet.
+See docs/plans/2026-09-23-robust-gru.md. Do not regenerate/publish website files.
+
 **Latest navigation preference:** the website must be open-ended. Remove the
 cross-paper tabs and “Paper N of 3” labels; each article links back to the
 growing homepage index. No fixed collection size in headings, footers or

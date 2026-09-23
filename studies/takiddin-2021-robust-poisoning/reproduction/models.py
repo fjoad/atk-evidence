@@ -78,3 +78,32 @@ def printed_classification_loss(y_true, probability):
     import tensorflow as tf
     y_true = tf.cast(y_true, probability.dtype)
     return -tf.reduce_mean(y_true * tf.math.log(probability) + (1 - y_true) * tf.math.log(probability))
+
+
+def gru(seed: int = 20260920, *, units: int = 300, hidden_layers: int = 8):
+    """Table-II native-Keras interpretation; small overrides are fixture-only."""
+    import tensorflow as tf
+    import keras
+    if tf.__version__ != "2.16.2" or keras.__version__ != "3.4.1" or keras.backend.backend() != "tensorflow":
+        raise RuntimeError("Use the pinned TensorFlow neural environment")
+    keras.backend.clear_session()
+    keras.utils.set_random_seed(seed)
+    keras.mixed_precision.set_global_policy("float32")
+    layers = [keras.layers.Input(shape=(48, 1), dtype="float32")]
+    for index in range(hidden_layers):
+        layers.append(keras.layers.GRU(units, activation="relu", recurrent_activation="sigmoid",
+            use_bias=True, kernel_initializer="glorot_uniform", recurrent_initializer="orthogonal",
+            bias_initializer="zeros", kernel_constraint=keras.constraints.MaxNorm(5., axis=0),
+            recurrent_constraint=keras.constraints.MaxNorm(5., axis=0),
+            dropout=.2, recurrent_dropout=0., return_sequences=index < hidden_layers - 1,
+            return_state=False, go_backwards=False, stateful=False, unroll=False,
+            reset_after=False, use_cudnn=False, implementation=2, seed=seed + index,
+            name=f"gru_{index + 1}"))
+    layers.append(keras.layers.Dense(2, activation="softmax", use_bias=True,
+        kernel_initializer="glorot_uniform", bias_initializer="zeros",
+        kernel_constraint=keras.constraints.MaxNorm(5., axis=0), name="output"))
+    model = keras.Sequential(layers, name="paper_gru_native_table_ce_repair")
+    model.compile(optimizer=keras.optimizers.Adam(learning_rate=.001, beta_1=.9,
+        beta_2=.999, epsilon=1e-7), loss=keras.losses.CategoricalCrossentropy(from_logits=False),
+        metrics=[keras.metrics.CategoricalAccuracy(name="categorical_accuracy")], jit_compile=False)
+    return model

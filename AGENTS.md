@@ -58,6 +58,18 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user approved the GRU-first research continuation. `GRU_PILOT.md` fixes
+the native-Keras/table interpretation and original p00/p30 inputs. Thirteen
+GRU and eight FF neural fixtures pass; main suite 352 pass/17 environment
+skips, and the old FF artifact audit is unchanged. Freeze code before a
+constructed-only V100 timing preflight (10 minutes); only a passing recorded
+gate permits the one-seed, two-fit GRU pair (40 minutes, 15-minute fit guards).
+No GRU research fit has run yet. Other source interpretations remain open.
+Website work belongs to another session; do not edit/regenerate/publish it.
+See [the GRU plan](docs/plans/2026-09-23-robust-gru.md).
+
+### Earlier poisoning-order checkpoint
+
 The user-approved poisoning-order control is complete and audited: contract
 9b23b32, startup-only NumPy-alias repair 579a3f5, CPU job 402291, 0:0 in 20s.
 On the same 1,288 original test rows, poison-before-training-only-ADASYN D
