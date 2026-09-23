@@ -24,6 +24,9 @@ execution plan here is
   any submission; the wrapper already runs both conditions and artifact audits.
   See [execution record](../studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
   No new settings, preparation, seeds, website edits or publication.
+  Second epoch took 29.64104s (90 updates total), slower than the constructed
+  projection; if sustained the fit guard will produce a preserved partial
+  result and stop before p30. No automatic guard extension is authorized.
 
 - **GRU launch exception approved:** the user explicitly approved continuing
   after the 778.68s projection exceeded the original 720s gate. Only the launch

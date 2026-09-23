@@ -13,6 +13,9 @@ The cluster verified the exception/current scientific sources; authorization
 matches local bytes. All 16 fixtures passed in 100.295s. P00 real-data training
 has completed at least its first full epoch/45 updates with finite loss and
 saved initial weights/history. No final performance is available yet.
+Latest observation: second epoch completed in 29.64104s, 90 updates, finite
+loss .63577533. Slower than constructed timing; if sustained, 15min guard
+will give a partial fit and stop before p30. Do not silently extend the guard.
 Check scheduler/output before doing anything; do not duplicate or rerun.
 The wrapper handles p00 then p30 then analysis/audit, stops on partial/failure.
 No completed research result at this checkpoint. See results/gru_pilot_20260923.

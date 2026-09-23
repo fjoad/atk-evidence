@@ -27,6 +27,11 @@ launch_authorization.json matches the cluster bytes. The p00 research model
 has completed its first full epoch (45 updates, finite loss 0.67069626), with
 initial weights and history saved. This establishes that research training
 started, not that the final model succeeds or matches the paper.
+The second epoch then completed in 29.64104s (90 cumulative updates, finite
+loss 0.63577533). That is slower than the constructed warm-step projection;
+if sustained, the 900s guard will stop short of 50 epochs. Keep the approved
+guard: preserve that partial result and do not automatically start p30 or
+extend the fit. Two early epoch times are not a final runtime measurement.
 
 ## Resume and audit
 

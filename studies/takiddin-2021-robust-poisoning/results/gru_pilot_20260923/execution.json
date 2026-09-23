@@ -22,8 +22,10 @@
   "cluster_fixture_tests_passed": 16,
   "cluster_fixture_seconds": 100.295,
   "launch_authorization_matches_local_verification": true,
-  "minimum_p00_completed_epochs_observed": 1,
-  "minimum_p00_optimizer_updates_observed": 45,
+  "minimum_p00_completed_epochs_observed": 2,
+  "minimum_p00_optimizer_updates_observed": 90,
+  "observed_second_epoch_seconds": 29.641041420400143,
+  "runtime_note": "Early research epochs are slower than constructed projection; unchanged fit guard may produce a partial result and stop before p30.",
   "completed_research_result_available_at_checkpoint": false,
   "website_changed": false,
   "published": false
