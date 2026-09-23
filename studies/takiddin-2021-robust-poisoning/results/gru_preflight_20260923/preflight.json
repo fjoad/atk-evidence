@@ -1,0 +1,132 @@
+{
+  "code_commit": "2d706b103ee03cc705cc3ef3f07718bc3ed7792a",
+  "constructed_arrays_sha256": "f4ad67efb41112f7f2fd13aaf111e17c86bbd1771e8ae4baab69f9b6ac072a89",
+  "constructed_seed": 20260923,
+  "created_utc": "2026-09-23T12:26:04.007231+00:00",
+  "elapsed_seconds": 26.4718025252223,
+  "final_weights_sha256": "4059ba3b56060af40cb68e408b7dcddc04cf19d2977a5095d77e2806b12584ad",
+  "gate": {
+    "ceiling_seconds": 720,
+    "passes": false,
+    "projected_fit_seconds_from_slowest_warm_step": 778.6819897592068
+  },
+  "gpu_allocator_bytes": {
+    "current": 50140928,
+    "peak": 855042560
+  },
+  "hardware": {
+    "backend": "tensorflow",
+    "build_info": {
+      "cpu_compiler": "/usr/lib/llvm-17/bin/clang",
+      "cuda_compute_capabilities": [
+        "sm_50",
+        "sm_60",
+        "sm_70",
+        "sm_80",
+        "compute_90"
+      ],
+      "cuda_version": "12.3",
+      "cudnn_version": "8",
+      "is_cuda_build": true,
+      "is_rocm_build": false,
+      "is_tensorrt_build": true
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+    "cuda_visible_devices": "0",
+    "deterministic_ops": true,
+    "gpu_details": [
+      {
+        "compute_capability": [
+          7,
+          0
+        ],
+        "device_name": "Tesla V100-PCIE-16GB"
+      }
+    ],
+    "h5py": "3.11.0",
+    "keras": "3.4.1",
+    "mixed_precision": false,
+    "node_gpu_inventory": [
+      "Tesla V100-PCIE-16GB, 16384 MiB, 570.133.07"
+    ],
+    "tensorflow": "2.16.2",
+    "tf32_enabled": false
+  },
+  "host": "crimv3mgpu005",
+  "inference_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+  "inference_seconds": 2.1180367693305016,
+  "initial_weights_sha256": "44ef3aeb4e343dbcfa09bd74468cb2085877411c1d2a5ae365ff1364aff0a1b3",
+  "kernel_norms": {
+    "gru_1/kernel": 0.0866871029138565,
+    "gru_1/recurrent_kernel": 0.6345412909240402,
+    "gru_2/kernel": 0.7631548534647614,
+    "gru_2/recurrent_kernel": 0.6340480645850751,
+    "gru_3/kernel": 0.7670964274831696,
+    "gru_3/recurrent_kernel": 0.636489427564751,
+    "gru_4/kernel": 0.7598814422447283,
+    "gru_4/recurrent_kernel": 0.6429285352071781,
+    "gru_5/kernel": 0.7625127853869916,
+    "gru_5/recurrent_kernel": 0.6360909857738073,
+    "gru_6/kernel": 0.7634793458350886,
+    "gru_6/recurrent_kernel": 0.6319339356041361,
+    "gru_7/kernel": 0.7564827614273657,
+    "gru_7/recurrent_kernel": 0.6338299131818624,
+    "gru_8/kernel": 0.7667267733560363,
+    "gru_8/recurrent_kernel": 0.6347592484846154,
+    "output/kernel": 1.4352007833145932
+  },
+  "losses": [
+    0.6931583285331726,
+    0.6931251287460327,
+    0.6931996941566467,
+    0.693159818649292,
+    0.6931445598602295,
+    0.6931215524673462,
+    0.6931381821632385,
+    0.6931086182594299,
+    0.6931114792823792,
+    0.6931008100509644,
+    0.6931247711181641,
+    0.6931623816490173
+  ],
+  "model_build_seconds": 0.5670393034815788,
+  "optimizer_updates": 12,
+  "parameters": 4058702,
+  "process_peak_rss_kib": 1230216,
+  "python": "3.12.2",
+  "research_fits": 0,
+  "research_inputs_loaded": false,
+  "scope": "constructed inputs only; not paper evidence",
+  "slurm_job_id": "402376",
+  "source_sha256": {
+    "GRU_PILOT.md": "97998fbdddca772e31e49570eee89d615ef305f174e0e0ac761c3f985e33ec10",
+    "checks/gru_preflight.py": "f5a56bb73b0d9db52ecbc1f2b0e8740974912e243663cf00476aea40cb89fd0f",
+    "reproduction/analyze_results.py": "3ec0c6a92b01192ad5cc1b38bcbe034abb7aed6db8411b62ff6f0b0e86e5b49b",
+    "reproduction/models.py": "516009d46eefa9bf108aa9252d4681475db7debfa7b0eb26278fc52355a41e25",
+    "reproduction/run_experiment.py": "314a499a67efa5f8b8b42ec29b0080d54a3a39fc4815f53fa98006f2d1b85e10",
+    "requirements-feed-forward.txt": "c062b45c1a30bcf96b4be0202725c89ec62f8d6b2dd2043893ee701e0e055a0f"
+  },
+  "status": "complete",
+  "update_seconds": [
+    11.806998908519745,
+    0.3584869056940079,
+    0.33329807221889496,
+    0.34608088433742523,
+    0.34252890199422836,
+    0.3344031125307083,
+    0.33299317955970764,
+    0.33034292608499527,
+    0.33252301812171936,
+    0.34479865431785583,
+    0.33352115750312805,
+    0.336728535592556
+  ],
+  "versions": {
+    "keras": "3.4.1",
+    "numpy": "1.26.4",
+    "tensorflow": "2.16.2"
+  },
+  "weight_devices": [
+    "/job:localhost/replica:0/task:0/device:GPU:0"
+  ]
+}

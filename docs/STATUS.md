@@ -12,6 +12,18 @@ execution plan here is
 
 ## Current project state
 
+- **GRU constructed preflight complete; research pair not launched:** frozen
+  `2d706b103ee03cc705cc3ef3f07718bc3ed7792a`, job 402376, completed 0:0 in
+  2:33 on one V100-PCIE-16GB, 4 CPUs/16 GiB. All 13 GRU fixtures pass locally
+  and on GPU, including full-model positive learning. Ten warmed update times
+  are 0.33034-0.34608s; 2,250 times the maximum projects 778.68199s (about 13min),
+  above the frozen 720s launch gate. All source/transfer/device/norm checks
+  pass; the gate correctly refuses research data. Zero research fits. The
+  user has been asked about an explicit exception while retaining the existing
+  40-minute job and 15-minute fit guards; awaiting that decision, not permission
+  to silently change settings. See [the preflight record](../studies/takiddin-2021-robust-poisoning/results/gru_preflight_20260923/README.md).
+  No website work or publication. Old FF artifact audit still matches bytes.
+
 - **GRU research continuation approved and implemented locally:** another
   session now owns website work. This session rechecked target GRU pages and
   read/visually inspected the complete Nabil et al. reference [26]. GRU_PILOT.md

@@ -1,0 +1,42 @@
+test_constructed_cluster_preflight_requires_allocation (tests.test_robust_gru.GRUContractTests.test_constructed_cluster_preflight_requires_allocation) ... ok
+test_roundoff_normalization_retains_raw_argmax_and_ties (tests.test_robust_gru.GRUContractTests.test_roundoff_normalization_retains_raw_argmax_and_ties) ... ok
+test_runtime_gate_uses_slowest_warm_step_and_has_no_parameter_search (tests.test_robust_gru.GRUContractTests.test_runtime_gate_uses_slowest_warm_step_and_has_no_parameter_search) ... ok
+test_saved_preflight_gate_and_identity_are_rechecked (tests.test_robust_gru.GRUContractTests.test_saved_preflight_gate_and_identity_are_rechecked) ... ok
+test_sequence_reshape_preserves_every_value_and_rejects_wrong_axes (tests.test_robust_gru.GRUContractTests.test_sequence_reshape_preserves_every_value_and_rejects_wrong_axes) ... ok
+test_target_is_the_gru_row (tests.test_robust_gru.GRUContractTests.test_target_is_the_gru_row) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-09-23 15:24:15.764845: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-23 15:24:15.789716: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-23 15:24:15.789765: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-23 15:24:22.127140: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_constraint_projection_after_a_real_update (tests.test_robust_gru.GRUTensorFlowTests.test_constraint_projection_after_a_real_update) ... ok
+test_full_architecture_learns_a_two_sequence_fixture (tests.test_robust_gru.GRUTensorFlowTests.test_full_architecture_learns_a_two_sequence_fixture) ... ok
+test_full_fit_path_preserves_batch_guard_partial_history_and_raw_outputs (tests.test_robust_gru.GRUTensorFlowTests.test_full_fit_path_preserves_batch_guard_partial_history_and_raw_outputs) ... {"training_epoch": {"epoch": 1, "seconds": 13.060074731707573, "loss": 0.6917446851730347, "categorical_accuracy": 0.5, "optimizer_updates": 1, "epoch_complete": false}}
+ok
+test_full_source_architecture_and_constraints (tests.test_robust_gru.GRUTensorFlowTests.test_full_source_architecture_and_constraints) ... ok
+test_native_cell_matches_reset_before_hand_calculation (tests.test_robust_gru.GRUTensorFlowTests.test_native_cell_matches_reset_before_hand_calculation) ... ok
+test_seed_pairing_and_correct_or_corrupted_constructed_labels (tests.test_robust_gru.GRUTensorFlowTests.test_seed_pairing_and_correct_or_corrupted_constructed_labels) ... ok
+test_two_softmax_loss_repair_matches_binary_channel_mean (tests.test_robust_gru.GRUTensorFlowTests.test_two_softmax_loss_repair_matches_binary_channel_mean) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 105.343s
+
+OK
+2026-09-23 15:26:04.839987: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-23 15:26:04.865791: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-23 15:26:04.865840: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-23 15:26:07.736423: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"constructed_update": 1, "seconds": 11.806998908519745, "loss": 0.6931583285331726}
+{"constructed_update": 2, "seconds": 0.3584869056940079, "loss": 0.6931251287460327}
+{"constructed_update": 3, "seconds": 0.33329807221889496, "loss": 0.6931996941566467}
+{"constructed_update": 4, "seconds": 0.34608088433742523, "loss": 0.693159818649292}
+{"constructed_update": 5, "seconds": 0.34252890199422836, "loss": 0.6931445598602295}
+{"constructed_update": 6, "seconds": 0.3344031125307083, "loss": 0.6931215524673462}
+{"constructed_update": 7, "seconds": 0.33299317955970764, "loss": 0.6931381821632385}
+{"constructed_update": 8, "seconds": 0.33034292608499527, "loss": 0.6931086182594299}
+{"constructed_update": 9, "seconds": 0.33252301812171936, "loss": 0.6931114792823792}
+{"constructed_update": 10, "seconds": 0.34479865431785583, "loss": 0.6931008100509644}
+{"constructed_update": 11, "seconds": 0.33352115750312805, "loss": 0.6931247711181641}
+{"constructed_update": 12, "seconds": 0.336728535592556, "loss": 0.6931623816490173}
+{"status": "complete", "gate": {"projected_fit_seconds_from_slowest_warm_step": 778.6819897592068, "ceiling_seconds": 720, "passes": false}}

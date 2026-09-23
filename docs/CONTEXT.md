@@ -2,6 +2,21 @@
 
 **Last updated:** 2026-09-23
 
+**GRU checkpoint:** frozen 2d706b103ee03cc705cc3ef3f07718bc3ed7792a;
+constructed GPU preflight job 402376 completed 0:0 in 153s, V100-PCIE-16GB,
+4 CPUs/16 GiB, node crimv3mgpu005. 13 fixtures pass locally/on GPU. Twelve
+constructed updates (two warmups), warm range .33034-.34608s, mean .33672s.
+Slowest-step fit projection 778.68199s exceeds 720s gate: correctly held, NOT
+a paper-performance failure. No CER input loaded/research fit/pair submitted.
+User asked for explicit gate exception within unchanged 40min pair/15min fit
+guards; no reply at this checkpoint. Do not launch until decision. Source/
+transfer/device/norm audit passes. Result hash 238384ed7e52f1438a9bf66202e850b1afa3b18215019dc8e284021633a3a040.
+Program 26.4718s, eager inference 100-row batch 2.118s, TF allocator peak 855042560
+bytes (not whole VRAM), process RSS 1230216 KiB; Slurm max 1442064 KiB includes tests.
+Records results/gru_preflight_20260923; ignored gru-preflight-20260923-attempt1.
+Main tests 352 pass/17 skips; neural 21 pass, Ada 7 pass. Old FF audit byte-identical.
+No website files/journal/publication changed; another session owns that work.
+
 **Current scientific work:** user approved the GRU-first continuation toward
 AEA/ARIMA/ensembles; website belongs to another session. GRU_PILOT.md fixes
 I-GRU-native-table: 8x300 GRU, 48 time steps x1, ReLU candidate, sigmoid gates,

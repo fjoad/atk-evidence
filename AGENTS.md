@@ -58,15 +58,17 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-The user approved the GRU-first research continuation. `GRU_PILOT.md` fixes
-the native-Keras/table interpretation and original p00/p30 inputs. Thirteen
-GRU and eight FF neural fixtures pass; main suite 352 pass/17 environment
-skips, and the old FF artifact audit is unchanged. Freeze code before a
-constructed-only V100 timing preflight (10 minutes); only a passing recorded
-gate permits the one-seed, two-fit GRU pair (40 minutes, 15-minute fit guards).
-No GRU research fit has run yet. Other source interpretations remain open.
-Website work belongs to another session; do not edit/regenerate/publish it.
-See [the GRU plan](docs/plans/2026-09-23-robust-gru.md).
+The GRU implementation is frozen at 2d706b103ee03cc705cc3ef3f07718bc3ed7792a.
+Constructed preflight job 402376 completed 0:0 in 2:33 on one V100-16GB. All 13
+GRU fixtures pass locally/on GPU, but the slowest-step fit estimate 778.68s
+exceeds the frozen 720s launch gate. The verifier correctly holds the gate;
+no research inputs or fits have run. The user was asked whether to permit
+an explicit exception under the unchanged 40-minute pair/15-minute fit guards;
+await that decision, never report the gate as passed. All source/transfer/
+device/norm checks pass; old FF audit remains unchanged. See the
+[preflight record](studies/takiddin-2021-robust-poisoning/results/gru_preflight_20260923/README.md)
+and [GRU plan](docs/plans/2026-09-23-robust-gru.md). Other source readings are
+open. Website belongs to another session; do not edit/regenerate/publish it.
 
 ### Earlier poisoning-order checkpoint
 

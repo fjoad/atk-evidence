@@ -10,7 +10,7 @@ owned by another session: do not edit or regenerate site pages here.
   runtime gate and stopping rule in GRU_PILOT.md before research outcomes.
 - [x] Add the direct model/fit path and constructed fixtures, preserving
   historical source revisions and results.
-- [ ] Freeze code; run a ten-minute, one-V100 constructed timing preflight
+- [x] Freeze code; run a ten-minute, one-V100 constructed timing preflight
   with no research inputs. Check the predeclared gate before dispatching fits.
 - [ ] If the gate passes, run only the original p00/p30 pair, same seed,
   50 epochs/batch100 within the bounded allocation. Audit the saved artifacts.
@@ -43,3 +43,29 @@ still matches its saved file byte-for-byte. Main-suite verification totals
 tests); all 21 neural tests passed separately. Strict data verification passes
 through the existing verified source branch. No GPU timing or research fit
 has run yet.
+
+Scientific contract/code freeze:
+`2d706b103ee03cc705cc3ef3f07718bc3ed7792a`. Subsequent status updates do not
+change that execution revision. The isolated Panther checkout is
+`/export/home/fjoad/atk-evidence-paper3-gru-20260923`; the older main checkout
+and original baseline artifacts remain untouched. Existing neural runtime is
+reused; no dependency installation is required. All seven AdaBoost fixtures
+also passed in their existing isolated environment.
+
+Constructed-only preflight submitted once as job **402376**, output
+`gru-preflight-20260923-attempt1`, using the frozen revision above. Research
+pair remains unsubmitted until its recorded runtime gate passes. Initial
+SSH/session interruptions occurred before submission; no duplicate job.
+
+Preflight completed 0:0 in 2:33 on one V100-PCIE-16GB. All 13 fixtures pass
+on GPU; full-model timing gives warmed updates 0.33034-0.34608s. The frozen
+slowest-step projection is 778.68199s per 2,250-update fit, above the 720s
+launch gate. The verifier correctly blocks real-data loading. Transfer/source/
+GPU/norm checks pass, and no research pair was submitted. Result record:
+`results/gru_preflight_20260923`.
+
+The user was asked whether to permit an explicit launch-gate exception for
+the unchanged pair under the existing 40-minute allocation and 15-minute
+fit guards. No response has been received at this checkpoint; do not treat
+the gate as passed or start the pair without that decision. Other model
+coverage has not begun. Website and earlier evidence remain untouched.

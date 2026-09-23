@@ -1,0 +1,15 @@
+{
+  "code_commit": "2d706b103ee03cc705cc3ef3f07718bc3ed7792a",
+  "gate": {
+    "ceiling_seconds": 720,
+    "passes": false,
+    "projected_fit_seconds_from_slowest_warm_step": 778.6819897592068
+  },
+  "gpu_placement_verified": true,
+  "kernel_norms_verified": 17,
+  "launch_refused_as_specified": true,
+  "preflight_sha256": "238384ed7e52f1438a9bf66202e850b1afa3b18215019dc8e284021633a3a040",
+  "research_fits": 0,
+  "source_files_verified": 6,
+  "status": "verified_gate_held"
+}
