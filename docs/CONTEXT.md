@@ -1,25 +1,33 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-22
+**Last updated:** 2026-09-23
 
-**Current next step, September 22:** user asked to continue; source review
-and code for one poisoning-before-balancing forest control are frozen at
-9b23b329aaefe76c9a1559691366ecdb424acd3f. See POISON_BALANCE_CHECK.md and
-checks/poison_balance.py. Compare new
-D-p30 with saved split-control-20260920-attempt1/B-p30; reuse B-p00 as context,
-requiring all 28 zero-poison prepared arrays identical before any fit. Same
-2,632 originals, 675 flips/six customers, seed20260920, 100 trees, 1,288 clean
-original test rows. Only training ADASYN order changes; generated features,
-counts/bootstrap and fitted scale can change too, so this does not isolate
-class priors. Stock ADASYN sees observed labels; preserve both true parent
-UIDs, mark synthetic truth/attack -1 if either parent is truly malicious.
-Never evaluate unknown-truth synthetic rows or report their truth accuracy.
-Ten constructed fixtures pass; full main suite 337 pass/10 environment skips.
-Old B results and 56 input arrays reverified unchanged. QCRI VPN disconnected, DNS fails and bounded
-direct-IP TCP/22 fails. No new real-data preparation/scoring/fit/job submitted.
-On reconnect resume the frozen one-fit control only, 4 CPUs/16 GiB/15 min/no
-GPU; check existing jobs/attempt paths before dispatch. No wider search or
-publication. Original direct files and all historical artifacts unchanged.
+**Current order-control result, complete September 23:** contract 9b23b32,
+startup-only repair 579a3f5cafc0f8943f230ff7458a1c14103a6718, CPU job 402291,
+0:0 in 20s on crimv3srv024, 4 CPUs/16 GiB/no GPU. Exactly one new forest;
+saved B-p00/B-p30 not refitted. D-p30 versus B-p30 on 1,288 original rows:
+DR 63.16742 vs 63.89140, FA 12.56831 vs 8.74317, AUC 79.80343 vs 84.37752.
+At common FA<=17.6/33.3%, DR 68.32579/75.56561 vs 75.65611/85.42986.
+Observed attack prior 34.86320→48.72032% but no default DR rescue; AUC drops
+4.57409 points. Whole resampling-policy contrast, not isolated prior causation.
+Useful signal remains above daily-mean AUC 65.43382. Same 2,632 originals,
+675 flips/six customers; D has 611 synths/3,243 total, observed 1,663/1,580.
+Parent truth categories 0/1/2 attacks: 157/132/322, so 454 unknown synthetic
+truths remain training-only; true-label training accuracy null. Observed
+training accuracy 99.87666%. All 28 zero-poison arrays equal B-p00 exactly;
+28 new+56 reference arrays, ancestry/scaling/labels/settings/reload/metrics
+pass. Local audit byte-identical to cluster. Fit 0.74316s, program 4.75547s,
+process peak 242,148 KiB; Slurm coarse sample 3,388 KiB is not the peak.
+Result SHA e65e397c387263299f0f0e451d5e7c5d1640dbf969c6fa64965bebf6d1004aea.
+Initial job 402290/frozen 9b23b32 failed after 57s in NumPy version alias lookup,
+before input load/output creation/fit. Log preserved, only lookup repaired.
+Resume requested 14:03 but scheduler stored 15:00; actual combined 77s, not an
+enforced cumulative 15-minute hard cap. 339 tests pass/10 environment skips;
+12 targeted fixtures pass locally/on compute. See results/poison_balance_20260923
+and ignored poison-balance-20260923-attempt2. Stop this diagnostic. Proposed
+next coverage step: separately specify GRU (shape/activations/output/loss/defaults)
+before implementation or fit. No new model/seed or publication authorized here.
+Original primary files/results unchanged; journal/site draft stays local.
 
 **Current feed-forward pair, complete September 22:** VPN/SSH restored;
 setup job 398992 completed 0:0 in 12:54, not rerun. Frozen b5da23a ran as

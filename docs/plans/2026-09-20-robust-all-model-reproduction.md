@@ -2,7 +2,7 @@
 
 **Date:** 2026-09-20
 
-**State:** four model pairs, forest controls, and read-only SVM diagnostic complete and audited
+**State:** four model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
 ## Current execution: poisoning versus balancing order
 
@@ -14,9 +14,19 @@ same original evaluation, and a zero-poison preparation-parity guard with no
 extra fit. The direct check and ten constructed fixtures are implemented.
 This is a controlled resampling-policy contrast, not a pure class-prior test.
 Mixed-parent synthetic truth is unknown, never a fabricated clean test label.
-Panther is unreachable with QCRI VPN disconnected; no experimental preparation,
-fit, scoring or job submission has occurred. Freeze locally and resume only
-the one bounded CPU control when access returns. No extra seed or publication.
+September 23: access restored. Job 402290 failed before research-input loading
+in a NumPy import-alias version check; preserved failure, zero fits. Startup-only
+repair 579a3f5 leaves the scientific contract/settings at 9b23b32 unchanged.
+Job 402291 completed 0:0 in 20 seconds with one new fit. All 28 zero-poison
+arrays match, all audits pass and local/cluster audit bytes match. B-p30→D-p30
+DR 63.89→63.17, FA 8.74→12.57, AUC 84.38→79.80; common-cap DR worsens.
+More balanced observed labels did not rescue this construction, but class-prior
+causation alone remains unidentified. Stop the diagnostic; propose source-
+specification of the GRU baseline next, not another order/seed trial. The
+two jobs total 77 seconds; resumed request 14:03 was recorded as 15:00 by Slurm,
+so no enforced cumulative 15-minute hard cap is claimed. Full suite 339 pass /
+10 environment-specific skips; 12 fixtures pass locally/on compute. No next
+model or publication. See `results/poison_balance_20260923` for all evidence.
 
 ## Current execution: feed-forward pilot
 

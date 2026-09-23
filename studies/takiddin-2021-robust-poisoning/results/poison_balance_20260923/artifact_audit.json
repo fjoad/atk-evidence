@@ -1,0 +1,20 @@
+{
+  "evaluation_rows": 1288,
+  "evaluation_unchanged": true,
+  "input_arrays_checked": 28,
+  "new_fits": 1,
+  "original_training_rows": 2632,
+  "references_retrained": false,
+  "result_sha256": "e65e397c387263299f0f0e451d5e7c5d1640dbf969c6fa64965bebf6d1004aea",
+  "status": "verified",
+  "synthetic_parent_attack_counts_0_1_2": [
+    157,
+    132,
+    322
+  ],
+  "train_observed_counts": [
+    1663,
+    1580
+  ],
+  "unknown_synthetic_truth": 454
+}

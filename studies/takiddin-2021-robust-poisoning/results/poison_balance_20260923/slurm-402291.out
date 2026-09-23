@@ -1,0 +1,27 @@
+/export/home/fjoad/atk-evidence/.venv/lib/python3.12/site-packages/joblib/numpy_pickle.py:207: DeprecationWarning: Setting the shape on a NumPy array has been deprecated in NumPy 2.5.
+As an alternative, you can create a new view using np.reshape (with copy=False if needed).
+  array.shape = self.shape
+----------------------------------------------------------------------
+Ran 12 tests in 2.101s
+
+OK
+{
+  "evaluation_rows": 1288,
+  "evaluation_unchanged": true,
+  "input_arrays_checked": 28,
+  "new_fits": 1,
+  "original_training_rows": 2632,
+  "references_retrained": false,
+  "result_sha256": "e65e397c387263299f0f0e451d5e7c5d1640dbf969c6fa64965bebf6d1004aea",
+  "status": "verified",
+  "synthetic_parent_attack_counts_0_1_2": [
+    157,
+    132,
+    322
+  ],
+  "train_observed_counts": [
+    1663,
+    1580
+  ],
+  "unknown_synthetic_truth": 454
+}

@@ -1,6 +1,6 @@
 # Can this detector learn from corrupted labels?
 
-Updated: 2026-09-22
+Updated: 2026-09-23
 
 This is our working journal for *Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids*, by Takiddin and colleagues (2021).
@@ -8,13 +8,12 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-**Where we are, 22 September 2026:** the feed-forward GPU pair has joined the
-three shallow-model pilots. The repaired neural baseline learns useful ranking,
-including under poisoning, although its default operating points differ from
-the paper. Forest and AdaBoost work well too; the initial sigmoid SVM is weak.
-These are small, dependent pilot samples, not full-population reproduction.
-The next poisoning/balancing-order comparison is specified and software-tested,
-but has not run: the cluster's VPN connection is unavailable.
+**Where we are, 23 September 2026:** forest, AdaBoost and repaired feed-forward
+learn useful ranking, while the initial sigmoid SVM is weak. Our latest control
+changes the order of poisoning and training-data balancing. It does not restore
+detection: ranking gets worse despite more balanced observed labels. These
+are small, dependent pilot samples, not a full-population reproduction or a
+verdict on the whole paper.
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -975,15 +974,73 @@ the QCRI VPN is disconnected; no new research preparation, score or fit has
 been produced. The [fixed comparison](POISON_BALANCE_CHECK.md) permits one
 15-minute CPU allocation when access returns, and then stops for analysis.
 
+## 23 September — Changing the order does not restore detection
+
+Cluster access returned, and the controlled comparison is now complete. We
+reused the earlier forest that balanced training data before corrupting labels
+and fitted one new forest that corrupted those labels first. Both are judged
+on exactly the same 1,288 original test examples. The zero-poison check recovered
+all 28 earlier prepared arrays exactly before the new model was fitted.
+
+| Training order at 30% selected customers | Attacks detected | False alarms | Ranking AUC |
+|---|---:|---:|---:|
+| Balance, then poison (saved control) | 63.89% | 8.74% | 84.38% |
+| Poison, then balance (new control) | 63.17% | 12.57% | 79.80% |
+
+This did not produce the simple rescue we considered. The fraction labeled
+attack during training moved from 34.86% to 48.72%, but default detection did
+not rise. The new forest missed eight more attacks and flagged seven more
+normal examples. At the same maximum false-alarm rate of 17.6%, the best
+saved-score detection fell from 75.66% to 68.33%. At a 33.3% allowance it fell
+from 85.43% to 75.57%. These test-selected cutoffs are diagnostic comparisons,
+not decisions calibrated for future data.
+
+The change therefore affects ranking too, not merely the default cutoff.
+However, it still does not isolate class proportions: the synthetic examples,
+their number, the forest's sampled training sets and the training-fitted scale
+also change. We have measured this whole order-of-operations change, not proved
+that class proportions alone do or do not cause the earlier pattern.
+
+The new order generated 611 synthetic training examples instead of 1,900.
+Of those 611, 454 have at least one truly malicious parent despite being labeled
+benign for training. We preserved their parents and marked their true class
+unknown. None entered the test set. This matters: assigning convenient clean
+answers to these generated examples would undermine the comparison.
+
+Useful signal survives. The new AUC of 79.80% remains above the simple
+daily-consumption score's 65.43%. Some individual attack types also improve, while
+others worsen. Neither the overall decline nor the remaining signal supplies
+a whole-paper verdict. We will not run more seeds to look for a preferred sign.
+
+There was one software failure before this result. The first cluster job passed
+its ten fixtures but failed a version lookup before loading research data or
+fitting anything. We fixed the NumPy import-alias lookup, added two regression
+tests, and preserved that failed job. The scientific settings did not change.
+The resumed job passed all 12 tests and completed the one intended fit.
+
+The fit took 0.74 seconds; the successful allocation took 20 seconds. Including
+the 57-second failed startup, total allocation time was 77 seconds. We requested
+a shorter limit for the resumed job, but the scheduler recorded 15 minutes;
+the [execution record](results/poison_balance_20260923/README.md) preserves that
+difference rather than claiming an enforced cumulative limit. All new and
+reference artifacts passed the audit, and the local audit matches the cluster
+file exactly. Earlier inputs, models and results remain unchanged.
+
+**Decision:** stop this control. The ordering ambiguity matters to the setup,
+but this particular alternative did not explain away the earlier detection
+pattern. Return to the remaining model coverage, beginning with a separately
+specified GRU baseline. No further model has been started here.
+
 ## What we will do next
 
 Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
 reduces default detection and false alarms while useful ranking remains.
-The next check is the now-specified one-fit order-of-operations control above,
-once cluster access returns. This is still an unresolved source detail, not
-a measured explanation. Do not regenerate the original data or launch a
-search. The remaining models, including GRU, ARIMA, AEA and the ensembles,
-stay in scope. SVM parameter sensitivity also remains open.
+The completed order-of-operations control did not supply a simple rescue and
+does not isolate class proportions as the cause. The next proposed coverage
+step is the GRU baseline: first resolve its sequence shape, activations, output,
+loss and omitted training settings from the source before specifying a small
+pilot. ARIMA, AEA and both ensembles also stay in scope. SVM parameter
+sensitivity remains open. No broader search or new model fit is automatic.
 
 The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
 one to four hours of training depending on the model (pages 2680 and 2682).

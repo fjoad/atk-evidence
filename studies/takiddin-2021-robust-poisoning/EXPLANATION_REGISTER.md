@@ -259,7 +259,8 @@ See the [feed-forward record](results/feed_forward_pilot_20260922/README.md).
 
 ## E19 — poisoning/balancing order contributes to the repeated cutoff pattern
 
-**Status:** open, not causally measured.
+**Status:** one order-policy contrast measured September 23; class-prior-only
+causation remains open. The proposed simple rescue is not observed here.
 
 Forest, AdaBoost and repaired feed-forward show lower default detection and
 lower FA under the declared one-sided label corruption, with substantial
@@ -279,3 +280,15 @@ it will not identify a class-prior-only effect. Synthetic rows with any truly
 malicious parent have unknown truth and remain training-only. Zero-poison
 array parity gates the single fit. Code passes ten constructed fixtures;
 Panther is inaccessible and no real-data control has run. E19 remains open.
+
+September 23 outcome: after a preserved startup-only failure and NumPy-alias
+repair, frozen 579a3f5/job 402291 completed one D-p30 forest. Observed attack
+proportion changes 34.86320→48.72032%, but DR changes 63.89140→63.16742,
+FA 8.74317→12.56831, AUC 84.37752→79.80343 on the same 1,288 original rows.
+Best DR at FA<=17.6/33.3% falls 7.33032/9.86425 points. Thus the policy does
+not merely restore the default decision point; measured ranking worsens too.
+Counts, generated geometry, bootstrap draws and scale also change, so the
+prior's separate contribution is not identified. Unknown synthetic truths
+stay training-only. All guards/audits pass; old models and inputs unchanged.
+Stop this contrast; no extra setting/seed to seek a desired result. See the
+[order-control record](results/poison_balance_20260923/README.md).

@@ -12,14 +12,26 @@ execution plan here is
 
 ## Current project state
 
-- **September 23 resume:** Panther VPN/SSH is restored. The frozen control
-  was submitted once as job 402290 and failed before loading inputs or creating
-  its output directory: the version check referenced `numpy`, imported as `np`.
-  All ten fixtures passed first; zero research fits. Its log/failure record
-  are preserved under `results/poison_balance_20260923`. A narrow startup-only
-  repair and two preflight regression tests are being frozen before resuming
-  the unchanged one-fit contract with a new attempt identity. No parameter,
-  seed, data, sampler or metric change; no scientific result yet.
+- **Poisoning-order control complete and audited, September 23:** repaired
+  freeze 579a3f5, CPU job 402291, completed 0:0 in 20 seconds; one new forest.
+  On the same 1,288 original test rows, balance-then-poison B versus poison-
+  then-balance D gives DR 63.89→63.17, FA 8.74→12.57, AUC 84.38→79.80.
+  At common FA caps 17.6/33.3%, best DR falls 75.66→68.33 / 85.43→75.57.
+  Observed attack-label proportion rises 34.86→48.72%, but the simple rescue
+  is not observed. This identifies a whole-policy contrast, not class-prior-only
+  causation or the authors' method. D retains AUC above the daily-mean 65.43.
+  All 28 zero-poison arrays equal B-p00; 28 new/56 reference input arrays,
+  provenance, labels, scaling, settings, model reload and metrics pass.
+  Local/cluster audits are byte-identical. D has 611 synthetics, 454 unknown
+  truths, all training-only. No earlier result was changed.
+  Initial job 402290 failed in version preflight before research-input loading
+  or any fit; its 57-second failure is preserved. Only NumPy alias lookup was
+  repaired; the 9b23b32 scientific contract is unchanged. Both jobs total 77
+  seconds. The resumed request was 14:03 but Slurm recorded 15:00; do not claim
+  an enforced cumulative 15-minute hard limit. Full suite 339 pass/10 environment
+  skips; all 12 targeted fixtures pass locally/on compute. Stop this control;
+  proposed next coverage step is a separately specified GRU pilot. No extra
+  seed/model or publication. See [the record](../studies/takiddin-2021-robust-poisoning/results/poison_balance_20260923/README.md).
 
 - **Poisoning/balancing control specified and locally tested, September 22:**
   the user asked to continue. Re-read/visually checked III-A.2-3, pp. 2677-2678.

@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-22
+**Last updated:** 2026-09-23
 
 ## Purpose
 
@@ -24,6 +24,31 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: balancing after poisoning does not supply the proposed rescue
+
+**Added September 23 after the one-fit order control.**
+
+- **Hypothesis:** the recurring low default detection might largely reflect
+  the changed observed class proportions when balancing precedes label flips.
+- **Intervention:** saved B-p30 versus new D-p30, poison-before-training-only-
+  ADASYN, same originals/evaluation/customers/seed/forest. This changes synthetic
+  geometry/counts/bootstrap/scale as well as the observed class proportion.
+- **Evidence:** proportion 34.86→48.72%, DR 63.89→63.17, FA 8.74→12.57,
+  AUC 84.38→79.80. At FA<=17.6/33.3%, best DR falls 7.33/9.86 points.
+  All zero-poison parity and artifact audits pass; 454 unknown synthetic truths
+  remain training-only. AUC still exceeds the daily-mean control's 65.43.
+- **Conclusion:** **OBSERVED** — no rescue under this order change; ranking
+  worsens on these matched rows. **OPEN** — isolated class-prior contribution,
+  other source interpretations, full population and proposed mechanism. Do not
+  turn a compound intervention into proof that class proportions never matter.
+- **Operational correction:** job 402290 failed a version alias check before
+  any research data load/fit. Repair 579a3f5 changes only startup, and job 402291
+  completes the single intended fit. Both jobs/logs and scheduler limits are
+  recorded. Old scientific results remain intact.
+- **Decision:** stop; separately specify the GRU baseline as the proposed next
+  coverage question. No more forests or seeds were fitted to change the outcome.
+- **Record:** [order control](../studies/takiddin-2021-robust-poisoning/results/poison_balance_20260923/README.md).
 
 ### Paper 3: working baselines change the question, not the whole-paper verdict
 

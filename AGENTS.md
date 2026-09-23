@@ -58,22 +58,23 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-The user-approved next shared-setup check is specified in
-`studies/takiddin-2021-robust-poisoning/POISON_BALANCE_CHECK.md` and implemented
-in `checks/poison_balance.py`. One new forest fit compares poison-before-
-training-only-ADASYN against saved B-p30 on the same 1,288 original test rows.
-A zero-poison preparation-parity guard reuses B-p00 without refitting. Ten
-constructed fixtures pass. Mixed/malicious-parent synthetic rows have unknown
-truth and never enter evaluation. This is a resampling-policy contrast, not
-an isolated class-prior effect or a literal reproduction. QCRI VPN is currently
-disconnected and Panther is unreachable; no new research-data preparation,
-scoring, fit or job was submitted. Resume only this frozen one-fit CPU control
-when access returns, after checking scheduler/output state, within 15 minutes,
-4 CPUs/16 GiB/no GPU. Do not add seeds or settings. Original inputs/results
-remain untouched; nothing is published. See the
-[step plan](docs/plans/2026-09-22-poison-balance-control.md).
-The scientific contract/code are frozen at
-`9b23b329aaefe76c9a1559691366ecdb424acd3f`; use that revision for execution.
+The user-approved poisoning-order control is complete and audited: contract
+9b23b32, startup-only NumPy-alias repair 579a3f5, CPU job 402291, 0:0 in 20s.
+On the same 1,288 original test rows, poison-before-training-only-ADASYN D
+versus saved balance-then-poison B gives DR 63.17 vs 63.89, FA 12.57 vs 8.74,
+AUC 79.80 vs 84.38. At common FA caps 17.6/33.3%, best DR 68.33/75.57 versus
+75.66/85.43. More balanced observed labels did not rescue the result; this is
+a whole resampling-policy effect, not isolated class-prior causation. Useful
+ranking remains. All 28 zero-poison arrays equal B-p00, all input/provenance/
+reload/metric audits pass, local/cluster audits match byte-for-byte. The 454
+unknown-truth synthetic rows remain training-only. Initial job 402290 failed
+before research input loading/fit; its 57s failure is preserved. Two jobs total
+77s; second request 14:03 was recorded as 15:00 by Slurm, not an enforced
+cumulative 15-minute hard cap. Stop this diagnostic. Proposed next coverage
+step is a separately specified GRU pilot, not an extra forest seed or order
+sweep. No new fit is authorized by this summary. Original inputs, models and
+contracts remain intact; nothing is published. See the
+[record](studies/takiddin-2021-robust-poisoning/results/poison_balance_20260923/README.md).
 
 ### Earlier feed-forward checkpoint
 
