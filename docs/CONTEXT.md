@@ -7,6 +7,9 @@ cross-paper tabs and “Paper N of 3” labels; each article links back to the
 growing homepage index. No fixed collection size in headings, footers or
 metadata; homepage entries are unnumbered. Research contents stay unchanged.
 See docs/plans/2026-09-23-open-paper-index.md.
+Published `616a0c0`; Pages 35854458279 and CI 35854458323 passed, with 32
+focused local tests. Live index and article verified: no tabs/fixed counts.
+Notebook stylesheet URLs are content-versioned to avoid stale cached layouts.
 
 **Latest website preference:** user wants a continuation, without prominent
 dates. Main pages now use descriptive section headings, undated introductions

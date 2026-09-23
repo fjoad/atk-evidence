@@ -12,6 +12,14 @@ execution plan here is
 
 ## Current project state
 
+- **Open-ended website navigation published:** articles now have only an
+  “All papers” link to a growing, unnumbered index. Removed cross-paper tabs,
+  “Paper N of 3” labels and fixed-count metadata. Published `616a0c0` includes
+  a content-versioned stylesheet to prevent cached old layouts. All 32 focused
+  site/report/registry checks passed; Pages 35854458279 and CI 35854458323
+  succeeded. Live index/article navigation and layout verified. No research
+  content changed. See [the plan](plans/2026-09-23-open-paper-index.md).
+
 - **Website presentation refinement published:** the user wants a continuing
   investigation, not dated diary entries. Commit `3cd566e` removes visible
   calendar prefixes, update-date banners and editorial assembly dates from
