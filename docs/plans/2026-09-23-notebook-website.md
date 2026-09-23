@@ -19,7 +19,7 @@ or stronger evidence. Electricity theft/deep autoencoder are one paper, not two.
   explanations, supportive pilot results, untested ensemble and final conclusion.
 - [x] Verify numeric claims, source/archive links, metadata, generated output,
   mobile/desktop navigation and layout, and the relevant/full software tests.
-- [ ] Update handoff documentation, commit, publish to GitHub Pages, verify
+- [x] Update handoff documentation, commit, publish to GitHub Pages, verify
   the deployed pages, and report the finished result. Do not start model work.
 
 Publication was explicitly authorized through the user's follow-up selection.
@@ -48,3 +48,16 @@ The user clarified that the older water/deep-autoencoder investigations were
 done with an earlier model/workflow and should be rethought/redone later, one
 paper at a time. Their results are preserved; the new notebooks explicitly say
 they await reassessment and do not claim fresh validation.
+
+## Published and verified
+
+Published commit `9f21c28a44382275435e967efced1ead2ae6fcb7` to the existing
+[GitHub Pages site](https://fjoad.github.io/atk-evidence/).
+[Pages run 35850178097](https://github.com/fjoad/atk-evidence/actions/runs/35850178097)
+and [CI run 35850178039](https://github.com/fjoad/atk-evidence/actions/runs/35850178039)
+both completed successfully. Live browser navigation verified the new index,
+all three paper tabs, Paper 3's mathematical/averaging caveats and the earlier
+studies' reassessment notices. Archive contents match the previous pages
+apart from an archive comment and back link. Strict data verification also
+passes through the existing verified source branch; no data were modified.
+No scientific experiment or cluster submission occurred in this update.

@@ -15,9 +15,12 @@ thinking; rethink/redo those later, one paper at a time, preserving results
 for now. Their notebook notices explicitly say awaiting reassessment, not
 fresh validation. Paper 3 adds mathematical issues with aggregation caveats;
 main sequential ensemble remains untested. Full suite 344 pass/10 environment
-skips; 30 site/registry tests pass, mobile/desktop browsing checked. Publication
-authorized but awaiting commit/push and live verification at this checkpoint.
-No new scientific run. See docs/plans/2026-09-23-notebook-website.md.
+skips; 30 site/registry tests pass, mobile/desktop browsing checked. Published
+9f21c28a44382275435e967efced1ead2ae6fcb7; Pages run 35850178097 and CI run
+35850178039 succeeded. Live homepage/all three tabs and key caveats verified.
+Earlier HTML content is preserved apart from archive comments/back links;
+the research result bytes and source contracts are unchanged. No new scientific
+run. See docs/plans/2026-09-23-notebook-website.md.
 
 **Current order-control result, complete September 23:** contract 9b23b32,
 startup-only repair 579a3f5cafc0f8943f230ff7458a1c14103a6718, CPU job 402291,

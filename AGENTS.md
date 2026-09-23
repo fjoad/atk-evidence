@@ -73,7 +73,8 @@ before research input loading/fit; its 57s failure is preserved. Two jobs total
 cumulative 15-minute hard cap. Stop this diagnostic. Proposed next coverage
 step is a separately specified GRU pilot, not an extra forest seed or order
 sweep. No new fit is authorized by this summary. Original inputs, models and
-contracts remain intact; nothing is published. See the
+contracts remain intact. The result is included in the September 23 website
+publication, without new experiments. See the
 [record](studies/takiddin-2021-robust-poisoning/results/poison_balance_20260923/README.md).
 
 ### Earlier feed-forward checkpoint
@@ -203,8 +204,9 @@ current conclusion at the end. Detailed earlier pages remain linked archives.
 The user wants the older water/deep-autoencoder work reassessed later under
 the newer approach; preserve their results for now and label them as awaiting
 reassessment. Do not treat a presentation rewrite as renewed scientific
-validation. Publication of the September 23 overhaul is explicitly authorized
-after checks; further experiments remain subject to their own checkpoints.
+validation. The September 23 overhaul was published at `9f21c28` after local
+checks; GitHub Pages and CI passed, and the live three-paper site was verified.
+Further experiments remain subject to their own checkpoints.
 
 For a multi-file change, save a short plan, complete the change, verify it,
 update current status, and commit it. User checkpoints still apply to

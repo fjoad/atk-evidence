@@ -12,7 +12,7 @@ execution plan here is
 
 ## Current project state
 
-- **Website notebook overhaul, September 23 — checked and ready to publish:**
+- **Website notebook overhaul published and verified, September 23:**
   the user authorized a simple three-paper index, consistent paper notebooks,
   and publication to the existing GitHub Pages site after checks. Each notebook
   opens with the paper's claims and starting hypothesis, keeps chronological
@@ -25,8 +25,11 @@ execution plan here is
   approach; no result was rerun or strengthened by this rewrite. Full suite
   344 pass/10 environment skips; 30 focused site/registry checks pass. Desktop/
   mobile navigation and layouts checked. No experiments ran. See the
-  [website plan](plans/2026-09-23-notebook-website.md). Deployment verification
-  follows the commit/push; do not call the update live until that succeeds.
+  [website plan](plans/2026-09-23-notebook-website.md). Commit `9f21c28` is live
+  at https://fjoad.github.io/atk-evidence/. Pages run 35850178097 and CI run
+  35850178039 succeeded. The live homepage/all three tabs were checked, including
+  source caveats and reassessment notices. This publishes the existing results;
+  no experiment or claim of renewed validation of the earlier studies occurred.
 
 - **Poisoning-order control complete and audited, September 23:** repaired
   freeze 579a3f5, CPU job 402291, completed 0:0 in 20 seconds; one new forest.
