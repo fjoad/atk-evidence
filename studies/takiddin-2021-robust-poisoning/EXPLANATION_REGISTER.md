@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; four model pairs, forest controls, and read-only SVM follow-up complete
+**Status:** active; four model pairs, forest controls and SVM follow-up complete; GRU partial fit audited
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -292,3 +292,22 @@ prior's separate contribution is not identified. Unknown synthetic truths
 stay training-only. All guards/audits pass; old models and inputs unchanged.
 Stop this contrast; no extra setting/seed to seek a desired result. See the
 [order-control record](results/poison_balance_20260923/README.md).
+
+## E20 — the first GRU gap demonstrates failure of the prescribed training
+
+**Status:** not established; the run stopped before completing that training.
+
+Job 402378 hit the 900s fit guard after 32 full epochs plus seven batches of
+epoch 33, not 50. P30 never started. The preserved p00 model has AUC 80.82379,
+DR 42.98643/FA 8.78438; at FA<=6.8 best DR is 35.74661 versus 92.4 printed. Neither
+cutoff nor favorable reversal rescues these saved partial scores. This does
+not exclude better scores from completed training. Full-epoch loss declined
+from .67070 to .40140; no converged plateau is established. Ranking still
+exceeds the daily-mean AUC 66.19624 on these rows.
+
+The constructed runtime projection underestimated the actual research fit;
+cause remains open. Separate partial-artifact checks verify inputs, labels,
+scores, metrics, weights, optimizer updates and history without relabeling it
+complete or rerunning inference locally. Stop this attempt; specify the
+timing/budget question before approved completion of the unchanged schedule.
+No extra seeds or automatic p30. See [record](results/gru_pilot_20260923/README.md).

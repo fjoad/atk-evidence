@@ -6,6 +6,14 @@
 
 ## Current execution: GRU pilot
 
+September 24 check: job 402378 stopped at p00's 900s fit guard, 32 full
+epochs plus seven batches of epoch 33; p30 never started. All partial-artifact
+checks pass without promoting it to a completed result. DR 42.99/FA 8.78/AUC 80.82;
+at FA<=6.8 best DR 35.75. No full-schedule/poisoning/attainability conclusion.
+Stop this attempt and specify timing calibration/adequate budget before any
+new compute. No new job, extra seed, website work or publication occurred.
+This supersedes the earlier running checkpoint immediately below.
+
 The user approved continuing with the unchanged GRU after the constructed
 runtime projection exceeded its initial launch gate. See the bounded
 [GRU step plan](2026-09-23-robust-gru.md), GRU_PILOT.md and the explicit

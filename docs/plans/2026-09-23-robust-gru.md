@@ -101,3 +101,29 @@ All 16 cluster fixtures passed in 100.295s, local launch-authorization audit
 matches cluster bytes, and the p00 model completed its first real-data epoch
 (45 updates, finite loss) with initial weights/history preserved. The job
 continues; this is a running checkpoint, not a completed research result.
+
+## Partial-result check, September 24
+
+The user asked to check the existing job. Slurm reports FAILED/2:0 after
+22:45, matching the intentional partial-fit exit: p00 hit its 900s guard
+after 32 full epochs plus seven batches of epoch 33. P30 never started.
+Preserve/copy the artifacts and log, verify hashes and saved-score arithmetic
+without fitting or running model inference, record the partial outcome and
+next decision, then stop. Do not alter the original result's partial status
+or loosen the completed-pair auditor. No new allocation, website work or
+automatic runtime extension is included in this check.
+
+Read-only partial audit passed: ten consumed inputs, all source/output hashes,
+test identities, probability normalization and full saved-score analysis,
+initial/final weight hashes, 4,058,702 parameters, serialized optimizer count,
+model config (except process-local object IDs), kernel norms and partial
+history. Original status remains partial and the completed auditor refuses it.
+All artifacts/logs copied; no model inference locally. DR42.99/FA8.78/AUC80.82;
+at FA<=6.8 best DR35.75 versus92.4. Loss still improves and p30 is untested.
+Stop; next decision is timing calibration and an approved adequate budget for
+the unchanged 50-epoch question. No new allocation or automatic continuation.
+
+Final verification: main suite 355 passes/17 environment-specific skips;
+strict source-data verification passes; copied original result/history bytes
+match. Scientific implementation and original GRU contract are unchanged.
+The website consistency check passes without regenerating any page.

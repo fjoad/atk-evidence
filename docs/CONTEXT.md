@@ -1,6 +1,26 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-23
+**Last updated:** 2026-09-24
+
+**GRU stopped and audited September 24:** job 402378 FAILED/2:0 in 22:45
+(intentional partial-fit return). P00 hit 900.07785s guard at 32 full epochs
++7 batches of epoch33, 1447 updates. P30 never started; no pair audit exists.
+Partial DR42.98643 FA8.78438 AUC80.82379; best DR35.74661 at FA<=6.8 versus
+92.4 printed; reversal1.44796. No cutoff rescue for this partial model, not
+a completed50epoch limit. Loss .67070→.40140 across full epochs; not plateaued.
+Real full epochs19–32 took24.72–25.90s, slower than constructed estimate.
+Scoring135.86020s/reload47.37145s; process1096.92745s. No OOM; TF peak903443968B.
+Read-only audit verifies 10 consumedarrays/source/outputhashes/labels/scores/
+metrics/initial-finalweights/1447 serializedoptimizerupdates/config/norms.
+No local model inference; recorded GPU reload verified by original result hash.
+Raw result SHA fa19293a1bac847fd7fb3ab8fe37b25f3ea92f52d88ad8e53cee129bbbdd4602.
+Full artifacts copied to ignored data/derived/.../gru-pilot-20260923-attempt1;
+small result/history/log/audit in results/gru_pilot_20260923. Ordinary completed-
+fit auditor still refuses partial. No active account jobs or new submissions.
+Stop this attempt. Next proposed question: timing calibration/adequate budget
+for unchanged50epochs; explicit approval before new compute. Saved optimizer
+does not by itself preserve unsaved shuffle/dropout state for exact continuation.
+Website untouched. This supersedes all running statements below.
 
 **Live GRU allocation:** job 402378 submitted ONCE and running on
 crimv3mgpu005; launcher 46966c7e021e964ff582e1eb56422b75cc6a4ec7,

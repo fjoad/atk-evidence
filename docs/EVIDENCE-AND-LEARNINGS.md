@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-23
+**Last updated:** 2026-09-24
 
 ## Purpose
 
@@ -24,6 +24,29 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: the first GRU result is interrupted, not a completed failure
+
+**Added September 24 after checking job 402378.**
+
+- **Former expectation:** the constructed 778.68s projection would allow
+  fifty epochs within the user-approved unchanged 900s fit guard.
+- **Observed correction:** research training was slower; the guard stopped
+  p00 at 32 full epochs plus seven batches, 1,447 updates. P30 never started.
+  The timing-gap cause is not isolated; the constructed/research pipelines
+  differ. It is not a calibrated full-population RTX 2070 runtime test.
+- **Evidence:** partial AUC 80.82, DR 42.99/FA 8.78. At FA<=6.8, best DR 35.75
+  versus 92.4 printed; score reversal does not rescue this saved partial model.
+  Loss declined with fluctuations. All partial-artifact checks pass, while the
+  completed-result auditor correctly refuses the unchanged partial record.
+- **Conclusion:** **VERIFIED** interrupted schedule and partial-score gap;
+  **OPEN** final 50-epoch performance, poisoning effect, convergence, other source
+  readings and cause of runtime underestimate. Do not turn our stopping rule
+  into evidence that the paper's prescribed training fails or is impossible.
+- **Decision:** stop this attempt; specify timing calibration/adequate bounded
+  completion before further compute, not extra seeds. No automatic exact-resume
+  claim: saved optimizer state does not guarantee unsaved shuffle/dropout state.
+- **Record:** [GRU partial audit](../studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
 
 ### Paper 3: balancing after poisoning does not supply the proposed rescue
 

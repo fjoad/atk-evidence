@@ -58,6 +58,22 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+GRU job **402378 has stopped** (checked September 24), FAILED/2:0 after
+22:45: intentional partial-fit exit, not an OOM. P00 reached the 900s guard
+after 32 full epochs plus seven batches of epoch 33 (1,447 updates); p30 never
+started. Partial DR/FA/AUC 42.99/8.78/80.82; best DR 35.75 at FA<=6.8 versus
+92.4 printed. This is not a completed 50-epoch result or a poisoning comparison.
+All copied input/output/source/weights/history/config/saved-score checks pass;
+the completed-fit auditor correctly refuses partial. Original outputs remain
+unchanged. Stop this attempt: reconcile underestimated timing and specify an
+approved bounded completion before new compute. No automatic resume/refit,
+extra seeds, p30 or ensemble launch. See the updated
+[record](studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
+No new job or local model inference; website untouched. This supersedes the
+running checkpoint below.
+
+### Earlier running checkpoint
+
 GRU pair job **402378 is running** under the approved exception, launcher
 46966c7e021e964ff582e1eb56422b75cc6a4ec7. The scientific files remain at
 2d706b103ee03cc705cc3ef3f07718bc3ed7792a. One V100-16GB, 4 CPUs/16 GiB,

@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-23
+**Last updated:** 2026-09-24
 
 **Branch:** `main`
 
@@ -11,6 +11,22 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **GRU partial p00 result audited; no active job:** checked September 24.
+  Job 402378 ended FAILED/2:0 after 22:45, the intentional partial-fit exit.
+  P00 hit its 900s fit guard after 32 full epochs plus seven batches of epoch
+  33 (1,447/2,250 updates); p30 never started. Partial DR/FA/AUC is
+  42.98643/8.78438/80.82379. At FA<=6.8%, best saved-score DR is 35.74661
+  versus 92.4 printed. This is not a 50-epoch failure or a paired poisoning
+  result. Loss still improved; no plateau or impossibility established.
+  Ten input arrays, source/output hashes, initial/final weights, serialized
+  optimizer count, model config/norms and saved-score metrics pass a separate
+  partial-artifact audit. Completed-fit auditor correctly refuses the record.
+  No new fit/inference/allocation; all originals preserved. Next decision:
+  reconcile the underestimated timing and specify/approve sufficient bounded
+  time for the unchanged schedule, not extra seeds or an automatic resume.
+  See [record](../studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
+  Website untouched. This supersedes the running checkpoint below.
 
 - **GRU pair submitted once, job 402378 running:** launcher freeze
   `46966c7e021e964ff582e1eb56422b75cc6a4ec7`, unchanged scientific freeze

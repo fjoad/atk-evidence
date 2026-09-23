@@ -1,0 +1,24 @@
+{
+  "audit_script_sha256": "c2a14931c6d5807596b1aa8249a2d1f149d3a09f0b8fe649d452665ebd929286",
+  "completed_result_auditor_correctly_refuses_partial": true,
+  "epochs_completed": 32,
+  "initial_and_final_weight_hashes_verified": true,
+  "input_arrays_checked": 10,
+  "kernel_norms_and_model_config_verified": true,
+  "local_model_inference_performed": false,
+  "new_fits": 0,
+  "optimizer_updates": 1447,
+  "original_result_unchanged": true,
+  "output_hashes_checked": {
+    "history.json": "8afac3da8677604ac21f785bf01be98b91901e72128e977573c58b88899ae6b1",
+    "initial_weights.npz": "f9be1638f70706c9580de0b358c200d676443aedc50519394bff378a02dc45d2",
+    "model.keras": "396590c413d48a34f0d2d6f21affb610a8f88e0b52864ee17c16c9deb5f0c773",
+    "predictions.npz": "19447182c971460721761e067a455dde03386c30ed9763a8aa32e57dc26086f3"
+  },
+  "p30_started": false,
+  "partial_epoch_batches": 7,
+  "result_sha256": "fa19293a1bac847fd7fb3ab8fe37b25f3ea92f52d88ad8e53cee129bbbdd4602",
+  "saved_scores_labels_metrics_verified": true,
+  "serialized_optimizer_iterations_verified": true,
+  "status": "verified_partial_artifacts_not_completed_experiment"
+}
