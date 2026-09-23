@@ -2,6 +2,23 @@
 
 **Last updated:** 2026-09-23
 
+**Live GRU allocation:** job 402378 submitted ONCE and running on
+crimv3mgpu005; launcher 46966c7e021e964ff582e1eb56422b75cc6a4ec7,
+science unchanged at 2d706b103ee03cc705cc3ef3f07718bc3ed7792a. One V100-16GB,
+4 CPUs/16GiB, 40min job/15min fit guards. Remote checkout
+/export/home/fjoad/atk-evidence-paper3-gru-approved-20260923; output under
+the usual derived study root at gru-pilot-20260923-attempt1. Log
+/export/home/fjoad/robust-gru-resume-transfer-jfMFay/slurm-402378.out.
+The cluster verified the exception/current scientific sources; authorization
+matches local bytes. All 16 fixtures passed in 100.295s. P00 real-data training
+has completed at least its first full epoch/45 updates with finite loss and
+saved initial weights/history. No final performance is available yet.
+Check scheduler/output before doing anything; do not duplicate or rerun.
+The wrapper handles p00 then p30 then analysis/audit, stops on partial/failure.
+No completed research result at this checkpoint. See results/gru_pilot_20260923.
+Local checks: 16 GRU+8 FF passed; main 355 pass/17 skips; strict data passes.
+No website work. This live checkpoint supersedes all unsubmitted statements.
+
 **Authorized resume:** user replied “sure incresae it and keep going” to the
 explicit GRU runtime-gate exception question. Only the launch ceiling is now
 900s; the original 720s failed gate is preserved, not relabeled a pass. Retain

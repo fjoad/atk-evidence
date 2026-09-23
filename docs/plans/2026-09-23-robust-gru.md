@@ -87,3 +87,17 @@ checks include refusal of altered identity/scientific sources and projections
 over 900s. The approved record passes only the explicit exception path; the
 default verifier still refuses it. Scheduler is empty and no GRU pilot output
 exists before dispatch. No computational source or original contract changed.
+
+Launcher/exception frozen at `46966c7e021e964ff582e1eb56422b75cc6a4ec7`.
+Submitted once as job **402378**, running on crimv3mgpu005 with the exact
+40-minute cap, one V100-16GB, four CPUs and 16 GiB. The cluster authorization
+checks pass before its constructed tests. Output is
+`gru-pilot-20260923-attempt1`; see `results/gru_pilot_20260923` for exact paths.
+Do not resubmit. The queued script proceeds through both conditions and audits
+without another launch decision, and stops on partial/failure. No completed
+research outcome at this checkpoint.
+
+All 16 cluster fixtures passed in 100.295s, local launch-authorization audit
+matches cluster bytes, and the p00 model completed its first real-data epoch
+(45 updates, finite loss) with initial weights/history preserved. The job
+continues; this is a running checkpoint, not a completed research result.

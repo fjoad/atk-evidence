@@ -58,6 +58,21 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+GRU pair job **402378 is running** under the approved exception, launcher
+46966c7e021e964ff582e1eb56422b75cc6a4ec7. The scientific files remain at
+2d706b103ee03cc705cc3ef3f07718bc3ed7792a. One V100-16GB, 4 CPUs/16 GiB,
+40min allocation and 15min fit guards. Check the existing job and
+gru-pilot-20260923-attempt1 before any action; do not submit a duplicate.
+The wrapper runs p00/p30 and audits automatically, stopping on partial/failure.
+All 16 cluster fixtures pass; p00 has completed at least one real-data epoch
+with finite loss and preserved initial weights/history. No completed research
+result yet. After completion preserve/copy/audit outputs,
+record the bounded result and next question; do not add settings/seeds.
+See [execution record](studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
+Website remains owned by another session, untouched here.
+
+### Approved preflight exception
+
 The GRU implementation is frozen at 2d706b103ee03cc705cc3ef3f07718bc3ed7792a.
 Constructed preflight job 402376 completed 0:0 in 2:33 on one V100-16GB. All 13
 GRU fixtures pass locally/on GPU, but the slowest-step fit estimate 778.68s

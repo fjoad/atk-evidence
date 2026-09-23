@@ -4,6 +4,18 @@
 
 **State:** four model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
+## Current execution: GRU pilot
+
+The user approved continuing with the unchanged GRU after the constructed
+runtime projection exceeded its initial launch gate. See the bounded
+[GRU step plan](2026-09-23-robust-gru.md), GRU_PILOT.md and the explicit
+GRU_RUNTIME_EXCEPTION.md. Job 402378 is running once at launcher 46966c7,
+science unchanged from 2d706b1: original p00/p30, one seed, 50 epochs, batch
+100, one V100-16GB/4 CPUs/16 GiB, 40min cap, 15min fit guards. The original
+720s gate remains false; approved launch ceiling is 900s. No completed
+research result yet. Inspect this allocation/output before further work.
+Website belongs to another session and is unchanged by this continuation.
+
 ## Current execution: poisoning versus balancing order
 
 The user asked to continue after the supportive feed-forward result. Source

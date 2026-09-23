@@ -12,6 +12,19 @@ execution plan here is
 
 ## Current project state
 
+- **GRU pair submitted once, job 402378 running:** launcher freeze
+  `46966c7e021e964ff582e1eb56422b75cc6a4ec7`, unchanged scientific freeze
+  `2d706b103ee03cc705cc3ef3f07718bc3ed7792a`. One V100-16GB on
+  crimv3mgpu005, 4 CPUs/16 GiB, 40-minute limit, 15-minute fit guards.
+  Cluster authorization verifies the exact old preflight and current scientific
+  files. It retains the false 720s gate and records the user-approved 900s
+  exception. All 16 cluster fixtures pass; p00 has completed its first epoch
+  with finite loss and saved initial weights/history. No completed research
+  result yet. Check this job/output before
+  any submission; the wrapper already runs both conditions and artifact audits.
+  See [execution record](../studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
+  No new settings, preparation, seeds, website edits or publication.
+
 - **GRU launch exception approved:** the user explicitly approved continuing
   after the 778.68s projection exceeded the original 720s gate. Only the launch
   ceiling becomes 900s; the model, scientific files, inputs, seed, 50 epochs,
