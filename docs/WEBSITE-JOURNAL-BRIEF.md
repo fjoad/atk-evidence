@@ -4,6 +4,15 @@
 
 **Audience:** an undergraduate taking an introductory statistics course.
 
+## Current navigation: an open-ended index
+
+The homepage is a growing paper index, not a collection fixed at three items.
+Paper pages have a simple “All papers” link back to that index. Do not add a
+cross-paper tab bar, “Paper N of 3” badges, or collection-size wording in page
+metadata. The index itself is unnumbered. Registry sequence numbers remain
+internal identifiers, not a public limit. This supersedes the original
+three-tab layout described in the earlier brief below.
+
 ## Current refinement: a continuous account, not a dated diary
 
 The user does not want calendar dates organizing the visible reading flow.

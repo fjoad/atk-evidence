@@ -2,6 +2,12 @@
 
 **Last updated:** 2026-09-23
 
+**Latest navigation preference:** the website must be open-ended. Remove the
+cross-paper tabs and “Paper N of 3” labels; each article links back to the
+growing homepage index. No fixed collection size in headings, footers or
+metadata; homepage entries are unnumbered. Research contents stay unchanged.
+See docs/plans/2026-09-23-open-paper-index.md.
+
 **Latest website preference:** user wants a continuation, without prominent
 dates. Main pages now use descriptive section headings, undated introductions
 and no update-date banners. Internal log dates and published anchor IDs remain

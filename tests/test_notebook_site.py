@@ -1,4 +1,4 @@
-"""Check the three-paper notebook design and the boundaries of its claims."""
+"""Check the open-ended paper index and the boundaries of its claims."""
 
 import importlib.util
 import json
@@ -6,6 +6,7 @@ from pathlib import Path
 import re
 import tomllib
 import unittest
+from unittest.mock import patch
 
 from tests.test_public_report import Page
 
@@ -39,7 +40,7 @@ class NotebookSiteTests(unittest.TestCase):
         self.assertIn('href="#20-september-the-printed-loss-loses-the-label"', poisoning)
         self.assertIn('>The printed loss loses the label</h2>', poisoning)
 
-    def test_home_is_a_three_paper_index_not_a_result_report(self):
+    def test_home_is_an_open_paper_index_not_a_result_report(self):
         content = (SITE / "index.html").read_text()
         links = [link for link in Page(SITE / "index.html").links if link.startswith("papers/")]
         self.assertEqual(links, [f"papers/{paper['id']}/" for paper in PAPERS])
@@ -51,22 +52,36 @@ class NotebookSiteTests(unittest.TestCase):
         self.assertNotIn("class=\"note", content)
         self.assertNotIn("50.93%", content)
         self.assertIn("Paper reproduction notes", content)
+        self.assertNotIn("Three attempted", content)
+        self.assertNotIn("three papers", content)
+        self.assertIn('aria-label="Papers"', content)
+        self.assertNotIn('class="number"', content)
 
-    def test_all_notebooks_are_generated_have_three_tabs_and_end_in_conclusion(self):
+    def test_notebooks_link_to_the_index_without_a_fixed_switcher(self):
         for paper in PAPERS:
             with self.subTest(paper=paper["id"]):
                 content = (ROOT / paper["page"]).read_text()
                 self.assertEqual(content, renderer.render(paper["id"]))
                 self.assertIn('href="../../notebook.css"', content)
-                tabs = re.search(r'<nav class="paper-tabs".*?</nav>', content).group()
-                self.assertEqual(tabs.count("<a "), 3)
-                self.assertEqual(tabs.count('aria-current="page"'), 1)
-                self.assertIn(f'href="../{paper["id"]}/" aria-current="page"', tabs)
+                self.assertNotIn("paper-tabs", content)
+                self.assertNotIn("Choose a paper", content)
+                self.assertNotIn("All three papers", content)
+                self.assertNotRegex(content, r"Paper \d+ of \d+")
+                header = re.search(r'<header class="site-header">.*?</header>', content, re.S).group()
+                self.assertEqual(header.count("<a "), 1)
+                self.assertIn('href="../../">← All papers</a>', header)
                 headings = re.findall(r'<h2 id="[^"]+">(.*?)</h2>', content)
                 self.assertEqual(headings[:2], ["What the paper claims", "Starting hypothesis"])
                 self.assertEqual(headings[-1], "Current conclusion")
                 self.assertIn('<details class="contents">', content)
                 self.assertIn('class="table-scroll"', content)
+
+    def test_an_additional_registry_entry_does_not_change_existing_navigation(self):
+        paper = PAPERS[0]
+        before = renderer.render(paper["id"])
+        future_paper = {**paper, "id": "future-study", "sequence": 99}
+        with patch.object(renderer, "PAPERS", [*PAPERS, future_paper]):
+            self.assertEqual(renderer.render(paper["id"]), before)
 
     def test_earlier_studies_are_not_presented_as_fresh_experiments(self):
         for paper in PAPERS[:2]:

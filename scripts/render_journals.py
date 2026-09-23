@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the three paper notebooks from their editable research logs."""
+"""Render registered paper notebooks from their editable research logs."""
 
 from __future__ import annotations
 
@@ -18,9 +18,6 @@ from markdown_it import MarkdownIt
 ROOT = Path(__file__).resolve().parents[1]
 SITE = ROOT / "site"
 PAPERS = tomllib.loads((ROOT / "studies/registry.toml").read_text())["studies"]
-LABELS = {"atk-2022-deep-autoencoder": "Autoencoders · 2022",
-          "tlstgt-2025-water": "Water networks · 2025",
-          "takiddin-2021-robust-poisoning": "Data poisoning · 2021"}
 MONTHS = "January|February|March|April|May|June|July|August|September|October|November|December"
 ENTRY_PREFIX = re.compile(
     rf"^(?:\d{{1,2}}(?:[–-]\d{{1,2}})? (?:{MONTHS})(?: and the later arithmetic checks)?|Later checks) — "
@@ -99,9 +96,6 @@ def render(study_id: str) -> str:
     body = body[:first_entry] + navigation + body[first_entry:]
     page_title = escape(title + " — Paper reproduction notes")
     description = escape(f"Reproduction notes for {paper['title']}: starting hypotheses, experiments, corrections and current conclusions.")
-    tabs = "".join(
-        f'<a href="../{item["id"]}/"' + (' aria-current="page"' if item["id"] == study_id else '')
-        + f'>{item["sequence"]}. {escape(LABELS[item["id"]])}</a>' for item in PAPERS)
     return f'''<!doctype html>
 <!-- Generated from {source_path.relative_to(ROOT)}.
      Edit the journal, then run .venv/bin/python scripts/render_journals.py. -->
@@ -122,13 +116,11 @@ def render(study_id: str) -> str:
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <a class="brand" href="../../">Paper reproduction notes</a>
-  <nav class="paper-tabs" aria-label="Choose a paper">{tabs}</nav>
+  <a class="brand" href="../../">← All papers</a>
 </header>
 <main class="journal" id="main">
-  <p class="meta">Paper {paper['sequence']} of 3</p>
 {body}
-  <footer><a href="../../">All three papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/{source_path.relative_to(ROOT)}">Notebook source</a></footer>
+  <footer><a href="../../">All papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/{source_path.relative_to(ROOT)}">Notebook source</a></footer>
 </main>
 </body>
 </html>
@@ -151,7 +143,7 @@ def main() -> int:
             output.write_text(rendered, encoding="utf-8")
             print(output.relative_to(ROOT))
     if args.check:
-        print("All three notebooks match their research logs")
+        print("All registered notebooks match their research logs")
     return 0
 
 

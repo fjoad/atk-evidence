@@ -196,9 +196,11 @@ Preserve the original run and both diagnostic contracts unchanged.
 
 ## Working practice
 
-The public website is a quiet three-paper index and three chronological
-notebooks, not a project-wide verdict. Each study's `RESEARCH_LOG.md` is the
-editable source; run `scripts/render_journals.py` (or `--check`) for all pages.
+The public website is a quiet, growing paper index and continuing research
+accounts, not a project-wide verdict. Use a simple “All papers” back link,
+not cross-paper tabs, fixed totals or “Paper N of 3” labels. Each study's
+`RESEARCH_LOG.md` is the editable source; run `scripts/render_journals.py`
+(or `--check`) for all pages.
 Keep claims, starting hypothesis, evolving checks/results/corrections and a
 current conclusion at the end. Detailed earlier pages remain linked archives.
 The visible pages should read as one continuing investigation, not a dated
