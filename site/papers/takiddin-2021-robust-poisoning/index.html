@@ -1,40 +1,39 @@
 <!doctype html>
 <!-- Generated from studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md.
-     Edit the journal, then run .venv/bin/python scripts/render_robust_journal.py. -->
+     Edit the journal, then run .venv/bin/python scripts/render_journals.py. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Can this detector learn from corrupted labels? — Research journal · ATK Evidence</title>
-  <meta name="description" content="A research journal rebuilding an electricity-theft poisoning experiment: what we noticed, the checks we chose, and what remains to be tested.">
-  <meta property="og:title" content="Can this detector learn from corrupted labels? — Research journal · ATK Evidence">
-  <meta property="og:description" content="A research journal rebuilding an electricity-theft poisoning experiment: what we noticed, the checks we chose, and what remains to be tested.">
+  <title>Electricity theft with poisoned training labels — Paper reproduction notes</title>
+  <meta name="description" content="Reproduction notes for Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
+  <meta property="og:title" content="Electricity theft with poisoned training labels — Paper reproduction notes">
+  <meta property="og:description" content="Reproduction notes for Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/takiddin-2021-robust-poisoning/">
-  <meta name="twitter:title" content="Can this detector learn from corrupted labels? — Research journal · ATK Evidence">
-  <meta name="twitter:description" content="A research journal rebuilding an electricity-theft poisoning experiment: what we noticed, the checks we chose, and what remains to be tested.">
-  <link rel="stylesheet" href="../../styles.css">
+  <meta name="twitter:title" content="Electricity theft with poisoned training labels — Paper reproduction notes">
+  <meta name="twitter:description" content="Reproduction notes for Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
+  <link rel="stylesheet" href="../../notebook.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
-  <a class="brand" href="../../">ATK Evidence</a>
-  <nav aria-label="Main navigation"><a href="../../#studies">All studies</a><a href="#inspect-the-record">Evidence &amp; sources</a></nav>
+  <a class="brand" href="../../">Paper reproduction notes</a>
+  <nav class="paper-tabs" aria-label="Choose a paper"><a href="../atk-2022-deep-autoencoder/">1. Autoencoders · 2022</a><a href="../tlstgt-2025-water/">2. Water networks · 2025</a><a href="../takiddin-2021-robust-poisoning/" aria-current="page">3. Data poisoning · 2021</a></nav>
 </header>
 <main class="journal" id="main">
-  <div class="eyebrow">Study 3 · Research journal · Updated 23 September 2026</div>
-<h1 id="can-this-detector-learn-from-corrupted-labels">Can this detector learn from corrupted labels?</h1>
+  <p class="meta">Paper 3 of 3 · Notebook updated 23 September 2026</p>
+<h1 id="electricity-theft-with-poisoned-training-labels">Electricity theft with poisoned training labels</h1>
 <p>This is our working journal for <em>Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids</em>, by Takiddin and colleagues (2021).
 We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.</p>
-<p><strong>Where we are, 23 September 2026:</strong> forest, AdaBoost and repaired feed-forward
-learn useful ranking, while the initial sigmoid SVM is weak. Our latest control
-changes the order of poisoning and training-data balancing. It does not restore
-detection: ranking gets worse despite more balanced observed labels. These
-are small, dependent pilot samples, not a full-population reproduction or a
-verdict on the whole paper.</p>
+<p>The work currently covers four baseline pilots and preparation controls on
+twenty customers. The proposed sequential ensemble has not yet been trained.
+The entries below retain both the source concerns and the results that changed
+our initial expectation.</p>
+<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</a></li><li><a href="#21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">21 September — The SVM is weak, and moving the cutoff does not close the gap</a></li><li><a href="#21-september-separating-score-replay-from-kernel-behavior">21 September — Separating score replay from kernel behavior</a></li><li><a href="#21-september-the-scores-check-out-the-kernel-has-a-separate-problem">21 September — The scores check out; the kernel has a separate problem</a></li><li><a href="#21-september-moving-to-the-feed-forward-baseline">21 September — Moving to the feed-forward baseline</a></li><li><a href="#21-september-the-neural-instrument-is-ready-cluster-access-interrupted">21 September — The neural instrument is ready; cluster access interrupted</a></li><li><a href="#22-september-access-restored-the-existing-setup-finished">22 September — Access restored; the existing setup finished</a></li><li><a href="#22-september-the-repaired-feed-forward-model-learns">22 September — The repaired feed-forward model learns</a></li><li><a href="#22-september-testing-the-order-without-changing-the-test-answers">22 September — Testing the order without changing the test answers</a></li><li><a href="#23-september-changing-the-order-does-not-restore-detection">23 September — Changing the order does not restore detection</a></li><li><a href="#23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">23 September — Rechecking the arithmetic and narrowing our criticism</a></li><li><a href="#23-september-taking-stock-before-the-main-ensemble">23 September — Taking stock before the main ensemble</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
 <p>The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
 to simulate theft. It then deliberately gives some theft examples the wrong
@@ -46,10 +45,21 @@ readings, attention that weights parts of the sequence, a recurrent network
 called a GRU, and a final classifier. Table V says that increasing poisoning
 from 0% to 30% reduces detection from 95.2% to 92.2%, while false alarms rise
 from 2.9% to 5.8%. We want to establish whether that behavior follows from the
-published procedure, and whether the baseline models behave as reported too.</p>
+published procedure, and whether the baseline models behave as reported too.
+This sequential ensemble is the main proposed contribution; ordinary ensemble
+averaging is a comparison. A successful baseline alone does not establish
+the proposed ensemble's advantage or its claimed reconstruction mechanism.</p>
 <p><a href="https://doi.org/10.1109/TSG.2020.3047864">Read the paper's publication record</a>.
 The page numbers below refer to the journal's printed pages.</p>
-<nav class="contents" aria-label="Journal entries"><p>Follow the investigation</p><ol><li><a href="#2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</a></li><li><a href="#20-september-starting-with-the-setup-and-including-every-model">20 September — Starting with the setup, and including every model</a></li><li><a href="#20-september-what-exactly-gets-poisoned">20 September — What exactly gets poisoned?</a></li><li><a href="#20-september-the-printed-loss-loses-the-label">20 September — The printed loss loses the label</a></li><li><a href="#20-september-what-makes-the-intermediate-output-a-reconstruction">20 September — What makes the intermediate output a reconstruction?</a></li><li><a href="#20-september-the-evaluation-itself-can-change-the-problem">20 September — The evaluation itself can change the problem</a></li><li><a href="#20-september-looking-for-code-before-writing-our-implementation">20 September — Looking for code before writing our implementation</a></li><li><a href="#20-september-a-large-gap-should-change-the-next-question">20 September — A large gap should change the next question</a></li><li><a href="#20-september-finding-the-data-and-checking-the-attack-definitions">20 September — Finding the data and checking the attack definitions</a></li><li><a href="#20-september-checking-the-preparation-code-before-using-it">20 September — Checking the preparation code before using it</a></li><li><a href="#20-september-the-first-preparation-check-passed-and-exposed-two-choices">20 September — The first preparation check passed, and exposed two choices</a></li><li><a href="#20-september-giving-the-first-baseline-a-specific-question">20 September — Giving the first baseline a specific question</a></li><li><a href="#20-september-the-first-baseline-works-and-the-cutoff-changes-the-story">20 September — The first baseline works, and the cutoff changes the story</a></li><li><a href="#20-september-separating-two-possible-effects-of-preparation">20 September — Separating two possible effects of preparation</a></li><li><a href="#20-september-preparation-matters-but-the-baseline-does-not-collapse">20 September — Preparation matters, but the baseline does not collapse</a></li><li><a href="#20-september-pinning-down-the-next-baseline-before-fitting-it">20 September — Pinning down the next baseline before fitting it</a></li><li><a href="#20-september-adaboost-learns-too-and-a-low-detection-rate-needs-context">20 September — AdaBoost learns too, and a low detection rate needs context</a></li><li><a href="#21-september-specifying-the-svm-without-adding-hidden-training">21 September — Specifying the SVM without adding hidden training</a></li><li><a href="#21-september-the-svm-is-weak-and-moving-the-cutoff-does-not-close-the-gap">21 September — The SVM is weak, and moving the cutoff does not close the gap</a></li><li><a href="#21-september-separating-score-replay-from-kernel-behavior">21 September — Separating score replay from kernel behavior</a></li><li><a href="#21-september-the-scores-check-out-the-kernel-has-a-separate-problem">21 September — The scores check out; the kernel has a separate problem</a></li><li><a href="#21-september-moving-to-the-feed-forward-baseline">21 September — Moving to the feed-forward baseline</a></li><li><a href="#21-september-the-neural-instrument-is-ready-cluster-access-interrupted">21 September — The neural instrument is ready; cluster access interrupted</a></li><li><a href="#22-september-access-restored-the-existing-setup-finished">22 September — Access restored; the existing setup finished</a></li><li><a href="#22-september-the-repaired-feed-forward-model-learns">22 September — The repaired feed-forward model learns</a></li><li><a href="#22-september-testing-the-order-without-changing-the-test-answers">22 September — Testing the order without changing the test answers</a></li><li><a href="#23-september-changing-the-order-does-not-restore-detection">23 September — Changing the order does not restore detection</a></li><li><a href="#what-we-will-do-next">What we will do next</a></li><li><a href="#inspect-the-record">Inspect the record</a></li></ol></nav><h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
+<h2 id="starting-hypothesis">Starting hypothesis</h2>
+<p>We initially expected that reasonable implementations might fall far below
+the reported performance, even after obvious omissions or typos were repaired.
+That was an expectation to test, not evidence about how the authors produced
+their numbers. We planned to examine the baselines as well as the proposed
+model, preserve favorable results, and revise the expectation when necessary.</p>
+<p>The original entries remain below. Later corrections and the current conclusion
+do not rewrite what we thought before the experiments.</p>
+<h2 id="2-september-an-earlier-arithmetic-check">2 September — An earlier arithmetic check</h2>
 <p><em>This entry was written retrospectively on 20 September from the saved record.</em></p>
 <p>An earlier pass transcribed the result tables and checked relationships between
 their metrics. Those calculations and the original interpretation remain in
@@ -148,7 +158,7 @@ data preparation could contribute to the reported performance. Its direction
 and size need measurement.</p>
 <p>We also noticed that Table V's headline of a three-percentage-point detection
 drop accompanies a doubling of the false-alarm rate:</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Quantity</th>
@@ -168,7 +178,7 @@ drop accompanies a doubling of the false-alarm rate:</p>
 <td style="text-align:right">5.8%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>A detector's cutoff controls how readily it raises an alarm. Lowering that
 cutoff can catch more theft while flagging more normal examples. We therefore
 need to compare both the printed operating points and detection at the same
@@ -319,7 +329,7 @@ the time of this entry.</p>
 16 seconds; the individual fits each took less than a second. Both saved
 models produced identical probabilities and predictions after reloading.</p>
 <p>Here is what happened on this small, 20-customer pilot:</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Training condition</th>
@@ -342,7 +352,7 @@ models produced identical probabilities and predictions after reloading.</p>
 <td style="text-align:right">94.36%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>Detection is the fraction of theft examples flagged. False alarms are the
 fraction of normal examples flagged. AUC describes how well scores rank theft
 above normal examples across possible cutoffs; 50% is chance-level ranking.</p>
@@ -412,7 +422,7 @@ original forest's predictions and compared all three preparations on the same
 test set was chosen from identities before inspecting scores. All customers
 still come from the same 20-customer pilot.</p>
 <p>Here are the ranking results on those identical examples:</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Preparation</th>
@@ -437,7 +447,7 @@ still come from the same 20-customer pilot.</p>
 <td style="text-align:right">82.97%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>The first change matters. AUC drops by 6.47 and 8.99 percentage points.
 False alarms rise from 3.39% to 33.90% without poisoning, and from 1.69%
 to 15.25% with it. On the larger 1,288-row original test set shared by A/B,
@@ -517,7 +527,7 @@ experiment was part of that setup job.</p>
 They used exactly the original pilot's 4,464 training and 2,232 test examples;
 the only difference between the pair was the declared poisoning of training
 labels. Each fit took about 1.5 seconds. The complete CPU job took 14 seconds.</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Training condition</th>
@@ -540,7 +550,7 @@ labels. Each fit took about 1.5 seconds. The complete CPU job took 14 seconds.</
 <td style="text-align:right">83.74%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>The poisoned detector's 46.43% detection is well below the paper's 70.1%.
 But it also makes far fewer false alarms than the paper's 29.9%. Those are
 different operating points, so detection alone is not enough to explain the
@@ -617,7 +627,7 @@ and submitted without changing any earlier result.</p>
 <p>Both SVM fits completed on Panther, passed exact save/reload checks, and
 reported successful solver termination. The full job took two minutes inside
 the 15-minute budget. No additional setting or seed was tried after the result.</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Training condition</th>
@@ -640,7 +650,7 @@ the 15-minute budget. No additional setting or seed was tried after the result.<
 <td style="text-align:right">63.38%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>This is different from the earlier two baselines. A simple score using only
 daily consumption averages has AUC 66.20% on these same rows. The fitted
 SVM does not improve on that reference in AUC here, although that numerical
@@ -818,7 +828,7 @@ performed 2,250 updates, and their initial-weight hashes were identical.
 They used the same original training/test rows and the declared change in
 observed labels. Every saved model reproduced its test probabilities exactly
 after loading again, and the transferred artifacts passed the local audit.</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Training condition</th>
@@ -841,7 +851,7 @@ after loading again, and the transferred artifacts passed the local audit.</p>
 <td style="text-align:right">90.89%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>The default poisoned detection is below the paper's 76.0%, but false alarms
 are also far below its 24.4%. The saved-score checks again change what that
 comparison means. Within a 24.4% false-alarm allowance, the poisoned scores
@@ -933,7 +943,7 @@ reused the earlier forest that balanced training data before corrupting labels
 and fitted one new forest that corrupted those labels first. Both are judged
 on exactly the same 1,288 original test examples. The zero-poison check recovered
 all 28 earlier prepared arrays exactly before the new model was fitted.</p>
-<table>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
 <th>Training order at 30% selected customers</th>
@@ -956,7 +966,7 @@ all 28 earlier prepared arrays exactly before the new model was fitted.</p>
 <td style="text-align:right">79.80%</td>
 </tr>
 </tbody>
-</table>
+</table></div>
 <p>This did not produce the simple rescue we considered. The fraction labeled
 attack during training moved from 34.86% to 48.72%, but default detection did
 not rise. The new forest missed eight more attacks and flagged seven more
@@ -994,6 +1004,141 @@ file exactly. Earlier inputs, models and results remain unchanged.</p>
 but this particular alternative did not explain away the earlier detection
 pattern. Return to the remaining model coverage, beginning with a separately
 specified GRU baseline. No further model has been started here.</p>
+<h2 id="23-september-rechecking-the-arithmetic-and-narrowing-our-criticism">23 September — Rechecking the arithmetic and narrowing our criticism</h2>
+<p>The working baselines do not resolve errors in the printed mathematics. We
+returned to the source and the earlier static audit to separate definite
+calculations from assumptions about how the reported metrics were aggregated.
+No new model was trained for this review.</p>
+<h3 id="the-classification-loss-loses-the-label">The classification loss loses the label</h3>
+<p>Equation (1), page 2679, prints <code>log(p)</code> in both binary terms. As explained in
+the <a href="#20-september-the-printed-loss-loses-the-label">earlier loss entry</a>,
+<code>−[y log(p) + (1−y) log(p)] = −log(p)</code>: changing the label has no effect.
+This is a concrete error in the printed expression. Standard binary
+cross-entropy supplies the obvious <code>log(1−p)</code> repair, and our feed-forward
+pilot learns with that repair. The error alone does not exclude the intended
+classifier or identify the loss actually used by the authors.</p>
+<h3 id="a-random-forest-f1-entry-does-not-match-its-ingredients">A random-forest F1 entry does not match its ingredients</h3>
+<p>Table III, page 2681, at 20% poisoning reports detection 72.7%, precision 73.8%
+and F1 72.7%. The stated harmonic-mean formula gives approximately 73.25%.
+Allowing the full one-decimal rounding intervals gives 73.1959–73.2959%,
+which does not overlap the printed F1 interval 72.65–72.75%.</p>
+<p>Those values cannot all describe the same ordinary confusion matrix under
+the stated formula. An isolated table typo remains a plausible explanation.
+Separate averaging of metrics would require a different interpretation.</p>
+<h3 id="three-sequential-ensemble-metric-combinations-are-incompatible">Three sequential-ensemble metric combinations are incompatible</h3>
+<p>Table V, page 2683, reports detection, false alarms, precision and ordinary
+accuracy together. For one evaluation population, those quantities share one
+underlying fraction of attack examples. We can work backward to that fraction
+in two independent ways.</p>
+<p>For example, its unpoisoned row reports detection 95.2%, false alarms 2.9%,
+precision 95.6% and accuracy 96.1%. With equal class counts, the first two
+would imply precision about 97.04%, not 95.6%. Allowing unequal counts does
+not reconcile precision and accuracy together:</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Sequential-ensemble row</th>
+<th style="text-align:right">Attack fraction allowed by detection / false alarms / precision</th>
+<th style="text-align:right">Attack fraction allowed by detection / false alarms / accuracy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0% poisoning</td>
+<td style="text-align:right">39.12–40.54%</td>
+<td style="text-align:right">47.37–57.89%</td>
+</tr>
+<tr>
+<td>10% poisoning</td>
+<td style="text-align:right">42.11–43.31%</td>
+<td style="text-align:right">45.00–55.00%</td>
+</tr>
+<tr>
+<td>30% poisoning</td>
+<td style="text-align:right">44.00–44.82%</td>
+<td style="text-align:right">45.00–55.00%</td>
+</tr>
+</tbody>
+</table></div>
+<p>The intervals already allow favorable rounding. Each pair is disjoint.
+Therefore these three complete metric combinations cannot come from one
+ordinary confusion matrix within that rounding allowance, regardless of
+class balance. The 20% row is not excluded by this stronger check.</p>
+<p>This does <strong>not</strong> prove the headline detection rates are unattainable by a
+model. Nor does it exclude independently averaged metrics, columns from
+different evaluations, reporting mistakes or a different undocumented
+procedure. Those possibilities change the meaning of the table and require
+explanation. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/SOURCE_AUDIT_FINDING.md">dated source audit</a> preserves the
+calculation; its broad interpretation must be read with the correction below.</p>
+<h3 id="our-customer-averaging-caveat-is-essential">Our customer-averaging caveat is essential</h3>
+<p>Table IV explicitly averages over customers (page 2680). An average precision
+need not equal the precision obtained by combining every customer's predictions.
+Likewise, averaging F1 is not generally the same as taking the harmonic mean
+of average precision and average detection.</p>
+<p>The old audit's <strong>58 of 68 balanced-precision failures are not an unconditional
+finding of 58 erroneous rows</strong>. Those checks assume exact balance and a shared
+confusion-matrix interpretation. Table IV's stated averaging invalidates using
+that simple argument indiscriminately there. The stronger Table V result above
+is specifically conditional on its rows describing one evaluation, rather
+than an unspecified aggregation. We retain the old calculation and correct
+its scope instead of hiding either.</p>
+<h3 id="missing-mechanisms-and-evaluation-steps-are-different-from-algebraic-errors">Missing mechanisms and evaluation steps are different from algebraic errors</h3>
+<p>Section IV-B trains the combined ensemble through classification loss. It
+does not explicitly add reconstruction loss or benign pretraining for that
+combined model. Calling its intermediate output a reconstruction does not
+establish what it learned; classification may succeed without reconstruction.</p>
+<p>The novelty-model tuning description also leaves a missing step. It selects
+settings using attack detection rate and describes cross-validation over
+benign-only training data. Detection rate needs actual attack examples; a
+malicious validation population or another scoring rule must be specified.
+The ROC/IQR wording does not uniquely define an executable threshold rule
+either. These are consequential specification gaps, not proofs that no
+reasonable implementation can work. See the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/METHOD.md">source reconstruction</a>.</p>
+<h2 id="23-september-taking-stock-before-the-main-ensemble">23 September — Taking stock before the main ensemble</h2>
+<p>The initial expectation of widespread failure is weakened by the measurements:</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Baseline</th>
+<th>What the pilot establishes</th>
+<th>What it does not establish</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Forest</td>
+<td>Original-pilot AUC 98.55%/94.36% without/with poisoning; useful ranking survives stricter preparation too.</td>
+<td>The complete printed pattern or its model ordering.</td>
+</tr>
+<tr>
+<td>Feed-forward, repaired BCE</td>
+<td>At the corresponding printed false-alarm caps, detection reaches 90.77%/88.87%, versus 90.8%/76.0% reported.</td>
+<td>A complete row match or independently calibrated thresholds.</td>
+</tr>
+<tr>
+<td>AdaBoost</td>
+<td>Corresponding-cap detection 80.72%/80.45%, versus 85.7%/70.1% reported: one target missed, the other exceeded.</td>
+<td>Universal failure, or complete numerical reproduction.</td>
+</tr>
+<tr>
+<td>Sigmoid SVM</td>
+<td>Corresponding-cap detection only 19.37%/33.48%, versus 89.2%/73.7%; no cutoff or reversal rescues the saved fits.</td>
+<td>Failure of every omitted gamma/coefficient or other reasonable configuration.</td>
+</tr>
+</tbody>
+</table></div>
+<p>These are twenty-customer, 28-day pilots, not the paper's 3,000-customer
+population. The favorable cutoff checks use test labels and demonstrate
+attainability for saved scores rather than independent validation. Different
+source populations, poisoning completions and omitted settings remain material.
+The latest order control also did not identify class proportions alone as the
+cause of the recurring default-cutoff behavior.</p>
+<p>Our strongest current assessment is that ordinary learning performance is
+plausible, while parts of the written report need correction or explanation.
+Attainable numbers do not authenticate the authors' original experiments;
+non-reproduction and mathematical inconsistencies do not by themselves identify
+fabrication. The main sequential ensemble and its proposed mechanism are
+still untested.</p>
 <h2 id="what-we-will-do-next">What we will do next</h2>
 <p>Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
 reduces default detection and false alarms while useful ranking remains.
@@ -1030,8 +1175,23 @@ changed.</p>
 preparation, fitted forest/AdaBoost/SVM/feed-forward pilots, forest controls,
 and a read-only SVM follow-up.
 It does not yet contain a full-population reproduction of this paper.</p>
+<h2 id="current-conclusion">Current conclusion</h2>
+<p>Several baseline detection levels are attainable in the declared pilot, and
+three ordinary model families learn useful rankings. The sigmoid SVM remains
+a substantial mismatch for the tested settings. Preparation and threshold
+choices change the interpretation of apparent success or failure.</p>
+<p>The printed classification loss is wrong as written. Some complete metric
+combinations are incompatible under a single-evaluation interpretation, but
+customer-averaged metrics need different reasoning. These source issues are
+not erased by the working baselines, and they do not establish how the
+published values arose.</p>
+<p>No complete published result pattern has been reproduced, and the paper's
+main proposed sequential ensemble has not been tested. The next step is a
+separately specified continuation of model coverage, not a verdict that the
+whole paper is either correct or fabricated. No further experiment was run
+for this website update.</p>
 
-  <footer><p>This is a working investigation. Dated entries preserve our questions, evidence, and corrections.</p><p><a href="../../">Back to all studies</a></p></footer>
+  <footer><a href="../../">All three papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/takiddin-2021-robust-poisoning/RESEARCH_LOG.md">Notebook source</a></footer>
 </main>
 </body>
 </html>

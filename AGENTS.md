@@ -195,6 +195,17 @@ Preserve the original run and both diagnostic contracts unchanged.
 
 ## Working practice
 
+The public website is a quiet three-paper index and three chronological
+notebooks, not a project-wide verdict. Each study's `RESEARCH_LOG.md` is the
+editable source; run `scripts/render_journals.py` (or `--check`) for all pages.
+Keep claims, starting hypothesis, evolving checks/results/corrections and a
+current conclusion at the end. Detailed earlier pages remain linked archives.
+The user wants the older water/deep-autoencoder work reassessed later under
+the newer approach; preserve their results for now and label them as awaiting
+reassessment. Do not treat a presentation rewrite as renewed scientific
+validation. Publication of the September 23 overhaul is explicitly authorized
+after checks; further experiments remain subject to their own checkpoints.
+
 For a multi-file change, save a short plan, complete the change, verify it,
 update current status, and commit it. User checkpoints still apply to
 scientific experiments. Documentation work may report completed evidence but

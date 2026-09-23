@@ -12,6 +12,22 @@ execution plan here is
 
 ## Current project state
 
+- **Website notebook overhaul, September 23 — checked and ready to publish:**
+  the user authorized a simple three-paper index, consistent paper notebooks,
+  and publication to the existing GitHub Pages site after checks. Each notebook
+  opens with the paper's claims and starting hypothesis, keeps chronological
+  experiments/corrections and linked outputs, and ends in a current conclusion.
+  Older detailed accounts are archived at their paper's `earlier-notes.html`;
+  the full Paper 1 report stays at its existing `/reproduction/` URL. Paper 3
+  now includes the F1/Table V arithmetic with rounding/aggregation assumptions,
+  the Table IV averaging correction, supportive baseline results and untested
+  ensemble. Papers 1/2 explicitly await future reassessment under the newer
+  approach; no result was rerun or strengthened by this rewrite. Full suite
+  344 pass/10 environment skips; 30 focused site/registry checks pass. Desktop/
+  mobile navigation and layouts checked. No experiments ran. See the
+  [website plan](plans/2026-09-23-notebook-website.md). Deployment verification
+  follows the commit/push; do not call the update live until that succeeds.
+
 - **Poisoning-order control complete and audited, September 23:** repaired
   freeze 579a3f5, CPU job 402291, completed 0:0 in 20 seconds; one new forest.
   On the same 1,288 original test rows, balance-then-poison B versus poison-

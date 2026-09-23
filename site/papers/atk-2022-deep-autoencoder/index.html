@@ -1,277 +1,232 @@
 <!doctype html>
+<!-- Generated from studies/atk-2022-deep-autoencoder/RESEARCH_LOG.md.
+     Edit the journal, then run .venv/bin/python scripts/render_journals.py. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
-  <title>Earlier electricity-theft method notes — ATK Evidence</title>
-  <meta property="og:title" content="Earlier electricity-theft method notes — ATK Evidence">
-  <meta property="og:description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
+  <title>Electricity theft with deep autoencoders — Paper reproduction notes</title>
+  <meta name="description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
+  <meta property="og:title" content="Electricity theft with deep autoencoders — Paper reproduction notes">
+  <meta property="og:description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
   <meta property="og:type" content="article">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Earlier electricity-theft method notes — ATK Evidence">
-  <meta name="twitter:description" content="Earlier notes on the electricity-theft paper, preserved separately from the August 2026 audited reproduction.">
-  <link rel="stylesheet" href="../../styles.css">
+  <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/">
+  <meta name="twitter:title" content="Electricity theft with deep autoencoders — Paper reproduction notes">
+  <meta name="twitter:description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
+  <link rel="stylesheet" href="../../notebook.css">
 </head>
-<body class="legacy">
-<main>
-  <div class="topline">
-    <a href="../../">← ATK Evidence</a>
-    <span>Earlier study notes · Results from 11 August 2026</span>
-  </div>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../../">Paper reproduction notes</a>
+  <nav class="paper-tabs" aria-label="Choose a paper"><a href="../atk-2022-deep-autoencoder/" aria-current="page">1. Autoencoders · 2022</a><a href="../tlstgt-2025-water/">2. Water networks · 2025</a><a href="../takiddin-2021-robust-poisoning/">3. Data poisoning · 2021</a></nav>
+</header>
+<main class="journal" id="main">
+  <p class="meta">Paper 1 of 3 · Notebook updated 23 September 2026</p>
+<h1 id="electricity-theft-with-deep-autoencoders">Electricity theft with deep autoencoders</h1>
+<p>Notes on <em>Deep Autoencoder-Based Anomaly Detection of Electricity Theft
+Cyberattacks in Smart Grids</em>, Takiddin, Ismail, Zafar and Serpedin,
+IEEE Systems Journal (2022). <a href="https://doi.org/10.1109/JSYST.2021.3136683">Publication record</a>.</p>
+<p>This notebook was assembled on 23 September from the preserved dated findings.
+The dates below identify the earlier work, not new experiments performed for
+the website. The full technical report and older accounts remain linked below.</p>
+<p><strong>Earlier investigation, awaiting reassessment.</strong> These results were obtained
+under an earlier workflow. We are preserving them, not certifying them again
+under the current approach. A fresh reassessment is separate future work;
+the present active investigation is the data-poisoning paper.</p>
+<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#11-august-an-earlier-attempt-left-a-preparation-question-open">11 August — An earlier attempt left a preparation question open</a></li><li><a href="#30-31-august-completing-a-declared-fc-sae-reproduction">30–31 August — Completing a declared FC-SAE reproduction</a></li><li><a href="#31-august-a-conditional-limit-stronger-than-a-failed-seed">31 August — A conditional limit stronger than a failed seed</a></li><li><a href="#31-august-testing-what-the-bound-depends-on">31 August — Testing what the bound depends on</a></li><li><a href="#2-september-giving-lstm-sae-the-paper-s-reported-training-time">2 September — Giving LSTM-SAE the paper&#x27;s reported training time</a></li><li><a href="#records-and-unresolved-coverage">Records and unresolved coverage</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
+<p>The paper trains autoencoders on normal electricity use. An autoencoder tries
+to reproduce its input. The proposed detection rule treats a sufficiently large
+reconstruction error as evidence of theft. The study compares fully connected,
+recurrent and attention-based variants on the named SGCC and Irish ISET datasets.</p>
+<p>For the simplest fully connected model, FC-SAE, the ISET table reports 81%
+detection at 15% false alarms and 83% balanced accuracy. The recurrent LSTM-SAE
+row reports 85% detection at 13% false alarms. These are specific targets,
+not interchangeable descriptions of a generally successful model.</p>
+<h2 id="starting-hypothesis">Starting hypothesis</h2>
+<p>Our working expectation was that the reported performance might not follow
+from reasonable implementations of the written method. We needed to test
+that expectation while keeping source omissions, repairs and controls visible.
+A failed fit would not establish that every implementation must fail.</p>
+<p>Three questions gradually separated: do the numbers reproduce, does the
+architecture supply the claimed useful behavior, and can this fixed setup
+reach the reported target at all? They need different evidence.</p>
+<h2 id="11-august-an-earlier-attempt-left-a-preparation-question-open">11 August — An earlier attempt left a preparation question open</h2>
+<p>The earlier seed-11 experiment detected 26.18% of attacks with 58.22% false
+alarms. However, it omitted the paper's test-set ADASYN operation. It was
+therefore not a complete reconstruction of that evaluation.</p>
+<p>Adding generated benign test examples cannot change an already-fitted model's
+detection on unchanged attack examples. That observation limited what the
+omitted step could repair for those scores, but it did not exclude a different
+trained model. We retained the result and returned to a more explicit source
+reconstruction rather than treating the first run as the final verdict.</p>
+<p>The <a href="earlier-notes.html">earlier method notes</a>
+preserve that route, including assumptions, unsuccessful attempts and its
+conditional calculations. Do not combine those numbers with later runs as if
+they were repetitions of one fixed experiment.</p>
+<h2 id="30-31-august-completing-a-declared-fc-sae-reproduction">30–31 August — Completing a declared FC-SAE reproduction</h2>
+<p>The clean-reader experiment completed with the named Irish consumption data,
+declared source interpretations, one seed, and the printed-position test-set
+resampling. It evaluated 8,884,989 rows, including generated benign examples.
+The exact population and preprocessing choices are in the
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md">frozen specification</a>.</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align:right">Paper</th>
+<th style="text-align:right">This run</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detection</td>
+<td style="text-align:right">81.00%</td>
+<td style="text-align:right">25.48%</td>
+</tr>
+<tr>
+<td>False alarms</td>
+<td style="text-align:right">15.00%</td>
+<td style="text-align:right">45.13%</td>
+</tr>
+<tr>
+<td>Specificity</td>
+<td style="text-align:right">85.00%</td>
+<td style="text-align:right">54.87%</td>
+</tr>
+<tr>
+<td>Precision</td>
+<td style="text-align:right">81.00%</td>
+<td style="text-align:right">36.73%</td>
+</tr>
+<tr>
+<td>Balanced accuracy</td>
+<td style="text-align:right">83.00%</td>
+<td style="text-align:right">40.18%</td>
+</tr>
+<tr>
+<td>F1</td>
+<td style="text-align:right">81.00%</td>
+<td style="text-align:right">30.09%</td>
+</tr>
+<tr>
+<td>Ranking AUC</td>
+<td style="text-align:right">81.00%</td>
+<td style="text-align:right">39.40%</td>
+</tr>
+</tbody>
+</table></div>
+<p>This was a substantial mismatch, not a close reproduction. Inputs, saved
+scores, confusion counts and all seven metrics passed the independent audit.
+But the result still concerned one declared completion and seed, not every
+model in the paper. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md">initial finding</a> records both
+the gap and that boundary.</p>
+<p>The next useful question was not simply whether another seed would help.
+The output layer and score impose restrictions that can be examined without
+training again.</p>
+<h2 id="31-august-a-conditional-limit-stronger-than-a-failed-seed">31 August — A conditional limit stronger than a failed seed</h2>
+<p>Softmax forces each reconstruction to have nonnegative entries that sum to one.
+The prepared consumption values do not generally have that form. We asked:
+even if every example could receive its most favorable allowed reconstruction,
+could a shared reconstruction-error cutoff reach the published target?</p>
+<p>The deliberately optimistic calculation used the true answers to choose the
+best allowed outputs. On the fixed prepared evaluation, its upper limits,
+rounded upward, are <strong>50.93% balanced accuracy</strong> and <strong>9.25% detection at no
+more than 15% false alarms</strong>, versus 83% and 81% reported.</p>
+<p>This is an all-weights restriction under the fixed prepared inputs, Softmax
+output and MSE score. Changing weights, width or seeds cannot escape that
+particular bound. Changing the preparation, output domain or score is outside
+it. The evaluation of the analytic bound uses padded floating-point arithmetic,
+not certified interval arithmetic. See the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md">follow-up finding</a>.</p>
+<p>There was counterevidence to a simpler accusation: the trained score was not
+doing nothing. It improved original-row balanced accuracy over zero
+reconstruction by about 0.89 percentage points, and retained useful ranking
+differences within similar-input-magnitude groups. A small useful contribution
+can coexist with a large structural shortfall. The experiment did not establish
+the claimed recurrent or attention mechanism.</p>
+<h2 id="31-august-testing-what-the-bound-depends-on">31 August — Testing what the bound depends on</h2>
+<p>Two additional source-supported scaling readings still capped detection at
+the printed cutoff at 29.81% and 33.96%. They did not exhaust every reasonable
+normalization. Replacing Softmax with a Sigmoid output removed the all-cutoff
+exclusion on the complete evaluation: that alternative remained mathematically
+open, rather than becoming an achieved reproduction.</p>
+<p>We then trained a small matched Softmax/Sigmoid pair for ten epochs. Sigmoid's
+best detection at FA&lt;=15% was <strong>9.75%</strong>, or <strong>25.39%</strong> after favorable score
+reversal, against the 81% target. Every cutoff failed for those fitted models
+and sampled rows. Its calibration loss was <strong>still improving</strong>; this is not a
+universal Sigmoid impossibility proof or an established long-run plateau.</p>
+<p>The distinction matters: a permissive bound only means an outcome has not
+been excluded; a failed small fit only excludes those particular fitted scores.
+The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md">scaling finding</a>,
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md">complete Sigmoid range check</a>, and
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md">paired-fit finding</a> preserve those separate steps.</p>
+<h2 id="2-september-giving-lstm-sae-the-paper-s-reported-training-time">2 September — Giving LSTM-SAE the paper's reported training time</h2>
+<p>The paper reports 183 minutes for full-ISET LSTM-SAE training without stating
+its hardware or epoch count. A separate declared implementation received that
+fitting budget on one V100-16GB. This paper-time LSTM-SAE run scored all
+8,884,989 prepared evaluation examples and passed its artifact audit.</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Measure</th>
+<th style="text-align:right">Paper</th>
+<th style="text-align:right">Run inside 183 minutes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Detection</td>
+<td style="text-align:right">85.00%</td>
+<td style="text-align:right">16.62%</td>
+</tr>
+<tr>
+<td>False alarms</td>
+<td style="text-align:right">13.00%</td>
+<td style="text-align:right">31.91%</td>
+</tr>
+<tr>
+<td>Balanced accuracy</td>
+<td style="text-align:right">86.00%</td>
+<td style="text-align:right">42.35%</td>
+</tr>
+<tr>
+<td>Ranking AUC</td>
+<td style="text-align:right">82.00%</td>
+<td style="text-align:right">40.30%</td>
+</tr>
+</tbody>
+</table></div>
+<p>At the reported 13% false-alarm limit, the best saved-score detection was
+7.00% in the printed direction and <strong>23.02%</strong> after reversal. No cutoff
+rescued that fitted model. It completed about 1.268 epochs; measured throughput
+projects ten epochs to <strong>23.98 hours</strong>, but the paper does not claim ten epochs.
+Loss was still decreasing. This is a bounded failure inside the reported time,
+not an unlimited-time impossibility proof.</p>
+<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md">paper-time finding</a> includes all seven metrics,
+the clock boundary, hardware, assumptions, saved-score checks and limitations.</p>
+<h2 id="records-and-unresolved-coverage">Records and unresolved coverage</h2>
+<ul>
+<li><a href="reproduction/index.html">Current technical reproduction report, figures and all comparisons</a>.</li>
+<li><a href="../../reports/atk-2022-deep-autoencoder.pdf">FC-SAE scientific report through 1 September (PDF)</a>; the web report also contains the later LSTM-SAE result.</li>
+<li><a href="earlier-notes.html">Earlier account and method notes</a>.</li>
+<li><a href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder/results">All study results and execution records</a>.</li>
+</ul>
+<p>The remaining architectures, source interpretations, SGCC model experiments,
+and repeated-run uncertainty are not completed by these checks. Restricted
+datasets and source PDFs are not redistributed here. No new experiment ran
+for this notebook reorganization.</p>
+<h2 id="current-conclusion">Current conclusion</h2>
+<p>The declared FC-SAE and time-bounded LSTM-SAE implementations did not reproduce
+their targeted ISET results. The FC-SAE follow-up establishes a stronger
+conditional limit for fixed inputs, Softmax outputs and MSE scoring. The
+Sigmoid alternative remains open beyond the tested small pair, and unlimited
+LSTM training is not excluded by a finite-time run.</p>
+<p>These results do not establish that every autoencoder must fail, that training
+learned nothing, or how the authors produced their numbers. Further work must
+name a remaining source or mechanism question; the completed runs are not an
+invitation to repeat seeds until a preferred answer appears.</p>
 
-  <div class="kicker">Earlier method notes</div>
-  <h1>Reading the electricity-theft paper</h1>
-  <div class="note warning"><strong>This is the earlier account, not the current reproduction.</strong> The results below use older assumptions, including omitted test-set resampling. They are preserved for comparison. The current report includes the later FC-SAE experiment, output-domain and fitted-Sigmoid checks, and a separately bounded LSTM-SAE run on one V100 inside the paper's reported 183-minute training time. <a href="reproduction/">Read the current reproduction report and its paper-to-code comparison.</a></div>
-  <p class="lede">The paper trains computer models to recognize electricity theft. These earlier notes explain the method, missing details, and initial experiments. They are not instructions to resume the old runs, and their numbers must not be combined with the current reproduction as if they were repeated seeds.</p>
-  <p class="meta">Paper source: Sections II–IV, Equations (1)–(13), Algorithms 1–6, Figures 1–8, and Tables I–V. PDF SHA-256: <code>f3098e0c…f850f</code>.</p>
-  <p class="meta"><a href="../../reports/atk-2022-deep-autoencoder.pdf">Download the FC-SAE scientific report through 1 September (PDF)</a>. The live reproduction page contains the newer paper-time LSTM-SAE result.</p>
-
-  <div class="legend" aria-label="Legend">
-    <span><b class="tag paper">IN PAPER</b> stated or printed explicitly</span>
-    <span><b class="tag choice">OUR CHOICE</b> paper is silent; predeclared interpretation</span>
-    <span><b class="tag impossible">UNCLEAR OR INVALID</b> an instruction needs clarification or cannot run as printed</span>
-    <span><b class="tag alongside">ALONGSIDE</b> scientifically corrected control, never paper reproduction</span>
-  </div>
-
-  <section class="overview" aria-label="Paper workflow overview">
-    <div class="flowbox"><strong>1 · Data</strong><span>SGCC supplied labels or ISET benign profiles plus six synthetic attacks</span></div>
-    <div class="arrow" aria-hidden="true">→</div>
-    <div class="flowbox"><strong>2 · Prepare</strong><span>Separate anomaly and supervised pipelines, each with the paper’s ADASYN placement</span></div>
-    <div class="arrow" aria-hidden="true">→</div>
-    <div class="flowbox"><strong>3–4 · Fit</strong><span>Benchmarks and five autoencoders; sequential search and ROC-derived thresholds on ISET</span></div>
-    <div class="arrow" aria-hidden="true">→</div>
-    <div class="flowbox"><strong>5 · Report</strong><span>SGCC and ISET metrics, ISET training time, and per-attack detection</span></div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">0</div><h2>What happened in the earlier experiment?</h2></div>
-    <p class="plain"><strong>Short version:</strong> using the named ISET/CER data but omitting test-set ADASYN, our earlier seed-11 model missed nearly three quarters of the attacks and falsely accused more than half of the normal examples. This one run is strong evidence of a mismatch, but it is not yet a paper-wide verdict.</p>
-    <div class="result-grid" aria-label="Reported versus reproduced headline metrics">
-      <div class="metric-card"><span>Attacks detected</span><strong>81% → 26.18%</strong><small>paper → reproduced</small></div>
-      <div class="metric-card"><span>False alarms</span><strong>15% → 58.22%</strong><small>paper → reproduced</small></div>
-      <div class="metric-card"><span>Balanced accuracy</span><strong>83% → 33.98%</strong><small>paper → reproduced</small></div>
-    </div>
-    <div class="two">
-      <article class="block">
-        <h3>What this run does establish</h3>
-        <ul>
-          <li>The fully recorded no-test-resampling interpretation does not reproduce the paper’s FC-SAE result.</li>
-          <li>Changing the frozen batch size from 32 to 512 did not rescue it: the two runs are nearly identical.</li>
-          <li>For this trained model, adding synthetic benign test examples cannot change its 26.18% detection rate on the already scored attack rows.</li>
-          <li>With that detection rate fixed, even an impossible perfect 0% false-alarm rate would cap balanced accuracy at <strong>63.09%</strong>, below the paper’s 83%.</li>
-        </ul>
-      </article>
-      <article class="block">
-        <h3>What it does not establish</h3>
-        <ul>
-          <li>This older run omitted full test-set ADASYN. That step was completed in the later, separately reported experiment.</li>
-          <li>It does not prove every reasonable missing hyperparameter or interpretation must fail; those require predeclared repeated experiments.</li>
-          <li>It does not prove fabrication, adaptive sample construction, or what private code the authors used.</li>
-          <li>It is one primary seed. A statistical reproduction conclusion requires the remaining frozen seeds and ambiguity envelope.</li>
-        </ul>
-      </article>
-    </div>
-    <div class="callout proof"><strong>The exact conditional proof:</strong> the paper defines balanced accuracy as <code>(DR + 100 − FA) / 2</code>. Holding this model’s malicious predictions fixed gives <code>(26.1807 + 100 − 0) / 2 = 63.0903%</code> even under the best mathematically possible false-alarm rate. This proves what ADASYN cannot repair <em>for this trained model</em>; it does not prove that all other training completions are capped there.</div>
-    <div class="two">
-      <article class="block">
-        <h3>Could a better cutoff recover 83%?</h3>
-        <p class="plain"><strong>No, not for this score vector.</strong> We let the test labels choose the most favorable cutoff after the fact. In the paper’s score direction, the best balanced accuracy was only <strong>50.00%</strong>. Reversing the direction—treating lower error as more suspicious—raised it to <strong>66.26%</strong>, still far below 83%.</p>
-        <p>This is an intentionally optimistic diagnostic, not a valid evaluation protocol. It shows the gap is not merely that we copied <code>0.58</code> instead of a nearby threshold.</p>
-      </article>
-      <article class="block">
-        <h3>Why did the autoencoder behave this way?</h3>
-        <p class="plain"><strong>ELI5:</strong> the paper first turns the input into numbers above and below zero, then tells the final Softmax layer that it may output only positive numbers that add up to one. That is like asking a printer with no minus sign to copy a page full of negative numbers.</p>
-        <p>The trained model’s reconstruction-error ranking was <strong>0.99946 correlated</strong> with the ranking obtained by reconstructing every profile as zero. This motivated a separate output-layer comparison. It did not establish that the output layer was the only cause or authorize changing the completed run.</p>
-      </article>
-    </div>
-    <div class="callout red"><strong>What is and is not mathematically impossible:</strong> test-set ADASYN alone cannot raise this trained model above 63.09% balanced accuracy, and Table V’s changing false-alarm values cannot come from one unchanged model, threshold, and benign set. But the paper’s headline 83% is <em>not yet proven impossible for every reasonable training completion</em>. That broader claim remains open. The current investigation is described in the new report.</div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">!</div><h2>When the printed method cannot execute</h2></div>
-    <p>The audit does not quietly fix impossible wording and does not stop after pointing it out. Every such item follows the same visible evidence ladder:</p>
-    <div class="three">
-      <div class="track"><strong><span class="tag impossible">1 · LITERAL FAILURE</span></strong><p>Quote and locate the printed operation; preserve exactly why it cannot exist, calculate, or run.</p></div>
-      <div class="track"><strong><span class="tag choice">2 · REASONABLE REPAIRS</span></strong><p>Predeclare the smallest executable repair and every other materially defensible reading under separate stable IDs.</p></div>
-      <div class="track"><strong><span class="tag alongside">3 · EXECUTE + REPORT</span></strong><p>Run every repair and show all seeds, failures, timings, and metrics beside the paper's target here and in the scientific PDF.</p></div>
-    </div>
-    <div class="callout"><strong>Interpretation rule:</strong> a repair is evidence about a reasonable executable completion of the text. It is never described as the authors' hidden implementation. The working hypothesis is that reasonable completions will not reproduce the paper, but that expectation cannot select the branches or the displayed results. A successful repair is reported as plainly as a non-match.</div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">1</div><h2>Acquire the two named datasets</h2></div>
-    <p class="plain"><strong>Plain English:</strong> one dataset already says which customers stole electricity. The other contains normal electricity days, so the paper manufactures six different kinds of fake theft from each normal day.</p>
-
-    <div class="two">
-      <article class="block lane">
-        <h3>1a · SGCC — real labels already exist</h3>
-        <p><span class="tag paper">IN PAPER</span> About 40,000 customers, one daily reading over roughly three years, with benign/malicious labels supplied by the dataset.</p>
-        <p><span class="tag paper">IN PAPER</span> Use those labels directly. The paper does <strong>not</strong> apply the six synthetic ISET attacks to SGCC.</p>
-        <div class="callout red"><span class="tag impossible">CONTRADICTION</span> The source contains 1,034 daily features, while the model section specifies an input in <code>R^48</code>. No transformation from 1,034 to 48 is given.</div>
-      </article>
-
-      <article class="block lane">
-        <h3>1b · ISET/CER — benign data, attacks added</h3>
-        <p><span class="tag paper">IN PAPER</span> Roughly 3,000 residential meters, half-hour readings over about 1.5 years. Form one 48-value profile per meter-day.</p>
-        <p><span class="tag paper">IN PAPER</span> Apply all six attack functions to every customer’s benign matrix, producing six malicious matrices.</p>
-        <p><span class="tag choice">AMBIGUOUS</span> The official allocation contains 4,225 residential meters. The paper gives no rule for selecting “roughly 3,000,” so both all-residential and seeded-3,000 readings must be named.</p>
-      </article>
-    </div>
-
-    <article class="block">
-      <h3>1c · The six ISET attack transforms</h3>
-      <div class="equations">
-        <div class="equation"><b>f1</b> one fixed α∈[0.1,0.8] scales readings; the scope of “all samples” is undefined</div>
-        <div class="equation"><b>f2</b> independent β(d,t)∈[0.1,0.8] scales each reading</div>
-        <div class="equation"><b>f3</b> zero a randomly selected 4–24 hour interval</div>
-        <div class="equation"><b>f4</b> replace every reading by that day’s mean</div>
-        <div class="equation"><b>f5</b> multiply the day’s mean by independent β(d,t)</div>
-        <div class="equation"><b>f6</b> reverse the 48 readings in time</div>
-      </div>
-      <div class="callout red"><span class="tag impossible">PRINTED f3</span> Equation (3) uses <code>tf = ti − tl</code>, placing the final time before the start. The paper also mixes 24 hourly indices with 48 half-hour values. The literal expression is retained as non-executable. Executable interpretation branches use addition plus clipping, addition plus wraparound, or redraw to a valid endpoint, crossed with declared hour-to-half-hour mappings; these were candidate interpretations, not a statement that every branch had been executed.</div>
-    </article>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">2</div><h2>Prepare two different learning problems</h2></div>
-    <p class="plain"><strong>Plain English:</strong> the anomaly models study only normal days, like learning what a healthy heartbeat looks like. They are then tested on normal and altered days. The paper also changes the test set itself by inventing extra examples with ADASYN.</p>
-
-    <div class="two">
-      <article class="block lane">
-        <h3>2a · Anomaly detectors</h3>
-        <div class="chain" aria-label="Anomaly preparation sequence">
-          <span>normalize B + M</span><b>→</b><span>split benign 2:1</span><b>→</b><span>train on B1 only</span><b>→</b><span>test = B2 + all M</span><b>→</b><span>ADASYN on test</span>
-        </div>
-        <p><span class="tag paper">IN PAPER</span> This is the paper’s order. In particular, it explicitly oversamples the <strong>test set</strong>, even though that is statistically questionable.</p>
-        <p><span class="tag choice">AMBIGUOUS</span> “Zero mean and unit variance” does not identify the fit population or axis: joint B+M, per class, per profile, or benign training only.</p>
-      </article>
-
-      <article class="block lane">
-        <h3>2b · Supervised detectors</h3>
-        <div class="chain" aria-label="Supervised preparation sequence">
-          <span>combine B + M for all customers</span><b>→</b><span>ADASYN</span><b>→</b><span>split 2:1</span><b>→</b><span>same feature scaling</span>
-        </div>
-        <p><span class="tag paper">IN PAPER</span> ADASYN appears before the supervised train/test split.</p>
-        <p><span class="tag impossible">CONTRADICTION</span> The paper first requires unseen test customers, but later describes row/sample splitting after synthesis. Both cannot be assumed true without an explicit identity policy.</p>
-      </article>
-    </div>
-
-    <article class="block">
-      <h3>2c · ADASYN — “invent more examples from the smaller group”</h3>
-      <p><span class="tag paper">IN PAPER</span> For ISET, the paper applies ADASYN after building the anomaly-detector test set. In this earlier construction that test set has <strong>750,770 benign</strong> profiles and <strong>13,507,740 attack</strong> profiles, so benign is the smaller group.</p>
-      <p class="plain"><strong>ELI5:</strong> ADASYN looks at each smaller-group example, finds its nearest neighbors, and draws new synthetic examples between nearby smaller-group points. It does not inspect which neural model failed, and it cannot manufacture examples specially chosen for the next model.</p>
-      <div class="callout"><strong>Historical estimate—not the current runtime:</strong> the selected exact default implementation must compare roughly <code>750,770 × 14,258,510 = 10.7 trillion</code> profile pairs in its first neighbor search, then another 0.56 trillion pairs in a smaller-group search and generate about 12.8 million synthetic benign profiles. A same-machine 16-core benchmark extrapolates to <strong>about 14.2 wall-hours for the two neighbor searches alone</strong>, before synthesis and disk output. A prior bounded attempt ran for 79 minutes and consumed 9.35 CPU-hours without completing the first search.</div>
-      <div class="callout red"><strong>What the paper does not tell us:</strong> it names ADASYN but gives no library, neighbor-search implementation, approximation rule, hardware, subsample, random seed, or preprocessing time. Exact GPU search or approximate neighbors could be much faster than our CPU default. Fourteen CPU hours is also entirely possible as an overnight preprocessing job. Therefore the audit can report the cost of this declared default and the missing implementation details; it cannot honestly claim the authors “could not have run ADASYN” or infer what they actually ran.</div>
-      <p><span class="tag alongside">STATISTICAL CAUTION</span> Applying oversampling to an evaluation set is unusual: it changes the exam after the model is trained. Here it adds benign rows only. It may change false alarms, AUC, precision, and balanced accuracy, but it cannot change detection on the existing malicious rows.</p>
-      <p class="plain"><strong>About model-tailored synthetic samples:</strong> standard ADASYN uses class labels and nearest neighbors, not the neural model’s successes or failures. With benign as the smaller class, it creates more synthetic benign profiles near places where attack profiles are common. Running it again may produce a slightly different random test set, but it does not automatically create examples specially chosen for FC-SAE, then LSTM-SAE, and so on. The paper reports no model-adaptive sampling procedure.</p>
-    </article>
-
-    <article class="block">
-      <h3>2d · Corrected control run beside the reproduction</h3>
-      <p><span class="tag alongside">ALONGSIDE</span> Keep customers disjoint; fit imputation and scaling on training data only; synthesize/oversample training data only; never alter validation or test rows. This answers whether a conventional leakage-free detector works. It does <strong>not</strong> rescue or replace the paper-literal result.</p>
-    </article>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">3</div><h2>Build the benchmark and autoencoder families</h2></div>
-    <p class="plain"><strong>Plain English:</strong> an autoencoder is a copy machine trained on normal days. If it struggles to copy a new day, the paper calls that day suspicious. The five models are different kinds of copy machines.</p>
-
-    <article class="block">
-      <h3>3a · Detector families</h3>
-      <div class="two">
-        <div>
-          <p><span class="tag paper">ANOMALY</span> ARIMA, one-class SVM, FC-SAE, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.</p>
-        </div>
-        <div>
-          <p><span class="tag paper">SUPERVISED</span> Naive Bayes, “multiclass” SVM, feed-forward neural network, and supervised LSTM.</p>
-        </div>
-      </div>
-    </article>
-
-    <article class="block">
-      <h3>3b · Table I neural architectures</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Model</th><th>Encoder widths</th><th>Decoder widths</th><th>Output</th><th>Dropout</th><th>Anomaly score</th></tr></thead>
-          <tbody>
-            <tr><td>FC-SAE</td><td><code>400, 300, 200, 100</code></td><td><code>100, 200, 300, 400</code></td><td>Softmax</td><td>0.4</td><td>MSE</td></tr>
-            <tr><td>LSTM-SAE</td><td><code>500, 300</code></td><td><code>300, 500</code></td><td>Sigmoid</td><td>0.2</td><td>MSE</td></tr>
-            <tr><td>FC-VAE</td><td><code>500, 400, 300, 100</code></td><td><code>100, 300, 400, 500</code></td><td>Softmax</td><td>0.4</td><td>Reconstruction probability</td></tr>
-            <tr><td>LSTM-VAE</td><td><code>400, 300</code></td><td><code>300, 400</code></td><td>Sigmoid</td><td>0</td><td>Reconstruction probability</td></tr>
-            <tr><td>LSTM-AEA</td><td><code>500, 300, 200</code></td><td><code>200, 300, 500</code></td><td>Sigmoid</td><td>0</td><td>MSE</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <p><span class="tag choice">AMBIGUOUS</span> Figures/prose show a distinct latent layer, while Algorithms 2 and 5 directly reuse the final encoder state or attention context. Latent width is not reported. These are separate model interpretations, not permission to choose whichever scores best.</p>
-      <div class="callout red"><span class="tag impossible">VAE DEFINITION</span> Equation (9) places distributions over incompatible variables inside one KL divergence and compares the lower bound with <code>log p(k)</code> rather than <code>log p(x)</code>. Algorithms 3–4 call an unconstrained activation-plus-bias output a variance, so it need not be positive. The VAE prose says low reconstruction probability is anomalous, while the generic decision paragraph says probability above the threshold is anomalous. Literal failures and finite loss/variance/score-direction completions remain separate results.</div>
-      <div class="callout red"><span class="tag impossible">AEA DECODER</span> Algorithm 5 defines the reconstructed decoder input using that reconstruction before decoding, and the prose calls the context/reconstruction merge concatenation while the algorithm prints a sum. Repeat-latent, zero-after-first-step, and autoregressive decoder completions—and both merge readings—must remain named executable interpretations.</div>
-    </article>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">4</div><h2>Select hyperparameters and anomaly thresholds</h2></div>
-    <p class="plain"><strong>Plain English:</strong> the paper lists the winning machine settings and the score that triggers an alarm, but it omits much of the recipe needed to reproduce how those winners and alarm cutoffs were selected.</p>
-
-    <div class="two">
-      <article class="block lane">
-        <h3>4a · Algorithm 6</h3>
-        <p><span class="tag paper">IN PAPER</span> On ISET training data, search sequentially over layer count, neuron count, optimizer, dropout, hidden activation, and output activation.</p>
-        <p><span class="tag impossible">INCOMPLETE</span> Epochs, batch size, learning rate, initialization, seeds, repetitions, final refit, and a usable convergence rule are absent. The scalar width loop also does not directly produce Table I’s unequal widths.</p>
-      </article>
-
-      <article class="block lane">
-        <h3>4b · Thresholds</h3>
-        <p><span class="tag paper">IN PAPER</span> The paper prints <code>0.58, 0.61, 0.43, 0.47, 0.51</code> for FC-SAE, LSTM-SAE, FC-VAE, LSTM-VAE, and LSTM-AEA.</p>
-        <p><span class="tag impossible">NON-UNIQUE</span> It says thresholds come from the “median of the IQR of the ROC curve.” That phrase does not define one algorithm. ROC selection also requires attack labels, while <code>X_TR</code> is defined as benign-only.</p>
-      </article>
-    </div>
-
-    <div class="callout"><span class="tag choice">TIMING LIMIT</span> Table IV reports 137–193 minutes, but no hardware, software versions, epoch count, batch size, repetition count, or timing boundary. We can report our measured time; we cannot test equality to those minutes on an unknown machine/procedure.</div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><div class="stage-number">5</div><h2>Evaluate once, then populate Tables II–V</h2></div>
-    <p class="plain"><strong>Plain English:</strong> every profile receives one suspiciousness score. A fixed cutoff turns that score into “normal” or “attack,” and all reported metrics should then come from the same predictions and test population.</p>
-
-    <article class="block">
-      <h3>5a · Metrics from one score vector and confusion matrix</h3>
-      <p><span class="tag paper">IN PAPER</span> Detection rate, false-alarm rate, specificity, precision, F1, ROC-AUC, and <strong>balanced accuracy</strong>—called “ACC” in the paper: <code>(DR + specificity) / 2</code>.</p>
-      <div class="callout red"><span class="tag impossible">REPORTED-METRIC ARITHMETIC</span> The precision prose describes recall although the printed formula is <code>TP/(TP+FP)</code>. Table-II Naive Bayes reports <code>DR=75</code>, <code>PR=75</code>, and <code>F1=77</code>, although the stated harmonic-mean formula forces <code>F1=75</code>. More broadly, the DR/FA/PR rows in neither Table II nor Table III admit one common test prevalence even with generous rounding. These static contradictions are shown beside, but are not substituted for, experimental reproduction results.</div>
-    </article>
-
-    <div class="two">
-      <article class="block">
-        <h3>Table II</h3>
-        <p><strong>SGCC performance.</strong> The unresolved 1,034-to-48 representation affects every row.</p>
-      </article>
-      <article class="block">
-        <h3>Table III</h3>
-        <p><strong>ISET performance.</strong> All models on benign daily profiles plus the six generated attacks.</p>
-      </article>
-      <article class="block">
-        <h3>Table IV</h3>
-        <p><strong>ISET training size and time.</strong> Half, three-quarter, and full <code>X_TR</code>; “60 million” most plausibly counts scalar readings, not 48-value examples.</p>
-      </article>
-      <article class="block">
-        <h3>Table V</h3>
-        <p><strong>Each ISET attack separately.</strong> Same stated hyperparameters and thresholds; balanced data; no ADASYN.</p>
-      </article>
-    </div>
-
-    <div class="callout red"><span class="tag impossible">TABLE V IDENTITY IS UNSTATED</span> With one fixed model, threshold, and benign test set, false alarms depend only on those benign rows and must be identical for all six attack columns. The paper reports different FA values. Therefore at least one experiment identity—model fit, benign sample, threshold, or another unreported element—must vary. Common-model/common-benign, per-attack retraining, per-attack benign resampling, and their combination are separate declared readings.</div>
-  </section>
-
-  <section class="stage">
-    <div class="stage-title"><h2>Where this leaves the earlier notes</h2></div>
-    <p>The old execution sequence is superseded. One expensive run per model is not a cheap first pass. The current work uses small checks to identify which explanations deserve another full experiment.</p>
-    <p>The later FC-SAE run used a newly documented reading, a different seed, all residential customers, attacks only from held-out customers, and completed test-set ADASYN. It reached 25.48% detection and 40.18% balanced accuracy. A subsequent Softmax-domain proof excludes the target under those fixed data/output/score assumptions; a small trained Sigmoid control also failed every cutoff on its sampled evaluation, while longer Sigmoid training remains unresolved. Those results and their limits belong to the <a href="reproduction/">new reproduction report</a>, not this earlier run.</p>
-    <p>Original results, code, and changes of interpretation remain in the research record. No additional training is authorized by this page.</p>
-  </section>
-
-  <footer>
-    Earlier method notes, retained with their original results. Wording and navigation updated 1 September 2026. See the new report for the current experiment; no claim about author intent is made.
-  </footer>
+  <footer><a href="../../">All three papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/RESEARCH_LOG.md">Notebook source</a></footer>
 </main>
 </body>
 </html>

@@ -4,6 +4,41 @@
 
 **Audience:** an undergraduate taking an introductory statistics course.
 
+## September 23: agreed three-paper notebook structure
+
+This supersedes the staged first implementation below. The homepage is now a
+quiet index with three full paper titles and years, not a featured-result card
+or a project-wide thesis. Electricity theft/deep autoencoder are one registered
+paper; data poisoning and water networks are the other two.
+
+Each canonical paper URL contains a notebook with the paper's claims, starting
+hypothesis, chronological checks/results/corrections, supporting records, and
+a current conclusion at the end. Three ordinary navigation links styled as
+tabs switch papers. A collapsible contents list and scrollable tables support
+long entries and small screens without a JavaScript application.
+
+Each study's `RESEARCH_LOG.md` is editable source; run
+`.venv/bin/python scripts/render_journals.py` to generate all three pages, or
+add `--check` to detect stale output. The older renderer command remains a
+compatibility entry point. The notebooks use `site/notebook.css`; detailed
+legacy reports retain their original layout and remain linked as archives.
+
+The user explicitly plans to rethink and eventually redo the water and
+deep-autoencoder studies under the newer approach, one paper at a time. Their
+current results are preserved, not revalidated by this editorial work. Their
+new pages say they await reassessment and label reconstructed history. The
+water notebook retains early-run provenance caveats, retractions, co-authorship
+disclosure and the later limits on its arithmetic/experimental claims.
+
+The poisoning notebook includes the Equation (1) error and tested repair,
+F1 and Table V arithmetic, the essential Table IV customer-averaging correction,
+the successful baselines and failed SVM, source ambiguities, and the untested
+central ensemble. Never treat its old 58-of-68 conditional check as an
+unconditional count of erroneous rows.
+
+The user authorized publication to the existing GitHub Pages site after checks.
+No experiment or reinterpretation of frozen result bytes is included.
+
 The user wants a research journal: what we first thought, what we checked, what
 we observed, and what that observation led us to do next. The technical record
 must remain available, but the reader should not need to work through a

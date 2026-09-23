@@ -1,4 +1,4 @@
-# Can this detector learn from corrupted labels?
+# Electricity theft with poisoned training labels
 
 Updated: 2026-09-23
 
@@ -8,12 +8,12 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-**Where we are, 23 September 2026:** forest, AdaBoost and repaired feed-forward
-learn useful ranking, while the initial sigmoid SVM is weak. Our latest control
-changes the order of poisoning and training-data balancing. It does not restore
-detection: ranking gets worse despite more balanced observed labels. These
-are small, dependent pilot samples, not a full-population reproduction or a
-verdict on the whole paper.
+The work currently covers four baseline pilots and preparation controls on
+twenty customers. The proposed sequential ensemble has not yet been trained.
+The entries below retain both the source concerns and the results that changed
+our initial expectation.
+
+## What the paper claims
 
 The paper's starting point is straightforward. An electricity meter reports a
 customer's usage. The study takes real consumption readings and alters them
@@ -28,9 +28,23 @@ called a GRU, and a final classifier. Table V says that increasing poisoning
 from 0% to 30% reduces detection from 95.2% to 92.2%, while false alarms rise
 from 2.9% to 5.8%. We want to establish whether that behavior follows from the
 published procedure, and whether the baseline models behave as reported too.
+This sequential ensemble is the main proposed contribution; ordinary ensemble
+averaging is a comparison. A successful baseline alone does not establish
+the proposed ensemble's advantage or its claimed reconstruction mechanism.
 
 [Read the paper's publication record](https://doi.org/10.1109/TSG.2020.3047864).
 The page numbers below refer to the journal's printed pages.
+
+## Starting hypothesis
+
+We initially expected that reasonable implementations might fall far below
+the reported performance, even after obvious omissions or typos were repaired.
+That was an expectation to test, not evidence about how the authors produced
+their numbers. We planned to examine the baselines as well as the proposed
+model, preserve favorable results, and revise the expectation when necessary.
+
+The original entries remain below. Later corrections and the current conclusion
+do not rewrite what we thought before the experiments.
 
 ## 2 September — An earlier arithmetic check
 
@@ -1031,6 +1045,119 @@ but this particular alternative did not explain away the earlier detection
 pattern. Return to the remaining model coverage, beginning with a separately
 specified GRU baseline. No further model has been started here.
 
+## 23 September — Rechecking the arithmetic and narrowing our criticism
+
+The working baselines do not resolve errors in the printed mathematics. We
+returned to the source and the earlier static audit to separate definite
+calculations from assumptions about how the reported metrics were aggregated.
+No new model was trained for this review.
+
+### The classification loss loses the label
+
+Equation (1), page 2679, prints `log(p)` in both binary terms. As explained in
+the [earlier loss entry](#20-september-the-printed-loss-loses-the-label),
+`−[y log(p) + (1−y) log(p)] = −log(p)`: changing the label has no effect.
+This is a concrete error in the printed expression. Standard binary
+cross-entropy supplies the obvious `log(1−p)` repair, and our feed-forward
+pilot learns with that repair. The error alone does not exclude the intended
+classifier or identify the loss actually used by the authors.
+
+### A random-forest F1 entry does not match its ingredients
+
+Table III, page 2681, at 20% poisoning reports detection 72.7%, precision 73.8%
+and F1 72.7%. The stated harmonic-mean formula gives approximately 73.25%.
+Allowing the full one-decimal rounding intervals gives 73.1959–73.2959%,
+which does not overlap the printed F1 interval 72.65–72.75%.
+
+Those values cannot all describe the same ordinary confusion matrix under
+the stated formula. An isolated table typo remains a plausible explanation.
+Separate averaging of metrics would require a different interpretation.
+
+### Three sequential-ensemble metric combinations are incompatible
+
+Table V, page 2683, reports detection, false alarms, precision and ordinary
+accuracy together. For one evaluation population, those quantities share one
+underlying fraction of attack examples. We can work backward to that fraction
+in two independent ways.
+
+For example, its unpoisoned row reports detection 95.2%, false alarms 2.9%,
+precision 95.6% and accuracy 96.1%. With equal class counts, the first two
+would imply precision about 97.04%, not 95.6%. Allowing unequal counts does
+not reconcile precision and accuracy together:
+
+| Sequential-ensemble row | Attack fraction allowed by detection / false alarms / precision | Attack fraction allowed by detection / false alarms / accuracy |
+|---|---:|---:|
+| 0% poisoning | 39.12–40.54% | 47.37–57.89% |
+| 10% poisoning | 42.11–43.31% | 45.00–55.00% |
+| 30% poisoning | 44.00–44.82% | 45.00–55.00% |
+
+The intervals already allow favorable rounding. Each pair is disjoint.
+Therefore these three complete metric combinations cannot come from one
+ordinary confusion matrix within that rounding allowance, regardless of
+class balance. The 20% row is not excluded by this stronger check.
+
+This does **not** prove the headline detection rates are unattainable by a
+model. Nor does it exclude independently averaged metrics, columns from
+different evaluations, reporting mistakes or a different undocumented
+procedure. Those possibilities change the meaning of the table and require
+explanation. The [dated source audit](SOURCE_AUDIT_FINDING.md) preserves the
+calculation; its broad interpretation must be read with the correction below.
+
+### Our customer-averaging caveat is essential
+
+Table IV explicitly averages over customers (page 2680). An average precision
+need not equal the precision obtained by combining every customer's predictions.
+Likewise, averaging F1 is not generally the same as taking the harmonic mean
+of average precision and average detection.
+
+The old audit's **58 of 68 balanced-precision failures are not an unconditional
+finding of 58 erroneous rows**. Those checks assume exact balance and a shared
+confusion-matrix interpretation. Table IV's stated averaging invalidates using
+that simple argument indiscriminately there. The stronger Table V result above
+is specifically conditional on its rows describing one evaluation, rather
+than an unspecified aggregation. We retain the old calculation and correct
+its scope instead of hiding either.
+
+### Missing mechanisms and evaluation steps are different from algebraic errors
+
+Section IV-B trains the combined ensemble through classification loss. It
+does not explicitly add reconstruction loss or benign pretraining for that
+combined model. Calling its intermediate output a reconstruction does not
+establish what it learned; classification may succeed without reconstruction.
+
+The novelty-model tuning description also leaves a missing step. It selects
+settings using attack detection rate and describes cross-validation over
+benign-only training data. Detection rate needs actual attack examples; a
+malicious validation population or another scoring rule must be specified.
+The ROC/IQR wording does not uniquely define an executable threshold rule
+either. These are consequential specification gaps, not proofs that no
+reasonable implementation can work. See the [source reconstruction](METHOD.md).
+
+## 23 September — Taking stock before the main ensemble
+
+The initial expectation of widespread failure is weakened by the measurements:
+
+| Baseline | What the pilot establishes | What it does not establish |
+|---|---|---|
+| Forest | Original-pilot AUC 98.55%/94.36% without/with poisoning; useful ranking survives stricter preparation too. | The complete printed pattern or its model ordering. |
+| Feed-forward, repaired BCE | At the corresponding printed false-alarm caps, detection reaches 90.77%/88.87%, versus 90.8%/76.0% reported. | A complete row match or independently calibrated thresholds. |
+| AdaBoost | Corresponding-cap detection 80.72%/80.45%, versus 85.7%/70.1% reported: one target missed, the other exceeded. | Universal failure, or complete numerical reproduction. |
+| Sigmoid SVM | Corresponding-cap detection only 19.37%/33.48%, versus 89.2%/73.7%; no cutoff or reversal rescues the saved fits. | Failure of every omitted gamma/coefficient or other reasonable configuration. |
+
+These are twenty-customer, 28-day pilots, not the paper's 3,000-customer
+population. The favorable cutoff checks use test labels and demonstrate
+attainability for saved scores rather than independent validation. Different
+source populations, poisoning completions and omitted settings remain material.
+The latest order control also did not identify class proportions alone as the
+cause of the recurring default-cutoff behavior.
+
+Our strongest current assessment is that ordinary learning performance is
+plausible, while parts of the written report need correction or explanation.
+Attainable numbers do not authenticate the authors' original experiments;
+non-reproduction and mathematical inconsistencies do not by themselves identify
+fabrication. The main sequential ensemble and its proposed mechanism are
+still untested.
+
 ## What we will do next
 
 Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
@@ -1072,3 +1199,22 @@ This journal contains source observations, an algebraic check, verified
 preparation, fitted forest/AdaBoost/SVM/feed-forward pilots, forest controls,
 and a read-only SVM follow-up.
 It does not yet contain a full-population reproduction of this paper.
+
+## Current conclusion
+
+Several baseline detection levels are attainable in the declared pilot, and
+three ordinary model families learn useful rankings. The sigmoid SVM remains
+a substantial mismatch for the tested settings. Preparation and threshold
+choices change the interpretation of apparent success or failure.
+
+The printed classification loss is wrong as written. Some complete metric
+combinations are incompatible under a single-evaluation interpretation, but
+customer-averaged metrics need different reasoning. These source issues are
+not erased by the working baselines, and they do not establish how the
+published values arose.
+
+No complete published result pattern has been reproduced, and the paper's
+main proposed sequential ensemble has not been tested. The next step is a
+separately specified continuation of model coverage, not a verdict that the
+whole paper is either correct or fabricated. No further experiment was run
+for this website update.

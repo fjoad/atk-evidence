@@ -26,6 +26,8 @@ SIGMOID_RANGE = STUDY / "results/sigmoid_sanity_20260831"
 SIGMOID_FIT = STUDY / "results/sigmoid_fit_20260831"
 PAPER_TIME = STUDY / "results/lstm_sae_paper_time_20260901.json"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
+NOTEBOOK = SITE / "papers/atk-2022-deep-autoencoder/index.html"
+EARLIER_NOTES = SITE / "papers/atk-2022-deep-autoencoder/earlier-notes.html"
 REPORT_SOURCE = ROOT / "reports/atk-2022-deep-autoencoder/main.tex"
 
 
@@ -44,12 +46,14 @@ class Page(HTMLParser):
         self.fits = {}
         self.lstm = {}
         self.h1_count = 0
+        self.text_parts = []
         self.row = None
         self.row_group = None
         self.cells = []
         self.cell = None
         self.feed(path.read_text())
         self.close()
+        self.text = " ".join(" ".join(self.text_parts).split())
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
@@ -76,6 +80,7 @@ class Page(HTMLParser):
             self.cell = []
 
     def handle_data(self, data):
+        self.text_parts.append(data)
         if self.cell is not None:
             self.cell.append(data)
 
@@ -144,10 +149,10 @@ class PublicReportTests(unittest.TestCase):
         self.assertIn("unlimited-time impossibility", self.report_text)
 
     def test_current_entry_points_publish_paper_time_lstm_finding(self):
-        home = (SITE / "index.html").read_text()
+        notebook = NOTEBOOK.read_text()
         readme = (ROOT / "README.md").read_text()
-        legacy = (SITE / "papers/atk-2022-deep-autoencoder/index.html").read_text()
-        for text in (home, readme):
+        legacy = EARLIER_NOTES.read_text()
+        for text in (notebook, readme):
             for value in ("16.62", "31.91", "23.02", "23.98"):
                 self.assertIn(value, text)
             self.assertIn("unlimited-time impossibility", text)
@@ -217,8 +222,8 @@ class PublicReportTests(unittest.TestCase):
             self.assertIn(f"{self.result['metrics'][count]:,}", self.report_text)
 
     def test_historical_pages_and_results_are_distinguished(self):
-        previous = (SITE / "papers/atk-2022-deep-autoencoder/index.html").read_text()
-        water = (SITE / "papers/tlstgt-2025-water/index.html").read_text()
+        previous = EARLIER_NOTES.read_text()
+        water = self.pages[SITE / "papers/tlstgt-2025-water/index.html"].text
         self.assertIn("This is the earlier account, not the current reproduction", previous)
         self.assertIn("26.18%", previous)
         self.assertIn("58.22%", previous)
@@ -293,7 +298,7 @@ class PublicReportTests(unittest.TestCase):
             self.assertEqual(sha(RECORDS / "result.json"), record["source_result_sha256"])
 
     def test_bound_scope_remains_visible_in_all_current_accounts(self):
-        for path in (ROOT / "README.md", SITE / "index.html", REPORT):
+        for path in (ROOT / "README.md", NOTEBOOK, REPORT):
             content = path.read_text()
             with self.subTest(path=path):
                 self.assertIn("50.93%", content)
@@ -368,7 +373,7 @@ class PublicReportTests(unittest.TestCase):
         self.assertIn("not a universal Sigmoid impossibility proof", self.report_text)
 
     def test_all_current_entry_points_name_the_fitted_sigmoid_scope(self):
-        for path in (ROOT / "README.md", SITE / "index.html", REPORT):
+        for path in (ROOT / "README.md", NOTEBOOK, REPORT):
             content = path.read_text()
             with self.subTest(path=path):
                 self.assertIn("9.75%", content)

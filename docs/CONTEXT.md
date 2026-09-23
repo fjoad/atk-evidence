@@ -2,6 +2,23 @@
 
 **Last updated:** 2026-09-23
 
+**Website/user direction, September 23:** user approved a quiet index linking
+the three registered papers, notebook pages with claims → starting hypothesis
+→ chronological investigation/results/corrections → current conclusion, and
+publication after checks. No grand headline card or cross-paper campaign.
+New `scripts/render_journals.py` renders all three RESEARCH_LOG.md sources;
+old command is a compatibility wrapper. New pages use `site/notebook.css`.
+Paper 1/2 earlier root pages are preserved as `earlier-notes.html`; detailed
+Paper 1 `/reproduction/` stays available. Source/result bytes unchanged.
+User clarified older water and deep-autoencoder work used 5.6 Sol and earlier
+thinking; rethink/redo those later, one paper at a time, preserving results
+for now. Their notebook notices explicitly say awaiting reassessment, not
+fresh validation. Paper 3 adds mathematical issues with aggregation caveats;
+main sequential ensemble remains untested. Full suite 344 pass/10 environment
+skips; 30 site/registry tests pass, mobile/desktop browsing checked. Publication
+authorized but awaiting commit/push and live verification at this checkpoint.
+No new scientific run. See docs/plans/2026-09-23-notebook-website.md.
+
 **Current order-control result, complete September 23:** contract 9b23b32,
 startup-only repair 579a3f5cafc0f8943f230ff7458a1c14103a6718, CPU job 402291,
 0:0 in 20s on crimv3srv024, 4 CPUs/16 GiB/no GPU. Exactly one new forest;
