@@ -12,6 +12,16 @@ execution plan here is
 
 ## Current project state
 
+- **AEA zero-fit check approved and implemented:** the user asked to run the
+  frozen AEA_GEOMETRY_CHECK.md contract (aa2c4ab). The direct diagnostic and
+  saved-artifact audit pass18 constructed tests; no neural model is built.
+  One10-minute/1CPU/8GiB/noGPU job will verify the original novelty p00/p30
+  arrays, then measure output-box bounds and four untrained scores, including
+  favorable score/metric rounding and all original/synthetic strata. No data
+  regeneration or new model settings. Scheduler/output checks found no
+  existing account jobs or AEA geometry attempt. No submission yet at this
+  checkpoint. See [execution plan](plans/2026-09-24-aea-geometry-execution.md).
+
 - **AEA source specification and constructed checks complete:** re-read and
   visually inspected all ten target pages; inspected reference[23]'s relevant
   attention/decoder/setup pages. Reference[22] full text was not obtained;

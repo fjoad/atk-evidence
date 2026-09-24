@@ -58,6 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user approved the zero-fit AEA geometry check under unchanged
+AEA_GEOMETRY_CHECK.md (aa2c4ab). The direct diagnostic/artifact audit and18
+constructed tests are ready; no research data scored yet. Freeze code and
+submit one10min/1CPU/8GiB/noGPU allocation after scheduler/output checks.
+No model fitting or data regeneration. See the
+[execution plan](docs/plans/2026-09-24-aea-geometry-execution.md). Preserve all
+originals and report bounds as conditional necessary conditions, not model
+AUC ceilings or proof of detection failure from the range mismatch alone.
+No submission yet at this checkpoint; website untouched. This supersedes
+the prior await-approval state below, not its scientific limitations.
+
+### AEA source checkpoint
+
 **AEA source specification is complete; no AEA experiment has run.**
 See [specification](studies/takiddin-2021-robust-poisoning/AEA_SPECIFICATION.md)
 and [step plan](docs/plans/2026-09-24-aea-source-specification.md).

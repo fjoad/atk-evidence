@@ -2,6 +2,16 @@
 
 **Last updated:** 2026-09-24
 
+**AEA geometry execution approved:** user said "ok do it" to the frozen zero-
+fit check. Contract AEA_GEOMETRY_CHECK.md remains aa2c4ab unchanged. Runner
+checks/aea_diagnostic.py and run_aea_geometry.sbatch,18 constructed checks
+pass. One10min/1CPU/8GiB/noGPU job; no neural construction, fits, inference,
+new preparation or website work. Verify56 input arrays/provenance/scaling
+before scoring; compare output-box bounds/rounding/three error units and
+zero/half/clipped/daily-mean scores. Existing root CPU .venv reused (pinned
+NumPy2.5.1,sklearn1.9.0 etc), no install. No job yet; finish tests/freeze,
+recheck scheduler/output and submit once. Plan2026-09-24-aea-geometry-execution.
+
 **AEA source step complete:** user approved specification, not research fits.
 All10 target pages re-read/rendered; Zhao et al.[23] pp425–430 read/visually
 checked from Augsburg PDF (ignored references/zhao-2020-hierarchical-attention-autoencoders.pdf,
