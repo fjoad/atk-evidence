@@ -343,3 +343,37 @@ interpretations remain untested alternatives; the temporal and ensemble
 reconstruction mechanisms are not identified. No further seeds or training
 were run after inspecting this result. Proposed next coverage is standalone
 AEA source/reconstruction specification. See [completed record](results/gru_completion_20260924/README.md).
+
+## E22 — the selected AEA can exactly reconstruct the standardized inputs
+
+**Status:** false for negative entries if Sigmoid is the reconstruction head;
+the effect on real-data detection remains unmeasured.
+
+III-A.1 standardizes training values; TableII selects a Sigmoid output. Under
+the natural coordinate-reconstruction reading and declared MSE score, every
+weight choice obeys the pointwise output-box bounds in AEA_SPECIFICATION.md.
+Zero error on negative entries is impossible; good anomaly detection is not.
+Constructed witnesses verify both statements, threshold-boundary behavior,
+rounding and error-unit distinctions. No CER arrays were scored for this
+finding, no trained score or full-population bound is available, and MAE/
+linear-output/alternative preprocessing conclusions do not follow.
+
+The proposed next check is the separately approved zero-fit novelty-input
+and score-geometry experiment. Metadata alone reports108 exact train/test
+overlaps at p30 and a different test population from the classifier pilot;
+these cannot be hidden when comparing models. See
+[source specification](AEA_SPECIFICATION.md) and [proposed check](AEA_GEOMETRY_CHECK.md).
+
+## E23 — classification-only training establishes that the intermediate block reconstructs
+
+**Status:** not established by the stated objective; ensemble behavior untested.
+
+IV-B gives a classification loss without an explicit reconstruction term or
+benign pretraining. A constructed complement-and-compensate example gives
+identical small classification loss with either the input itself or its
+complement as the intermediate representation, while reconstruction errors
+differ. This is a logical witness that classification loss alone does not
+identify reconstruction, not a trained replication or proof that the actual
+ensemble cannot learn useful reconstruction incidentally. Standalone AEA
+reconstruction, joint classification, pretraining and combined losses remain
+separate experiments. No ensemble was implemented or run.

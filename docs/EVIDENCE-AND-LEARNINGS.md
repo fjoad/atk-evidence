@@ -25,6 +25,30 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: AEA specification makes range and objective checks precede fitting
+
+**Added September24 during source work, with constructed checks only.**
+
+- **Source:** all ten target pages re-read/rendered; reference[23]'s relevant
+  attention/decoder/setup pages inspected. Reference[22] full text was not
+  obtained in the bounded search; no claim about its missing implementation.
+- **Observed source limitation:** standardized inputs plus a Sigmoid
+  coordinate reconstruction cannot achieve zero error on negative entries.
+  Decoder/attention scheduling, state-width mapping and the relationship
+  between native cells and printed peephole/tanh equations need completions.
+- **Verified mathematics, not a dataset finding:** pointwise MSE lower/upper
+  bounds hold for every output in the closed unit box. Eleven constructed
+  tests also show the range mismatch does not imply detection failure and
+  classification loss alone does not identify intermediate reconstruction.
+- **Setup caution:** novelty metadata reports373 train/6704 test rows and
+  108 exact p30 train/test overlaps. The classifier test set is not a substitute.
+  No new arrays were scored; those counts still need input-level checking.
+- **Decision:** write an explicit proposed native/table completion and a
+  zero-fit CPU input/score-geometry contract before any AEA model or fit.
+  Real-data execution of that next check awaits approval. Existing model
+  results and the website remain unchanged.
+- **Record:** [AEA specification](../studies/takiddin-2021-robust-poisoning/AEA_SPECIFICATION.md).
+
 ### Paper 3: completed GRU improves on the partial run but still misses the operating corners
 
 **Added September 24 after the completed pair and independent artifact audit.**

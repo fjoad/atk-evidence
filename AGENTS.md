@@ -58,6 +58,24 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+**AEA source specification is complete; no AEA experiment has run.**
+See [specification](studies/takiddin-2021-robust-poisoning/AEA_SPECIFICATION.md)
+and [step plan](docs/plans/2026-09-24-aea-source-specification.md).
+All ten target pages and relevant reference[23] pages were visually checked;
+reference[22] full text remains unavailable. Native-table AEA is a proposed
+interpretation, not implemented. Eleven constructed checks verify output-box
+MSE bounds and objective distinctions; no real arrays scored. Standardized
+inputs versus Sigmoid reconstruction needs a range check before fitting;
+this mismatch alone does not prove detection failure. Novelty inputs differ
+from classifier inputs and metadata reports108 p30 train/test overlaps.
+Next proposed [zero-fit check](studies/takiddin-2021-robust-poisoning/AEA_GEOMETRY_CHECK.md)
+needs separate approval:10min/1CPU/8GiB/noGPU, no models, no regeneration.
+Its real-data runner is not implemented or submitted. Preserve all original
+inputs/results. No new GRU seed/epoch, AEA fit or ensemble is authorized by
+this source-step summary. Website remains untouched.
+
+### Completed GRU checkpoint
+
 **GRU pair complete and audited:** frozen
 1f847039ea3c5d410db5e9ee194a6625ecd2b54d, job 402625, COMPLETED/0:0 in
 56:11 on one V100-16GB, 4 CPUs/16 GiB. Both fits completed 50 epochs/2,250

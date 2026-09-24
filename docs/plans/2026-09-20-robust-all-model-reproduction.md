@@ -4,6 +4,20 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
+## Current step: standalone AEA source and pre-fit geometry
+
+The user approved source-specification after the GRU result. All target pages
+and relevant reference[23] pages were visually checked; reference[22] remains
+an explicit full-text access limitation. AEA_SPECIFICATION.md separates the
+standalone reconstruction objective, classification-only ensemble and proposed
+controls, records an executable interpretation and unresolved alternatives.
+Eleven constructed tests verify range/score/objective mathematics. No new
+real-data scoring, neural implementation, fit or cluster allocation occurred.
+Next proposed action is AEA_GEOMETRY_CHECK.md, a separately approved zero-fit
+novelty-input/range/threshold check before GPU training. Do not substitute the
+classifier data or hide the existing novelty train/test overlaps. See the
+[source step](2026-09-24-aea-source-specification.md). Website untouched.
+
 ## Current execution: GRU pilot
 
 Completed job402625 at1f84703, 0:0 in56:11. Both50epochs/2250updates,

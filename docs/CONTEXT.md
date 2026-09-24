@@ -2,6 +2,32 @@
 
 **Last updated:** 2026-09-24
 
+**AEA source step complete:** user approved specification, not research fits.
+All10 target pages re-read/rendered; Zhao et al.[23] pp425–430 read/visually
+checked from Augsburg PDF (ignored references/zhao-2020-hierarchical-attention-autoencoders.pdf,
+SHA eacc7bc72db20c13b7a4f66de0837900ba5204e479f09c3a842ea73b9928b525).
+Sun/Wu[22] full text not located; do not claim to have read it. Source map and
+proposed I-AEA-native-table are in AEA_SPECIFICATION.md: standardized48x1,
+encoder500/300/200 mirrored decoder200/300/500, nativeSigmoid LSTM nopeepholes,
+causal decoder-query attention, zero initial output/free-running decode,
+Sigmoid scalar reconstruction/MSE, SGD.01, MaxNorm1; all omitted choices explicit.
+This model is NOT implemented or fitted. Printed peepholes/tanh and attention
+loop/state indexing differ or are incomplete. Ref23 is not imported wholesale.
+Range mismatch yields pointwise MSE bounds, not automatic detection failure.
+Eleven constructed tests pass; classification-only complement witness is not
+an ensemble experiment. No CER arrays scored or cluster job submitted.
+Novelty metadata:373train/6704test, p30 replaces108rows from6customers;
+108 exact train/test row overlaps,373 sharedsource days. Test3344benign
+(187original/3157synthetic),3360attacks. Scaler changes by poison condition;
+do not use classifier2232-row inputs or claim matched scaled features.
+Next proposed AEA_GEOMETRY_CHECK.md: zero-fit range/threshold/baseline and
+input/provenance check,10min/1CPU/8GiB/noGPU, separate approval before execution.
+Its runner is not implemented. Five reproduction files and all results unchanged;
+website belongs to another session. Plan docs/plans/2026-09-24-aea-source-specification.md.
+Final371pass/17skips;17focused source/geometry tests pass; strict data passes.
+An attempted METHOD annotation triggered its legacy hash guard and was removed;
+METHOD/oldaudit/test remain unchanged. New notes live only in AEA_SPECIFICATION.
+
 **GRU complete and audited:** 1f847039ea3c5d410db5e9ee194a6625ecd2b54d,
 job 402625 COMPLETED/0:0 in 56:11, crimv3mgpu005, one V100-16GB/4 CPUs/
 16 GiB. Both 50 epochs/2,250 updates, no guard reached. Initial weights match

@@ -12,6 +12,25 @@ execution plan here is
 
 ## Current project state
 
+- **AEA source specification and constructed checks complete:** re-read and
+  visually inspected all ten target pages; inspected reference[23]'s relevant
+  attention/decoder/setup pages. Reference[22] full text was not obtained;
+  that limitation is explicit. AEA_SPECIFICATION.md records source omissions,
+  a proposed native-Keras/table completion and alternatives. The natural
+  Sigmoid-reconstruction reading cannot reproduce negative standardized
+  entries exactly, but detection failure does not follow. Eleven constructed
+  tests verify MSE output-box bounds, threshold/rounding/unit distinctions and
+  why classification loss alone does not identify reconstruction. No AEA model
+  implemented, no new research-data scoring/fit/job or website change.
+  The existing novelty metadata reports373 train/6704 test rows and108 exact
+  p30 train/test overlaps; do not substitute the classifier inputs.
+  Next proposed step, requiring separate approval, is the zero-fit CPU check in
+  [AEA_GEOMETRY_CHECK.md](../studies/takiddin-2021-robust-poisoning/AEA_GEOMETRY_CHECK.md),
+  10min/1CPU/8GiB/no GPU. See [source plan](plans/2026-09-24-aea-source-specification.md).
+  Final verification:371 tests pass/17 environment-specific skips; strict
+  data verification passes. Original METHOD.md and five implementation files
+  are unchanged; new source notes are a separate addendum.
+
 - **GRU pair complete and audited:** frozen `1f84703`, job 402625,
   COMPLETED/0:0 in 56:11, one V100-16GB/4 CPUs/16 GiB. Both models finished
   50 epochs/2,250 updates; paired initialization and the repeated first 32
