@@ -2,6 +2,21 @@
 
 **Last updated:** 2026-09-24
 
+**Repair envelope approved:** user "continue", then resumed interrupted turn;
+interruption only completed connectivity, no code/job at that time. Now
+AEA_REPAIR_ENVELOPE.md and checks/aea_repair.py/run_aea_repair.sbatch specify
+five zero-fit branches: feature_z_mse,feature_z_mae,raw_unit_mse,
+global_z_mse,minmax_mse. Last is C control; no test-statistic fitting/clipping.
+Oracle gives benign rows lower error and attacks upper error; hence ROC/AUC
+upper bound for every reconstruction in those intervals. This is NOT the old
+clipped-score AUC and NOT a model. Tests include identical-input contradiction
+where oracle passes but a deterministic model cannot. Strict>cutoffs and
+ties, nominal/favorable rounding+1e-6 guards, necessary cutoff/factor intervals,
+original/synthetic strata, primary-only reversal; linear-output case analytic
+only.22 fixtures pass. No real repair calculations/job yet; finish main checks,
+freeze then submit one10min/1CPU/8GiB/noGPU job. Prior result d6e8b877...a42e5
+and56 inputs must verify first. Plan2026-09-24-aea-repair-envelope. No website work.
+
 **AEA geometry complete:**5d5d85050850f21f344c7509267b8215ca18767d,
 job402811 COMPLETED/0:0 in30s, nodecrimv3srv025. Requested1CPU/8GiB/noGPU,
 Slurm allocated2logicalCPUs, CPUs/Task1/numericalthreads1. Program1.80581s,

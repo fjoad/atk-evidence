@@ -12,6 +12,17 @@ execution plan here is
 
 ## Current project state
 
+- **AEA bounded repair comparison approved and implemented:** the user asked
+  to continue and resumed after an interruption that submitted no job. The
+  finite contract AEA_REPAIR_ENVELOPE.md tests all-cutoff interval relaxations
+  and five declared score/scale readings, not model training. True test labels
+  are used only to construct optimistic upper bounds; a pass is not a detector
+  or reproduction. Twenty-two constructed checks pass. Original preparations,
+  source contracts, five reproduction files and results remain unchanged.
+  Next:freeze code and run one10min/1CPU/8GiB/noGPU job, then audit and stop.
+  No new repair data scored or job submitted yet. See
+  [repair plan](plans/2026-09-24-aea-repair-envelope.md). Website untouched.
+
 - **AEA zero-fit check complete and audited:** freeze5d5d850, job402811,
   COMPLETED/0:0 in30s, no GPU/fits/neural inference. On the frozen novelty
   pilot, any [0,1]-bounded reconstruction scored by MSE at the printed0.51

@@ -58,6 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+The user approved the bounded AEA repair comparison and resumed after an
+interruption (no job existed at that interruption). See
+[repair contract](studies/takiddin-2021-robust-poisoning/AEA_REPAIR_ENVELOPE.md)
+and [plan](docs/plans/2026-09-24-aea-repair-envelope.md). Five declared score/
+scale branches, zero model fits; one10min/1CPU/8GiB/noGPU job after code freeze.
+22 constructed checks pass. No new real repair scores/job yet at this checkpoint.
+The label-informed interval oracle is an optimistic ROC/AUC bound, NOT a
+trained model, unlike the earlier clipped-error baseline. A pass only means
+not excluded. Preserve originals and all alternatives; no branch search,
+neural fit, or publication follows automatically. Website untouched.
+
+### Completed fixed-cutoff geometry checkpoint
+
 The zero-fit AEA geometry check is complete:5d5d850, job402811,0:0 in30s,
 no GPU/fits/neural inference. On the frozen novelty pilot, every reconstruction
 in[0,1] scored by MSE at the printed0.51 cutoff has favorable-rounding minimum
