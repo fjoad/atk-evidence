@@ -2,15 +2,29 @@
 
 **Last updated:** 2026-09-24
 
-**AEA geometry execution approved:** user said "ok do it" to the frozen zero-
-fit check. Contract AEA_GEOMETRY_CHECK.md remains aa2c4ab unchanged. Runner
-checks/aea_diagnostic.py and run_aea_geometry.sbatch,18 constructed checks
-pass. One10min/1CPU/8GiB/noGPU job; no neural construction, fits, inference,
-new preparation or website work. Verify56 input arrays/provenance/scaling
-before scoring; compare output-box bounds/rounding/three error units and
-zero/half/clipped/daily-mean scores. Existing root CPU .venv reused (pinned
-NumPy2.5.1,sklearn1.9.0 etc), no install. No job yet; finish tests/freeze,
-recheck scheduler/output and submit once. Plan2026-09-24-aea-geometry-execution.
+**AEA geometry complete:**5d5d85050850f21f344c7509267b8215ca18767d,
+job402811 COMPLETED/0:0 in30s, nodecrimv3srv025. Requested1CPU/8GiB/noGPU,
+Slurm allocated2logicalCPUs, CPUs/Task1/numericalthreads1. Program1.80581s,
+peakRSS204144KiB vs coarse Slurm51316KiB. Zero fits/inference/regeneration.
+For fixed novelty inputs/[0,1] reconstruction/MSE at printed0.51, minimum
+FA22.24880/22.78708 literal; allowing tau.515+1e-6 and printedFA rounding,
+741/3344=22.15909% and748/3344=22.36842% must be false alarms, beyond
+5.25/18.45 allowed. Any weights/seed/training duration with those fixed
+semantics cannot rescue that point. Not a full-population/scaler/threshold/
+other-output/other-error/ensemble result. Favorable RMSE minima55.14354/
+53.70813; SSE99.52153/99.55144. Optimistic DR bound100%, not excluded.
+Original-benign MSE minima53/187=28.34225,62/187=33.15508: not synthetic-only.
+Controls AUC p00/p30: zero51.86267/48.65709, half60.86976/58.98843,
+clipped59.44402/56.65526, dailymean65.70123/65.70123. These are fixed
+baselines, NOT model-AUC limits. Confirmed373train/6704test,108contaminated
+p30 rows and108exacttrain/test overlaps; all56hashes/scaler transforms/
+synthetic parents/rawtestpair/scorebounds/metrics pass. Local audit matches
+cluster bytes. Original inputs unchanged; raw score archives stay ignored.
+ResultSHA d6e8b877ce31bd6ccaccbfa9ed478fad9587665782a9192590243f58834a42e5.
+Results/aea_geometry_20260924; ignored aea-geometry-20260924-attempt1.
+Stop. Proposed next: bounded score/scale clarification/repair comparison,
+not fit excluded0.51 configuration or add seeds. No further job/site change.
+Contract aa2c4ab unchanged; implementation root CPU environment reused.
 
 **AEA source step complete:** user approved specification, not research fits.
 All10 target pages re-read/rendered; Zhao et al.[23] pp425–430 read/visually

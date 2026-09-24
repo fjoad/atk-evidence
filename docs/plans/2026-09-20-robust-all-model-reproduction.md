@@ -6,6 +6,14 @@
 
 ## Current step: standalone AEA source and pre-fit geometry
 
+The subsequently approved zero-fit check completed as job402811 at5d5d850,
+0:0 in30s. Rounding-favorable minimum FA22.15909/22.36842 exceeds paper
+5.25/18.45 for every [0,1] reconstruction/MSE at the fixed0.51 cutoff on
+the novelty pilot. All audits pass; no neural model/fitting. Stop this check;
+propose a bounded score/scale clarification/repair comparison rather than
+train the excluded setup. See [execution plan](2026-09-24-aea-geometry-execution.md)
+and its result record. No full-population or ensemble inference; no website change.
+
 The user approved source-specification after the GRU result. All target pages
 and relevant reference[23] pages were visually checked; reference[22] remains
 an explicit full-text access limitation. AEA_SPECIFICATION.md separates the

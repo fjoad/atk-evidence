@@ -25,6 +25,33 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: the AEA output range excludes its printed FA point on the frozen pilot
+
+**Added September24 after the approved zero-fit check.**
+
+- **Earlier state:** Sigmoid reconstruction cannot represent negative
+  standardized inputs, but that observation alone did not establish a
+  detection failure. A neural run had not been justified by it.
+- **New evidence:** the pointwise best possible [0,1] reconstruction still
+  exceeds the most favorable0.515 cutoff plus1e-6 guard on741/3344 and
+  748/3344 benign test rows. FA must be at least22.15909%/22.36842%, not
+  the printed5.2%/18.4%, even allowing one-decimal metric rounding.
+- **Conclusion:** **VERIFIED conditional attainability exclusion** for
+  every bounded reconstruction on these fixed prepared rows under the
+  stated MSE/cutoff interpretation. It does not depend on seeds or training
+  duration. RMSE/SSE alternatives at the same printed cutoff also fail.
+- **Limits:** other datasets/scalers/error meanings/output ranges/cutoffs
+  remain open; DR upper bounds are still100%. Fixed baseline AUCs are not
+  model-AUC ceilings. The paper's full population and sequential classifier
+  were not tested. This does not establish intent or fabrication.
+- **Checks and cost:** job402811 completed0:0 in30s, zero fits/no GPU;
+  all56 input arrays/provenance and saved-output calculations pass. Local
+  audit matches cluster bytes. Original-only benign bounds also exceed the
+  FA caps; synthetic evaluation alone is not the whole obstruction.
+- **Decision:** stop. A bounded score/scale clarification or repair comparison
+  is the proposed next question, not GPU training of this excluded point.
+- **Record:** [AEA geometry](../studies/takiddin-2021-robust-poisoning/results/aea_geometry_20260924/README.md).
+
 ### Paper 3: AEA specification makes range and objective checks precede fitting
 
 **Added September24 during source work, with constructed checks only.**

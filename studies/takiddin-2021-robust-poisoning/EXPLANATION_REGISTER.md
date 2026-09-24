@@ -347,7 +347,7 @@ AEA source/reconstruction specification. See [completed record](results/gru_comp
 ## E22 — the selected AEA can exactly reconstruct the standardized inputs
 
 **Status:** false for negative entries if Sigmoid is the reconstruction head;
-the effect on real-data detection remains unmeasured.
+the subsequent zero-fit pilot check establishes the conditional FA limit in E24.
 
 III-A.1 standardizes training values; TableII selects a Sigmoid output. Under
 the natural coordinate-reconstruction reading and declared MSE score, every
@@ -377,3 +377,30 @@ identify reconstruction, not a trained replication or proof that the actual
 ensemble cannot learn useful reconstruction incidentally. Standalone AEA
 reconstruction, joint classification, pretraining and combined losses remain
 separate experiments. No ensemble was implemented or run.
+
+## E24 — some weights rescue the printed AEA false-alarm point under the frozen reading
+
+**Status:** excluded on the frozen novelty pilot for [0,1] reconstruction,
+MSE and the printed0.51 cutoff, including declared rounding allowances.
+
+Job402811, freeze5d5d850, performed zero fits. Even the nearest permitted
+reconstruction has MSE above0.515+1e-6 for741/3344 benign p00 rows and
+748/3344 benign p30 rows. Every bounded reconstruction therefore has FA at
+least22.15909%/22.36842%, above the favorable printed caps5.25%/18.45%.
+This applies across all weight choices under these fixed conditions, not
+only a fitted model's scores. Predeclared RMSE/SSE versions also miss the
+FA caps at the same printed cutoff. The DR upper bound remains100%.
+
+The obstruction persists on original benign rows (minimum28.34225%/33.15508%
+at favorable rounding). All56 input arrays, scaler transforms, identities,
+synthetic ancestry and output calculations verify; local audit matches
+cluster bytes. Original inputs are unchanged. The108 exact p30 train/test
+overlaps remain a limitation of the retained preparation, not a new holdout.
+
+The lower-bound score's AUC59.44/56.66 is not an AUC ceiling on a learned
+model. Other populations, normalization axes/scales, outputs, score functions
+or thresholds remain open. In particular, this is not a statement about the
+sequential ensemble's classification output or author intent. No further
+training can fix this particular point; propose a bounded score/scale
+clarification or repair comparison instead of another seed. See
+[geometry result](results/aea_geometry_20260924/README.md).

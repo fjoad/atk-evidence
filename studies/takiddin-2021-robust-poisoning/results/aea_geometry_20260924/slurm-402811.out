@@ -1,0 +1,33 @@
+test_classification_loss_does_not_identify_reconstruction (tests.test_robust_aea_geometry.AEAGeometryTests.test_classification_loss_does_not_identify_reconstruction) ... ok
+test_favorable_rounding_can_remove_a_literal_threshold_certificate (tests.test_robust_aea_geometry.AEAGeometryTests.test_favorable_rounding_can_remove_a_literal_threshold_certificate) ... ok
+test_hand_calculated_mixed_domain_row (tests.test_robust_aea_geometry.AEAGeometryTests.test_hand_calculated_mixed_domain_row) ... ok
+test_invalid_arrays_and_intervals_are_rejected (tests.test_robust_aea_geometry.AEAGeometryTests.test_invalid_arrays_and_intervals_are_rejected) ... ok
+test_projection_attains_lower_bound_in_closed_box (tests.test_robust_aea_geometry.AEAGeometryTests.test_projection_attains_lower_bound_in_closed_box) ... ok
+test_random_bounded_reconstructions_obey_both_bounds (tests.test_robust_aea_geometry.AEAGeometryTests.test_random_bounded_reconstructions_obey_both_bounds) ... ok
+test_range_mismatch_alone_does_not_prove_detection_failure (tests.test_robust_aea_geometry.AEAGeometryTests.test_range_mismatch_alone_does_not_prove_detection_failure) ... ok
+test_rmse_and_sum_error_thresholds_are_not_mse_thresholds (tests.test_robust_aea_geometry.AEAGeometryTests.test_rmse_and_sum_error_thresholds_are_not_mse_thresholds) ... ok
+test_standardized_fixture_cannot_reconstruct_negative_row (tests.test_robust_aea_geometry.AEAGeometryTests.test_standardized_fixture_cannot_reconstruct_negative_row) ... ok
+test_threshold_strictness_and_unknown_middle (tests.test_robust_aea_geometry.AEAGeometryTests.test_threshold_strictness_and_unknown_middle) ... ok
+test_upper_bound_equals_exhaustive_corner_maximum (tests.test_robust_aea_geometry.AEAGeometryTests.test_upper_bound_equals_exhaustive_corner_maximum) ... ok
+test_allocation_guard_precedes_output_creation (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_allocation_guard_precedes_output_creation) ... ok
+test_clean_and_contaminated_provenance_and_scaler (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_clean_and_contaminated_provenance_and_scaler) ... ok
+test_complete_fixture_artifacts_reaudit_without_mutation (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_complete_fixture_artifacts_reaudit_without_mutation) ... ok
+test_guard_and_favorable_rounding_do_not_overclaim (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_guard_and_favorable_rounding_do_not_overclaim) ... ok
+test_input_hash_tampering_is_rejected_before_calculation (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_input_hash_tampering_is_rejected_before_calculation) ... ok
+test_invalid_scaling_labels_ancestry_or_overlap_are_rejected (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_invalid_scaling_labels_ancestry_or_overlap_are_rejected) ... ok
+test_score_construction_and_baselines_are_not_models (tests.test_robust_aea_diagnostic.AEADiagnosticTests.test_score_construction_and_baselines_are_not_models) ... ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 0.663s
+
+OK
+{
+  "input_arrays_checked": 56,
+  "model_fits": 0,
+  "neural_inference_calls": 0,
+  "original_inputs_unchanged": true,
+  "provenance_bounds_scores_metrics_verified": true,
+  "result_sha256": "d6e8b877ce31bd6ccaccbfa9ed478fad9587665782a9192590243f58834a42e5",
+  "score_artifacts_checked": 2,
+  "status": "verified"
+}

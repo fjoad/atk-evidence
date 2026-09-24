@@ -12,15 +12,21 @@ execution plan here is
 
 ## Current project state
 
-- **AEA zero-fit check approved and implemented:** the user asked to run the
-  frozen AEA_GEOMETRY_CHECK.md contract (aa2c4ab). The direct diagnostic and
-  saved-artifact audit pass18 constructed tests; no neural model is built.
-  One10-minute/1CPU/8GiB/noGPU job will verify the original novelty p00/p30
-  arrays, then measure output-box bounds and four untrained scores, including
-  favorable score/metric rounding and all original/synthetic strata. No data
-  regeneration or new model settings. Scheduler/output checks found no
-  existing account jobs or AEA geometry attempt. No submission yet at this
-  checkpoint. See [execution plan](plans/2026-09-24-aea-geometry-execution.md).
+- **AEA zero-fit check complete and audited:** freeze5d5d850, job402811,
+  COMPLETED/0:0 in30s, no GPU/fits/neural inference. On the frozen novelty
+  pilot, any [0,1]-bounded reconstruction scored by MSE at the printed0.51
+  threshold has rounding-favorable minimum FA22.15909%/22.36842%, versus
+  printed5.2%/18.4% (favorable caps5.25/18.45). RMSE/SSE interpretations
+  also fail those FA limits; detection's optimistic upper bound remains100%.
+  This is a weight-independent exclusion at that cutoff on these prepared
+  rows, not another scaler/population/threshold/output-range or ensemble
+  conclusion. All56 input arrays/provenance, both score archives and metrics
+  verify; local audit matches cluster bytes. Original inputs unchanged.
+  The108 exact p30 train/test overlaps are confirmed. Stop this diagnostic;
+  next proposed question is a bounded score/scale clarification or repair
+  comparison, not GPU training or another seed for the excluded setup.
+  See [result](../studies/takiddin-2021-robust-poisoning/results/aea_geometry_20260924/README.md)
+  and [execution plan](plans/2026-09-24-aea-geometry-execution.md). No website publication.
 
 - **AEA source specification and constructed checks complete:** re-read and
   visually inspected all ten target pages; inspected reference[23]'s relevant
