@@ -1,0 +1,8 @@
+{
+  "completed_result_sha256": "ce6847aba5c8c5da942779c02b100272ae7b0fa4e21e9eec9e2b0d52a05b4f9b",
+  "first_32_epoch_metrics_match_exactly": true,
+  "initial_weights_match_partial": true,
+  "mismatched_epoch_numbers": [],
+  "status": "compared_without_selecting_a_run",
+  "timing_compared_for_equality": false
+}

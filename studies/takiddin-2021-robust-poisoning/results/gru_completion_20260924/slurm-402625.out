@@ -1,0 +1,230 @@
+test_cli_rejects_unapproved_guard_or_other_model_before_compute (tests.test_robust_gru.GRUContractTests.test_cli_rejects_unapproved_guard_or_other_model_before_compute) ... ok
+test_completion_budget_uses_only_full_epochs_and_rounds_up (tests.test_robust_gru.GRUContractTests.test_completion_budget_uses_only_full_epochs_and_rounds_up) ... ok
+test_constructed_cluster_preflight_requires_allocation (tests.test_robust_gru.GRUContractTests.test_constructed_cluster_preflight_requires_allocation) ... ok
+test_guard_dispatch_changes_no_model_arguments (tests.test_robust_gru.GRUContractTests.test_guard_dispatch_changes_no_model_arguments) ... ok
+test_prefix_comparison_reports_differences_without_selecting (tests.test_robust_gru.GRUContractTests.test_prefix_comparison_reports_differences_without_selecting) ... ok
+test_roundoff_normalization_retains_raw_argmax_and_ties (tests.test_robust_gru.GRUContractTests.test_roundoff_normalization_retains_raw_argmax_and_ties) ... ok
+test_runtime_exception_has_fixed_identity_and_ceiling (tests.test_robust_gru.GRUContractTests.test_runtime_exception_has_fixed_identity_and_ceiling) ... ok
+test_runtime_exception_preserves_original_failed_gate (tests.test_robust_gru.GRUContractTests.test_runtime_exception_preserves_original_failed_gate) ... ok
+test_runtime_exception_rejects_wrong_identity_and_scientific_drift (tests.test_robust_gru.GRUContractTests.test_runtime_exception_rejects_wrong_identity_and_scientific_drift) ... ok
+test_runtime_gate_uses_slowest_warm_step_and_has_no_parameter_search (tests.test_robust_gru.GRUContractTests.test_runtime_gate_uses_slowest_warm_step_and_has_no_parameter_search) ... ok
+test_saved_preflight_gate_and_identity_are_rechecked (tests.test_robust_gru.GRUContractTests.test_saved_preflight_gate_and_identity_are_rechecked) ... ok
+test_scientific_function_check_rejects_body_changes_not_comments (tests.test_robust_gru.GRUContractTests.test_scientific_function_check_rejects_body_changes_not_comments) ... ok
+test_sequence_reshape_preserves_every_value_and_rejects_wrong_axes (tests.test_robust_gru.GRUContractTests.test_sequence_reshape_preserves_every_value_and_rejects_wrong_axes) ... ok
+test_target_is_the_gru_row (tests.test_robust_gru.GRUContractTests.test_target_is_the_gru_row) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-09-24 01:44:18.953448: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-24 01:44:18.978414: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-24 01:44:18.978465: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-24 01:44:23.007763: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_constraint_projection_after_a_real_update (tests.test_robust_gru.GRUTensorFlowTests.test_constraint_projection_after_a_real_update) ... ok
+test_full_architecture_learns_a_two_sequence_fixture (tests.test_robust_gru.GRUTensorFlowTests.test_full_architecture_learns_a_two_sequence_fixture) ... ok
+test_full_fit_path_preserves_batch_guard_partial_history_and_raw_outputs (tests.test_robust_gru.GRUTensorFlowTests.test_full_fit_path_preserves_batch_guard_partial_history_and_raw_outputs) ... {"training_epoch": {"epoch": 1, "seconds": 13.525753624737263, "loss": 0.6917446851730347, "categorical_accuracy": 0.5, "optimizer_updates": 1, "epoch_complete": false}}
+ok
+test_full_source_architecture_and_constraints (tests.test_robust_gru.GRUTensorFlowTests.test_full_source_architecture_and_constraints) ... ok
+test_native_cell_matches_reset_before_hand_calculation (tests.test_robust_gru.GRUTensorFlowTests.test_native_cell_matches_reset_before_hand_calculation) ... ok
+test_seed_pairing_and_correct_or_corrupted_constructed_labels (tests.test_robust_gru.GRUTensorFlowTests.test_seed_pairing_and_correct_or_corrupted_constructed_labels) ... ok
+test_two_softmax_loss_repair_matches_binary_channel_mean (tests.test_robust_gru.GRUTensorFlowTests.test_two_softmax_loss_repair_matches_binary_channel_mean) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 101.495s
+
+OK
+2026-09-24 01:46:04.954937: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-24 01:46:04.979567: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-24 01:46:04.979610: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-24 01:46:06.973781: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"training_epoch": {"epoch": 1, "seconds": 40.087415635585785, "loss": 0.6706962585449219, "categorical_accuracy": 0.6003584265708923, "optimizer_updates": 45, "epoch_complete": true}}
+{"training_epoch": {"epoch": 2, "seconds": 25.512427665293217, "loss": 0.6357753276824951, "categorical_accuracy": 0.6469534039497375, "optimizer_updates": 90, "epoch_complete": true}}
+{"training_epoch": {"epoch": 3, "seconds": 25.42450798302889, "loss": 0.6342968940734863, "categorical_accuracy": 0.6500896215438843, "optimizer_updates": 135, "epoch_complete": true}}
+{"training_epoch": {"epoch": 4, "seconds": 25.58213548362255, "loss": 0.6196072697639465, "categorical_accuracy": 0.6698028445243835, "optimizer_updates": 180, "epoch_complete": true}}
+{"training_epoch": {"epoch": 5, "seconds": 25.43180938065052, "loss": 0.5905236601829529, "categorical_accuracy": 0.6962365508079529, "optimizer_updates": 225, "epoch_complete": true}}
+{"training_epoch": {"epoch": 6, "seconds": 25.42754276841879, "loss": 0.5764484405517578, "categorical_accuracy": 0.7011649012565613, "optimizer_updates": 270, "epoch_complete": true}}
+{"training_epoch": {"epoch": 7, "seconds": 25.450841531157494, "loss": 0.5717206001281738, "categorical_accuracy": 0.7045251131057739, "optimizer_updates": 315, "epoch_complete": true}}
+{"training_epoch": {"epoch": 8, "seconds": 25.440144769847393, "loss": 0.5686887502670288, "categorical_accuracy": 0.7175179123878479, "optimizer_updates": 360, "epoch_complete": true}}
+{"training_epoch": {"epoch": 9, "seconds": 25.576310522854328, "loss": 0.58448725938797, "categorical_accuracy": 0.6834677457809448, "optimizer_updates": 405, "epoch_complete": true}}
+{"training_epoch": {"epoch": 10, "seconds": 25.436545945703983, "loss": 0.545421302318573, "categorical_accuracy": 0.7273745536804199, "optimizer_updates": 450, "epoch_complete": true}}
+{"training_epoch": {"epoch": 11, "seconds": 25.42499018460512, "loss": 0.5119287371635437, "categorical_accuracy": 0.7320788502693176, "optimizer_updates": 495, "epoch_complete": true}}
+{"training_epoch": {"epoch": 12, "seconds": 26.014283888041973, "loss": 0.5224977731704712, "categorical_accuracy": 0.7311828136444092, "optimizer_updates": 540, "epoch_complete": true}}
+{"training_epoch": {"epoch": 13, "seconds": 25.414876960217953, "loss": 0.5696985721588135, "categorical_accuracy": 0.6872760057449341, "optimizer_updates": 585, "epoch_complete": true}}
+{"training_epoch": {"epoch": 14, "seconds": 25.025594115257263, "loss": 0.5137607455253601, "categorical_accuracy": 0.7318548560142517, "optimizer_updates": 630, "epoch_complete": true}}
+{"training_epoch": {"epoch": 15, "seconds": 24.580880038440228, "loss": 0.488911509513855, "categorical_accuracy": 0.747087836265564, "optimizer_updates": 675, "epoch_complete": true}}
+{"training_epoch": {"epoch": 16, "seconds": 24.534938603639603, "loss": 0.4747738242149353, "categorical_accuracy": 0.7526881694793701, "optimizer_updates": 720, "epoch_complete": true}}
+{"training_epoch": {"epoch": 17, "seconds": 25.354792773723602, "loss": 0.4789882004261017, "categorical_accuracy": 0.7551523447036743, "optimizer_updates": 765, "epoch_complete": true}}
+{"training_epoch": {"epoch": 18, "seconds": 25.44653743505478, "loss": 0.4781491458415985, "categorical_accuracy": 0.7594085931777954, "optimizer_updates": 810, "epoch_complete": true}}
+{"training_epoch": {"epoch": 19, "seconds": 25.40587704628706, "loss": 0.4620908796787262, "categorical_accuracy": 0.7567204236984253, "optimizer_updates": 855, "epoch_complete": true}}
+{"training_epoch": {"epoch": 20, "seconds": 25.33381525427103, "loss": 0.46853819489479065, "categorical_accuracy": 0.7540322542190552, "optimizer_updates": 900, "epoch_complete": true}}
+{"training_epoch": {"epoch": 21, "seconds": 25.40544857084751, "loss": 0.43462416529655457, "categorical_accuracy": 0.7732974886894226, "optimizer_updates": 945, "epoch_complete": true}}
+{"training_epoch": {"epoch": 22, "seconds": 25.319806464016438, "loss": 0.43982115387916565, "categorical_accuracy": 0.7688171863555908, "optimizer_updates": 990, "epoch_complete": true}}
+{"training_epoch": {"epoch": 23, "seconds": 24.62140256166458, "loss": 0.4200216829776764, "categorical_accuracy": 0.7856183052062988, "optimizer_updates": 1035, "epoch_complete": true}}
+{"training_epoch": {"epoch": 24, "seconds": 24.993788443505764, "loss": 0.4358293414115906, "categorical_accuracy": 0.7762096524238586, "optimizer_updates": 1080, "epoch_complete": true}}
+{"training_epoch": {"epoch": 25, "seconds": 25.438741467893124, "loss": 0.42145034670829773, "categorical_accuracy": 0.7802419066429138, "optimizer_updates": 1125, "epoch_complete": true}}
+{"training_epoch": {"epoch": 26, "seconds": 25.410717874765396, "loss": 0.41461241245269775, "categorical_accuracy": 0.7887544631958008, "optimizer_updates": 1170, "epoch_complete": true}}
+{"training_epoch": {"epoch": 27, "seconds": 25.442835569381714, "loss": 0.40247437357902527, "categorical_accuracy": 0.7932347655296326, "optimizer_updates": 1215, "epoch_complete": true}}
+{"training_epoch": {"epoch": 28, "seconds": 25.709197349846363, "loss": 0.4392778277397156, "categorical_accuracy": 0.772849440574646, "optimizer_updates": 1260, "epoch_complete": true}}
+{"training_epoch": {"epoch": 29, "seconds": 25.84212327003479, "loss": 0.40683862566947937, "categorical_accuracy": 0.7838261723518372, "optimizer_updates": 1305, "epoch_complete": true}}
+{"training_epoch": {"epoch": 30, "seconds": 25.883468754589558, "loss": 0.4202703535556793, "categorical_accuracy": 0.772849440574646, "optimizer_updates": 1350, "epoch_complete": true}}
+{"training_epoch": {"epoch": 31, "seconds": 25.87363590300083, "loss": 0.3961741328239441, "categorical_accuracy": 0.794130802154541, "optimizer_updates": 1395, "epoch_complete": true}}
+{"training_epoch": {"epoch": 32, "seconds": 25.469487212598324, "loss": 0.4014042019844055, "categorical_accuracy": 0.794130802154541, "optimizer_updates": 1440, "epoch_complete": true}}
+{"training_epoch": {"epoch": 33, "seconds": 25.44506047666073, "loss": 0.38453227281570435, "categorical_accuracy": 0.7972670197486877, "optimizer_updates": 1485, "epoch_complete": true}}
+{"training_epoch": {"epoch": 34, "seconds": 25.480804592370987, "loss": 0.38770726323127747, "categorical_accuracy": 0.7965949773788452, "optimizer_updates": 1530, "epoch_complete": true}}
+{"training_epoch": {"epoch": 35, "seconds": 25.41137858480215, "loss": 0.38312068581581116, "categorical_accuracy": 0.8008512258529663, "optimizer_updates": 1575, "epoch_complete": true}}
+{"training_epoch": {"epoch": 36, "seconds": 25.413943700492382, "loss": 0.376437783241272, "categorical_accuracy": 0.8064516186714172, "optimizer_updates": 1620, "epoch_complete": true}}
+{"training_epoch": {"epoch": 37, "seconds": 26.775631323456764, "loss": 0.37406107783317566, "categorical_accuracy": 0.7981630563735962, "optimizer_updates": 1665, "epoch_complete": true}}
+{"training_epoch": {"epoch": 38, "seconds": 36.33506307005882, "loss": 0.40405821800231934, "categorical_accuracy": 0.7871863842010498, "optimizer_updates": 1710, "epoch_complete": true}}
+{"training_epoch": {"epoch": 39, "seconds": 27.92431704699993, "loss": 0.5612435340881348, "categorical_accuracy": 0.647849440574646, "optimizer_updates": 1755, "epoch_complete": true}}
+{"training_epoch": {"epoch": 40, "seconds": 25.285809725522995, "loss": 0.5884615182876587, "categorical_accuracy": 0.6458333134651184, "optimizer_updates": 1800, "epoch_complete": true}}
+{"training_epoch": {"epoch": 41, "seconds": 25.10236929357052, "loss": 0.5367164015769958, "categorical_accuracy": 0.6863799095153809, "optimizer_updates": 1845, "epoch_complete": true}}
+{"training_epoch": {"epoch": 42, "seconds": 24.676495149731636, "loss": 0.4998670518398285, "categorical_accuracy": 0.7078853249549866, "optimizer_updates": 1890, "epoch_complete": true}}
+{"training_epoch": {"epoch": 43, "seconds": 25.271747179329395, "loss": 0.5108613967895508, "categorical_accuracy": 0.7253584265708923, "optimizer_updates": 1935, "epoch_complete": true}}
+{"training_epoch": {"epoch": 44, "seconds": 25.360154673457146, "loss": 0.49277356266975403, "categorical_accuracy": 0.7213261723518372, "optimizer_updates": 1980, "epoch_complete": true}}
+{"training_epoch": {"epoch": 45, "seconds": 26.900595121085644, "loss": 0.5014062523841858, "categorical_accuracy": 0.7096773982048035, "optimizer_updates": 2025, "epoch_complete": true}}
+{"training_epoch": {"epoch": 46, "seconds": 25.21552088856697, "loss": 0.516933262348175, "categorical_accuracy": 0.70743727684021, "optimizer_updates": 2070, "epoch_complete": true}}
+{"training_epoch": {"epoch": 47, "seconds": 29.47956759482622, "loss": 0.49146753549575806, "categorical_accuracy": 0.7199820876121521, "optimizer_updates": 2115, "epoch_complete": true}}
+{"training_epoch": {"epoch": 48, "seconds": 33.045824252068996, "loss": 0.4651665985584259, "categorical_accuracy": 0.7358871102333069, "optimizer_updates": 2160, "epoch_complete": true}}
+{"training_epoch": {"epoch": 49, "seconds": 26.487129375338554, "loss": 0.4700315594673157, "categorical_accuracy": 0.7419354915618896, "optimizer_updates": 2205, "epoch_complete": true}}
+{"training_epoch": {"epoch": 50, "seconds": 28.904682211577892, "loss": 0.4413221478462219, "categorical_accuracy": 0.758512556552887, "optimizer_updates": 2250, "epoch_complete": true}}
+{"case": "generalized-two-class-p00", "status": "complete", "metrics": {"n": 2232, "TP": 689, "FN": 416, "FP": 112, "TN": 1015, "DR": 62.35294117647059, "FA": 9.937888198757763, "SP": 90.06211180124224, "PR": 86.01747815230961, "ACC": 76.34408602150538, "F1": 72.29800629590765, "AUC": 89.07390380901525, "balanced_accuracy": 76.20752648885642}, "seconds": {"fit": 1316.2554303854704, "score": 138.26919454336166, "reload": 47.132180489599705}}
+2026-09-24 02:11:22.686680: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-09-24 02:11:22.711446: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-09-24 02:11:22.711493: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-09-24 02:11:24.795640: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"training_epoch": {"epoch": 1, "seconds": 40.32486330717802, "loss": 0.6507732272148132, "categorical_accuracy": 0.6391128897666931, "optimizer_updates": 45, "epoch_complete": true}}
+{"training_epoch": {"epoch": 2, "seconds": 25.44929761439562, "loss": 0.6351315379142761, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 90, "epoch_complete": true}}
+{"training_epoch": {"epoch": 3, "seconds": 25.451482318341732, "loss": 0.6342597603797913, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 135, "epoch_complete": true}}
+{"training_epoch": {"epoch": 4, "seconds": 25.43853786587715, "loss": 0.6338657140731812, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 180, "epoch_complete": true}}
+{"training_epoch": {"epoch": 5, "seconds": 26.369886606931686, "loss": 0.6273928880691528, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 225, "epoch_complete": true}}
+{"training_epoch": {"epoch": 6, "seconds": 29.38669279962778, "loss": 0.6148662567138672, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 270, "epoch_complete": true}}
+{"training_epoch": {"epoch": 7, "seconds": 25.383347392082214, "loss": 0.609402596950531, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 315, "epoch_complete": true}}
+{"training_epoch": {"epoch": 8, "seconds": 25.438822865486145, "loss": 0.6002174019813538, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 360, "epoch_complete": true}}
+{"training_epoch": {"epoch": 9, "seconds": 25.431898564100266, "loss": 0.6137906908988953, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 405, "epoch_complete": true}}
+{"training_epoch": {"epoch": 10, "seconds": 25.67950014770031, "loss": 0.6079673767089844, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 450, "epoch_complete": true}}
+{"training_epoch": {"epoch": 11, "seconds": 26.074220895767212, "loss": 0.5951511263847351, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 495, "epoch_complete": true}}
+{"training_epoch": {"epoch": 12, "seconds": 25.983611829578876, "loss": 0.5977118611335754, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 540, "epoch_complete": true}}
+{"training_epoch": {"epoch": 13, "seconds": 25.67781452089548, "loss": 0.5846242308616638, "categorical_accuracy": 0.6460573673248291, "optimizer_updates": 585, "epoch_complete": true}}
+{"training_epoch": {"epoch": 14, "seconds": 25.8648489266634, "loss": 0.5793417096138, "categorical_accuracy": 0.6749551892280579, "optimizer_updates": 630, "epoch_complete": true}}
+{"training_epoch": {"epoch": 15, "seconds": 26.134597435593605, "loss": 0.5836238265037537, "categorical_accuracy": 0.6866039633750916, "optimizer_updates": 675, "epoch_complete": true}}
+{"training_epoch": {"epoch": 16, "seconds": 27.564631335437298, "loss": 0.5705486536026001, "categorical_accuracy": 0.7016128897666931, "optimizer_updates": 720, "epoch_complete": true}}
+{"training_epoch": {"epoch": 17, "seconds": 26.6057108938694, "loss": 0.573664128780365, "categorical_accuracy": 0.6951164603233337, "optimizer_updates": 765, "epoch_complete": true}}
+{"training_epoch": {"epoch": 18, "seconds": 25.71031329035759, "loss": 0.5589305758476257, "categorical_accuracy": 0.6962365508079529, "optimizer_updates": 810, "epoch_complete": true}}
+{"training_epoch": {"epoch": 19, "seconds": 25.90706168115139, "loss": 0.5504716038703918, "categorical_accuracy": 0.7083333134651184, "optimizer_updates": 855, "epoch_complete": true}}
+{"training_epoch": {"epoch": 20, "seconds": 25.384013928472996, "loss": 0.5476259589195251, "categorical_accuracy": 0.7132616639137268, "optimizer_updates": 900, "epoch_complete": true}}
+{"training_epoch": {"epoch": 21, "seconds": 25.457934640347958, "loss": 0.5324007272720337, "categorical_accuracy": 0.7170698642730713, "optimizer_updates": 945, "epoch_complete": true}}
+{"training_epoch": {"epoch": 22, "seconds": 25.378986716270447, "loss": 0.5298658609390259, "categorical_accuracy": 0.7175179123878479, "optimizer_updates": 990, "epoch_complete": true}}
+{"training_epoch": {"epoch": 23, "seconds": 25.36297508329153, "loss": 0.5143570899963379, "categorical_accuracy": 0.7267025113105774, "optimizer_updates": 1035, "epoch_complete": true}}
+{"training_epoch": {"epoch": 24, "seconds": 25.61522277444601, "loss": 0.5072853565216064, "categorical_accuracy": 0.7358871102333069, "optimizer_updates": 1080, "epoch_complete": true}}
+{"training_epoch": {"epoch": 25, "seconds": 26.423970490694046, "loss": 0.4942916929721832, "categorical_accuracy": 0.7392473220825195, "optimizer_updates": 1125, "epoch_complete": true}}
+{"training_epoch": {"epoch": 26, "seconds": 27.11330482363701, "loss": 0.49951741099357605, "categorical_accuracy": 0.7374551892280579, "optimizer_updates": 1170, "epoch_complete": true}}
+{"training_epoch": {"epoch": 27, "seconds": 26.337636046111584, "loss": 0.5049769878387451, "categorical_accuracy": 0.7363350987434387, "optimizer_updates": 1215, "epoch_complete": true}}
+{"training_epoch": {"epoch": 28, "seconds": 32.61895415186882, "loss": 0.5049782395362854, "categorical_accuracy": 0.730286717414856, "optimizer_updates": 1260, "epoch_complete": true}}
+{"training_epoch": {"epoch": 29, "seconds": 28.262663200497627, "loss": 0.5199629664421082, "categorical_accuracy": 0.7325268983840942, "optimizer_updates": 1305, "epoch_complete": true}}
+{"training_epoch": {"epoch": 30, "seconds": 34.08887089788914, "loss": 0.5065617561340332, "categorical_accuracy": 0.7379032373428345, "optimizer_updates": 1350, "epoch_complete": true}}
+{"training_epoch": {"epoch": 31, "seconds": 27.248628616333008, "loss": 0.48110371828079224, "categorical_accuracy": 0.7437276244163513, "optimizer_updates": 1395, "epoch_complete": true}}
+{"training_epoch": {"epoch": 32, "seconds": 30.81765805184841, "loss": 0.4799610674381256, "categorical_accuracy": 0.748431921005249, "optimizer_updates": 1440, "epoch_complete": true}}
+{"training_epoch": {"epoch": 33, "seconds": 33.780302941799164, "loss": 0.47382494807243347, "categorical_accuracy": 0.7594085931777954, "optimizer_updates": 1485, "epoch_complete": true}}
+{"training_epoch": {"epoch": 34, "seconds": 27.48898394405842, "loss": 0.4762140214443207, "categorical_accuracy": 0.7558243870735168, "optimizer_updates": 1530, "epoch_complete": true}}
+{"training_epoch": {"epoch": 35, "seconds": 34.01104149222374, "loss": 0.4898863136768341, "categorical_accuracy": 0.7473118305206299, "optimizer_updates": 1575, "epoch_complete": true}}
+{"training_epoch": {"epoch": 36, "seconds": 30.90028453618288, "loss": 0.4699796736240387, "categorical_accuracy": 0.7625448107719421, "optimizer_updates": 1620, "epoch_complete": true}}
+{"training_epoch": {"epoch": 37, "seconds": 33.935450561344624, "loss": 0.4605543315410614, "categorical_accuracy": 0.7701612710952759, "optimizer_updates": 1665, "epoch_complete": true}}
+{"training_epoch": {"epoch": 38, "seconds": 29.097875729203224, "loss": 0.4627140164375305, "categorical_accuracy": 0.7663530707359314, "optimizer_updates": 1710, "epoch_complete": true}}
+{"training_epoch": {"epoch": 39, "seconds": 27.17550592124462, "loss": 0.4567161500453949, "categorical_accuracy": 0.7674731016159058, "optimizer_updates": 1755, "epoch_complete": true}}
+{"training_epoch": {"epoch": 40, "seconds": 32.204284481704235, "loss": 0.44027024507522583, "categorical_accuracy": 0.7795698642730713, "optimizer_updates": 1800, "epoch_complete": true}}
+{"training_epoch": {"epoch": 41, "seconds": 31.565750181674957, "loss": 0.44277140498161316, "categorical_accuracy": 0.7762096524238586, "optimizer_updates": 1845, "epoch_complete": true}}
+{"training_epoch": {"epoch": 42, "seconds": 25.67772015929222, "loss": 0.4894416928291321, "categorical_accuracy": 0.7701612710952759, "optimizer_updates": 1890, "epoch_complete": true}}
+{"training_epoch": {"epoch": 43, "seconds": 26.060713037848473, "loss": 0.4511130154132843, "categorical_accuracy": 0.7865143418312073, "optimizer_updates": 1935, "epoch_complete": true}}
+{"training_epoch": {"epoch": 44, "seconds": 25.735901162028313, "loss": 0.45289161801338196, "categorical_accuracy": 0.7759856581687927, "optimizer_updates": 1980, "epoch_complete": true}}
+{"training_epoch": {"epoch": 45, "seconds": 24.117372676730156, "loss": 0.4522900879383087, "categorical_accuracy": 0.7757616639137268, "optimizer_updates": 2025, "epoch_complete": true}}
+{"training_epoch": {"epoch": 46, "seconds": 23.79539303481579, "loss": 0.43849921226501465, "categorical_accuracy": 0.788306474685669, "optimizer_updates": 2070, "epoch_complete": true}}
+{"training_epoch": {"epoch": 47, "seconds": 23.61983495950699, "loss": 0.4468890428543091, "categorical_accuracy": 0.7800179123878479, "optimizer_updates": 2115, "epoch_complete": true}}
+{"training_epoch": {"epoch": 48, "seconds": 24.562732338905334, "loss": 0.43370312452316284, "categorical_accuracy": 0.7847222089767456, "optimizer_updates": 2160, "epoch_complete": true}}
+{"training_epoch": {"epoch": 49, "seconds": 25.74003017693758, "loss": 0.4354401230812073, "categorical_accuracy": 0.7844982147216797, "optimizer_updates": 2205, "epoch_complete": true}}
+{"training_epoch": {"epoch": 50, "seconds": 25.726364716887474, "loss": 0.43377047777175903, "categorical_accuracy": 0.7909946441650391, "optimizer_updates": 2250, "epoch_complete": true}}
+{"case": "generalized-two-class-p30", "status": "complete", "metrics": {"n": 2232, "TP": 439, "FN": 666, "FP": 69, "TN": 1058, "DR": 39.72850678733032, "FA": 6.122448979591836, "SP": 93.87755102040816, "PR": 86.41732283464567, "ACC": 67.06989247311827, "F1": 54.43273403595784, "AUC": 79.8860547563507, "balanced_accuracy": 66.80302890386923}, "seconds": {"fit": 1375.6240243688226, "score": 146.12082845717669, "reload": 47.72522296011448}}
+{
+  "attempts": [
+    {
+      "case": "generalized-two-class-p00",
+      "code_commit": "1f847039ea3c5d410db5e9ee194a6625ecd2b54d",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -16.45591397849462,
+        "AUC": -3.0260961909847452,
+        "DR": -30.04705882352942,
+        "F1": -20.001993704092342,
+        "FA": 3.1378881987577634,
+        "PR": -6.28252184769039,
+        "SP": -3.1378881987577643
+      },
+      "pilot_primary": {
+        "ACC": 76.34408602150538,
+        "AUC": 89.07390380901525,
+        "DR": 62.35294117647059,
+        "F1": 72.29800629590765,
+        "FA": 9.937888198757763,
+        "FN": 416,
+        "FP": 112,
+        "PR": 86.01747815230961,
+        "SP": 90.06211180124224,
+        "TN": 1015,
+        "TP": 689,
+        "balanced_accuracy": 76.20752648885642,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 92.8,
+        "AUC": 92.1,
+        "DR": 92.4,
+        "F1": 92.3,
+        "FA": 6.8,
+        "PR": 92.3,
+        "SP": 93.2
+      },
+      "result_sha256": "ce6847aba5c8c5da942779c02b100272ae7b0fa4e21e9eec9e2b0d52a05b4f9b",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    },
+    {
+      "case": "generalized-two-class-p30",
+      "code_commit": "1f847039ea3c5d410db5e9ee194a6625ecd2b54d",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -11.830107526881733,
+        "AUC": 0.48605475635069695,
+        "DR": -38.77149321266968,
+        "F1": -24.26726596404216,
+        "FA": -14.477551020408164,
+        "PR": 7.417322834645674,
+        "SP": 14.477551020408157
+      },
+      "pilot_primary": {
+        "ACC": 67.06989247311827,
+        "AUC": 79.8860547563507,
+        "DR": 39.72850678733032,
+        "F1": 54.43273403595784,
+        "FA": 6.122448979591836,
+        "FN": 666,
+        "FP": 69,
+        "PR": 86.41732283464567,
+        "SP": 93.87755102040816,
+        "TN": 1058,
+        "TP": 439,
+        "balanced_accuracy": 66.80302890386923,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 78.9,
+        "AUC": 79.4,
+        "DR": 78.5,
+        "F1": 78.7,
+        "FA": 20.6,
+        "PR": 79.0,
+        "SP": 79.4
+      },
+      "result_sha256": "c4de02d467b0c584477a93a7ea7130e9b474e4989bfdefbd1222a231d6817a26",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    }
+  ],
+  "scope": "first-baseline pilot, not full Table III reproduction"
+}

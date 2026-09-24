@@ -2,25 +2,31 @@
 
 **Last updated:** 2026-09-24
 
-**Live completion:** job402625 submitted ONCE and running at freeze
-1f847039ea3c5d410db5e9ee194a6625ecd2b54d, nodecrimv3mgpu005, one
-V100-16GB/4CPUs/16GiB,85min allocation/35min fit guards. Same50epochs,
-batch100,seed20260920, model/data. Remote checkout
-/export/home/fjoad/atk-evidence-paper3-gru-completion-20260924;
-output data/derived/takiddin-2021-robust-poisoning/gru-completion-20260924-attempt1
-under /export/home/fjoad/atk-evidence; log
-/export/home/fjoad/robust-gru-completion-transfer-OceGkq/slurm-402625.out.
-No completed research result yet. Wrapper runs p00, compares old initialization
-and32-epoch prefix, thenp30 andfullaudits; stops on partial/failure. Inspect
-this job/output; do not duplicate. Old partial remains intact. Local21GRU+8FF
-fixtures pass after correcting a Path expectation; main360passes/17skips,
-strict data verification passes; oldGRU/FF audits still match bytes.
-All21 GPU fixtures passed in101.495s; completion_authorization.json matches
-local bytes and p00 research runner started. No completed new fit yet.
-First2 full epochs/90 updates match old loss/accuracy exactly. Initial weight
-archive SHA f9be1638f70706c9580de0b358c200d676443aedc50519394bff378a02dc45d2
-matches old. Job still running; prefix32/pair audits occur after completion.
-No website changes. This supersedes the unsubmitted/stopped-state text below.
+**GRU complete and audited:** 1f847039ea3c5d410db5e9ee194a6625ecd2b54d,
+job 402625 COMPLETED/0:0 in 56:11, crimv3mgpu005, one V100-16GB/4 CPUs/
+16 GiB. Both 50 epochs/2,250 updates, no guard reached. Initial weights match
+each other and old partial; first 32 p00 epoch losses/accuracies/updates match
+old exactly. DR/FA/AUC p00 62.35294/9.93789/89.07390; p30
+39.72851/6.12245/79.88605. At corresponding FA caps 6.8/20.6%, best DR
+51.40271/67.14932 versus 92.4/78.5; reversal .27149/6.24434. Poisoned AUC
+close to 79.4 reported, not whole-row reproduction. Common-cap DR declines
+10.04525/16.56109/16.56109/12.48869 at 6.8/17.6/20.6/33.3; AUC drop9.18785.
+P00 loss .37406 at37→.58846 at40→.44132 at50; p30 final .43377. No plateau
+or global limit. Final observed training accuracy76.56810/73.40950.
+Fits1316.25543/1375.62402s; program1513.03924/1580.91651s. All GRU jobs
+including old preflight/partial total4889s=81:29; do not erase repeated cost.
+All20 input arrays, IDs/labels/hashes, scores/metrics, pairing/schedule/budget
+pass. Local pair/comparison/prefix audits match cluster bytes; HDF5 final
+weights, optimizer2250,4058702params, configs/norms verify without inference.
+All artifacts in ignored gru-completion-20260924-attempt1 under usual derived
+study root; summaries in results/gru_completion_20260924. Result SHA p00
+ce6847aba5c8c5da942779c02b100272ae7b0fa4e21e9eec9e2b0d52a05b4f9b; p30
+c4de02d467b0c584477a93a7ea7130e9b474e4989bfdefbd1222a231d6817a26.
+Remote checkout /export/home/fjoad/atk-evidence-paper3-gru-completion-20260924;
+log /export/home/fjoad/robust-gru-completion-transfer-OceGkq/slurm-402625.out.
+Stop pair. Proposed next: source-specify standalone AEA/reconstruction, not
+extra GRU seeds/epochs or ensemble fit. No new job/inference/site publication.
+Old partial remains intact. This supersedes all running-state text below.
 
 **Approved GRU completion:** user said go ahead after the partial-audit report.
 docs/plans/2026-09-24-gru-completion.md and GRU_COMPLETION.md authorize one

@@ -25,6 +25,33 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: completed GRU improves on the partial run but still misses the operating corners
+
+**Added September 24 after the completed pair and independent artifact audit.**
+
+- **Question:** was the weak partial GRU merely an interrupted schedule, and
+  could completing 50 epochs or changing the cutoff close its numerical gap?
+- **Controlled continuity:** same seed/model/data, both 50 epochs/2,250 updates.
+  Initial weights and all first32 p00 epoch loss/accuracy/update records match
+  the earlier run exactly. Only the operational time guard was increased.
+- **Evidence:** p00 AUC80.82→89.07 and default DR42.99→62.35 from partial to
+  complete; p30 AUC79.89 is close to paper79.4. But at the corresponding
+  printed FA caps6.8/20.6%, best DR51.40/67.15 misses92.4/78.5. All cutoffs
+  and reversed-score diagnostics on these saved scores fail those corners.
+- **Conclusion:** **VERIFIED** useful learning and a remaining fixed-score
+  operating-point gap in this pilot. **OPEN** full population, source-reading
+  alternatives and mechanism. The near-AUC match is supportive evidence,
+  not complete-row reproduction; the corner miss is not an all-GRU bound.
+- **Caution:** p00 training loss rises at epochs39–40 and partly recovers.
+  Fifty scheduled epochs do not establish convergence or a plateau. Do not
+  select an earlier epoch after viewing test performance or automatically
+  add seeds. No cause of the late deterioration is identified.
+- **Cost and decision:** job402625 took56:11; GRU allocations including the
+  preserved preflight/partial total81:29. All local audits match cluster bytes.
+  Stop pair; propose source-specifying standalone AEA/reconstruction before
+  any fit or ensemble work. No new job or local model inference in the check.
+- **Record:** [completed GRU pair](../studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
+
 ### Paper 3: the first GRU result is interrupted, not a completed failure
 
 **Added September 24 after checking job 402378.**

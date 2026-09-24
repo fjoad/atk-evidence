@@ -2,16 +2,20 @@
 
 **Date:** 2026-09-20
 
-**State:** four model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
+**State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
 ## Current execution: GRU pilot
 
-User-approved completion is now running once as job402625 at1f84703.
-See [completion plan](2026-09-24-gru-completion.md):35min guards/85min cap
-from measured epoch times, unchanged model/data/seed/50epoch schedule,
-fresh initialization and explicit prefix comparison with preserved partial.
-No completed new result yet; inspect existing allocation/output before action.
-No website work or publication. This supersedes the budget-decision pause below.
+Completed job402625 at1f84703, 0:0 in56:11. Both50epochs/2250updates,
+same initial weights and exact repeated32-epoch p00 prefix. Local audits
+match cluster bytes; all original partial outputs remain. DR/FA/AUC
+62.35/9.94/89.07 and39.73/6.12/79.89; best DR at paper FA caps51.40/67.15
+versus92.4/78.5. Useful ranking survives and poisoned AUC is close, but no
+complete metric-row reproduction. Late p00 loss deterioration precludes a
+converged-plateau claim. Stop pair; next proposed coverage step is standalone
+AEA source/reconstruction-objective specification, not more GRU seeds/epochs.
+See [completion plan](2026-09-24-gru-completion.md). No new experiment or
+website publication. This supersedes the earlier checkpoints below.
 
 September 24 check: job 402378 stopped at p00's 900s fit guard, 32 full
 epochs plus seven batches of epoch 33; p30 never started. All partial-artifact

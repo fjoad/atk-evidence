@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; four model pairs, forest controls and SVM follow-up complete; GRU partial fit audited
+**Status:** active; five model pairs, forest controls and SVM follow-up complete; GRU partial attempt also preserved
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -311,3 +311,35 @@ scores, metrics, weights, optimizer updates and history without relabeling it
 complete or rerunning inference locally. Stop this attempt; specify the
 timing/budget question before approved completion of the unchanged schedule.
 No extra seeds or automatic p30. See [record](results/gru_pilot_20260923/README.md).
+
+**Completed-schedule update:** the separately approved same-seed pair now
+finishes all 50 epochs. The first 32 p00 epochs match exactly; full p00 AUC
+improves to89.07390 and default DR to62.35294. Thus the partial score was not
+the final scheduled result. Its old partial status remains unchanged. See E21.
+
+## E21 — completing the prescribed schedule or changing the cutoff closes the GRU gap
+
+**Status:** not observed for the declared completed pilot; other readings,
+optimization trajectories and full-population outcomes remain open.
+
+Frozen1f84703/job402625 completed both50-epoch/2250-update fits in56:11.
+DR/FA/AUC is62.35294/9.93789/89.07390 unpoisoned and
+39.72851/6.12245/79.88605 poisoned. At corresponding FA caps6.8/20.6%, best
+saved-score DR51.40271/67.14932 misses92.4/78.5; reversal gives only
+.27149/6.24434. This excludes cutoff/sign rescue for these scores/rows,
+not every GRU configuration. The poisoned AUC is close to79.4 reported;
+one close metric does not reproduce the complete operating pattern.
+
+Useful ranking remains above daily-mean AUC66.19624. Default DR declines
+22.62443 points; common-cap declines are10.04525–16.56109, with AUC down
+9.18785. Threshold effects are material but not the entire change. Identical
+initialization, inputs and repeated32-epoch prefix pass; all local audits
+match cluster bytes. The original partial attempt remains preserved.
+
+P00 loss rises sharply around epochs39–40 then partly recovers. The completed
+schedule does not establish convergence, a stable attainable ceiling or the
+cause of underperformance. Native-ReLU/table versus generic recurrence
+interpretations remain untested alternatives; the temporal and ensemble
+reconstruction mechanisms are not identified. No further seeds or training
+were run after inspecting this result. Proposed next coverage is standalone
+AEA source/reconstruction specification. See [completed record](results/gru_completion_20260924/README.md).

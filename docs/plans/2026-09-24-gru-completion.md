@@ -10,7 +10,7 @@ The user approved correcting the runtime estimate and budgeting the unchanged
   and neural fixtures; freeze code before the new attempt.
 - [x] Check scheduler/output state; launch one original p00/p30 pair, one
   V100-16GB, four CPUs/16 GiB, 35-minute fit guards, 85-minute allocation.
-- [ ] Preserve/audit all outcomes, compare the unpoisoned run's initial weights
+- [x] Preserve/audit all outcomes, compare the unpoisoned run's initial weights
   and first 32 epochs with the earlier attempt, and record the next decision.
 
 No additional constructed GPU timing job is needed: 32 measured full research
@@ -49,3 +49,34 @@ remains running, with no completed result yet. Do not launch a duplicate.
 At the running checkpoint, p00's first two full epochs/90 updates exactly
 match the earlier loss/accuracy values, and the initial-weight archive hash
 matches the old file. The full32-epoch prefix comparison remains pending.
+
+## Completion check
+
+The user asked to check the existing job. Slurm reports COMPLETED/0:0 in
+56:11. Both conditions finished; cluster comparison/pair-audit and prefix
+records exist. The first32 unpoisoned epoch metrics match exactly. Copy full
+artifacts to ignored data, re-run saved-artifact audits locally (no model
+inference), compare bytes with cluster outputs, inspect learning/timing and
+fixed-score tradeoffs, then record the bounded result and next question.
+No new fit, seed, allocation, website edit or publication is authorized by
+this status check.
+
+All local pair, comparison and prefix audits match cluster bytes. All20
+consumed inputs, labels/identities, source/output hashes,50epochs/2250updates
+and paired initialization pass. Read-only serialized-model inspection also
+checks final-weight hashes, optimizer count, configuration and constraints.
+The first32 p00 epochs match the partial attempt exactly; old outputs remain
+intact. No local model inference or new allocation.
+
+Completed DR/FA/AUC: p00 62.35294/9.93789/89.07390; p30
+39.72851/6.12245/79.88605. At corresponding paper FA caps6.8/20.6%, best
+DR51.40271/67.14932 versus92.4/78.5. Reversal does not rescue these scores.
+The poisoned AUC is close to79.4 reported; do not call that full reproduction.
+P00 loss rises sharply at epochs39–40 then partly recovers; no stable plateau
+or global attainability limit. Stop the pair. Proposed next coverage step is
+source-specifying standalone AEA/reconstruction before fitting or ensemble
+work, not more GRU seeds/epochs. No further experiment or publication occurred.
+
+Outcome-check verification: main suite360 passes/17 environment-specific
+skips; strict data verification passes. All journal/site consistency checks
+pass without regenerating any page. Earlier partial audit still matches bytes.

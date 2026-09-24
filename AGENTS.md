@@ -58,18 +58,23 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-**GRU completion job402625 is running**, frozen at
-1f847039ea3c5d410db5e9ee194a6625ecd2b54d. One V100-16GB,4CPUs/16GiB,
-85min allocation/35min fit guards, unchanged50epochs/batch100/seed/model/data.
-It is a same-seed restart, not a checkpoint continuation. Old partial remains
-preserved. Check this job and gru-completion-20260924-attempt1 before any
-action; no duplicate submission. Wrapper runs p00/prefix check/p30/audits,
-stopping on partial/failure. No completed research result yet. See
-[running record](studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
-All21 GPU fixtures pass; cluster authorization matches local bytes and p00
-research runner has started. The recorded job remains the only submission.
-After termination preserve/copy/audit and record the next question, not more
-settings/seeds. Website remains untouched. This supersedes older job-state text.
+**GRU pair complete and audited:** frozen
+1f847039ea3c5d410db5e9ee194a6625ecd2b54d, job 402625, COMPLETED/0:0 in
+56:11 on one V100-16GB, 4 CPUs/16 GiB. Both fits completed 50 epochs/2,250
+updates, with identical initial weights and exact first-32-epoch agreement
+with the earlier p00 attempt. DR/FA/AUC: 62.35/9.94/89.07 unpoisoned,
+39.73/6.12/79.89 poisoned. At paper FA caps 6.8/20.6%, best DR 51.40/67.15
+misses 92.4/78.5; reversal does not rescue these fitted scores. Poisoned AUC
+is close to the reported 79.4, not a full-row reproduction. P00 training loss
+rises late then partly recovers; no converged plateau or global limit.
+All local pair/comparison/prefix audits match cluster bytes; serialized
+weights, optimizer counts/config/norms also verify. Old partial remains intact.
+Stop this pair. Proposed next coverage step is source-specifying standalone
+AEA/reconstruction, not more GRU seeds/epochs or an automatic ensemble fit.
+No further experiment is authorized by this completed-result summary. See
+[record](studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
+No new job or local inference during the outcome check; website untouched.
+This supersedes older running-state text below.
 
 ### Completion authorization
 

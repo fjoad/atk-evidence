@@ -1,0 +1,87 @@
+{
+  "attempts": [
+    {
+      "case": "generalized-two-class-p00",
+      "code_commit": "1f847039ea3c5d410db5e9ee194a6625ecd2b54d",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -16.45591397849462,
+        "AUC": -3.0260961909847452,
+        "DR": -30.04705882352942,
+        "F1": -20.001993704092342,
+        "FA": 3.1378881987577634,
+        "PR": -6.28252184769039,
+        "SP": -3.1378881987577643
+      },
+      "pilot_primary": {
+        "ACC": 76.34408602150538,
+        "AUC": 89.07390380901525,
+        "DR": 62.35294117647059,
+        "F1": 72.29800629590765,
+        "FA": 9.937888198757763,
+        "FN": 416,
+        "FP": 112,
+        "PR": 86.01747815230961,
+        "SP": 90.06211180124224,
+        "TN": 1015,
+        "TP": 689,
+        "balanced_accuracy": 76.20752648885642,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 92.8,
+        "AUC": 92.1,
+        "DR": 92.4,
+        "F1": 92.3,
+        "FA": 6.8,
+        "PR": 92.3,
+        "SP": 93.2
+      },
+      "result_sha256": "ce6847aba5c8c5da942779c02b100272ae7b0fa4e21e9eec9e2b0d52a05b4f9b",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    },
+    {
+      "case": "generalized-two-class-p30",
+      "code_commit": "1f847039ea3c5d410db5e9ee194a6625ecd2b54d",
+      "comparison_is_reproduction": false,
+      "pilot_minus_reported_percentage_points": {
+        "ACC": -11.830107526881733,
+        "AUC": 0.48605475635069695,
+        "DR": -38.77149321266968,
+        "F1": -24.26726596404216,
+        "FA": -14.477551020408164,
+        "PR": 7.417322834645674,
+        "SP": 14.477551020408157
+      },
+      "pilot_primary": {
+        "ACC": 67.06989247311827,
+        "AUC": 79.8860547563507,
+        "DR": 39.72850678733032,
+        "F1": 54.43273403595784,
+        "FA": 6.122448979591836,
+        "FN": 666,
+        "FP": 69,
+        "PR": 86.41732283464567,
+        "SP": 93.87755102040816,
+        "TN": 1058,
+        "TP": 439,
+        "balanced_accuracy": 66.80302890386923,
+        "n": 2232
+      },
+      "reported_full_data_context": {
+        "ACC": 78.9,
+        "AUC": 79.4,
+        "DR": 78.5,
+        "F1": 78.7,
+        "FA": 20.6,
+        "PR": 79.0,
+        "SP": 79.4
+      },
+      "result_sha256": "c4de02d467b0c584477a93a7ea7130e9b474e4989bfdefbd1222a231d6817a26",
+      "scope": "20-customer 28-day exploratory pilot; not full Table III reproduction",
+      "status": "verified"
+    }
+  ],
+  "scope": "first-baseline pilot, not full Table III reproduction"
+}

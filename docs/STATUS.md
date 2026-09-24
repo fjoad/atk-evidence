@@ -12,20 +12,21 @@ execution plan here is
 
 ## Current project state
 
-- **GRU completion job402625 is running:** frozen
-  `1f847039ea3c5d410db5e9ee194a6625ecd2b54d`, one V100-16GB on
-  crimv3mgpu005,4 CPUs/16 GiB,85min cap/35min fit guards. Same seed,
-  original data/model and50epochs/batch100, fresh initialization rather than
-  an unverified checkpoint resume. Old partial remains untouched. No completed
-  result yet. The wrapper runs p00, repeated-prefix check, p30 and full audits;
-  stop on partial/failure. Check this job/output, do not duplicate it. See
-  [running record](../studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
-  Local21 GRU+8 FF fixtures pass; main360 pass/17 skips; old audits unchanged.
-  All21 GRU GPU fixtures pass in101.495s; cluster authorization matches local
-  bytes and p00 research runner has started. No completed new result yet.
-  First two full epochs (90 updates) match old loss/accuracy exactly; initial
-  weight archive also matches the original hash. Job continues unchanged.
-  No website changes/publication.
+- **GRU pair complete and audited:** frozen `1f84703`, job 402625,
+  COMPLETED/0:0 in 56:11, one V100-16GB/4 CPUs/16 GiB. Both models finished
+  50 epochs/2,250 updates; paired initialization and the repeated first 32
+  p00 epochs match exactly. DR/FA/AUC is 62.35/9.94/89.07 at p00 and
+  39.73/6.12/79.89 at p30. At corresponding paper FA caps 6.8/20.6%, best
+  detection is 51.40/67.15 versus 92.4/78.5; cutoff/reversal does not rescue
+  these fixed pilot scores. Poisoned AUC is close to 79.4 reported, but the
+  whole row is not reproduced. P00 loss deteriorates around epochs 39–40
+  then partly recovers; no stable plateau or all-GRU exclusion. All local
+  pair/comparison/prefix audits match cluster bytes; serialized weights,
+  optimizer counts, configurations and norms pass. Old partial preserved.
+  Stop this pair; proposed next coverage is source-specification of standalone
+  AEA/reconstruction before any fit or ensemble work. No new job, local
+  inference, website edit or publication during the check. See
+  [completed record](../studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
 
 - **Same-seed GRU completion now approved:** the user asked to proceed with
   correcting the runtime estimate and budgeting the unchanged 50-epoch pair.
