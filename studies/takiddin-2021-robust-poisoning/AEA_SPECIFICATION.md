@@ -129,6 +129,22 @@ The dimension plan implies5,031,701 parameters under these choices; verify
 against runtime before any fit. Native SGD/LSTM defaults were checked in the
 local pinned Keras3.4.1 source; that does not establish the authors' version.
 
+## Branch choice after the zero-fit envelope
+
+Feature-z MAE is the least invasive surviving branch: it preserves the
+paper's explicit featurewise standardization, Sigmoid output and threshold
+context while changing only the unspecified reconstruction-error norm.
+Raw-unit MSE and min-max remain alternatives; min-max is explicitly a control
+and raw-unit MSE changes the input/score convention more materially.
+
+`checks/aea_model.py` implements only a constructed fixture for this MAE
+branch. It is not part of the five paper-facing files and has not loaded
+research data. Four pinned-environment tests pass: 5,031,701 parameters and
+shapes, bounded output/attention normalization/query dependence, finite small
+fixture updates, and separate MAE/MSE objective identities. This does not
+establish a data result or authorize a fit. Feature-z MAE remains an
+interpreted `I/A` candidate, not an authenticated author implementation.
+
 ### Open alternatives, not an automatic sweep
 
 Equation-style peepholes/tanh; different peephole matrix/diagonal convention;

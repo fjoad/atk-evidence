@@ -58,6 +58,17 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+Feature-z MAE is the least invasive surviving repair branch after the audited
+AEA envelope. Constructed-only `checks/aea_model.py` passes four pinned TF
+tests: 5,031,701 parameters, output/attention checks, finite small updates and
+separate MAE/MSE objectives. It is not connected to direct reproduction files
+and has not loaded research data. Do not fit yet: changing MSE to MAE needs a
+new frozen research contract. Raw-unit MSE/min-max remain alternatives, not
+selected automatically. No branch search, ensemble, extra seed or website
+work. See [AEA_IMPLEMENTATION_ENVELOPE.md](studies/takiddin-2021-robust-poisoning/AEA_IMPLEMENTATION_ENVELOPE.md).
+
+### Completed repair envelope
+
 AEA repair envelope is complete and audited. Corrected job **403409** is
 COMPLETED/0:0 in 41s; job403408 failed prelaunch in1s because its Slurm output
 path was misspelled, with no data loaded. Five declared zero-fit branches,

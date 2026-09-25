@@ -12,6 +12,16 @@ execution plan here is
 
 ## Current project state
 
+- **AEA MAE implementation fixture complete; no research fit:** feature-z MAE
+  is the least invasive surviving branch after the repair envelope. Separate
+  constructed-only `checks/aea_model.py` implements mirrored Sigmoid LSTMs,
+  decoder-query attention, zero first output/free-running feedback, Sigmoid
+  reconstruction and MAE. Four pinned TensorFlow tests pass, including
+  5,031,701 parameters, normalized attention and finite updates. It is not
+  connected to the paper-facing files, has not loaded CER data and does not
+  authorize a fit. MAE versus MSE remains an interpretation choice requiring
+  a new frozen research contract. No website changes.
+
 - **AEA repair envelope complete and audited:** corrected job 403409 completed
   0:0 in 41 seconds after 403408 failed before the batch script due to a
   misspelled Slurm output path. Five declared zero-fit branches were evaluated;

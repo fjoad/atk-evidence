@@ -424,3 +424,15 @@ The first job failed before data load from an output-path typo and is preserved.
 Next question is textual justification of a surviving score/scale branch,
 not automatic AEA implementation, ensemble training or extra seeds. See
 [repair record](results/aea_repair_20260925/README.md).
+
+## E26 — a constructed AEA fixture does not authenticate the MAE branch
+
+**Status:** implementation fixture only; no research result.
+
+Feature-z MAE is the least invasive surviving branch after E25. The separate
+fixture uses mirrored Sigmoid LSTMs, decoder-query attention and free-running
+Sigmoid reconstruction, with MAE/SGD. Four pinned TensorFlow checks pass,
+including the full 5,031,701-parameter inventory and finite small updates.
+It is not connected to direct reproduction files or CER data, and its missing
+source choices remain interpretive. A new fit contract must decide whether
+MAE is textually defensible. No AEA fit, ensemble, branch search or extra seed.

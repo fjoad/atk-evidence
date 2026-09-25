@@ -42,3 +42,9 @@ cluster. Feature-z MSE/global-z MSE exclude the p00 paper corner under the
 optimistic envelope; feature-z MAE/raw-unit MSE/min-max are not excluded.
 This does not make a passing relaxation a detector. Stop and choose a textual
 score/scale branch before AEA implementation. No neural fit/ensemble/search.
+
+Feature-z MAE is now the least invasive surviving candidate. A separate
+constructed AEA fixture passes four pinned TensorFlow tests, but no research
+fit is authorized. Decide whether the paper supports MAE as an `I/A`
+completion and freeze a new data/metric/budget contract before any fit. Do not
+treat the fixture as performance or change the direct reproduction silently.

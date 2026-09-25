@@ -25,6 +25,23 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: a surviving score branch is not yet an AEA result
+
+**Added September25 after the repair envelope.**
+
+- **Decision:** feature-z MAE is the least invasive surviving interpretation;
+  it keeps the explicit standardization, Sigmoid output and threshold context
+  while changing only the unspecified reconstruction norm.
+- **Fixture:** a separate constructed I-AEA-native-table implementation passes
+  four pinned TensorFlow checks: 5,031,701 parameters, bounded output,
+  normalized/query-dependent attention, finite small updates and distinct
+  MAE/MSE objectives.
+- **Boundary:** this is not author code, not trained data evidence and not a
+  proof of reconstruction. The five direct reproduction files/results remain
+  unchanged. MAE source support and a new fit contract remain open.
+- **Decision:** stop at the fixture. Do not automatically fit, search branches,
+  add seeds or build the ensemble.
+
 ### Paper 3: score/scale alternatives separate a fixed obstruction from model evidence
 
 **Added September25 after the bounded repair envelope.**

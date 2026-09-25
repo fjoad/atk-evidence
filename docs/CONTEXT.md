@@ -2,6 +2,18 @@
 
 **Last updated:** 2026-09-24
 
+**AEA implementation fixture:** repair envelope leaves feature-z MAE as least
+invasive surviving branch (preserves featurewise standardization, Sigmoid head,
+threshold context; changes only unspecified error norm). New constructed-only
+checks/aea_model.py implements proposed I-AEA-native-table: encoder500/300/200,
+mirrored decoder200/300/500, native Sigmoid LSTM/no peepholes, additive
+decoder-query attention over48 states, zero first output, free-running
+feedback, Sigmoid reconstruction, MAE/SGD. Four pinned TF tests pass; full
+count5031701. No CER load, research score, fit, cluster job or five-file change.
+Not author code or proof of reconstruction. Before any fit, decide MAE source
+defensibility and freeze separate data/metric/budget/stopping contract.
+Raw-unit/minmax alternatives remain open.
+
 **AEA repair envelope complete:** job403408 failed prelaunch in1s from a
 misspelled output directory; no data loaded. Corrected job403409 completed0:0
 in41s oncrimv3srv024, requested1CPU/8GiB/noGPU, Slurm2logicalCPUs, threads1.
