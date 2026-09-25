@@ -2,6 +2,19 @@
 
 **Last updated:** 2026-09-24
 
+**AEA repair envelope complete:** job403408 failed prelaunch in1s from a
+misspelled output directory; no data loaded. Corrected job403409 completed0:0
+in41s oncrimv3srv024, requested1CPU/8GiB/noGPU, Slurm2logicalCPUs, threads1.
+Five interval/oracle branches, zero fits;56inputarrays/10archives. Feature-z
+MSE oracle excludes p00 paper corner: upperDR88.24405 versus94.05 rounding-
+favorable target; global-z MSE upperDR92.26190 also excludes p00.
+Feature-z MAE/raw-unit MSE/minmax control pass the optimistic envelope; this
+means only not excluded, not trained or realizable. Common p00 cutoff interval
+empty for feature-z MSE/global-z MSE. Prior geometry unchanged, local audit
+matches cluster, result SHA fd14a718560989e5575e7e1a8f4f5f153a17fc6fd023ccfdde3ee35ade9c7f69.
+Stop. Next is source justification for a surviving branch, not a neural fit or
+branch search. See results/aea_repair_20260925; website untouched.
+
 **Repair envelope approved:** user "continue", then resumed interrupted turn;
 interruption only completed connectivity, no code/job at that time. Now
 AEA_REPAIR_ENVELOPE.md and checks/aea_repair.py/run_aea_repair.sbatch specify

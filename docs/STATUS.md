@@ -12,6 +12,18 @@ execution plan here is
 
 ## Current project state
 
+- **AEA repair envelope complete and audited:** corrected job 403409 completed
+  0:0 in 41 seconds after 403408 failed before the batch script due to a
+  misspelled Slurm output path. Five declared zero-fit branches were evaluated;
+  no model fit or neural inference occurred. Feature-z MSE and global-z MSE
+  remain excluded at p00 even under optimistic label-informed bounds; feature-z
+  MAE, raw-unit MSE and training-only min-max control are not excluded by this
+  relaxation. This is not a detector or reproduction. All 56 inputs, ten
+  archives, prior geometry artifacts and metrics audit locally against cluster.
+  See [repair result](../studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
+  Stop; choose any textual score/scale branch before AEA implementation. No
+  neural fit, ensemble, extra seed, website edit or publication.
+
 - **AEA bounded repair comparison approved and implemented:** the user asked
   to continue and resumed after an interruption that submitted no job. The
   finite contract AEA_REPAIR_ENVELOPE.md tests all-cutoff interval relaxations

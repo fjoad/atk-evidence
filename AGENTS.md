@@ -58,6 +58,20 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+AEA repair envelope is complete and audited. Corrected job **403409** is
+COMPLETED/0:0 in 41s; job403408 failed prelaunch in1s because its Slurm output
+path was misspelled, with no data loaded. Five declared zero-fit branches,
+56 inputs and10archives pass local/cluster audit; model_fits=0. Feature-z MSE
+and global-z MSE optimistic bounds exclude the p00 paper corner; MAE/raw-unit
+MSE/min-max remain only **not excluded**, not successful models. Stop here:
+choose a textually defensible surviving score/scale branch before implementing
+AEA. No branch search, neural fit, ensemble, extra seed, website edit or
+publication. See
+[repair record](studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
+This supersedes the pre-job repair boundary below.
+
+### Earlier repair authorization
+
 The user approved the bounded AEA repair comparison and resumed after an
 interruption (no job existed at that interruption). See
 [repair contract](studies/takiddin-2021-robust-poisoning/AEA_REPAIR_ENVELOPE.md)

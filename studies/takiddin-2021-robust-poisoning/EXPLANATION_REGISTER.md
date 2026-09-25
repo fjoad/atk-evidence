@@ -404,3 +404,23 @@ sequential ensemble's classification output or author intent. No further
 training can fix this particular point; propose a bounded score/scale
 clarification or repair comparison instead of another seed. See
 [geometry result](results/aea_geometry_20260924/README.md).
+
+## E25 — a score/scale repair can remove the fixed-cutoff obstruction only as a relaxation
+
+**Status:** mixed; original feature-z MSE/global-z MSE p00 remain excluded by
+optimistic oracle bounds, while MAE/raw-unit MSE/min-max are not excluded.
+
+Corrected job403409, after prelaunch failure403408, evaluated five declared
+zero-fit branches using true labels only to maximize possible separation.
+Feature-z MSE p00 upper DR at favorable FA cap is88.24405 versus94.05;
+global-z MSE is92.26190. Their common p00 cutoff intervals are empty.
+Feature-z MAE, raw-unit MSE and training-only min-max MSE have optimistic
+envelopes that pass; this is only failure to exclude, not evidence a shared
+network can attain the oracle. No branch search or neural fit followed.
+
+All56 inputs/ten archives/prior geometry artifacts pass local/cluster audit.
+The108 p30 train/test overlaps and training-only statistics remain explicit.
+The first job failed before data load from an output-path typo and is preserved.
+Next question is textual justification of a surviving score/scale branch,
+not automatic AEA implementation, ensemble training or extra seeds. See
+[repair record](results/aea_repair_20260925/README.md).

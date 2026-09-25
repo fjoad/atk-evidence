@@ -11,9 +11,9 @@ unchanged. No neural training or website work is included.
   AEA_REPAIR_ENVELOPE.md before examining their research-data outcomes.
 - [x] Implement and test with constructed arrays, including proof witnesses
   that a passing relaxation is not a trained detector.
-- [ ] Freeze code; check scheduler/output state; run one10min/1CPU/8GiB/noGPU
+- [x] Freeze code; check scheduler/output state; run one10min/1CPU/8GiB/noGPU
   job on the same original novelty pair. No new split, poisoning or synthesis.
-- [ ] Audit saved outputs, preserve all alternatives, record changed beliefs
+- [x] Audit saved outputs, preserve all alternatives, record changed beliefs
   and the next question, verify and commit. Stop before any neural fit.
 
 The interval relaxation deliberately uses test labels to maximize possible
@@ -33,3 +33,12 @@ Pre-freeze checks:389 main-suite passes/17 environment-specific skips,
 22 focused fixtures and strict source-data verification. Five reproduction
 files, old contracts and METHOD.md remain unchanged. No research-data repair
 calculation has been performed before the code freeze.
+
+The first submission (403408) failed before the script ran because its output
+directory was misspelled; it loaded no data. Corrected job 403409 completed
+0:0 in41s. All56 input arrays, ten repair archives, prior geometry artifacts,
+interval/oracle analyses and metrics pass local audit byte-for-byte against
+cluster. Feature-z MSE/global-z MSE exclude the p00 paper corner under the
+optimistic envelope; feature-z MAE/raw-unit MSE/min-max are not excluded.
+This does not make a passing relaxation a detector. Stop and choose a textual
+score/scale branch before AEA implementation. No neural fit/ensemble/search.

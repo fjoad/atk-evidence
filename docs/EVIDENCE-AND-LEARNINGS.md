@@ -25,6 +25,30 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: score/scale alternatives separate a fixed obstruction from model evidence
+
+**Added September25 after the bounded repair envelope.**
+
+- **Question:** does a plausible score/scale interpretation remove the AEA
+  output-range false-alarm obstruction without training a model?
+- **Intervention:** five predeclared zero-fit interval branches: feature-z
+  MSE/MAE, raw-unit MSE, global-z MSE and training-only min-max MSE control.
+  A label-informed oracle supplies an optimistic envelope; it is not a
+  deployable model or prediction.
+- **Evidence:** feature-z MSE and global-z MSE still exclude the p00 corner
+  by optimistic DR/cutoff intervals. MAE, raw-unit MSE and min-max are not
+  excluded; no realizability follows. All inputs/archives/audits pass.
+- **Conclusion:** **OBSERVED** mixed score/scale sensitivity. The original
+  fixed feature-z/MSE p00 claim remains boundedly excluded; alternatives are
+  open, not validated.
+- **Limits:** branches are finite and source-contested; no AEA implementation,
+  training, ensemble mechanism or population result. The oracle uses test
+  labels and ignores shared-model coupling. Initial prelaunch failure was
+  operational only and loaded no data.
+- **Decision:** stop; select a textually defensible branch before writing an
+  AEA implementation. Do not automatically train a surviving branch.
+- **Record:** [repair envelope](../studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
+
 ### Paper 3: the AEA output range excludes its printed FA point on the frozen pilot
 
 **Added September24 after the approved zero-fit check.**

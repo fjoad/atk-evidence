@@ -1,0 +1,10 @@
+{
+  "input_arrays_checked": 56,
+  "model_fits": 0,
+  "previous_artifacts_unchanged": true,
+  "repair_archives_checked": 10,
+  "result_sha256": "fd14a718560989e5575e7e1a8f4f5f153a17fc6fd023ccfdde3ee35ade9c7f69",
+  "status": "verified",
+  "uses_test_labels_for_relaxation_not_model_training": true,
+  "views_intervals_oracle_bounds_and_metrics_verified": true
+}
