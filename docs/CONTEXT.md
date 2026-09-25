@@ -1,18 +1,25 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-24
+**Last updated:** 2026-09-25
 
-**AEA implementation fixture:** repair envelope leaves feature-z MAE as least
-invasive surviving branch (preserves featurewise standardization, Sigmoid head,
-threshold context; changes only unspecified error norm). New constructed-only
-checks/aea_model.py implements proposed I-AEA-native-table: encoder500/300/200,
-mirrored decoder200/300/500, native Sigmoid LSTM/no peepholes, additive
-decoder-query attention over48 states, zero first output, free-running
-feedback, Sigmoid reconstruction, MAE/SGD. Four pinned TF tests pass; full
-count5031701. No CER load, research score, fit, cluster job or five-file change.
-Not author code or proof of reconstruction. Before any fit, decide MAE source
-defensibility and freeze separate data/metric/budget/stopping contract.
-Raw-unit/minmax alternatives remain open.
+**AEA recheck (user requested):** MAE promotion withdrawn; no training branch
+selected. Its optimistic free-cutoff pass was confused with preserving 0.51;
+fixed-cutoff minimum FA is 36.75239/33.79187%, above 5.25/18.45%. Necessary
+free cutoff intervals [0.78932,0.97132)/[0.60363,1.25402). Source axis is
+unspecified; score norm does not choose training loss. Repair README p30
+bounds used the wrong FA cap: correct MSE/raw/global DR bounds at 18.45% are
+100/100/96.81548%. Raw JSON unchanged. Original audits replay exactly;
+independent endpoint/pair-count/order-statistic calculations verify all
+branches, all-cutoff/fixed-cutoff distinctions and original geometry. Original
+model/data artifacts and five files preserved. Old prototype query test also
+passed with query disabled; save succeeded but load failed. Fixed module-scope
+registered layer, explicit seed config/loss argument and six constructed TF
+tests (causal query witness with negative control, fresh-process reload).
+24 weight arrays/output/attention equal original small seed42 fixture exactly.
+No useful-learning claim, research fit/job or website change. See
+results/aea_recheck_20260925 and docs/plans/2026-09-25-aea-recheck.md. Before
+any new experiment separately justify scaling, loss, score and cutoff; no
+automatic alternate branch or model search.
 
 **AEA repair envelope complete:** job403408 failed prelaunch in1s from a
 misspelled output directory; no data loaded. Corrected job403409 completed0:0
@@ -20,12 +27,12 @@ in41s oncrimv3srv024, requested1CPU/8GiB/noGPU, Slurm2logicalCPUs, threads1.
 Five interval/oracle branches, zero fits;56inputarrays/10archives. Feature-z
 MSE oracle excludes p00 paper corner: upperDR88.24405 versus94.05 rounding-
 favorable target; global-z MSE upperDR92.26190 also excludes p00.
-Feature-z MAE/raw-unit MSE/minmax control pass the optimistic envelope; this
+Feature-z MAE/raw-unit MSE/minmax control pass the free-cutoff envelope; this
 means only not excluded, not trained or realizable. Common p00 cutoff interval
 empty for feature-z MSE/global-z MSE. Prior geometry unchanged, local audit
 matches cluster, result SHA fd14a718560989e5575e7e1a8f4f5f153a17fc6fd023ccfdde3ee35ade9c7f69.
-Stop. Next is source justification for a surviving branch, not a neural fit or
-branch search. See results/aea_repair_20260925; website untouched.
+The recheck above corrects the later MAE promotion. No neural fit or branch
+search. See results/aea_repair_20260925; website untouched.
 
 **Repair envelope approved:** user "continue", then resumed interrupted turn;
 interruption only completed connectivity, no code/job at that time. Now

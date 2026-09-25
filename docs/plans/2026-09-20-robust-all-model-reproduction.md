@@ -4,7 +4,19 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: standalone AEA source and pre-fit geometry
+## Current step: recheck the AEA interpretation before further experiments
+
+The user requested an audit of the last few steps. Independent replay confirms
+the geometry/repair mathematics, but MAE was wrongly promoted as preserving
+the printed cutoff. Its minimum FA is 36.75239%/33.79187% there. Three p30
+report values also used the wrong FA cap; the original JSON is unchanged.
+The prototype query test was non-discriminating and reload failed; these
+software defects are corrected with constructed checks. No research branch
+is selected and no new experiment/job follows. See
+[recheck plan](2026-09-25-aea-recheck.md) and its result record. Separately
+justify scaling, training loss, score and threshold before any future contract.
+
+## Previous step: standalone AEA source and pre-fit geometry
 
 The subsequently approved zero-fit check completed as job402811 at5d5d850,
 0:0 in30s. Rounding-favorable minimum FA22.15909/22.36842 exceeds paper

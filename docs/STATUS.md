@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-24
+**Last updated:** 2026-09-25
 
 **Branch:** `main`
 
@@ -12,26 +12,35 @@ execution plan here is
 
 ## Current project state
 
-- **AEA MAE implementation fixture complete; no research fit:** feature-z MAE
-  is the least invasive surviving branch after the repair envelope. Separate
-  constructed-only `checks/aea_model.py` implements mirrored Sigmoid LSTMs,
-  decoder-query attention, zero first output/free-running feedback, Sigmoid
-  reconstruction and MAE. Four pinned TensorFlow tests pass, including
-  5,031,701 parameters, normalized attention and finite updates. It is not
-  connected to the paper-facing files, has not loaded CER data and does not
-  authorize a fit. MAE versus MSE remains an interpretation choice requiring
-  a new frozen research contract. No website changes.
+- **AEA recheck corrects the recent conclusions; no training branch selected:**
+  MAE's free-cutoff relaxation was wrongly promoted as threshold-preserving.
+  Its minimum FA near printed 0.51 is 36.75239%/33.79187%, so that promotion is
+  withdrawn. Three p30 DR values in the repair README used the p00 FA cap;
+  the underlying JSON was correct. The source omits the scaling axis, and
+  scoring norm does not select training loss. Independent arithmetic and
+  artifact replay confirm the original bounds, including p00 DR≤88.24405%
+  for feature-z MSE at FA≤5.25%. The old prototype query test also passed with
+  the query disabled, and saved-model loading failed. Those software defects
+  are fixed; six constructed tests now pass without establishing useful
+  learning. No research fit/job, direct-file change or website work.
+  See [audit](../studies/takiddin-2021-robust-poisoning/results/aea_recheck_20260925/README.md)
+  and [step plan](plans/2026-09-25-aea-recheck.md). Any future proposal must
+  separately justify scaling, training loss, anomaly score and cutoff.
+  Verification: repository 392 passed/23 environment skips, six pinned AEA
+  fixtures passed; strict data verification passes on the recorded ScienceDB
+  branch (restricted official copies absent). Original artifacts preserved.
 
 - **AEA repair envelope complete and audited:** corrected job 403409 completed
   0:0 in 41 seconds after 403408 failed before the batch script due to a
   misspelled Slurm output path. Five declared zero-fit branches were evaluated;
   no model fit or neural inference occurred. Feature-z MSE and global-z MSE
   remain excluded at p00 even under optimistic label-informed bounds; feature-z
-  MAE, raw-unit MSE and training-only min-max control are not excluded by this
-  relaxation. This is not a detector or reproduction. All 56 inputs, ten
+  MAE, raw-unit MSE and training-only min-max control are not excluded by the
+  free-cutoff relaxation, not necessarily at 0.51. This is not a detector or
+  reproduction. All 56 inputs, ten
   archives, prior geometry artifacts and metrics audit locally against cluster.
   See [repair result](../studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
-  Stop; choose any textual score/scale branch before AEA implementation. No
+  The recheck above supersedes the subsequent MAE branch promotion. No
   neural fit, ensemble, extra seed, website edit or publication.
 
 - **AEA bounded repair comparison approved and implemented:** the user asked

@@ -54,7 +54,7 @@ labels using that equation. A reconstruction objective needs input targets.
 | Consequential item | Locator | Status and consequence |
 |---|---|---|
 | Novelty training versus testing | III-A.1, p2677; III-B.1, p2678 | Benign-only training before contamination; benign plus malicious evaluation. Not the classifier preparation. |
-| Input scaling | III-A.1, p2677 | Explicit zero-mean/unit-variance training scaling, reused for test data. |
+| Input scaling | III-A.1, p2677 | Explicit zero-mean/unit-variance training scaling, reused for test data; axis unspecified. Featurewise scaling is our completion, not an explicit source instruction. |
 | Test ADASYN | III-A.1, p2677 | Explicitly oversamples benign test examples; preserve and expose it, with original-only views. |
 | Poisoning | III-A.3, p2678 | Percentages of customers for generalized models; exact replacement/injection procedure omitted. |
 | Recurrent encoder/decoder and attention | III-B.1(b), Fig.2, p2678 | Attention uses encoder states and previous decoder state; context plus reconstructed output enters decoder. Dimensions, first output and execution order incomplete. |
@@ -129,21 +129,22 @@ The dimension plan implies5,031,701 parameters under these choices; verify
 against runtime before any fit. Native SGD/LSTM defaults were checked in the
 local pinned Keras3.4.1 source; that does not establish the authors' version.
 
-## Branch choice after the zero-fit envelope
+## Correction after the zero-fit envelope
 
-Feature-z MAE is the least invasive surviving branch: it preserves the
-paper's explicit featurewise standardization, Sigmoid output and threshold
-context while changing only the unspecified reconstruction-error norm.
-Raw-unit MSE and min-max remain alternatives; min-max is explicitly a control
-and raw-unit MSE changes the input/score convention more materially.
+The September25 promotion of feature-z MAE as threshold-preserving is
+withdrawn. Its free-cutoff relaxation passes, but at0.51 its minimum FA is
+36.75239%/33.79187%, even allowing favorable rounding. It requires changing
+the cutoff as well. Featurewise standardization is not explicitly named by
+the paper, and selecting a score norm does not select a training loss.
 
-`checks/aea_model.py` implements only a constructed fixture for this MAE
-branch. It is not part of the five paper-facing files and has not loaded
-research data. Four pinned-environment tests pass: 5,031,701 parameters and
-shapes, bounded output/attention normalization/query dependence, finite small
-fixture updates, and separate MAE/MSE objective identities. This does not
-establish a data result or authorize a fit. Feature-z MAE remains an
-interpreted `I/A` candidate, not an authenticated author implementation.
+No research branch is selected. `checks/aea_model.py` remains a constructed
+prototype of the native/table topology above, with explicit MAE or MSE loss
+choice, no CER loader and no connection to the five direct files. Its original
+query-dependence test was non-discriminating, and save/reload failed. Both
+software defects have been addressed; six bounded tests now pass, without
+establishing useful learning or reconstruction quality. See
+[implementation scope](AEA_IMPLEMENTATION_ENVELOPE.md) and the
+[independent recheck](results/aea_recheck_20260925/README.md).
 
 ### Open alternatives, not an automatic sweep
 

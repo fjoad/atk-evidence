@@ -1,0 +1,176 @@
+{
+  "audit_source_sha256": "d0b50616de3998981d07a476f29ff3917c826b621c8bc8d13b76308cdb7b4803",
+  "comparisons": {
+    "p00": {
+      "feature_z_mae": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 94.05,
+        "favorable_FA_cap": 5.25,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 100.0,
+        "fixed_cutoff_favorable_minimum_FA": 36.75239234449761,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 175,
+          "empty": false,
+          "maximum_exclusive": 0.9713206966622491,
+          "minimum_inclusive": 0.7893197470575968,
+          "required_true_positives": 3161
+        }
+      },
+      "feature_z_mse": {
+        "all_cutoff_DR_upper_bound": 88.24404761904762,
+        "favorable_DR_target": 94.05,
+        "favorable_FA_cap": 5.25,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 100.0,
+        "fixed_cutoff_favorable_minimum_FA": 22.15909090909091,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 175,
+          "empty": true,
+          "maximum_exclusive": 1.0430926387731771,
+          "minimum_inclusive": 1.4491031226982387,
+          "required_true_positives": 3161
+        }
+      },
+      "global_z_mse": {
+        "all_cutoff_DR_upper_bound": 92.26190476190476,
+        "favorable_DR_target": 94.05,
+        "favorable_FA_cap": 5.25,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 96.93452380952381,
+        "fixed_cutoff_favorable_minimum_FA": 22.966507177033492,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 175,
+          "empty": true,
+          "maximum_exclusive": 0.8995329501958319,
+          "minimum_inclusive": 1.008860914641934,
+          "required_true_positives": 3161
+        }
+      },
+      "minmax_mse": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 94.05,
+        "favorable_FA_cap": 5.25,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": false,
+        "fixed_cutoff_favorable_maximum_DR": 98.39285714285714,
+        "fixed_cutoff_favorable_minimum_FA": 0.0,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 175,
+          "empty": false,
+          "maximum_exclusive": 0.6536011959295498,
+          "minimum_inclusive": 0.0,
+          "required_true_positives": 3161
+        }
+      },
+      "raw_unit_mse": {
+        "all_cutoff_DR_upper_bound": 94.73214285714286,
+        "favorable_DR_target": 94.05,
+        "favorable_FA_cap": 5.25,
+        "fixed_cutoff_excluded_by_DR": true,
+        "fixed_cutoff_excluded_by_FA": false,
+        "fixed_cutoff_favorable_maximum_DR": 90.0297619047619,
+        "fixed_cutoff_favorable_minimum_FA": 3.139952153110048,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 175,
+          "empty": false,
+          "maximum_exclusive": 0.395891610291738,
+          "minimum_inclusive": 0.3694168415189295,
+          "required_true_positives": 3161
+        }
+      }
+    },
+    "p30": {
+      "feature_z_mae": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 80.75,
+        "favorable_FA_cap": 18.45,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 100.0,
+        "fixed_cutoff_favorable_minimum_FA": 33.791866028708135,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 616,
+          "empty": false,
+          "maximum_exclusive": 1.254015088733432,
+          "minimum_inclusive": 0.6036300675553977,
+          "required_true_positives": 2714
+        }
+      },
+      "feature_z_mse": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 80.75,
+        "favorable_FA_cap": 18.45,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 100.0,
+        "fixed_cutoff_favorable_minimum_FA": 22.36842105263158,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 616,
+          "empty": false,
+          "maximum_exclusive": 1.6991658127777114,
+          "minimum_inclusive": 0.568703078831754,
+          "required_true_positives": 2714
+        }
+      },
+      "global_z_mse": {
+        "all_cutoff_DR_upper_bound": 96.81547619047619,
+        "favorable_DR_target": 80.75,
+        "favorable_FA_cap": 18.45,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": true,
+        "fixed_cutoff_favorable_maximum_DR": 96.8452380952381,
+        "fixed_cutoff_favorable_minimum_FA": 18.809808612440193,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 616,
+          "empty": false,
+          "maximum_exclusive": 1.6612324886410892,
+          "minimum_inclusive": 0.5160677772383913,
+          "required_true_positives": 2714
+        }
+      },
+      "minmax_mse": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 80.75,
+        "favorable_FA_cap": 18.45,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": false,
+        "fixed_cutoff_favorable_maximum_DR": 98.39285714285714,
+        "fixed_cutoff_favorable_minimum_FA": 0.0,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 616,
+          "empty": false,
+          "maximum_exclusive": 0.7846959376473732,
+          "minimum_inclusive": 0.0,
+          "required_true_positives": 2714
+        }
+      },
+      "raw_unit_mse": {
+        "all_cutoff_DR_upper_bound": 100.0,
+        "favorable_DR_target": 80.75,
+        "favorable_FA_cap": 18.45,
+        "fixed_cutoff_excluded_by_DR": false,
+        "fixed_cutoff_excluded_by_FA": false,
+        "fixed_cutoff_favorable_maximum_DR": 87.5297619047619,
+        "fixed_cutoff_favorable_minimum_FA": 3.3791866028708135,
+        "free_cutoff_interval": {
+          "allowed_false_positives": 616,
+          "empty": false,
+          "maximum_exclusive": 0.6004551978919573,
+          "minimum_inclusive": 0.19595492441891205,
+          "required_true_positives": 2714
+        }
+      }
+    }
+  },
+  "method": "piecewise endpoint errors; direct AUC pair counts; benign order-statistic ROC bounds",
+  "new_research_experiments": 0,
+  "original_result_hashes": {
+    "geometry": "d6e8b877ce31bd6ccaccbfa9ed478fad9587665782a9192590243f58834a42e5",
+    "repair": "fd14a718560989e5575e7e1a8f4f5f153a17fc6fd023ccfdde3ee35ade9c7f69"
+  },
+  "status": "independent_arithmetic_verified"
+}

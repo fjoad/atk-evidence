@@ -1,0 +1,19 @@
+{
+  "attention_gradient_norms": {
+    "aea_recurrent/attention_bias": 1.2226908374657341e-09,
+    "aea_recurrent/attention_decoder_kernel": 1.3459846570640366e-09,
+    "aea_recurrent/attention_encoder_kernel": 1.7902119786583626e-09,
+    "aea_recurrent/attention_vector": 2.5839173023456397e-09
+  },
+  "gradient_none_names": [],
+  "gradients_finite": true,
+  "load_succeeded": false,
+  "original_input_perturbation_attention_change": 5.213543772697449e-06,
+  "original_query_test_still_passes_after_disabling_query": true,
+  "original_source_sha256": "2c3beac4dc92f9b4850898d22be71621f9270bb0629ce38dd5b360d0a5e6279d",
+  "same_test_change_with_query_path_disabled": 4.036352038383484e-06,
+  "save_succeeded": true,
+  "scope": "constructed audit only",
+  "serialization_error": "<class 'keras.src.models.functional.Functional'> could not be deserialized properly. Please ensure that components that are Python object instances (layers, models, etc.) returned by `get_config()` are explicitly deserialized in the model's `from_config()` method.\n\nconfig={'module': 'keras.src.models.functional', 'class_name': 'Functional', 'config': {'name': 'aea_native_table', 'trainable': True, 'layers': [{'module': 'keras.layers', 'class_name': 'InputLayer', 'config': {'batch_shape': [None, 48, 1], 'dtype': 'float32', 'sparse': False, 'name': 'daily_profile'}, 'registered_name': None, 'name': 'daily_profile', 'inbound_nodes': []}, {'module': 'aea_model', 'class_name': 'AEARecurrent', 'config': {'name': 'aea_recurrent', 'enc': [8, 6, 4], 'dec': [4, 6, 8], 'steps': 48, 'trainable': True, 'dtype': {'module': 'keras', 'class_name': 'DTypePolicy', 'config': {'name': 'float32'}, 'registered_name': None}}, 'registered_name': 'AEARecurrent', 'build_config': {'input_shape': [None, 48, 1]}, 'name': 'aea_recurrent', 'inbound_nodes': [{'args': [{'class_name': '__keras_tensor__', 'config': {'shape': [None, 48, 1], 'dtype': 'float32', 'keras_history': ['daily_profile', 0, 0]}}], 'kwargs': {'training': False}}]}], 'input_layers': [['daily_profile', 0, 0]], 'output_layers': [['aea_recurrent', 0, 0]]}, 'registered_name': 'Functional', 'build_config': {'input_shape': None}, 'compile_config': {'optimizer': {'module': 'keras.optimizers', 'class_name': 'SGD', 'config': {'name': 'SGD', 'learning_rate': 0.009999999776482582, 'weight_decay': None, 'clipnorm': None, 'global_clipnorm': None, 'clipvalue': None, 'use_ema': False, 'ema_momentum': 0.99, 'ema_overwrite_frequency': None, 'loss_scale_factor': None, 'gradient_accumulation_steps': None, 'momentum': 0.0, 'nesterov': False}, 'registered_name': None}, 'loss': {'module': 'keras.losses', 'class_name': 'MeanAbsoluteError', 'config': {'name': 'mean_absolute_error', 'reduction': 'sum_over_batch_size'}, 'registered_name': None}, 'loss_wei",
+  "serialization_error_type": "TypeError"
+}

@@ -1,0 +1,10 @@
+{
+  "input_arrays_checked": 56,
+  "model_fits": 0,
+  "neural_inference_calls": 0,
+  "original_inputs_unchanged": true,
+  "provenance_bounds_scores_metrics_verified": true,
+  "result_sha256": "d6e8b877ce31bd6ccaccbfa9ed478fad9587665782a9192590243f58834a42e5",
+  "score_artifacts_checked": 2,
+  "status": "verified"
+}

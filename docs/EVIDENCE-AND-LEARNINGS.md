@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-24
+**Last updated:** 2026-09-25
 
 ## Purpose
 
@@ -25,14 +25,42 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
-### Paper 3: a surviving score branch is not yet an AEA result
+### Paper 3: the AEA recheck corrects our interpretation and reporting
+
+**Added September25 at the user's request to revisit the last few steps.**
+
+- **Former belief — INVALIDATED:** MAE was the least invasive surviving
+  branch and preserved the printed threshold. The paper's scaling axis was
+  also described as explicit, and a score change was used to motivate a loss
+  change. These statements exceeded the evidence.
+- **Disconfirming evidence:** MAE's minimum FA near 0.51 is
+  36.75239%/33.79187%, despite its optimistic free-cutoff pass. The source
+  leaves the scaling axis and standalone loss unspecified. A scoring norm
+  cannot identify the training objective.
+- **Reporting defect — VERIFIED:** three p30 DR bounds in the repair README
+  used the p00 FA cap. Correct values at FA≤18.45% are 100%, 100%, 96.81548%
+  for feature-z MSE, raw-unit MSE and global-z MSE. The raw JSON was correct.
+- **Software assurance defect — VERIFIED:** the old query-dependence test
+  passed even after disabling the query path, because it changed encoder
+  memory too. Saved-model loading failed. Both are corrected; six constructed
+  tests include an isolated query intervention/negative control and exact
+  fresh-process reload. This does not establish useful reconstruction learning.
+- **What held:** original artifact audits match exactly; independent endpoint,
+  direct AUC pair-count and order-statistic calculations reproduce all saved
+  bounds. The conditional MSE exclusions remain valid on the frozen pilot.
+- **Decision:** withdraw the MAE promotion. No training branch selected,
+  research fit, new job or website work. Preserve all original evidence; any
+  future setup must separately justify scaling, loss, score and threshold.
+- **Record:** [AEA recheck](../studies/takiddin-2021-robust-poisoning/results/aea_recheck_20260925/README.md).
+
+### Paper 3: a surviving score branch is not yet an AEA result (decision withdrawn)
 
 **Added September25 after the repair envelope.**
 
-- **Decision:** feature-z MAE is the least invasive surviving interpretation;
+- **Former decision, invalidated above:** feature-z MAE is the least invasive surviving interpretation;
   it keeps the explicit standardization, Sigmoid output and threshold context
   while changing only the unspecified reconstruction norm.
-- **Fixture:** a separate constructed I-AEA-native-table implementation passes
+- **Former fixture claim, narrowed by the audit above:** a separate constructed I-AEA-native-table implementation passes
   four pinned TensorFlow checks: 5,031,701 parameters, bounded output,
   normalized/query-dependent attention, finite small updates and distinct
   MAE/MSE objectives.
@@ -54,7 +82,8 @@ and repeated experiments determine technical conclusions.
   deployable model or prediction.
 - **Evidence:** feature-z MSE and global-z MSE still exclude the p00 corner
   by optimistic DR/cutoff intervals. MAE, raw-unit MSE and min-max are not
-  excluded; no realizability follows. All inputs/archives/audits pass.
+  excluded with a free cutoff, not necessarily at 0.51; no realizability
+  follows. All inputs/archives/audits pass.
 - **Conclusion:** **OBSERVED** mixed score/scale sensitivity. The original
   fixed feature-z/MSE p00 claim remains boundedly excluded; alternatives are
   open, not validated.

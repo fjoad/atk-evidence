@@ -405,10 +405,11 @@ training can fix this particular point; propose a bounded score/scale
 clarification or repair comparison instead of another seed. See
 [geometry result](results/aea_geometry_20260924/README.md).
 
-## E25 — a score/scale repair can remove the fixed-cutoff obstruction only as a relaxation
+## E25 — score/scale alternatives may pass a free-cutoff relaxation
 
 **Status:** mixed; original feature-z MSE/global-z MSE p00 remain excluded by
-optimistic oracle bounds, while MAE/raw-unit MSE/min-max are not excluded.
+optimistic oracle bounds, while MAE/raw-unit MSE/min-max are not excluded
+when the cutoff is free. That does not imply a pass at the printed 0.51.
 
 Corrected job403409, after prelaunch failure403408, evaluated five declared
 zero-fit branches using true labels only to maximize possible separation.
@@ -416,7 +417,11 @@ Feature-z MSE p00 upper DR at favorable FA cap is88.24405 versus94.05;
 global-z MSE is92.26190. Their common p00 cutoff intervals are empty.
 Feature-z MAE, raw-unit MSE and training-only min-max MSE have optimistic
 envelopes that pass; this is only failure to exclude, not evidence a shared
-network can attain the oracle. No branch search or neural fit followed.
+network can attain the oracle. MAE still fails at 0.51 with minimum
+FA36.75239%/33.79187%; raw-unit MSE p00 fixed-cutoff maximum DR90.02976%
+also misses. Three p30 DR values in the original README used the wrong cap;
+the report is corrected but raw JSON remains unchanged. No branch search or
+neural fit followed. See E27.
 
 All56 inputs/ten archives/prior geometry artifacts pass local/cluster audit.
 The108 p30 train/test overlaps and training-only statistics remain explicit.
@@ -427,12 +432,35 @@ not automatic AEA implementation, ensemble training or extra seeds. See
 
 ## E26 — a constructed AEA fixture does not authenticate the MAE branch
 
-**Status:** implementation fixture only; no research result.
+**Status:** MAE branch promotion withdrawn; experimental software only.
 
-Feature-z MAE is the least invasive surviving branch after E25. The separate
-fixture uses mirrored Sigmoid LSTMs, decoder-query attention and free-running
-Sigmoid reconstruction, with MAE/SGD. Four pinned TensorFlow checks pass,
-including the full 5,031,701-parameter inventory and finite small updates.
-It is not connected to direct reproduction files or CER data, and its missing
-source choices remain interpretive. A new fit contract must decide whether
-MAE is textually defensible. No AEA fit, ensemble, branch search or extra seed.
+The previous “least invasive surviving” claim conflated free-cutoff and
+fixed-cutoff results. The prototype remains separate from direct reproduction
+files and CER data. It uses mirrored Sigmoid LSTMs, decoder-query attention,
+free-running reconstruction and SGD; loss now requires an explicit choice.
+Its old four-test assurance was overstated: the query test passed with that
+path disabled, and saved-model loading failed. Six revised tests address the
+software defects without establishing useful learning. No branch is selected
+for training. See E27 and [implementation scope](AEA_IMPLEMENTATION_ENVELOPE.md).
+
+## E27 — independent recheck distinguishes valid bounds from our reporting errors
+
+**Status:** verified corrections; original evidence preserved.
+
+The user requested a fresh check of the recent steps. Source reinspection
+confirms the normalization axis and standalone training loss are omitted.
+Independent piecewise endpoint, direct pair-count AUC and order-statistic
+calculations reproduce the geometry and repair archives. Original auditors
+also reproduce preserved outputs exactly. Thus E24's fixed-cutoff exclusion
+and E25's original/global MSE p00 all-cutoff exclusions remain intact within
+their pilot scope. Neither establishes author intent or ensemble failure.
+
+MAE's necessary favorable cutoff intervals [0.78932,0.97132) and
+[0.60363,1.25402) exclude 0.51. The repair report's p30 DR bounds at the proper
+18.45% FA cap are 100/100/96.81548% for feature-z/raw-unit/global-z MSE.
+The prototype now has a causal first-query witness with a disabled-query
+negative control and exact fresh-process reload. All24 small-fixture weight
+arrays/output/attention remain identical after the serialization refactor.
+These are software checks, not useful reconstruction evidence. No new
+research experiment, selected repair branch or website change. See the
+[recheck record](results/aea_recheck_20260925/README.md).

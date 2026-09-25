@@ -43,8 +43,10 @@ optimistic envelope; feature-z MAE/raw-unit MSE/min-max are not excluded.
 This does not make a passing relaxation a detector. Stop and choose a textual
 score/scale branch before AEA implementation. No neural fit/ensemble/search.
 
-Feature-z MAE is now the least invasive surviving candidate. A separate
-constructed AEA fixture passes four pinned TensorFlow tests, but no research
-fit is authorized. Decide whether the paper supports MAE as an `I/A`
-completion and freeze a new data/metric/budget contract before any fit. Do not
-treat the fixture as performance or change the direct reproduction silently.
+**Subsequent decision corrected September25:** MAE was promoted as the least
+invasive surviving candidate and a four-test prototype was built. The
+[recheck](2026-09-25-aea-recheck.md) withdraws that promotion: its free-cutoff
+pass does not preserve 0.51, the paper omits the scaling axis, and scoring norm
+does not identify training loss. The old query test was non-discriminating;
+reload also failed. Software repairs now have six constructed tests, not
+research performance evidence. No training branch is selected or fit authorized.

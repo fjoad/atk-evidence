@@ -58,14 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-Feature-z MAE is the least invasive surviving repair branch after the audited
-AEA envelope. Constructed-only `checks/aea_model.py` passes four pinned TF
-tests: 5,031,701 parameters, output/attention checks, finite small updates and
-separate MAE/MSE objectives. It is not connected to direct reproduction files
-and has not loaded research data. Do not fit yet: changing MSE to MAE needs a
-new frozen research contract. Raw-unit MSE/min-max remain alternatives, not
-selected automatically. No branch search, ensemble, extra seed or website
-work. See [AEA_IMPLEMENTATION_ENVELOPE.md](studies/takiddin-2021-robust-poisoning/AEA_IMPLEMENTATION_ENVELOPE.md).
+The user's requested recheck found errors in the recent AEA interpretation,
+reporting and prototype validation. **MAE promotion is withdrawn; no training
+branch is selected.** Free-cutoff non-exclusion is not a pass at printed 0.51:
+MAE minimum FA is 36.75239%/33.79187%. The repair README's three p30 DR bounds
+used the wrong FA cap; raw JSON was correct and is preserved. The paper omits
+the scaling axis, and a score-norm comparison does not choose a training loss.
+Independent replay confirms the original geometry/all-cutoff bounds. The
+prototype query test was non-discriminating and reload failed; repaired
+software passes six constructed tests, not a useful-learning demonstration.
+Original model/data artifacts and direct reproduction files remain unchanged.
+No new research fit/job, selected branch, ensemble, seed or website work.
+See [recheck](studies/takiddin-2021-robust-poisoning/results/aea_recheck_20260925/README.md)
+and [implementation scope](studies/takiddin-2021-robust-poisoning/AEA_IMPLEMENTATION_ENVELOPE.md).
 
 ### Completed repair envelope
 
@@ -74,9 +79,9 @@ COMPLETED/0:0 in 41s; job403408 failed prelaunch in1s because its Slurm output
 path was misspelled, with no data loaded. Five declared zero-fit branches,
 56 inputs and10archives pass local/cluster audit; model_fits=0. Feature-z MSE
 and global-z MSE optimistic bounds exclude the p00 paper corner; MAE/raw-unit
-MSE/min-max remain only **not excluded**, not successful models. Stop here:
-choose a textually defensible surviving score/scale branch before implementing
-AEA. No branch search, neural fit, ensemble, extra seed, website edit or
+MSE/min-max remain only **not excluded with a free cutoff**, not successful
+models or passes at 0.51. The recheck above supersedes the earlier MAE selection.
+No branch search, neural fit, ensemble, extra seed, website edit or
 publication. See
 [repair record](studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
 This supersedes the pre-job repair boundary below.
