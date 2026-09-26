@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-25
+**Last updated:** 2026-09-26
 
 **Branch:** `main`
 
@@ -11,6 +11,23 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Next experiment source/design complete: supervised sequential ensemble.**
+  The new [contract](../studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
+  separates scaling, training loss, score and cutoff for standalone AEA versus
+  the ensemble. All ten target pages were re-read/visually checked. Section
+  IV-C selects ReLU/Adam/no dropout/constraint1 for the ensemble, unlike the
+  standalone AEA's Sigmoid/SGD. The proposed native completion uses joint
+  repaired BCE, existing two-class arrays, scalar probability and an explicit
+  0.5 classification rule; standalone0.51/error bounds do not transfer.
+  Intermediate projection, native cells and other omissions remain declared
+  interpretations. No standalone repair branch is promoted.
+  Next executable work: implement and validate the ensemble, including the
+  declared learning/feedback/reload checks, then constructed GPU timing.
+  Proposed20min preflight and180min paired job are ceilings, not measured
+  costs or submission approval. Research execution remains behind its
+  implementation/timing/freeze checkpoint. No new fits, scoring or jobs;
+  originals and website unchanged. See [step plan](plans/2026-09-26-aea-next-experiment.md).
 
 - **AEA recheck corrects the recent conclusions; no training branch selected:**
   MAE's free-cutoff relaxation was wrongly promoted as threshold-preserving.

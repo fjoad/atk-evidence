@@ -1,6 +1,24 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-25
+**Last updated:** 2026-09-26
+
+**Next-step source/design (September26):** User asked to perform source
+resolution and define the bounded next experiment. All10 target pages read
+and visually checked; ref23 pp425/426/428/429 checked. New
+`SEQUENTIAL_ENSEMBLE_PILOT.md` proposes I-SEQ-native-IVC: joint correctedBCE,
+original two-class p00/p30, ReLU/Adam/dropout0/MaxNorm1 perIV-C, scalar final
+Sigmoid score and declared0.5 cutoff. Native cells and intermediateReLU
+scalar projection are explicit completions; alternative activations remain
+open. Standalone AEA MSE/MAE/0.51 do not select ensemble settings. No
+standalone repair promotion or pretraining prerequisite. Proposed architecture
+count9,240,802 is arithmetic only. Next implement/verify ensemble with
+positive learning, causal feedback/query and fresh-reload checks, then full
+variable-batch GPU preflight. Proposed20min preflight+180min pair (70min/fit)
+not executed/approved by the document alone; research checkpoint remains.
+Existing GRU is contextual, not a matched AEA ablation. Broad statistical
+attainability and causal reconstruction claims remain untested. No new
+research scoring/fit/job, direct-file or website change. Plan
+`docs/plans/2026-09-26-aea-next-experiment.md`.
 
 **AEA recheck (user requested):** MAE promotion withdrawn; no training branch
 selected. Its optimistic free-cutoff pass was confused with preserving 0.51;

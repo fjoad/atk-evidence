@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-25
+**Last updated:** 2026-09-26
 
 ## Purpose
 
@@ -24,6 +24,28 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: standalone reconstruction choices do not define the ensemble
+
+**Added September26 during source resolution and next-experiment design.**
+
+- **Potential inference to avoid:** selecting a standalone AEA score/loss
+  repair is necessary before testing the paper's main sequential ensemble.
+- **Source evidence:** IV-B/C, p2682 specifies joint classification training
+  and ensemble-specific ReLU/Adam/no-dropout/constraint1 settings, distinct
+  from standalone TableII. III-D.2(b)'s0.51 is a novelty-error cutoff.
+- **Current decision:** retain the standalone bounds/MAE withdrawal; define
+  one explicit native ensemble completion with corrected BCE and the frozen
+  classifier data. Choose neither preprocessing nor loss because an oracle
+  bound happens to pass. No standalone pretraining is silently added.
+- **Boundary:** source inspection supports this separation. Native cells,
+  the intermediate projection and0.5 classifier rule remain declared
+  completions. The proposed model, learning gates and timing are untested;
+  existing GRU scores are not a matched component ablation. No new empirical
+  claim or change in the broad attainability assessment follows.
+
+See the [next experiment](../studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
+and [step plan](plans/2026-09-26-aea-next-experiment.md).
 
 ### Paper 3: the AEA recheck corrects our interpretation and reporting
 

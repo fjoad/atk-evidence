@@ -4,7 +4,23 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: recheck the AEA interpretation before further experiments
+## Current step: implement and validate the source-specified ensemble
+
+The user requested the next source-resolution/design steps. Those are complete
+under [the September26 plan](2026-09-26-aea-next-experiment.md). The proposed
+[sequential pilot](../../studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
+uses IV-B/C's joint classification objective and ensemble-specific settings;
+it does not require selecting or fitting a standalone MAE repair first.
+Scaling, objective, score and cutoff are separated, and the native-cell and
+intermediate-output ambiguities are explicit. No new research result exists.
+Next implement the declared model, pass meaningful constructed learning,
+feedback/query and reload checks, and measure complete variable-batch epochs
+on the full model. Research launch remains behind the experiment checkpoint;
+the proposed allocation is not an authorization or timing result. Preserve
+standalone/ARIMA/averaging/full-data coverage as unfinished rather than
+silently dropping it. Website and originals remain untouched.
+
+## Completed step: recheck the AEA interpretation before further experiments
 
 The user requested an audit of the last few steps. Independent replay confirms
 the geometry/repair mathematics, but MAE was wrongly promoted as preserving

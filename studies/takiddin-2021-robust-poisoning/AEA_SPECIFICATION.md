@@ -4,6 +4,15 @@ Recorded September24 before any AEA research fit or new data scoring.
 This is source specification, not evidence that an AEA succeeds or fails.
 Do not inherit an implementation or result from another paper in this project.
 
+**September26 next-step clarification:** the standalone interpretation below
+is not the sequential ensemble's complete setting. IV-C, p2682 specifies
+ReLU hidden activations, Adam, no dropout and constraint1 for that ensemble;
+IV-B trains it jointly on classification loss. The
+[next experiment specification](SEQUENTIAL_ENSEMBLE_PILOT.md) separates the
+two tasks and records a proposed ensemble completion. No standalone MAE
+repair is selected, and no standalone fit is required as unreported ensemble
+pretraining. The original bounds and recheck remain unchanged.
+
 ## Sources and access
 
 The complete ten-page target was re-read and all pages visually inspected:

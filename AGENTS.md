@@ -58,6 +58,18 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+September26 source/design work is complete. See
+[next experiment](studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
+and [step plan](docs/plans/2026-09-26-aea-next-experiment.md).
+The proposed supervised ensemble has its own IV-C ReLU/Adam/no-dropout/
+constraint1 settings and joint repaired BCE; standalone AEA loss/score/0.51
+do not transfer. Native cells, intermediate ReLU projection and classification
+cutoff0.5 are declared completions. No standalone repair is promoted.
+Next: implement/validate the proposed ensemble and constructed full-model
+timing before any research pair. Proposed budgets do not authorize launch.
+No new research fit, scoring or job, and no website/direct-file changes.
+The September25 recheck below remains valid and its originals are preserved.
+
 The user's requested recheck found errors in the recent AEA interpretation,
 reporting and prototype validation. **MAE promotion is withdrawn; no training
 branch is selected.** Free-cutoff non-exclusion is not a pass at printed 0.51:

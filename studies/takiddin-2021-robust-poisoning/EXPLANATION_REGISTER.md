@@ -464,3 +464,28 @@ arrays/output/attention remain identical after the serialization refactor.
 These are software checks, not useful reconstruction evidence. No new
 research experiment, selected repair branch or website change. See the
 [recheck record](results/aea_recheck_20260925/README.md).
+
+## E28 — standalone AEA repairs determine how to test the sequential ensemble
+
+**Status:** not required by the source; separate experiment specified.
+
+The complete target reread on September26 confirms IV-B, p2682 trains all
+ensemble components through classification loss; IV-C independently chooses
+ReLU hidden activations, Adam, no dropout and constraint1. Standalone AEA's
+Sigmoid/SGD, reconstruction-error score and0.51 cutoff cannot silently be
+carried over. The standalone mathematical exclusions remain valid on their
+own prepared inputs; no downstream classification bound follows from them.
+
+The [proposed ensemble pilot](SEQUENTIAL_ENSEMBLE_PILOT.md) retains the
+original two-class inputs and declares corrected BCE, native cells,
+intermediate scalar ReLU projection, final Sigmoid probability and0.5 rule.
+Intermediate activation and other omissions remain interpretations, not
+newly discovered author settings. No pretraining/reconstruction objective is
+added. A standalone AEA fit remains unfinished coverage, not a prerequisite
+to this joint-training interpretation. Existing GRU comparisons are not
+matched ablations because their downstream settings differ.
+
+The next empirical gates are constructed learning, causal query/feedback,
+serialization and full-model variable-batch timing. None has been completed
+for the ensemble. The contract specifies the bounded pair and competing
+outcomes; it reports no fit, timing, causal mechanism or attainability result.
