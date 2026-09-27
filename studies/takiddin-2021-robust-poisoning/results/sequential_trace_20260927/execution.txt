@@ -1,0 +1,65 @@
+{"step": 1, "loss": 0.6931467056274414, "exact_old_loss": true, "zero_stages": []}
+{"step": 10, "loss": 0.6931471824645996, "exact_old_loss": true, "zero_stages": ["gru_8", "classifier_hidden"]}
+{"step": 20, "loss": 0.6931471824645996, "exact_old_loss": true, "zero_stages": ["gru_8", "classifier_hidden"]}
+{"step": 30, "loss": 0.6931471824645996, "exact_old_loss": true, "zero_stages": ["gru_8", "classifier_hidden"]}
+{"step": 40, "loss": 0.6931471824645996, "exact_old_loss": true, "zero_stages": ["gru_8", "classifier_hidden"]}
+{"step": 50, "loss": 0.6931471824645996, "exact_old_loss": true, "zero_stages": ["gru_8", "classifier_hidden"]}
+{
+  "status": "complete",
+  "events": {
+    "intermediate": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_1": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_2": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_3": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_4": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_5": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_6": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_7": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_8": {
+      "initially_zero": false,
+      "new_zero_steps": [
+        2
+      ],
+      "zero_through_observed_end_from_first_transition": true
+    },
+    "classifier_hidden": {
+      "initially_zero": false,
+      "new_zero_steps": [
+        2
+      ],
+      "zero_through_observed_end_from_first_transition": true
+    }
+  }
+}

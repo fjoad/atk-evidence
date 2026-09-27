@@ -513,3 +513,27 @@ model, CER performance, other source interpretations and broad attainability
 remain untested. No GPU timing follows. A writer failure was repaired by
 reloading the completed normal fit, not repeating it; the reversed fit was run
 once. See [record](results/sequential_constructed_20260927/README.md).
+
+## E30 — the reversed fixture loses its training signal only late in optimization
+
+**Status:** contradicted for the fixed small trajectory; collapse after update2.
+
+The50-update diagnostic replay matches the prior history exactly from the
+same initial weights. GRU8 and classifierhidden become all zero after the
+second Adam update on constructed train/test inputs; earlier stages stay
+active. Feature gradients are zero from that point through update50. Both
+stages change in the same update; finer ordering is not identified.
+
+Fixed old/new input/parameter comparisons show that each block's updated
+parameters can zero its outputs even on the old inputs. The head's bias
+change dominates its local affine change; reverting only the GRU8 candidate
+bias restores some activity, and injecting only its new candidate bias into
+the old GRU state kills the output. Native/independent recurrence agrees
+within8.93e-12. These saved-state interventions use no optimizer updates and
+do not establish that a modified model would train successfully.
+
+The tiny-width learner's early dead-ReLU behavior is now localized; the
+full-width model remains untested. Do not infer universal failure, select a
+new optimizer or waive the learning gate. A bounded published-width
+constructed check is the next proposed discriminator. See
+[trace record](results/sequential_trace_20260927/README.md).

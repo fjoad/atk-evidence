@@ -58,6 +58,17 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+September27 collapse trace is complete: one unchanged50-update constructed
+replay matches all old losses/initial weights. After update2, lastGRU and
+classifierhidden are zero; feature gradients vanish. EarlierAEA/GRUs remain
+active. Saved-state swaps identify local candidate-bias/head-bias shutoff,
+not a successful repair or full-width failure. All51snapshots and prior
+hashes verify. Learning gate remains failed; no GPU timing/research job.
+Next consider a bounded full-width constructed check before optimizer or
+activation changes; no new seed/search follows. See
+[trace](studies/takiddin-2021-robust-poisoning/results/sequential_trace_20260927/README.md)
+and [plan](docs/plans/2026-09-27-sequential-collapse-trace.md). Website untouched.
+
 September27 implementation is complete but the constructed learning gate
 fails. Full model9,240,802 parameters;9 ensemble/gate plus6 oldAEA software
 checks pass. Small fixed learning pair300updates: normal100% test accuracy,

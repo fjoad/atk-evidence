@@ -1,0 +1,125 @@
+{
+  "scope": "saved constructed states only; zero updates",
+  "snapshot_count": 51,
+  "all_hashes_verified": true,
+  "all_50_old_losses_exact": true,
+  "originals_unchanged": true,
+  "inference_checks": {
+    "0": {
+      "max_absolute_difference": 0.0,
+      "gradient_zero_pattern_matches": true
+    },
+    "1": {
+      "max_absolute_difference": 0.0,
+      "gradient_zero_pattern_matches": true
+    },
+    "2": {
+      "max_absolute_difference": 0.0,
+      "gradient_zero_pattern_matches": true
+    },
+    "50": {
+      "max_absolute_difference": 0.0,
+      "gradient_zero_pattern_matches": true
+    }
+  },
+  "gru8_counterfactuals": {
+    "old_input_old_params": {
+      "output": {
+        "min": 0.0,
+        "max": 6.562281487276778e-05,
+        "positive_fraction": 0.375
+      },
+      "candidate_preactivation": {
+        "min": -0.0002827521111070144,
+        "max": 6.629793370382323e-05,
+        "positive_fraction": 0.359375
+      },
+      "manual_native_max_error": 8.924947234164801e-12
+    },
+    "old_input_new_params": {
+      "output": {
+        "min": 0.0,
+        "max": 0.0,
+        "positive_fraction": 0.0
+      },
+      "candidate_preactivation": {
+        "min": -0.0006556211428934952,
+        "max": -2.152359176222561e-05,
+        "positive_fraction": 0.0
+      },
+      "manual_native_max_error": 0.0
+    },
+    "new_input_old_params": {
+      "output": {
+        "min": 0.0,
+        "max": 5.0122689572162926e-05,
+        "positive_fraction": 0.125
+      },
+      "candidate_preactivation": {
+        "min": -0.00040232903417929654,
+        "max": 5.0497117699642995e-05,
+        "positive_fraction": 0.125
+      },
+      "manual_native_max_error": 5.684060901535275e-12
+    },
+    "new_input_new_params": {
+      "output": {
+        "min": 0.0,
+        "max": 0.0,
+        "positive_fraction": 0.0
+      },
+      "candidate_preactivation": {
+        "min": -0.0006658379410050489,
+        "max": -3.999231654243287e-05,
+        "positive_fraction": 0.0
+      },
+      "manual_native_max_error": 0.0
+    },
+    "new_input_new_params_old_candidate_bias": {
+      "output": {
+        "min": 0.0,
+        "max": 5.011125176679343e-05,
+        "positive_fraction": 0.125
+      },
+      "candidate_preactivation": {
+        "min": -0.0004023238568791586,
+        "max": 5.048542620689459e-05,
+        "positive_fraction": 0.125
+      },
+      "manual_native_max_error": 5.654598723937518e-12
+    },
+    "old_input_old_params_new_candidate_bias": {
+      "output": {
+        "min": 0.0,
+        "max": 0.0,
+        "positive_fraction": 0.0
+      },
+      "candidate_preactivation": {
+        "min": -0.000655618748333964,
+        "max": -2.1523595713462612e-05,
+        "positive_fraction": 0.0
+      },
+      "manual_native_max_error": 0.0
+    }
+  },
+  "candidate_bias_before": [
+    0.0,
+    -7.599511445732787e-05,
+    -0.00024406448937952518,
+    4.603131310432218e-05,
+    0.0,
+    -0.00018423220899421722,
+    0.0,
+    0.0
+  ],
+  "candidate_bias_after": [
+    -0.0005652570398524404,
+    -0.0001268925698241219,
+    -0.00040753954090178013,
+    -0.0006637381738983095,
+    -0.00028050399851053953,
+    -0.00030762774986214936,
+    0.0,
+    0.0
+  ]
+}

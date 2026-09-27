@@ -25,6 +25,31 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: the small learner shuts off after its second update
+
+**Added September27 after a frozen prefix replay and saved-state checks.**
+
+- **Timing — VERIFIED:** same initial weights and all50 original losses;
+  the last GRU and classifier hidden outputs become zero after update2,
+  with feature gradients zero afterward. This is an early failure, not
+  a late plateau. Earlier AEA/GRU stages remain active.
+- **Local mechanism — bounded interventions:** each updated block can go
+  zero even on its previous inputs. GRU8 candidate-bias substitution alone
+  reproduces the local shutoff; restoring its previous candidate bias
+  restores activity under the other updated values. The head's bias change
+  likewise zeros its local output. Independent GRU arithmetic agrees with
+  native computation within8.93e-12.
+- **What is not established:** neither intervention is a successful training
+  repair. Both stages die within the same optimizer update, so no finer
+  temporal ordering is claimed. This5,082-parameter fixture does not settle
+  full-width training, paper-data performance or an infinite-time limit.
+- **Next question:** whether miniature widths produced an unrepresentative
+  learning gate. A full-width constructed check is proposed before changing
+  the declared optimizer or adding seeds; it has not run. GPU timing stays
+  held. No scientific source/model setting or old result was changed.
+
+See [the trace record](../studies/takiddin-2021-robust-poisoning/results/sequential_trace_20260927/README.md).
+
 ### Paper 3: the ensemble's constructed learning gate catches a failure
 
 **Added September27 after the implementation and fixed synthetic pair.**

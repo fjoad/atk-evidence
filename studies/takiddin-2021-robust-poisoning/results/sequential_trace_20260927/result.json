@@ -1,0 +1,335 @@
+{
+  "scope": "constructed prefix trace, not research evidence",
+  "status": "complete",
+  "code_commit": "9368a9013d19568ef718d5cd4a5c17f972fc6b85",
+  "source_sha256": {
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_trace.py": "69f9669ccaba05a99df45e4853456d6f354892fb9c30c250cf940e095f10288f",
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py": "f7acfdfdee321e244cb616a6404f18c611dc43a07d4ae941e8d13da85f22d3d5",
+    "studies/takiddin-2021-robust-poisoning/reproduction/models.py": "dcefb40c59c3ffa0082c20a29e9cb413e46ffffa8c7ec3af1df712aef1f82299",
+    "docs/plans/2026-09-27-sequential-collapse-trace.md": "44b75c369318939a0744230a9d65ca760667929d6cfc0ce6482738e5ba84c03d"
+  },
+  "original_file_sha256": {
+    "constructed_data.npz": "9906021e2cc5a5f8fd3d7b96f134732d98a2229b1392222aa2c5d5608fe58e9f",
+    "result.json": "c6b45ff250b37e60e47e13daf14a6696cd5d717e160daa3be8c4ce6c34caa2fc",
+    "reversed/result.json": "970ba41d535c28ed55f9e193961952fa8937936caf424416abb3c9100733d78a",
+    "reversed/outputs.npz": "d7db0661790b79884c815370cf891dc41da5a48c2c48576ef3b44f71d3c46837",
+    "reversed/history.json": "1b10197abb43ad7235ccbbf3bb959d1ba9d611eea47acc8e56fa479a20fedd26",
+    "reversed/initial_weights.npz": "8ddaceb3e52411fd2d4e3be79131203e18a53341d2c4a33803957a98fe61fe66",
+    "reversed/final.keras": "a69a511a1d558e6b7d58c76bc997d7c13a630ac1ba3c13ddf49db0b8f8776828",
+    "normal/result.json": "36520cb897fa0a42e5bbdde297a34f23f2d2c649dca777ebfe7bbf0bc42a465a",
+    "normal/outputs.npz": "bad082257e75f43aab0cbe7d150bdb34d63fa4418b7420be117082f5af446b0d",
+    "normal/history.json": "25fcf3eb4d9c4ee43b62086100985d634bc1a6c32d790f707103357702ba732b",
+    "normal/initial_weights.npz": "8ddaceb3e52411fd2d4e3be79131203e18a53341d2c4a33803957a98fe61fe66",
+    "normal/final.keras": "4b3e5e5dfac6a88072a24fe67359822de3b1f3b9aa70251a311280c7e7678f3a"
+  },
+  "runtime": {
+    "tensorflow": "2.16.2",
+    "keras": "3.4.1",
+    "h5py": "3.11.0",
+    "backend": "tensorflow",
+    "gpu_details": [],
+    "build_info": {
+      "is_cuda_build": false,
+      "is_rocm_build": false,
+      "is_tensorrt_build": false
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:CPU:0",
+    "cuda_visible_devices": null,
+    "deterministic_ops": true,
+    "tf32_enabled": false,
+    "mixed_precision": false
+  },
+  "statistics_columns": [
+    "min",
+    "max",
+    "std",
+    "positive_fraction"
+  ],
+  "history_prefix_exact": true,
+  "observer_state_unchanged": true,
+  "updates_requested": 50,
+  "initial_weights_sha256": "80beecbcc7f1580c8f30ad38da32e70dede598de9b586ae58737ddf3c72b6b38",
+  "weight_paths": [
+    "attention_decoder/attention_encoder_kernel",
+    "attention_decoder/attention_decoder_kernel",
+    "attention_decoder/attention_vector",
+    "attention_decoder/attention_bias",
+    "attention_decoder/encoder_lstm_1/lstm_cell/kernel",
+    "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel",
+    "attention_decoder/encoder_lstm_1/lstm_cell/bias",
+    "attention_decoder/encoder_lstm_2/lstm_cell/kernel",
+    "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel",
+    "attention_decoder/encoder_lstm_2/lstm_cell/bias",
+    "attention_decoder/encoder_lstm_3/lstm_cell/kernel",
+    "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel",
+    "attention_decoder/encoder_lstm_3/lstm_cell/bias",
+    "attention_decoder/decoder_lstm_1/kernel",
+    "attention_decoder/decoder_lstm_1/recurrent_kernel",
+    "attention_decoder/decoder_lstm_1/bias",
+    "attention_decoder/decoder_lstm_2/kernel",
+    "attention_decoder/decoder_lstm_2/recurrent_kernel",
+    "attention_decoder/decoder_lstm_2/bias",
+    "attention_decoder/decoder_lstm_3/kernel",
+    "attention_decoder/decoder_lstm_3/recurrent_kernel",
+    "attention_decoder/decoder_lstm_3/bias",
+    "attention_decoder/intermediate_projection/kernel",
+    "attention_decoder/intermediate_projection/bias",
+    "sequence_gru_1/gru_cell/kernel",
+    "sequence_gru_1/gru_cell/recurrent_kernel",
+    "sequence_gru_1/gru_cell/bias",
+    "sequence_gru_2/gru_cell/kernel",
+    "sequence_gru_2/gru_cell/recurrent_kernel",
+    "sequence_gru_2/gru_cell/bias",
+    "sequence_gru_3/gru_cell/kernel",
+    "sequence_gru_3/gru_cell/recurrent_kernel",
+    "sequence_gru_3/gru_cell/bias",
+    "sequence_gru_4/gru_cell/kernel",
+    "sequence_gru_4/gru_cell/recurrent_kernel",
+    "sequence_gru_4/gru_cell/bias",
+    "sequence_gru_5/gru_cell/kernel",
+    "sequence_gru_5/gru_cell/recurrent_kernel",
+    "sequence_gru_5/gru_cell/bias",
+    "sequence_gru_6/gru_cell/kernel",
+    "sequence_gru_6/gru_cell/recurrent_kernel",
+    "sequence_gru_6/gru_cell/bias",
+    "sequence_gru_7/gru_cell/kernel",
+    "sequence_gru_7/gru_cell/recurrent_kernel",
+    "sequence_gru_7/gru_cell/bias",
+    "sequence_gru_8/gru_cell/kernel",
+    "sequence_gru_8/gru_cell/recurrent_kernel",
+    "sequence_gru_8/gru_cell/bias",
+    "classifier_hidden/kernel",
+    "classifier_hidden/bias",
+    "attack_probability/kernel",
+    "attack_probability/bias"
+  ],
+  "head_weight_indices": [
+    48,
+    49
+  ],
+  "updates_completed": 50,
+  "elapsed_seconds": 12.365125750002335,
+  "events": {
+    "intermediate": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_1": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_2": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_3": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_4": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_5": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_6": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_7": {
+      "initially_zero": false,
+      "new_zero_steps": [],
+      "zero_through_observed_end_from_first_transition": null
+    },
+    "gru_8": {
+      "initially_zero": false,
+      "new_zero_steps": [
+        2
+      ],
+      "zero_through_observed_end_from_first_transition": true
+    },
+    "classifier_hidden": {
+      "initially_zero": false,
+      "new_zero_steps": [
+        2
+      ],
+      "zero_through_observed_end_from_first_transition": true
+    }
+  },
+  "head_transition": {
+    "step": 2,
+    "comparison": {
+      "cases": {
+        "before_inputs_before_parameters": {
+          "preactivation": [
+            -0.00038311302156278035,
+            0.00048032957807790384,
+            0.0002037623589389548,
+            0.3125
+          ],
+          "relu_output": [
+            0.0,
+            0.00048032957807790384,
+            0.0001466847687842762,
+            0.3125
+          ]
+        },
+        "before_inputs_after_parameters": {
+          "preactivation": [
+            -0.0006588427751358787,
+            -8.956125771451752e-07,
+            0.00023738803161666195,
+            0.0
+          ],
+          "relu_output": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "after_inputs_before_parameters": {
+          "preactivation": [
+            -0.00040220015216618776,
+            0.00046957653830759227,
+            0.00020284328681312883,
+            0.1875
+          ],
+          "relu_output": [
+            0.0,
+            0.00046957653830759227,
+            0.00014244560776905792,
+            0.1875
+          ]
+        },
+        "after_inputs_after_parameters": {
+          "preactivation": [
+            -0.0006716161733493209,
+            0.0,
+            0.0002534808210798158,
+            0.0
+          ],
+          "relu_output": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        "after_inputs_after_weights_before_bias": {
+          "preactivation": [
+            -0.00040220015216618776,
+            0.00046957653830759227,
+            0.00020284328681312883,
+            0.1875
+          ],
+          "relu_output": [
+            0.0,
+            0.00046957653830759227,
+            0.00014244560776905792,
+            0.1875
+          ]
+        },
+        "after_inputs_before_weights_after_bias": {
+          "preactivation": [
+            -0.0006716161733493209,
+            0.0,
+            0.0002534808210798158,
+            0.0
+          ],
+          "relu_output": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      },
+      "decomposition": {
+        "input": [
+          -3.333816261052082e-05,
+          3.377325283126493e-05,
+          2.2165307686912175e-05,
+          0.5
+        ],
+        "weights": [
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "bias": [
+          -0.0007078047492541373,
+          0.0,
+          0.00027853300442506245,
+          0.0
+        ]
+      },
+      "additive_identity_max_error": 1.0842021724855044e-19
+    }
+  },
+  "originals_unchanged": true,
+  "artifact_sha256": {
+    "step-020.npz": "815c3fd49e6f563b3e26fbda8833b127982bd951e3ff424ae62fdeedeadfe79f",
+    "step-034.npz": "9463bf6232c42ef0b3ce634acf69713326452b18cbfc2a568d950f0f5d8068cd",
+    "step-008.npz": "f59097f8933ea1fa30cfadaeb3888319c24d9fcd33c1f9e6c300ba43ade5b65b",
+    "step-009.npz": "2eb086cdd6dd56d854f18fe22411e4ea61ed5f165dcfc42ab062dff37a6d88b0",
+    "step-035.npz": "d630b17c46ed4853a1d73b176e08b1b89d5cc9b257d6e5d47fca9cf54bdad1d2",
+    "step-021.npz": "aa6dff6a6ce0d4e9c2deccad5a0c404ca4ba1eecfa206fd96292d57357225635",
+    "step-037.npz": "a824cda40ee7ba98266d0185c5b1a1d87d23b29b83c1a49d154fb2a57b9d09e1",
+    "step-023.npz": "fe0742ad6817e6df14626d3602229fca6f25fd818cd07eef364c6dfe60ce8942",
+    "step-022.npz": "209acbb4cb7cd3ab54cf176c5820cfef70f3f87bd90344c5a2032692f7107dff",
+    "step-036.npz": "afd37b193ba8d87dca765c0cb075dcdf37fc25054233eabeebefed3d6344ac93",
+    "step-032.npz": "5753422328fdf4f8006fcac9e384140267d0277a3550b1180c6c09d447ba0bbb",
+    "step-026.npz": "2578b46141613163b8cd52ecea972eaca61711886740934de587ea062b70ed9d",
+    "step-027.npz": "beafd17d4a4b8464d68b07e0d7e6cbfe242d621864fd86b3f935760865fec001",
+    "step-033.npz": "9359891071ebdad5214c3df120188db5575a2d86fe2187784649f6eebd23dbce",
+    "step-019.npz": "cc162c197b77dd434af8cae54d4bdb0a68f77e28b4c5566020c7a9d3927f83a7",
+    "step-025.npz": "066f4f2ce6f70fb7cb24e7888b6d92612eca990c2853f352ae745d60cddf1ed6",
+    "step-031.npz": "0612eb115a5320200449e3b5aa17c980713f5502f7852760ca9c16830c1f5e6b",
+    "step-030.npz": "fe9e2ad6c9d2677dd119039b25d4fc531d7008864bbdc9b35a06fb2010cb2a95",
+    "step-024.npz": "de8bbf106c8125723eff35f9f76eed1c14e1f050cdd5356a65b2c59162c81ede",
+    "step-018.npz": "4cb0d98b39820af1d90d03bd653d9ad2c4f0e1cbbfbd44116d67bf5fbef099a4",
+    "step-043.npz": "fd4c7b3db5aec6166871bba1ee51c8d201edaaf5ab80ef23143945a8a0acff8a",
+    "step-042.npz": "f0402d964d212830a0045c7d1c2234588bba1df77ba7b099820a73be97558264",
+    "step-040.npz": "f873d373d95166c66e63ead5d64997dbad44b68c2164d8bcadb69e2f025283ba",
+    "step-041.npz": "f84e168430fc565aa0d4d4729d3ef0b16cc53bd51e13c215cc20244567531c71",
+    "step-045.npz": "47b0322c0bf5178bd09d874095f27a748099492d0edf9ef3c2c5778e76084d4f",
+    "step-044.npz": "e5cd3f9617ab0729720b2f4b470854770cf892db146d405b7f1e70dc28925470",
+    "step-050.npz": "6bac304677f77326bed2e4357c981ba95b695a0277f660cf1ced138ab0e6a290",
+    "step-046.npz": "9aacd975ab11634524248532953e5c6323412d4b4f78fb2dd3c718a15574d2fb",
+    "step-047.npz": "79505c4ec6c4883f3d35c4dc4f286b7d95cf7fc82d7e248f4eced6f3e04d1c05",
+    "step-049.npz": "88afce478ceac298f1780a2cbb1110bdca3a54c42f94997ca24c6a2a95d36c22",
+    "step-048.npz": "f121f71b5b2b2d620c56cfd8de37c374eb74287a3597a16b010cb5fc3d280440",
+    "trace.jsonl": "d22035f71d4586537261d54dac722c1909cc4573f8028bc2ef30d7902b6760a2",
+    "step-001.npz": "92e4ac2ef13572d0d3ac425ea9c5ed81c4ed9cbc954415eef9ad69f24e38213f",
+    "step-015.npz": "0c170e73439ce11a5ca696cd19e34ae6339f7e233a2af51d70a116d4053a8b3d",
+    "step-029.npz": "698af04d41c03840036bb11cb490302ee4ac7f64c78f6bc9dbf6c5414071b553",
+    "step-028.npz": "2c0493658b21d19c23f608c838af2287ee8ccd5cc08a25f2984c5c9151213c9c",
+    "step-014.npz": "a179830e54eed457140192ada724de68cc8c2d928265eff603b776df8ae8c584",
+    "step-000.npz": "884018703af7efd52f7b8271e52acd194a7415e7ce46a1c189954bdd88e10601",
+    "step-016.npz": "90879136c96e2c0a78062e1d059fd3be8bf03da37606f6c6cfc1a1e726a12177",
+    "step-002.npz": "4f0418f2f6dd901e27a3e14dab62f1ad5e6e96e7d6fb5ec8e5ad7a8c521481e3",
+    "step-003.npz": "c2b53c2d308f4947350ac0bb4fc703362e46a29e6b9632d871fc515a1c265669",
+    "step-017.npz": "2d6ffc1c924cf9cdc1bddc8af41761ed21f4abf2c3eea8bd2cb04f8cbabc0738",
+    "step-013.npz": "cf7dc65e00c1bf72a3c2bc49af6e0b213a04f040b8e6a2b11cc13f0be8a7bfd7",
+    "step-007.npz": "fb92043bae25ecd659e7ccdc36b8fdf6ae043ca42b1aca46a86e99c5548542dd",
+    "step-006.npz": "caf71421f0fa18bc5edf4835b9f3e73e75c0c5a7ac59a143584c7fe45c2a4961",
+    "step-012.npz": "288173e0cd3dbe9d5fb50bdd281917198357f4cd41ee6fa1ac59b6805dd14c7a",
+    "step-038.npz": "c2b98b979c66c7309d130c0c8455fc1108e365156548d85b56d5dce9bbb9236d",
+    "step-004.npz": "d53cf737c3bbccd1ba9b29c4337c4d181182927eb5dd531d38ca5fc360f0a994",
+    "step-010.npz": "4fbbf4ce782a8e7b8c2cc7cf95d8356c5c9cda81be234ad3bb4dedb1aa9c3079",
+    "step-011.npz": "b58ba3cc8264a05adb8a8d131218e15457b9c9b7fe44aaa32f7a13a2504d31ea",
+    "step-005.npz": "2397d83fb32c2e8daa44780ff85f491fd1039cae256f3c8720176a63312d5d46",
+    "step-039.npz": "3895e6c277f1f3f48317b82a12d0b4e505c57187ec163cb3850807772b6b4f8f"
+  }
+}

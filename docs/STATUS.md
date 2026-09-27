@@ -12,6 +12,24 @@ execution plan here is
 
 ## Current project state
 
+- **Constructed collapse traced to update2; no model settings changed.**
+  The frozen reversed-label50-update prefix (9368a90) reproduces every
+  original training loss and initial weights; observer state checks pass.
+  GRU8 and classifier hidden outputs go entirely zero after update2 on
+  train/test fixtures; feature gradients are then zero through50. The AEA
+  intermediate and GRU1-7 remain active. Saved-state counterfactuals identify
+  candidate-bias-driven GRU8 shutoff and a separate head bias shutoff at that
+  update; both changes can zero their blocks even with preceding inputs.
+  These are local forward checks, not trained repairs. Independent GRU
+  arithmetic matches within8.93e-12; all51 snapshots/prior hashes verify.
+  The5,082-parameter fixture's gate remains failed; full-width learning is
+  untested. Next decide a bounded full-width constructed check before
+  changing optimizer/activation or adding seeds. No GPU timing, cluster job,
+  research scoring/fit or website changes. [Record](../studies/takiddin-2021-robust-poisoning/results/sequential_trace_20260927/README.md),
+  [plan](plans/2026-09-27-sequential-collapse-trace.md). Verification:397
+  repository passes/30 skips;3 new checker tests, strict data and journal
+  consistency pass. Scientific model/training functions remain unchanged.
+
 - **Sequential implementation complete; constructed learning gate failed.**
   The full direct model has9,240,802 parameters and verified48-step forward
   shapes. All9 ensemble/gate software checks plus6 old AEA checks pass in

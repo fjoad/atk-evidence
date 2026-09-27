@@ -4,7 +4,22 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: diagnose the failed constructed ensemble learning gate
+## Current step: decide a bounded full-width constructed learning check
+
+The [collapse trace](2026-09-27-sequential-collapse-trace.md) is complete.
+An unchanged50-update prefix matches the earlier reversed-label losses
+exactly. GRU8 and classifierhidden go zero after update2, shutting off
+upstream gradients; earlier stages remain active. Saved-state bias swaps
+locally identify why these ReLU outputs shut off, but are not trained repairs.
+All artifacts verify. The reduced5,082-parameter learner's gate still fails;
+no GPU timing or real-data work occurred. See the
+[record](../../studies/takiddin-2021-robust-poisoning/results/sequential_trace_20260927/README.md).
+The next distinct question is whether this is an unrepresentative tiny-width
+instrument. Specify a bounded constructed check at published widths with
+unchanged optimizer before choosing a settings repair or more seeds. No
+full-width learning, alternate branch or research run has been performed.
+
+## Completed step: diagnose the failed constructed ensemble learning gate
 
 The September27 implementation is complete under the
 [new step plan](2026-09-27-sequential-implementation.md). Full runtime count

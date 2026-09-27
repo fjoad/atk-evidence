@@ -2,6 +2,23 @@
 
 **Last updated:** 2026-09-27
 
+**Constructed collapse trace complete:** User approved tracing the failed
+reversed fit.9368a90 froze one50-update replay, same small model/data/seed/
+Adam.12.37s CPU; all50 old losses and initial weights match exactly;
+observer preserves state. GRU8 and classifierhidden both become zero after
+update2 on32train/32test and stay zero through50; upstream feature gradients
+zero. EarlierAEA/GRU1-7 active. Classifier head updatedparams kill oldinputs;
+oldbias restores local activation. Separately declared read-only GRU8 swaps
+show updatedcandidatebias alone kills oldinputs/params; oldcandidatebias
+restores some activation with updatedinputs/params. Native/manual GRU agree
+within8.93e-12. All51snapshots and oldartifacthashes verify; fresh0/1/2/50
+outputs exact. No repaired training result or infinite-time exclusion.
+Gate stays failed. Next bounded question: full-width constructed learning
+with existingoptimizer to assess miniature-fixture artifact, not settings/
+seed search. No GPU/research job, real-data score/fit or website change.
+397repo passes/30skips;3new checker tests; strictdata/journalcheck pass.
+See results/sequential_trace_20260927 and its September27 step plan.
+
 **Sequential implementation/constructed gate:** User approved continuation.
 Model added to direct models.py atb9d8223: full9,240,802 parameters, verified
 forward shapes. All9 software/gate checks and6 oldAEA checks pass. Fixed
