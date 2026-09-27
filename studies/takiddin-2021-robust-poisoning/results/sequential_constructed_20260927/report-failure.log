@@ -1,0 +1,33 @@
+normal {'epoch': 1, 'loss': 0.693147599697113, 'elapsed_seconds': 6.660693541998626, 'updates': 1}
+normal {'epoch': 50, 'loss': 0.6931464076042175, 'elapsed_seconds': 7.4486851249967, 'updates': 50}
+normal {'epoch': 100, 'loss': 0.6925563812255859, 'elapsed_seconds': 8.295886291991337, 'updates': 100}
+normal {'epoch': 150, 'loss': 0.6427651643753052, 'elapsed_seconds': 9.13763020899205, 'updates': 150}
+normal {'epoch': 200, 'loss': 0.32369229197502136, 'elapsed_seconds': 9.971280291996663, 'updates': 200}
+normal {'epoch': 250, 'loss': 0.25281399488449097, 'elapsed_seconds': 10.804226042004302, 'updates': 250}
+normal {'epoch': 300, 'loss': 0.22578056156635284, 'elapsed_seconds': 11.686822125004255, 'updates': 300}
+Traceback (most recent call last):
+  File "/Users/fjoad/Documents/projects/evidence/studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py", line 220, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/fjoad/Documents/projects/evidence/studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py", line 205, in main
+    record["cases"][name] = run_one(args.output / name, arrays, reverse)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fjoad/Documents/projects/evidence/studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py", line 176, in run_one
+    (output / "result.json").write_text(json.dumps(record, indent=2, allow_nan=False)+"\n")
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 202, in encode
+    chunks = list(chunks)
+             ^^^^^^^^^^^^
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/Users/fjoad/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type bool_ is not JSON serializable

@@ -1,0 +1,9 @@
+The first read-only saved-fit audit stopped before recording layer observations.
+AttributeError: list object has no attribute numpy at the layer-summary step.
+Keras exposed loaded model.output as a single-element list; use model.outputs[0].
+No training, input change or saved-model mutation occurred in this attempt.
+
+The second read-only audit reached the preactivation hook, then stopped:
+TypeError: capture() got an unexpected keyword argument training.
+The observation hook was repaired to pass through call arguments.
+No optimizer update or saved artifact mutation occurred.

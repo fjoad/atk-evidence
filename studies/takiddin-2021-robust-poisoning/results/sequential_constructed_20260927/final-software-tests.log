@@ -1,0 +1,22 @@
+test_constant_partial_and_nonfinite_results_cannot_pass (tests.test_robust_sequential.SequentialGateTests.test_constant_partial_and_nonfinite_results_cannot_pass) ... ok
+test_fixed_data_are_balanced_disjoint_and_easily_separable (tests.test_robust_sequential.SequentialGateTests.test_fixed_data_are_balanced_disjoint_and_easily_separable) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_actual_decoder_loop_uses_previous_output_and_mirrored_states (tests.test_robust_sequential.SequentialTests.test_actual_decoder_loop_uses_previous_output_and_mirrored_states) ... ok
+test_feedback_changes_state_and_disabled_input_removes_effect (tests.test_robust_sequential.SequentialTests.test_feedback_changes_state_and_disabled_input_removes_effect) ... ok
+test_finite_gradient_connectivity_update_and_constraints (tests.test_robust_sequential.SequentialTests.test_finite_gradient_connectivity_update_and_constraints) ... ok
+test_fresh_process_reload_preserves_internal_outputs_and_optimizer (tests.test_robust_sequential.SequentialTests.test_fresh_process_reload_preserves_internal_outputs_and_optimizer) ... ok
+test_full_source_inventory_and_configuration (tests.test_robust_sequential.SequentialTests.test_full_source_inventory_and_configuration) ... ok
+test_paired_initialization_and_shape_validation (tests.test_robust_sequential.SequentialTests.test_paired_initialization_and_shape_validation) ... ok
+test_query_intervention_and_disabled_connection (tests.test_robust_sequential.SequentialTests.test_query_intervention_and_disabled_connection) ... ok
+test_invalid_shape_and_finite_update (tests.test_robust_aea_model.AEAModelTests.test_invalid_shape_and_finite_update) ... ok
+test_mae_and_mse_are_separate_declared_objectives (tests.test_robust_aea_model.AEAModelTests.test_mae_and_mse_are_separate_declared_objectives) ... ok
+test_output_range_and_attention_normalization (tests.test_robust_aea_model.AEAModelTests.test_output_range_and_attention_normalization) ... ok
+test_parameter_inventory_and_shapes (tests.test_robust_aea_model.AEAModelTests.test_parameter_inventory_and_shapes) ... ok
+test_query_intervention_holds_encoder_memory_fixed (tests.test_robust_aea_model.AEAModelTests.test_query_intervention_holds_encoder_memory_fixed) ... ok
+test_serialization_in_fresh_process_preserves_predictions_attention_and_optimizer (tests.test_robust_aea_model.AEAModelTests.test_serialization_in_fresh_process_preserves_predictions_attention_and_optimizer) ... ok
+
+----------------------------------------------------------------------
+Ran 15 tests in 40.870s
+
+OK
