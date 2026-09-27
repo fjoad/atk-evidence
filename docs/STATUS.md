@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-26
+**Last updated:** 2026-09-27
 
 **Branch:** `main`
 
@@ -11,6 +11,26 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Sequential implementation complete; constructed learning gate failed.**
+  The full direct model has9,240,802 parameters and verified48-step forward
+  shapes. All9 ensemble/gate software checks plus6 old AEA checks pass in
+  the pinned runtime. The frozen5,082-parameter,8-step learning pair both
+  completed300 updates: normal labels100% test accuracy/BCE.22528521;
+  reversed labels50%/BCE.69314718. Paired initial weights match. The reversed
+  model's last GRU and classifier hidden outputs are zero on the constructed
+  test rows; its AEA intermediate is active. Final upstream gradients are
+  zero. Complementing the successful model's probabilities solves reversed
+  labels, establishing representability, not successful reversed training.
+  A JSON-writer failure after the normal fit was recovered without refitting;
+  originals and all failures are preserved. GPU timing is held by the failed
+  gate. No full-width training, research fit/scoring, cluster job or website
+  work. Next: bounded diagnosis of the reversed trajectory/fixture before
+  promotion, not another seed. [Result](../studies/takiddin-2021-robust-poisoning/results/sequential_constructed_20260927/README.md),
+  [plan](plans/2026-09-27-sequential-implementation.md). Verification:394
+  repository passes/30 skips;15 pinned checks; strict data and journal
+  consistency pass. All pre-existing model functions and old results remain
+  unchanged; only the new model was added to the direct implementation.
 
 - **Next experiment source/design complete: supervised sequential ensemble.**
   The new [contract](../studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)

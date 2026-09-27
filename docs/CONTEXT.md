@@ -1,6 +1,25 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-26
+**Last updated:** 2026-09-27
+
+**Sequential implementation/constructed gate:** User approved continuation.
+Model added to direct models.py atb9d8223: full9,240,802 parameters, verified
+forward shapes. All9 software/gate checks and6 oldAEA checks pass. Fixed
+small model5,082 parameters (8/6/4 LSTM,8x8 GRU,Dense16,8steps),32train/32test,
+seeds20260920/20260926,300updates each. Normal100%/BCE.22528521; reversed
+50%/BCElog(2). Same initial weights; both complete. Reversed finalGRU and
+classifierhidden zero on toytest; intermediateAEA positive; upstream final
+gradients zero. Complement-normal probabilities solve reversed labels: capacity
+exists, training did not find it. Not evidence on full-width training or CER.
+Normal saved model/history before JSONwriter np.bool_ failure.2f9b793 fixes
+writer; recovered normal report without refit and ran only missing reversed
+case. Original attempt1 and attempt1-recovery preserved underdata/derived.
+Result/audit/logs/recovery scripts inresults/sequential_constructed_20260927.
+Two read-only audit-hook/output-shape errors also recorded; no model changes.
+GPU timing held by failed learning gate; no allocation/researchfit/scoring.
+Next bounded question: diagnose reversed training collapse/reduced-width
+instrument. No seed/activation search. Website unchanged.394repo passes/30
+skips;15pinned checks, strictdata and journalcheck pass. See September27 plan.
 
 **Next-step source/design (September26):** User asked to perform source
 resolution and define the bounded next experiment. All10 target pages read

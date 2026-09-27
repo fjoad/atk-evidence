@@ -1,0 +1,184 @@
+{
+  "scope": "read-only audit of constructed saved fits; zero further updates",
+  "cases": {
+    "normal": {
+      "artifact_hashes_verified": true,
+      "fresh_reload_exact": true,
+      "optimizer_updates": 300,
+      "measurements": {
+        "finite": true,
+        "accuracy": 1.0,
+        "bce": 0.2252852113579493,
+        "probability_min": 0.3627033233642578,
+        "probability_max": 0.9999554753303528
+      },
+      "layers": {
+        "intermediate": {
+          "min": 0.002476245164871216,
+          "max": 24.38152313232422,
+          "std": 10.926066398620605,
+          "nonzero_fraction": 1.0
+        },
+        "gru_1": {
+          "min": 0.0,
+          "max": 16.1447811126709,
+          "std": 4.177606582641602,
+          "nonzero_fraction": 0.4375
+        },
+        "gru_2": {
+          "min": 0.0,
+          "max": 12.842649459838867,
+          "std": 3.5910956859588623,
+          "nonzero_fraction": 0.4375
+        },
+        "gru_3": {
+          "min": 0.0,
+          "max": 14.325972557067871,
+          "std": 3.666525363922119,
+          "nonzero_fraction": 0.4375
+        },
+        "gru_4": {
+          "min": 0.0,
+          "max": 12.706823348999023,
+          "std": 3.134334087371826,
+          "nonzero_fraction": 0.6875
+        },
+        "gru_5": {
+          "min": 0.0,
+          "max": 9.810860633850098,
+          "std": 2.01191782951355,
+          "nonzero_fraction": 0.46875
+        },
+        "gru_6": {
+          "min": 0.0,
+          "max": 6.707976341247559,
+          "std": 1.3311982154846191,
+          "nonzero_fraction": 0.390625
+        },
+        "gru_7": {
+          "min": 0.0,
+          "max": 4.7647175788879395,
+          "std": 0.9423677325248718,
+          "nonzero_fraction": 0.375
+        },
+        "gru_8": {
+          "min": 0.0,
+          "max": 6.889163017272949,
+          "std": 2.140920400619507,
+          "nonzero_fraction": 0.390625
+        },
+        "classifier_hidden": {
+          "min": 0.0,
+          "max": 7.694866180419922,
+          "std": 2.137150764465332,
+          "nonzero_fraction": 0.353515625
+        },
+        "probability": {
+          "min": 0.3627033233642578,
+          "max": 0.9999554753303528,
+          "std": 0.31862419843673706,
+          "nonzero_fraction": 1.0
+        },
+        "intermediate_raw_preactivation": {
+          "min": 0.002476245164871216,
+          "max": 24.38152313232422,
+          "nonpositive_fraction": 0.0
+        }
+      }
+    },
+    "reversed": {
+      "artifact_hashes_verified": true,
+      "fresh_reload_exact": true,
+      "optimizer_updates": 300,
+      "measurements": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599524,
+        "probability_min": 0.5000000596046448,
+        "probability_max": 0.5000000596046448
+      },
+      "layers": {
+        "intermediate": {
+          "min": 0.00102015002630651,
+          "max": 0.08715412765741348,
+          "std": 0.02205604501068592,
+          "nonzero_fraction": 1.0
+        },
+        "gru_1": {
+          "min": 0.0,
+          "max": 0.013267945498228073,
+          "std": 0.003549636108800769,
+          "nonzero_fraction": 0.37646484375
+        },
+        "gru_2": {
+          "min": 0.0,
+          "max": 0.009472278878092766,
+          "std": 0.0027504554018378258,
+          "nonzero_fraction": 0.39990234375
+        },
+        "gru_3": {
+          "min": 0.0,
+          "max": 0.008547019213438034,
+          "std": 0.002715352224186063,
+          "nonzero_fraction": 0.44482421875
+        },
+        "gru_4": {
+          "min": 0.0,
+          "max": 0.00721321627497673,
+          "std": 0.0020411808509379625,
+          "nonzero_fraction": 0.75
+        },
+        "gru_5": {
+          "min": 0.0,
+          "max": 0.004058224149048328,
+          "std": 0.0012520878808572888,
+          "nonzero_fraction": 0.32275390625
+        },
+        "gru_6": {
+          "min": 0.0,
+          "max": 0.004018809646368027,
+          "std": 0.0011694804998114705,
+          "nonzero_fraction": 0.25
+        },
+        "gru_7": {
+          "min": 0.0,
+          "max": 0.002184388693422079,
+          "std": 0.0006460734293796122,
+          "nonzero_fraction": 0.125
+        },
+        "gru_8": {
+          "min": 0.0,
+          "max": 0.0,
+          "std": 0.0,
+          "nonzero_fraction": 0.0
+        },
+        "classifier_hidden": {
+          "min": 0.0,
+          "max": 0.0,
+          "std": 0.0,
+          "nonzero_fraction": 0.0
+        },
+        "probability": {
+          "min": 0.5000000596046448,
+          "max": 0.5000000596046448,
+          "std": 0.0,
+          "nonzero_fraction": 1.0
+        },
+        "intermediate_raw_preactivation": {
+          "min": 0.00102015002630651,
+          "max": 0.08715412765741348,
+          "nonpositive_fraction": 0.0
+        }
+      }
+    }
+  },
+  "complement_against_reversed_labels": {
+    "finite": true,
+    "accuracy": 1.0,
+    "bce": 0.22528522012623123,
+    "probability_min": 4.45246696472168e-05,
+    "probability_max": 0.6372966766357422
+  },
+  "paired_initial_weights": true,
+  "gate_passed": false
+}

@@ -58,6 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+September27 implementation is complete but the constructed learning gate
+fails. Full model9,240,802 parameters;9 ensemble/gate plus6 oldAEA software
+checks pass. Small fixed learning pair300updates: normal100% test accuracy,
+BCE.2253; reversed50%, BCElog(2). Reversed finalGRU/classifierhidden outputs
+collapse to zero; AEA intermediate remains active. Complement-normal scores
+solve reversed labels, so this is not a representational impossibility.
+Normal report-writer failure recovered without refitting; all originals
+preserved. No full-width training, GPU timing, research fit/scoring or job.
+Next diagnose the failed constructed trajectory/fixture before promotion;
+do not silently relax the gate or change seeds. See
+[record](studies/takiddin-2021-robust-poisoning/results/sequential_constructed_20260927/README.md)
+and [plan](docs/plans/2026-09-27-sequential-implementation.md). Website untouched.
+
 September26 source/design work is complete. See
 [next experiment](studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
 and [step plan](docs/plans/2026-09-26-aea-next-experiment.md).

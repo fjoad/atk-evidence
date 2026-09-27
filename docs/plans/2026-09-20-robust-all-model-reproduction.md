@@ -4,7 +4,24 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: implement and validate the source-specified ensemble
+## Current step: diagnose the failed constructed ensemble learning gate
+
+The September27 implementation is complete under the
+[new step plan](2026-09-27-sequential-implementation.md). Full runtime count
+9,240,802 and forward dimensions verify; all9 ensemble/gate and6 older AEA
+software checks pass. The fixed small learning pair completed300updates:
+normal100% accuracy/BCE.2253, reversed50%/BCElog(2). Initial weights match.
+Saved-fit audit finds a zero last-GRU/classifier-hidden output in the reversed
+case, with active AEA intermediate output. Complementing the successful
+model's probabilities solves the reversed task without fitting, so a
+representational impossibility is not established. See the
+[record](../../studies/takiddin-2021-robust-poisoning/results/sequential_constructed_20260927/README.md).
+GPU timing is held by the predeclared learning gate. Diagnose the failed
+trajectory/reduced-width fixture before changing settings or promoting to
+GPU; no research fits or extra seeds. The JSON-report failure after normal
+training was recovered without repeating the fit; original artifacts remain.
+
+## Completed step: source-specify the ensemble
 
 The user requested the next source-resolution/design steps. Those are complete
 under [the September26 plan](2026-09-26-aea-next-experiment.md). The proposed

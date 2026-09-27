@@ -84,6 +84,14 @@ class SequentialTests(unittest.TestCase):
         self.assertEqual(model.loss.name, "binary_crossentropy")
         self.assertEqual(type(model.optimizer).__name__, "Adam")
         self.assertAlmostEqual(float(model.optimizer.learning_rate.numpy()), .001, places=8)
+        probe = self.keras.Model(model.input, [model.output, *front.output])
+        probability, sequence, attention = probe(
+            np.linspace(-1., 1., 96, dtype=np.float32).reshape(2, 48, 1))
+        self.assertEqual(tuple(sequence.shape), (2, 48, 1))
+        self.assertEqual(tuple(attention.shape), (2, 48, 48))
+        self.assertTrue(np.isfinite(probability.numpy()).all())
+        self.assertTrue(np.isfinite(sequence.numpy()).all())
+        np.testing.assert_allclose(attention.numpy().sum(axis=-1), 1., atol=1e-6)
 
     def test_paired_initialization_and_shape_validation(self):
         first = M.sequential_ensemble(**SMALL).get_weights()

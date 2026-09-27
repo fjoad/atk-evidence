@@ -489,3 +489,27 @@ The next empirical gates are constructed learning, causal query/feedback,
 serialization and full-model variable-batch timing. None has been completed
 for the ensemble. The contract specifies the bounded pair and competing
 outcomes; it reports no fit, timing, causal mechanism or attainability result.
+
+## E29 — connected gradients and passing software checks establish usable ensemble training
+
+**Status:** insufficient; the declared constructed learning gate failed.
+
+The September27 direct ensemble implementation has the specified9,240,802
+parameters and passes structure, causal query/feedback, update/constraint and
+fresh-process persistence checks. In the predeclared5,082-parameter learning
+fixture, all groups initially have finite nonzero BCE gradients and change
+weights. Yet300updates achieve100%/BCE.2253 for normal labels and50%/BCElog(2)
+for reversed labels, from identical initial weights. Both fits completed.
+
+The saved reversed model's last GRU and classifier hidden outputs are zero
+on constructed test inputs; AEA intermediate outputs remain positive. Final
+upstream gradients are zero on its constructed training inputs. This locates
+a collapsed final state, without identifying which training step caused it.
+Complementing normal-model probabilities solves reversed labels with no
+optimization, so the architecture can represent the reversed answer.
+
+The small fixed training configuration fails its learning gate; the full-width
+model, CER performance, other source interpretations and broad attainability
+remain untested. No GPU timing follows. A writer failure was repaired by
+reloading the completed normal fit, not repeating it; the reversed fit was run
+once. See [record](results/sequential_constructed_20260927/README.md).

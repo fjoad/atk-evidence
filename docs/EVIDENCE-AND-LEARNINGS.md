@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-26
+**Last updated:** 2026-09-27
 
 ## Purpose
 
@@ -24,6 +24,34 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: the ensemble's constructed learning gate catches a failure
+
+**Added September27 after the implementation and fixed synthetic pair.**
+
+- **Software — VERIFIED:** full9,240,802-parameter model inventory/forward
+  shapes, causal decoder query/feedback checks and fresh-process reload pass.
+  Existing model functions and historical evidence remain unchanged.
+- **Learning — OBSERVED:** reduced5,082-parameter model, one initialization,
+  300updates per label orientation: normal100% accuracy/BCE.22528521;
+  reversed50%/BCElog(2). Both starts have connected nonzero gradients in all
+  groups and every group changes some weights; those facts did not ensure
+  useful learning. GPU timing is therefore held.
+- **Saved behavior — VERIFIED:** final reversed GRU and classifier hidden
+  outputs are zero on the32 constructed test rows, while AEA intermediate
+  outputs remain active. Final upstream gradients are zero. The trajectory
+  that produced this state has not been isolated.
+- **Capacity — bounded witness:** normal-model probability complements solve
+  reversed labels without optimization. Thus the failed fit does not show
+  the architecture lacks the representational capacity for this trivial task.
+- **Boundary:** this is a software/optimization gate, not full-width training,
+  CER evidence, a mechanism verdict or a statistical attainability conclusion.
+  Preserve the failed orientation; no settings/seed change is automatically
+  warranted. A final-report serialization failure was recovered from saved
+  normal weights without a repeat fit; read-only audit-helper errors are
+  recorded alongside the eventual successful audit.
+
+See [the complete constructed record](../studies/takiddin-2021-robust-poisoning/results/sequential_constructed_20260927/README.md).
 
 ### Paper 3: standalone reconstruction choices do not define the ensemble
 
