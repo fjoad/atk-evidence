@@ -1,6 +1,7 @@
 """Constructed checks of the declared sequential implementation; no CER."""
 
 from pathlib import Path
+import json
 import subprocess
 import sys
 import tempfile
@@ -28,6 +29,8 @@ class SequentialGateTests(unittest.TestCase):
         self.assertFalse(G.passes_learning(result))
         result["test"] = G.measurements(labels, [.01, .99])
         self.assertTrue(G.passes_learning(result))
+        self.assertIs(type(G.passes_learning(result)), bool)
+        self.assertEqual(json.dumps({"passed": G.passes_learning(result)}), '{"passed": true}')
         result["status"] = "time_guard"
         self.assertFalse(G.passes_learning(result))
         result.update(status="complete", updates=299)

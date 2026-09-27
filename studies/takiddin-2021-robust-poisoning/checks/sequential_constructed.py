@@ -54,7 +54,7 @@ def measurements(labels, probability):
 
 
 def passes_learning(record):
-    return (record["status"] == "complete" and record["updates"] == 300
+    return bool(record["status"] == "complete" and record["updates"] == 300
             and record["test"]["finite"] and record["test"]["accuracy"] >= .9
             and record["test"]["bce"] < np.log(2)/2)
 
@@ -146,6 +146,12 @@ def run_one(output, arrays, reverse):
                   updates=int(model.optimizer.iterations.numpy()))
     # Save before any final diagnostic that could fail, including partial runs.
     model.save(output / "final.keras")
+    return finish_record(output, model, record, initial_trainable, x, y, test_x, test_y)
+
+
+def finish_record(output, model, record, initial_trainable, x, y, test_x, test_y):
+    """Evaluate/persist an already fitted constructed model, without updates."""
+    import keras
     probability = model(test_x).numpy()
     front = keras.Model(model.input, model.get_layer("attention_decoder").output)
     sequence, attention = front(test_x)
