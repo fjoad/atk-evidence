@@ -1,0 +1,777 @@
+{
+  "scope": "read-only full-width eight-step software artifacts; zero updates",
+  "cases": {
+    "normal": {
+      "artifact_hashes_verified": true,
+      "fresh_reload_exact": true,
+      "updates": 300,
+      "states": {
+        "initial": {
+          "train": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.02035248465836048,
+                "max": -0.001264818711206317,
+                "positive_fraction": 0.0,
+                "std": 0.00484927324578166
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03528762236237526,
+                "positive_fraction": 0.8016796875,
+                "std": 0.004866208881139755
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "test": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.020636839792132378,
+                "max": -0.0012587604578584433,
+                "positive_fraction": 0.0,
+                "std": 0.004798629321157932
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03569258004426956,
+                "positive_fraction": 0.8020078125,
+                "std": 0.004827597178518772
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "gradient_group_l2": {
+            "encoder": 0.0,
+            "attention": 0.0,
+            "decoder": 0.0,
+            "intermediate": 0.0,
+            "gru": 0.0,
+            "classifier": 0.0
+          }
+        },
+        "final": {
+          "train": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.013931299559772015,
+                "max": -0.0008661027532070875,
+                "positive_fraction": 0.0,
+                "std": 0.0033193661365658045
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03526470437645912,
+                "positive_fraction": 0.80175,
+                "std": 0.0048624249175190926
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "test": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.014126126654446125,
+                "max": -0.0008618768770247698,
+                "positive_fraction": 0.0,
+                "std": 0.0032846834510564804
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.035669367760419846,
+                "positive_fraction": 0.8020703125,
+                "std": 0.0048238420858979225
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "gradient_group_l2": {
+            "encoder": 0.0,
+            "attention": 0.0,
+            "decoder": 0.0,
+            "intermediate": 0.0,
+            "gru": 0.0,
+            "classifier": 0.0
+          }
+        }
+      },
+      "unchanged_biases": true
+    },
+    "reversed": {
+      "artifact_hashes_verified": true,
+      "fresh_reload_exact": true,
+      "updates": 300,
+      "states": {
+        "initial": {
+          "train": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.02035248465836048,
+                "max": -0.001264818711206317,
+                "positive_fraction": 0.0,
+                "std": 0.00484927324578166
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03528762236237526,
+                "positive_fraction": 0.8016796875,
+                "std": 0.004866208881139755
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "test": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.020636839792132378,
+                "max": -0.0012587604578584433,
+                "positive_fraction": 0.0,
+                "std": 0.004798629321157932
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03569258004426956,
+                "positive_fraction": 0.8020078125,
+                "std": 0.004827597178518772
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "gradient_group_l2": {
+            "encoder": 0.0,
+            "attention": 0.0,
+            "decoder": 0.0,
+            "intermediate": 0.0,
+            "gru": 0.0,
+            "classifier": 0.0
+          }
+        },
+        "final": {
+          "train": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.013931299559772015,
+                "max": -0.0008661027532070875,
+                "positive_fraction": 0.0,
+                "std": 0.0033193661365658045
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.03526470437645912,
+                "positive_fraction": 0.80175,
+                "std": 0.0048624249175190926
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "test": {
+            "layers": {
+              "intermediate": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_1": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_2": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_3": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_4": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_5": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_6": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_7": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "gru_8": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "classifier_hidden": {
+                "min": 0.0,
+                "max": 0.0,
+                "positive_fraction": 0.0,
+                "std": 0.0
+              },
+              "probability": {
+                "min": 0.5,
+                "max": 0.5,
+                "positive_fraction": 1.0,
+                "std": 0.0
+              },
+              "projection_raw": {
+                "min": -0.014126126654446125,
+                "max": -0.0008618768770247698,
+                "positive_fraction": 0.0,
+                "std": 0.0032846834510564804
+              },
+              "projection_input": {
+                "min": 0.0,
+                "max": 0.035669367760419846,
+                "positive_fraction": 0.8020703125,
+                "std": 0.0048238420858979225
+              }
+            },
+            "metrics": {
+              "finite": true,
+              "accuracy": 0.5,
+              "bce": 0.6931471805599453,
+              "probability_min": 0.5,
+              "probability_max": 0.5
+            }
+          },
+          "gradient_group_l2": {
+            "encoder": 0.0,
+            "attention": 0.0,
+            "decoder": 0.0,
+            "intermediate": 0.0,
+            "gru": 0.0,
+            "classifier": 0.0
+          }
+        }
+      },
+      "unchanged_biases": true
+    }
+  },
+  "sources_and_data_verified": true,
+  "paired_initial_weights": true,
+  "identical_final_weights_across_label_orientations": true,
+  "all_original_full_width_files_unchanged": true
+}

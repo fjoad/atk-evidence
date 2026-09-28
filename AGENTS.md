@@ -58,6 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+September28 full-width constructed pair fails its learning gate. User approved
+the dependent sequence, but both unchanged9,240,802-parameter/8-step cases
+finish300updates at50%, BCElog(2), probability.5. Initial gradients are zero:
+the declared scalarReLU bridge clips negative projections to zero despite
+active decoder features. That bridge is our completion of omitted source
+details, not a fully specified paper layer. All hashes/reload/metrics verify.
+GPU timing and research pair remain held; no new cluster/research job or
+website work. Next resolve decoder-to-GRU tensor shape/activation from the
+source before a separately declared alternative/control; no silent setting
+change or seed retry. See
+[record](studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md)
+and [plan](docs/plans/2026-09-28-sequential-execution.md).
+
 September27 collapse trace is complete: one unchanged50-update constructed
 replay matches all old losses/initial weights. After update2, lastGRU and
 classifierhidden are zero; feature gradients vanish. EarlierAEA/GRUs remain

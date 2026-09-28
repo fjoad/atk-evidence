@@ -1,6 +1,6 @@
 # Execute the bounded ensemble sequence
 
-Date: 2026-09-28. State: approved, starting with full-width software learning.
+Date: 2026-09-28. State: Stage1 completed; learning gate failed; dependent stages held.
 
 The user asked to "go ahead and do it all" after the four-stage proposal:
 learning validation at the published widths, full-model GPU timing, the
@@ -71,3 +71,36 @@ questions, not silently included in this bounded first ensemble pair.
 Website work remains outside this task. A cluster-access problem does not
 authorize local research fits; continue independent implementation/fixtures
 where useful and report any genuinely external prerequisite.
+
+## Read-only diagnosis after Stage 1
+
+Both full-width cases completed300 updates and failed the fixed learning
+criterion: accuracy50%, BCElog(2), all probabilities0.5. Initial gradient
+summaries are already zero. Hold Stages2-4. Inspect only preserved initial
+and final weights: verify data/source/weight/history hashes and fresh reload,
+record intermediate/GRU/head outputs on the fixed constructed train/test
+sets, and inspect the scalar ReLU projection's input and raw preactivation.
+This is read-only localization, not another fit or an activation repair.
+Preserve the originally frozen plan at66db165 for source-hash replay.
+
+## Completed outcome
+
+Both full-width runs finished300 updates inside their600-second guards:
+105.63s normal,103.80s reversed. Both have50% test accuracy, BCElog(2) and
+constant probability0.5. Initial/final weights match across orientations;
+initial and final gradients are zero in all groups. The decoder features are
+active, but the declared scalar ReLU projection has entirely negative raw
+values at initialization on these constructed inputs and outputs zeros.
+That bridge shape/activation is an explicit completion, not a fully specified
+printed layer. No source alternative was selected from this result.
+
+Fresh-process audit verifies source/data/file hashes, exact reload outputs,
+all weights,300 optimizer steps and metrics. Original files remain unchanged.
+397 repository tests pass with30 skips; strict data/journal consistency pass.
+See [the complete record](../../studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md).
+
+The gate has failed, so Stages2-4 were not executed. No GPU timing, cluster
+allocation, research-data fit/scoring or website change occurred. Next resolve
+the source-supported decoder-to-GRU tensor shape/activation before declaring
+another controlled implementation. Preserve this failed completion; do not
+relabel it as the authors' method, waive the gate or retry seeds automatically.

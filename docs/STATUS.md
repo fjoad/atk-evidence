@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-27
+**Last updated:** 2026-09-28
 
 **Branch:** `main`
 
@@ -11,6 +11,25 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Full-width constructed pair fails; dependent ensemble stages held.**
+  The user approved the bounded learning→GPU timing→real-data pair→audit
+  sequence, conditional on gates. Frozen66db165 changed only widths in the
+  old8-step synthetic fixture. Both9,240,802-parameter runs completed300
+  updates in105.63/103.80s, with50% accuracy/BCElog(2), all probabilities0.5.
+  Initial/final weights match across label orientations; gradients are zero
+  initially/finally. Decoder features are active, but the scalar ReLU bridge
+  clips entirely negative initial projections to zero; all downstream stages
+  are then inactive. This bridge is our declared completion of missing
+  details, not a fully specified paper layer. No alternate branch selected.
+  Fresh-process artifact/source/data/reload/metric audits pass. Next resolve
+  decoder-to-GRU shape and activation from the source and separately declare
+  an alternative/control. Do not run more seeds or waive the gate. No48-step
+  GPU timing, research pair/scoring, cluster allocation or website work.
+  [Result](../studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md),
+  [plan](plans/2026-09-28-sequential-execution.md).397 repository passes/30
+  skips; strict data and journal checks pass. Originals/scientific model
+  settings remain unchanged.
 
 - **Constructed collapse traced to update2; no model settings changed.**
   The frozen reversed-label50-update prefix (9368a90) reproduces every

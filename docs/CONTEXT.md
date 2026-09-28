@@ -1,6 +1,24 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-27
+**Last updated:** 2026-09-28
+
+**Full-width learning gate failed (September28):** User approved all bounded
+dependent stages, not a waiver of failed checks.66db165 froze width-only
+fixture: same32train/32test,8steps, seed20260920, Adam.001,300updates,
+600s/fit guard; published widths9,240,802 params. Bothnormal/reversed finish
+105.63/103.80s at50%, BCElog(2), p=.5 everywhere. Initial/final weight hashes
+match across orientations; initial/final gradients zero. Initial decoder
+features active but scalarReLU rawprojection negative (train -0.02035 to
+-0.001265), so projected data/allGRUs/head are zero. This scalar bridge and
+activation are OUR recorded source completion. Do not call it a fully printed
+operation or paper-data failure. Fresh reload and every artifact/source/data
+hash/metric pass; old files unchanged.397tests pass/30skips, strictdata and
+journalchecks pass. No GPU/research job or scoring/site work; staged sequence
+held. Next source review: decoder-to-GRU tensor shape/activation, then separate
+declared alternative/control. No automatic seed/activation retry. Records:
+results/sequential_full_width_20260928; plan2026-09-28-sequential-execution.
+Panther reached authentication in a batch probe, but no remote job submitted;
+scientific gate failure, not access, stopped the dependent stages.
 
 **Constructed collapse trace complete:** User approved tracing the failed
 reversed fit.9368a90 froze one50-update replay, same small model/data/seed/

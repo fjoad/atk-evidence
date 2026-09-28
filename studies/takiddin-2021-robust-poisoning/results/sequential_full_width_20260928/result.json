@@ -1,0 +1,1448 @@
+{
+  "scope": "full-width eight-step constructed software learning pair only",
+  "status": "failed_gate",
+  "runtime": {
+    "tensorflow": "2.16.2",
+    "keras": "3.4.1",
+    "h5py": "3.11.0",
+    "backend": "tensorflow",
+    "gpu_details": [],
+    "build_info": {
+      "is_cuda_build": false,
+      "is_rocm_build": false,
+      "is_tensorrt_build": false
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:CPU:0",
+    "cuda_visible_devices": null,
+    "deterministic_ops": true,
+    "tf32_enabled": false,
+    "mixed_precision": false
+  },
+  "code_commit": "66db165aa5e77f8fabdf408f91e0a0b803b1e4cc",
+  "source_sha256": {
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_full_width.py": "b49e705301efd8b8aa23b445b1b4e8e7f34ee21dbdb98685f156c4d386289493",
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py": "f7acfdfdee321e244cb616a6404f18c611dc43a07d4ae941e8d13da85f22d3d5",
+    "studies/takiddin-2021-robust-poisoning/reproduction/models.py": "dcefb40c59c3ffa0082c20a29e9cb413e46ffffa8c7ec3af1df712aef1f82299",
+    "docs/plans/2026-09-28-sequential-execution.md": "886872b441cc0b4bb9e0675a8172232289315d27f05fea165d07d1c439688824"
+  },
+  "same_constructed_arrays_as_previous": true,
+  "previous_data_sha256": "9906021e2cc5a5f8fd3d7b96f134732d98a2229b1392222aa2c5d5608fe58e9f",
+  "model_seed": 20260920,
+  "data_seed": 20260926,
+  "constant_prior": {
+    "finite": true,
+    "accuracy": 0.5,
+    "bce": 0.6931471805599453,
+    "probability_min": 0.5,
+    "probability_max": 0.5
+  },
+  "daily_mean_accuracy": 1.0,
+  "cases": {
+    "normal": {
+      "label_orientation": "normal",
+      "status": "complete",
+      "model_seed": 20260920,
+      "parameter_count": 9240802,
+      "timesteps": 8,
+      "fit_guard_seconds": 600,
+      "initial_weights_sha256": "3441a22fb73c5064c713d6aa448fe2c4c926b6fd8a605ebccae885b917acab6d",
+      "initial_test": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "initial_gradient": {
+        "finite": true,
+        "group_l2": {
+          "encoder": 0.0,
+          "attention": 0.0,
+          "decoder": 0.0,
+          "intermediate": 0.0,
+          "gru": 0.0,
+          "classifier": 0.0
+        },
+        "variables": [
+          {
+            "name": "attention_decoder/attention_encoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_decoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_vector",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_bias",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/kernel",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/bias",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          }
+        ]
+      },
+      "updates": 300,
+      "elapsed_seconds": 105.6348520419997,
+      "test": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "train": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "final_gradient": {
+        "finite": true,
+        "group_l2": {
+          "encoder": 0.0,
+          "attention": 0.0,
+          "decoder": 0.0,
+          "intermediate": 0.0,
+          "gru": 0.0,
+          "classifier": 0.0
+        },
+        "variables": [
+          {
+            "name": "attention_decoder/attention_encoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_decoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_vector",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_bias",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/kernel",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/bias",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          }
+        ]
+      },
+      "weights_finite": true,
+      "changed_groups": {
+        "encoder": true,
+        "attention": true,
+        "decoder": true,
+        "intermediate": true,
+        "gru": true,
+        "classifier": true
+      },
+      "maximum_constrained_norm": 0.9999669813007136,
+      "final_weights_sha256": "e12af6a121499be9b608181726fd6199cf138a8c82dadbd2a638b7191fde7e53",
+      "learning_gate_passed": false,
+      "gradient_group_gate_passed": false,
+      "artifact_sha256": {
+        "outputs.npz": "302089f42ba23d87ce760e6e8bb88c6dbb76ea91f79313ba140fa73056f4a799",
+        "history.json": "73d69637bd3cad532c9f4b7ec062d010a9c19c8f90b82e7753114138a9c084f4",
+        "initial_weights.npz": "efe3785f359b5c10dd82967bc6ab567d26084f9543b601d1c6eaad40d6261b94",
+        "final.keras": "94ace4654f085b7b5f9a9838f28469e33311de25381c95c7e21a0862cb646331"
+      },
+      "reload_exact": true
+    },
+    "reversed": {
+      "label_orientation": "reversed",
+      "status": "complete",
+      "model_seed": 20260920,
+      "parameter_count": 9240802,
+      "timesteps": 8,
+      "fit_guard_seconds": 600,
+      "initial_weights_sha256": "3441a22fb73c5064c713d6aa448fe2c4c926b6fd8a605ebccae885b917acab6d",
+      "initial_test": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "initial_gradient": {
+        "finite": true,
+        "group_l2": {
+          "encoder": 0.0,
+          "attention": 0.0,
+          "decoder": 0.0,
+          "intermediate": 0.0,
+          "gru": 0.0,
+          "classifier": 0.0
+        },
+        "variables": [
+          {
+            "name": "attention_decoder/attention_encoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_decoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_vector",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_bias",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/kernel",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/bias",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          }
+        ]
+      },
+      "updates": 300,
+      "elapsed_seconds": 103.8019058330101,
+      "test": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "train": {
+        "finite": true,
+        "accuracy": 0.5,
+        "bce": 0.6931471805599453,
+        "probability_min": 0.5,
+        "probability_max": 0.5
+      },
+      "final_gradient": {
+        "finite": true,
+        "group_l2": {
+          "encoder": 0.0,
+          "attention": 0.0,
+          "decoder": 0.0,
+          "intermediate": 0.0,
+          "gru": 0.0,
+          "classifier": 0.0
+        },
+        "variables": [
+          {
+            "name": "attention_decoder/attention_encoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_decoder_kernel",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_vector",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/attention_bias",
+            "group": "attention",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_1/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_2/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/encoder_lstm_3/lstm_cell/bias",
+            "group": "encoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_1/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_2/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/recurrent_kernel",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/decoder_lstm_3/bias",
+            "group": "decoder",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/kernel",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attention_decoder/intermediate_projection/bias",
+            "group": "intermediate",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_1/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_2/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_3/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_4/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_5/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_6/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_7/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/recurrent_kernel",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "sequence_gru_8/gru_cell/bias",
+            "group": "gru",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "classifier_hidden/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/kernel",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          },
+          {
+            "name": "attack_probability/bias",
+            "group": "classifier",
+            "finite": true,
+            "l2": 0.0
+          }
+        ]
+      },
+      "weights_finite": true,
+      "changed_groups": {
+        "encoder": true,
+        "attention": true,
+        "decoder": true,
+        "intermediate": true,
+        "gru": true,
+        "classifier": true
+      },
+      "maximum_constrained_norm": 0.9999669813007136,
+      "final_weights_sha256": "e12af6a121499be9b608181726fd6199cf138a8c82dadbd2a638b7191fde7e53",
+      "learning_gate_passed": false,
+      "gradient_group_gate_passed": false,
+      "artifact_sha256": {
+        "outputs.npz": "533d88d6660d599494941abc9e7c493b701b7daa3bc77378c1ddd8ea61e96f40",
+        "history.json": "4c5a2f8ac8ec7a9c883931feb88ede10b74c46eff2281a3cd30dcc5d2480d96b",
+        "initial_weights.npz": "efe3785f359b5c10dd82967bc6ab567d26084f9543b601d1c6eaad40d6261b94",
+        "final.keras": "967d10a0c2130e12dcbc145c58edccde0c74b46bfb96c8eef9262e5fa94fce2d"
+      },
+      "reload_exact": true
+    }
+  },
+  "paired_initial_weights": true,
+  "gate_passed": false
+}

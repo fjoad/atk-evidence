@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-27
+**Last updated:** 2026-09-28
 
 ## Purpose
 
@@ -24,6 +24,29 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: full widths expose an inactive interpretive bridge
+
+**Added September28 after the fixed width-only software learning pair.**
+
+- **Hypothesis tested:** the tiny widths caused an unrepresentative failure
+  that would disappear at the published widths.
+- **Observed:** both9,240,802-parameter/8-step runs complete300updates at50%
+  accuracy/BCElog(2). Initial and final gradients are zero; initial/final
+  weights match across label orientations. Source/data/artifact/reload audits
+  pass. The criterion was not relaxed after seeing the result.
+- **Located:** decoder features remain active, but the scalar ReLU projection
+  has negative raw outputs on every constructed profile at initialization,
+  producing a zero input to the GRUs. The downstream network is inactive.
+- **Interpretation boundary:** the scalar bridge and its activation are our
+  declared completion of omitted details. This is not a literal-paper or
+  research-data failure, and the eight-step fixture does not test48-step
+  learning. Other source-supported interfaces remain unresolved.
+- **Decision:** hold dependent GPU timing/real-data fitting. Resolve the
+  interface from the source before another declared control or completion;
+  do not solve this by selecting another seed or silently changing activation.
+
+See [the full-width record](../studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md).
 
 ### Paper 3: the small learner shuts off after its second update
 

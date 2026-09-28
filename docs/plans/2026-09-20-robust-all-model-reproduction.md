@@ -4,7 +4,21 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: decide a bounded full-width constructed learning check
+## Current step: resolve the decoder-to-GRU interface before another fit
+
+The user approved the dependent ensemble sequence. Its
+[full-width constructed stage](2026-09-28-sequential-execution.md) completed
+both300-update cases at the published widths, retaining the old8-step data
+and settings. Both remain50%/BCElog(2). The declared scalarReLU bridge clips
+negative initial projections to zero, and all downstream stages are inactive.
+Fresh artifact/reload/metric audits pass; no GPU timing or real-data fit ran.
+This bridge shape/activation was an explicit completion, not a fully specified
+paper operation. Preserve the failure and review Fig.2/Algorithm1/IV-C to
+justify a separate interface alternative/control before changing settings.
+No seed search, automatic gate waiver or website work. See the
+[record](../../studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md).
+
+## Completed step: full-width constructed learning check
 
 The [collapse trace](2026-09-27-sequential-collapse-trace.md) is complete.
 An unchanged50-update prefix matches the earlier reversed-label losses

@@ -537,3 +537,26 @@ full-width model remains untested. Do not infer universal failure, select a
 new optimizer or waive the learning gate. A bounded published-width
 constructed check is the next proposed discriminator. See
 [trace record](results/sequential_trace_20260927/README.md).
+
+## E31 — using the published widths rescues the constructed learning gate
+
+**Status:** not observed in the fixed pair; both label orientations fail.
+
+The September28 width-only comparison retains the old8-step constructed
+arrays, initializer seed, Adam and all other settings, changing widths to
+the declared9,240,802-parameter model. Both300-update fits stay at50%,
+BCElog(2), with probability.5. Initial/final gradients are already zero.
+Active decoder features feed a scalar projection whose preactivations are
+entirely negative; its ReLU output and every downstream stage are zero.
+Both label orientations have identical initial and final weights.
+
+This does not establish that width alone caused either failure: the narrow
+reversed run shut off later stages after two updates, while the wide pair
+starts with an inactive intermediate bridge. The bridge shape/activation is
+a recorded interpretation, not an explicit paper instruction. Neither
+failure transfers to a different interface,48-step learning or paper data.
+
+The failed gate holds GPU timing and the real-data pair despite their
+conditional authorization. Next review the source interface and separately
+declare any alternative/control; no automatic activation/seed search.
+See [record](results/sequential_full_width_20260928/README.md).
