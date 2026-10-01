@@ -14,8 +14,11 @@ unchanged3h/resources/science. Preflight407255 completed0:0 in8:01 on026:
 14 checks pass; epochs58.0757/36.7454/36.9169s,135updates; projected50epoch
 1845.8433s<=3600. Exact reload/device/norm/memory checks pass. Preflight SHA
 721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07 verified
-locally/remotely; result record sequential_preflight_20261001. No completed
-research fit yet. Preserve/copy/audit results, no further seeds or settings.
+locally/remotely; result record sequential_preflight_20261001. P00 complete
+50epochs/2250updates,fit2125.66s; all scores0.5047591328620911,DR/FA100/100,
+AUC50. All-cutoff/reversal DR0 at caps. Local hashes/source/metrics/serialized
+weights/config/optimizer/norm pass; p30 now running. Preserve/copy/audit
+results, no further seeds or settings.
 Local verification:140+294 cases,34 skipped =>400 passed; targeted runner
 and gate tests pass. No website edit/publication. See preflight result record.
 **Oct1 interface comparison:** source pages2678/2680/2682/2683 checked;

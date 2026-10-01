@@ -65,7 +65,9 @@ Preflight407255 completed0:0 in8:01;14 checks pass; measured warm projection
 1845.84s per50epochs passes3600s. Artifact/reload/device gates pass. Pair
 was moved while pending to gpu-all because gpu-short has a2h limit; same
 job/resources/budget/science, no second submission. Inspect407294/output
-before any action. No completed research result yet. Preserve/copy/audit,
+before any action. P00 completed50epochs/2250updates: constant0.504759
+scores,DR/FA100/100,AUC50; local artifact/metric/weight audits pass. P30 is
+running; no completed poisoning comparison yet. Preserve/copy/audit,
 then stop this pair; no automatic extra seeds/settings or website work. See
 [preflight](studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md)
 and [pair](studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).

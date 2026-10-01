@@ -560,3 +560,25 @@ The failed gate holds GPU timing and the real-data pair despite their
 conditional authorization. Next review the source interface and separately
 declare any alternative/control; no automatic activation/seed search.
 See [record](results/sequential_full_width_20260928/README.md).
+
+## E32 — the old ReLU bridge failure rules out other declared interfaces
+
+**Status:** contradicted on the fixed eight-step constructed task; research
+learning remains a separate question.
+
+Source recheck leaves the readout equation/activation ambiguous. The primary
+scalar-Sigmoid interpretation and separate scalar-linear control were declared
+before results, with Sigmoid selected for numerical continuation in advance.
+Both normal/reversed learning cases at both activations reached100% held-out
+accuracy and clipped BCE about1e-7 after300updates, with the same initial
+weights/data/settings as the failed full-width ReLU fixture. Old ReLU defaults
+and reload behavior remain exact. This closes the claim that the previous
+failure necessarily transfers to those two interfaces on that constructed task.
+
+The activation affects decoder feedback as well as GRU input; the comparison
+does not isolate one of those paths. Full48-step constructed GPU timing also
+passes (job407255,0:0,8:01;1845.84s projected per50 epochs). Neither result
+establishes CER discrimination, unique fidelity to the underspecified source,
+or reconstruction-mediated robustness. The fixed research pair407294 is a
+separate numerical test. See the [interface record](results/sequential_interface_20261001/README.md)
+and [preflight](results/sequential_preflight_20261001/README.md).

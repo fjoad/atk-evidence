@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-10-01
 
 ## Purpose
 
@@ -24,6 +24,35 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: a declared interface change resolves the constructed failure
+
+**Added October1 after source recheck and the fixed interface comparison.**
+
+- **Source limit — VERIFIED:** Fig.2/Algorithm1 omit the scalar readout
+  equation and do not uniquely settle its activation. TableII supports
+  retaining the AEA component's Sigmoid output; IV-C's scope is ambiguous.
+- **Predeclared comparison:** scalar-Sigmoid was selected for numerical
+  continuation before results; scalar-linear was a separate clipping control.
+  The other model settings, initial weights, data and300-update schedule
+  stayed fixed. The old ReLU default and all failures remain preserved.
+- **Observed:** all four full-width8-step synthetic fits (two activations,
+  two label orientations) reached100% held-out accuracy/BCE about1e-7, with
+  identical initial weights to the failed ReLU fixture. Persistence and
+  gradient/constraint checks passed. Thus the old failure does not establish
+  that these other declared interfaces cannot learn the constructed task.
+- **Boundary:** activation affects both decoder feedback and GRU input;
+  this is not an isolated intervention on the downstream input. Passing a
+  trivial8-step task does not establish48-step CER learning or reconstruction
+  as the cause of robustness. The paper still does not uniquely specify the
+  complete interface.
+- **Measured compute:** three full48-step constructed V100 epochs took
+  58.08/36.75/36.92s; the1845.84s projection per50 epochs passes the runtime
+  gate. The whole preflight job took8:01 including14 software checks. A
+  20-minute allocation ceiling was not a measured20-minute workload.
+
+See [interface results](../studies/takiddin-2021-robust-poisoning/results/sequential_interface_20261001/README.md)
+and [GPU preflight](../studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md).
 
 ### Paper 3: full widths expose an inactive interpretive bridge
 

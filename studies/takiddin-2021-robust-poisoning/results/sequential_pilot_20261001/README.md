@@ -2,8 +2,30 @@
 
 The one authorized pair is running on Panther as **job407294**, scientific
 code `3705bcca04279bbfa8523a573b9b573f123463b7`. Inspect that existing job
-and output before continuing; do not submit a duplicate. No completed
-paper-data result is available at this checkpoint.
+and output before continuing; do not submit a duplicate. P00 is complete
+and audited; p30 is running. No completed poisoning comparison yet.
+
+## Completed unpoisoned checkpoint
+
+P00 completed50epochs/2,250updates in2125.66s of fitting, followed by207.48s
+scoring and73.71s reload verification. Every test probability is exactly
+0.5047591328620911, so the0.5 rule flags all2,232 rows: DR100%,FA100%,
+AUC50%,ACC49.50717%. All saved-score cutoffs and favorable score reversal
+give bestDR0 at the declared FA caps. This is a completed weak learner,
+not merely a poor choice of cutoff. Initial test probabilities were also
+constant at float32 precision. Intermediate outputs are not constant, but
+mean finalMSE1.261641 exceeds zero-outputMSE1.038686; classification-only
+training does not establish reconstruction of the input.
+
+Local source/artifact/metric replay passes, as do serialized52-variable/
+9,240,802-parameter/optimizer2250/finite/norm checks. The secondary archive
+auditor initially rejected raw config equality because Keras stores
+`shared_object_id` metadata only in the archive; recursively removing only
+that identity field yields exact equality for all model settings. This was
+an audit-reader correction; no model, data, score or fit was changed.
+[Raw result](p00_result.json) and [history](p00_history.json) are preserved.
+P30 remains the same approved job407294; no scientific conclusion about
+poisoning follows until that fixed second fit completes and is audited.
 
 ## Frozen setup
 

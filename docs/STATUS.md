@@ -23,7 +23,9 @@ execution plan here is
   Pair407294 was moved while pending from gpu-short (2h maximum) to gpu-all,
   retaining its3h ceiling and V100 resources; it was not resubmitted.
   Inspect this existing job and `sequential-sigmoid-pilot-20261001-attempt1`
-  before any action. No completed paper-data result yet. Preserve/audit both
+  before any action. P00 completed50epochs/2250updates: all scores0.504759,
+  DR/FA100/100%,AUC50%; local artifact/metric/serialized-weight audits pass.
+  P30 is running; no completed poisoning comparison yet. Preserve/audit both
   outcomes; no extra seed/settings or website work. See
   [preflight](../studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md)
   and [running pair](../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
