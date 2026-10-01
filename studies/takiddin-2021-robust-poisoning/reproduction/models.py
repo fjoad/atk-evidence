@@ -129,10 +129,13 @@ def register_sequential_layer():
         """I-SEQ-native-IVC: target Fig.2/IV-C and declared causal completions."""
 
         def __init__(self, encoder_units=(500, 300, 200), steps=48,
-                     seed=20260920, **kwargs):
+                     seed=20260920, bridge_activation="relu", **kwargs):
             super().__init__(**kwargs)
             self.encoder_units = tuple(int(u) for u in encoder_units)
             self.steps, self.seed = int(steps), int(seed)
+            if bridge_activation not in ("relu", "sigmoid", "linear"):
+                raise ValueError("Undeclared sequential bridge activation")
+            self.bridge_activation = bridge_activation
             if len(self.encoder_units) != 3 or min(self.encoder_units) < 1 or self.steps < 2:
                 raise ValueError("Need three positive encoder widths and at least two steps")
             self.decoder_units = tuple(reversed(self.encoder_units))
@@ -155,7 +158,7 @@ def register_sequential_layer():
                 dropout=0., recurrent_dropout=0., name=f"decoder_lstm_{i+1}")
                 for i, u in enumerate(self.decoder_units)]
             self.projection = keras.layers.Dense(
-                1, activation="relu", kernel_constraint=constraint,
+                1, activation=self.bridge_activation, kernel_constraint=constraint,
                 kernel_initializer=keras.initializers.GlorotUniform(seed=self.seed + 40),
                 bias_initializer="zeros", name="intermediate_projection")
 
@@ -187,7 +190,8 @@ def register_sequential_layer():
 
         def get_config(self):
             return {**super().get_config(), "encoder_units": list(self.encoder_units),
-                    "steps": self.steps, "seed": self.seed}
+                    "steps": self.steps, "seed": self.seed,
+                    "bridge_activation": self.bridge_activation}
 
         def compute_output_shape(self, input_shape):
             return ((input_shape[0], self.steps, 1),
@@ -240,11 +244,13 @@ def register_sequential_layer():
 
 
 def sequential_ensemble(seed: int = 20260920, *, encoder_units=(500, 300, 200),
-                        gru_units=300, dense_units=500, timesteps=48):
+                        gru_units=300, dense_units=500, timesteps=48, bridge_activation="relu"):
     """Section IV-C native completion; reduced dimensions are software-only.
 
     The eight GRU layers and six LSTM layers are retained for every fixture.
     No standalone reconstruction loss, pretraining or 0.51 cutoff is inherited.
+    ReLU is the historical default; explicit alternatives are source-labeled
+    in SEQUENTIAL_INTERFACE.md and serialized in the frontend configuration.
     """
     import tensorflow as tf
     import keras
@@ -257,7 +263,8 @@ def sequential_ensemble(seed: int = 20260920, *, encoder_units=(500, 300, 200),
     keras.mixed_precision.set_global_policy("float32")
     inputs = keras.Input(shape=(timesteps, 1), dtype="float32", name="daily_profile")
     frontend = register_sequential_layer()(encoder_units=encoder_units, steps=timesteps,
-                                          seed=seed, name="attention_decoder")
+                                          seed=seed, bridge_activation=bridge_activation,
+                                          name="attention_decoder")
     value, _ = frontend(inputs)
     constraint = keras.constraints.MaxNorm(1., axis=0)
     for i in range(8):

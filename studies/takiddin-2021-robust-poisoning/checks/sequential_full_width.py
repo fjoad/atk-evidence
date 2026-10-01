@@ -12,11 +12,11 @@ import sequential_constructed as G
 EXPECTED_MODEL = "dcefb40c59c3ffa0082c20a29e9cb413e46ffffa8c7ec3af1df712aef1f82299"
 
 
-def run_case(output, arrays, reverse):
+def run_case(output, arrays, reverse, *, bridge_activation="relu", fit_guard_seconds=600):
     import tensorflow as tf
     import keras
     output.mkdir()
-    model = G.M.sequential_ensemble(G.MODEL_SEED, timesteps=8)
+    model = G.M.sequential_ensemble(G.MODEL_SEED, timesteps=8, bridge_activation=bridge_activation)
     if model.count_params() != 9240802:
         raise ValueError("Full-width parameter count differs")
     x, test_x = arrays["train_x"], arrays["test_x"]
@@ -27,7 +27,8 @@ def run_case(output, arrays, reverse):
     np.savez_compressed(output / "initial_weights.npz", **{f"w{i}": w for i,w in enumerate(initial)})
     record = {"label_orientation": "reversed" if reverse else "normal", "status": "started",
               "model_seed": G.MODEL_SEED, "parameter_count": model.count_params(),
-              "timesteps": 8, "fit_guard_seconds": 600,
+              "timesteps": 8, "fit_guard_seconds": fit_guard_seconds,
+              "bridge_activation": bridge_activation,
               "initial_weights_sha256": G.R.weight_hash(initial),
               "initial_test": G.measurements(test_y, model(test_x).numpy()),
               "initial_gradient": G.gradient_report(model, x, y)}
@@ -47,7 +48,7 @@ def run_case(output, arrays, reverse):
             if not np.isfinite(loss):
                 stopped.append("nonfinite_loss")
                 self.model.stop_training = True
-            elif time.monotonic()-started >= 600 and epoch+1 < 300:
+            elif time.monotonic()-started >= fit_guard_seconds and epoch+1 < 300:
                 stopped.append("time_guard")
                 self.model.stop_training = True
 

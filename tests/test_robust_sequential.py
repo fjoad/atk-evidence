@@ -59,6 +59,62 @@ class SequentialTests(unittest.TestCase):
         cls.tf, cls.keras = tf, keras
         R.configure_tensorflow(False)
 
+    def test_explicit_interface_choices_share_initial_parameters(self):
+        hashes = []
+        for activation in ("relu", "sigmoid", "linear"):
+            model = M.sequential_ensemble(**SMALL, bridge_activation=activation)
+            hashes.append(R.weight_hash(model.get_weights()))
+            front = model.get_layer("attention_decoder")
+            self.assertEqual(front.bridge_activation, activation)
+            self.assertEqual(front.get_config()["bridge_activation"], activation)
+        self.assertEqual(len(set(hashes)), 1)
+        self.assertEqual(hashes[0], "80beecbcc7f1580c8f30ad38da32e70dede598de9b586ae58737ddf3c72b6b38")
+        with self.assertRaises(ValueError):
+            M.sequential_ensemble(**SMALL, bridge_activation="tanh")
+
+    def test_negative_readout_has_the_declared_value_and_bias_gradient(self):
+        tf = self.tf
+        expected = {"relu": (0., 0.), "sigmoid": (1/(1+np.exp(2)), np.exp(2)/(1+np.exp(2))**2),
+                    "linear": (-2., 1.)}
+        for activation, (value, gradient) in expected.items():
+            front = M.sequential_ensemble(**SMALL, bridge_activation=activation).get_layer("attention_decoder")
+            front.projection.kernel.assign(tf.zeros_like(front.projection.kernel))
+            front.projection.bias.assign([-2.])
+            with tf.GradientTape() as tape:
+                output = front.projection(tf.ones((1, 8)))
+            derivative = tape.gradient(output, front.projection.bias)
+            self.assertAlmostEqual(float(output.numpy()[0,0]), value, places=6)
+            self.assertAlmostEqual(float(derivative.numpy()[0]), gradient, places=6)
+
+    def test_nondefault_readouts_survive_fresh_process_reload(self):
+        x = np.linspace(-1., 1., 16, dtype=np.float32).reshape(2, 8, 1)
+        for activation in ("sigmoid", "linear"):
+            model = M.sequential_ensemble(**SMALL, bridge_activation=activation)
+            model.train_on_batch(x, np.array([[0.], [1.]], dtype=np.float32))
+            with tempfile.TemporaryDirectory() as directory:
+                d = Path(directory)
+                model.save(d / "model.keras")
+                np.save(d / "input.npy", x)
+                child = '''
+import sys
+from pathlib import Path
+import numpy as np
+sys.path.insert(0, str(Path("studies/takiddin-2021-robust-poisoning/reproduction").resolve()))
+import models
+from run_experiment import configure_tensorflow
+configure_tensorflow(False)
+import keras
+models.register_sequential_layer()
+d=Path(sys.argv[1]); m=keras.models.load_model(d/"model.keras")
+assert m.get_layer("attention_decoder").bridge_activation==sys.argv[2]
+assert int(m.optimizer.iterations.numpy())==1
+np.save(d/"output.npy",m(np.load(d/"input.npy")).numpy())
+'''
+                done = subprocess.run([sys.executable, "-c", child, str(d), activation],
+                                      cwd=ROOT, capture_output=True, text=True, timeout=60)
+                self.assertEqual(done.returncode, 0, done.stderr)
+                np.testing.assert_array_equal(np.load(d / "output.npy"), model(x).numpy())
+
     def test_full_source_inventory_and_configuration(self):
         model = M.sequential_ensemble()
         self.assertEqual(model.count_params(), 9240802)
