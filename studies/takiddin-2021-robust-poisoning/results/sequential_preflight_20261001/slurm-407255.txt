@@ -1,0 +1,38 @@
+test_constant_partial_and_nonfinite_results_cannot_pass (tests.test_robust_sequential.SequentialGateTests.test_constant_partial_and_nonfinite_results_cannot_pass) ... ok
+test_fixed_data_are_balanced_disjoint_and_easily_separable (tests.test_robust_sequential.SequentialGateTests.test_fixed_data_are_balanced_disjoint_and_easily_separable) ... ok
+test_sequential_targets_are_table_five_not_standalone_gru (tests.test_robust_sequential.SequentialGateTests.test_sequential_targets_are_table_five_not_standalone_gru) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-10-01 13:55:27.442575: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-01 13:55:29.563206: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-01 13:55:29.586016: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-01 13:55:59.544181: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_actual_decoder_loop_uses_previous_output_and_mirrored_states (tests.test_robust_sequential.SequentialTests.test_actual_decoder_loop_uses_previous_output_and_mirrored_states) ... ok
+test_explicit_interface_choices_share_initial_parameters (tests.test_robust_sequential.SequentialTests.test_explicit_interface_choices_share_initial_parameters) ... ok
+test_feedback_changes_state_and_disabled_input_removes_effect (tests.test_robust_sequential.SequentialTests.test_feedback_changes_state_and_disabled_input_removes_effect) ... ok
+test_finite_gradient_connectivity_update_and_constraints (tests.test_robust_sequential.SequentialTests.test_finite_gradient_connectivity_update_and_constraints) ... ok
+test_fresh_process_reload_preserves_internal_outputs_and_optimizer (tests.test_robust_sequential.SequentialTests.test_fresh_process_reload_preserves_internal_outputs_and_optimizer) ... ok
+test_full_source_inventory_and_configuration (tests.test_robust_sequential.SequentialTests.test_full_source_inventory_and_configuration) ... ok
+test_negative_readout_has_the_declared_value_and_bias_gradient (tests.test_robust_sequential.SequentialTests.test_negative_readout_has_the_declared_value_and_bias_gradient) ... ok
+test_nondefault_readouts_survive_fresh_process_reload (tests.test_robust_sequential.SequentialTests.test_nondefault_readouts_survive_fresh_process_reload) ... ok
+test_paired_initialization_and_shape_validation (tests.test_robust_sequential.SequentialTests.test_paired_initialization_and_shape_validation) ... ok
+test_query_intervention_and_disabled_connection (tests.test_robust_sequential.SequentialTests.test_query_intervention_and_disabled_connection) ... ok
+test_runner_preserves_scores_representations_and_partial_status (tests.test_robust_sequential.SequentialTests.test_runner_preserves_scores_representations_and_partial_status) ... WARNING:tensorflow:5 out of the last 5 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x15545824f380> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+{"training_epoch": {"epoch": 1, "loss": 0.6931793689727783, "seconds": 20.25120933772996, "optimizer_updates": 1, "epoch_complete": true}}
+{"training_epoch": {"epoch": 2, "loss": 0.6921190023422241, "seconds": 0.7901097359135747, "optimizer_updates": 2, "epoch_complete": true}}
+WARNING:tensorflow:6 out of the last 7 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x15541efc1ee0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+{"training_epoch": {"epoch": 1, "loss": 0.6931793689727783, "seconds": 19.81463193008676, "optimizer_updates": 1, "epoch_complete": true}}
+ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 275.581s
+
+OK
+2026-10-01 13:59:50.506192: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-01 13:59:50.530937: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-01 13:59:50.530994: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-01 13:59:52.819213: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"epoch": 1, "seconds": 58.07567547308281, "updates": 45, "loss": 0.6932232975959778}
+{"epoch": 2, "seconds": 36.74542277911678, "updates": 45, "loss": 0.6932176947593689}
+{"epoch": 3, "seconds": 36.91686583403498, "updates": 45, "loss": 0.6932308077812195}
+{"status": "complete", "gate": {"projected_fit_seconds": 1845.843291701749, "ceiling_seconds": 3600, "passed": true}}

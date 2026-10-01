@@ -58,6 +58,18 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+Oct1 sequential pair407294 is running on Panther, one V10016GB on005,
+4CPU/16GiB,3h,70min/fit; frozen3705bcca04279bbfa8523a573b9b573f123463b7.
+Original p00 thenp30, same seed,50epochs/batch100, declared Sigmoid interface.
+Preflight407255 completed0:0 in8:01;14 checks pass; measured warm projection
+1845.84s per50epochs passes3600s. Artifact/reload/device gates pass. Pair
+was moved while pending to gpu-all because gpu-short has a2h limit; same
+job/resources/budget/science, no second submission. Inspect407294/output
+before any action. No completed research result yet. Preserve/copy/audit,
+then stop this pair; no automatic extra seeds/settings or website work. See
+[preflight](studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md)
+and [pair](studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+
 Oct1 scalar-Sigmoid interface and separate linear control both pass fixed
 full-width8-step software learning: four300-update cases,100% accuracy,
 BCE~1e-7. Sigmoid was preselected as the next numerical interpretation before

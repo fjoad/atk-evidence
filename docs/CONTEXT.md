@@ -2,6 +2,22 @@
 
 **Last updated:** 2026-10-01
 
+**Live real-data pair407294:** code3705bcca04279bbfa8523a573b9b573f123463b7;
+one V10016GB oncrimv3mgpu005,4CPU/16GiB,3h ceiling,70min/fit. Same-seed
+fresh p00/p30,50epochs/batch100, scalar-Sigmoid interpretation; p00 first.
+Isolated checkout /export/home/fjoad/atk-evidence-paper3-seq-20261001.
+Output /export/home/fjoad/atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-sigmoid-pilot-20261001-attempt1;
+log /export/home/fjoad/seq-transfer-20261001/pair-407294.out. Check this job
+and outputs first; never submit a duplicate. Pending PartitionTimeLimit was
+resolved by moving the SAME job to gpu-all from gpu-short (2h limit), with
+unchanged3h/resources/science. Preflight407255 completed0:0 in8:01 on026:
+14 checks pass; epochs58.0757/36.7454/36.9169s,135updates; projected50epoch
+1845.8433s<=3600. Exact reload/device/norm/memory checks pass. Preflight SHA
+721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07 verified
+locally/remotely; result record sequential_preflight_20261001. No completed
+research fit yet. Preserve/copy/audit results, no further seeds or settings.
+Local verification:140+294 cases,34 skipped =>400 passed; targeted runner
+and gate tests pass. No website edit/publication. See preflight result record.
 **Oct1 interface comparison:** source pages2678/2680/2682/2683 checked;
 readout shape/equation still omitted.73fe054 froze primaryI-SEQ-scalar-sigmoid
 from component-output reading and C-linear control BEFORE results. Four

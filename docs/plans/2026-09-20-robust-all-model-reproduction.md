@@ -4,7 +4,19 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: full48-step GPU timing of the validated Sigmoid interpretation
+## Current step: audit the running sequential pair on Panther
+
+GPU preflight407255 completed0:0 in8:01 at3705bcca:14 checks pass,
+three full48-step epochs58.08/36.75/36.92s; projected50epochs1845.84s
+passes3600s. Device/memory/finite/reload checks pass. The authorized original
+p00/p30 pair is running as407294 ononeV10016GB,4CPU/16GiB,3h ceiling,
+70min/fit, same seed and frozen science. Before fitting, Slurm's2h gpu-short
+limit was resolved by moving the same pending job to gpu-all, not resubmitting.
+Inspect existing job/output, preserve all results, compare saved scores and
+audit after completion. No extra seeds/settings. See
+[pair record](../../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+
+## Completed step: full48-step GPU timing of the validated Sigmoid interpretation
 
 The [Oct1 source/interface comparison](2026-10-01-sequential-interface.md)
 declared primary scalar-Sigmoid and a separate linear control before fitting.

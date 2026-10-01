@@ -1,6 +1,6 @@
 # Resolve and test the decoder-to-GRU interface
 
-Date: 2026-10-01. State: source/comparison complete; preparing GPU timing.
+Date: 2026-10-01. State: source/comparison and GPU timing complete; pair407294 running.
 
 The user approved the proposed source review, a separately documented minimal
 interface interpretation/control, its fixed learning checks and continuation
@@ -61,3 +61,20 @@ No timings or research result have been produced yet. User reaffirmed local
 small checks are acceptable and big jobs must use Panther. Cluster login is
 restored, idle V100-16GB nodes were observed, existing neural environment and
 prepared data are present, and the new preflight output path is clear.
+
+## Cluster execution
+
+Frozen scientific code3705bcca04279bbfa8523a573b9b573f123463b7 ran GPU
+preflight407255: COMPLETED/0:0 in8:01 oncrimv3mgpu026. All14 cluster checks
+passed. Epoch times58.0757/36.7454/36.9169s;135 updates and exact reload.
+The runtime projection is1845.8433s per50 epochs, below3600s. Training
+allocator peak1,570,985,216 bytes; this is not total process/driver VRAM.
+Preflight SHA721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07
+matches locally/remotely and the direct gate verifier passes.
+
+The authorized real pair was submitted once as407294. Slurm held it pending
+with PartitionTimeLimit: gpu-short permits only2h. Before fitting, the same
+job was moved using scontrol to gpu-all, which supports the sameV10016GB
+resources and the unchanged3h ceiling. The launcher partition is corrected
+for future use; model/data/seed/epochs/70min fit guards are unchanged. This
+is an operational scheduler correction, not a new fit or scientific branch.
