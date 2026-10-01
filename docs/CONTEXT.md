@@ -1,6 +1,24 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-10-01
+
+**Oct1 interface comparison:** source pages2678/2680/2682/2683 checked;
+readout shape/equation still omitted.73fe054 froze primaryI-SEQ-scalar-sigmoid
+from component-output reading and C-linear control BEFORE results. Four
+full-width8step synthetic fits300updates all100%/BCE~1e-7, identical initial
+weights to historicalReLU. Artifact/fresh reload/metrics pass, oldReLU default
+and attention outputs preserved. Sigmoid alone was preselected for numerical
+continuation. models.py serializes bridge_activation, ReLU default unchanged.
+Direct fit_sequential/CLI TableV/audit +20min GPU preflight and180min paired
+launcher now implemented. Preliminary scripts/tests pass; complete freeze
+checks before submit. Same scientific models across learning/timing/fit; both
+50epoch/batch100 fits have4200s guards. Full48step GPU time not measured yet.
+Panther authenticated; idleV10016GB listed. No job submitted at this checkpoint.
+No actual electric-data fit/scoring or site change. All old outcomes retained.
+See SEQUENTIAL_INTERFACE.md, results/sequential_interface_20261001 and
+docs/plans/2026-10-01-sequential-interface.md. The learning controls were local
+software fixtures; user reaffirmed small local checks are fine and big jobs
+must run on Panther. Use existing pinned remote neural environment.
 
 **Full-width learning gate failed (September28):** User approved all bounded
 dependent stages, not a waiver of failed checks.66db165 froze width-only

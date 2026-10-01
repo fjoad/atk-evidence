@@ -73,7 +73,8 @@ def threshold_summary(labels, scores, caps=(17.6, 33.3)):
 
 def reported_row(rate, model="random_forest"):
     column = f"p{round(100 * rate)}"
-    with (STUDY / "reported/table_3.csv").open() as stream:
+    table = "table_5.csv" if model == "sequential_ensemble" else "table_3.csv"
+    with (STUDY / "reported" / table).open() as stream:
         result = {r["metric"]: float(r[column]) for r in csv.DictReader(stream)
                   if r["model"] == model}
     if set(result) != set(METRICS):
@@ -191,7 +192,8 @@ if __name__ == "__main__":
     parser.add_argument("attempt", type=Path, nargs="+")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
-    payload = {"scope": "first-baseline pilot, not full Table III reproduction",
+    sequential = any(json.loads((p / "result.json").read_text()).get("model") == "sequential_ensemble" for p in args.attempt)
+    payload = {"scope": "sequential pilot, not full Table V reproduction" if sequential else "first-baseline pilot, not full Table III reproduction",
                "attempts": [audit_result(path) for path in args.attempt]}
     encoded = json.dumps(payload, indent=2, sort_keys=True, allow_nan=False) + "\n"
     if args.output:

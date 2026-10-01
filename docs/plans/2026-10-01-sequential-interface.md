@@ -1,6 +1,6 @@
 # Resolve and test the decoder-to-GRU interface
 
-Date: 2026-10-01. State: source review in progress.
+Date: 2026-10-01. State: source/comparison complete; preparing GPU timing.
 
 The user approved the proposed source review, a separately documented minimal
 interface interpretation/control, its fixed learning checks and continuation
@@ -42,3 +42,22 @@ input. Four fixed full-width,8-step,300-update learning fits,300s guard each,
 no additional branch or seed after results. Same >=90%/BCE<log(2)/2 criterion.
 Only a passing Sigmoid pair can promote to the previously approved GPU
 timing/pilot sequence. A better linear-control metric does not select it.
+
+## Constructed result and execution implementation
+
+All four declared fits completed300 updates at100% held-out accuracy and
+clipped BCE~1e-7. All share the old ReLU initial parameter hash; source/data/
+weights/optimizer/metrics and fresh output/attention reload verify. Historical
+ReLU defaults and outputs remain exact. Sigmoid therefore qualifies for
+timing; linear remains a control. These are local software fixtures only.
+
+The full48-step GPU preflight, direct50-epoch research runner, Table-V target
+mapping and pair audit are implemented. They preserve original inputs and
+historical functions. The new runner records initial/final representations,
+raw class probabilities, all prescribed cutoff diagnostics, histories,
+weights/configuration/norms and failures. It refuses an absent, failed,
+wrong-source or altered preflight before loading research arrays.
+No timings or research result have been produced yet. User reaffirmed local
+small checks are acceptable and big jobs must use Panther. Cluster login is
+restored, idle V100-16GB nodes were observed, existing neural environment and
+prepared data are present, and the new preflight output path is clear.

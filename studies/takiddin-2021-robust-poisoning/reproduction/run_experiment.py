@@ -19,7 +19,7 @@ import sklearn
 import scipy
 import threadpoolctl
 
-from models import adaboost, random_forest, svm, feed_forward, gru
+from models import adaboost, random_forest, svm, feed_forward, gru, sequential_ensemble, register_sequential_layer
 from analyze_results import analyze_scores, digest
 
 
@@ -502,6 +502,169 @@ def fit_gru(arrays, output, *, seed, epochs=50, batch_size=100, fit_limit_second
         "output_sha256": {name: digest(output / name) for name in ("model.keras", "initial_weights.npz", "history.json", "predictions.npz")}}
 
 
+def require_sequential_preflight(path, expected_hash):
+    if path is None or expected_hash is None or digest(path) != expected_hash:
+        raise ValueError("Need the preserved sequential GPU preflight and its exact hash")
+    r = json.loads(Path(path).read_text())
+    epochs = r.get("epochs", [])
+    if (r.get("status") != "complete" or r.get("parameters") != 9240802
+            or r.get("optimizer_updates") != 135 or not r.get("reload_exact")
+            or r.get("research_inputs_loaded") is not False or r.get("research_fits") != 0
+            or r.get("approval", {}).get("interpretation") != "I-SEQ-scalar-sigmoid"
+            or len(epochs) != 3 or any(e["updates"] != 45 or not np.isfinite(e["seconds"])
+                                     or e["seconds"] <= 0 for e in epochs)):
+        raise ValueError("Incomplete or wrong-scope sequential GPU preflight")
+    projected = 50 * max(e["seconds"] for e in epochs[1:])
+    if r.get("gate") != {"projected_fit_seconds": projected, "ceiling_seconds": 3600,
+                         "passed": projected <= 3600} or projected > 3600:
+        raise ValueError("Sequential runtime gate did not pass")
+    for p in (Path(__file__), STUDY / "reproduction/models.py", STUDY / "SEQUENTIAL_INTERFACE.md"):
+        key = str(p.resolve().relative_to(STUDY.parents[1]))
+        if digest(p) != r["source_sha256"][key]:
+            raise ValueError("Scientific source differs from timed implementation")
+    return {"sha256": expected_hash, "code_commit": r["code_commit"], "gate": r["gate"]}
+
+
+def fit_sequential(arrays, output, *, seed, epochs=50, batch_size=100,
+                   fit_limit_seconds=4200, fixture_dimensions=None):
+    """I-SEQ-scalar-sigmoid; small overrides are internal constructed fixtures only."""
+    import tensorflow as tf
+    import keras
+    output = Path(output)
+    device = "/GPU:0" if tf.config.list_physical_devices("GPU") else "/CPU:0"
+    kwargs = {} if fixture_dimensions is None else dict(fixture_dimensions)
+    if set(kwargs) - {"encoder_units", "gru_units", "dense_units"}:
+        raise ValueError("Fixture overrides may change only layer widths")
+    train_x, test_x = sequence_inputs(arrays["train_x"]), sequence_inputs(arrays["test_x"])
+    observed = arrays["train_observed_y"]
+    if not np.isin(observed, [0, 1]).all():
+        raise ValueError("Sequential training labels must be binary")
+    y = observed.astype(np.float32)[:, None]
+    with tf.device(device):
+        model = sequential_ensemble(seed, bridge_activation="sigmoid", **kwargs)
+    if fixture_dimensions is None and model.count_params() != 9240802:
+        raise ValueError("Unexpected sequential architecture")
+    weight_devices = sorted({v.value.device for v in model.trainable_weights})
+    if device == "/GPU:0" and any("GPU:0" not in d for d in weight_devices):
+        raise ValueError("Sequential weights not on the allocated GPU")
+    initial = model.get_weights()
+    initial_hash = weight_hash(initial)
+    np.savez_compressed(output / "initial_weights.npz", **{f"weight_{i}": w for i,w in enumerate(initial)})
+    probe = keras.Model(model.input, [model.outputs[0], model.get_layer("attention_decoder").output[0]])
+
+    def infer(network, x):
+        probabilities, representations = [], []
+        for i in range(0, len(x), batch_size):
+            probability, representation = network(tf.convert_to_tensor(x[i:i+batch_size]), training=False)
+            probabilities.append(probability.numpy().ravel())
+            representations.append(representation.numpy()[:, :, 0])
+        probability, representation = np.concatenate(probabilities), np.concatenate(representations)
+        if not np.isfinite(probability).all() or not np.isfinite(representation).all():
+            raise ValueError("Nonfinite sequential inference")
+        return probability, representation
+
+    initial_probability, initial_representation = infer(probe, test_x)
+    dataset = tf.data.Dataset.from_tensor_slices((train_x, y)).shuffle(len(train_x), seed=seed,
+        reshuffle_each_iteration=True).batch(batch_size)
+    options = tf.data.Options()
+    options.deterministic = True
+    options.threading.private_threadpool_size = 1
+    options.threading.max_intra_op_parallelism = 1
+    dataset = dataset.with_options(options).prefetch(1)
+    steps = (len(train_x)+batch_size-1)//batch_size
+    history, guard = [], []
+    started = time.perf_counter()
+
+    class Recorder(keras.callbacks.Callback):
+        def on_epoch_begin(self, epoch, logs=None):
+            self.started = time.perf_counter()
+            self.first = int(self.model.optimizer.iterations.numpy())
+
+        def on_train_batch_end(self, batch, logs=None):
+            if not np.isfinite(float(logs["loss"])):
+                raise ValueError("Nonfinite sequential loss")
+            if time.perf_counter()-started >= fit_limit_seconds:
+                guard.append(True)
+                self.model.stop_training = True
+
+        def on_epoch_end(self, epoch, logs=None):
+            updates = int(self.model.optimizer.iterations.numpy())
+            row = {"epoch": epoch+1, "loss": float(logs["loss"]),
+                   "seconds": time.perf_counter()-self.started, "optimizer_updates": updates,
+                   "epoch_complete": updates-self.first == steps}
+            history.append(row)
+            (output / "history.json").write_text(json.dumps(history, indent=2, allow_nan=False)+"\n")
+            print(json.dumps({"training_epoch": row}), flush=True)
+
+    if device == "/GPU:0":
+        tf.config.experimental.reset_memory_stats("GPU:0")
+    try:
+        model.fit(dataset, epochs=epochs, verbose=0, callbacks=[Recorder()])
+    except Exception:
+        model.save(output / "failed_model.keras")
+        (output / "history.json").write_text(json.dumps(history, indent=2, allow_nan=False)+"\n")
+        raise
+    fit_seconds = time.perf_counter()-started
+    updates = int(model.optimizer.iterations.numpy())
+    completed_epochs = sum(row["epoch_complete"] for row in history)
+    complete = completed_epochs == epochs and updates == epochs*steps
+    model.save(output / "model.keras")
+    tick = time.perf_counter()
+    raw, representation = infer(probe, test_x)
+    train_raw, _ = infer(probe, train_x)
+    score_seconds = time.perf_counter()-tick
+    final_hash = weight_hash(model.get_weights())
+    if not all(np.isfinite(v.numpy()).all() for v in model.trainable_weights):
+        raise ValueError("Nonfinite sequential weights")
+    norms = {v.path: float(np.linalg.norm(v.numpy().astype(np.float64), axis=0).max())
+             for v in model.trainable_weights if v.constraint is not None}
+    if max(norms.values()) > 1.00001:
+        raise ValueError("Sequential weight constraint violated")
+    tick = time.perf_counter()
+    register_sequential_layer()
+    with tf.device(device):
+        restored = keras.models.load_model(output / "model.keras")
+        reload_probe = keras.Model(restored.input, [restored.outputs[0], restored.get_layer("attention_decoder").output[0]])
+        reloaded_raw, reloaded_representation = infer(reload_probe, test_x)
+    np.testing.assert_array_equal(raw, reloaded_raw)
+    np.testing.assert_array_equal(representation, reloaded_representation)
+    if int(restored.optimizer.iterations.numpy()) != updates or weight_hash(restored.get_weights()) != final_hash:
+        raise ValueError("Reloaded sequential weights/optimizer differ")
+    reload_seconds = time.perf_counter()-tick
+    probability = np.column_stack((1-raw.astype(np.float64), raw.astype(np.float64)))
+    saved = {"probabilities": probability, "raw_probabilities": raw, "predictions": (raw>.5).astype(np.int8),
+             "labels": arrays["test_true_y"], "uid": arrays["test_uid"], "attack": arrays["test_attack"],
+             "synthetic": arrays["test_synthetic"], "negative_daily_mean": -arrays["test_raw_x"].mean(axis=1,dtype=np.float64)}
+    np.savez_compressed(output / "predictions.npz", **saved)
+    targets = arrays["test_x"].astype(np.float64)
+    np.savez_compressed(output / "representations.npz", initial=initial_representation, final=representation,
+        initial_probabilities=initial_probability,
+        initial_mse=np.mean((initial_representation-targets)**2,axis=1),
+        final_mse=np.mean((representation-targets)**2,axis=1),
+        initial_mae=np.mean(np.abs(initial_representation-targets),axis=1),
+        final_mae=np.mean(np.abs(representation-targets),axis=1),
+        zero_mse=np.mean(targets**2,axis=1),
+        training_mean_mse=np.mean((targets-arrays["train_x"].mean(axis=0,dtype=np.float64))**2,axis=1))
+    prior, caps = float(observed.mean()), (2.9,2.95,5.8,5.85,9.3,24.4)
+    return {"training_prior": prior, "false_alarm_caps": list(caps),
+        "fitting_parameters": {"interpretation": "I-SEQ-scalar-sigmoid", "seed": seed,
+            "epochs": epochs, "batch_size": batch_size, "shuffle": True,
+            "bridge_activation": "sigmoid", "loss": "binary_crossentropy_repair",
+            "model_json": json.loads(model.to_json()), "optimizer_config": model.optimizer.get_config()},
+        "neural": {"parameters": model.count_params(), "epochs_completed": completed_epochs,
+            "optimizer_updates": updates, "training_complete": complete, "batch_guard_reached": bool(guard),
+            "initial_weights_sha256": initial_hash, "final_weights_sha256": final_hash,
+            "maximum_kernel_column_norms": norms, "weight_devices": weight_devices,
+            "gpu_allocator_bytes": tf.config.experimental.get_memory_info("GPU:0") if device=="/GPU:0" else None},
+        "timing_seconds": {"fit": fit_seconds, "score": score_seconds, "reload": reload_seconds},
+        "reload": {"identical_probabilities": True, "identical_representations": True, "identical_optimizer_count": True},
+        "training": {"observed_label_accuracy": 100*float(np.mean((train_raw>.5)==observed)),
+            "true_label_accuracy": 100*float(np.mean((train_raw>.5)==arrays["train_true_y"]))},
+        "analysis": analyze_scores(saved, prior, caps),
+        "output_sha256": {name: digest(output/name) for name in
+            ("model.keras","initial_weights.npz","history.json","predictions.npz","representations.npz")}}
+
+
 def require_compute():
     if not os.environ.get("SLURM_JOB_ID") or not os.environ.get("SLURM_JOB_NODELIST"):
         raise RuntimeError("Real-data fitting and scoring require a Slurm compute allocation")
@@ -511,16 +674,23 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
-    parser.add_argument("--model", choices=("random_forest", "adaboost", "svm", "feed_forward", "gru"), default="random_forest")
+    parser.add_argument("--model", choices=("random_forest", "adaboost", "svm", "feed_forward", "gru", "sequential_ensemble"), default="random_forest")
     parser.add_argument("--gru-fit-limit-seconds", type=int, choices=(900, 2100), default=900)
+    parser.add_argument("--sequential-preflight", type=Path)
+    parser.add_argument("--sequential-preflight-sha")
     args = parser.parse_args()
     if args.model != "gru" and args.gru_fit_limit_seconds != 900:
         parser.error("The GRU completion budget applies only to GRU")
     require_compute()
-    required_version = "1.5.2" if args.model in ("adaboost", "feed_forward", "gru") else "1.9.0"
+    sequential_preflight = None
+    if args.model == "sequential_ensemble":
+        sequential_preflight = require_sequential_preflight(args.sequential_preflight, args.sequential_preflight_sha)
+    elif args.sequential_preflight is not None or args.sequential_preflight_sha is not None:
+        parser.error("Sequential preflight applies only to the sequential ensemble")
+    required_version = "1.5.2" if args.model in ("adaboost", "feed_forward", "gru", "sequential_ensemble") else "1.9.0"
     if sklearn.__version__ != required_version:
         raise RuntimeError(f"{args.model} is frozen to scikit-learn {required_version}")
-    if args.model in ("adaboost", "feed_forward", "gru") and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("1.26.4", "1.13.1", "1.4.2", "3.5.0"):
+    if args.model in ("adaboost", "feed_forward", "gru", "sequential_ensemble") and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("1.26.4", "1.13.1", "1.4.2", "3.5.0"):
         raise RuntimeError("AdaBoost/neural numerical dependencies differ from the frozen environment")
     if args.model == "svm" and (np.__version__, scipy.__version__, joblib.__version__, threadpoolctl.__version__) != ("2.5.1", "1.18.0", "1.5.3", "3.6.0"):
         raise RuntimeError("SVM numerical dependencies differ from the frozen environment")
@@ -538,15 +708,19 @@ def main():
         "source_sha256": {str(path.relative_to(STUDY)): digest(path) for path in (
             Path(__file__), Path(__file__).with_name("models.py"),
             Path(__file__).with_name("analyze_results.py"),
-            STUDY / {"random_forest": "FIRST_BASELINE.md", "adaboost": "ADABOOST_PILOT.md", "svm": "SVM_PILOT.md", "feed_forward": "FEED_FORWARD_PILOT.md", "gru": "GRU_PILOT.md"}[args.model],
-            STUDY / "reported/table_3.csv",
+            STUDY / {"random_forest": "FIRST_BASELINE.md", "adaboost": "ADABOOST_PILOT.md", "svm": "SVM_PILOT.md", "feed_forward": "FEED_FORWARD_PILOT.md", "gru": "GRU_PILOT.md", "sequential_ensemble": "SEQUENTIAL_INTERFACE.md"}[args.model],
+            STUDY / ("reported/table_5.csv" if args.model == "sequential_ensemble" else "reported/table_3.csv"),
         )},
     }
+    if args.model == "sequential_ensemble":
+        record["scope"] = "20-customer exploratory Table V context; not full-population reproduction"
+        record["preflight"] = sequential_preflight
+        record["execution_budget"] = {"fit_guard_seconds": 4200, "epochs": 50, "batch_size": 100}
     if args.model == "adaboost":
         record["source_sha256"]["requirements-adaboost.txt"] = digest(STUDY / "requirements-adaboost.txt")
     if args.model == "svm":
         record["source_sha256"]["requirements-svm.txt"] = digest(STUDY / "requirements-svm.txt")
-    if args.model in ("feed_forward", "gru"):
+    if args.model in ("feed_forward", "gru", "sequential_ensemble"):
         record["source_sha256"]["requirements-feed-forward.txt"] = digest(STUDY / "requirements-feed-forward.txt")
     if args.model == "gru":
         record["execution_budget"] = {"fit_guard_seconds": args.gru_fit_limit_seconds,
@@ -556,7 +730,7 @@ def main():
     result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
     captured = []
     try:
-        if args.model in ("feed_forward", "gru"):
+        if args.model in ("feed_forward", "gru", "sequential_ensemble"):
             record["hardware"] = configure_tensorflow(require_gpu=True)
             record["versions"].update({key: record["hardware"][key] for key in ("tensorflow", "keras", "h5py", "backend")})
             result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + "\n")
@@ -569,13 +743,16 @@ def main():
                       training_rows=len(arrays["train_x"]), test_rows=len(arrays["test_x"]))
         with warnings.catch_warnings(record=True) as captured:
             warnings.simplefilter("always")
-            record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model,
-                                  gru_fit_limit_seconds=args.gru_fit_limit_seconds))
+            if args.model == "sequential_ensemble":
+                record.update(fit_sequential(arrays, args.output, seed=20260920))
+            else:
+                record.update(fit_one(arrays, args.output, seed=20260920, workers=4, model_name=args.model,
+                                      gru_fit_limit_seconds=args.gru_fit_limit_seconds))
         record["warnings"] = [{"category": w.category.__name__, "message": str(w.message)} for w in captured]
         if args.model == "svm" and record["svm"]["fit_status"] != 0:
             raise RuntimeError("SVM did not converge; preserve artifacts but do not label the fit complete")
-        if args.model in ("feed_forward", "gru") and not record["neural"]["training_complete"]:
-            record.update(status="partial", stop_reason=(f"{args.gru_fit_limit_seconds}-second batch-boundary guard reached" if args.model == "gru" else "seven-minute training guard reached"))
+        if args.model in ("feed_forward", "gru", "sequential_ensemble") and not record["neural"]["training_complete"]:
+            record.update(status="partial", stop_reason=(f"{args.gru_fit_limit_seconds}-second batch-boundary guard reached" if args.model == "gru" else "4200-second batch-boundary guard reached" if args.model == "sequential_ensemble" else "seven-minute training guard reached"))
         else:
             record["status"] = "complete"
     except Exception as exc:

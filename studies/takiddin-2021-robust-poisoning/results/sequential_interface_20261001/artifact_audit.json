@@ -1,0 +1,41 @@
+{
+  "scope": "constructed interface audit; no updates",
+  "branches": {
+    "sigmoid": {
+      "normal": {
+        "hashes_verified": true,
+        "fresh_reload_exact": true,
+        "updates": 300,
+        "accuracy": 1.0,
+        "bce": 1.0000000497368254e-07
+      },
+      "reversed": {
+        "hashes_verified": true,
+        "fresh_reload_exact": true,
+        "updates": 300,
+        "accuracy": 1.0,
+        "bce": 1.0000000497368254e-07
+      }
+    },
+    "linear": {
+      "normal": {
+        "hashes_verified": true,
+        "fresh_reload_exact": true,
+        "updates": 300,
+        "accuracy": 1.0,
+        "bce": 1.0000000497368254e-07
+      },
+      "reversed": {
+        "hashes_verified": true,
+        "fresh_reload_exact": true,
+        "updates": 300,
+        "accuracy": 1.0,
+        "bce": 1.0000000497368254e-07
+      }
+    }
+  },
+  "historical_relu_reload": {
+    "activation_default_preserved": true,
+    "probability_sequence_attention_exact": true
+  }
+}

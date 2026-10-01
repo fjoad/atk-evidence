@@ -58,6 +58,19 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+Oct1 scalar-Sigmoid interface and separate linear control both pass fixed
+full-width8-step software learning: four300-update cases,100% accuracy,
+BCE~1e-7. Sigmoid was preselected as the next numerical interpretation before
+results, not chosen because of the metrics. Source equation/shape is still
+ambiguous; all earlier ReLU failures remain. New bridge parameter defaults
+toReLU and old artifacts reload exactly. See
+[interface contract](studies/takiddin-2021-robust-poisoning/SEQUENTIAL_INTERFACE.md)
+and [plan](docs/plans/2026-10-01-sequential-interface.md). Proceed with the
+approved bounded sequence after freeze:20min V100 timing, then180min real
+p00/p30 pair only on passed gates. No new research fit/job exists yet at this
+checkpoint. User reaffirmed small local software checks are allowed; large
+work must run on Panther. Website untouched.
+
 September28 full-width constructed pair fails its learning gate. User approved
 the dependent sequence, but both unchanged9,240,802-parameter/8-step cases
 finish300updates at50%, BCElog(2), probability.5. Initial gradients are zero:

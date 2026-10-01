@@ -1,0 +1,14 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_runner_preserves_scores_representations_and_partial_status (tests.test_robust_sequential.SequentialTests.test_runner_preserves_scores_representations_and_partial_status) ... {"training_epoch": {"epoch": 1, "loss": 0.6931793093681335, "seconds": 7.533476457989309, "optimizer_updates": 1, "epoch_complete": true}}
+{"training_epoch": {"epoch": 2, "loss": 0.6921190023422241, "seconds": 0.07738199998857453, "optimizer_updates": 2, "epoch_complete": true}}
+{"training_epoch": {"epoch": 1, "loss": 0.6931793093681335, "seconds": 7.650841166963801, "optimizer_updates": 1, "epoch_complete": true}}
+ok
+test_constant_partial_and_nonfinite_results_cannot_pass (tests.test_robust_sequential.SequentialGateTests.test_constant_partial_and_nonfinite_results_cannot_pass) ... ok
+test_fixed_data_are_balanced_disjoint_and_easily_separable (tests.test_robust_sequential.SequentialGateTests.test_fixed_data_are_balanced_disjoint_and_easily_separable) ... ok
+test_sequential_targets_are_table_five_not_standalone_gru (tests.test_robust_sequential.SequentialGateTests.test_sequential_targets_are_table_five_not_standalone_gru) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 24.306s
+
+OK

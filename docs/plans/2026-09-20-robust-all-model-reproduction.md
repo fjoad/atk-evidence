@@ -4,7 +4,20 @@
 
 **State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
 
-## Current step: resolve the decoder-to-GRU interface before another fit
+## Current step: full48-step GPU timing of the validated Sigmoid interpretation
+
+The [Oct1 source/interface comparison](2026-10-01-sequential-interface.md)
+declared primary scalar-Sigmoid and a separate linear control before fitting.
+All four full-width8-step constructed cases pass the unchanged learning gate;
+all artifacts/reloads and original ReLU behavior verify. The paper does not
+uniquely specify the interface, and no research-data result is claimed.
+Freeze the implemented direct runner/auditors and submit the approved20min
+V100 timing check. If its variable-batch/time/device gates pass, continue
+with the approved180min originalp00/p30 pair,70min/fit, then audit and compare.
+Use the Sigmoid interpretation identified by SEQUENTIAL_INTERFACE.md; do
+not select the linear control from its performance. Website remains separate.
+
+## Completed step: resolve and explicitly bound the interface ambiguity
 
 The user approved the dependent ensemble sequence. Its
 [full-width constructed stage](2026-09-28-sequential-execution.md) completed

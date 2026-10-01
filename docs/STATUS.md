@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-10-01
 
 **Branch:** `main`
 
@@ -11,6 +11,23 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Sigmoid interface passes constructed learning; Panther timing next.**
+  Source recheck still leaves the readout equation/shape ambiguous. The new
+  [interface contract](../studies/takiddin-2021-robust-poisoning/SEQUENTIAL_INTERFACE.md)
+  predeclares a scalar-Sigmoid component-output interpretation and separate
+  scalar-linear control, with Sigmoid selected for numerical continuation
+  before results. All four full-width eight-step synthetic fits complete300
+  updates at100% accuracy/BCE about1e-7; initial weights match the old ReLU
+  fixture. Fresh artifact/config/reload audits pass; old ReLU behavior remains
+  exact. No paper-data result follows from these checks. The direct runner,
+  Table-V analysis, pair audit and bounded GPU scripts are implemented.
+  Next freeze and submit the20-minute full48-step V100 timing check, then
+  the already approved180-minute pair only if timing/artifacts pass. Panther
+  currently lists idle V100-16GB nodes; authentication is restored. No new
+  cluster submission or research fit yet at this source-freeze checkpoint.
+  See [learning record](../studies/takiddin-2021-robust-poisoning/results/sequential_interface_20261001/README.md)
+  and [step plan](plans/2026-10-01-sequential-interface.md). Website untouched.
 
 - **Full-width constructed pair fails; dependent ensemble stages held.**
   The user approved the bounded learning→GPU timing→real-data pair→audit

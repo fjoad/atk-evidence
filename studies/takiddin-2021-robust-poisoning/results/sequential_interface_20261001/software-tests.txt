@@ -1,0 +1,27 @@
+test_constant_partial_and_nonfinite_results_cannot_pass (tests.test_robust_sequential.SequentialGateTests.test_constant_partial_and_nonfinite_results_cannot_pass) ... ok
+test_fixed_data_are_balanced_disjoint_and_easily_separable (tests.test_robust_sequential.SequentialGateTests.test_fixed_data_are_balanced_disjoint_and_easily_separable) ... ok
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_actual_decoder_loop_uses_previous_output_and_mirrored_states (tests.test_robust_sequential.SequentialTests.test_actual_decoder_loop_uses_previous_output_and_mirrored_states) ... ok
+test_explicit_interface_choices_share_initial_parameters (tests.test_robust_sequential.SequentialTests.test_explicit_interface_choices_share_initial_parameters) ... ok
+test_feedback_changes_state_and_disabled_input_removes_effect (tests.test_robust_sequential.SequentialTests.test_feedback_changes_state_and_disabled_input_removes_effect) ... ok
+test_finite_gradient_connectivity_update_and_constraints (tests.test_robust_sequential.SequentialTests.test_finite_gradient_connectivity_update_and_constraints) ... ok
+test_fresh_process_reload_preserves_internal_outputs_and_optimizer (tests.test_robust_sequential.SequentialTests.test_fresh_process_reload_preserves_internal_outputs_and_optimizer) ... ok
+test_full_source_inventory_and_configuration (tests.test_robust_sequential.SequentialTests.test_full_source_inventory_and_configuration) ... ok
+test_negative_readout_has_the_declared_value_and_bias_gradient (tests.test_robust_sequential.SequentialTests.test_negative_readout_has_the_declared_value_and_bias_gradient) ... ok
+test_nondefault_readouts_survive_fresh_process_reload (tests.test_robust_sequential.SequentialTests.test_nondefault_readouts_survive_fresh_process_reload) ... ok
+test_paired_initialization_and_shape_validation (tests.test_robust_sequential.SequentialTests.test_paired_initialization_and_shape_validation) ... ok
+test_query_intervention_and_disabled_connection (tests.test_robust_sequential.SequentialTests.test_query_intervention_and_disabled_connection) ... ok
+test_invalid_shape_and_finite_update (tests.test_robust_aea_model.AEAModelTests.test_invalid_shape_and_finite_update) ... WARNING:tensorflow:5 out of the last 5 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x150117e20> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ok
+test_mae_and_mse_are_separate_declared_objectives (tests.test_robust_aea_model.AEAModelTests.test_mae_and_mse_are_separate_declared_objectives) ... ok
+test_output_range_and_attention_normalization (tests.test_robust_aea_model.AEAModelTests.test_output_range_and_attention_normalization) ... ok
+test_parameter_inventory_and_shapes (tests.test_robust_aea_model.AEAModelTests.test_parameter_inventory_and_shapes) ... ok
+test_query_intervention_holds_encoder_memory_fixed (tests.test_robust_aea_model.AEAModelTests.test_query_intervention_holds_encoder_memory_fixed) ... ok
+test_serialization_in_fresh_process_preserves_predictions_attention_and_optimizer (tests.test_robust_aea_model.AEAModelTests.test_serialization_in_fresh_process_preserves_predictions_attention_and_optimizer) ... WARNING:tensorflow:6 out of the last 7 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x14e67ade0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ok
+
+----------------------------------------------------------------------
+Ran 18 tests in 78.341s
+
+OK

@@ -5,6 +5,7 @@ import json
 import subprocess
 import sys
 import tempfile
+import types
 import unittest
 from unittest.mock import patch
 
@@ -20,6 +21,10 @@ G = load("sequential_constructed_gate", ROOT /
 
 
 class SequentialGateTests(unittest.TestCase):
+    def test_sequential_targets_are_table_five_not_standalone_gru(self):
+        from tests.test_robust_baseline import A
+        self.assertEqual(A.reported_row(0., "sequential_ensemble")["DR"], 95.2)
+        self.assertEqual(A.reported_row(.3, "sequential_ensemble")["FA"], 5.8)
     def test_constant_partial_and_nonfinite_results_cannot_pass(self):
         labels = np.array([0., 1.])
         constant = G.measurements(labels, [.5, .5])
@@ -61,14 +66,23 @@ class SequentialTests(unittest.TestCase):
 
     def test_explicit_interface_choices_share_initial_parameters(self):
         hashes = []
-        for activation in ("relu", "sigmoid", "linear"):
-            model = M.sequential_ensemble(**SMALL, bridge_activation=activation)
-            hashes.append(R.weight_hash(model.get_weights()))
-            front = model.get_layer("attention_decoder")
-            self.assertEqual(front.bridge_activation, activation)
-            self.assertEqual(front.get_config()["bridge_activation"], activation)
+        with self.tf.device("/CPU:0"):
+            for activation in ("relu", "sigmoid", "linear"):
+                model = M.sequential_ensemble(**SMALL, bridge_activation=activation)
+                hashes.append(R.weight_hash(model.get_weights()))
+                front = model.get_layer("attention_decoder")
+                self.assertEqual(front.bridge_activation, activation)
+                self.assertEqual(front.get_config()["bridge_activation"], activation)
+            # Compare the frozen implementation on this machine; Orthogonal
+            # initialization need not be byte-identical across CPU/GPU types.
+            source = subprocess.check_output(["git", "show",
+                "5e47acb:studies/takiddin-2021-robust-poisoning/reproduction/models.py"], cwd=ROOT, text=True)
+            historical = types.ModuleType("historical_relu_model")
+            exec(compile(source, "historical_relu_model", "exec"), historical.__dict__)
+            previous = R.weight_hash(historical.sequential_ensemble(**SMALL).get_weights())
+            self.keras.saving.register_keras_serializable(package="atk_evidence")(M.register_sequential_layer())
         self.assertEqual(len(set(hashes)), 1)
-        self.assertEqual(hashes[0], "80beecbcc7f1580c8f30ad38da32e70dede598de9b586ae58737ddf3c72b6b38")
+        self.assertEqual(hashes[0], previous)
         with self.assertRaises(ValueError):
             M.sequential_ensemble(**SMALL, bridge_activation="tanh")
 
@@ -114,6 +128,30 @@ np.save(d/"output.npy",m(np.load(d/"input.npy")).numpy())
                                       cwd=ROOT, capture_output=True, text=True, timeout=60)
                 self.assertEqual(done.returncode, 0, done.stderr)
                 np.testing.assert_array_equal(np.load(d / "output.npy"), model(x).numpy())
+
+    def test_runner_preserves_scores_representations_and_partial_status(self):
+        from tests.test_robust_baseline import constructed_input, A
+        arrays = constructed_input()
+        for key in arrays:
+            arrays[key] = arrays[key][:8 if key.startswith("train") else 4]
+        arrays["train_observed_y"] = np.zeros(8, dtype=np.int64)
+        dimensions = dict(encoder_units=(4,3,2), gru_units=4, dense_units=8)
+        for guard, complete in ((300., True), (0., False)):
+            with tempfile.TemporaryDirectory() as directory:
+                result = R.fit_sequential(arrays, directory, seed=42, epochs=2,
+                    batch_size=8, fit_limit_seconds=guard, fixture_dimensions=dimensions)
+                self.assertEqual(result["training_prior"], 0.)
+                self.assertEqual(result["neural"]["training_complete"], complete)
+                self.assertEqual(result["neural"]["optimizer_updates"], 2 if complete else 1)
+                self.assertTrue(result["reload"]["identical_representations"])
+                self.assertEqual(result["fitting_parameters"]["bridge_activation"], "sigmoid")
+                with np.load(Path(directory)/"predictions.npz") as scores:
+                    np.testing.assert_array_equal(scores["predictions"], scores["raw_probabilities"]>.5)
+                    self.assertEqual(result["analysis"], A.analyze_scores(
+                        {k:scores[k] for k in scores.files},0.,tuple(result["false_alarm_caps"])))
+                with np.load(Path(directory)/"representations.npz") as rep:
+                    np.testing.assert_array_equal(rep["final_mse"],np.mean(
+                        (rep["final"]-arrays["test_x"].astype(np.float64))**2,axis=1))
 
     def test_full_source_inventory_and_configuration(self):
         model = M.sequential_ensemble()

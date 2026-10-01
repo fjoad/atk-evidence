@@ -30,6 +30,10 @@ def verify(preparation, attempt):
             if record["model"] == "gru":
                 np.testing.assert_array_equal(scores["probabilities"], normalized_softmax(scores["raw_probabilities"]))
                 np.testing.assert_array_equal(scores["predictions"], np.argmax(scores["raw_probabilities"], axis=1))
+            if record["model"] == "sequential_ensemble":
+                raw = scores["raw_probabilities"].astype(np.float64)
+                np.testing.assert_array_equal(scores["probabilities"], np.column_stack((1-raw, raw)))
+                np.testing.assert_array_equal(scores["predictions"], raw>.5)
             for saved, original in (("labels", "test_true_y"), ("uid", "test_uid"),
                                     ("attack", "test_attack"), ("synthetic", "test_synthetic")):
                 np.testing.assert_array_equal(scores[saved], arrays[original])
@@ -47,7 +51,7 @@ def verify(preparation, attempt):
         raise ValueError("Code/runtime changed within the pair")
     if rows[0].get("execution_budget") != rows[1].get("execution_budget"):
         raise ValueError("Execution budget changed within the pair")
-    if rows[0]["model"] in ("feed_forward", "gru"):
+    if rows[0]["model"] in ("feed_forward", "gru", "sequential_ensemble"):
         from run_experiment import weight_hash
         for level, record in zip(("p00", "p30"), rows):
             with np.load(attempt / level / "initial_weights.npz", allow_pickle=False) as initial:
@@ -60,13 +64,28 @@ def verify(preparation, attempt):
                     or not record["neural"]["training_complete"]):
                 raise ValueError("Neural training schedule differs from contract")
             accuracy_key = "categorical_accuracy" if record["model"] == "gru" else "binary_accuracy"
-            if not all(np.isfinite(r["loss"]) and np.isfinite(r[accuracy_key]) for r in history):
+            if not all(np.isfinite(r["loss"]) and (record["model"] == "sequential_ensemble" or np.isfinite(r[accuracy_key])) for r in history):
                 raise ValueError("Invalid neural training history")
             if record["model"] == "gru" and (not all(r["epoch_complete"] for r in history)
                     or record["neural"]["parameters"] != 4058702
                     or record["neural"]["epochs_completed"] != 50
                     or record["neural"]["optimizer_updates"] != 2250):
                 raise ValueError("GRU architecture or completed schedule differs")
+            if record["model"] == "sequential_ensemble":
+                if (not all(r["epoch_complete"] for r in history) or record["neural"]["parameters"] != 9240802
+                        or record["neural"]["optimizer_updates"] != 2250
+                        or record["fitting_parameters"]["bridge_activation"] != "sigmoid"):
+                    raise ValueError("Sequential source/schedule differs")
+                with np.load(attempt / level / "representations.npz", allow_pickle=False) as rep:
+                    target = loaded[level]["test_x"].astype(np.float64)
+                    for stage in ("initial", "final"):
+                        if rep[stage].shape != target.shape or not np.isfinite(rep[stage]).all():
+                            raise ValueError("Invalid saved intermediate representation")
+                        np.testing.assert_array_equal(rep[stage+"_mse"], np.mean((rep[stage]-target)**2,axis=1))
+                        np.testing.assert_array_equal(rep[stage+"_mae"], np.mean(np.abs(rep[stage]-target),axis=1))
+                    np.testing.assert_array_equal(rep["zero_mse"], np.mean(target**2,axis=1))
+                    np.testing.assert_array_equal(rep["training_mean_mse"], np.mean(
+                        (target-loaded[level]["train_x"].mean(axis=0,dtype=np.float64))**2,axis=1))
         if rows[0]["neural"]["initial_weights_sha256"] != rows[1]["neural"]["initial_weights_sha256"]:
             raise ValueError("Neural initializations differ across the poison pair")
     changed = int(np.count_nonzero(loaded["p00"]["train_observed_y"] != loaded["p30"]["train_observed_y"]))
