@@ -12,23 +12,26 @@ execution plan here is
 
 ## Current project state
 
-- **Sequential real-data pair407294 running on Panther:** one V100-16GB on
-  crimv3mgpu005, 4 CPUs/16 GiB, three-hour ceiling; scientific freeze
-  3705bcca04279bbfa8523a573b9b573f123463b7. Sigmoid interpretation, original
-  p00 then p30, same seed, 50 epochs/batch100 and 70-minute fit guards.
-  GPU preflight407255 completed 0:0 in8:01: 14 software checks pass, three
-  full48-step epochs took58.08/36.75/36.92s, projected50 epochs1845.84s
-  below3600s; device/artifact/reload checks pass. Its exact verified SHA is
-  721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07.
-  Pair407294 was moved while pending from gpu-short (2h maximum) to gpu-all,
-  retaining its3h ceiling and V100 resources; it was not resubmitted.
-  Inspect this existing job and `sequential-sigmoid-pilot-20261001-attempt1`
-  before any action. P00 completed50epochs/2250updates: all scores0.504759,
-  DR/FA100/100%,AUC50%; local artifact/metric/serialized-weight audits pass.
-  P30 is running; no completed poisoning comparison yet. Preserve/audit both
-  outcomes; no extra seed/settings or website work. See
-  [preflight](../studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md)
-  and [running pair](../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+- **Sequential pair complete and audited; no useful ranking.** Frozen
+  3705bcca04279bbfa8523a573b9b573f123463b7, Panther job407294, COMPLETED/0:0
+  in1:21:28 ononeV100-16GB,4CPUs/16GiB. Both50epochs/2250updates, paired
+  initial weights and original p00/p30 inputs. Constant probabilities
+  0.504759/0.353959 giveDR/FA100/100 and0/0,AUC50/50. No cutoff or reversal
+  reaches either paper detection corner. Training BCE tracks the constant
+  prior; the eight-step learning pass did not establish48-step learning.
+  P00 representations vary across profiles but classify identically; p30
+  representation is almost zero, matching the zero-output MSE baseline.
+  All15 transferred files, input/source/metric/history/weight/optimizer/norm
+  and compute-node reload checks pass; local pair/comparison audits match
+  cluster bytes. Stop this pair. Next propose bounded zero-fit inspection
+  of saved initial/final activations/gradients to locate lost profile signal;
+  no new fit, seed or diagnostic job is launched. This interpreted20-customer
+  result is not a source-complete/full-population or family-wide failure.
+  [Result](../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md),
+  [step plan](plans/2026-10-01-sequential-interface.md). Preflight407255 passed
+  in8:01; total two-job allocation1:29:29. All large work ran on Panther;
+  local work was software fixtures and read-only artifact audits. No website
+  edit or publication. Six model pairs are complete; broader coverage remains.
 
 - **Sigmoid interface passes constructed learning; Panther timing next.**
   Source recheck still leaves the readout equation/shape ambiguous. The new

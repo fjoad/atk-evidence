@@ -2,19 +2,24 @@
 
 **Date:** 2026-09-20
 
-**State:** five model pairs, forest split/order controls, and read-only SVM diagnostic complete and audited
+**State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current step: audit the running sequential pair on Panther
+## Current decision: diagnose the completed constant-score sequential pair
 
-GPU preflight407255 completed0:0 in8:01 at3705bcca:14 checks pass,
-three full48-step epochs58.08/36.75/36.92s; projected50epochs1845.84s
-passes3600s. Device/memory/finite/reload checks pass. The authorized original
-p00/p30 pair is running as407294 ononeV10016GB,4CPU/16GiB,3h ceiling,
-70min/fit, same seed and frozen science. Before fitting, Slurm's2h gpu-short
-limit was resolved by moving the same pending job to gpu-all, not resubmitting.
-Inspect existing job/output, preserve all results, compare saved scores and
-audit after completion. No extra seeds/settings. See
-[pair record](../../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+Job407294 completed0:0 in1:21:28 at3705bcca ononeV10016GB. Both50epochs/
+2250updates and all artifact/metric/source/reload checks pass; local pair/
+comparison audits match clusterbytes. Constant probabilities0.504759/0.353959
+produceAUC50/50 and no useful cutoff. The original eight-step learning gate
+passed, but useful48-step research learning did not follow. P00 intermediate
+profiles still differ while final scores do not; p30 representations are
+nearlyzero, matching zero-output reconstruction error. See
+[the completed record](../../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+Stop pair. The next named question is where profile signal ceases to affect
+the saved initial/final48-step classifier, and whether saturation, precision
+or inactive layers explain it. Propose bounded zero-fit observation before
+another trained branch/seed. No new diagnostic or research job has launched.
+Source shape/cell ambiguity and full-population/mechanism/attainability remain
+open. All large compute stays onPanther; website remains unchanged.
 
 ## Completed step: full48-step GPU timing of the validated Sigmoid interpretation
 

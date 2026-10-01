@@ -58,19 +58,20 @@ attainability is preserved in
 
 ## Current scientific boundary
 
-Oct1 sequential pair407294 is running on Panther, one V10016GB on005,
-4CPU/16GiB,3h,70min/fit; frozen3705bcca04279bbfa8523a573b9b573f123463b7.
-Original p00 thenp30, same seed,50epochs/batch100, declared Sigmoid interface.
-Preflight407255 completed0:0 in8:01;14 checks pass; measured warm projection
-1845.84s per50epochs passes3600s. Artifact/reload/device gates pass. Pair
-was moved while pending to gpu-all because gpu-short has a2h limit; same
-job/resources/budget/science, no second submission. Inspect407294/output
-before any action. P00 completed50epochs/2250updates: constant0.504759
-scores,DR/FA100/100,AUC50; local artifact/metric/weight audits pass. P30 is
-running; no completed poisoning comparison yet. Preserve/copy/audit,
-then stop this pair; no automatic extra seeds/settings or website work. See
-[preflight](studies/takiddin-2021-robust-poisoning/results/sequential_preflight_20261001/README.md)
-and [pair](studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+Oct1 sequential pair407294 is complete and audited:0:0 in1:21:28 onPanther
+oneV10016GB,4CPU/16GiB,science3705bcca04279bbfa8523a573b9b573f123463b7.
+Both50epochs/2250updates, identical initial weights. Constant0.504759/0.353959
+scores giveDR/FA100/100 and0/0,AUC50/50; no cutoff/reversal rescue. Eight-step
+learning success did not establish48-step CER learning. P00 representations
+vary while classifier scores are constant; p30 output is almostzero and its
+MSE matches zero baseline. All15files, input/source/metric/history/weight/
+optimizer/norm and GPUreload checks pass; local audits match clusterbytes.
+Stop pair. Next propose bounded zero-fit saved-state activation/gradient
+inspection before another fit/seed/sourcealternative; no newjob is launched.
+Not a fully specified-source/full-population or model-family failure. Allbig
+work ran onPanther; local softwarefixtures/read-only audits only. Website
+untouched. See [result](studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md)
+and [plan](docs/plans/2026-10-01-sequential-interface.md).
 
 Oct1 scalar-Sigmoid interface and separate linear control both pass fixed
 full-width8-step software learning: four300-update cases,100% accuracy,

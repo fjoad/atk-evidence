@@ -2,7 +2,7 @@
 
 **Created:** 2026-09-02
 
-**Status:** active; five model pairs, forest controls and SVM follow-up complete; GRU partial attempt also preserved
+**Status:** active; six model pairs, forest controls and read-only diagnostics complete; all prior failures preserved
 
 **Boundary:** These are competing explanations for observations, not findings
 about author intent. A source inconsistency does not identify how a value was
@@ -582,3 +582,32 @@ establishes CER discrimination, unique fidelity to the underspecified source,
 or reconstruction-mediated robustness. The fixed research pair407294 is a
 separate numerical test. See the [interface record](results/sequential_interface_20261001/README.md)
 and [preflight](results/sequential_preflight_20261001/README.md).
+
+## E33 — cutoff choice accounts for the completed sequential pilot's miss
+
+**Status:** excluded for the two saved constant scores; failure cause and
+other weights/source interpretations remain open.
+
+The scalar-Sigmoid interpretation completed both50-epoch/2,250-update
+research fits at3705bcca (Panther407294,0:0,1:21:28). Test probabilities
+are constant0.504759/0.353959, withAUC50/50. The0.5 cutoff flags all/none,
+but any cutoff or reversal gives bestDR0 under the2.9/5.8 FA caps, including
+favorable rounding allowances. Both defaults equal the constant-prior
+decision reference. No stable-robustness claim follows from unchanged50%AUC.
+Initial test probabilities were also constant at float32 precision.
+
+P00 intermediate profiles still differ, whereas p30 intermediate outputs
+are almostzero. P30's improved MSE merely matches the zero-output baseline;
+it is not evidence of useful reconstruction. The same-row forest, FF and
+earlier GRU show useful ranking, but differ in architecture/settings, so
+this does not isolate a causal effect of adding the AEA.
+
+All source/input/artifact/metric/initialization/history/weight/config/optimizer/
+norm and compute-node reload checks pass; local pair/comparison audits match
+cluster bytes. The eight-step learning pass and full48-step timing check did
+not establish useful48-step research learning. Stop the pair. Next propose a
+bounded zero-fit inspection locating where profile differences cease to
+affect the saved initial/final classifier, before another fit or seed.
+No such job is launched. Source interface/native-cell ambiguity and the
+full-population/mechanism/attainability questions remain open. See
+[the complete record](results/sequential_pilot_20261001/README.md).

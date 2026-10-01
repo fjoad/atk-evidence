@@ -2,25 +2,30 @@
 
 **Last updated:** 2026-10-01
 
-**Live real-data pair407294:** code3705bcca04279bbfa8523a573b9b573f123463b7;
-one V10016GB oncrimv3mgpu005,4CPU/16GiB,3h ceiling,70min/fit. Same-seed
-fresh p00/p30,50epochs/batch100, scalar-Sigmoid interpretation; p00 first.
-Isolated checkout /export/home/fjoad/atk-evidence-paper3-seq-20261001.
-Output /export/home/fjoad/atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-sigmoid-pilot-20261001-attempt1;
-log /export/home/fjoad/seq-transfer-20261001/pair-407294.out. Check this job
-and outputs first; never submit a duplicate. Pending PartitionTimeLimit was
-resolved by moving the SAME job to gpu-all from gpu-short (2h limit), with
-unchanged3h/resources/science. Preflight407255 completed0:0 in8:01 on026:
-14 checks pass; epochs58.0757/36.7454/36.9169s,135updates; projected50epoch
-1845.8433s<=3600. Exact reload/device/norm/memory checks pass. Preflight SHA
-721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07 verified
-locally/remotely; result record sequential_preflight_20261001. P00 complete
-50epochs/2250updates,fit2125.66s; all scores0.5047591328620911,DR/FA100/100,
-AUC50. All-cutoff/reversal DR0 at caps. Local hashes/source/metrics/serialized
-weights/config/optimizer/norm pass; p30 now running. Preserve/copy/audit
-results, no further seeds or settings.
-Local verification:140+294 cases,34 skipped =>400 passed; targeted runner
-and gate tests pass. No website edit/publication. See preflight result record.
+**Sequential pair complete (October1):** scientific3705bcca04279bbfa8523a573b9b573f123463b7;
+job407294 COMPLETED/0:0 in1:21:28 onPanther005,oneV10016GB,4CPU/16GiB.
+Both50epochs/2250updates, paired initial arrays and original20-customer data.
+Scalar-Sigmoid interpretation; test probabilities constant0.5047591328620911
+and0.3539589047431946. DR/FA100/100 and0/0,AUC50/50; all-cutoff/reversal DR0
+at declaredcaps. FinalBCE0.693111/0.650009 near constant-prior0.693094/0.649853.
+Initial probabilities also constant. P00 intermediate retains profile variation
+but p30 nearlyzero; itsMSE equals zero baseline, not useful reconstruction.
+All15 copiedfiles hashmatch, local pair/comparison byte-match, HDF5weights/
+config/optimizer2250/norm and compute-node reload checks pass. No local model
+inference. Stop pair; next propose zero-fit activation/gradient inspection of
+saved initial/final48-step models before more training. No newjob/fits/seeds.
+Preflight407255 completed0:0 in8:01,14checkspass, warmprojection1845.84s<=3600;
+SHA721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07.
+Pair was moved while pending from2h-limitedgpu-short togpu-all; samejob/3h
+ceiling/resources/science, no duplicate. Wholefile login hash attempt killed;
+streaminghash succeeded. Archiveaudit ignores only shared_object_id metadata.
+Original results unchanged. Local400tests passed/34skipped atlaunch; strictdata/
+journal checks passed. Alllargework onPanther, small localfixtures permitted.
+No website changes/publication. Records:results/sequential_pilot_20261001 and
+sequential_preflight_20261001. Raw pairdata exists locally and under original
+Panther atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-sigmoid-pilot-20261001-attempt1.
+Isolated executing checkout /export/home/fjoad/atk-evidence-paper3-seq-20261001.
+
 **Oct1 interface comparison:** source pages2678/2680/2682/2683 checked;
 readout shape/equation still omitted.73fe054 froze primaryI-SEQ-scalar-sigmoid
 from component-output reading and C-linear control BEFORE results. Four

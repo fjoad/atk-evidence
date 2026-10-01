@@ -1,0 +1,76 @@
+{
+  "allocated_cpus": 4,
+  "allocated_gpus": 1,
+  "batch_size": 100,
+  "cluster_preflight_tests_passed": 14,
+  "code_commit": "3705bcca04279bbfa8523a573b9b573f123463b7",
+  "completed_fits": 2,
+  "copied_files_verified_against_panther": 15,
+  "elapsed_allocation_seconds": 4888,
+  "epochs_per_fit": 50,
+  "exit_code": "0:0",
+  "extra_research_fits": 0,
+  "fit_seconds_p00_p30": [
+    2125.66170835495,
+    2008.0873101949692
+  ],
+  "gpu_type_requested": "v100_16GB",
+  "host_memory_gib": 16,
+  "initial_weight_files_byte_identical": true,
+  "interpretation": "I-SEQ-scalar-sigmoid",
+  "journal_consistency_passed_after_outcome": true,
+  "local_comparison_matches_cluster_bytes": true,
+  "local_pair_audit_matches_cluster_bytes": true,
+  "local_research_model_inferences": 0,
+  "node": "crimv3mgpu005",
+  "official_restricted_CER_archives_available_locally": false,
+  "operational_notes": [
+    "Pending partition limit corrected in place before fitting.",
+    "Secondary config audit compares every setting after removing archive-only shared_object_id metadata.",
+    "Whole-file login-node hash attempt was killed before writing a manifest; streaming sha256sum succeeded. No research rerun."
+  ],
+  "partition": "gpu-all",
+  "per_fit_guard_seconds": 4200,
+  "preflight_actual_seconds": 481,
+  "preflight_job_id": "407255",
+  "preflight_sha256": "721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07",
+  "process_peak_rss_kib_p00_p30": [
+    1808980,
+    1809396
+  ],
+  "published": false,
+  "reload_seconds_p00_p30": [
+    73.70964556187391,
+    70.52757441997528
+  ],
+  "repository_tests_at_launch": {
+    "passed": 400,
+    "skipped": 34
+  },
+  "research_process_seconds_p00_p30": [
+    2501.498326316476,
+    2362.8503805696964
+  ],
+  "research_submissions": 1,
+  "same_pending_job_moved_from_gpu_short_to_gpu_all": true,
+  "score_seconds_p00_p30": [
+    207.4813027009368,
+    198.72887286543846
+  ],
+  "seed": 20260920,
+  "serialized_weights_config_optimizer_and_norms_verified": true,
+  "slurm_job_id": "407294",
+  "slurm_sampled_max_rss_kib": 1794728,
+  "slurm_state": "COMPLETED",
+  "status": "complete_pair_audited",
+  "strict_data_branch": "sciencedb-csv-semantic-equivalence-v1",
+  "strict_data_verification_passed_after_outcome": true,
+  "tensorflow_peak_allocator_bytes_p00_p30": [
+    1582497792,
+    1583084544
+  ],
+  "time_limit_seconds": 10800,
+  "total_preflight_and_pair_allocation_seconds": 5369,
+  "updates_per_fit": 2250,
+  "website_changed": false
+}

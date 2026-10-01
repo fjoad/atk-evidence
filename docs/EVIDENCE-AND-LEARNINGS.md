@@ -25,6 +25,40 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: short constructed learning does not establish full-sequence learning
+
+**Added October1 after the completed, audited sequential research pair.**
+
+- **Observed:** the declared scalar-Sigmoid completion passed both fixed
+  eight-step learning cases and full48-step GPU timing, but its original
+  research p00/p30 fits produce constant test probabilities0.504759/0.353959
+  after50epochs/2250updates. AUC is50% in both; the0.5 rule flags everything
+  or nothing. FinalBCE tracks the constant-prior references. All artifact,
+  initialization, history, metric and reload checks pass.
+- **Fixed-score bound — VERIFIED:** no cutoff or score reversal attains
+  either paper detection corner. This constrains these saved scores, not
+  other weights, source interpretations or populations. Stable50%AUC is
+  not evidence of robustness when discrimination is absent in both cases.
+- **Mechanism description:** p00 intermediate outputs differ across profiles
+  while final probabilities do not. P30 intermediate outputs are nearlyzero;
+  its lower reconstruction MSE matches the zero-output baseline. Neither
+  observation identifies the internal cause or demonstrates useful
+  reconstruction. Initial saved classifier probabilities were also constant.
+- **Comparative evidence:** the same-row forest/FF/GRU saved scores retain
+  AUC98.55/96.35/89.07 unpoisoned and94.36/90.89/79.89 poisoned. The daily
+  mean rule hasAUC66.20. These rows contain usable signal, but the previous
+  GRU has different settings and is not a matched removal-of-AEA control.
+- **Decision:** stop this pair. Inspect saved48-step initial/final activations
+  and gradients under a separately bounded zero-fit diagnostic before any
+  further training. The short positive gate did not guarantee transfer to
+  full-length inputs. No new diagnostic job, seed or source branch follows
+  automatically, and the paper's omitted interface/cell details stay open.
+
+The pair ran entirely onPanther, job407294,0:0 in1:21:28. Together with
+preflight407255 the actual allocation was1:29:29. Local work was constructed
+software checks and read-only artifact inspection. See
+[the result](../studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md).
+
 ### Paper 3: a declared interface change resolves the constructed failure
 
 **Added October1 after source recheck and the fixed interface comparison.**

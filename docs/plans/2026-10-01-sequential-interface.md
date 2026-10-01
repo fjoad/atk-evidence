@@ -1,6 +1,6 @@
 # Resolve and test the decoder-to-GRU interface
 
-Date: 2026-10-01. State: source/comparison and GPU timing complete; pair407294 running.
+Date: 2026-10-01. State: all bounded stages complete; pair407294 audited, stop before new compute.
 
 The user approved the proposed source review, a separately documented minimal
 interface interpretation/control, its fixed learning checks and continuation
@@ -78,3 +78,22 @@ job was moved using scontrol to gpu-all, which supports the sameV10016GB
 resources and the unchanged3h ceiling. The launcher partition is corrected
 for future use; model/data/seed/epochs/70min fit guards are unchanged. This
 is an operational scheduler correction, not a new fit or scientific branch.
+
+## Completed outcome and next decision
+
+Pair407294 completed0:0 in1:21:28 onPanther005. Both fixed fits completed
+50epochs/2250updates in2125.66/2008.09s, with byte-identical initial weights.
+Probabilities are constant0.504759/0.353959:DR/FA100/100 and0/0,AUC50/50.
+No cutoff/reversal rescues the paper corners. P00 intermediate profile
+variation does not reach the output; p30 representation is almostzero and
+its lower MSE equals the zero baseline. Eight-step positive learning did not
+establish useful48-step research learning. No causal or family-wide claim.
+
+All15 copied files hashmatch, local pair/comparison audits match cluster
+bytes, and source/input/metrics/history/serialized weights/config/optimizer/
+norm and compute-node reload checks pass. Full runtime/results and two
+read-only audit-operation corrections are preserved in the resultrecord.
+No model inference ran locally; no website edits. Stop this pair. Next
+propose bounded zero-fit activation/gradient inspection of the saved initial/
+final states before any further training; it has not run. All previous
+contracts, failed interfaces, preparations and artifacts remain preserved.

@@ -86,6 +86,11 @@ def analyze(attempt):
         directory = attempt / level
         record = json.loads((directory / "result.json").read_text())
         result = {"result": audit_result(directory), "serialized": serialized_weights(directory, record)}
+        prior = record["training_prior"]
+        history = json.loads((directory / "history.json").read_text())
+        result["loss_context"] = {"training_attack_label_fraction": prior,
+            "optimal_constant_training_bce": float(-prior*np.log(prior)-(1-prior)*np.log1p(-prior)),
+            "final_epoch_training_bce": history[-1]["loss"]}
         with np.load(directory / "predictions.npz", allow_pickle=False) as archive:
             saved = {k: archive[k] for k in archive.files}
         scores = saved["probabilities"][:, 1]
@@ -97,8 +102,14 @@ def analyze(attempt):
                 ("initial_mse", "final_mse", "initial_mae", "final_mae", "zero_mse", "training_mean_mse")}
             initial = rep["initial_probabilities"].astype(np.float64)
             result["initial_classification"] = metrics(saved["labels"], initial>.5, initial)
+            result["initial_probability"] = {"minimum": float(initial.min()), "maximum": float(initial.max()),
+                "unique_values": int(len(np.unique(initial)))}
             result["representation_range"] = {
                 stage: [float(rep[stage].min()), float(rep[stage].max())] for stage in ("initial", "final")}
+            result["representation_across_profiles"] = {stage: {
+                "unique_profiles": int(len(np.unique(rep[stage], axis=0))),
+                "maximum_range_at_a_fixed_time_step": float(np.ptp(rep[stage].astype(np.float64), axis=0).max())}
+                for stage in ("initial", "final")}
         result["matched_context"] = {}
         for name, relative in comparators.items():
             other = attempt.parent / relative / level

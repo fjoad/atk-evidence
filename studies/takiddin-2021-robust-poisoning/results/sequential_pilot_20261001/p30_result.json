@@ -1,0 +1,1619 @@
+{
+  "actual_poisoning": {
+    "changed_fraction_of_eligible": 0.29933481152993346,
+    "changed_fraction_of_training": 0.15120967741935484,
+    "changed_rows": 675,
+    "eligible_rows": 2255,
+    "operation": "label-flip",
+    "rate": 0.3,
+    "scope": "generalized",
+    "selected_customer_count": 6,
+    "selection_denominator": "selected-customers",
+    "training_rows": 4464
+  },
+  "analysis": {
+    "benign_strata": {
+      "original": {
+        "FA": 0.0,
+        "false_alarms": 0,
+        "n": 183
+      },
+      "synthetic": {
+        "FA": 0.0,
+        "false_alarms": 0,
+        "n": 944
+      }
+    },
+    "controls": {
+      "constant_training_prior": {
+        "ACC": 50.492831541218635,
+        "AUC": 50.0,
+        "DR": 0.0,
+        "F1": 0.0,
+        "FA": 0.0,
+        "FN": 1105,
+        "FP": 0,
+        "PR": null,
+        "SP": 100.0,
+        "TN": 1127,
+        "TP": 0,
+        "balanced_accuracy": 50.0,
+        "n": 2232
+      },
+      "negative_daily_mean": {
+        "AUC": 66.19624438404125,
+        "definition": "negative mean raw daily kWh; no learned parameter",
+        "thresholds": {
+          "at_false_alarm_caps": {
+            "2.9": {
+              "DR": 8.054298642533936,
+              "FA": 2.839396628216504,
+              "threshold": -0.011416666209697723
+            },
+            "2.95": {
+              "DR": 8.054298642533936,
+              "FA": 2.839396628216504,
+              "threshold": -0.011416666209697723
+            },
+            "24.4": {
+              "DR": 51.58371040723983,
+              "FA": 24.312333629103815,
+              "threshold": -0.21843750774860382
+            },
+            "5.8": {
+              "DR": 10.678733031674208,
+              "FA": 5.767524401064774,
+              "threshold": -0.024894059422270704
+            },
+            "5.85": {
+              "DR": 10.678733031674208,
+              "FA": 5.767524401064774,
+              "threshold": -0.024894059422270704
+            },
+            "9.3": {
+              "DR": 26.153846153846157,
+              "FA": 9.139307897071872,
+              "threshold": -0.09874243248486891
+            }
+          },
+          "best_balanced_accuracy": 64.12350893534672,
+          "boundary_count": 2163,
+          "rule": "score >= threshold; null threshold denotes no alarms"
+        }
+      }
+    },
+    "original_rows": {
+      "ACC": 14.20807453416149,
+      "AUC": 50.0,
+      "DR": 0.0,
+      "F1": 0.0,
+      "FA": 0.0,
+      "FN": 1105,
+      "FP": 0,
+      "PR": null,
+      "SP": 100.0,
+      "TN": 183,
+      "TP": 0,
+      "balanced_accuracy": 50.0,
+      "n": 1288
+    },
+    "per_attack": {
+      "1": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 190
+      },
+      "2": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 177
+      },
+      "3": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 191
+      },
+      "4": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 171
+      },
+      "5": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 189
+      },
+      "6": {
+        "DR": 0.0,
+        "detected": 0,
+        "n": 187
+      }
+    },
+    "primary": {
+      "ACC": 50.492831541218635,
+      "AUC": 50.0,
+      "DR": 0.0,
+      "F1": 0.0,
+      "FA": 0.0,
+      "FN": 1105,
+      "FP": 0,
+      "PR": null,
+      "SP": 100.0,
+      "TN": 1127,
+      "TP": 0,
+      "balanced_accuracy": 50.0,
+      "n": 2232
+    },
+    "thresholds": {
+      "diagnostic_reversal": {
+        "at_false_alarm_caps": {
+          "2.9": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "2.95": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "24.4": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "5.8": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "5.85": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "9.3": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          }
+        },
+        "best_balanced_accuracy": 50.0,
+        "boundary_count": 2,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      },
+      "higher_probability": {
+        "at_false_alarm_caps": {
+          "2.9": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "2.95": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "24.4": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "5.8": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "5.85": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          },
+          "9.3": {
+            "DR": 0.0,
+            "FA": 0.0,
+            "threshold": null
+          }
+        },
+        "best_balanced_accuracy": 50.0,
+        "boundary_count": 2,
+        "rule": "score >= threshold; null threshold denotes no alarms"
+      }
+    }
+  },
+  "case": "generalized-two-class-p30",
+  "code_commit": "3705bcca04279bbfa8523a573b9b573f123463b7",
+  "created_utc": "2026-10-01T12:38:34.774225+00:00",
+  "elapsed_seconds": 2362.8503805696964,
+  "execution_budget": {
+    "batch_size": 100,
+    "epochs": 50,
+    "fit_guard_seconds": 4200
+  },
+  "false_alarm_caps": [
+    2.9,
+    2.95,
+    5.8,
+    5.85,
+    9.3,
+    24.4
+  ],
+  "fitting_parameters": {
+    "batch_size": 100,
+    "bridge_activation": "sigmoid",
+    "epochs": 50,
+    "interpretation": "I-SEQ-scalar-sigmoid",
+    "loss": "binary_crossentropy_repair",
+    "model_json": {
+      "build_config": {
+        "input_shape": null
+      },
+      "class_name": "Functional",
+      "compile_config": {
+        "jit_compile": false,
+        "loss": {
+          "class_name": "BinaryCrossentropy",
+          "config": {
+            "axis": -1,
+            "from_logits": false,
+            "label_smoothing": 0.0,
+            "name": "binary_crossentropy",
+            "reduction": "sum_over_batch_size"
+          },
+          "module": "keras.losses",
+          "registered_name": null
+        },
+        "loss_weights": null,
+        "metrics": null,
+        "optimizer": {
+          "class_name": "Adam",
+          "config": {
+            "amsgrad": false,
+            "beta_1": 0.9,
+            "beta_2": 0.999,
+            "clipnorm": null,
+            "clipvalue": null,
+            "ema_momentum": 0.99,
+            "ema_overwrite_frequency": null,
+            "epsilon": 1e-07,
+            "global_clipnorm": null,
+            "gradient_accumulation_steps": null,
+            "learning_rate": 0.0010000000474974513,
+            "loss_scale_factor": null,
+            "name": "adam",
+            "use_ema": false,
+            "weight_decay": null
+          },
+          "module": "keras.optimizers",
+          "registered_name": null
+        },
+        "run_eagerly": false,
+        "steps_per_execution": 1,
+        "weighted_metrics": null
+      },
+      "config": {
+        "input_layers": [
+          [
+            "daily_profile",
+            0,
+            0
+          ]
+        ],
+        "layers": [
+          {
+            "class_name": "InputLayer",
+            "config": {
+              "batch_shape": [
+                null,
+                48,
+                1
+              ],
+              "dtype": "float32",
+              "name": "daily_profile",
+              "sparse": false
+            },
+            "inbound_nodes": [],
+            "module": "keras.layers",
+            "name": "daily_profile",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                1
+              ]
+            },
+            "class_name": "SequentialAttentionDecoder",
+            "config": {
+              "bridge_activation": "sigmoid",
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "encoder_units": [
+                500,
+                300,
+                200
+              ],
+              "name": "attention_decoder",
+              "seed": 20260920,
+              "steps": 48,
+              "trainable": true
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "daily_profile",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "training": false
+                }
+              }
+            ],
+            "module": "models",
+            "name": "attention_decoder",
+            "registered_name": "atk_evidence>SequentialAttentionDecoder"
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                1
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261020
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_1",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261120
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "attention_decoder",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        1
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_1",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261021
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_2",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261121
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_1",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_2",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261022
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_3",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261122
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_2",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_3",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261023
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_4",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261123
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_3",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_4",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261024
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_5",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261124
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_4",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_5",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261025
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_6",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261125
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_5",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_6",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261026
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_7",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261126
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": true,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_6",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_7",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                48,
+                300
+              ]
+            },
+            "class_name": "GRU",
+            "config": {
+              "activation": "relu",
+              "activity_regularizer": null,
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dropout": 0.0,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "go_backwards": false,
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261027
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "sequence_gru_8",
+              "recurrent_activation": "sigmoid",
+              "recurrent_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "recurrent_dropout": 0.0,
+              "recurrent_initializer": {
+                "class_name": "OrthogonalInitializer",
+                "config": {
+                  "gain": 1.0,
+                  "seed": 20261127
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "recurrent_regularizer": null,
+              "reset_after": false,
+              "return_sequences": false,
+              "return_state": false,
+              "seed": null,
+              "stateful": false,
+              "trainable": true,
+              "units": 300,
+              "unroll": false,
+              "use_bias": true,
+              "zero_output_for_mask": false
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_7",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        48,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {
+                  "mask": null,
+                  "training": false
+                }
+              }
+            ],
+            "module": "keras.layers",
+            "name": "sequence_gru_8",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                300
+              ]
+            },
+            "class_name": "Dense",
+            "config": {
+              "activation": "relu",
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261220
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "classifier_hidden",
+              "trainable": true,
+              "units": 500,
+              "use_bias": true
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "sequence_gru_8",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        300
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {}
+              }
+            ],
+            "module": "keras.layers",
+            "name": "classifier_hidden",
+            "registered_name": null
+          },
+          {
+            "build_config": {
+              "input_shape": [
+                null,
+                500
+              ]
+            },
+            "class_name": "Dense",
+            "config": {
+              "activation": "sigmoid",
+              "bias_constraint": null,
+              "bias_initializer": {
+                "class_name": "Zeros",
+                "config": {},
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "bias_regularizer": null,
+              "dtype": {
+                "class_name": "DTypePolicy",
+                "config": {
+                  "name": "float32"
+                },
+                "module": "keras",
+                "registered_name": null
+              },
+              "kernel_constraint": {
+                "class_name": "MaxNorm",
+                "config": {
+                  "axis": 0,
+                  "max_value": 1.0
+                },
+                "module": "keras.constraints",
+                "registered_name": null
+              },
+              "kernel_initializer": {
+                "class_name": "GlorotUniform",
+                "config": {
+                  "seed": 20261221
+                },
+                "module": "keras.initializers",
+                "registered_name": null
+              },
+              "kernel_regularizer": null,
+              "name": "attack_probability",
+              "trainable": true,
+              "units": 1,
+              "use_bias": true
+            },
+            "inbound_nodes": [
+              {
+                "args": [
+                  {
+                    "class_name": "__keras_tensor__",
+                    "config": {
+                      "dtype": "float32",
+                      "keras_history": [
+                        "classifier_hidden",
+                        0,
+                        0
+                      ],
+                      "shape": [
+                        null,
+                        500
+                      ]
+                    }
+                  }
+                ],
+                "kwargs": {}
+              }
+            ],
+            "module": "keras.layers",
+            "name": "attack_probability",
+            "registered_name": null
+          }
+        ],
+        "name": "paper_sequential_native_ivc_bce_repair",
+        "output_layers": [
+          [
+            "attack_probability",
+            0,
+            0
+          ]
+        ],
+        "trainable": true
+      },
+      "module": "keras.src.models.functional",
+      "registered_name": "Functional"
+    },
+    "optimizer_config": {
+      "amsgrad": false,
+      "beta_1": 0.9,
+      "beta_2": 0.999,
+      "clipnorm": null,
+      "clipvalue": null,
+      "ema_momentum": 0.99,
+      "ema_overwrite_frequency": null,
+      "epsilon": 1e-07,
+      "global_clipnorm": null,
+      "gradient_accumulation_steps": null,
+      "learning_rate": 0.0010000000474974513,
+      "loss_scale_factor": null,
+      "name": "adam",
+      "use_ema": false,
+      "weight_decay": null
+    },
+    "seed": 20260920,
+    "shuffle": true
+  },
+  "hardware": {
+    "backend": "tensorflow",
+    "build_info": {
+      "cpu_compiler": "/usr/lib/llvm-17/bin/clang",
+      "cuda_compute_capabilities": [
+        "sm_50",
+        "sm_60",
+        "sm_70",
+        "sm_80",
+        "compute_90"
+      ],
+      "cuda_version": "12.3",
+      "cudnn_version": "8",
+      "is_cuda_build": true,
+      "is_rocm_build": false,
+      "is_tensorrt_build": true
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+    "cuda_visible_devices": "0",
+    "deterministic_ops": true,
+    "gpu_details": [
+      {
+        "compute_capability": [
+          7,
+          0
+        ],
+        "device_name": "Tesla V100-PCIE-16GB"
+      }
+    ],
+    "h5py": "3.11.0",
+    "keras": "3.4.1",
+    "mixed_precision": false,
+    "node_gpu_inventory": [
+      "Tesla V100-PCIE-16GB, 16384 MiB, 570.133.07"
+    ],
+    "tensorflow": "2.16.2",
+    "tf32_enabled": false
+  },
+  "input_load_seconds": 0.040693625807762146,
+  "input_sha256": {
+    "test_attack": "4f240126b1db6db76baa5f97bc4f06452c4faa8604f6c20ee2a6776f9d9dcba4",
+    "test_observed_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_raw_x": "5614e473ca8c6023b1333014e8d115e695850d2a5d15fc37102ddf772e353b49",
+    "test_synthetic": "1727c42471409e6e6f1b738763cc6486a3237145fb0896a5d527b21f334cf402",
+    "test_true_y": "785cbf0ecf66ee6f4371d75d5408f24a87b420d52506c081e5874f119169296d",
+    "test_uid": "ca54dcf6a8b5bf03ac4c0830bcc66dff1aac62d16b6fb2a0d1e9a2393e5cf08b",
+    "test_x": "7314ee291f270c49e59a0075c573f1869bb93cc965dac47b11065d5e99fab3da",
+    "train_observed_y": "76bbc5177684ae654eb9d49ecfe5e7726b131987e677fc2c09f293d9ff009b9a",
+    "train_true_y": "2d24504474403783fcb30d2c751b37ddc5f88183c10066fd15b43cbbf26a9da4",
+    "train_x": "098b3cabfb1fad82bbe0751c1b36ebbeeb05ec6dfafcbea6bf158774d6799dbe"
+  },
+  "model": "sequential_ensemble",
+  "neural": {
+    "batch_guard_reached": false,
+    "epochs_completed": 50,
+    "final_weights_sha256": "0ca3b5b9129cc4b5c59aa9a6830c30e07f3e91c860a383f191230422fc788f52",
+    "gpu_allocator_bytes": {
+      "current": 250796032,
+      "peak": 1583084544
+    },
+    "initial_weights_sha256": "11c3bf3746800eebd9e695a9dda3abaafc9e7c445cbe8044a2110ca4da77f549",
+    "maximum_kernel_column_norms": {
+      "attack_probability/kernel": 0.9166490084311347,
+      "attention_decoder/attention_decoder_kernel": 0.9997862370891748,
+      "attention_decoder/attention_encoder_kernel": 0.999778854348761,
+      "attention_decoder/attention_vector": 0.9703574954614848,
+      "attention_decoder/decoder_lstm_1/kernel": 0.6936721466035286,
+      "attention_decoder/decoder_lstm_1/recurrent_kernel": 0.5878340920719723,
+      "attention_decoder/decoder_lstm_2/kernel": 0.6192838689250374,
+      "attention_decoder/decoder_lstm_2/recurrent_kernel": 0.5566789856419001,
+      "attention_decoder/decoder_lstm_3/kernel": 0.5629190304451651,
+      "attention_decoder/decoder_lstm_3/recurrent_kernel": 0.5466160841436768,
+      "attention_decoder/encoder_lstm_1/lstm_cell/kernel": 0.10502540320158005,
+      "attention_decoder/encoder_lstm_1/lstm_cell/recurrent_kernel": 0.5821096649327558,
+      "attention_decoder/encoder_lstm_2/lstm_cell/kernel": 0.8187587632990455,
+      "attention_decoder/encoder_lstm_2/lstm_cell/recurrent_kernel": 0.5779060190731017,
+      "attention_decoder/encoder_lstm_3/lstm_cell/kernel": 0.8040997274920861,
+      "attention_decoder/encoder_lstm_3/lstm_cell/recurrent_kernel": 0.5770379636973687,
+      "attention_decoder/intermediate_projection/kernel": 0.9997840269441784,
+      "classifier_hidden/kernel": 0.959713846449575,
+      "sequence_gru_1/gru_cell/kernel": 0.08396313339471817,
+      "sequence_gru_1/gru_cell/recurrent_kernel": 0.6321379726980088,
+      "sequence_gru_2/gru_cell/kernel": 0.7591071891209364,
+      "sequence_gru_2/gru_cell/recurrent_kernel": 0.6323777654174981,
+      "sequence_gru_3/gru_cell/kernel": 0.7657072172311781,
+      "sequence_gru_3/gru_cell/recurrent_kernel": 0.6447259481818688,
+      "sequence_gru_4/gru_cell/kernel": 0.7737399671618409,
+      "sequence_gru_4/gru_cell/recurrent_kernel": 0.635638049433021,
+      "sequence_gru_5/gru_cell/kernel": 0.7681912353698851,
+      "sequence_gru_5/gru_cell/recurrent_kernel": 0.6405610176076836,
+      "sequence_gru_6/gru_cell/kernel": 0.7703101546630592,
+      "sequence_gru_6/gru_cell/recurrent_kernel": 0.6763536380558238,
+      "sequence_gru_7/gru_cell/kernel": 0.8163743156689616,
+      "sequence_gru_7/gru_cell/recurrent_kernel": 0.668760990884225,
+      "sequence_gru_8/gru_cell/kernel": 0.7761628317090978,
+      "sequence_gru_8/gru_cell/recurrent_kernel": 0.8109474729884188
+    },
+    "optimizer_updates": 2250,
+    "parameters": 9240802,
+    "training_complete": true,
+    "weight_devices": [
+      "/job:localhost/replica:0/task:0/device:GPU:0"
+    ]
+  },
+  "output_sha256": {
+    "history.json": "5c72779e3e2521e3608998d621de2f4a893b5ee6d5745cf9b24fc29f4b394c19",
+    "initial_weights.npz": "2cd85a58211a12dd68e2e4081952949a4b9be9cd39061ca5ec9118913798d6b3",
+    "model.keras": "f97f1dd13e0ca9191b3cae0ab9fa05fc45d6419f2fc1d39e19dc891288ecdd37",
+    "predictions.npz": "3b6466ff44e07f2860c8bfa96b54de9dee480bebc5aa35e1c33c9963584d855c",
+    "representations.npz": "feb67ea5d034d2e97e58bdfe25ef66d8d66373c510bd96a206e99cf18a2d599a"
+  },
+  "poisoning_rate": 0.3,
+  "preflight": {
+    "code_commit": "3705bcca04279bbfa8523a573b9b573f123463b7",
+    "gate": {
+      "ceiling_seconds": 3600,
+      "passed": true,
+      "projected_fit_seconds": 1845.843291701749
+    },
+    "sha256": "721256059d34a104fa2eda04ccb0bb8775603d01206117e4e82e1a9e54782c07"
+  },
+  "preparation_metadata_sha256": "9ac0faeea220e62ed5af13e39deb174a190cc69749786c38ea58240e5031f21a",
+  "preparation_overlap": {
+    "test_synthetic_train_parent": 1306,
+    "train_synthetic_test_parent": 1186
+  },
+  "process_peak_rss_kib": 1809396,
+  "reload": {
+    "identical_optimizer_count": true,
+    "identical_probabilities": true,
+    "identical_representations": true
+  },
+  "scope": "20-customer exploratory Table V context; not full-population reproduction",
+  "seed": 20260920,
+  "slurm_job_id": "407294",
+  "source_sha256": {
+    "SEQUENTIAL_INTERFACE.md": "9f550b895777a89a17068b1d3803e525af747add87cbda235c68e1c919b42145",
+    "reported/table_5.csv": "620f255de634625b7add8e219b1b01e47972297078772d5d1a78166faed641d5",
+    "reproduction/analyze_results.py": "c70781d7cbdad20142caab5303c97926f72890307811c00597a501e352db1a6d",
+    "reproduction/models.py": "9c9201bb682ab0732dd25ffa469a8003173eeb166c503b5e7f63a81b525c1c13",
+    "reproduction/run_experiment.py": "dd9311d78f352a23825abd1ebf1f567d021c8a0e8856f9c1e87988b6d34e3352",
+    "requirements-feed-forward.txt": "c062b45c1a30bcf96b4be0202725c89ec62f8d6b2dd2043893ee701e0e055a0f"
+  },
+  "status": "complete",
+  "test_rows": 2232,
+  "timing_seconds": {
+    "fit": 2008.0873101949692,
+    "reload": 70.52757441997528,
+    "score": 198.72887286543846
+  },
+  "training": {
+    "observed_label_accuracy": 64.6057347670251,
+    "true_label_accuracy": 49.4847670250896
+  },
+  "training_prior": 0.3539426523297491,
+  "training_rows": 4464,
+  "versions": {
+    "backend": "tensorflow",
+    "h5py": "3.11.0",
+    "joblib": "1.4.2",
+    "keras": "3.4.1",
+    "numpy": "1.26.4",
+    "python": "3.12.2",
+    "scipy": "1.13.1",
+    "sklearn": "1.5.2",
+    "tensorflow": "2.16.2",
+    "threadpoolctl": "3.5.0"
+  },
+  "warnings": []
+}
