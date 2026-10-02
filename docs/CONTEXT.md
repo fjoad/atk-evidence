@@ -2,6 +2,13 @@
 
 **Last updated:** 2026-10-02
 
+**Live cell-learning job408764:** code6ca174a8e58cd47ccb5af656f1cbfa534c29a156,
+Panther oneV10016GB/4CPU/16GiB,35min ceiling,360s/fit. Four fixed synthetic
+48-step cases, zero CER inputs/fits. Inspect this job and
+sequential-cell-learning-20261002-attempt1 before any action; never duplicate.
+Remote checkout:/export/home/fjoad/atk-evidence-seq-cells-20261002;
+log:/export/home/fjoad/seq-cells-transfer-20261002/cells-408764.out.
+
 **Full48-step cell comparison authorized and ready:** I-SEQ-tanh-cells
 follows explicit Algorithm1 recurrent tanh formulas while preserving the
 IV-C activation conflict. Only LSTM/GRU cell activation changes; Sigmoid
