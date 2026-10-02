@@ -1,0 +1,72 @@
+{
+  "all_three_initial_weight_hashes_match_prior_gpu_initialization": true,
+  "completed_software_fits": 2,
+  "completed_tanh_fresh_process_probabilities_sequence_attention_exact": true,
+  "copied_comparison_files_verified": 29,
+  "data_seed": 20260926,
+  "execution_commit": "febc28e4aaf626302f884524c1184a79f59b2c02",
+  "failed_pre_fit_attempt_preserved": true,
+  "fit_seconds_by_case": {
+    "relu_normal": 221.03876933827996,
+    "tanh_normal": 265.69263514271006,
+    "tanh_reversed": 263.5222058799118
+  },
+  "four_case_comparison_completed": false,
+  "initial_arrays_match_pre_fit_attempt": true,
+  "jobs": [
+    {
+      "elapsed_seconds": 184,
+      "exit_code": "1:0",
+      "job_id": "408764",
+      "reason": "CPU-only dataset requested under GPU scope; no full-width fitting update",
+      "state": "FAILED"
+    },
+    {
+      "elapsed_seconds": 1088,
+      "exit_code": "1:0",
+      "job_id": "408778",
+      "reason": "declared stop after ReLU-normal nonfinite loss at update245",
+      "state": "FAILED"
+    },
+    {
+      "elapsed_seconds": 32,
+      "exit_code": "0:0",
+      "job_id": "408787",
+      "reason": "fresh-process audit only; zero fitting updates",
+      "state": "COMPLETED"
+    }
+  ],
+  "model_parameters": 9240802,
+  "model_seed": 20260920,
+  "model_weights_on_gpu_input_pipeline_on_cpu": true,
+  "numerically_failed_software_fits": 1,
+  "official_restricted_archives_available_locally": false,
+  "original_allocation_budget_seconds": 2100,
+  "original_pair_files_unchanged": 15,
+  "partial_artifact_audit_verified": true,
+  "placement_regression_passed": true,
+  "published": false,
+  "relevant_pinned_neural_checks_passed": 20,
+  "repository_cases_passed": 405,
+  "repository_environment_skips": 45,
+  "research_fits": 0,
+  "research_inputs_loaded": false,
+  "scientific_model_commit": "6ca174a8e58cd47ccb5af656f1cbfa534c29a156",
+  "sequence_length": 48,
+  "status": "concluded_at_declared_numeric_stop_with_tanh_gate_verified",
+  "strict_data_verification": "sciencedb-csv-semantic-equivalence-v1",
+  "tanh_full_48_step_gate_verified": true,
+  "test_profiles": 32,
+  "total_actual_gpu_allocation_seconds": 1304,
+  "train_profiles": 32,
+  "unrun_cases": [
+    "relu_reversed"
+  ],
+  "updates_by_case": {
+    "relu_normal": 245,
+    "tanh_normal": 300,
+    "tanh_reversed": 300
+  },
+  "verification_source_commit": "5d53338",
+  "website_changed": false
+}

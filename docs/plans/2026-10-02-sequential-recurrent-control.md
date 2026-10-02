@@ -1,6 +1,6 @@
 # Validate one recurrent activation alternative at full sequence length
 
-Date:2026-10-02. State: implemented and verified; ready to freeze before learning outputs.
+Date:2026-10-02. State: concluded at the declared numerical stop; tanh gate verified.
 The user approved the next alternative/control and full48-step validation.
 
 1. Recheck the relevant complete source pages; declare the tanh-cell
@@ -76,3 +76,22 @@ locally as data, preserving its nonfinite status; do not run its missing fit.
 This is closure of the authorized audit, not a new comparison attempt.
 Prior actual allocation184+1088=1272s; plus this180s ceiling is1452s (24:12),
 within the original35min budget. No further training allocation follows.
+
+## Audited outcome
+
+Both tanh cases complete300updates with100% held-out accuracy/clippedBCE
+1.00000005e-7, finite connected gradients, bounds/constraints and reload.
+ReLU-normal becomes nonfinite at245; reversedReLU is held. Its loss briefly
+dips to.48902 at239 before rising/nonfinite, so no plateau is claimed. Raw
+comparison status stays failed/incomplete. No further fitting or missing-case
+retry. Both completed tanh models pass fresh-process GPU verification as
+408787,0:0 in32s. All29 attempt2files,15 originalpairfiles and attempt1
+preservation checks pass; specialized partial audit verifies the failed state.
+
+Total actual allocations184+1088+32=1304s (21:44), within original35min.
+The startup device-scope correction preserves every initial array and all
+scientific model/data/settings. Only executable input placement changed.
+Current research CLI still uses ReLU; next step is a separately specified,
+explicitly wired fresh-weight tanh CER pilot with a new runtime gate. No CER
+input/fit or website change occurred in this step. Positive learning on the
+trivial mean-rule task is not theft-detection or robustness evidence.

@@ -4,16 +4,23 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current step: full48-step constructed recurrent comparison
+## Current decision: specify a research pilot for the validated tanh alternative
 
-The user approved defining and validating one alternative. The
-[recurrent-control plan](2026-10-02-sequential-recurrent-control.md) declares
-I-SEQ-tanh-cells from the explicit formulas, preserving the IV-C ReLU conflict.
-Only cell activation changes; original ReLU/defaults and artifacts remain.
-Twenty pinned neural checks and405 repository cases pass. Freeze and run
-four fixed software fits onPanther (tanh/relu × normal/reversed labels),
-35min allocation/360s perfit/300updates, then audit/report. No CER inputs,
-research fit, extra seed/setting or website work; no automatic promotion.
+The [full-length cell check](2026-10-02-sequential-recurrent-control.md)
+concluded at its declared stop. Both tanh orientations complete300updates,
+100% held-out accuracy/BCE~1e-7, with exact fresh-process GPU reload. The
+matched ReLU normal case becomes nonfinite at245; reversedReLU is not run.
+Its late loss dip prevents a plateau claim. Preserve the raw incomplete
+comparison and all three attempted states. See
+[result](../../studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md).
+
+I-SEQ-tanh-cells is now a working full48-step constructed learner, not a
+CER reproduction or poisoning repair. The IV-C/Algorithm1 conflict and other
+native-cell omissions remain explicit. Next specify and explicitly wire a
+bounded fresh-weight p00/p30 CER pair, with a new full-batch runtime gate.
+The current research runner still defaults to ReLU; do not mistake it for
+the new branch or reuse trained synthetic weights. No new research job,
+seed/search or website work is launched by this result.
 
 ## Previous decision: source-explicit recurrent alternative before more fitting
 

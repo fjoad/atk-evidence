@@ -13,6 +13,13 @@ Poisoning Attacks in Smart Grids,” *IEEE Transactions on Smart Grid* 12(3),
 formal experimental implementation. This file records the paper, not an
 inferred author implementation.
 
+Executable sequential interpretations are specified separately in
+[the ensemble contract](SEQUENTIAL_ENSEMBLE_PILOT.md),
+[the scalar-interface addendum](SEQUENTIAL_INTERFACE.md), and
+[the recurrent-cell alternative](SEQUENTIAL_RECURRENT_CONTROL.md).
+Constructed learning checks do not resolve the source's activation conflict
+or establish a reported-data reproduction.
+
 ## 1. Questions and headline claims
 
 The abstract, Section I-B, and Section V ask and answer three questions:

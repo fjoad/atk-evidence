@@ -1,0 +1,58 @@
+{
+  "cases": {
+    "tanh_normal": {
+      "probability_sequence_attention_exact": true,
+      "updates": 300,
+      "weights_optimizer_unchanged": true
+    },
+    "tanh_reversed": {
+      "probability_sequence_attention_exact": true,
+      "updates": 300,
+      "weights_optimizer_unchanged": true
+    }
+  },
+  "fits": 0,
+  "runtime": {
+    "backend": "tensorflow",
+    "build_info": {
+      "cpu_compiler": "/usr/lib/llvm-17/bin/clang",
+      "cuda_compute_capabilities": [
+        "sm_50",
+        "sm_60",
+        "sm_70",
+        "sm_80",
+        "compute_90"
+      ],
+      "cuda_version": "12.3",
+      "cudnn_version": "8",
+      "is_cuda_build": true,
+      "is_rocm_build": false,
+      "is_tensorrt_build": true
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+    "cuda_visible_devices": "0",
+    "deterministic_ops": true,
+    "gpu_details": [
+      {
+        "compute_capability": [
+          7,
+          0
+        ],
+        "device_name": "Tesla V100-PCIE-16GB"
+      }
+    ],
+    "h5py": "3.11.0",
+    "keras": "3.4.1",
+    "mixed_precision": false,
+    "node_gpu_inventory": [
+      "Tesla V100-PCIE-16GB, 16384 MiB, 575.57.08"
+    ],
+    "tensorflow": "2.16.2",
+    "tf32_enabled": false
+  },
+  "scope": "fresh-process verification of completed constructed models only",
+  "status": "verified",
+  "training_result_sha256": "d1ad4564a0984a6c72f01562d3ab60fae50260039fcf291e4a02de5b5423cd45",
+  "updates": 0,
+  "verification_script_sha256": "becccd7079c8d3f8786172a7143e939f9b831cd349baab905983d737a562728d"
+}

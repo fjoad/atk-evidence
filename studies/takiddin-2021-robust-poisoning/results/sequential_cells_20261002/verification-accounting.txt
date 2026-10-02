@@ -1,0 +1,3 @@
+JobID|JobName|Partition|State|ExitCode|Elapsed|ElapsedRaw|Start|End|NodeList|AllocCPUS|ReqMem|MaxRSS
+408787|robust-cell-verify|gpu-short|COMPLETED|0:0|00:00:32|32|2026-10-02T13:55:07|2026-10-02T13:55:39|crimv3mgpu026|4|16G|
+408787.batch|batch||COMPLETED|0:0|00:00:32|32|2026-10-02T13:55:07|2026-10-02T13:55:39|crimv3mgpu026|4||1020872K

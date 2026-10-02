@@ -1,0 +1,5 @@
+2026-10-02 13:55:15.707720: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 13:55:15.733169: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 13:55:15.733216: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 13:55:19.750421: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"status": "verified", "output": "/export/home/fjoad/atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-cell-verification-20261002-attempt1/fresh_tanh_reload.json", "fits": 0}

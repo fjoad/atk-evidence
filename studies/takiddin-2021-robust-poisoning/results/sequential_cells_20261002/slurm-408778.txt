@@ -1,0 +1,53 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-10-02 13:17:01.200772: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 13:17:01.224816: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 13:17:01.224862: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 13:17:04.129897: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_legacy_archive_and_new_tanh_reload_in_fresh_process (tests.test_sequential_cell_learning.CellActivation.test_legacy_archive_and_new_tanh_reload_in_fresh_process) ... ok
+test_only_cell_activation_changes_and_initial_weights_match (tests.test_sequential_cell_learning.CellActivation.test_only_cell_activation_changes_and_initial_weights_match) ... ok
+test_partial_schedule_cannot_pass_and_preserves_artifacts (tests.test_sequential_cell_learning.CellActivation.test_partial_schedule_cannot_pass_and_preserves_artifacts) ... {"activation": "tanh", "orientation": "normal", "epoch": 1, "updates": 1, "loss": 0.6931481957435608, "elapsed_seconds": 20.034567156806588}
+{"case": "tanh_normal", "status": "time_guard", "test": {"finite": true, "accuracy": 0.5, "bce": 0.6931483252201228, "probability_min": 0.5007365345954895, "probability_max": 0.5007365942001343}, "passed": false}
+ok
+test_tanh_hidden_bounds_under_large_signed_inputs (tests.test_sequential_cell_learning.CellActivation.test_tanh_hidden_bounds_under_large_signed_inputs) ... ok
+test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor (tests.test_sequential_cell_learning.FixtureContract.test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor) ... ok
+test_other_detector_functions_are_unchanged (tests.test_sequential_cell_learning.FixtureContract.test_other_detector_functions_are_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 132.154s
+
+OK
+2026-10-02 13:19:19.466555: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 13:19:19.491877: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 13:19:19.491926: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 13:19:21.803749: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"activation": "tanh", "orientation": "normal", "epoch": 1, "updates": 1, "loss": 0.6931472420692444, "elapsed_seconds": 21.548368324991316}
+{"activation": "tanh", "orientation": "normal", "epoch": 50, "updates": 50, "loss": 3.6751601761864094e-09, "elapsed_seconds": 61.585378917865455}
+{"activation": "tanh", "orientation": "normal", "epoch": 100, "updates": 100, "loss": 2.537839050020807e-09, "elapsed_seconds": 102.29449220187962}
+{"activation": "tanh", "orientation": "normal", "epoch": 150, "updates": 150, "loss": 2.5315671781100946e-09, "elapsed_seconds": 143.1031492948532}
+{"activation": "tanh", "orientation": "normal", "epoch": 200, "updates": 200, "loss": 2.532086984530224e-09, "elapsed_seconds": 184.1954429349862}
+{"activation": "tanh", "orientation": "normal", "epoch": 250, "updates": 250, "loss": 2.53261700500218e-09, "elapsed_seconds": 224.87491164775565}
+{"activation": "tanh", "orientation": "normal", "epoch": 300, "updates": 300, "loss": 2.5331456932065066e-09, "elapsed_seconds": 265.67256212001666}
+{"case": "tanh_normal", "status": "complete", "test": {"finite": true, "accuracy": 1.0, "bce": 1.0000000497368254e-07, "probability_min": 2.224291757724206e-11, "probability_max": 1.0}, "passed": true}
+{"activation": "tanh", "orientation": "reversed", "epoch": 1, "updates": 1, "loss": 0.6931470632553101, "elapsed_seconds": 19.86666951375082}
+{"activation": "tanh", "orientation": "reversed", "epoch": 50, "updates": 50, "loss": 2.7313845407661574e-08, "elapsed_seconds": 60.092124985996634}
+{"activation": "tanh", "orientation": "reversed", "epoch": 100, "updates": 100, "loss": 2.2107506936208665e-08, "elapsed_seconds": 100.3674069037661}
+{"activation": "tanh", "orientation": "reversed", "epoch": 150, "updates": 150, "loss": 2.1805012906384036e-08, "elapsed_seconds": 140.9450621008873}
+{"activation": "tanh", "orientation": "reversed", "epoch": 200, "updates": 200, "loss": 2.1489757529025155e-08, "elapsed_seconds": 182.06953657791018}
+{"activation": "tanh", "orientation": "reversed", "epoch": 250, "updates": 250, "loss": 2.114021846466585e-08, "elapsed_seconds": 222.8948830529116}
+{"activation": "tanh", "orientation": "reversed", "epoch": 300, "updates": 300, "loss": 2.0763863517458958e-08, "elapsed_seconds": 263.508034478873}
+{"case": "tanh_reversed", "status": "complete", "test": {"finite": true, "accuracy": 1.0, "bce": 1.0000000497368254e-07, "probability_min": 3.253859048868435e-08, "probability_max": 1.0}, "passed": true}
+{"activation": "relu", "orientation": "normal", "epoch": 1, "updates": 1, "loss": 0.6931471824645996, "elapsed_seconds": 19.716903424356133}
+{"activation": "relu", "orientation": "normal", "epoch": 50, "updates": 50, "loss": 0.6931471824645996, "elapsed_seconds": 58.726472397334874}
+{"activation": "relu", "orientation": "normal", "epoch": 100, "updates": 100, "loss": 0.6931471228599548, "elapsed_seconds": 99.88543258607388}
+{"activation": "relu", "orientation": "normal", "epoch": 150, "updates": 150, "loss": 0.6931472420692444, "elapsed_seconds": 141.35578170930967}
+{"activation": "relu", "orientation": "normal", "epoch": 200, "updates": 200, "loss": 0.6931471824645996, "elapsed_seconds": 183.0689210779965}
+{"case": "relu_normal", "status": "nonfinite_loss", "test": {"finite": false, "accuracy": null, "bce": null}, "passed": false}
+Traceback (most recent call last):
+  File "/export/home/fjoad/atk-evidence-seq-cells-retry-20261002/studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py", line 291, in <module>
+    else:run(a.output,a.previous,a.failed_attempt)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence-seq-cells-retry-20261002/studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py", line 156, in run
+    if r['cases'][name]['status']!='complete':raise RuntimeError('Stop after incomplete/numerically failed fixed case')
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Stop after incomplete/numerically failed fixed case

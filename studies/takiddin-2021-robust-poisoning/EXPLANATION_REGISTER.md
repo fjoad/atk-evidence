@@ -672,3 +672,34 @@ conflicting source descriptions. Next define one explicit recurrent-cell
 alternative/control with full48-step constructed validation before further
 research fitting; no alternative or newjob is selected/launched here. See
 [gate record](results/sequential_gates_20261002/README.md).
+
+## E36 — one source-explicit recurrent alternative can learn the full48-step fixture
+
+**Status:** supported for the two fixed tanh cases; CER performance remains
+untested for this alternative and the reference matrix is incomplete.
+
+Source review preserves the conflict between Algorithm1's explicit tanh
+formulas and IV-C's ReLU selection. I-SEQ-tanh-cells changes only recurrent
+cell activation, retaining Sigmoid gates/bridge, ReLU Dense, all dimensions,
+initial weights, optimizer, constraints and objective. The existing ReLU
+default and historical archives remain valid.
+
+Both tanh label orientations complete300updates on the same32train/32test
+48-step constructed profiles at100% held-out accuracy/clippedBCE~1e-7.
+Finite gradients, constraints and fresh-process GPU reload pass. ReLU-normal
+becomes nonfinite at245; reversedReLU is held by the stop rule. Its brief
+loss improvement to.48902 at239 precludes an unqualified plateau claim.
+The failed reference has invalid final predictions, not a valid50% score.
+
+The task is solved by a zero-parameter mean rule; reversed labels flip both
+train and test labels and are not a poisoning test. This validates basic
+learning in one finite setting, not robust theft detection, reconstruction
+mechanism or a uniquely faithful source implementation. The LSTM and GRU
+activation changes are coupled, not separate causal ablations.
+
+Preserve the raw incomplete comparison and all attempts. A pre-fit device
+placement error was corrected with exact initial-array parity, no scientific
+setting change or trained retry. Three allocations total21:44, within35min;
+the last was verification only. No CER fit or unrun reference continuation.
+Next specify/wire/timing-gate a fresh-weight CER pilot for the fixed tanh
+alternative before launch. See [record](results/sequential_cells_20261002/README.md).

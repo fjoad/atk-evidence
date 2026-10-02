@@ -25,6 +25,37 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: an equation-led tanh alternative passes full-length constructed learning
+
+**Added October2 after source review and the bounded cell comparison.**
+
+- **Source:** Algorithm1 explicitly uses tanh for LSTM candidates/hidden
+  output and GRU candidates; IV-C selects ReLU hidden activation. The new
+  I-SEQ-tanh-cells alternative preserves that conflict, native-cell omissions,
+  Sigmoid gates/bridge, ReLU Dense, other settings and historical defaults.
+- **Observed:** both normal/reversed tanh cases finish300updates at published
+  widths/48steps with100% fresh-test accuracy/clippedBCE about1e-7. Initial
+  weights match the ReLU reference. Finite gradients, parameter changes,
+  constraints and exact fresh-process GPU reload verify.
+- **Preserved negative outcome:** ReLU-normal becomes nonfinite at245;
+  reversedReLU is unrun under the declared stop. A late finite loss dip to
+  .48902 at239 prevents a converged-plateau claim. The raw comparison remains
+  failed/incomplete; no completed four-case result is fabricated.
+- **Boundary:** this is a trivial synthetic mean-rule task, including flipped
+  labels on both splits, not poisoning or temporal-capability evidence. The
+  activation changes LSTM and GRU operations together, so their individual
+  contributions are not isolated. No CER result or unique source reading is
+  validated by this pass.
+- **Execution:** pre-fit dataset-device error408764 is preserved and corrected
+  without changing scientific settings; initial arrays match exactly.408778
+  stops as declared;408787 performs audit only. Total allocation21:44 stays
+  within35min. All original files remain unchanged; no further fitting.
+- **Decision:** the tanh alternative qualifies for a separately specified
+  fresh-weight research pilot with explicit driver wiring and a new runtime
+  gate. The existing research CLI still selects ReLU; no automatic launch.
+
+See [full-length cell record](../studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md).
+
 ### Paper 3: saved gate equations identify decay and amplification
 
 **Added October2 after the fixed gate arithmetic diagnostic; no fitting.**

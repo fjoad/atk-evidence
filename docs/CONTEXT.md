@@ -2,18 +2,37 @@
 
 **Last updated:** 2026-10-02
 
-**Cell fitting stopped as declared:**408778 FAILED/1:0 in18:08. Both tanh
-orientations completed300updates with100% held-out accuracy/BCE~1e-7 and
-case gates passed. ReLU-normal loss became nonfinite atupdate245; its saved
-weights/predictions are nonfinite. ReLU-reversed was held by the stop rule.
-Do not resume fitting or call this a completed four-case comparison. Raw
-failed result remains unchanged. Local artifact audit passes all three states.
-Close only the planned fresh-process GPU reload of the TWO completed tanh
-models, one3min verification allocation, zero updates/new cases. Prior
-actual184+1088s plus180s ceiling=24:12, within original35min budget.
-No CER data/fit or website work. Verification not yet submitted.
+**Full48-step tanh learning gate verified:** scientific6ca174a; placement
+recoveryfebc28e. Two tanh cases complete300updates each,100% held-out
+accuracy/clippedBCE~1e-7; same initial weights and all other settings as the
+ReLU reference. ReLU-normal becomes nonfinite at245, with a brief finite
+loss dip to.489 at239; no plateau claim. ReLU-reversed is unrun under the
+predeclared stop rule. Raw comparison stays failed/incomplete, not four-case
+complete. Fresh-process GPU reload408787 passes both tanh models exactly;
+partial artifact audit verifies failed reference without treating it as valid.
+408764 pre-fit device error184s preserved;408778 stopped1088s;408787 audit32s;
+total21:44 within35min. No CER inputs/fits. Alternative follows explicit tanh
+formulas while retaining the IV-C ReLU conflict and other native-cell gaps.
+Default ReLU/legacy behavior remains; only models.py gained the option.
+Next specify/wire/timing-gate a fresh-weight tanh CER pair; current research
+CLI still selects ReLU and old preflight does not authorize tanh. No automatic
+launch/extra seed or website work. See [cell record](../studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md).
 
-**Cell comparison pre-fit recovery:**408764 FAILED/1:0 in3:04, all cluster
+Raw data:sequential-cell-learning-20261002-attempt1 andattempt2. Attempt2
+has two complete tanh fits, one preserved nonfinite ReLU fit, no reversedReLU.
+All29 copiedfiles verify;15 oldpairfiles and failedattempt1 unchanged. First
+corrected tanh initialization matches all failed-prefit arrays exactly. Fresh
+GPU receiptSHAe93c1c80e0d39a169be71db51f8d3e7fd69ada4315971a3f299910831da77e3c.
+GPU code:/export/home/fjoad/atk-evidence-seq-cells-retry-20261002 atfebc28e;
+verification script frozen5d53338/copied bySHA. No active jobs. Model has
+9,240,802params,32train/32test synthetic48steps, model/data seeds20260920/
+20260926, Adam.001/BCErepair/no dropout/MaxNorm1/nativekernels unchanged.
+20 pinned neuralchecks,405 repo passes/45skips, device regression and strict
+semantic-equivalence data checks pass. PDF source unchanged/relevant pages
+visually rechecked. No paper-data or mechanism conclusion follows from toy
+learning. Never reuse synthetic trained weights for a proposed CER pilot.
+
+**Earlier cell comparison recovery checkpoint:**408764 FAILED/1:0 in3:04, all cluster
 fixtures passed but no full-width optimizer update ran. Broad GPU scope
 incorrectly forced CPU-only TensorSliceDataset ontoGPU. Fix only placement:
 GPU model variables, CPU input pipeline. Preserveattempt1 and require exact
