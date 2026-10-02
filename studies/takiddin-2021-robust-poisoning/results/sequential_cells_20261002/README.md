@@ -42,3 +42,13 @@ uses unusedattempt2. Only device placement and preservation checks changed;
 the scientific model/contract/settings remain at6ca174a. Inspect this job,
 not a new submission. Log:
 `/export/home/fjoad/seq-cells-transfer-20261002/cells-retry-408778.out`.
+
+## Declared numerical stop
+
+408778 stopped1:0 in18:08. Both tanh cases completed300updates with100%
+held-out accuracy/BCE about1e-7 and passed their case checks. ReLU-normal
+became nonfinite atupdate245, so ReLU-reversed was not run. The original
+comparison result remains failed/incomplete; it is not relabeled complete.
+No further fitting follows. Local saved-state/metric/configuration audit passes.
+Only the planned fresh-process GPU verification of the two completed tanh
+models remains:3min, zero updates, within the original cumulative budget.

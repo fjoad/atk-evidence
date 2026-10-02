@@ -58,3 +58,21 @@ the original35min allocation budget. Whole-minute downward rounding avoids
 relying on Slurm second-level rounding. No budget extension or automatic
 additional attempt. Validate the corrected CPU-pipeline/GPU-weight fixture,
 freeze the recovery revision, inspect queue and unusedattempt2 before submit.
+
+## Numeric stop and audit-only closure
+
+408778 stopped1:0 in18:08 (1088s) as specified: both tanh cases completed
+300updates/passed; ReLU-normal became nonfinite atupdate245. ReLU-reversed
+was not run. Preserve all results and do not resume/complete its training.
+The comparison's raw status remains failed/incomplete, not rewritten as a
+four-case completion. CPU-pipeline/GPU-weight and failed-initial-array parity
+checks passed before the first full-width update.
+
+Because the stop prevented the wrapper's final fresh-process verification,
+finish that already planned verification only: one3min V100/4CPU/16GiB job
+reloads the TWO completed tanh models on their same saved32 test fixtures,
+without any update or new model/input/metric. Inspect the failed ReLU artifact
+locally as data, preserving its nonfinite status; do not run its missing fit.
+This is closure of the authorized audit, not a new comparison attempt.
+Prior actual allocation184+1088=1272s; plus this180s ceiling is1452s (24:12),
+within the original35min budget. No further training allocation follows.

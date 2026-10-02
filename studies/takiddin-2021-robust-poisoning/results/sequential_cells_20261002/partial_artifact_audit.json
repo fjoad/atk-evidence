@@ -1,0 +1,52 @@
+{
+  "cases": {
+    "relu_normal": {
+      "gate_passed": false,
+      "serialized": {
+        "configuration_verified": true,
+        "nonfinite_parameter_values": 9240802,
+        "optimizer_updates": 245,
+        "preserved_nonfinite_failure": true
+      },
+      "status": "verified",
+      "updates": 245
+    },
+    "tanh_normal": {
+      "gate_passed": true,
+      "serialized": {
+        "config_verified": true,
+        "maximum_constrained_norm": 0.9999816441490064,
+        "optimizer_updates": 300,
+        "parameter_count": 9240802,
+        "weight_hash_verified": true
+      },
+      "status": "verified",
+      "updates": 300
+    },
+    "tanh_reversed": {
+      "gate_passed": true,
+      "serialized": {
+        "config_verified": true,
+        "maximum_constrained_norm": 0.9999998847815288,
+        "optimizer_updates": 300,
+        "parameter_count": 9240802,
+        "weight_hash_verified": true
+      },
+      "status": "verified",
+      "updates": 300
+    }
+  },
+  "comparison_completed": false,
+  "fits": 0,
+  "fresh_gpu_reload_required_separately": true,
+  "model_calls": 0,
+  "original_pair_and_failed_attempt_unchanged": true,
+  "scope": "partial comparison artifact audit; no model calls",
+  "status": "verified",
+  "stop_rule_respected": true,
+  "tanh_two_case_learning_gate_passed": true,
+  "training_result_sha256": "d1ad4564a0984a6c72f01562d3ab60fae50260039fcf291e4a02de5b5423cd45",
+  "unrun_cases": [
+    "relu_reversed"
+  ]
+}

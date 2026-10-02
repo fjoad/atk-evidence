@@ -2,14 +2,16 @@
 
 **Last updated:** 2026-10-02
 
-**Live corrected cell job408778:** frozenfebc28e4aaf626302f884524c1184a79f59b2c02,
-31min ceiling ononeV10016GB/4CPU16GiB. Source model remains6ca174a; only
-placement and failed-attempt preservation checks change. Same four fixed
-48-step synthetic cases; no CER inputs/fits. Check408778 and
-sequential-cell-learning-20261002-attempt2 before any action; no duplicate.
-Remote code:/export/home/fjoad/atk-evidence-seq-cells-retry-20261002;
-log:/export/home/fjoad/seq-cells-transfer-20261002/cells-retry-408778.out.
-408764 remains FAILED/1:0,184s, no full-width fitting update; preserved.
+**Cell fitting stopped as declared:**408778 FAILED/1:0 in18:08. Both tanh
+orientations completed300updates with100% held-out accuracy/BCE~1e-7 and
+case gates passed. ReLU-normal loss became nonfinite atupdate245; its saved
+weights/predictions are nonfinite. ReLU-reversed was held by the stop rule.
+Do not resume fitting or call this a completed four-case comparison. Raw
+failed result remains unchanged. Local artifact audit passes all three states.
+Close only the planned fresh-process GPU reload of the TWO completed tanh
+models, one3min verification allocation, zero updates/new cases. Prior
+actual184+1088s plus180s ceiling=24:12, within original35min budget.
+No CER data/fit or website work. Verification not yet submitted.
 
 **Cell comparison pre-fit recovery:**408764 FAILED/1:0 in3:04, all cluster
 fixtures passed but no full-width optimizer update ran. Broad GPU scope
