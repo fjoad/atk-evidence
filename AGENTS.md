@@ -58,6 +58,15 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+**Live corrected cell job408778:** frozenfebc28e4aaf626302f884524c1184a79f59b2c02,
+31min ceiling ononeV10016GB/4CPU16GiB. Source model remains6ca174a; only
+placement and failed-attempt preservation checks change. Same four fixed
+48-step synthetic cases; no CER inputs/fits. Check408778 and
+sequential-cell-learning-20261002-attempt2 before any action; no duplicate.
+Remote code:/export/home/fjoad/atk-evidence-seq-cells-retry-20261002;
+log:/export/home/fjoad/seq-cells-transfer-20261002/cells-retry-408778.out.
+408764 remains FAILED/1:0,184s, no full-width fitting update; preserved.
+
 **Cell comparison pre-fit recovery:**408764 FAILED/1:0 in3:04, all cluster
 fixtures passed but no full-width optimizer update ran. Broad GPU scope
 incorrectly forced CPU-only TensorSliceDataset ontoGPU. Fix only placement:

@@ -34,3 +34,11 @@ settings, uses an unusedattempt2, and checks exact initial-array agreement
 before fitting. Retry ceiling31min plus prior184s totals at most34:04 of
 nominal allocated time, within the original35min budget. No CER data or
 research fit; no result-driven setting change. See the amended step plan.
+
+## Live corrected execution
+
+Job408778 at `febc28e4aaf626302f884524c1184a79f59b2c02`,31min ceiling,
+uses unusedattempt2. Only device placement and preservation checks changed;
+the scientific model/contract/settings remain at6ca174a. Inspect this job,
+not a new submission. Log:
+`/export/home/fjoad/seq-cells-transfer-20261002/cells-retry-408778.out`.
