@@ -4,7 +4,15 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current decision: diagnose the completed constant-score sequential pair
+## Current step: bounded saved-state inspection
+
+The user approved the next diagnostic. The [October2 plan](2026-10-02-sequential-saved-state-diagnostic.md)
+fixes three saved states and first100 train/test rows, zero fitting/updates,
+one10min V100 allocation with a7min observation guard. Six local constructed
+controls pass. Freeze and run once after checking queue/output; audit and
+report exact limits, with no automatic model repair or website work.
+
+## Previous decision: diagnose the completed constant-score sequential pair
 
 Job407294 completed0:0 in1:21:28 at3705bcca ononeV10016GB. Both50epochs/
 2250updates and all artifact/metric/source/reload checks pass; local pair/

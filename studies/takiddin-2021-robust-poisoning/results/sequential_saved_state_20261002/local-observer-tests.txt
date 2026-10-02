@@ -1,0 +1,13 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_active_observer_preserves_native_outputs_and_label_gradient_signs (tests.test_sequential_saved_state.ObserverControls.test_active_observer_preserves_native_outputs_and_label_gradient_signs) ... ok
+test_dead_head_has_zero_upstream_gradient_but_live_output_bias (tests.test_sequential_saved_state.ObserverControls.test_dead_head_has_zero_upstream_gradient_but_live_output_bias) ... ok
+test_saturated_bridge_is_observed_without_repair (tests.test_sequential_saved_state.ObserverControls.test_saturated_bridge_is_observed_without_repair) ... ok
+test_constant_float32_probability_can_hide_affine_variation (tests.test_sequential_saved_state.SummaryControls.test_constant_float32_probability_can_hide_affine_variation) ... ok
+test_nonfinite_values_remain_explicit (tests.test_sequential_saved_state.SummaryControls.test_nonfinite_values_remain_explicit) ... ok
+test_time_variation_is_not_profile_variation (tests.test_sequential_saved_state.SummaryControls.test_time_variation_is_not_profile_variation) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 3.552s
+
+OK

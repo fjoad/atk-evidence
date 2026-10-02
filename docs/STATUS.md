@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-10-01
+**Last updated:** 2026-10-02
 
 **Branch:** `main`
 
@@ -11,6 +11,15 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+- **Saved-state diagnostic authorized and implemented.** The user approved
+  inspection of the failed48-step sequential pair. Three fixed weight states
+  (shared initialization, finalp00, finalp30), first100 train/test rows,
+  activation/gradient/readout inspection only; zero fitting/optimizer steps.
+  Six constructed observer controls pass locally. Freeze/check and submit
+  one10min V10016GB/4CPU/16GiB job onPanther, with7min observation guard;
+  no branch/seed/repair or website work. No new job submitted at this checkpoint.
+  See [step plan](plans/2026-10-02-sequential-saved-state-diagnostic.md).
 
 - **Sequential pair complete and audited; no useful ranking.** Frozen
   3705bcca04279bbfa8523a573b9b573f123463b7, Panther job407294, COMPLETED/0:0

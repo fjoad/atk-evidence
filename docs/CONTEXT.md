@@ -1,6 +1,16 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-10-01
+**Last updated:** 2026-10-02
+
+**October2 authorized saved-state diagnostic:** first100 train/test rows,
+sharedinitial/finalp00/finalp30, zero training/optimizer updates. Observe native
+AEA/GRU/head outputs, gradients and bridge/affine readout arithmetic; weights
+and originals must remain unchanged. Six discriminating constructed controls
+pass locally in3.55s. One10min V10016GB/4CPU/16GiB allocation with7min guard;
+no job yet. Freeze then inspect queue/output before submission; run onPanther.
+Plan2026-10-02-sequential-saved-state-diagnostic.md. Local pinned fixture
+runtime:tmp/robust-feedforward-venv/bin/python; normal tests:.venv/bin/python.
+No direct scientific model edits, new fitted branch or website work.
 
 **Sequential pair complete (October1):** scientific3705bcca04279bbfa8523a573b9b573f123463b7;
 job407294 COMPLETED/0:0 in1:21:28 onPanther005,oneV10016GB,4CPU/16GiB.

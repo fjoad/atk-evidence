@@ -58,6 +58,13 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+October2 user approved bounded saved-state activation/gradient inspection of
+the constant-score sequential pair. Three fixedstates, first100 train/test
+rows, zero fitting or optimizer steps. Six local constructed observer controls
+pass. Freeze and run one10min V10016GB/4CPU/16GiB Panther job,7min internal
+guard, then copy/audit/report and stop. No extra seed/branch/repair/sitework.
+No new job yet. See [plan](docs/plans/2026-10-02-sequential-saved-state-diagnostic.md).
+
 Oct1 sequential pair407294 is complete and audited:0:0 in1:21:28 onPanther
 oneV10016GB,4CPU/16GiB,science3705bcca04279bbfa8523a573b9b573f123463b7.
 Both50epochs/2250updates, identical initial weights. Constant0.504759/0.353959
