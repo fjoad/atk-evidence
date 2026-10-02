@@ -12,6 +12,13 @@ execution plan here is
 
 ## Current project state
 
+**Live gate job408551:** frozenee1a420656cfa28d47008d12a550ea63f6145bd5,
+oneV10016GB/4CPU/16GiB onPanther,10min ceiling/7min observer guard. Zero fits
+or parameter updates. Inspect this existing job and sequential-gates-20261002-attempt1
+before any action; no duplicate submission. Remote code:
+/export/home/fjoad/atk-evidence-seq-gates-20261002; log:
+/export/home/fjoad/seq-gates-transfer-20261002/gates-408551.out.
+
 **Gate arithmetic authorized:** the user approved a zero-fit check of the
 saved recurrent operations. Same first100 test rows, shared initial/finalp00/
 finalp30, all six LSTM cells and GRU8. No parameter update or repaired state
