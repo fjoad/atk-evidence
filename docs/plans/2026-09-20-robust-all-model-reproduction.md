@@ -4,13 +4,21 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current step: bounded saved-state inspection
+## Current decision: inspect recurrent arithmetic before any repair
 
-The user approved the next diagnostic. The [October2 plan](2026-10-02-sequential-saved-state-diagnostic.md)
-fixes three saved states and first100 train/test rows, zero fitting/updates,
-one10min V100 allocation with a7min observation guard. Six local constructed
-controls pass. Freeze and run once after checking queue/output; audit and
-report exact limits, with no automatic model repair or website work.
+The [October2 diagnostic](2026-10-02-sequential-saved-state-diagnostic.md)
+completed onPanther as408550,0:0 in2:11, without fitting/updates. Initial
+logit variation is hidden by float32 probability resolution. At finalp00,
+GRU8 is nearlyzero and hidden classifier profiles are identical; at finalp30,
+large encoder/decoder states saturate the Sigmoid bridge and GRU2 onward
+is profile-identical. Upstream derivatives are tiny rather than disconnected.
+All observations, source/input/state/output audits and original saved-score
+parity pass; local audit matches clusterbytes. See
+[record](../../studies/takiddin-2021-robust-poisoning/results/sequential_saved_state_20261002/README.md).
+Stop this diagnostic. Next identify which saved gate/cell arithmetic drives
+GRU8 attenuation and recurrent amplification before any declared repair or
+retraining. No follow-up job is launched. Endpoints do not date training onset
+or select a unique source interpretation; website stays unchanged.
 
 ## Previous decision: diagnose the completed constant-score sequential pair
 

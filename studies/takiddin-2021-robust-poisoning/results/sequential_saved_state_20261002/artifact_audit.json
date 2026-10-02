@@ -1,0 +1,12 @@
+{
+  "all_saved_summaries_replayed": true,
+  "independent_output_bias_and_kernel_derivatives_checked": 4,
+  "input_arrays_verified": 20,
+  "model_fits": 0,
+  "model_inferences": 0,
+  "native_saved_test_batches_exact": 3,
+  "observations": 6,
+  "original_files_verified": 15,
+  "source_and_output_hashes_verified": true,
+  "status": "verified"
+}

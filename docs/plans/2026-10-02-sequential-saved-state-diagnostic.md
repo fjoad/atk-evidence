@@ -1,6 +1,6 @@
 # Locate lost profile differences in the saved sequential models
 
-Date: 2026-10-02. State: authorized; specification before observations.
+Date: 2026-10-02. State: completed and audited; original specification preserved at3127b19.
 The user approved the proposed bounded inspection after the completed pair.
 No training, model repair, seed change or website work is included.
 
@@ -99,3 +99,28 @@ unavailable locally. Journal consistency and shell/Python syntax pass.
 Five direct scientific files are unchanged from the original pair. No
 research observations have been made yet. The read-only auditor additionally
 checks output-layer BCE bias/kernel derivatives against elementary arithmetic.
+
+## Completed result
+
+One job408550 completed0:0 in2:11 onV10016GB node026; diagnostic80.85s.
+Six local/cluster observer checks pass. Three states/two fixed batches,
+four training-label gradient conditions; zero fits/optimizer updates. All
+observations remain finite and preserve every model/optimizer state hash.
+Native test probabilities/representations match saved originals exactly;
+all six independent decoder bridge/attention replays are also exact.
+
+Initial logits vary but float32 probabilities round together. Finalp00
+GRU8 is nearlyzero with tiny profile differences and an identical classifier
+hidden output. Finalp30 has very large encoder/decoder activations; the
+Sigmoid bridge saturates (all outputszero fromstep2), and GRU2 onward is
+profile-identical. No whole native stage is entirelyzero. Upstream gradients
+are extremely small but nonzero. Widened final readout stays constant in
+both trained models. These are observed endpoints, not onset or a repair.
+
+All10 copiedfiles,15 oldpairfiles and20 preparedarrays verify; local audit
+matches clusterbytes, including four independent elementary output-layer
+BCE derivative checks. Six native arrays were summarized over all48steps
+post-run without further inference. See resultrecord and source scripts.
+Stop; next saved gate/cell arithmetic before any repair/fitting. No follow-up
+job, newseed, modelsetting or website work. The earlier command-path error
+was confined to a repository-test invocation and is preserved in the record.

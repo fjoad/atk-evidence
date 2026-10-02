@@ -12,11 +12,19 @@ execution plan here is
 
 ## Current project state
 
-**Live diagnostic408550:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
-Panther oneV10016GB/4CPU/16GiB,10min ceiling, zero fits/updates. Inspect this
-existing job and sequential-saved-state-20261002-attempt1 before any action;
-do not submit a duplicate. Three saved states, fixed first100 train/test rows.
-Audit/preserve outputs after completion; no new scientific branch or website work.
+**Saved-state diagnostic complete:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
+Panther408550 COMPLETED/0:0 in2:11, zero fits/optimizer updates. On fixed100
+train/test rows: initial logit differences survive but float32 probabilities
+round together; finalp00 GRU8 is about6e-18 and classifier hidden profiles
+are identical; finalp30 encoder/decoder reach3e9/1e15, bridge is exactlyzero
+fromstep2, and GRU2 onward is profile-identical. Upstream gradients are tiny
+but nonzero; no whole native stage is entirelyzero. Widening only the final
+readout does not recover either trained model. All10 copiedfiles,15 oldfiles,
+20 preparedarrays, all model/optimizer hashes, native decoder replay and
+savedtest parity verify; local audit matches clusterbytes. Endpoint/batch
+scope only, not a training trajectory or family-wide impossibility. Next
+consider saved gate/cell arithmetic before declaring a repair; no furtherjob,
+fit/seed or website work. See [diagnostic](../studies/takiddin-2021-robust-poisoning/results/sequential_saved_state_20261002/README.md).
 
 - **Saved-state diagnostic authorized and implemented.** The user approved
   inspection of the failed48-step sequential pair. Three fixed weight states

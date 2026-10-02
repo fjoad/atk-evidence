@@ -1,6 +1,6 @@
 # ATK Evidence — Evidence and Causal Learnings
 
-**Last updated:** 2026-10-01
+**Last updated:** 2026-10-02
 
 ## Purpose
 
@@ -24,6 +24,40 @@ statement is primary evidence for project intent; paper text, data artifacts,
 and repeated experiments determine technical conclusions.
 
 ## Causal record
+
+### Paper 3: constant probabilities conceal different internal failures
+
+**Added October2 after the fixed saved-state diagnostic; no fitting.**
+
+- **Initial precision — VERIFIED on the fixed batches:** native classifier
+  logits vary by1.81e-8 on the100 test rows, while float32 probabilities are
+  identical. Widening only the last affine/Sigmoid arithmetic reveals a
+  4.54e-9 probability range. Native BCE gradients still exist; rounded
+  probabilities do not imply a disconnected loss or useful hidden ranking.
+- **Final unpoisoned state — OBSERVED:** GRU8 outputs are at most5.92e-18
+  with profile variation5.05e-23. The classifier hidden output is identical
+  across profiles but has nonzero coordinates. Input-gradient L2 is8.05e-28;
+  upstream derivatives are tiny, not exactlyzero. This differs from the
+  earlier eight-step whole-layer-zero failure.
+- **Final poisoned state — OBSERVED:** test-batch encoder/decoder maxima
+  reach3.12e9/1.39e15. Sigmoid bridge outputs are allzero fromstep2 through48
+  on both fixed batches; GRU2 onward is identical across profiles. These
+  large finite states coexist with the earlier verified kernel-column norms.
+  Input-gradient L2 is1.69e-28. No entire native stage is allzero; constant
+  nonzero features can remain after input distinctions vanish.
+- **Repair boundary:** widening only the final readout leaves both trained
+  outputs constant. No full float64 network, alternate activation or retraining
+  was tested. Endpoints do not identify training onset or one causal parameter.
+- **Decision:** stop the diagnostic. A targeted saved gate/cell arithmetic
+  check can distinguish how GRU8 attenuates differences and the poisoned
+  recurrent states amplify before proposing a separately declared repair.
+
+Panther408550 completed0:0 in2:11; three weightstates, first100 train/test
+rows, four observed-label gradient conditions. All source/input/state/array
+checks, six exact decoder replays and three exact saved-test batches pass.
+Local audit matches clusterbytes, including elementary BCE head derivatives;
+no research model call ran locally. See
+[the diagnostic](../studies/takiddin-2021-robust-poisoning/results/sequential_saved_state_20261002/README.md).
 
 ### Paper 3: short constructed learning does not establish full-sequence learning
 

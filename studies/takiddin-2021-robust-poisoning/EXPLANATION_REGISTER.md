@@ -611,3 +611,31 @@ affect the saved initial/final classifier, before another fit or seed.
 No such job is launched. Source interface/native-cell ambiguity and the
 full-population/mechanism/attainability questions remain open. See
 [the complete record](results/sequential_pilot_20261001/README.md).
+
+## E34 — constant probabilities mean the whole network is disconnected or zero
+
+**Status:** contradicted as a common explanation for the three observed
+states; different precision/attenuation/saturation effects are visible.
+
+Fixed zero-fit inspection (3127b19, Panther408550,0:0,2:11) observes shared
+initialization and finalp00/finalp30 on the first100 train/test rows. Initial
+native logits retain1.81e-8 test-profile variation, hidden by float32 Sigmoid
+resolution; widened readout probability range is4.54e-9. Native stable BCE
+gradients remain connected. This arithmetic does not establish useful ranking
+or a viable full float64 network.
+
+Finalp00 GRU8 maximum is5.92e-18 with profile range5.05e-23; classifier
+hidden output is profile-identical but not allzero. Finalp30 encoder/decoder
+maxima reach3.12e9/1.39e15, and its Sigmoid bridge is exactlyzero fromstep2
+through48 on both batches. GRU2 onward is profile-identical. No whole native
+stage is entirelyzero; input-gradient L2 is8.05e-28/1.69e-28 at the final
+states. Tiny nonzero derivatives differ from a broken graph or exact zero.
+
+Native and widened final readouts are constant for both trained states.
+All source/input/output/model/optimizer hashes and saved-test parity pass;
+the decoder observer is exact, and the local audit matches clusterbytes.
+These endpoint observations do not determine onset, identify a single gate/
+bias cause or transfer to other populations/source choices. Stop this check;
+next proposed question is saved recurrent gate/cell arithmetic before any
+repair or fit. No new job or trained branch follows automatically. See
+[the saved-state record](results/sequential_saved_state_20261002/README.md).

@@ -2,14 +2,29 @@
 
 **Last updated:** 2026-10-02
 
-**Live408550:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28. New remote
-checkout /export/home/fjoad/atk-evidence-seq-observe-20261002; output original
-atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-saved-state-20261002-attempt1;
-log /export/home/fjoad/seq-observe-transfer-20261002/diagnostic-408550.out.
-OneV10016GB/4CPU16GiB/10min; first run6fixtures then fixed3states/2batches,
-zero fits/updates. Check existingjob/output; no duplicate. Copy/audit/record.
+**Saved-state diagnostic complete:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
+Panther408550 COMPLETED/0:0 in2:11, zero fits/optimizer updates. On fixed100
+train/test rows: initial logit differences survive but float32 probabilities
+round together; finalp00 GRU8 is about6e-18 and classifier hidden profiles
+are identical; finalp30 encoder/decoder reach3e9/1e15, bridge is exactlyzero
+fromstep2, and GRU2 onward is profile-identical. Upstream gradients are tiny
+but nonzero; no whole native stage is entirelyzero. Widening only the final
+readout does not recover either trained model. All10 copiedfiles,15 oldfiles,
+20 preparedarrays, all model/optimizer hashes, native decoder replay and
+savedtest parity verify; local audit matches clusterbytes. Endpoint/batch
+scope only, not a training trajectory or family-wide impossibility. Next
+consider saved gate/cell arithmetic before declaring a repair; no furtherjob,
+fit/seed or website work. See [diagnostic](../studies/takiddin-2021-robust-poisoning/results/sequential_saved_state_20261002/README.md).
 
-**October2 authorized saved-state diagnostic:** first100 train/test rows,
+Remote code /export/home/fjoad/atk-evidence-seq-observe-20261002 remains frozen.
+Raw local/Panther output:sequential-saved-state-20261002-attempt1 under the
+original study data/derived path. Log and accounting copied into resultrecord.
+Six local/cluster observerchecks pass;403 repository passes in recordedrun;
+strictdata/journalchecks pass. No local research inference. Original pair407294
+and five direct scientific files unchanged. Next unresolved question is exact
+recurrent gate/cell arithmetic, not an automatic higher-precision repair.
+
+**Earlier October2 authorization checkpoint:** first100 train/test rows,
 sharedinitial/finalp00/finalp30, zero training/optimizer updates. Observe native
 AEA/GRU/head outputs, gradients and bridge/affine readout arithmetic; weights
 and originals must remain unchanged. Six discriminating constructed controls
