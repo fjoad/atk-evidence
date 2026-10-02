@@ -4,7 +4,16 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current decision: inspect recurrent arithmetic before any repair
+## Current step: approved fixed gate/cell arithmetic
+
+The user approved [the gate plan](2026-10-02-sequential-gate-arithmetic.md):
+three saved states, the same first100 test rows, six LSTM cells and GRU8,
+zero fitting or parameter updates. Four constructed controls and repository
+checks pass. Freeze and run once onPanther within10min/oneV10016GB, then
+copy/audit/report and stop. Local term omissions are conditional arithmetic,
+not repaired trajectories or new source interpretations. Website untouched.
+
+## Previous decision: inspect recurrent arithmetic before any repair
 
 The [October2 diagnostic](2026-10-02-sequential-saved-state-diagnostic.md)
 completed onPanther as408550,0:0 in2:11, without fitting/updates. Initial

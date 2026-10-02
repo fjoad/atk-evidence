@@ -58,6 +58,14 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+**Gate arithmetic authorized:** the user approved a zero-fit check of the
+saved recurrent operations. Same first100 test rows, shared initial/finalp00/
+finalp30, all six LSTM cells and GRU8. No parameter update or repaired state
+trajectory. Four constructed controls pass;403 repository cases pass with
+41 environment skips. Freeze and submit one10min V10016GB/4CPU/16GiB job,
+7min internal guard, then copy/audit/report and stop. No job yet at this
+checkpoint. Plan:2026-10-02-sequential-gate-arithmetic.md. Website unchanged.
+
 **Saved-state diagnostic complete:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
 Panther408550 COMPLETED/0:0 in2:11, zero fits/optimizer updates. On fixed100
 train/test rows: initial logit differences survive but float32 probabilities
