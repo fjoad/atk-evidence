@@ -4,14 +4,22 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current step: approved fixed gate/cell arithmetic
+## Current decision: source-explicit recurrent alternative before more fitting
 
-The user approved [the gate plan](2026-10-02-sequential-gate-arithmetic.md):
-three saved states, the same first100 test rows, six LSTM cells and GRU8,
-zero fitting or parameter updates. Four constructed controls and repository
-checks pass. Freeze and run once onPanther within10min/oneV10016GB, then
-copy/audit/report and stop. Local term omissions are conditional arithmetic,
-not repaired trajectories or new source interpretations. Website untouched.
+The [gate check](2026-10-02-sequential-gate-arithmetic.md) completed onPanther
+as408551,0:0 in3:05, with zero updates. All21 traces reproduce native h/c
+arithmetic and saved sequences exactly. Finalp00 stops GRU8 candidate
+injection fromstep4, then retains about half its state eachstep. The largest
+residual unit haspositive bias; a growing negative input projection closes
+its candidate. Finalp30 LSTMs admit large positive recurrent candidate
+injection while retaining memory, amplifying states through all six cells.
+All preservation/audit checks pass. See
+[record](../../studies/takiddin-2021-robust-poisoning/results/sequential_gates_20261002/README.md).
+Stop this diagnostic. Define one source-explicit recurrent-cell alternative
+or control, preserving the paper's activation/cell conflicts, and require
+full48-step constructed learning before another research fit. No branch,
+repair, seed or newjob has been selected/launched. Endpoint arithmetic does
+not locate the training update that created these conditions. Website unchanged.
 
 ## Previous decision: inspect recurrent arithmetic before any repair
 

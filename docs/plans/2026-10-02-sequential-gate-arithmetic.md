@@ -1,6 +1,6 @@
 # Recurrent gate arithmetic in the saved sequential models
 
-Date: 2026-10-02. State: authorized; specified before new observations.
+Date: 2026-10-02. State: complete and audited; original specification frozen at ee1a420.
 The user approved the proposed saved gate/cell check. No fitting, optimizer
 step, altered network parameter, new seed, repaired model or website work.
 
@@ -100,3 +100,24 @@ data verification passes the established ScienceDB semantic-equivalence
 branch and journal consistency passes. Restricted official archives remain
 unavailable locally. All five original scientific files remain unchanged.
 No new research observation has run at this checkpoint.
+
+## Completed result
+
+One job408551 completed0:0 in3:05 onV10016GB node026; observer56.13s.
+Four local/cluster controls pass. All21 native/manual h/c traces match
+exactly, as do saved topencoder/decoder/GRU8 sequences. Zero parameter or
+optimizer updates; all45 copiedfiles,15 originalpair and10 previous diagnostic
+files verify. Local witness/state/GRU identity audit matches clusterbytes.
+
+Finalp00 candidates are allzero fromstep4 through48; update gates near.5
+retain/halve residualstate to5.92e-18. The maximum-final-hidden witness has
+positive bias; a negative input projection overtakes it. Bias omission
+activates some other candidates locally, not a repaired trajectory. Finalp30
+open gates admit positive recurrent candidate injection on top of retained
+cell memory; amplification is already visible inencoder1 and propagates
+through the stack. Endpoints do not determine when training entered these
+conditions or select a successful repair. Full raw report is losslessly
+compressed in the resultrecord; canonical data and all traces remain intact.
+Stop. Next source-explicit alternative/control with full48-step constructed
+validation before further research fitting. No branch or newjob follows
+without its own recorded setup/authorization. Website unchanged.

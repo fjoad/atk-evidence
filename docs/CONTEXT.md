@@ -2,14 +2,31 @@
 
 **Last updated:** 2026-10-02
 
-**Live gate job408551:** frozenee1a420656cfa28d47008d12a550ea63f6145bd5,
-oneV10016GB/4CPU/16GiB onPanther,10min ceiling/7min observer guard. Zero fits
-or parameter updates. Inspect this existing job and sequential-gates-20261002-attempt1
-before any action; no duplicate submission. Remote code:
-/export/home/fjoad/atk-evidence-seq-gates-20261002; log:
-/export/home/fjoad/seq-gates-transfer-20261002/gates-408551.out.
+**Gate arithmetic complete:** ee1a420656cfa28d47008d12a550ea63f6145bd5,
+Panther408551 COMPLETED/0:0 in3:05, zero fits/updates. Same100 test rows,
+three saved states,21 cell traces; native/manual h/c arithmetic and saved
+sequences match exactly. Finalp00 GRU8 candidates are allzero fromstep4;
+z stays near.5, so retained state decays to5.92e-18. Largest final-unit
+witness has POSITIVE bias; increasingly negative input projection closes it.
+Do not generalize the earlier negative-bias explanation. Finalp30 LSTMs
+admit large positive recurrent candidate injection with open gates; growth
+starts inencoder1 and reaches decoder3~1.39e15. These are fixed-weight
+forward mechanisms, not training-onset or successful-repair evidence.
+All45 copiedfiles,15 pairfiles,10 prior diagnosticfiles and all parameter/
+optimizer hashes verify; local audit matches clusterbytes. Stop this check.
+Next define one source-explicit recurrent-cell alternative/control and require
+full48-step constructed learning before any new CER fit; no branch/job is
+selected or launched. Website unchanged. See [gate record](../studies/takiddin-2021-robust-poisoning/results/sequential_gates_20261002/README.md).
 
-**Gate arithmetic authorized:** the user approved a zero-fit check of the
+Raw local/Panther output:sequential-gates-20261002-attempt1. Frozen remote
+checkout /export/home/fjoad/atk-evidence-seq-gates-20261002. Resultrecord
+stores raw JSON losslessly compressed plus compact summary/PNG/SVG; original
+uncompressed JSON and NPZ traces remain under data/derived. Research replay
+56.13s; wholeallocation185s includes checks/audit. Four gatecontrols pass on
+CPU/GPU;403 repository passes/41 skips, strictdata and journal checks pass.
+Five direct sciencefiles unchanged. No local research model calls.
+
+**Earlier gate authorization checkpoint:** the user approved a zero-fit check of the
 saved recurrent operations. Same first100 test rows, shared initial/finalp00/
 finalp30, all six LSTM cells and GRU8. No parameter update or repaired state
 trajectory. Four constructed controls pass;403 repository cases pass with

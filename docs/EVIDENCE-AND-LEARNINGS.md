@@ -25,6 +25,38 @@ and repeated experiments determine technical conclusions.
 
 ## Causal record
 
+### Paper 3: saved gate equations identify decay and amplification
+
+**Added October2 after the fixed gate arithmetic diagnostic; no fitting.**
+
+- **Unpoisoned forward mechanism — VERIFIED:** all GRU8 candidates are
+  zero from steps4–48 on the fixed100 test rows. Update gates near0.5
+  repeatedly retain about half the residual state, yielding a maximum final
+  state5.92e-18. The full weighted-injection/retention identity verifies.
+- **Bias explanation refined:** the unit with the largest final state has
+  positive bias0.001063; its increasingly negative input projection crosses
+  that offset bystep4. Other units are locally held off by bias, but the
+  earlier negative-bias explanation is not universal. Omitting a term at an
+  observed state is not a repaired recurrent trajectory.
+- **Poisoned forward mechanism — VERIFIED:** positive recurrent candidate
+  terms, admitted by open input gates, add to retained LSTM cell memory.
+  At the maximum-final-hidden encoder1 witness, final input/recurrent/bias
+  terms are0.281/26951.291/0.026 withi=f=o=1. This amplification starts in
+  encoder1 and propagates through encoder/decoder stages; decoder3 reaches
+  about1.39e15. Forget gates alone are not the source of new cell memory.
+- **Precision and scope:** all21 manual/native h/c traces and old saved
+  sequences match exactly. These are within-profile48-step trajectories at
+  fixed saved weights, not the50-epoch optimization history or a global
+  instability proof. No parameter intervention or working repair was fitted.
+- **Decision:** stop this diagnostic. Define one source-explicit recurrent
+  alternative/control and require full48-step constructed learning before
+  another CER fit. No branch is selected by the gate result alone.
+
+Panther408551 completed0:0 in3:05; zero fits/updates. All45 copiedfiles,
+25 prior artifacts and model/optimizer hashes verify; local witness/state
+audit matches clusterbytes. See
+[gate arithmetic](../studies/takiddin-2021-robust-poisoning/results/sequential_gates_20261002/README.md).
+
 ### Paper 3: constant probabilities conceal different internal failures
 
 **Added October2 after the fixed saved-state diagnostic; no fitting.**

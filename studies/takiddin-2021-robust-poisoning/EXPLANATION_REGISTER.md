@@ -639,3 +639,36 @@ bias cause or transfer to other populations/source choices. Stop this check;
 next proposed question is saved recurrent gate/cell arithmetic before any
 repair or fit. No new job or trained branch follows automatically. See
 [the saved-state record](results/sequential_saved_state_20261002/README.md).
+
+## E35 — gate equations distinguish candidate shutoff from recurrent amplification
+
+**Status:** supported for the saved fixed-weight trajectories; training onset
+and a successful repair remain unidentified.
+
+The frozen gate check (ee1a420, Panther408551,0:0,3:05) repeats the same100
+test profiles at shared initialization/finalp00/finalp30. All21 cell traces
+match native h/c arithmetic and saved outputs exactly, with no updates.
+
+Finalp00 GRU8 has500/400/200 positive candidate coordinates in steps1/2/3,
+then zero of30,000 throughout4–48. Update gates remain near0.5, so the
+retention-product identity explains the final5.92e-18 maximum state. The
+maximum-final-state witness haspositive bias; increasingly negative input
+projection overtakes it. Negative bias is not a universal cause. Locally
+omitting bias activates13,000 candidates atstep48 but does not test a
+changed trajectory or establish that bias removal repairs learning.
+
+Finalp30 LSTM cell growth contains admitted positive recurrent candidate
+injection, not amplification by the forget factor alone. The first encoder's
+maximum-final-hidden witness hasi=f=o=1 atstep48; its recurrent contribution
+26951.291 dwarfs input0.281. Retained72659.45 plus new26951.60 gives
+cell/hidden99611.05 to displayed rounding. Encoder/decoder stages amplify
+further, to about1.39e15 in decoder3. These selected extrema follow a
+predeclared witness rule and are not population prevalence claims.
+
+All data/state/source/artifact checks pass, and the local audit matches
+clusterbytes. These endpoints do not identify when or which training update
+created the conditions. The native ReLU completion is still one reading of
+conflicting source descriptions. Next define one explicit recurrent-cell
+alternative/control with full48-step constructed validation before further
+research fitting; no alternative or newjob is selected/launched here. See
+[gate record](results/sequential_gates_20261002/README.md).

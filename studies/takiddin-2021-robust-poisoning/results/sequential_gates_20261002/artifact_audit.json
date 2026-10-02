@@ -1,0 +1,14 @@
+{
+  "all_batch_native_state_summaries_replayed": true,
+  "cell_traces": 21,
+  "fixed_and_extreme_witness_gate_equations_verified": true,
+  "gru_full_batch_retention_injection_verified": true,
+  "model_calls": 0,
+  "model_fits": 0,
+  "native_saved_sequence_checks": 9,
+  "original_pair_files_unchanged": 15,
+  "previous_observation_files_unchanged": 10,
+  "source_output_hashes_verified": true,
+  "states": 3,
+  "status": "verified"
+}

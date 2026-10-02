@@ -1,0 +1,22 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-10-02 06:29:58.156804: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 06:29:58.180713: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 06:29:58.180762: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 06:30:03.779850: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_full_observer_matches_native_sequences_and_preserves_state (tests.test_sequential_gate_arithmetic.GateArithmetic.test_full_observer_matches_native_sequences_and_preserves_state) ... ok
+test_gru_closed_candidate_has_exact_geometric_retention (tests.test_sequential_gate_arithmetic.GateArithmetic.test_gru_closed_candidate_has_exact_geometric_retention) ... ok
+test_lstm_closed_input_preserves_only_forget_scaled_memory (tests.test_sequential_gate_arithmetic.GateArithmetic.test_lstm_closed_input_preserves_only_forget_scaled_memory) ... ok
+test_unit_columns_do_not_bound_relu_lstm_state (tests.test_sequential_gate_arithmetic.GateArithmetic.test_unit_columns_do_not_bound_relu_lstm_state) ... ok
+
+----------------------------------------------------------------------
+Ran 4 tests in 17.164s
+
+OK
+2026-10-02 06:30:18.650533: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 06:30:18.675358: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 06:30:18.675407: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 06:30:20.490649: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+{"state": "initial", "seconds": 15.125554699916393, "native_parity_exact": true}
+{"state": "final_p00", "seconds": 13.90873524080962, "native_parity_exact": true}
+{"state": "final_p30", "seconds": 12.733325317967683, "native_parity_exact": true}
