@@ -2,6 +2,13 @@
 
 **Last updated:** 2026-10-02
 
+**Live408550:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28. New remote
+checkout /export/home/fjoad/atk-evidence-seq-observe-20261002; output original
+atk-evidence/data/derived/takiddin-2021-robust-poisoning/sequential-saved-state-20261002-attempt1;
+log /export/home/fjoad/seq-observe-transfer-20261002/diagnostic-408550.out.
+OneV10016GB/4CPU16GiB/10min; first run6fixtures then fixed3states/2batches,
+zero fits/updates. Check existingjob/output; no duplicate. Copy/audit/record.
+
 **October2 authorized saved-state diagnostic:** first100 train/test rows,
 sharedinitial/finalp00/finalp30, zero training/optimizer updates. Observe native
 AEA/GRU/head outputs, gradients and bridge/affine readout arithmetic; weights

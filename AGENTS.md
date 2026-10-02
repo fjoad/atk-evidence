@@ -58,6 +58,12 @@ attainability is preserved in
 
 ## Current scientific boundary
 
+**Live diagnostic408550:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
+Panther oneV10016GB/4CPU/16GiB,10min ceiling, zero fits/updates. Inspect this
+existing job and sequential-saved-state-20261002-attempt1 before any action;
+do not submit a duplicate. Three saved states, fixed first100 train/test rows.
+Audit/preserve outputs after completion; no new scientific branch or website work.
+
 October2 user approved bounded saved-state activation/gradient inspection of
 the constant-score sequential pair. Three fixedstates, first100 train/test
 rows, zero fitting or optimizer steps. Six local constructed observer controls
