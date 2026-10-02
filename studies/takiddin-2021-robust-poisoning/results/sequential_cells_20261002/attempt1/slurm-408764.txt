@@ -1,0 +1,48 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+2026-10-02 12:54:23.718308: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 12:54:23.742427: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 12:54:23.742476: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 12:54:29.132390: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+test_legacy_archive_and_new_tanh_reload_in_fresh_process (tests.test_sequential_cell_learning.CellActivation.test_legacy_archive_and_new_tanh_reload_in_fresh_process) ... ok
+test_only_cell_activation_changes_and_initial_weights_match (tests.test_sequential_cell_learning.CellActivation.test_only_cell_activation_changes_and_initial_weights_match) ... ok
+test_partial_schedule_cannot_pass_and_preserves_artifacts (tests.test_sequential_cell_learning.CellActivation.test_partial_schedule_cannot_pass_and_preserves_artifacts) ... {"activation": "tanh", "orientation": "normal", "epoch": 1, "updates": 1, "loss": 0.6931481957435608, "elapsed_seconds": 20.10256773000583}
+{"case": "tanh_normal", "status": "time_guard", "test": {"finite": true, "accuracy": 0.5, "bce": 0.6931483252201228, "probability_min": 0.5007365345954895, "probability_max": 0.5007365942001343}, "passed": false}
+ok
+test_tanh_hidden_bounds_under_large_signed_inputs (tests.test_sequential_cell_learning.CellActivation.test_tanh_hidden_bounds_under_large_signed_inputs) ... ok
+test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor (tests.test_sequential_cell_learning.FixtureContract.test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor) ... ok
+test_other_detector_functions_are_unchanged (tests.test_sequential_cell_learning.FixtureContract.test_other_detector_functions_are_unchanged) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 138.354s
+
+OK
+2026-10-02 12:56:47.436651: E external/local_xla/xla/stream_executor/cuda/cuda_fft.cc:479] Unable to register cuFFT factory: Attempting to register factory for plugin cuFFT when one has already been registered
+2026-10-02 12:56:47.460934: E external/local_xla/xla/stream_executor/cuda/cuda_dnn.cc:10575] Unable to register cuDNN factory: Attempting to register factory for plugin cuDNN when one has already been registered
+2026-10-02 12:56:47.460982: E external/local_xla/xla/stream_executor/cuda/cuda_blas.cc:1442] Unable to register cuBLAS factory: Attempting to register factory for plugin cuBLAS when one has already been registered
+2026-10-02 12:56:49.831306: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Could not find TensorRT
+Traceback (most recent call last):
+  File "/export/home/fjoad/atk-evidence-seq-cells-20261002/studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py", line 258, in <module>
+    else:run(a.output,a.previous)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence-seq-cells-20261002/studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py", line 130, in run
+    with tf.device('/GPU:0'):r['cases'][name]=run_case(output/name,arrays,activation,reverse)
+                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence-seq-cells-20261002/studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py", line 82, in run_case
+    dataset=tf.data.Dataset.from_tensor_slices((x,y)).batch(32).with_options(options)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2/lib/python3.12/site-packages/tensorflow/python/data/ops/dataset_ops.py", line 826, in from_tensor_slices
+    return from_tensor_slices_op._from_tensor_slices(tensors, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2/lib/python3.12/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 25, in _from_tensor_slices
+    return _TensorSliceDataset(tensors, name=name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2/lib/python3.12/site-packages/tensorflow/python/data/ops/from_tensor_slices_op.py", line 49, in __init__
+    variant_tensor = gen_dataset_ops.tensor_slice_dataset(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2/lib/python3.12/site-packages/tensorflow/python/ops/gen_dataset_ops.py", line 7772, in tensor_slice_dataset
+    _ops.raise_from_not_ok_status(e, name)
+  File "/export/home/fjoad/atk-evidence/data/environments/robust-feed-forward-2.16.2/lib/python3.12/site-packages/tensorflow/python/framework/ops.py", line 5983, in raise_from_not_ok_status
+    raise core._status_to_exception(e) from None  # pylint: disable=protected-access
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tensorflow.python.framework.errors_impl.InvalidArgumentError: Could not satisfy device specification '/job:localhost/replica:0/task:0/device:GPU:0'. enable_soft_placement=0. Supported device types [CPU]. All available devices [/job:localhost/replica:0/task:0/device:GPU:0, /job:localhost/replica:0/task:0/device:CPU:0]. [Op:TensorSliceDataset] name: 

@@ -3,13 +3,14 @@
 #SBATCH --gres=gpu:v100_16GB:1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=16G
-#SBATCH --time=00:35:00
+#SBATCH --time=00:31:00
 #SBATCH --job-name=robust-cell-learning
 set -euo pipefail
 : "${REPRO_CHECKOUT:?}"
 : "${EXPECTED_COMMIT:?}"
 : "${PYTHON_BIN:?}"
 : "${PREVIOUS_PAIR:?}"
+: "${FAILED_ATTEMPT:?}"
 : "${DIAGNOSTIC_OUTPUT:?}"
 cd "$REPRO_CHECKOUT"
 test "$(git rev-parse HEAD)" = "$EXPECTED_COMMIT"
@@ -27,10 +28,10 @@ done
 export LD_LIBRARY_PATH="$neural_cuda_libs${LD_LIBRARY_PATH:-}"
 "$PYTHON_BIN" -m unittest tests.test_sequential_cell_learning -v
 "$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py \
-    --previous "$PREVIOUS_PAIR" --output "$DIAGNOSTIC_OUTPUT"
+    --previous "$PREVIOUS_PAIR" --failed-attempt "$FAILED_ATTEMPT" --output "$DIAGNOSTIC_OUTPUT"
 "$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py --reload \
-    --previous "$PREVIOUS_PAIR" --output "$DIAGNOSTIC_OUTPUT" > "$DIAGNOSTIC_OUTPUT/fresh_reload.json"
+    --previous "$PREVIOUS_PAIR" --failed-attempt "$FAILED_ATTEMPT" --output "$DIAGNOSTIC_OUTPUT" > "$DIAGNOSTIC_OUTPUT/fresh_reload.json"
 "$PYTHON_BIN" -m pip freeze > "$DIAGNOSTIC_OUTPUT/runtime-packages.txt"
 "$PYTHON_BIN" studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py --audit \
-    --previous "$PREVIOUS_PAIR" --output "$DIAGNOSTIC_OUTPUT" \
+    --previous "$PREVIOUS_PAIR" --failed-attempt "$FAILED_ATTEMPT" --output "$DIAGNOSTIC_OUTPUT" \
     > "$DIAGNOSTIC_OUTPUT/artifact_audit.json"

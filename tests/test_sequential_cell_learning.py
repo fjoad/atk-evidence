@@ -103,6 +103,9 @@ for activation in ('relu','tanh'):
                 fixture_dimensions={'encoder_units':(8,6,4),'gru_units':8,'dense_units':16})
             self.assertEqual(r['status'],'time_guard');self.assertEqual(r['updates'],1)
             self.assertFalse(r['case_gate_passed']);self.assertTrue(r['reload_exact'])
+            self.assertIn('CPU:',r['input_pipeline_device'])
+            expected='GPU:0' if self.tf.config.list_physical_devices('GPU') else 'CPU:0'
+            self.assertTrue(all(expected in d for d in r['weight_devices']))
             self.assertTrue((Path(d)/'case/final.keras').exists())
 
 if __name__=='__main__':unittest.main()

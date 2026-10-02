@@ -2,12 +2,13 @@
 
 **Last updated:** 2026-10-02
 
-**Live cell-learning job408764:** code6ca174a8e58cd47ccb5af656f1cbfa534c29a156,
-Panther oneV10016GB/4CPU/16GiB,35min ceiling,360s/fit. Four fixed synthetic
-48-step cases, zero CER inputs/fits. Inspect this job and
-sequential-cell-learning-20261002-attempt1 before any action; never duplicate.
-Remote checkout:/export/home/fjoad/atk-evidence-seq-cells-20261002;
-log:/export/home/fjoad/seq-cells-transfer-20261002/cells-408764.out.
+**Cell comparison pre-fit recovery:**408764 FAILED/1:0 in3:04, all cluster
+fixtures passed but no full-width optimizer update ran. Broad GPU scope
+incorrectly forced CPU-only TensorSliceDataset ontoGPU. Fix only placement:
+GPU model variables, CPU input pipeline. Preserveattempt1 and require exact
+initial-array parity before fittingattempt2. Same model/data/seed/settings;
+retry31min + prior184s stays within original35min budget. No CER fit/data,
+new branch, seed or website work. Recovery not yet submitted at this checkpoint.
 
 **Full48-step cell comparison authorized and ready:** I-SEQ-tanh-cells
 follows explicit Algorithm1 recurrent tanh formulas while preserving the

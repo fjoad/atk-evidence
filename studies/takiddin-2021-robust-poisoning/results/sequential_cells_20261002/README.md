@@ -18,3 +18,19 @@ OneV10016GB/4CPUs/16GiB,35min ceiling,360s/fit; no CER data. Check this
 existing job/output before any continuation. Four cases remain fixed in
 advance; no duplicate or automatic research promotion. Log:
 `/export/home/fjoad/seq-cells-transfer-20261002/cells-408764.out`.
+
+## Attempt1: pre-fit device error
+
+408764 failed1:0 in3:04 after all six cluster fixtures passed. A broad
+GPU-only caller scope forced TensorSliceDataset ontoGPU although its kernel
+is CPU-only. The first full-width case saved initial weights/predictions/
+layer arrays, but performed no optimizer update and wrote no fitting history
+or final model. This is an execution error, not a failed learning result.
+[Failure](attempt1/result.json), [log](attempt1/slurm-408764.txt), and
+[accounting](attempt1/attempt1-accounting.txt) remain preserved.
+
+The placement-only recovery retains the source model and all scientific
+settings, uses an unusedattempt2, and checks exact initial-array agreement
+before fitting. Retry ceiling31min plus prior184s totals at most34:04 of
+nominal allocated time, within the original35min budget. No CER data or
+research fit; no result-driven setting change. See the amended step plan.

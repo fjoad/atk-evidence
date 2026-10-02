@@ -50,12 +50,14 @@ def case_passes(c):
         and c.get('maximum_constrained_norm') is not None and c['maximum_constrained_norm']<=1.00001)
 
 
-def run_case(output,arrays,activation,reverse,*,updates=300,fit_guard_seconds=360,fixture_dimensions=None):
+def run_case(output,arrays,activation,reverse,*,updates=300,fit_guard_seconds=360,fixture_dimensions=None,prior_case=None):
     import tensorflow as tf
     import keras
     output.mkdir();dims={} if fixture_dimensions is None else dict(fixture_dimensions)
     if set(dims)-{'encoder_units','gru_units','dense_units'}:raise ValueError('Invalid software fixture dimensions')
-    model=M.sequential_ensemble(20260920,timesteps=48,bridge_activation='sigmoid',cell_activation=activation,**dims)
+    device='/GPU:0' if tf.config.list_physical_devices('GPU') else '/CPU:0'
+    with tf.device(device):
+        model=M.sequential_ensemble(20260920,timesteps=48,bridge_activation='sigmoid',cell_activation=activation,**dims)
     if fixture_dimensions is None and model.count_params()!=9240802:raise ValueError('Parameter count differs')
     if fixture_dimensions is None and any('GPU:0' not in v.value.device for v in model.trainable_weights):raise ValueError('Wrong device')
     x,xt=arrays['train_x'],arrays['test_x'];y=1-arrays['train_y'] if reverse else arrays['train_y'];yt=1-arrays['test_y'] if reverse else arrays['test_y']
@@ -68,6 +70,14 @@ def run_case(output,arrays,activation,reverse,*,updates=300,fit_guard_seconds=36
     if fixture_dimensions is None and c['initial_weights_sha256']!=INITIAL_GPU_SHA:raise ValueError('Prior GPU initialization differs')
     np.savez_compressed(output/'initial_predictions.npz',train_probability=model(x).numpy(),test_probability=model(xt).numpy(),observed_train_y=y,observed_test_y=yt)
     c['initial_layers']=layer_snapshot(model,xt,output/'initial_layers.npz')
+    c['optimizer_updates_before_fit']=int(model.optimizer.iterations.numpy())
+    if c['optimizer_updates_before_fit']!=0:raise ValueError('Expected a fresh optimizer')
+    if prior_case is not None:
+        for filename in ('initial_weights.npz','initial_predictions.npz','initial_layers.npz'):
+            with np.load(output/filename) as a,np.load(prior_case/filename) as b:
+                assert set(a.files)==set(b.files)
+                for key in a.files:np.testing.assert_array_equal(a[key],b[key])
+        c['initial_arrays_match_failed_pre_fit_attempt']=True
     save=lambda:(output/'result.json').write_text(json.dumps(c,indent=2,allow_nan=False)+'\n')
     save();history=[];stops=[];start=time.monotonic()
     class Recorder(keras.callbacks.Callback):
@@ -80,6 +90,9 @@ def run_case(output,arrays,activation,reverse,*,updates=300,fit_guard_seconds=36
             elif time.monotonic()-start>=fit_guard_seconds and epoch+1<updates:stops.append('time_guard');self.model.stop_training=True
     options=tf.data.Options();options.deterministic=True;options.threading.private_threadpool_size=1;options.threading.max_intra_op_parallelism=1
     dataset=tf.data.Dataset.from_tensor_slices((x,y)).batch(32).with_options(options)
+    c['input_pipeline_device']=dataset._variant_tensor.device
+    c['weight_devices']=sorted({v.value.device for v in model.trainable_weights})
+    if 'CPU:' not in c['input_pipeline_device']:raise ValueError('Dataset pipeline must use its CPU kernel')
     try:
         model.fit(dataset,epochs=updates,shuffle=False,verbose=0,callbacks=[Recorder()])
         c['status']=stops[0] if stops else 'complete'
@@ -104,7 +117,7 @@ def run_case(output,arrays,activation,reverse,*,updates=300,fit_guard_seconds=36
     return c
 
 
-def run(output,previous):
+def run(output,previous,failed_attempt=None):
     R.require_compute();output.mkdir(parents=True,exist_ok=False)
     sources=[Path(__file__).resolve(),Path(G.__file__).resolve(),Path(D.__file__).resolve(),
         STUDY/'reproduction/models.py',STUDY/'SEQUENTIAL_RECURRENT_CONTROL.md',
@@ -118,16 +131,27 @@ def run(output,previous):
     save=lambda:(output/'result.json').write_text(json.dumps(r,indent=2,allow_nan=False)+'\n')
     save();start=time.monotonic()
     try:
-        r['prior_pair_sha256']=D.original_hashes(previous);r['runtime']=R.configure_tensorflow(True)
+        r['prior_pair_sha256']=D.original_hashes(previous)
+        if failed_attempt is not None:
+            old=json.loads((failed_attempt/'result.json').read_text())
+            assert old['status']=='failed' and not old['cases'] and old['active_case']=='tanh_normal'
+            assert 'TensorSliceDataset' in old['error'] and not (failed_attempt/'tanh_normal/history.json').exists()
+            r['failed_pre_fit_attempt_sha256']={str(p.relative_to(failed_attempt)):R.digest(p) for p in failed_attempt.rglob('*') if p.is_file()}
+            for name,h in old['artifact_sha256'].items():assert R.digest(failed_attempt/name)==h
+        r['runtime']=R.configure_tensorflow(True)
         import tensorflow as tf
         arrays=fixture_data();np.savez_compressed(output/'constructed_data.npz',**arrays)
         r['data_sha256']=R.digest(output/'constructed_data.npz')
+        if failed_attempt is not None:
+            with np.load(failed_attempt/'constructed_data.npz') as old:
+                for k,v in arrays.items():np.testing.assert_array_equal(v,old[k])
         r['constant_prior']=G.measurements(arrays['test_y'],np.full((32,1),.5))
         r['mean_rule_accuracy']={str(reverse):float(np.mean(((arrays['test_x'].mean(axis=(1,2))>0)^reverse)==(1-arrays['test_y'] if reverse else arrays['test_y']).ravel())) for reverse in (False,True)}
         for activation in ('tanh','relu'):
             for reverse in (False,True):
                 name=activation+('_reversed' if reverse else '_normal');r['active_case']=name;save();gc.collect()
-                with tf.device('/GPU:0'):r['cases'][name]=run_case(output/name,arrays,activation,reverse)
+                prior=failed_attempt/'tanh_normal' if failed_attempt is not None and name=='tanh_normal' else None
+                r['cases'][name]=run_case(output/name,arrays,activation,reverse,prior_case=prior)
                 save()
                 if r['cases'][name]['status']!='complete':raise RuntimeError('Stop after incomplete/numerically failed fixed case')
         r['paired_initial_weights']=len({c['initial_weights_sha256'] for c in r['cases'].values()})==1
@@ -137,6 +161,8 @@ def run(output,previous):
     except Exception as exc:r.update(status='failed',error=f'{type(exc).__name__}: {exc}');raise
     finally:
         r['elapsed_seconds']=time.monotonic()-start
+        if failed_attempt is not None and 'failed_pre_fit_attempt_sha256' in r:
+            r['failed_attempt_unchanged']=all(R.digest(failed_attempt/name)==h for name,h in r['failed_pre_fit_attempt_sha256'].items())
         if 'prior_pair_sha256' in r:r['prior_pair_unchanged']=D.original_hashes(previous)==r['prior_pair_sha256']
         r['artifact_sha256']={str(p.relative_to(output)):R.digest(p) for p in output.rglob('*') if p.is_file() and p!=output/'result.json'}
         save()
@@ -200,11 +226,15 @@ def saved_weights(case,c):
     return {'parameter_count':9240802,'weight_hash_verified':True,'optimizer_updates':300,'config_verified':True,'maximum_constrained_norm':max(norms)}
 
 
-def audit(output,previous):
+def audit(output,previous,failed_attempt=None):
     import hashlib
     r=json.loads((output/'result.json').read_text())
     assert r['status']=='complete' and not r['research_inputs_loaded'] and r['research_fits']==0
     assert r['prior_pair_unchanged'] and D.original_hashes(previous)==r['prior_pair_sha256']
+    if 'failed_pre_fit_attempt_sha256' in r:
+        assert failed_attempt is not None and r['failed_attempt_unchanged']
+        for name,h in r['failed_pre_fit_attempt_sha256'].items():assert R.digest(failed_attempt/name)==h
+        assert r['cases']['tanh_normal']['initial_arrays_match_failed_pre_fit_attempt']
     assert set(r['cases'])=={'tanh_normal','tanh_reversed','relu_normal','relu_reversed'}
     for p,h in r['source_sha256'].items():
         data=subprocess.check_output(['git','show',r['code_commit']+':'+p],cwd=ROOT)
@@ -219,6 +249,8 @@ def audit(output,previous):
         assert c==json.loads((case/'result.json').read_text())
         assert c['status']=='complete' and c['updates']==300 and c['timesteps']==48
         assert c['parameter_count']==9240802 and c['bridge_activation']=='sigmoid'
+        assert c['optimizer_updates_before_fit']==0 and 'CPU:' in c['input_pipeline_device']
+        assert all('GPU:0' in device for device in c['weight_devices'])
         assert c['cell_activation']==name.split('_')[0]
         with np.load(case/'initial_weights.npz') as z:w=[z[f'w{i}'] for i in range(len(z.files))]
         assert R.weight_hash(w)==c['initial_weights_sha256']==INITIAL_GPU_SHA
@@ -251,8 +283,9 @@ def audit(output,previous):
 
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--output',type=Path,required=True);p.add_argument('--previous',type=Path,required=True)
+    p.add_argument('--failed-attempt',type=Path)
     mode=p.add_mutually_exclusive_group();mode.add_argument('--reload',action='store_true');mode.add_argument('--audit',action='store_true')
     a=p.parse_args()
     if a.reload:print(json.dumps(fresh_reload(a.output),indent=2,sort_keys=True))
-    elif a.audit:print(json.dumps(audit(a.output,a.previous),indent=2,sort_keys=True))
-    else:run(a.output,a.previous)
+    elif a.audit:print(json.dumps(audit(a.output,a.previous,a.failed_attempt),indent=2,sort_keys=True))
+    else:run(a.output,a.previous,a.failed_attempt)

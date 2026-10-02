@@ -1,0 +1,100 @@
+{
+  "status": "failed",
+  "scope": "full-width 48-step constructed learning only; no CER inputs",
+  "research_inputs_loaded": false,
+  "research_fits": 0,
+  "planned_software_fits": 4,
+  "cases": {},
+  "code_commit": "6ca174a8e58cd47ccb5af656f1cbfa534c29a156",
+  "source_sha256": {
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_cell_learning.py": "b1d32b6dad0801dd41335d0216457661f41766a036b5a5e8386c18488ad15592",
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_constructed.py": "f7acfdfdee321e244cb616a6404f18c611dc43a07d4ae941e8d13da85f22d3d5",
+    "studies/takiddin-2021-robust-poisoning/checks/sequential_saved_state.py": "bdd57470c185b97c735abd0f1b185c00deb6c3591fb553f697b98e72d9b282a6",
+    "studies/takiddin-2021-robust-poisoning/reproduction/models.py": "af34df5b423c5abe45dd3ecf35d79eb9830054135f7775bcfbe6b126fe7397f4",
+    "studies/takiddin-2021-robust-poisoning/SEQUENTIAL_RECURRENT_CONTROL.md": "daad24fa17590bc46993219e2fef1fd68dd55649836f7ed04cd8cff03bcd90d6",
+    "studies/takiddin-2021-robust-poisoning/checks/run_sequential_cell_learning.sbatch": "85b6e24a810f15d5ac1046f4ccaf4071c70038f61617100ded86684df97e8ced",
+    "tests/test_sequential_cell_learning.py": "9689ba1a07ba28c287addb967413e74b55b89b74a8642f38cadeb78ee10df756",
+    "docs/plans/2026-10-02-sequential-recurrent-control.md": "5f4fa62c2924742bd4b83fabd83e810d793b59ffd9df1b0ac550e2704734e11c"
+  },
+  "candidate_predeclared": "tanh",
+  "model_seed": 20260920,
+  "data_seed": 20260926,
+  "prior_pair_sha256": {
+    "artifact_audit.json": "b5b08cadc5b6ff36ce440047c66aac51bbe248b1e57ce4b5d9a158649d812f74",
+    "cluster_comparison.json": "912db6ce506ea448d3171a04875b5812e48e40bcba84ffacb068870f108ac886",
+    "p00/history.json": "a1d4f1c7c17b5c9a7d8f9e182e9bf7df36227b0e10c37fa3e701f65ad696d1cd",
+    "p00/initial_weights.npz": "2cd85a58211a12dd68e2e4081952949a4b9be9cd39061ca5ec9118913798d6b3",
+    "p00/model.keras": "9a5097de033a87c3e20a04c4bb746c33cc4ea7f95a1fa41f5e4dde2a2589ae77",
+    "p00/predictions.npz": "c7aa3ee92303b1a40d5b8858c3a65f4ed56edda2da9128e64957fc01f5ccdfa4",
+    "p00/representations.npz": "a295401fac55e5a68c35f027f7d73ab30af11ff161a147fb78ce52c38458ba2e",
+    "p00/result.json": "eb60365b3f0cd39213c846602715ff3d73ca201bcaf2000d19e0e754b74e8a18",
+    "p30/history.json": "5c72779e3e2521e3608998d621de2f4a893b5ee6d5745cf9b24fc29f4b394c19",
+    "p30/initial_weights.npz": "2cd85a58211a12dd68e2e4081952949a4b9be9cd39061ca5ec9118913798d6b3",
+    "p30/model.keras": "f97f1dd13e0ca9191b3cae0ab9fa05fc45d6419f2fc1d39e19dc891288ecdd37",
+    "p30/predictions.npz": "3b6466ff44e07f2860c8bfa96b54de9dee480bebc5aa35e1c33c9963584d855c",
+    "p30/representations.npz": "feb67ea5d034d2e97e58bdfe25ef66d8d66373c510bd96a206e99cf18a2d599a",
+    "p30/result.json": "592354029a9603fde521c72ceff646d692c581aa9abf682ed5a4adaed8bab01a",
+    "runtime-packages.txt": "2c6d80063bd5e45faacfc3cde6980a0e6c36ba0bf98d561f6ba615302bb5dd6c"
+  },
+  "runtime": {
+    "tensorflow": "2.16.2",
+    "keras": "3.4.1",
+    "h5py": "3.11.0",
+    "backend": "tensorflow",
+    "gpu_details": [
+      {
+        "compute_capability": [
+          7,
+          0
+        ],
+        "device_name": "Tesla V100-PCIE-16GB"
+      }
+    ],
+    "build_info": {
+      "cpu_compiler": "/usr/lib/llvm-17/bin/clang",
+      "cuda_compute_capabilities": [
+        "sm_50",
+        "sm_60",
+        "sm_70",
+        "sm_80",
+        "compute_90"
+      ],
+      "cuda_version": "12.3",
+      "cudnn_version": "8",
+      "is_cuda_build": true,
+      "is_rocm_build": false,
+      "is_tensorrt_build": true
+    },
+    "constructed_update_device": "/job:localhost/replica:0/task:0/device:GPU:0",
+    "cuda_visible_devices": "0",
+    "deterministic_ops": true,
+    "tf32_enabled": false,
+    "mixed_precision": false,
+    "node_gpu_inventory": [
+      "Tesla V100-PCIE-16GB, 16384 MiB, 575.57.08"
+    ]
+  },
+  "data_sha256": "a23482f5d03babff39d53aeac07ed8befb0bb423c7395ce3ec1b4fdd47d636d1",
+  "constant_prior": {
+    "finite": true,
+    "accuracy": 0.5,
+    "bce": 0.6931471805599453,
+    "probability_min": 0.5,
+    "probability_max": 0.5
+  },
+  "mean_rule_accuracy": {
+    "False": 1.0,
+    "True": 1.0
+  },
+  "active_case": "tanh_normal",
+  "error": "InvalidArgumentError: Could not satisfy device specification '/job:localhost/replica:0/task:0/device:GPU:0'. enable_soft_placement=0. Supported device types [CPU]. All available devices [/job:localhost/replica:0/task:0/device:GPU:0, /job:localhost/replica:0/task:0/device:CPU:0]. [Op:TensorSliceDataset] name: ",
+  "elapsed_seconds": 30.219161293003708,
+  "prior_pair_unchanged": true,
+  "artifact_sha256": {
+    "constructed_data.npz": "a23482f5d03babff39d53aeac07ed8befb0bb423c7395ce3ec1b4fdd47d636d1",
+    "tanh_normal/result.json": "e770efa4c5853effc81105fa100b747a3d40726f2c48ab9b901eb06106eb8e97",
+    "tanh_normal/initial_weights.npz": "987963b33539c3619d7355832d3cf7991ffe10216b0f91c3cd486074dd8c4a4f",
+    "tanh_normal/initial_layers.npz": "bc8ad643098995c8baf40a5e720a5741834a781589d8fb0cfe495d0beced5fe3",
+    "tanh_normal/initial_predictions.npz": "cbd40469040c414092ddbb5c8ca97fdc3b4bd30955c6a1da970f7f69a915905a"
+  }
+}
