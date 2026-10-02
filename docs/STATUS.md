@@ -12,6 +12,17 @@ execution plan here is
 
 ## Current project state
 
+**Full48-step cell comparison authorized and ready:** I-SEQ-tanh-cells
+follows explicit Algorithm1 recurrent tanh formulas while preserving the
+IV-C activation conflict. Only LSTM/GRU cell activation changes; Sigmoid
+gates, scalar-Sigmoid bridge, ReLU Dense, all widths/optimizer/settings stay.
+Default ReLU and legacy archives remain valid. Twenty pinned neural checks
+and405 repository cases pass (45 environment skips). Four fixed synthetic
+fits: tanh normal/reversed, then ReLU normal/reversed;32train/32test,48steps,
+seed20260920,300updates each. One35min V10016GB/4CPU16GiB job,360s/fit.
+No CER arrays/fits or automatic promotion. Freeze then submit once after
+checking queue/output. No new job yet. See the recurrent-control plan.
+
 **Gate arithmetic complete:** ee1a420656cfa28d47008d12a550ea63f6145bd5,
 Panther408551 COMPLETED/0:0 in3:05, zero fits/updates. Same100 test rows,
 three saved states,21 cell traces; native/manual h/c arithmetic and saved

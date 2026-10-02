@@ -1,0 +1,34 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_legacy_archive_and_new_tanh_reload_in_fresh_process (tests.test_sequential_cell_learning.CellActivation.test_legacy_archive_and_new_tanh_reload_in_fresh_process) ... ok
+test_only_cell_activation_changes_and_initial_weights_match (tests.test_sequential_cell_learning.CellActivation.test_only_cell_activation_changes_and_initial_weights_match) ... ok
+test_partial_schedule_cannot_pass_and_preserves_artifacts (tests.test_sequential_cell_learning.CellActivation.test_partial_schedule_cannot_pass_and_preserves_artifacts) ... {"activation": "tanh", "orientation": "normal", "epoch": 1, "updates": 1, "loss": 0.693148136138916, "elapsed_seconds": 6.684799750044476}
+{"case": "tanh_normal", "status": "time_guard", "test": {"finite": true, "accuracy": 0.5, "bce": 0.6931482655275432, "probability_min": 0.5007365345954895, "probability_max": 0.5007365345954895}, "passed": false}
+ok
+test_tanh_hidden_bounds_under_large_signed_inputs (tests.test_sequential_cell_learning.CellActivation.test_tanh_hidden_bounds_under_large_signed_inputs) ... ok
+test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor (tests.test_sequential_cell_learning.FixtureContract.test_full_length_disjoint_fixture_and_reversed_zero_parameter_floor) ... ok
+test_other_detector_functions_are_unchanged (tests.test_sequential_cell_learning.FixtureContract.test_other_detector_functions_are_unchanged) ... ok
+test_constant_partial_and_nonfinite_results_cannot_pass (tests.test_robust_sequential.SequentialGateTests.test_constant_partial_and_nonfinite_results_cannot_pass) ... ok
+test_fixed_data_are_balanced_disjoint_and_easily_separable (tests.test_robust_sequential.SequentialGateTests.test_fixed_data_are_balanced_disjoint_and_easily_separable) ... ok
+test_sequential_targets_are_table_five_not_standalone_gru (tests.test_robust_sequential.SequentialGateTests.test_sequential_targets_are_table_five_not_standalone_gru) ... ok
+test_actual_decoder_loop_uses_previous_output_and_mirrored_states (tests.test_robust_sequential.SequentialTests.test_actual_decoder_loop_uses_previous_output_and_mirrored_states) ... ok
+test_explicit_interface_choices_share_initial_parameters (tests.test_robust_sequential.SequentialTests.test_explicit_interface_choices_share_initial_parameters) ... ok
+test_feedback_changes_state_and_disabled_input_removes_effect (tests.test_robust_sequential.SequentialTests.test_feedback_changes_state_and_disabled_input_removes_effect) ... ok
+test_finite_gradient_connectivity_update_and_constraints (tests.test_robust_sequential.SequentialTests.test_finite_gradient_connectivity_update_and_constraints) ... ok
+test_fresh_process_reload_preserves_internal_outputs_and_optimizer (tests.test_robust_sequential.SequentialTests.test_fresh_process_reload_preserves_internal_outputs_and_optimizer) ... WARNING:tensorflow:5 out of the last 5 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x12db35d00> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ok
+test_full_source_inventory_and_configuration (tests.test_robust_sequential.SequentialTests.test_full_source_inventory_and_configuration) ... ok
+test_negative_readout_has_the_declared_value_and_bias_gradient (tests.test_robust_sequential.SequentialTests.test_negative_readout_has_the_declared_value_and_bias_gradient) ... ok
+test_nondefault_readouts_survive_fresh_process_reload (tests.test_robust_sequential.SequentialTests.test_nondefault_readouts_survive_fresh_process_reload) ... WARNING:tensorflow:6 out of the last 6 calls to <function TensorFlowTrainer.make_train_function.<locals>.one_step_on_iterator at 0x131ee8ea0> triggered tf.function retracing. Tracing is expensive and the excessive number of tracings could be due to (1) creating @tf.function repeatedly in a loop, (2) passing tensors with different shapes, (3) passing Python objects instead of tensors. For (1), please define your @tf.function outside of the loop. For (2), @tf.function has reduce_retracing=True option that can avoid unnecessary retracing. For (3), please refer to https://www.tensorflow.org/guide/function#controlling_retracing and https://www.tensorflow.org/api_docs/python/tf/function for  more details.
+ok
+test_paired_initialization_and_shape_validation (tests.test_robust_sequential.SequentialTests.test_paired_initialization_and_shape_validation) ... ok
+test_query_intervention_and_disabled_connection (tests.test_robust_sequential.SequentialTests.test_query_intervention_and_disabled_connection) ... ok
+test_runner_preserves_scores_representations_and_partial_status (tests.test_robust_sequential.SequentialTests.test_runner_preserves_scores_representations_and_partial_status) ... {"training_epoch": {"epoch": 1, "loss": 0.6931793093681335, "seconds": 6.628882749995682, "optimizer_updates": 1, "epoch_complete": true}}
+{"training_epoch": {"epoch": 2, "loss": 0.6921190023422241, "seconds": 0.07011570903705433, "optimizer_updates": 2, "epoch_complete": true}}
+{"training_epoch": {"epoch": 1, "loss": 0.6931793093681335, "seconds": 6.6020018749986775, "optimizer_updates": 1, "epoch_complete": true}}
+ok
+
+----------------------------------------------------------------------
+Ran 20 tests in 96.860s
+
+OK

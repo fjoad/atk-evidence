@@ -1,0 +1,19 @@
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.MessageMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+<frozen importlib._bootstrap>:488: DeprecationWarning: Type google._upb._message.ScalarMapContainer uses PyType_Spec with a metaclass that has custom tp_new. This is deprecated and will no longer be allowed in Python 3.14.
+test_legacy_archive_and_new_tanh_reload_in_fresh_process (tests.test_sequential_cell_learning.CellActivation.test_legacy_archive_and_new_tanh_reload_in_fresh_process) ... FAIL
+
+======================================================================
+FAIL: test_legacy_archive_and_new_tanh_reload_in_fresh_process (tests.test_sequential_cell_learning.CellActivation.test_legacy_archive_and_new_tanh_reload_in_fresh_process)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Users/fjoad/Documents/projects/evidence/tests/test_sequential_cell_learning.py", line 97, in test_legacy_archive_and_new_tanh_reload_in_fresh_process
+    self.assertEqual(check.returncode,0,check.stderr)
+AssertionError: 1 != 0 : Traceback (most recent call last):
+  File "<string>", line 11, in <module>
+AttributeError: 'list' object has no attribute 'numpy'
+
+
+----------------------------------------------------------------------
+Ran 1 test in 17.911s
+
+FAILED (failures=1)

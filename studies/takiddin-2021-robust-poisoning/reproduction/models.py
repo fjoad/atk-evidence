@@ -129,19 +129,22 @@ def register_sequential_layer():
         """I-SEQ-native-IVC: target Fig.2/IV-C and declared causal completions."""
 
         def __init__(self, encoder_units=(500, 300, 200), steps=48,
-                     seed=20260920, bridge_activation="relu", **kwargs):
+                     seed=20260920, bridge_activation="relu", cell_activation="relu", **kwargs):
             super().__init__(**kwargs)
             self.encoder_units = tuple(int(u) for u in encoder_units)
             self.steps, self.seed = int(steps), int(seed)
             if bridge_activation not in ("relu", "sigmoid", "linear"):
                 raise ValueError("Undeclared sequential bridge activation")
             self.bridge_activation = bridge_activation
+            if cell_activation not in ("relu", "tanh"):
+                raise ValueError("Undeclared sequential cell activation")
+            self.cell_activation = cell_activation
             if len(self.encoder_units) != 3 or min(self.encoder_units) < 1 or self.steps < 2:
                 raise ValueError("Need three positive encoder widths and at least two steps")
             self.decoder_units = tuple(reversed(self.encoder_units))
             constraint = keras.constraints.MaxNorm(1., axis=0)
             self.encoder = [keras.layers.LSTM(
-                u, activation="relu", recurrent_activation="sigmoid",
+                u, activation=self.cell_activation, recurrent_activation="sigmoid",
                 kernel_initializer=keras.initializers.GlorotUniform(seed=self.seed + i),
                 recurrent_initializer=keras.initializers.Orthogonal(seed=self.seed + 10 + i),
                 bias_initializer="zeros", unit_forget_bias=True,
@@ -150,7 +153,7 @@ def register_sequential_layer():
                 return_state=True, use_cudnn=False, name=f"encoder_lstm_{i+1}")
                 for i, u in enumerate(self.encoder_units)]
             self.decoder = [keras.layers.LSTMCell(
-                u, activation="relu", recurrent_activation="sigmoid",
+                u, activation=self.cell_activation, recurrent_activation="sigmoid",
                 kernel_initializer=keras.initializers.GlorotUniform(seed=self.seed + 20 + i),
                 recurrent_initializer=keras.initializers.Orthogonal(seed=self.seed + 30 + i),
                 bias_initializer="zeros", unit_forget_bias=True,
@@ -191,7 +194,8 @@ def register_sequential_layer():
         def get_config(self):
             return {**super().get_config(), "encoder_units": list(self.encoder_units),
                     "steps": self.steps, "seed": self.seed,
-                    "bridge_activation": self.bridge_activation}
+                    "bridge_activation": self.bridge_activation,
+                    "cell_activation": self.cell_activation}
 
         def compute_output_shape(self, input_shape):
             return ((input_shape[0], self.steps, 1),
@@ -244,13 +248,15 @@ def register_sequential_layer():
 
 
 def sequential_ensemble(seed: int = 20260920, *, encoder_units=(500, 300, 200),
-                        gru_units=300, dense_units=500, timesteps=48, bridge_activation="relu"):
+                        gru_units=300, dense_units=500, timesteps=48, bridge_activation="relu",
+                        cell_activation="relu"):
     """Section IV-C native completion; reduced dimensions are software-only.
 
     The eight GRU layers and six LSTM layers are retained for every fixture.
     No standalone reconstruction loss, pretraining or 0.51 cutoff is inherited.
     ReLU is the historical default; explicit alternatives are source-labeled
-    in SEQUENTIAL_INTERFACE.md and serialized in the frontend configuration.
+    in SEQUENTIAL_INTERFACE.md and SEQUENTIAL_RECURRENT_CONTROL.md and
+    serialized in the frontend configuration. Sigmoid gates stay unchanged.
     """
     import tensorflow as tf
     import keras
@@ -264,11 +270,12 @@ def sequential_ensemble(seed: int = 20260920, *, encoder_units=(500, 300, 200),
     inputs = keras.Input(shape=(timesteps, 1), dtype="float32", name="daily_profile")
     frontend = register_sequential_layer()(encoder_units=encoder_units, steps=timesteps,
                                           seed=seed, bridge_activation=bridge_activation,
+                                          cell_activation=cell_activation,
                                           name="attention_decoder")
     value, _ = frontend(inputs)
     constraint = keras.constraints.MaxNorm(1., axis=0)
     for i in range(8):
-        value = keras.layers.GRU(gru_units, activation="relu", recurrent_activation="sigmoid",
+        value = keras.layers.GRU(gru_units, activation=cell_activation, recurrent_activation="sigmoid",
             use_bias=True, kernel_initializer=keras.initializers.GlorotUniform(seed=seed + 100 + i),
             recurrent_initializer=keras.initializers.Orthogonal(seed=seed + 200 + i),
             bias_initializer="zeros", kernel_constraint=constraint, recurrent_constraint=constraint,
@@ -280,7 +287,9 @@ def sequential_ensemble(seed: int = 20260920, *, encoder_units=(500, 300, 200),
     output = keras.layers.Dense(1, activation="sigmoid", kernel_constraint=constraint,
         kernel_initializer=keras.initializers.GlorotUniform(seed=seed + 301),
         bias_initializer="zeros", name="attack_probability")(value)
-    model = keras.Model(inputs, output, name="paper_sequential_native_ivc_bce_repair")
+    name = ("paper_sequential_native_ivc_bce_repair" if cell_activation == "relu"
+            else "paper_sequential_native_tanh_cells_bce_repair")
+    model = keras.Model(inputs, output, name=name)
     model.compile(optimizer=keras.optimizers.Adam(learning_rate=.001, beta_1=.9,
         beta_2=.999, epsilon=1e-7), loss=keras.losses.BinaryCrossentropy(from_logits=False),
         jit_compile=False)

@@ -2,6 +2,26 @@
 
 **Last updated:** 2026-10-02
 
+**Full48-step cell comparison authorized and ready:** I-SEQ-tanh-cells
+follows explicit Algorithm1 recurrent tanh formulas while preserving the
+IV-C activation conflict. Only LSTM/GRU cell activation changes; Sigmoid
+gates, scalar-Sigmoid bridge, ReLU Dense, all widths/optimizer/settings stay.
+Default ReLU and legacy archives remain valid. Twenty pinned neural checks
+and405 repository cases pass (45 environment skips). Four fixed synthetic
+fits: tanh normal/reversed, then ReLU normal/reversed;32train/32test,48steps,
+seed20260920,300updates each. One35min V10016GB/4CPU16GiB job,360s/fit.
+No CER arrays/fits or automatic promotion. Freeze then submit once after
+checking queue/output. No new job yet. See the recurrent-control plan.
+
+Source recheck: complete pp2678/2679/2682/2683; source PDF hash unchanged.
+New contract SEQUENTIAL_RECURRENT_CONTROL.md, plan2026-10-02-sequential-recurrent-control.md.
+`cell_activation` is serialized relu/tanh, defaultrelu; not gate `recurrent_activation`.
+Initial weights must match each other and priorGPU11c3bf3746800eebd9e695a9dda3abaafc9e7c445cbe8044a2110ca4da77f549.
+Old four other direct files/functions remain unchanged; original artifacts
+stay intact. New test initially mishandled nested symbolic output list; fixed
+to m.outputs[0]. No numerical model change resolved that software-test error.
+Largelearning onPanther; small localfixtures/read-only audits only. Website unchanged.
+
 **Gate arithmetic complete:** ee1a420656cfa28d47008d12a550ea63f6145bd5,
 Panther408551 COMPLETED/0:0 in3:05, zero fits/updates. Same100 test rows,
 three saved states,21 cell traces; native/manual h/c arithmetic and saved

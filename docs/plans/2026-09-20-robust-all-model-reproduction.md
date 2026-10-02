@@ -4,7 +4,18 @@
 
 **State:** six model pairs, forest split/order controls, and read-only diagnostics complete and audited
 
-## Current decision: source-explicit recurrent alternative before more fitting
+## Current step: full48-step constructed recurrent comparison
+
+The user approved defining and validating one alternative. The
+[recurrent-control plan](2026-10-02-sequential-recurrent-control.md) declares
+I-SEQ-tanh-cells from the explicit formulas, preserving the IV-C ReLU conflict.
+Only cell activation changes; original ReLU/defaults and artifacts remain.
+Twenty pinned neural checks and405 repository cases pass. Freeze and run
+four fixed software fits onPanther (tanh/relu × normal/reversed labels),
+35min allocation/360s perfit/300updates, then audit/report. No CER inputs,
+research fit, extra seed/setting or website work; no automatic promotion.
+
+## Previous decision: source-explicit recurrent alternative before more fitting
 
 The [gate check](2026-10-02-sequential-gate-arithmetic.md) completed onPanther
 as408551,0:0 in3:05, with zero updates. All21 traces reproduce native h/c
