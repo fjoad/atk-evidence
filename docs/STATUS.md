@@ -16,8 +16,11 @@ Research execution remains paused at the user's request. Research code,
 results and overviews are synchronized to GitHub at `8f616c2`. The separately
 requested website catch-up now covers all six completed detector pairs, AEA
 bounds and corrections, sequential diagnostics and the full-length tanh
-constructed check. The updated sources pass local verification; publication
-and live verification are the remaining steps in the
+constructed check. **Published and live-verified at `5b89946`.** GitHub
+[CI](https://github.com/fjoad/atk-evidence/actions/runs/37448352302) and
+[Pages](https://github.com/fjoad/atk-evidence/actions/runs/37448352284) both
+passed. The homepage, all three journals, stylesheet and two figures match
+the committed files byte-for-byte. See the completed
 [website plan](plans/2026-10-06-website-catch-up.md).
 
 The index remains open-ended, every paper keeps its All papers link, and

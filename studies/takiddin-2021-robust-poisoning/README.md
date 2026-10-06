@@ -26,7 +26,7 @@ Section IV-C's ReLU selection; the alternative preserves that uncertainty
 and other declared native-cell completions. No tanh CER research pair has
 run, and the existing research CLI still selects ReLU by default.
 
-Research execution is paused while the public account is brought up to date.
+The public account is up to date; research execution remains paused.
 The next scientific decision is to specify and wire a fresh-weight
 p00/p30 tanh CER pilot and require a new full-batch runtime gate before any
 launch. Synthetic trained weights must not be reused. See the

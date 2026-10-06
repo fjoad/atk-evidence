@@ -19,9 +19,13 @@ journal checks pass, and desktop/mobile layouts and all old anchors verify.
 Bootstrap initially lacked pip; ensurepip repaired the environment. The first
 full test run used macOS MPS and failed on unsupported QR operations; setting
 KERAS_TORCH_DEVICE=cpu passes unchanged scientific code. Logs remain in
-`/tmp/atk-site-20261006.Cnba28`. Publication/live verification remain pending
-under [the website plan](plans/2026-10-06-website-catch-up.md). No research
-execution, inference or new fit is authorized by this publication.
+`/tmp/atk-site-20261006.Cnba28`. Published at `5b89946`; CI37448352302 and
+Pages37448352284 succeeded. The live homepage, all three paper pages,
+stylesheet and both figures match committed bytes; browser checks confirm
+the new conclusion and loaded figures. The
+[website plan](plans/2026-10-06-website-catch-up.md) is complete.
+No research execution, inference or new fit is authorized by
+this publication; research remains paused until separately resumed.
 
 **Full48-step tanh learning gate verified:** scientific6ca174a; placement
 recoveryfebc28e. Two tanh cases complete300updates each,100% held-out

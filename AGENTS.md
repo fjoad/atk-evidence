@@ -533,6 +533,13 @@ validation. The September 23 overhaul was published at `9f21c28` after local
 checks; GitHub Pages and CI passed, and the live three-paper site was verified.
 Further experiments remain subject to their own checkpoints.
 
+The October 6 website catch-up was published at `5b89946`; GitHub CI and
+Pages passed and the live homepage, three journals, stylesheet and two
+figures match committed bytes. The poisoning account now covers the six
+completed detector pairs, AEA corrections, sequential diagnostics and the
+synthetic-only tanh learning pass. Older study accounts remain unchanged and
+await reassessment. This publication authorizes no new research execution.
+
 For a multi-file change, save a short plan, complete the change, verify it,
 update current status, and commit it. User checkpoints still apply to
 scientific experiments. Documentation work may report completed evidence but

@@ -24,7 +24,16 @@ reassess the older water and autoencoder studies.
    live files with the committed pages, and inspect the live navigation and
    updated conclusion. No experiment is part of this work.
 
-Status: steps 1–4 complete locally; publication and live verification pending.
+Status: complete; published at `5b89946` and verified live.
+
+- [GitHub Pages deployment](https://github.com/fjoad/atk-evidence/actions/runs/37448352284): success.
+- [Repository CI](https://github.com/fjoad/atk-evidence/actions/runs/37448352302): success.
+- Live homepage, all three paper journals, stylesheet and both PNG figures
+  return HTTP 200 and match committed bytes exactly. Browser navigation,
+  current conclusions and loaded figures verify too.
+- Local verification files and the published coverage screenshot are in
+  `/tmp/atk-site-20261006.Cnba28`. Research remains paused; no new experiment
+  or scientific artifact change occurred.
 
 The public account covers every completed detector pair and the later AEA,
 interface, saved-state, gate and recurrent-cell checks. The source records
