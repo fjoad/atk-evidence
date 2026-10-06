@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-10-02
+**Last updated:** 2026-10-06 (research documentation synchronization)
 
 **Branch:** `main`
 
@@ -11,6 +11,11 @@ execution plan here is
 [`plans/2026-09-01-paper-time-budget.md`](plans/2026-09-01-paper-time-budget.md).
 
 ## Current project state
+
+Research execution is paused at the user's request while research code,
+results, and writeups are synchronized to GitHub. The scientific checkpoint
+below is unchanged. See the [synchronization plan](plans/2026-10-06-research-github-sync.md)
+and [current study overview](../studies/takiddin-2021-robust-poisoning/README.md).
 
 **Full48-step tanh learning gate verified:** scientific6ca174a; placement
 recoveryfebc28e. Two tanh cases complete300updates each,100% held-out

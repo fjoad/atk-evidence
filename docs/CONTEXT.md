@@ -1,6 +1,14 @@
 # ATK Evidence — Working Memory
 
-**Last updated:** 2026-10-02
+**Last updated:** 2026-10-06
+
+The user paused research execution and requested GitHub synchronization of
+research code, results, and writeups. The 42 local commits through `be09ed0`
+were pushed; overview documents now describe the same checkpoint. The first
+CI run exposed a stale METHOD hash expectation; its current-document pin is
+updated to `be09ed0`, preserving the original audit hash and all calculations.
+Website work is excluded. Resume no scientific execution from this sync task;
+the scientific next decision below is unchanged.
 
 **Full48-step tanh learning gate verified:** scientific6ca174a; placement
 recoveryfebc28e. Two tanh cases complete300updates each,100% held-out

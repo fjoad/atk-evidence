@@ -4,9 +4,36 @@ We read research papers, implement the methods they describe, and compare our
 results with the published ones. When they differ, we try to understand why.
 
 **[Read the studies](https://fjoad.github.io/atk-evidence/)** ·
-[Current electricity-theft reproduction](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/)
+[Current research](studies/takiddin-2021-robust-poisoning/README.md)
 
-## What we found so far
+## Current research: robustness to label poisoning
+
+The active study is Takiddin et al. (2021), *Robust Electricity Theft Detection
+Against Data Poisoning Attacks in Smart Grids*. Six detector pairs have
+completed on a small, documented Irish electricity-data pilot. The results
+are mixed: several baselines retain useful rankings, while the tested
+sequential ensemble produces constant scores. These are bounded pilot
+results, not a full-paper reproduction or a model-family limit.
+
+The latest check follows the paper's explicit tanh recurrent formulas while
+preserving their conflict with its ReLU activation selection. Both tanh
+models learn the fixed 48-step synthetic task; the matched ReLU reference
+becomes nonfinite in its first case, and the second case remains unrun under
+the stopping rule. This establishes basic constructed learning, not theft
+detection or poisoning robustness. The tanh alternative has not been fitted
+to the research data.
+
+Start with the [study overview](studies/takiddin-2021-robust-poisoning/README.md),
+[latest result](studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md),
+and [current research status](docs/STATUS.md). They link the methods, results,
+corrections, failed attempts, and next decision. The website journal remains
+at its earlier published checkpoint.
+
+## Earlier autoencoder findings
+
+The autoencoder and water-network studies retain their existing evidence and
+await reassessment under the newer research approach. The following results
+belong to the separate 2022 autoencoder paper.
 
 We rebuilt FC-SAE, the simplest autoencoder in Takiddin et al. (2022), and ran
 it on the named Irish electricity data. The first run did not reproduce its
@@ -126,10 +153,11 @@ that a component adds little useful work, we need a fair comparison and a
 justified definition of a meaningful gain. To claim impossibility, we need a
 bound with explicit assumptions—not just a large gap or an extrapolated runtime.
 
-## The two studies
+## Studies
 
 | Paper | Read |
 |---|---|
+| Takiddin et al., *Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids* (2021) | [Current research and results](studies/takiddin-2021-robust-poisoning/README.md) |
 | Takiddin et al., *Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids* (2022) | [Current reproduction](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/reproduction/) · [Earlier method notes](https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/) |
 | Ahasan et al., *Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems* (2025) | [Earlier study and corrections](https://fjoad.github.io/atk-evidence/papers/tlstgt-2025-water/) |
 

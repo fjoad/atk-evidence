@@ -91,12 +91,13 @@ class RobustPoisoningSourceAuditTests(unittest.TestCase):
         fresh = AUDIT.build_audit()
         for result in (preserved, fresh):
             result.pop("created_utc")
-        # The September 20 correction only clarifies the stated tree family.
-        # Preserve the original source hash, check both documented revisions,
-        # and still compare every arithmetic output and all other input hashes.
+        # Later METHOD revisions clarify the tree family and link the declared
+        # sequential interpretations. Preserve the original audit hash and
+        # verify the current documented revision separately; every arithmetic
+        # output and every other input hash must still match the original.
         method = "studies/takiddin-2021-robust-poisoning/METHOD.md"
         for result, revision in ((preserved, "5e92700d750f766e0cfc752ea4df2f7e8d2627d1"),
-                                 (fresh, "d47a6de4a60840b6806b409f88f47ac6a102a118")):
+                                 (fresh, "be09ed04b3cde8e1518e00f8f08f7ef7f3fcae44")):
             content = subprocess.check_output(["git", "-C", str(REPO_ROOT),
                                                "show", f"{revision}:{method}"])
             self.assertEqual(result["input_sha256"].pop(method), hashlib.sha256(content).hexdigest())
