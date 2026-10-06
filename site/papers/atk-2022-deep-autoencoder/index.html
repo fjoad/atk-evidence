@@ -1,230 +1,131 @@
 <!doctype html>
-<!-- Generated from studies/atk-2022-deep-autoencoder/RESEARCH_LOG.md.
-     Edit the journal, then run .venv/bin/python scripts/render_journals.py. -->
+<!-- Generated from studies/atk-2022-deep-autoencoder/README.md and studies/registry.toml.
+     Run .venv/bin/python scripts/render_journals.py to rebuild. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Electricity theft with deep autoencoders — Paper reproduction notes</title>
-  <meta name="description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
-  <meta property="og:title" content="Electricity theft with deep autoencoders — Paper reproduction notes">
-  <meta property="og:description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
+  <title>Electricity theft detection with deep autoencoders — ATK Evidence</title>
+  <meta name="description" content="Our rebuild of the simplest model detected 25% of attacks against 81% published. With the paper&#x27;s own output layer and error score, the published number is out of reach on our prepared data.">
+  <meta property="og:title" content="Electricity theft detection with deep autoencoders — ATK Evidence">
+  <meta property="og:description" content="Our rebuild of the simplest model detected 25% of attacks against 81% published. With the paper&#x27;s own output layer and error score, the published number is out of reach on our prepared data.">
   <meta property="og:type" content="article">
   <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/atk-2022-deep-autoencoder/">
-  <meta name="twitter:title" content="Electricity theft with deep autoencoders — Paper reproduction notes">
-  <meta name="twitter:description" content="Reproduction notes for Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids: starting hypotheses, experiments, corrections and current conclusions.">
-  <link rel="stylesheet" href="../../notebook.css?v=195e589b19d1">
+  <meta name="twitter:title" content="Electricity theft detection with deep autoencoders — ATK Evidence">
+  <meta name="twitter:description" content="Our rebuild of the simplest model detected 25% of attacks against 81% published. With the paper&#x27;s own output layer and error score, the published number is out of reach on our prepared data.">
+  <link rel="stylesheet" href="../../notebook.css?v=81be2b364d8d">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="site-header">
   <a class="brand" href="../../">← All papers</a>
 </header>
-<main class="journal" id="main">
-<h1 id="electricity-theft-with-deep-autoencoders">Electricity theft with deep autoencoders</h1>
-<p>Notes on <em>Deep Autoencoder-Based Anomaly Detection of Electricity Theft
-Cyberattacks in Smart Grids</em>, Takiddin, Ismail, Zafar and Serpedin,
-IEEE Systems Journal (2022). <a href="https://doi.org/10.1109/JSYST.2021.3136683">Publication record</a>.</p>
-<p>This account follows the earlier work preserved in the linked findings.
-It reorganizes existing evidence rather than describing new experiments.
-The full technical report and older accounts remain available below.</p>
-<p><strong>Earlier investigation, awaiting reassessment.</strong> These results were obtained
-under an earlier workflow. We are preserving them, not certifying them again
-under the current approach. A fresh reassessment is separate future work;
-the present active investigation is the data-poisoning paper.</p>
-<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#11-august-an-earlier-attempt-left-a-preparation-question-open">An earlier attempt left a preparation question open</a></li><li><a href="#30-31-august-completing-a-declared-fc-sae-reproduction">Completing a declared FC-SAE reproduction</a></li><li><a href="#31-august-a-conditional-limit-stronger-than-a-failed-seed">A conditional limit stronger than a failed seed</a></li><li><a href="#31-august-testing-what-the-bound-depends-on">Testing what the bound depends on</a></li><li><a href="#2-september-giving-lstm-sae-the-paper-s-reported-training-time">Giving LSTM-SAE the paper&#x27;s reported training time</a></li><li><a href="#records-and-unresolved-coverage">Records and unresolved coverage</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
-<p>The paper trains autoencoders on normal electricity use. An autoencoder tries
-to reproduce its input. The proposed detection rule treats a sufficiently large
-reconstruction error as evidence of theft. The study compares fully connected,
-recurrent and attention-based variants on the named SGCC and Irish ISET datasets.</p>
-<p>For the simplest fully connected model, FC-SAE, the ISET table reports 81%
-detection at 15% false alarms and 83% balanced accuracy. The recurrent LSTM-SAE
-row reports 85% detection at 13% false alarms. These are specific targets,
-not interchangeable descriptions of a generally successful model.</p>
-<h2 id="starting-hypothesis">Starting hypothesis</h2>
-<p>Our working expectation was that the reported performance might not follow
-from reasonable implementations of the written method. We needed to test
-that expectation while keeping source omissions, repairs and controls visible.
-A failed fit would not establish that every implementation must fail.</p>
-<p>Three questions gradually separated: do the numbers reproduce, does the
-architecture supply the claimed useful behavior, and can this fixed setup
-reach the reported target at all? They need different evidence.</p>
-<h2 id="11-august-an-earlier-attempt-left-a-preparation-question-open">An earlier attempt left a preparation question open</h2>
-<p>The earlier seed-11 experiment detected 26.18% of attacks with 58.22% false
-alarms. However, it omitted the paper's test-set ADASYN operation. It was
-therefore not a complete reconstruction of that evaluation.</p>
-<p>Adding generated benign test examples cannot change an already-fitted model's
-detection on unchanged attack examples. That observation limited what the
-omitted step could repair for those scores, but it did not exclude a different
-trained model. We retained the result and returned to a more explicit source
-reconstruction rather than treating the first run as the final verdict.</p>
-<p>The <a href="earlier-notes.html">earlier method notes</a>
-preserve that route, including assumptions, unsuccessful attempts and its
-conditional calculations. Do not combine those numbers with later runs as if
-they were repetitions of one fixed experiment.</p>
-<h2 id="30-31-august-completing-a-declared-fc-sae-reproduction">Completing a declared FC-SAE reproduction</h2>
-<p>The clean-reader experiment completed with the named Irish consumption data,
-declared source interpretations, one seed, and the printed-position test-set
-resampling. It evaluated 8,884,989 rows, including generated benign examples.
-The exact population and preprocessing choices are in the
-<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md">frozen specification</a>.</p>
+<main class="summary" id="main">
+<h1 id="electricity-theft-detection-with-deep-autoencoders">Electricity theft detection with deep autoencoders</h1>
+<p><em>Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in
+Smart Grids</em>, Takiddin, Ismail, Zafar and Serpedin, IEEE Systems Journal
+(2022). <a href="https://doi.org/10.1109/JSYST.2021.3136683">Publication record</a></p>
+<p><strong>First attempt.</strong> This study was done under our earlier, heavier process. We
+will redo it with our current approach; the results below stand until then.</p>
+<p class="log-link"><a href="journal/">Read the full research log</a></p>
+<h2 id="what-the-paper-claims">What the paper claims</h2>
+<p>The paper detects electricity theft with autoencoders: networks trained on
+normal electricity use to reproduce their input. A day that the network
+reproduces badly is flagged as possible theft. The paper compares a simple
+fully connected version with recurrent (LSTM) and attention versions on two
+public datasets and reports high detection rates. On the Irish smart-meter data,
+the simplest model (FC-SAE) detects 81% of attacks at 15% false alarms, and the
+LSTM version (LSTM-SAE) detects 85% at 13%.</p>
+<h2 id="why-we-doubted-it">Why we doubted it</h2>
+<p>The reported performance looked implausible to us, so we rebuilt the method
+from the paper and ran it on the same Irish data.</p>
+<h2 id="what-we-did">What we did</h2>
+<ul>
+<li>We rebuilt the simplest model, FC-SAE, with the data preparation the paper
+describes, and trained it once.</li>
+<li>We asked a stronger question using math rather than more training. With the
+output layer (Softmax) and error score (mean squared error) the paper
+specifies, what is the best any trained model could possibly do on these
+inputs?</li>
+<li>We gave the LSTM version exactly the training time the paper reports, 183
+minutes, on one GPU, and scored the result.</li>
+</ul>
+<h2 id="what-we-found">What we found</h2>
 <div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
 <thead>
 <tr>
-<th>Measure</th>
+<th></th>
 <th style="text-align:right">Paper</th>
-<th style="text-align:right">This run</th>
+<th style="text-align:right">Our rebuild</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Detection</td>
+<td>FC-SAE: attacks detected</td>
 <td style="text-align:right">81.00%</td>
 <td style="text-align:right">25.48%</td>
 </tr>
 <tr>
-<td>False alarms</td>
+<td>FC-SAE: false alarms</td>
 <td style="text-align:right">15.00%</td>
 <td style="text-align:right">45.13%</td>
 </tr>
 <tr>
-<td>Specificity</td>
-<td style="text-align:right">85.00%</td>
-<td style="text-align:right">54.87%</td>
-</tr>
-<tr>
-<td>Precision</td>
-<td style="text-align:right">81.00%</td>
-<td style="text-align:right">36.73%</td>
-</tr>
-<tr>
-<td>Balanced accuracy</td>
-<td style="text-align:right">83.00%</td>
-<td style="text-align:right">40.18%</td>
-</tr>
-<tr>
-<td>F1</td>
-<td style="text-align:right">81.00%</td>
-<td style="text-align:right">30.09%</td>
-</tr>
-<tr>
-<td>Ranking AUC</td>
-<td style="text-align:right">81.00%</td>
-<td style="text-align:right">39.40%</td>
-</tr>
-</tbody>
-</table></div>
-<p>This was a substantial mismatch, not a close reproduction. Inputs, saved
-scores, confusion counts and all seven metrics passed the independent audit.
-But the result still concerned one declared completion and seed, not every
-model in the paper. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_FINDING.md">initial finding</a> records both
-the gap and that boundary.</p>
-<p>The next useful question was not simply whether another seed would help.
-The output layer and score impose restrictions that can be examined without
-training again.</p>
-<h2 id="31-august-a-conditional-limit-stronger-than-a-failed-seed">A conditional limit stronger than a failed seed</h2>
-<p>Softmax forces each reconstruction to have nonnegative entries that sum to one.
-The prepared consumption values do not generally have that form. We asked:
-even if every example could receive its most favorable allowed reconstruction,
-could a shared reconstruction-error cutoff reach the published target?</p>
-<p>The deliberately optimistic calculation used the true answers to choose the
-best allowed outputs. On the fixed prepared evaluation, its upper limits,
-rounded upward, are <strong>50.93% balanced accuracy</strong> and <strong>9.25% detection at no
-more than 15% false alarms</strong>, versus 83% and 81% reported.</p>
-<p>This is an all-weights restriction under the fixed prepared inputs, Softmax
-output and MSE score. Changing weights, width or seeds cannot escape that
-particular bound. Changing the preparation, output domain or score is outside
-it. The evaluation of the analytic bound uses padded floating-point arithmetic,
-not certified interval arithmetic. See the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md">follow-up finding</a>.</p>
-<p>There was counterevidence to a simpler accusation: the trained score was not
-doing nothing. It improved original-row balanced accuracy over zero
-reconstruction by about 0.89 percentage points, and retained useful ranking
-differences within similar-input-magnitude groups. A small useful contribution
-can coexist with a large structural shortfall. The experiment did not establish
-the claimed recurrent or attention mechanism.</p>
-<h2 id="31-august-testing-what-the-bound-depends-on">Testing what the bound depends on</h2>
-<p>Two additional source-supported scaling readings still capped detection at
-the printed cutoff at 29.81% and 33.96%. They did not exhaust every reasonable
-normalization. Replacing Softmax with a Sigmoid output removed the all-cutoff
-exclusion on the complete evaluation: that alternative remained mathematically
-open, rather than becoming an achieved reproduction.</p>
-<p>We then trained a small matched Softmax/Sigmoid pair for ten epochs. Sigmoid's
-best detection at FA&lt;=15% was <strong>9.75%</strong>, or <strong>25.39%</strong> after favorable score
-reversal, against the 81% target. Every cutoff failed for those fitted models
-and sampled rows. Its calibration loss was <strong>still improving</strong>; this is not a
-universal Sigmoid impossibility proof or an established long-run plateau.</p>
-<p>The distinction matters: a permissive bound only means an outcome has not
-been excluded; a failed small fit only excludes those particular fitted scores.
-The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SOURCE_ASSUMPTION_FINDING.md">scaling finding</a>,
-<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_SANITY_FINDING.md">complete Sigmoid range check</a>, and
-<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md">paired-fit finding</a> preserve those separate steps.</p>
-<h2 id="2-september-giving-lstm-sae-the-paper-s-reported-training-time">Giving LSTM-SAE the paper's reported training time</h2>
-<p>The paper reports 183 minutes for full-ISET LSTM-SAE training without stating
-its hardware or epoch count. A separate declared implementation received that
-fitting budget on one V100-16GB. This paper-time LSTM-SAE run scored all
-8,884,989 prepared evaluation examples and passed its artifact audit.</p>
-<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
-<thead>
-<tr>
-<th>Measure</th>
-<th style="text-align:right">Paper</th>
-<th style="text-align:right">Run inside 183 minutes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Detection</td>
+<td>LSTM-SAE after 183 minutes: attacks detected</td>
 <td style="text-align:right">85.00%</td>
 <td style="text-align:right">16.62%</td>
 </tr>
 <tr>
-<td>False alarms</td>
+<td>LSTM-SAE after 183 minutes: false alarms</td>
 <td style="text-align:right">13.00%</td>
 <td style="text-align:right">31.91%</td>
 </tr>
-<tr>
-<td>Balanced accuracy</td>
-<td style="text-align:right">86.00%</td>
-<td style="text-align:right">42.35%</td>
-</tr>
-<tr>
-<td>Ranking AUC</td>
-<td style="text-align:right">82.00%</td>
-<td style="text-align:right">40.30%</td>
-</tr>
 </tbody>
 </table></div>
-<p>At the reported 13% false-alarm limit, the best saved-score detection was
-7.00% in the printed direction and <strong>23.02%</strong> after reversal. No cutoff
-rescued that fitted model. It completed about 1.268 epochs; measured throughput
-projects ten epochs to <strong>23.98 hours</strong>, but the paper does not claim ten epochs.
-Loss was still decreasing. This is a bounded failure inside the reported time,
-not an unlimited-time impossibility proof.</p>
-<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/PAPER_TIME_BUDGET_FINDING.md">paper-time finding</a> includes all seven metrics,
-the clock boundary, hardware, assumptions, saved-score checks and limitations.</p>
-<h2 id="records-and-unresolved-coverage">Records and unresolved coverage</h2>
 <ul>
-<li><a href="reproduction/index.html">Current technical reproduction report, figures and all comparisons</a>.</li>
-<li><a href="../../reports/atk-2022-deep-autoencoder.pdf">Earlier FC-SAE scientific report (PDF)</a>; the web report also contains the later LSTM-SAE result.</li>
-<li><a href="earlier-notes.html">Earlier account and method notes</a>.</li>
-<li><a href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder/results">All study results and execution records</a>.</li>
+<li><strong>The paper's own setup rules the number out.</strong> With Softmax outputs and mean
+squared error on our prepared data, no trained model could detect more than
+9.25% of attacks at 15% false alarms, or reach more than 50.93% balanced
+accuracy. The paper reports 81% and 83%.</li>
+<li><strong>A different output layer loosens that limit but didn't help in practice.</strong>
+With a Sigmoid output instead, the limit no longer applies. A small Sigmoid
+model we trained still detected only 9.75% of attacks at that false-alarm rate.</li>
+<li><strong>The models weren't doing nothing.</strong> FC-SAE carried a little useful signal. A
+small contribution can coexist with a large gap.</li>
 </ul>
-<p>The remaining architectures, source interpretations, SGCC model experiments,
-and repeated-run uncertainty are not completed by these checks. Restricted
-datasets and source PDFs are not redistributed here. No new experiment ran
-for this notebook reorganization.</p>
-<h2 id="current-conclusion">Current conclusion</h2>
-<p>The declared FC-SAE and time-bounded LSTM-SAE implementations did not reproduce
-their targeted ISET results. The FC-SAE follow-up establishes a stronger
-conditional limit for fixed inputs, Softmax outputs and MSE scoring. The
-Sigmoid alternative remains open beyond the tested small pair, and unlimited
-LSTM training is not excluded by a finite-time run.</p>
-<p>These results do not establish that every autoencoder must fail, that training
-learned nothing, or how the authors produced their numbers. Further work must
-name a remaining source or mechanism question; the completed runs are not an
-invitation to repeat seeds until a preferred answer appears.</p>
+<h2 id="limits">Limits</h2>
+<ul>
+<li>One training run per model, covering two of the paper's models.</li>
+<li>The 9.25% limit holds for the paper's stated output layer and score on our
+prepared data. Other ways of preparing the data, outputs or scores are outside
+it.</li>
+<li>The LSTM's training loss was still falling when its 183 minutes ran out.
+Longer training wasn't tested. The small Sigmoid model trained for ten epochs
+and was also still improving.</li>
+<li>None of this shows how the published numbers were produced, and we make no
+claim about that.</li>
+</ul>
+<h2 id="read-more">Read more</h2>
+<ul>
+<li><a href="journal/">Full research log</a>.</li>
+<li><a href="reproduction/index.html">Detailed technical report</a>,
+with every comparison and the calculation behind the limit.</li>
+<li><a href="earlier-notes.html">Earlier notes</a>
+and <a href="https://github.com/fjoad/atk-evidence/tree/main/studies/atk-2022-deep-autoencoder/results">all findings and run records</a>.</li>
+<li><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/CLEAN_READER_SPECIFICATION.md">How the rebuild was specified</a>.</li>
+</ul>
 
-  <footer><a href="../../">All papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/RESEARCH_LOG.md">Notebook source</a></footer>
+  <footer><a href="../../">All papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/atk-2022-deep-autoencoder/README.md">Page source</a></footer>
 </main>
+<script>
+window.addEventListener("load", function () {
+  if (!location.hash) return;
+  var id = location.hash.slice(1);
+  try { id = decodeURIComponent(id); } catch (_) {}
+  if (!document.getElementById(id)) {
+    location.replace("journal/" + location.hash);
+  }
+});
+</script>
 </body>
 </html>

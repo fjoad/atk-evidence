@@ -26,7 +26,8 @@ SIGMOID_RANGE = STUDY / "results/sigmoid_sanity_20260831"
 SIGMOID_FIT = STUDY / "results/sigmoid_fit_20260831"
 PAPER_TIME = STUDY / "results/lstm_sae_paper_time_20260901.json"
 REPORT = SITE / "papers/atk-2022-deep-autoencoder/reproduction/index.html"
-NOTEBOOK = SITE / "papers/atk-2022-deep-autoencoder/index.html"
+SUMMARY = SITE / "papers/atk-2022-deep-autoencoder/index.html"
+NOTEBOOK = SITE / "papers/atk-2022-deep-autoencoder/journal/index.html"
 EARLIER_NOTES = SITE / "papers/atk-2022-deep-autoencoder/earlier-notes.html"
 REPORT_SOURCE = ROOT / "reports/atk-2022-deep-autoencoder/main.tex"
 
@@ -123,11 +124,28 @@ class PublicReportTests(unittest.TestCase):
                 self.assertEqual(cells[1], f"{self.result['reported_table_3'][metric]:.2f}")
                 self.assertEqual(cells[2], f"{self.result['metrics'][metric]:.2f}")
 
-    def test_readme_has_complete_current_comparison(self):
-        readme = (ROOT / "README.md").read_text()
-        for metric in ("DR", "FA", "SP", "PR", "ACC", "F1", "AUC"):
-            pair = f"{self.result['reported_table_3'][metric]:.2f}% | {self.result['metrics'][metric]:.2f}%"
-            self.assertIn(pair, readme)
+    def test_summary_comparisons_and_bounds_match_saved_records(self):
+        content = SUMMARY.read_text()
+        rows = [re.findall(r"<td(?: [^>]*)?>(.*?)</td>", row, re.S)
+                for row in re.findall(r"<tr>(.*?)</tr>", content, re.S)]
+        comparisons = {row[0]: row[1:] for row in rows if row}
+        for metric, label in (("DR", "attacks detected"), ("FA", "false alarms")):
+            self.assertEqual(comparisons[f"FC-SAE: {label}"], [
+                f"{self.result['reported_table_3'][metric]:.2f}%",
+                f"{self.result['metrics'][metric]:.2f}%",
+            ])
+            minutes = self.paper_time["paper_claim"]["training_minutes_full_iset"]
+            # The paper-time JSON records observed scores, not the paper's
+            # metric targets. The report's targets are checked separately in this module.
+            self.assertEqual(comparisons[f"LSTM-SAE after {minutes} minutes: {label}"], [
+                self.pages[REPORT].lstm[metric][1] + "%",
+                f"{self.paper_time['observed']['printed_cutoff'][metric]:.2f}%",
+            ])
+        bound = self.diagnostics["bounds"]["full"]["printed"]
+        for value in (bound["at_FA_cap"]["15.0"]["max_DR"], bound["max_ACC"]):
+            self.assertIn(f"{math.ceil(value * 100) / 100:.2f}%", content)
+        self.assertIn("Softmax", content)
+        self.assertIn("prepared", content)
 
     def test_paper_time_lstm_result_matches_audited_record(self):
         rows = self.pages[REPORT].lstm
@@ -150,13 +168,11 @@ class PublicReportTests(unittest.TestCase):
 
     def test_current_entry_points_publish_paper_time_lstm_finding(self):
         notebook = NOTEBOOK.read_text()
-        readme = (ROOT / "README.md").read_text()
         legacy = EARLIER_NOTES.read_text()
-        for text in (notebook, readme):
-            for value in ("16.62", "31.91", "23.02", "23.98"):
-                self.assertIn(value, text)
-            self.assertIn("unlimited-time impossibility", text)
-            self.assertIn("183 minutes", text)
+        for value in ("16.62", "31.91", "23.02", "23.98"):
+            self.assertIn(value, notebook)
+        self.assertIn("unlimited-time impossibility", notebook)
+        self.assertIn("183 minutes", notebook)
         self.assertIn("paper-time LSTM-SAE", legacy)
         self.assertIn("FC-SAE scientific report through 1 September", legacy)
 
@@ -223,7 +239,7 @@ class PublicReportTests(unittest.TestCase):
 
     def test_historical_pages_and_results_are_distinguished(self):
         previous = EARLIER_NOTES.read_text()
-        water = self.pages[SITE / "papers/tlstgt-2025-water/index.html"].text
+        water = self.pages[SITE / "papers/tlstgt-2025-water/journal/index.html"].text
         self.assertIn("This is the earlier account, not the current reproduction", previous)
         self.assertIn("26.18%", previous)
         self.assertIn("58.22%", previous)
@@ -298,7 +314,7 @@ class PublicReportTests(unittest.TestCase):
             self.assertEqual(sha(RECORDS / "result.json"), record["source_result_sha256"])
 
     def test_bound_scope_remains_visible_in_all_current_accounts(self):
-        for path in (ROOT / "README.md", NOTEBOOK, REPORT):
+        for path in (NOTEBOOK, REPORT):
             content = path.read_text()
             with self.subTest(path=path):
                 self.assertIn("50.93%", content)
@@ -373,7 +389,7 @@ class PublicReportTests(unittest.TestCase):
         self.assertIn("not a universal Sigmoid impossibility proof", self.report_text)
 
     def test_all_current_entry_points_name_the_fitted_sigmoid_scope(self):
-        for path in (ROOT / "README.md", NOTEBOOK, REPORT):
+        for path in (NOTEBOOK, REPORT):
             content = path.read_text()
             with self.subTest(path=path):
                 self.assertIn("9.75%", content)

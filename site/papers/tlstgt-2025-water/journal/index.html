@@ -1,0 +1,233 @@
+<!doctype html>
+<!-- Generated from studies/tlstgt-2025-water/RESEARCH_LOG.md and studies/registry.toml.
+     Run .venv/bin/python scripts/render_journals.py to rebuild. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Attack detection in water networks — full research log — ATK Evidence</title>
+  <meta name="description" content="Reproduction notes for Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems: starting hypotheses, experiments, corrections and current conclusions.">
+  <meta property="og:title" content="Attack detection in water networks — full research log — ATK Evidence">
+  <meta property="og:description" content="Reproduction notes for Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems: starting hypotheses, experiments, corrections and current conclusions.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://fjoad.github.io/atk-evidence/papers/tlstgt-2025-water/journal/">
+  <meta name="twitter:title" content="Attack detection in water networks — full research log — ATK Evidence">
+  <meta name="twitter:description" content="Reproduction notes for Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems: starting hypotheses, experiments, corrections and current conclusions.">
+  <link rel="stylesheet" href="../../../notebook.css?v=81be2b364d8d">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <a class="brand" href="../">← Summary</a> <a class="brand" href="../../../">All papers</a>
+</header>
+<main class="journal" id="main">
+<h1 id="attack-detection-in-water-networks">Attack detection in water networks</h1>
+<p>Notes on <em>Graph Transfer Learning-Based Attack Detection in Cyber-Physical
+Water Distribution Systems</em>, Ahasan, Joad, Atat, Thompson, Serpedin and
+Takiddin, EUSIPCO (2025).</p>
+<p><strong>Disclosure:</strong> Faaiz Joad, a maintainer of these notes, is a co-author of this
+paper. This investigation is not independent of the authors. We record our
+own mistakes and the limits of each comparison.</p>
+<p>This account follows the <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">evidence log</a>, including the problems
+we found, the checks they prompted and the corrections that changed our view.
+No water-network experiment was rerun for this page.</p>
+<p><strong>Earlier investigation, awaiting reassessment.</strong> These results were obtained
+under an earlier workflow. This page reorganizes the existing record and its
+corrections; it does not certify the older conclusions anew. A fresh review
+and any reruns are separate future work, after the current poisoning study.</p>
+<details class="contents"><summary>Contents of this notebook</summary><nav aria-label="Notebook contents"><ol><li><a href="#what-the-paper-claims">What the paper claims</a></li><li><a href="#starting-hypothesis">Starting hypothesis</a></li><li><a href="#24-july-our-threshold-bug-changed-the-apparent-failure">Our threshold bug changed the apparent failure</a></li><li><a href="#24-july-and-the-later-arithmetic-checks-do-the-printed-metrics-fit">Do the printed metrics fit?</a></li><li><a href="#later-checks-establishing-simple-comparisons-first">Establishing simple comparisons first</a></li><li><a href="#later-checks-capacity-replay-and-instability">Capacity, replay and instability</a></li><li><a href="#later-checks-the-graph-does-help">The graph does help</a></li><li><a href="#later-checks-training-labels-change-the-comparison">Training labels change the comparison</a></li><li><a href="#31-august-narrowing-our-own-conclusions">Narrowing our own conclusions</a></li><li><a href="#records-and-remaining-questions">Records and remaining questions</a></li><li><a href="#current-conclusion">Current conclusion</a></li></ol></nav></details><h2 id="what-the-paper-claims">What the paper claims</h2>
+<p>The paper combines graph structure, temporal modeling and transfer learning
+to detect attacks on water-system sensors. It reports improving performance
+on larger graphs and an advantage over ordinary machine-learning baselines.
+The proposed benefit is not merely high accuracy: it is that these components
+help exploit the network's spatial and temporal structure.</p>
+<h2 id="starting-hypothesis">Starting hypothesis</h2>
+<p>We asked whether the reported numerical pattern followed from the stated
+procedure, and whether simple rules could explain performance attributed to
+the architecture. An early expectation that graph topology would add little
+turned out to be wrong in the tested comparisons. That change is part of the
+investigation, not an exception to hide.</p>
+<p>There is also a data boundary. Our benign source is the canonical DeepH2O
+C-Town series, not the authors' unpublished 1,400-hour run. Attack duration,
+replay offset, window length and other omissions require declared assumptions.
+These implementations therefore cannot be treated as exact recovery of the
+authors' original experiment.</p>
+<h2 id="24-july-our-threshold-bug-changed-the-apparent-failure">Our threshold bug changed the apparent failure</h2>
+<p>We initially described a roughly 46-F1-point shortfall. A later pipeline check
+found different models producing identical decisions, which led us to a defect
+in our own threshold selection. Samples labeled normal at the current time
+could still contain attack-corrupted history or a trailing batch containing
+an attack. Using them as normal calibration examples inflated the threshold.</p>
+<p>The approximately 46-point-shortfall claim was retracted. Corrected exploratory
+STGT results were much closer to the reported F1, but had different false-alarm
+rates and did not reproduce the complete pattern. The threshold inflation was
+about 8,000-fold in a constructed check; it was not evidence against the paper.</p>
+<p><strong>Provenance:</strong> the evidence log marks the early local experimental numbers
+in C1–C4 and C6 as provisional under the later cluster-only execution rule.
+This notebook does not promote them into eligible cluster results. The static
+paper-arithmetic checks do not depend on that execution issue.</p>
+<p>We also corrected an earlier attribution of the identical-model collapse to
+attack scaling alone. The scale problem remained worth inspecting, but the
+threshold defect caused the observed collapse. See <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">corrections C1–C4</a>.</p>
+<h2 id="24-july-and-the-later-arithmetic-checks-do-the-printed-metrics-fit">Do the printed metrics fit?</h2>
+<p>On a balanced binary test set, accuracy is the average of detection and
+specificity. Because specificity cannot exceed 100%, ordinary accuracy cannot
+exceed <code>(detection + 100%) / 2</code> under that balance assumption.</p>
+<p>The saved check found 24 of 27 reported model/graph combinations above that
+ceiling, and all 27 failed the stricter joint detection/F1/accuracy check under
+the stated interpretation. For example, STGT at 31 nodes reports detection
+74.7%, F1 76.3% and accuracy 84.8%; the first two imply about 76.8% accuracy
+on a balanced population, not 84.8%.</p>
+<p>We then asked whether another metric convention or class balance could explain
+the table. A finite search checked 67,326 combinations per cell: <strong>229 selected
+test sizes</strong>, 49 prevalences and six definitions. No one combination explained
+the whole table; <strong>20 of 27</strong> cells had no match anywhere in that search.
+This was not a search of every conceivable protocol.</p>
+<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/results/protocol_search.txt">saved search output</a> and
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">arithmetic record C5/C8/C10</a> retain the definitions and checks.
+These inconsistencies identify a reporting/protocol problem under those
+assumptions, not whether its cause was deliberate or accidental.</p>
+<h2 id="later-checks-establishing-simple-comparisons-first">Establishing simple comparisons first</h2>
+<p>Cluster breadth checks separated the attack types. A z-score rule detected
+the large manipulation attacks well. A stuck-sensor rule detected 93.3% of
+denial-of-service examples in the recorded setup. Replay remained difficult
+for the tested methods.</p>
+<p>A composite of the two simple rules achieved F1 71.5, accuracy 76.9% and
+detection 60.5% at 7.9% false alarms. It has no fitted parameters, but that does
+not remove uncertainty from the sampled data. Some trained-model comparisons
+used a common 3.7% false-alarm limit; the composite's 7.9% point must not be
+presented as if it used that same limit. Full configurations are in
+<a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">C7 of the evidence record</a>.</p>
+<p>The question became what the complex model added beyond these simple checks,
+not whether any nonzero detection alone demonstrated its mechanism.</p>
+<h2 id="later-checks-capacity-replay-and-instability">Capacity, replay and instability</h2>
+<p>Increasing feed-forward capacity across a 272-fold parameter range did not
+improve the tested comparison. At FA=3.7%, detection was 56.7%, 56.9%, 41.9%
+and 56.2% across the four sizes. This weakens a capacity-only explanation
+inside those settings; it is not a universal capacity bound.</p>
+<p>A corrected nearest-neighbor check gave replay-versus-normal AUC 0.455.
+Our first reference bank had included examples being evaluated, allowing
+self-matches; that error was corrected. Low replay detection and the corrected
+distance comparison establish difficulty for these checks, not equality of
+every distribution a detector could use.</p>
+<p>Across five recorded seeds, TGCN spanned 23.7 F1 points and STGT 11.8. That
+variability is another reason not to substitute one attractive run for a
+stable result. See <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">C9 and the later evidence</a>.</p>
+<h2 id="later-checks-the-graph-does-help">The graph does help</h2>
+<p>This went against our starting expectation. Shuffling graph labels or
+removing edges lowered performance in the recorded comparisons:</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Model and graph</th>
+<th style="text-align:right">Real topology</th>
+<th style="text-align:right">Shuffled topology</th>
+<th style="text-align:right">No edges</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STGT, 10 nodes</td>
+<td style="text-align:right">57.9 F1</td>
+<td style="text-align:right">51.9 F1</td>
+<td style="text-align:right">44.9 F1</td>
+</tr>
+<tr>
+<td>TL-STGT, 31 nodes</td>
+<td style="text-align:right">63.6 F1</td>
+<td style="text-align:right">45.2 F1</td>
+<td style="text-align:right">44.7 F1</td>
+</tr>
+</tbody>
+</table></div>
+<p>The topology is not decorative in these tests. Transfer learning also showed
+gains of 13.3–21.9 F1 at 31 nodes in the recorded configurations. However,
+pretraining gave the transferred model more total training; the comparison
+does not isolate transfer from training budget. Those supportive findings and
+their limits belong together. See <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">C11</a>.</p>
+<h2 id="later-checks-training-labels-change-the-comparison">Training labels change the comparison</h2>
+<p>The paper's stated equal-class split places attack examples in training.
+Using benign-only training instead produces quite different F1 values:</p>
+<div class="table-scroll" role="region" aria-label="Comparison table" tabindex="0"><table>
+<thead>
+<tr>
+<th>Model, 31 nodes, S=1</th>
+<th style="text-align:right">Balanced training</th>
+<th style="text-align:right">Benign-only training</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Feed-forward</td>
+<td style="text-align:right">44.1</td>
+<td style="text-align:right">70.3</td>
+</tr>
+<tr>
+<td>LSTM</td>
+<td style="text-align:right">46.0</td>
+<td style="text-align:right">71.2</td>
+</tr>
+<tr>
+<td>TGCN</td>
+<td style="text-align:right">44.6</td>
+<td style="text-align:right">70.8</td>
+</tr>
+<tr>
+<td>STGT</td>
+<td style="text-align:right">46.1</td>
+<td style="text-align:right">67.8</td>
+</tr>
+<tr>
+<td>TL-STGT</td>
+<td style="text-align:right">68.0</td>
+<td style="text-align:right">70.9</td>
+</tr>
+</tbody>
+</table></div>
+<p>An earlier draft quoted benign-training figures without making that choice
+clear. We corrected it. Under benign-only training, the displayed TL-STGT
+advantage over STGT is 3.1 F1 rather than 21.9. Training policy and extra
+pretraining budget both matter; these observations do not isolate one cause
+for every gain. The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">C12 record</a> preserves the configurations.</p>
+<h2 id="31-august-narrowing-our-own-conclusions">Narrowing our own conclusions</h2>
+<p>The <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md#public-wording-correction--2026-08-31">wording correction</a>
+changes how the older results should be read:</p>
+<ul>
+<li>The protocol search is finite, not every possible test size or convention.</li>
+<li>A one-sided-error sign-test calculation assumes independent, equally likely
+signs. Its p-value is not the probability that results were fabricated.</li>
+<li>The 57.1% non-replay share is <strong>not an unconditional detection ceiling</strong>.
+It is what detection would be if all non-replay attacks and no replay attacks
+were caught. A genuine indistinguishability bound would need distributional
+assumptions and must account for false alarms.</li>
+<li>Flat capacity results and failure on frozen history do not prove that all
+capacities or every possible forecaster must fail.</li>
+</ul>
+<p>The earlier evidence entries retain their original wording. These corrections
+govern the current interpretation; they do not change the saved measurements.</p>
+<h2 id="records-and-remaining-questions">Records and remaining questions</h2>
+<ul>
+<li><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/EVIDENCE.md">Full evidence log, including retractions and provenance</a>.</li>
+<li><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/DATA.md">Data provenance and limitations</a>, <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/PAPER_SPEC.md">paper specification</a>, and <a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/AMBIGUITY_REGISTER.md">ambiguity register</a>.</li>
+<li><a href="https://github.com/fjoad/atk-evidence/tree/main/studies/tlstgt-2025-water/results">Saved results</a>.</li>
+<li><a href="../earlier-notes.html">Earlier detailed website account</a>.</li>
+<li><a href="../../../reports/tlstgt-2025-water.pdf">Earlier report (PDF)</a>, read with the later corrections above.</li>
+</ul>
+<p>The interpretation sweep and a matched-budget transfer comparison remain
+incomplete. The unpublished source run is not recovered. This notebook does
+not authorize another experiment or transfer its findings to either
+electricity-theft paper.</p>
+<h2 id="current-conclusion">Current conclusion</h2>
+<p>The printed table has arithmetic inconsistencies under the stated balanced
+evaluation and remains unexplained by the finite protocol search. That is
+distinct from a blanket claim that the architecture cannot work.</p>
+<p>The experimental record contains both substantial sensitivity to setup and
+evidence that graph structure and transfer can help in particular comparisons.
+Our own threshold error and earlier overstatements materially changed the
+investigation and are retained prominently. Neither the failed searches nor
+the experiments establish author intent or the origin of the published values.</p>
+
+  <footer><a href="../../../">All papers</a><a href="https://github.com/fjoad/atk-evidence/blob/main/studies/tlstgt-2025-water/RESEARCH_LOG.md">Notebook source</a></footer>
+</main>
+</body>
+</html>

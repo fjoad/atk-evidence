@@ -1,40 +1,60 @@
 <!doctype html>
+<!-- Generated from docs/website-home.md and studies/registry.toml.
+     Run .venv/bin/python scripts/render_journals.py to rebuild. -->
 <html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Paper reproduction notes</title>
-  <meta name="description" content="Attempted paper reproductions: hypotheses, investigations, results, corrections and current conclusions.">
-  <meta property="og:title" content="Paper reproduction notes">
-  <meta property="og:description" content="Attempted paper reproductions, with results and changes in our understanding.">
+  <title>ATK Evidence</title>
+  <meta name="description" content="We rebuild the experiments in published papers whose results we doubt, run them, and compare our numbers with the published ones.">
+  <meta property="og:title" content="ATK Evidence">
+  <meta property="og:description" content="We rebuild the experiments in published papers whose results we doubt, run them, and compare our numbers with the published ones.">
   <meta property="og:type" content="website">
-  <meta name="twitter:title" content="Paper reproduction notes">
-  <meta name="twitter:description" content="Attempted paper reproductions, with results and changes in our understanding.">
-  <link rel="stylesheet" href="notebook.css?v=195e589b19d1">
+  <meta property="og:url" content="https://fjoad.github.io/atk-evidence/">
+  <meta name="twitter:title" content="ATK Evidence">
+  <meta name="twitter:description" content="We rebuild the experiments in published papers whose results we doubt, run them, and compare our numbers with the published ones.">
+  <link rel="stylesheet" href="notebook.css?v=81be2b364d8d">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <main class="home" id="main">
-  <h1>Paper reproduction notes</h1>
-  <p>Attempts to reproduce published methods, with results, questions, and changes in our understanding.</p>
-  <ul class="paper-list" id="studies" aria-label="Papers">
-    <li>
-      <h2><a href="papers/atk-2022-deep-autoencoder/">Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids</a></h2>
-      <p class="meta">Takiddin et al. · IEEE Systems Journal · 2022</p>
-      <p class="description">Earlier FC-SAE and LSTM-SAE attempts, with output-range and threshold checks. Awaiting reassessment.</p>
-    </li>
-    <li>
-      <h2><a href="papers/tlstgt-2025-water/">Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems</a></h2>
-      <p class="meta">Ahasan et al. · EUSIPCO · 2025</p>
-      <p class="description">Earlier checks of reported metrics, simple comparisons, graph structure and transfer learning, with corrections. Awaiting reassessment.</p>
-    </li>
-    <li>
-      <h2><a href="papers/takiddin-2021-robust-poisoning/">Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids</a></h2>
-      <p class="meta">Takiddin et al. · IEEE Transactions on Smart Grid · 2021</p>
-      <p class="description">Six detector pairs, preparation checks and a failed ensemble pilot. A recurrent alternative learns on synthetic examples; electricity-data testing remains open.</p>
-    </li>
-  </ul>
-  <footer>Investigations in progress</footer>
+<h1>ATK Evidence</h1>
+<p>We rebuild the experiments in published papers whose results we doubt, run
+them, and compare our numbers with the published ones.</p>
+<p>Many machine-learning papers don't publish their code. They do describe their
+method, and that should be enough for another researcher to rebuild it. So that
+is what we do: we write the code the paper describes, fill any gaps the way a
+reasonable researcher would, run the experiment and compare.</p>
+<p>We start from doubt, but we try to test it fairly. When our rebuild matches the
+paper, we say so. When it doesn't, we check our own work first, then ask whether
+any reasonable version of the method could reach the published numbers.
+<a href="https://github.com/fjoad/atk-evidence/blob/main/docs/APPROACH.md">How we work</a></p>
+<h2>Papers</h2>
+<ul class="cards" aria-label="Papers">
+  <li class="card">
+    <h3><a href="papers/takiddin-2021-robust-poisoning/">Robust Electricity Theft Detection Against Data Poisoning Attacks in Smart Grids</a></h3>
+    <p class="meta">Takiddin et al. · IEEE Transactions on Smart Grid · 2021</p>
+    <p class="status">In progress</p>
+    <p class="summary">The printed training loss can&#x27;t work as written, and three of the main model&#x27;s result rows can&#x27;t all be true at once. Most simpler models work on our data; the paper&#x27;s main model hasn&#x27;t reproduced.</p>
+    <a class="read" href="papers/takiddin-2021-robust-poisoning/">Read the study</a>
+  </li>
+  <li class="card">
+    <h3><a href="papers/atk-2022-deep-autoencoder/">Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids</a></h3>
+    <p class="meta">Takiddin et al. · IEEE Systems Journal · 2022</p>
+    <p class="status">First attempt, to be redone</p>
+    <p class="summary">Our rebuild of the simplest model detected 25% of attacks against 81% published. With the paper&#x27;s own output layer and error score, the published number is out of reach on our prepared data.</p>
+    <a class="read" href="papers/atk-2022-deep-autoencoder/">Read the study</a>
+  </li>
+  <li class="card">
+    <h3><a href="papers/tlstgt-2025-water/">Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems</a></h3>
+    <p class="meta">Ahasan et al. · EUSIPCO · 2025</p>
+    <p class="status">First attempt, to be redone</p>
+    <p class="summary">None of 67,326 ways of measuring the published results table reproduces it. In our own experiments, the graph did help in some comparisons. A maintainer co-authored this paper.</p>
+    <a class="read" href="papers/tlstgt-2025-water/">Read the study</a>
+  </li>
+</ul>
+
+  <footer>A maintainer of this project co-authored the water-network paper. <a href="https://github.com/fjoad/atk-evidence">Code and records on GitHub</a></footer>
 </main>
 </body>
 </html>

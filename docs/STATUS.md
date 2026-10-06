@@ -3,18 +3,19 @@
 _Last updated 2026-10-06. Rewrite this page whenever the state changes; don't
 append history to it._
 
-## Right now: project overhaul
+## Right now: overhaul done, waiting to publish
 
 The old process has been replaced. [APPROACH.md](APPROACH.md) holds the thinking,
 [AGENTS.md](../AGENTS.md) is one page, and this page and
 [CONTEXT.md](CONTEXT.md) are short. Old documents are in `docs/archive/`.
 
-Still to do in the overhaul:
-1. Rebuild the website: a homepage that explains the project, with a card per
-   paper, and a plain-language page for each paper.
-2. Rewrite each study's README in the same voice.
+The README, each study's README and the website are rewritten in plain
+language. The website has a homepage with a card per paper and a summary page
+per paper, rendered from the study README. Each full research log moved to
+`papers/<id>/journal/`, and old section links forward there. All tests pass.
+Nothing has been pushed yet: publishing needs the owner's approval.
 
-Research is paused until the overhaul is done.
+Next: research on the poisoning paper, below.
 
 ## Papers
 
