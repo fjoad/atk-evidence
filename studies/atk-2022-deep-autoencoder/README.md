@@ -1,76 +1,74 @@
-# Study 1: an electricity-theft autoencoder
+# Electricity theft detection with deep autoencoders
 
-This study examines:
+*Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in
+Smart Grids*, Takiddin, Ismail, Zafar and Serpedin, IEEE Systems Journal
+(2022). [Publication record](https://doi.org/10.1109/JSYST.2021.3136683)
 
-> A. Takiddin, M. Ismail, U. Zafar, and E. Serpedin, “Deep
-> Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart
-> Grids,” IEEE Systems Journal 16(3), 4106–4117, 2022.
+**First attempt.** This study was done under our earlier, heavier process. We
+will redo it with our current approach; the results below stand until then.
 
-## Current result
+## What the paper claims
 
-We implemented the paper's FC-SAE model and tested the Table III result on the
-named Irish electricity data. In one documented run:
+The paper detects electricity theft with autoencoders: networks trained on
+normal electricity use to reproduce their input. A day that the network
+reproduces badly is flagged as possible theft. The paper compares a simple
+fully connected version with recurrent (LSTM) and attention versions on two
+public datasets and reports high detection rates. On the Irish smart-meter data,
+the simplest model (FC-SAE) detects 81% of attacks at 15% false alarms, and the
+LSTM version (LSTM-SAE) detects 85% at 13%.
 
-| Measure | Paper | Our run |
+## Why we doubted it
+
+The reported performance looked implausible to us, so we rebuilt the method
+from the paper and ran it on the same Irish data.
+
+## What we did
+
+- We rebuilt the simplest model, FC-SAE, with the data preparation the paper
+  describes, and trained it once.
+- We asked a stronger question using math rather than more training. With the
+  output layer (Softmax) and error score (mean squared error) the paper
+  specifies, what is the best any trained model could possibly do on these
+  inputs?
+- We gave the LSTM version exactly the training time the paper reports, 183
+  minutes, on one GPU, and scored the result.
+
+## What we found
+
+| | Paper | Our rebuild |
 |---|---:|---:|
-| Detection | 81.00% | 25.48% |
-| False alarms | 15.00% | 45.13% |
-| Balanced accuracy | 83.00% | 40.18% |
-| AUC | 81.00% | 39.40% |
+| FC-SAE: attacks detected | 81.00% | 25.48% |
+| FC-SAE: false alarms | 15.00% | 45.13% |
+| LSTM-SAE after 183 minutes: attacks detected | 85.00% | 16.62% |
+| LSTM-SAE after 183 minutes: false alarms | 13.00% | 31.91% |
 
-The saved artifacts and metrics passed the recorded checks. Every cutoff on the
-same scores remains far below the reported result. The model's scores closely
-follow a zero-reconstruction input-magnitude score.
+- **The paper's own setup rules the number out.** With Softmax outputs and mean
+  squared error on our prepared data, no trained model could detect more than
+  9.25% of attacks at 15% false alarms, or reach more than 50.93% balanced
+  accuracy. The paper reports 81% and 83%.
+- **A different output layer loosens that limit but didn't help in practice.**
+  With a Sigmoid output instead, the limit no longer applies. A small Sigmoid
+  model we trained still detected only 9.75% of attacks at that false-alarm rate.
+- **The models weren't doing nothing.** FC-SAE carried a little useful signal. A
+  small contribution can coexist with a large gap.
 
-This numerical result is one implementation and one seed. A subsequent
-no-training bound goes further: on the fixed prepared data, even label-aware
-optimal Softmax reconstructions with MSE scoring stay below 50.93% balanced
-accuracy. Detection at at most 15% false alarms is bounded by 9.25%, versus
-81% reported. This excludes every weight and seed under those assumptions,
-not different preprocessing, output domains, or scores.
+## Limits
 
-The fitted score is not identical to simple input magnitude: original-row
-balanced accuracy improves by 0.89 points, and within-energy ranking exceeds
-both tested no-training geometry controls. These comparisons do not identify
-a learned causal mechanism or establish “nothing useful learned.”
+- One training run per model, covering two of the paper's models.
+- The 9.25% limit holds for the paper's stated output layer and score on our
+  prepared data. Other ways of preparing the data, outputs or scores are outside
+  it.
+- The LSTM's training loss was still falling when its 183 minutes ran out.
+  Longer training wasn't tested. The small Sigmoid model trained for ten epochs
+  and was also still improving.
+- None of this shows how the published numbers were produced, and we make no
+  claim about that.
 
-Read the [initial finding](CLEAN_READER_FINDING.md), the
-[completed diagnostic finding](POST_ANCHOR_FINDING.md), the
-[paper-to-code fidelity record](CLEAN_READER_FIDELITY.md), and the
-[remaining explanations](EXPLANATION_REGISTER.md).
+## Read more
 
-## What was implemented
-
-The current paper-facing implementation is exactly five direct files:
-
-```text
-reproduction/download_data.py
-reproduction/prepare_data.py
-reproduction/models.py
-reproduction/run_experiment.py
-reproduction/analyze_results.py
-```
-
-The run uses the final FC-SAE architecture, all officially labeled residential
-meters, disjoint training/test customers, six paper-derived attacks, the
-paper-positioned test-set ADASYN step, joint feature scaling, benign-only
-training, mean squared reconstruction error, and the printed threshold 0.58.
-Necessary completions are documented in
-[CLEAN_READER_SPECIFICATION.md](CLEAN_READER_SPECIFICATION.md). The literal
-Attack 3 and threshold-selection failures remain visible.
-
-Older study-root wrappers, `src/`, and earlier results are retained as
-historical evidence. They are not the implementation of this run and should not
-be resumed as though they were.
-
-## Next decision
-
-The first run, audit, and user-approved bounded diagnostic round are complete.
-No experiment remains running. The next proposed question is which
-source-supported alternatives would actually change the bound's assumptions.
-Begin with a source/semantic map, not repeated seeds or a broad search. A
-matched recurrence or attention comparison remains untested.
-
-Repository setup and authorized data access are in
-[Getting started](../../docs/GETTING_STARTED.md). Do not launch another seed,
-model, configuration, or control without the approved scientific question.
+- [Full research log](RESEARCH_LOG.md).
+- [Detailed technical report](../../site/papers/atk-2022-deep-autoencoder/reproduction/index.html),
+  with every comparison and the calculation behind the limit.
+- [Earlier notes](../../site/papers/atk-2022-deep-autoencoder/earlier-notes.html)
+  and [all findings and run records](results/).
+- [How the rebuild was specified](CLEAN_READER_SPECIFICATION.md).

@@ -1,68 +1,71 @@
-# Study 2 — Graph Transfer Learning for Water-Network Attack Detection
+# Attack detection in water networks
 
-Audit of Ahasan, Joad, Atat, Thompson, Serpedin, Takiddin, *"Graph Transfer
-Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems"*,
-EUSIPCO 2025.
+*Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water
+Distribution Systems*, Ahasan, Joad, Atat, Thompson, Serpedin and Takiddin,
+EUSIPCO (2025).
 
-> **Conflict of interest.** Faaiz Joad, a maintainer of this project, is the
-> second author of the audited paper. Every claim here is therefore held to
-> pre-registered ambiguity branches, published corrections of this audit's own
-> errors, and verdicts bounded strictly to what the artefact supports. The audit
-> does not assert how the reported numbers arose.
+**Disclosure:** Faaiz Joad, a maintainer of this project, is a co-author of this
+paper. This study is not independent of its authors.
 
-**Verdict: `no-consistent-protocol`.** An exhaustive pre-registered search over
-67,326 measurement protocols per cell finds none that reproduces the reported
-table; 20 of 27 cells are unreachable under every protocol searched.
+**First attempt.** This study was done under our earlier, heavier process. We
+will redo it with our current approach; the results below stand until then.
 
-## What this study asks
+## What the paper claims
 
-We compare the reported numbers with the method and with our implementation.
-We also ask whether simple rules already solve parts of the task, whether the
-graph and transfer-learning components help, and whether the evaluation makes
-those comparisons fairly. Our own implementation was wrong in two important
-instances; both corrections are recorded in `EVIDENCE.md`.
+The paper detects attacks on water-system sensors. Its model combines the
+layout of the water network (a graph), patterns over time, and transfer
+learning from smaller to larger networks. The paper reports that this model
+beats ordinary machine-learning methods and improves as the network grows.
 
-This is an earlier study, currently paused while Paper 1 is active. Its
-measurements are preserved. The public wording was clarified on 2026-08-31:
-the protocol search is finite, and the replay and capacity observations do not
-establish universal impossibility. See the appended correction in
-[EVIDENCE.md](EVIDENCE.md). No water-network experiment was rerun for that update.
+## Why we doubted it
 
-## Read in this order
+The reported numbers looked implausible to us. We checked whether the published
+results table is consistent with itself, then rebuilt the method and its
+comparisons.
 
-| File | Contents |
-|---|---|
-| [`DATA.md`](DATA.md) | inputs, checksums, provenance, how to point the code at your copy |
-| [`EVIDENCE.md`](EVIDENCE.md) | durable causal record — every finding, correction, and retraction |
-| [`AMBIGUITY_REGISTER.md`](AMBIGUITY_REGISTER.md) | ambiguity axes, pre-registered before results were seen |
-| [`IMPLEMENTATION_PLAN.md`](IMPLEMENTATION_PLAN.md) | the paper's method transcribed line by line |
-| [`PAPER_SPEC.md`](PAPER_SPEC.md) | fidelity audit: what the paper says vs what we implemented |
-| [`../../reports/tlstgt-2025-water/main.tex`](../../reports/tlstgt-2025-water/main.tex) | the report |
+## What we did
 
-## Running it
+- **Checked the table against itself.** On a test set with equal numbers of
+  attacks and normal readings, accuracy can't be higher than the average of the
+  detection rate and 100%.
+- **Searched for a way to explain the table.** We tried 67,326 possible ways of
+  measuring each number, covering test sizes, attack proportions and metric
+  definitions.
+- **Rebuilt the models.** This included simple rules with no training, run
+  through the same evaluation. We also tested whether the graph and transfer
+  learning actually help.
 
-```bash
-export WATER_DATA=/path/to/data        # see DATA.md
-python src/test_detect.py              # detector regression tests
-python src/sanity.py --size 31         # breadth checks; trains nothing
-python src/forensics.py                # forensics on the reported table
-python src/protocol_search.py          # exhaustive protocol search
-python src/run.py --help               # the full model comparison
-```
+## What we found
 
-`run.py` exposes every pre-registered ambiguity axis as a flag: `--delta-scale`,
-`--train`, `--thresh`, `--transformer`, `--errfit`, `--adj`, `--window`,
-`--ablate`, `--batch-s`. Defaults are the paper's literal reading.
+- **The table doesn't add up.** 24 of its 27 accuracy values are higher than a
+  balanced test set allows. None of the 67,326 measurement setups reproduces the
+  whole table, and 20 of its 27 numbers can't be reached by any of them.
+- **Simple rules catch a lot.** Two rules with no training, one for large changes
+  and one for stuck sensors, caught many attacks. Replay attacks stayed hard for
+  every method we tried.
+- **The graph does help.** Against our starting expectation, scrambling or
+  removing the network's connections lowered performance. Transfer learning also
+  helped in our runs, though it also gave the model extra training.
+- **Setup choices matter a lot.** Training on normal data only, instead of the
+  paper's 50/50 split, changed scores by about 25 F1 points.
+- **We made mistakes along the way.** A threshold bug in our own code briefly
+  made the gap look far larger than it was. That claim was retracted, and the
+  corrections are kept in the record.
 
-**Reporting rule:** always state which configuration produced a number. Training
-on the paper's literal 50/50 split and training on benign windows only differ by
-roughly 25 F1 points, so an unattributed figure is meaningless.
+## Limits
 
-## Files
+- The search covered many measurement setups but not every conceivable one.
+- Our data is the standard public version of this water-network simulation, not
+  the authors' unpublished run.
+- Some early results ran on a local machine rather than the cluster and are
+  marked provisional.
+- The inconsistencies show the table contains errors. They don't show how it was
+  produced, and we make no claim about that.
 
-`src/data.py` inputs, Figure-1 graphs, attack synthesis · `src/models.py` the
-nine detectors · `src/detect.py` residual → Mahalanobis → threshold → metrics ·
-`src/run.py` orchestration · `src/sanity.py` zero-parameter checks ·
-`src/depth_auc.py`, `src/depth_replay_capacity.py` aimed probes ·
-`src/forensics.py`, `src/protocol_search.py` analysis of the reported table ·
-`src/test_detect.py` regression tests · `results/` raw outputs.
+## Read more
+
+- [Full research log](RESEARCH_LOG.md).
+- [Evidence log with every finding, correction and retraction](EVIDENCE.md).
+- [Earlier notes](../../site/papers/tlstgt-2025-water/earlier-notes.html) and
+  [the earlier report (PDF)](../../site/reports/tlstgt-2025-water.pdf).
+- [Data sources](DATA.md) and [running the code](RUNNING.md).

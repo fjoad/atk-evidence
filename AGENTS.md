@@ -1,551 +1,71 @@
-# ATK Evidence — Working Guide
-
-## What this repository does
-
-This project reads research papers, implements the methods they describe, and
-compares measured results with published ones. When a result differs, the work
-asks what explains the difference before spending more compute.
-
-The public explanation starts with the paper, code, experiment, and result.
-Internal labels exist to keep evidence separate; they are not the voice of the
-README or website.
-
-## Start here
-
-1. Read [RUNBOOK.md](RUNBOOK.md) for the research procedure.
-2. Read [docs/STATUS.md](docs/STATUS.md) for the current result and next decision.
-3. Read [docs/CONTEXT.md](docs/CONTEXT.md) for facts that must survive a handoff.
-4. Read the active plan named in STATUS.
-5. When interpreting a result, also read the relevant study finding and
-   explanation register.
-
-The paper is the authority for what it claims. The runbook is the authority for
-the order of the audit. If the paper is incomplete or contradictory, preserve
-that fact and make every executable interpretation visible.
-
-## Scientific rules
-
-- Read the complete paper before implementing a reported experiment.
-- Connect each consequential instruction to a page, equation, figure, table, or
-  source note.
-- Use small exploratory scripts to discover useful questions. Do not present
-  their results as a reproduction.
-- Implement the written method before improving it. Corrections and controls
-  remain separate.
-- Record every necessary assumption before seeing whether it helps.
-- Preserve failed, interrupted, and unfavorable attempts.
-- Establish simple and zero-parameter comparisons before crediting a complex
-  architecture.
-- Ask whether an added component supplies the capability claimed for it; a
-  headline metric alone does not answer that question.
-- Use cheap checks before long runs. Another expensive seed or paper row must
-  answer a named uncertainty.
-- Freeze the data, code, metric, seeds, uncertainty method, budget, and stopping
-  rule before confirmatory depth.
-- Treat related rows, repeated customer-days, attacks derived from one profile,
-  and synthetic examples as dependent unless the analysis establishes
-  otherwise.
-- State exactly what was tested. A fixed-score cutoff limit is not a limit on
-  scores from another model. An empirical plateau is not a mathematical proof.
-- Report a match or evidence supporting the paper as plainly as a failure.
-- Do not infer author intent, undocumented code, or fabrication from
-  non-reproduction alone.
-- Do not transfer a result from one paper to another.
-
-The detailed separation between numerical reproduction, mechanism, and
-attainability is preserved in
-[the evidence-frame decision](docs/decisions/2026-08-20-three-part-evidence-frame.md).
-
-## Current scientific boundary
-
-**Full48-step tanh learning gate verified:** scientific6ca174a; placement
-recoveryfebc28e. Two tanh cases complete300updates each,100% held-out
-accuracy/clippedBCE~1e-7; same initial weights and all other settings as the
-ReLU reference. ReLU-normal becomes nonfinite at245, with a brief finite
-loss dip to.489 at239; no plateau claim. ReLU-reversed is unrun under the
-predeclared stop rule. Raw comparison stays failed/incomplete, not four-case
-complete. Fresh-process GPU reload408787 passes both tanh models exactly;
-partial artifact audit verifies failed reference without treating it as valid.
-408764 pre-fit device error184s preserved;408778 stopped1088s;408787 audit32s;
-total21:44 within35min. No CER inputs/fits. Alternative follows explicit tanh
-formulas while retaining the IV-C ReLU conflict and other native-cell gaps.
-Default ReLU/legacy behavior remains; only models.py gained the option.
-Next specify/wire/timing-gate a fresh-weight tanh CER pair; current research
-CLI still selects ReLU and old preflight does not authorize tanh. No automatic
-launch/extra seed or website work. See [cell record](studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md).
-
-**Cell comparison pre-fit recovery:**408764 FAILED/1:0 in3:04, all cluster
-fixtures passed but no full-width optimizer update ran. Broad GPU scope
-incorrectly forced CPU-only TensorSliceDataset ontoGPU. Fix only placement:
-GPU model variables, CPU input pipeline. Preserveattempt1 and require exact
-initial-array parity before fittingattempt2. Same model/data/seed/settings;
-retry31min + prior184s stays within original35min budget. No CER fit/data,
-new branch, seed or website work. Recovery not yet submitted at this checkpoint.
-
-**Full48-step cell comparison authorized and ready:** I-SEQ-tanh-cells
-follows explicit Algorithm1 recurrent tanh formulas while preserving the
-IV-C activation conflict. Only LSTM/GRU cell activation changes; Sigmoid
-gates, scalar-Sigmoid bridge, ReLU Dense, all widths/optimizer/settings stay.
-Default ReLU and legacy archives remain valid. Twenty pinned neural checks
-and405 repository cases pass (45 environment skips). Four fixed synthetic
-fits: tanh normal/reversed, then ReLU normal/reversed;32train/32test,48steps,
-seed20260920,300updates each. One35min V10016GB/4CPU16GiB job,360s/fit.
-No CER arrays/fits or automatic promotion. Freeze then submit once after
-checking queue/output. No new job yet. See the recurrent-control plan.
-
-**Gate arithmetic complete:** ee1a420656cfa28d47008d12a550ea63f6145bd5,
-Panther408551 COMPLETED/0:0 in3:05, zero fits/updates. Same100 test rows,
-three saved states,21 cell traces; native/manual h/c arithmetic and saved
-sequences match exactly. Finalp00 GRU8 candidates are allzero fromstep4;
-z stays near.5, so retained state decays to5.92e-18. Largest final-unit
-witness has POSITIVE bias; increasingly negative input projection closes it.
-Do not generalize the earlier negative-bias explanation. Finalp30 LSTMs
-admit large positive recurrent candidate injection with open gates; growth
-starts inencoder1 and reaches decoder3~1.39e15. These are fixed-weight
-forward mechanisms, not training-onset or successful-repair evidence.
-All45 copiedfiles,15 pairfiles,10 prior diagnosticfiles and all parameter/
-optimizer hashes verify; local audit matches clusterbytes. Stop this check.
-Next define one source-explicit recurrent-cell alternative/control and require
-full48-step constructed learning before any new CER fit; no branch/job is
-selected or launched. Website unchanged. See [gate record](studies/takiddin-2021-robust-poisoning/results/sequential_gates_20261002/README.md).
-
-**Gate arithmetic authorized:** the user approved a zero-fit check of the
-saved recurrent operations. Same first100 test rows, shared initial/finalp00/
-finalp30, all six LSTM cells and GRU8. No parameter update or repaired state
-trajectory. Four constructed controls pass;403 repository cases pass with
-41 environment skips. Freeze and submit one10min V10016GB/4CPU/16GiB job,
-7min internal guard, then copy/audit/report and stop. No job yet at this
-checkpoint. Plan:2026-10-02-sequential-gate-arithmetic.md. Website unchanged.
-
-**Saved-state diagnostic complete:** frozen3127b19372cd16546cbf814394ea8d52f7ee2f28,
-Panther408550 COMPLETED/0:0 in2:11, zero fits/optimizer updates. On fixed100
-train/test rows: initial logit differences survive but float32 probabilities
-round together; finalp00 GRU8 is about6e-18 and classifier hidden profiles
-are identical; finalp30 encoder/decoder reach3e9/1e15, bridge is exactlyzero
-fromstep2, and GRU2 onward is profile-identical. Upstream gradients are tiny
-but nonzero; no whole native stage is entirelyzero. Widening only the final
-readout does not recover either trained model. All10 copiedfiles,15 oldfiles,
-20 preparedarrays, all model/optimizer hashes, native decoder replay and
-savedtest parity verify; local audit matches clusterbytes. Endpoint/batch
-scope only, not a training trajectory or family-wide impossibility. Next
-consider saved gate/cell arithmetic before declaring a repair; no furtherjob,
-fit/seed or website work. See [diagnostic](studies/takiddin-2021-robust-poisoning/results/sequential_saved_state_20261002/README.md).
-
-October2 user approved bounded saved-state activation/gradient inspection of
-the constant-score sequential pair. Three fixedstates, first100 train/test
-rows, zero fitting or optimizer steps. Six local constructed observer controls
-pass. Freeze and run one10min V10016GB/4CPU/16GiB Panther job,7min internal
-guard, then copy/audit/report and stop. No extra seed/branch/repair/sitework.
-No new job yet. See [plan](docs/plans/2026-10-02-sequential-saved-state-diagnostic.md).
-
-Oct1 sequential pair407294 is complete and audited:0:0 in1:21:28 onPanther
-oneV10016GB,4CPU/16GiB,science3705bcca04279bbfa8523a573b9b573f123463b7.
-Both50epochs/2250updates, identical initial weights. Constant0.504759/0.353959
-scores giveDR/FA100/100 and0/0,AUC50/50; no cutoff/reversal rescue. Eight-step
-learning success did not establish48-step CER learning. P00 representations
-vary while classifier scores are constant; p30 output is almostzero and its
-MSE matches zero baseline. All15files, input/source/metric/history/weight/
-optimizer/norm and GPUreload checks pass; local audits match clusterbytes.
-Stop pair. Next propose bounded zero-fit saved-state activation/gradient
-inspection before another fit/seed/sourcealternative; no newjob is launched.
-Not a fully specified-source/full-population or model-family failure. Allbig
-work ran onPanther; local softwarefixtures/read-only audits only. Website
-untouched. See [result](studies/takiddin-2021-robust-poisoning/results/sequential_pilot_20261001/README.md)
-and [plan](docs/plans/2026-10-01-sequential-interface.md).
-
-Oct1 scalar-Sigmoid interface and separate linear control both pass fixed
-full-width8-step software learning: four300-update cases,100% accuracy,
-BCE~1e-7. Sigmoid was preselected as the next numerical interpretation before
-results, not chosen because of the metrics. Source equation/shape is still
-ambiguous; all earlier ReLU failures remain. New bridge parameter defaults
-toReLU and old artifacts reload exactly. See
-[interface contract](studies/takiddin-2021-robust-poisoning/SEQUENTIAL_INTERFACE.md)
-and [plan](docs/plans/2026-10-01-sequential-interface.md). Proceed with the
-approved bounded sequence after freeze:20min V100 timing, then180min real
-p00/p30 pair only on passed gates. No new research fit/job exists yet at this
-checkpoint. User reaffirmed small local software checks are allowed; large
-work must run on Panther. Website untouched.
-
-September28 full-width constructed pair fails its learning gate. User approved
-the dependent sequence, but both unchanged9,240,802-parameter/8-step cases
-finish300updates at50%, BCElog(2), probability.5. Initial gradients are zero:
-the declared scalarReLU bridge clips negative projections to zero despite
-active decoder features. That bridge is our completion of omitted source
-details, not a fully specified paper layer. All hashes/reload/metrics verify.
-GPU timing and research pair remain held; no new cluster/research job or
-website work. Next resolve decoder-to-GRU tensor shape/activation from the
-source before a separately declared alternative/control; no silent setting
-change or seed retry. See
-[record](studies/takiddin-2021-robust-poisoning/results/sequential_full_width_20260928/README.md)
-and [plan](docs/plans/2026-09-28-sequential-execution.md).
-
-September27 collapse trace is complete: one unchanged50-update constructed
-replay matches all old losses/initial weights. After update2, lastGRU and
-classifierhidden are zero; feature gradients vanish. EarlierAEA/GRUs remain
-active. Saved-state swaps identify local candidate-bias/head-bias shutoff,
-not a successful repair or full-width failure. All51snapshots and prior
-hashes verify. Learning gate remains failed; no GPU timing/research job.
-Next consider a bounded full-width constructed check before optimizer or
-activation changes; no new seed/search follows. See
-[trace](studies/takiddin-2021-robust-poisoning/results/sequential_trace_20260927/README.md)
-and [plan](docs/plans/2026-09-27-sequential-collapse-trace.md). Website untouched.
-
-September27 implementation is complete but the constructed learning gate
-fails. Full model9,240,802 parameters;9 ensemble/gate plus6 oldAEA software
-checks pass. Small fixed learning pair300updates: normal100% test accuracy,
-BCE.2253; reversed50%, BCElog(2). Reversed finalGRU/classifierhidden outputs
-collapse to zero; AEA intermediate remains active. Complement-normal scores
-solve reversed labels, so this is not a representational impossibility.
-Normal report-writer failure recovered without refitting; all originals
-preserved. No full-width training, GPU timing, research fit/scoring or job.
-Next diagnose the failed constructed trajectory/fixture before promotion;
-do not silently relax the gate or change seeds. See
-[record](studies/takiddin-2021-robust-poisoning/results/sequential_constructed_20260927/README.md)
-and [plan](docs/plans/2026-09-27-sequential-implementation.md). Website untouched.
-
-September26 source/design work is complete. See
-[next experiment](studies/takiddin-2021-robust-poisoning/SEQUENTIAL_ENSEMBLE_PILOT.md)
-and [step plan](docs/plans/2026-09-26-aea-next-experiment.md).
-The proposed supervised ensemble has its own IV-C ReLU/Adam/no-dropout/
-constraint1 settings and joint repaired BCE; standalone AEA loss/score/0.51
-do not transfer. Native cells, intermediate ReLU projection and classification
-cutoff0.5 are declared completions. No standalone repair is promoted.
-Next: implement/validate the proposed ensemble and constructed full-model
-timing before any research pair. Proposed budgets do not authorize launch.
-No new research fit, scoring or job, and no website/direct-file changes.
-The September25 recheck below remains valid and its originals are preserved.
-
-The user's requested recheck found errors in the recent AEA interpretation,
-reporting and prototype validation. **MAE promotion is withdrawn; no training
-branch is selected.** Free-cutoff non-exclusion is not a pass at printed 0.51:
-MAE minimum FA is 36.75239%/33.79187%. The repair README's three p30 DR bounds
-used the wrong FA cap; raw JSON was correct and is preserved. The paper omits
-the scaling axis, and a score-norm comparison does not choose a training loss.
-Independent replay confirms the original geometry/all-cutoff bounds. The
-prototype query test was non-discriminating and reload failed; repaired
-software passes six constructed tests, not a useful-learning demonstration.
-Original model/data artifacts and direct reproduction files remain unchanged.
-No new research fit/job, selected branch, ensemble, seed or website work.
-See [recheck](studies/takiddin-2021-robust-poisoning/results/aea_recheck_20260925/README.md)
-and [implementation scope](studies/takiddin-2021-robust-poisoning/AEA_IMPLEMENTATION_ENVELOPE.md).
-
-### Completed repair envelope
-
-AEA repair envelope is complete and audited. Corrected job **403409** is
-COMPLETED/0:0 in 41s; job403408 failed prelaunch in1s because its Slurm output
-path was misspelled, with no data loaded. Five declared zero-fit branches,
-56 inputs and10archives pass local/cluster audit; model_fits=0. Feature-z MSE
-and global-z MSE optimistic bounds exclude the p00 paper corner; MAE/raw-unit
-MSE/min-max remain only **not excluded with a free cutoff**, not successful
-models or passes at 0.51. The recheck above supersedes the earlier MAE selection.
-No branch search, neural fit, ensemble, extra seed, website edit or
-publication. See
-[repair record](studies/takiddin-2021-robust-poisoning/results/aea_repair_20260925/README.md).
-This supersedes the pre-job repair boundary below.
-
-### Earlier repair authorization
-
-The user approved the bounded AEA repair comparison and resumed after an
-interruption (no job existed at that interruption). See
-[repair contract](studies/takiddin-2021-robust-poisoning/AEA_REPAIR_ENVELOPE.md)
-and [plan](docs/plans/2026-09-24-aea-repair-envelope.md). Five declared score/
-scale branches, zero model fits; one10min/1CPU/8GiB/noGPU job after code freeze.
-22 constructed checks pass. No new real repair scores/job yet at this checkpoint.
-The label-informed interval oracle is an optimistic ROC/AUC bound, NOT a
-trained model, unlike the earlier clipped-error baseline. A pass only means
-not excluded. Preserve originals and all alternatives; no branch search,
-neural fit, or publication follows automatically. Website untouched.
-
-### Completed fixed-cutoff geometry checkpoint
-
-The zero-fit AEA geometry check is complete:5d5d850, job402811,0:0 in30s,
-no GPU/fits/neural inference. On the frozen novelty pilot, every reconstruction
-in[0,1] scored by MSE at the printed0.51 cutoff has favorable-rounding minimum
-FA22.15909%/22.36842%, above printed5.2%/18.4%. RMSE/SSE also miss those
-FA points. This holds for any weights under those fixed inputs/range/score/
-threshold, not another population, scaler, cutoff, output range or ensemble.
-The optimistic DR upper bound remains100%; baseline AUCs are NOT limits on
-learned-model AUC. All56 input arrays/provenance, two score archives and
-metrics pass; local audit matches cluster bytes and originals are unchanged.
-108 exact p30 train/test overlaps remain explicit. Stop this diagnostic;
-propose a bounded score/scale clarification or repair comparison, not more
-seeds or GPU training of the excluded point. No follow-up is authorized by
-this result summary. See [record](studies/takiddin-2021-robust-poisoning/results/aea_geometry_20260924/README.md)
-and [plan](docs/plans/2026-09-24-aea-geometry-execution.md). Website untouched.
-This supersedes earlier planned/unsubmitted states below.
-
-### AEA source checkpoint
-
-**AEA source specification is complete; no AEA experiment has run.**
-See [specification](studies/takiddin-2021-robust-poisoning/AEA_SPECIFICATION.md)
-and [step plan](docs/plans/2026-09-24-aea-source-specification.md).
-All ten target pages and relevant reference[23] pages were visually checked;
-reference[22] full text remains unavailable. Native-table AEA is a proposed
-interpretation, not implemented. Eleven constructed checks verify output-box
-MSE bounds and objective distinctions; no real arrays scored. Standardized
-inputs versus Sigmoid reconstruction needs a range check before fitting;
-this mismatch alone does not prove detection failure. Novelty inputs differ
-from classifier inputs and metadata reports108 p30 train/test overlaps.
-Next proposed [zero-fit check](studies/takiddin-2021-robust-poisoning/AEA_GEOMETRY_CHECK.md)
-needs separate approval:10min/1CPU/8GiB/noGPU, no models, no regeneration.
-Its real-data runner is not implemented or submitted. Preserve all original
-inputs/results. No new GRU seed/epoch, AEA fit or ensemble is authorized by
-this source-step summary. Website remains untouched.
-
-### Completed GRU checkpoint
-
-**GRU pair complete and audited:** frozen
-1f847039ea3c5d410db5e9ee194a6625ecd2b54d, job 402625, COMPLETED/0:0 in
-56:11 on one V100-16GB, 4 CPUs/16 GiB. Both fits completed 50 epochs/2,250
-updates, with identical initial weights and exact first-32-epoch agreement
-with the earlier p00 attempt. DR/FA/AUC: 62.35/9.94/89.07 unpoisoned,
-39.73/6.12/79.89 poisoned. At paper FA caps 6.8/20.6%, best DR 51.40/67.15
-misses 92.4/78.5; reversal does not rescue these fitted scores. Poisoned AUC
-is close to the reported 79.4, not a full-row reproduction. P00 training loss
-rises late then partly recovers; no converged plateau or global limit.
-All local pair/comparison/prefix audits match cluster bytes; serialized
-weights, optimizer counts/config/norms also verify. Old partial remains intact.
-Stop this pair. Proposed next coverage step is source-specifying standalone
-AEA/reconstruction, not more GRU seeds/epochs or an automatic ensemble fit.
-No further experiment is authorized by this completed-result summary. See
-[record](studies/takiddin-2021-robust-poisoning/results/gru_completion_20260924/README.md).
-No new job or local inference during the outcome check; website untouched.
-This supersedes older running-state text below.
-
-### Completion authorization
-
-The user has now approved the unchanged GRU's same-seed completion under
-the [new step plan](docs/plans/2026-09-24-gru-completion.md) and
-GRU_COMPLETION.md. One fresh original p00/p30 pair, same seed/model/data and
-50 epochs/batch100, now35min fit guards and85min job on one V100-16GB,
-4CPUs/16GiB. The budget uses actual full-epoch times; old partial outputs and
-900s default remain intact. No claim of exact checkpoint continuation.
-Validate unchanged scientific functions, prior hashes and fixtures, freeze
-code, inspect scheduler/output state, then submit once. Audit initial-weight
-identity and first32 repeated epoch metrics as well as normal pair artifacts.
-No new job yet at this checkpoint. Website remains untouched. This approval
-supersedes the stop-for-budget-decision statements below, not their evidence.
-
-### Audited partial checkpoint
-
-GRU job **402378 has stopped** (checked September 24), FAILED/2:0 after
-22:45: intentional partial-fit exit, not an OOM. P00 reached the 900s guard
-after 32 full epochs plus seven batches of epoch 33 (1,447 updates); p30 never
-started. Partial DR/FA/AUC 42.99/8.78/80.82; best DR 35.75 at FA<=6.8 versus
-92.4 printed. This is not a completed 50-epoch result or a poisoning comparison.
-All copied input/output/source/weights/history/config/saved-score checks pass;
-the completed-fit auditor correctly refuses partial. Original outputs remain
-unchanged. Stop this attempt: reconcile underestimated timing and specify an
-approved bounded completion before new compute. No automatic resume/refit,
-extra seeds, p30 or ensemble launch. See the updated
-[record](studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
-No new job or local model inference; website untouched. This supersedes the
-running checkpoint below.
-
-### Earlier running checkpoint
-
-GRU pair job **402378 is running** under the approved exception, launcher
-46966c7e021e964ff582e1eb56422b75cc6a4ec7. The scientific files remain at
-2d706b103ee03cc705cc3ef3f07718bc3ed7792a. One V100-16GB, 4 CPUs/16 GiB,
-40min allocation and 15min fit guards. Check the existing job and
-gru-pilot-20260923-attempt1 before any action; do not submit a duplicate.
-The wrapper runs p00/p30 and audits automatically, stopping on partial/failure.
-All 16 cluster fixtures pass; p00 has completed at least one real-data epoch
-with finite loss and preserved initial weights/history. No completed research
-result yet. After completion preserve/copy/audit outputs,
-record the bounded result and next question; do not add settings/seeds.
-See [execution record](studies/takiddin-2021-robust-poisoning/results/gru_pilot_20260923/README.md).
-Website remains owned by another session, untouched here.
-
-### Approved preflight exception
-
-The GRU implementation is frozen at 2d706b103ee03cc705cc3ef3f07718bc3ed7792a.
-Constructed preflight job 402376 completed 0:0 in 2:33 on one V100-16GB. All 13
-GRU fixtures pass locally/on GPU, but the slowest-step fit estimate 778.68s
-exceeds the frozen 720s launch gate. The verifier correctly holds the gate;
-no research inputs or fits have run. The user was asked whether to permit
-an explicit exception under the unchanged 40-minute pair/15-minute fit guards.
-The user has now approved that exception: GRU_RUNTIME_EXCEPTION.md raises only
-the launch ceiling to 900s and requires unchanged scientific-file hashes.
-Proceed with the one unchanged pair after checks; never report the original
-720s gate as passed. Preserve partial outcomes and stop after auditing.
-All source/transfer/
-device/norm checks pass; old FF audit remains unchanged. See the
-[preflight record](studies/takiddin-2021-robust-poisoning/results/gru_preflight_20260923/README.md)
-and [GRU plan](docs/plans/2026-09-23-robust-gru.md). Other source readings are
-open. Website belongs to another session; do not edit/regenerate/publish it.
-
-### Earlier poisoning-order checkpoint
-
-The user-approved poisoning-order control is complete and audited: contract
-9b23b32, startup-only NumPy-alias repair 579a3f5, CPU job 402291, 0:0 in 20s.
-On the same 1,288 original test rows, poison-before-training-only-ADASYN D
-versus saved balance-then-poison B gives DR 63.17 vs 63.89, FA 12.57 vs 8.74,
-AUC 79.80 vs 84.38. At common FA caps 17.6/33.3%, best DR 68.33/75.57 versus
-75.66/85.43. More balanced observed labels did not rescue the result; this is
-a whole resampling-policy effect, not isolated class-prior causation. Useful
-ranking remains. All 28 zero-poison arrays equal B-p00, all input/provenance/
-reload/metric audits pass, local/cluster audits match byte-for-byte. The 454
-unknown-truth synthetic rows remain training-only. Initial job 402290 failed
-before research input loading/fit; its 57s failure is preserved. Two jobs total
-77s; second request 14:03 was recorded as 15:00 by Slurm, not an enforced
-cumulative 15-minute hard cap. Stop this diagnostic. Proposed next coverage
-step is a separately specified GRU pilot, not an extra forest seed or order
-sweep. No new fit is authorized by this summary. Original inputs, models and
-contracts remain intact. The result is included in the September 23 website
-publication, without new experiments. See the
-[record](studies/takiddin-2021-robust-poisoning/results/poison_balance_20260923/README.md).
-
-### Earlier feed-forward checkpoint
-
-The approved feed-forward pair is complete and audited (b5da23a, job 400825).
-Setup job 398992 had completed successfully and was not repeated after access
-returned. Both repaired-BCE models finished 50 epochs on one V100-16GB with
-paired initial weights. AUC 96.35/90.89 at p00/p30; within the corresponding
-printed FA caps, best DR 90.76923/88.86878 meets 90.8 to rounding and exceeds
-76.0. This is a working pilot, not full-row/full-population reproduction or
-validated calibration. All artifact/history/reload checks pass. See the
-[record](studies/takiddin-2021-robust-poisoning/results/feed_forward_pilot_20260922/README.md).
-Stop the pair. Next proposed question is the shared poisoning/balancing order
-and observed class proportions; specify any controlled check before running it.
-No additional experiment is authorized by this summary. All original models,
-contracts and inputs remain preserved; website changes are local drafts only.
-
-### Earlier read-only SVM checkpoint
-
-The approved read-only SVM follow-up is complete (4665e07, job 398978),
-with zero experimental fits. All 13,392 manually reconstructed/native scores
-agree within 1.68e-12 and all labels match. The fixed 512-row sigmoid kernel
-has large negative directions, including under the dual equality constraint
-(centered minimum -19.97 versus tolerance 1.48e-8). Thus the usual concave-dual
-guarantee is unavailable here; fitted-point suboptimality, performance cause,
-and failure of other settings are NOT established. Original artifacts remain
-unchanged and all diagnostic audits pass. See the
-[record](studies/takiddin-2021-robust-poisoning/results/svm_replay_20260921/README.md).
-Stop this diagnostic. Next proposed coverage step is a separately specified
-feed-forward pilot with the standard cross-entropy repair explicit; SVM
-parameter sensitivity remains open. No new fit is authorized by this summary.
-Website changes remain local drafts; no deployment occurred.
-
-### Earlier SVM checkpoint
-
-The user-approved first sigmoid SVM pair is complete (e698173, job 398709).
-Its original-pilot AUC is 65.64/63.38 at p00/p30; at the corresponding printed
-FA caps 10.2/25.7%, best saved-score DR is 19.37/33.48 versus 89.2/73.7.
-Neither any cutoff nor favorable score reversal rescues these fitted models
-on these rows. Both solvers and artifact audits passed; training accuracy is
-weak too. Other parameters/full data are not excluded. Stop this pair. The
-next proposed question is bounded read-only score replay and sigmoid-kernel
-inspection on a fixed subset, not extra seeds/fits. No kernel spectrum has
-been measured. See the [SVM record](studies/takiddin-2021-robust-poisoning/results/svm_pilot_20260921/README.md).
-Preserve raw scores, original inputs, all fitted models, contracts, and frozen
-Git revisions. Journal/site updates remain local drafts, not deployed.
-
-### Earlier AdaBoost checkpoint
-
-The user-approved first AdaBoost pair is complete (d47a6de, job 398348).
-Its historical SAMME.R completion gives AUC 90.71/83.74 at p00/p30 on the
-original pilot. Default DR drops to 46.43% under poisoning, but saved-score
-DR reaches 80.45% within FA<=29.9%. Useful ranking survives; the complete
-printed pattern is not reproduced by this small pilot. All artifact checks
-passed. Stop this pair; next proposed model is a separately specified SVM
-pair, not automatic AdaBoost seeds or alternative settings. See the
-[record](studies/takiddin-2021-robust-poisoning/results/adaboost_pilot_20260920/README.md).
-The direct files now support both baselines. Preserve historical scientific
-revisions in Git and verify old source hashes against their recorded commits;
-never rewrite old evidence to match the latest implementation. Local website
-drafts are not published. Paper 1 is unchanged by this work.
-
-### Earlier Paper 3 checkpoints
-
-Paper 3's September 20 all-model investigation is active under the plan in
-STATUS. Its preparation, first forest pair, and user-approved matched controls
-are complete. The four-fit control (frozen e6e0359, job 398164) found that
-training-only resampling lowers AUC on matched rows, while whole-source-day
-grouping does not cause a further collapse. C retains AUC 93.18/82.97 at
-0%/30% poisoning. All saved-artifact checks passed. This is one 20-customer
-pilot, not full-paper reproduction or evidence of intent. Stop this diagnostic;
-the proposed next distinct question is a separately specified AdaBoost pair.
-See the [control record](studies/takiddin-2021-robust-poisoning/results/split_control_20260920/README.md).
-No additional model or seed is authorized by this summary alone. The website
-changes are local drafts, not deployed. Preserve the original preparation,
-baseline, control contract, code, and outputs.
-
-### Separate Paper 1 checkpoints
-
-The source-assumption findings are published at `dc37bbe`; subsequent Sigmoid
-checks are saved locally. The approved
-[small paired fit](docs/plans/2026-08-31-small-sigmoid-fit.md) is complete.
-Both models finished ten epochs. Sigmoid's best detection at FA<=15% was
-9.74935% (25.39063% reversed), versus 81%. This excludes cutoff rescue for
-those fitted models and sampled rows, not all Sigmoid configurations. Its
-calibration loss still improved; no long-run plateau is established. Stop
-for discussion before another experiment or publication. See
-[the finding](studies/atk-2022-deep-autoencoder/SIGMOID_FIT_FINDING.md).
-
-Paper 1's first clean-reader FC-SAE run is
-complete and audited. The result did not reproduce Table III under the declared
-implementation and one seed. The completed follow-up excludes the target for
-any weights under the fixed prepared inputs, Softmax output, and MSE score.
-Useful score differences exist; the claimed architectural mechanism and other
-source interpretations remain open. See
-[the follow-up finding](studies/atk-2022-deep-autoencoder/POST_ANCHOR_FINDING.md)
-and [current status](docs/STATUS.md).
-
-All diagnostic allocations, including the small paired fit, are complete.
-Any further work needs a named
-remaining question, recorded setup, and approval. Do not start a full
-training run, seed sweep, model family, or broader search. Experimental scoring
-remains on cluster compute nodes; local runs are software fixtures only.
-Preserve the original run and both diagnostic contracts unchanged.
-
-## Repository and evidence
-
-- Keep raw datasets and source PDFs local and unmodified.
-- Never commit credentials, restricted archives, or machine-specific secrets.
-- Each paper belongs in `studies/<study-id>/` and is registered in
-  `studies/registry.toml`.
-- The five direct files under a study's `reproduction/` directory are the
-  active paper-facing implementation. Older forensic machinery is historical
-  evidence, not the default route.
-- `docs/STATUS.md` is current state; `docs/CONTEXT.md` is compact handoff
-  memory; `docs/EVIDENCE-AND-LEARNINGS.md` preserves changed conclusions.
-- Historical plans and decisions remain for provenance. They do not override
-  the current plan.
-
-## Working practice
-
-The public website is a quiet, growing paper index and continuing research
-accounts, not a project-wide verdict. Use a simple “All papers” back link,
-not cross-paper tabs, fixed totals or “Paper N of 3” labels. Each study's
-`RESEARCH_LOG.md` is the editable source; run `scripts/render_journals.py`
-(or `--check`) for all pages.
-Keep claims, starting hypothesis, evolving checks/results/corrections and a
-current conclusion at the end. Detailed earlier pages remain linked archives.
-The visible pages should read as one continuing investigation, not a dated
-diary: no calendar-prefixed headings or update-date banners. Keep dates in
-source records and preserve existing link anchors; publication years may
-remain to distinguish the papers.
-The user wants the older water/deep-autoencoder work reassessed later under
-the newer approach; preserve their results for now and label them as awaiting
-reassessment. Do not treat a presentation rewrite as renewed scientific
-validation. The September 23 overhaul was published at `9f21c28` after local
-checks; GitHub Pages and CI passed, and the live three-paper site was verified.
-Further experiments remain subject to their own checkpoints.
-
-The October 6 website catch-up was published at `5b89946`; GitHub CI and
-Pages passed and the live homepage, three journals, stylesheet and two
-figures match committed bytes. The poisoning account now covers the six
-completed detector pairs, AEA corrections, sequential diagnostics and the
-synthetic-only tanh learning pass. Older study accounts remain unchanged and
-await reassessment. This publication authorizes no new research execution.
-
-For a multi-file change, save a short plan, complete the change, verify it,
-update current status, and commit it. User checkpoints still apply to
-scientific experiments. Documentation work may report completed evidence but
-must not strengthen the conclusion beyond that evidence.
-
-Use:
+# ATK Evidence: guide for agents
+
+Read [docs/APPROACH.md](docs/APPROACH.md) first. It explains what this project
+is for and how the work runs. This page is the short operational version.
+
+Where things stand right now: [docs/STATUS.md](docs/STATUS.md). Facts that
+must survive a handoff, such as cluster access, paths and environments, are in
+[docs/CONTEXT.md](docs/CONTEXT.md).
+
+## Roles
+
+- **Planning agent (Claude).** Talks with the project owner, makes and records
+  decisions, writes the briefs for build jobs, reviews every result before it
+  counts, and writes the documents and website text.
+- **Build agent (GPT-6 Astra via Codex).** Writes code, tests it and runs jobs
+  from a self-contained brief. It makes no scientific choices. If the brief
+  doesn't settle something, it stops and reports instead of guessing.
+- **Project owner.** Approves each paper's assumptions and frozen setup before the
+  full run, and approves publishing.
+
+## Build briefs
+
+Each job gets a written brief that states the goal, the exact inputs, what to
+build or run, how to check the result, what to report back and what not to
+touch. "Self-contained" means everything needed is in the brief; it doesn't mean
+the job is small. Briefs for a paper are saved under `studies/<paper>/briefs/`
+so the work can be retraced.
+
+The planning agent reviews the code changes and the outputs before anything is
+recorded as a result. Build agents don't commit; the planning agent commits
+after review.
+
+## Rules
+
+- Follow the approach: a best-faith remake, reasonable-person choices, breadth
+  first, then one frozen full run.
+- Experiments on real data run on the Panther cluster. Local runs are only for
+  testing code on made-up data and for reading saved outputs.
+- Raw datasets, paper PDFs and model weights stay out of git. Never commit
+  passwords, tokens or keys.
+- Never overwrite the outputs of a frozen run. If a frozen run fails, keep it and
+  report it.
+- Public text uses plain words, reports matches as plainly as mismatches, and
+  makes no claims about anyone's intent.
+- When the state of the work changes, rewrite `docs/STATUS.md`. Keep it to one
+  screen and don't append history.
+- Pushing to `main` publishes the website, so push only with the owner's
+  approval.
+
+## Where things live
+
+- `studies/<paper>/`: one folder per paper.
+  - `README.md`: plain summary of the paper and what we found.
+  - `ASSUMPTIONS.md`: the one-page list of reasonable-person choices.
+  - `reproduction/`: the remake's code.
+  - `briefs/`: build-job briefs.
+  - `results/`: records of runs and checks.
+
+  Older studies also hold documents from the earlier, heavier process. They are
+  history, not instructions.
+- `studies/registry.toml`: the list of papers.
+- `site/`: the public website, generated by `scripts/render_journals.py`.
+- `docs/APPROACH.md`, `docs/STATUS.md`, `docs/CONTEXT.md`: approach, current
+  state and durable facts.
+- `docs/archive/`, `docs/plans/`, `docs/decisions/`: retired documents from the
+  earlier process. Read them only for history.
+
+## Commands
 
 ```bash
 bash scripts/bootstrap.sh
@@ -553,5 +73,7 @@ bash scripts/test.sh
 .venv/bin/python scripts/verify_data.py --strict
 ```
 
-The verification command may stop when restricted data are unavailable. Never
-substitute a proxy and describe it as the named dataset.
+On macOS, run the tests with `KERAS_TORCH_DEVICE=cpu`. The default GPU backend
+fails on some operations. Data verification may stop when restricted datasets
+aren't available locally. Never substitute a different dataset and call it the
+named one.

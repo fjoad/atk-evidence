@@ -1,7 +1,12 @@
 schema_version = 2
 
-# Verdict vocabulary. A verdict is assigned only when the listed evidentiary bar
-# is met; it is never inferred from suspicion or from a failure to reproduce.
+# One entry per paper, in the order the website shows them (the active study
+# first). The homepage card for each paper uses `title`, `authors`, `venue`,
+# `year`, `card_status` and `card_summary`; the paper's page is rendered from
+# `<path>/README.md` and its full research log from `<path>/RESEARCH_LOG.md`.
+#
+# `status` and `verdict` are legacy fields from the earlier process, kept so old
+# values stay interpretable. Their vocabulary:
 #
 #   not-attempted            no work started
 #   in-progress              work under way, no verdict issued
@@ -18,49 +23,13 @@ schema_version = 2
 #                            printed numbers, AND the deviation is systematic
 #                            rather than consistent with rounding or isolated
 #                            transcription error
-#   no-consistent-protocol   strongest rung. An exhaustive, pre-registered search
-#                            over measurement protocols -- any test-set size, any
-#                            class prevalence, and the common metric-definition
-#                            variants -- finds NO single protocol that reproduces
-#                            the reported table, and most individual cells are
-#                            unreachable under every protocol searched. The
-#                            likelihood of the table under "these were measured"
-#                            is then zero rather than small, for the whole
-#                            searched space. This is a statement about the
-#                            artefact. It does not distinguish deliberate
-#                            fabrication from catastrophic process failure (for
-#                            example placeholder values never replaced); that
-#                            distinction needs evidence outside the paper, and
-#                            this project does not assert it.
-
-[[studies]]
-id = "atk-2022-deep-autoencoder"
-sequence = 1
-status = "in-progress"
-verdict = "in-progress"
-primary = false
-title = "Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids"
-authors = ["Abdulrahman Takiddin", "Mohamed Ismail", "Usman Zafar", "Erchin Serpedin"]
-venue = "IEEE Systems Journal 16(3), 4106-4117"
-year = 2022
-doi = "10.1109/JSYST.2021.3136683"
-path = "studies/atk-2022-deep-autoencoder"
-report_path = "reports/atk-2022-deep-autoencoder"
-page = "site/papers/atk-2022-deep-autoencoder/index.html"
-
-[[studies]]
-id = "tlstgt-2025-water"
-sequence = 2
-status = "verdict-issued"
-verdict = "no-consistent-protocol"
-primary = false
-title = "Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems"
-authors = ["Md Rakibul Ahasan", "Faaiz Joad", "Rachad Atat", "Coleman Thompson", "Erchin Serpedin", "Abdulrahman Takiddin"]
-venue = "EUSIPCO"
-year = 2025
-path = "studies/tlstgt-2025-water"
-report_path = "reports/tlstgt-2025-water"
-page = "site/papers/tlstgt-2025-water/index.html"
+#   no-consistent-protocol   an exhaustive, pre-registered search over
+#                            measurement protocols (test-set sizes, class
+#                            prevalences and common metric definitions) finds no
+#                            single protocol that reproduces the reported table,
+#                            and most individual cells are unreachable under every
+#                            protocol searched. This is a statement about the
+#                            published table, not about how it was produced.
 
 [[studies]]
 id = "takiddin-2021-robust-poisoning"
@@ -76,3 +45,38 @@ doi = "10.1109/TSG.2020.3047864"
 path = "studies/takiddin-2021-robust-poisoning"
 report_path = "reports/takiddin-2021-robust-poisoning"
 page = "site/papers/takiddin-2021-robust-poisoning/index.html"
+card_status = "In progress"
+card_summary = "The printed training loss can't work as written, and three of the main model's result rows can't all be true at once. Most simpler models work on our data; the paper's main model hasn't reproduced."
+
+[[studies]]
+id = "atk-2022-deep-autoencoder"
+sequence = 1
+status = "in-progress"
+verdict = "in-progress"
+primary = false
+title = "Deep Autoencoder-Based Anomaly Detection of Electricity Theft Cyberattacks in Smart Grids"
+authors = ["Abdulrahman Takiddin", "Mohamed Ismail", "Usman Zafar", "Erchin Serpedin"]
+venue = "IEEE Systems Journal 16(3), 4106-4117"
+year = 2022
+doi = "10.1109/JSYST.2021.3136683"
+path = "studies/atk-2022-deep-autoencoder"
+report_path = "reports/atk-2022-deep-autoencoder"
+page = "site/papers/atk-2022-deep-autoencoder/index.html"
+card_status = "First attempt, to be redone"
+card_summary = "Our rebuild of the simplest model detected 25% of attacks against 81% published. With the paper's own output layer and error score, the published number is out of reach on our prepared data."
+
+[[studies]]
+id = "tlstgt-2025-water"
+sequence = 2
+status = "verdict-issued"
+verdict = "no-consistent-protocol"
+primary = false
+title = "Graph Transfer Learning-Based Attack Detection in Cyber-Physical Water Distribution Systems"
+authors = ["Md Rakibul Ahasan", "Faaiz Joad", "Rachad Atat", "Coleman Thompson", "Erchin Serpedin", "Abdulrahman Takiddin"]
+venue = "EUSIPCO"
+year = 2025
+path = "studies/tlstgt-2025-water"
+report_path = "reports/tlstgt-2025-water"
+page = "site/papers/tlstgt-2025-water/index.html"
+card_status = "First attempt, to be redone"
+card_summary = "None of 67,326 ways of measuring the published results table reproduces it. In our own experiments, the graph did help in some comparisons. A maintainer co-authored this paper."
