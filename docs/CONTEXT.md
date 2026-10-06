@@ -2,13 +2,26 @@
 
 **Last updated:** 2026-10-06
 
-The user paused research execution and requested GitHub synchronization of
-research code, results, and writeups. The 42 local commits through `be09ed0`
-were pushed; overview documents now describe the same checkpoint. The first
-CI run exposed a stale METHOD hash expectation; its current-document pin is
-updated to `be09ed0`, preserving the original audit hash and all calculations.
-Website work is excluded. Resume no scientific execution from this sync task;
-the scientific next decision below is unchanged.
+Research execution remains paused. The earlier GitHub synchronization is
+complete at `8f616c2`, including all 42 research commits and refreshed overviews.
+The user then separately requested updating the full website. The poisoning
+journal now follows all six research pairs, AEA bounds/withdrawn MAE promotion,
+constructed ensemble failures, the constant-score research pair, saved-state
+and gate diagnostics, and the synthetic-only tanh pass. Its opening, coverage,
+next step and conclusion agree with the saved research checkpoint. Index and
+repository pointers are refreshed; older study accounts retain their previous
+content and reassessment notices. Existing anchors and undated reading flow
+are preserved. Two saved PNGs are copied exactly into site figures, with
+renderer support for local image links and responsive sizing.
+
+All 407 repository tests pass on CPU (45 environment skips), strict data and
+journal checks pass, and desktop/mobile layouts and all old anchors verify.
+Bootstrap initially lacked pip; ensurepip repaired the environment. The first
+full test run used macOS MPS and failed on unsupported QR operations; setting
+KERAS_TORCH_DEVICE=cpu passes unchanged scientific code. Logs remain in
+`/tmp/atk-site-20261006.Cnba28`. Publication/live verification remain pending
+under [the website plan](plans/2026-10-06-website-catch-up.md). No research
+execution, inference or new fit is authorized by this publication.
 
 **Full48-step tanh learning gate verified:** scientific6ca174a; placement
 recoveryfebc28e. Two tanh cases complete300updates each,100% held-out

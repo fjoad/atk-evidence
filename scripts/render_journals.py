@@ -76,9 +76,10 @@ def render(study_id: str) -> str:
             elif token.tag == "h2":
                 contents.append((slug, display_heading))
         for child in token.children or []:
-            if child.type != "link_open":
+            if child.type not in {"link_open", "image"}:
                 continue
-            href = child.attrGet("href") or ""
+            attribute = "src" if child.type == "image" else "href"
+            href = child.attrGet(attribute) or ""
             parsed = urlsplit(href)
             if parsed.scheme or parsed.netloc or not parsed.path:
                 continue
@@ -89,10 +90,12 @@ def render(study_id: str) -> str:
                 public = posixpath.relpath(target.as_posix(), output.parent.as_posix())
                 if target.is_dir():
                     public += "/"
+            elif child.type == "image":
+                public = "https://raw.githubusercontent.com/fjoad/atk-evidence/main/" + target.relative_to(ROOT).as_posix()
             else:
                 kind = "tree" if target.is_dir() else "blob"
                 public = f"https://github.com/fjoad/atk-evidence/{kind}/main/" + target.relative_to(ROOT).as_posix()
-            child.attrSet("href", public + ("#" + parsed.fragment if parsed.fragment else ""))
+            child.attrSet(attribute, public + ("#" + parsed.fragment if parsed.fragment else ""))
     if not title:
         raise ValueError("Journal needs a title")
     body = markdown.renderer.render(tokens, markdown.options, {})

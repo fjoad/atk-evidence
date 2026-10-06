@@ -102,7 +102,7 @@ class NotebookSiteTests(unittest.TestCase):
         for text in ("73.1959–73.2959%", "72.65–72.75%", "39.12–40.54%", "47.37–57.89%",
                      "42.11–43.31%", "44.00–44.82%", "Table IV explicitly averages",
                      "not an unconditional", "single-evaluation interpretation", "log(1−p)",
-                     "without reconstruction", "still untested"):
+                     "without reconstruction", "claimed mechanism remains unresolved"):
             self.assertIn(text, content)
         self.assertIn("20% row is not excluded", content)
         self.assertIn("independently averaged metrics", content)
@@ -114,8 +114,36 @@ class NotebookSiteTests(unittest.TestCase):
         for arm in ("B_p30", "D_p30"):
             for metric in ("DR", "FA", "AUC"):
                 self.assertIn(f"{result['comparison'][arm]['primary'][metric]:.2f}%", content)
-        self.assertIn("main proposed sequential ensemble has not been tested", content)
+        self.assertIn("The proposed sequential ensemble has now been tested", content)
         self.assertIn("No complete published result pattern has been reproduced", content)
+
+    def test_completed_neural_pairs_match_their_saved_research_metrics(self):
+        base = ROOT / "studies/takiddin-2021-robust-poisoning/results"
+        content = (SITE / "papers/takiddin-2021-robust-poisoning/index.html").read_text()
+        for record in ("gru_completion_20260924", "sequential_pilot_20261001"):
+            for case in ("p00", "p30"):
+                result = json.loads((base / record / f"{case}_result.json").read_text())
+                self.assertTrue(result["neural"]["training_complete"])
+                self.assertEqual(result["neural"]["epochs_completed"], 50)
+                for metric in ("DR", "FA", "AUC"):
+                    self.assertIn(f"{result['analysis']['primary'][metric]:.2f}%", content)
+        conclusion = content.split('id="current-conclusion"', 1)[1]
+        self.assertIn("remains untested on electricity data", conclusion)
+        self.assertIn("fourth planned case was not run", conclusion)
+        self.assertNotIn("ensemble has not been tested", conclusion)
+
+    def test_published_figures_are_unchanged_copies_with_local_image_links(self):
+        study = "takiddin-2021-robust-poisoning"
+        content = (SITE / "papers" / study / "index.html").read_text()
+        for record, filename in (
+            ("sequential_gates_20261002", "gate-dynamics.png"),
+            ("sequential_cells_20261002", "learning-curves.png"),
+        ):
+            source = ROOT / "studies" / study / "results" / record / filename
+            published = SITE / "papers" / study / "figures" / filename
+            self.assertEqual(source.read_bytes(), published.read_bytes())
+            self.assertIn(f'<img src="figures/{filename}" alt="', content)
+            self.assertIn(f'href="figures/{filename}"', content)
 
 
 if __name__ == "__main__":

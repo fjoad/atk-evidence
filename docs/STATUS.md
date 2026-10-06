@@ -1,6 +1,6 @@
 # ATK Evidence — Current Status
 
-**Last updated:** 2026-10-06 (research documentation synchronization)
+**Last updated:** 2026-10-06 (website catch-up)
 
 **Branch:** `main`
 
@@ -12,10 +12,22 @@ execution plan here is
 
 ## Current project state
 
-Research execution is paused at the user's request while research code,
-results, and writeups are synchronized to GitHub. The scientific checkpoint
-below is unchanged. See the [synchronization plan](plans/2026-10-06-research-github-sync.md)
-and [current study overview](../studies/takiddin-2021-robust-poisoning/README.md).
+Research execution remains paused at the user's request. Research code,
+results and overviews are synchronized to GitHub at `8f616c2`. The separately
+requested website catch-up now covers all six completed detector pairs, AEA
+bounds and corrections, sequential diagnostics and the full-length tanh
+constructed check. The updated sources pass local verification; publication
+and live verification are the remaining steps in the
+[website plan](plans/2026-10-06-website-catch-up.md).
+
+The index remains open-ended, every paper keeps its All papers link, and
+all prior journal anchors survive. The two diagnostic figures are unchanged
+copies of their saved records. Older study accounts and scientific artifacts
+are unchanged. Local verification: 407 tests pass with 45 environment skips;
+strict data verification passes the documented ScienceDB semantic-equivalence
+branch. The default macOS MPS test run failed on unsupported QR operations;
+the complete CPU run passes without scientific-code changes. No experiment
+or fit is part of this publication. The scientific checkpoint below is unchanged.
 
 **Full48-step tanh learning gate verified:** scientific6ca174a; placement
 recoveryfebc28e. Two tanh cases complete300updates each,100% held-out

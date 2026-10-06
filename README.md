@@ -25,9 +25,11 @@ to the research data.
 
 Start with the [study overview](studies/takiddin-2021-robust-poisoning/README.md),
 [latest result](studies/takiddin-2021-robust-poisoning/results/sequential_cells_20261002/README.md),
-and [current research status](docs/STATUS.md). They link the methods, results,
-corrections, failed attempts, and next decision. The website journal remains
-at its earlier published checkpoint.
+and [current research status](docs/STATUS.md). The
+[website journal](https://fjoad.github.io/atk-evidence/papers/takiddin-2021-robust-poisoning/)
+follows the same investigation through the completed ensemble pilot, saved-state
+diagnostics and constructed tanh learning check, including corrections and
+failed attempts.
 
 ## Earlier autoencoder findings
 
@@ -167,8 +169,8 @@ limitations, and corrections are kept visible. We do not infer author intent.
 
 ## Inspect or reproduce the work
 
-The scientific code for the current experiment is under
-[studies/atk-2022-deep-autoencoder/reproduction/](studies/atk-2022-deep-autoencoder/reproduction/).
+The scientific code for the current poisoning study is under
+[studies/takiddin-2021-robust-poisoning/reproduction/](studies/takiddin-2021-robust-poisoning/reproduction/).
 It contains the download, data preparation, model, training, and analysis files.
 The report links the exact revisions used for the runs.
 

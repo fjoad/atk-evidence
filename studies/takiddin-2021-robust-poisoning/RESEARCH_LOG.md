@@ -1,6 +1,6 @@
 # Electricity theft with poisoned training labels
 
-Updated: 2026-09-23
+Updated: 2026-10-06
 
 This is our working journal for *Robust Electricity Theft Detection Against
 Data Poisoning Attacks in Smart Grids*, by Takiddin and colleagues (2021).
@@ -8,10 +8,16 @@ We are rebuilding the experiments to find out whether the reported results
 can be recovered. We record what we notice, why it matters, what we decide to
 test, and how the evidence changes our view.
 
-The work currently covers four baseline pilots and preparation controls on
-twenty customers. The proposed sequential ensemble has not yet been trained.
-The entries below retain both the source concerns and the results that changed
-our initial expectation.
+Six detector pairs have now completed on the twenty-customer pilot, including
+the proposed sequential ensemble. Several simpler models learn useful rankings;
+our tested ensemble produces constant scores. Investigating that failure led
+to a different reading of the paper's recurrent equations, which learns on
+simple synthetic examples but has not yet been tested on electricity data.
+
+The account below follows how we reached that point, including mistakes in our
+own interpretation. Earlier passages describe what we knew at that stage.
+The [current conclusion](#current-conclusion) separates completed results from
+the questions still open.
 
 ## What the paper claims
 
@@ -249,12 +255,15 @@ sound setup. Testing all reported models remains part of the plan.
 
 ## 20 September — Finding the data and checking the attack definitions
 
-The consumption archives were already present locally and on the cluster.
+The consumption archives were already present locally and on the cluster as
+copies from ScienceDB, rather than a new download from restricted ISSDA access.
 We independently checked them against the current official ISSDA metadata:
 all six filenames, file sizes, and checksums match, and the compressed files
 pass their integrity checks. The customer-type CSV contains 4,225 residential
 meters. We compared its allocation information with a separate public workbook;
-all 6,445 rows match. Our initial workbook reader mistakenly assumed a header
+all 6,445 rows match. This verifies the allocation contents against that
+workbook, not the original official TAB file's bytes. Our initial workbook
+reader mistakenly assumed a header
 row. Checking the first row exposed that mistake, and including it resolved
 the apparent mismatch.
 
@@ -1151,61 +1160,464 @@ source populations, poisoning completions and omitted settings remain material.
 The latest order control also did not identify class proportions alone as the
 cause of the recurring default-cutoff behavior.
 
-Our strongest current assessment is that ordinary learning performance is
+At this stage, our assessment was that ordinary learning performance was
 plausible, while parts of the written report need correction or explanation.
 Attainable numbers do not authenticate the authors' original experiments;
 non-reproduction and mathematical inconsistencies do not by themselves identify
-fabrication. The main sequential ensemble and its proposed mechanism are
-still untested.
+fabrication. We had not yet tested the main sequential ensemble. The following
+work changes that coverage, while its claimed mechanism remains unresolved.
+
+## 24 September — Completing the GRU instead of mistaking a partial run for a result
+
+The next baseline processes a day's readings as a sequence using gated
+recurrent units, or GRUs. We specified the input shape, activations, loss and
+missing library settings before fitting. Like the feed-forward pair, it used
+the explicit binary-cross-entropy repair, the original prepared classifier
+inputs, one seed, 50 epochs and batches of 100.
+
+Our first timing estimate was too optimistic. The unpoisoned fit stopped at
+its 15-minute training guard after 32 full epochs and part of the next; the
+poisoned fit never started. We preserved that partial result. Extending its
+cutoff analysis could not turn it into the requested 50-epoch experiment.
+
+After approval of a budget based on measured epoch times, we restarted both
+cases with unchanged data, model, seed and training settings. The initial
+weights matched the first attempt, and all of its first 32 completed epochs
+were reproduced exactly. Both new fits finished 50 epochs. The complete pair,
+including checks, took 56 minutes 11 seconds on one V100-16GB.
+
+| GRU measure | Paper, no poisoning | Pilot, no poisoning | Paper, 30% poisoning | Pilot, 30% poisoning |
+|---|---:|---:|---:|---:|
+| Detection | 92.40% | 62.35% | 78.50% | 39.73% |
+| False alarms | 6.80% | 9.94% | 20.60% | 6.12% |
+| Ranking AUC | 92.10% | 89.07% | 79.40% | 79.89% |
+
+The poisoned AUC is close to the paper's value, and both models rank examples
+better than chance. That favorable result belongs beside the mismatch.
+At the corresponding false-alarm limits, however, the best saved-score
+detection is only **51.40% and 67.15%**, versus 92.4% and 78.5% reported.
+Checking every cutoff and reversing score direction does not recover those
+operating points for these fitted models.
+
+The unpoisoned training loss rose late and then partly recovered. We cannot
+describe this as a converged plateau, or extrapolate it into a limit on all
+GRU models. The decision was to stop this pair and investigate the standalone
+autoencoder. [Completed results, histories and audits](results/gru_completion_20260924/README.md)
+link the preserved [partial attempt](results/gru_pilot_20260923/README.md)
+and [initial timing check](results/gru_preflight_20260923/README.md).
+
+## 24 September — Checking the autoencoder's allowed outputs before training
+
+The standalone attention autoencoder, or AEA, raises a different question.
+It is intended to copy a normal consumption profile and flag a large copying
+error. Standardizing the inputs can give negative readings or values above
+one. A Sigmoid reconstruction can only return values between zero and one.
+Training cannot remove the distance from an out-of-range input to that range.
+
+We calculated the smallest possible error for each profile, allowing every
+coordinate its own most favorable reconstruction. For squared error, this
+means replacing a value below zero by zero and a value above one by one.
+This is an optimistic mathematical limit, not a trained detector. If even
+that error exceeds a cutoff, the profile must be flagged by every
+reconstruction within the stated range.
+
+On the frozen novelty-detector pilot, using mean squared error and the printed
+0.51 cutoff, the minimum false-alarm rates are:
+
+| Condition | Minimum possible false alarms | Paper's false alarms |
+|---|---:|---:|
+| No poisoning | 22.16% | 5.2% |
+| 30% customer poisoning | 22.37% | 18.4% |
+
+These minima already give the cutoff favorable rounding and a numerical
+allowance. They exclude the printed false-alarm points for **these prepared
+inputs, output range, score and cutoff**, regardless of weights or training
+time. They do not exclude a different scaler, score, output range or cutoff.
+Root mean squared error and the sum of squared errors also miss the printed
+false-alarm points when paired with that same numerical cutoff.
+
+The novelty evaluation is different from the classifiers' evaluation. It
+contains 187 original normal profiles, 3,157 generated normal profiles and
+3,360 attack profiles. Its declared poisoned-training interpretation also
+puts 108 attack profiles in both training and testing; those overlaps remain
+explicit. Neither population is an independent sample of thousands of new
+customers. The bound also holds on the original normal rows, so it is not
+solely an artifact of generated test examples.
+
+No neural network was trained for this check. The [geometry record](results/aea_geometry_20260924/README.md)
+contains the formula, counts, alternative error units, simple controls and
+audit. The [source specification](AEA_SPECIFICATION.md) separates the printed
+instructions from our choices, including the unspecified error norm and
+scaling axis. The standalone bound does not transfer to the ensemble's
+classification output.
+
+## 25 September — An optimistic alternative is not a successful repair
+
+We next compared five declared score/scale combinations without fitting a
+model. Each calculation was allowed to use the true labels and choose the
+most favorable error separately for each example. A real shared network may
+not be able to realize those choices. Failure of that optimistic calculation
+excludes a setup; passing it only leaves the setup open.
+
+With a freely chosen cutoff, mean squared error on feature-standardized inputs
+has an unpoisoned detection ceiling of **88.24%** at the allowed false-alarm
+rate, below the paper's 94.1%. Using one global standardization gives **92.26%**,
+also below the target even with favorable rounding. Mean absolute error
+(MAE), raw-unit squared error and a separately labeled min-max scaling control
+are not excluded by that free-cutoff calculation.
+
+We initially promoted MAE as the least invasive next interpretation. That
+was a mistake: **allowing another cutoff is different from passing at the
+paper's cutoff of 0.51**. At the printed cutoff, MAE still has minimum
+false-alarm rates of **36.75% and 33.79%**. We withdrew the recommendation.
+Of the five tested branches, only the min-max control remains unexcluded at
+the printed cutoff in both conditions. That does not validate it as the
+paper's method or demonstrate a working model.
+
+The recheck found two more errors in our work. Three poisoned-case detection
+bounds in the written summary used the unpoisoned false-alarm allowance;
+the underlying JSON already contained the correct calculations. Also, an
+attention test changed two things at once and could pass with the connection
+it claimed to test disabled. Saved-model loading failed too. We corrected
+the reporting and software tests, preserving the original artifacts and
+failed attempts. Passing the repaired software checks still did not show
+useful reconstruction learning.
+
+The [repair comparison](results/aea_repair_20260925/README.md) and
+[independent recheck](results/aea_recheck_20260925/README.md) preserve both
+the surviving bounds and the withdrawn interpretation. Input scaling,
+training loss, anomaly score and cutoff are separate choices; a promising
+score calculation does not select a training objective. No standalone AEA
+training branch was selected.
+
+## 26 September — Specifying the ensemble as its own model
+
+The proposed ensemble combines the autoencoder, GRUs and classifier, but its
+training instructions differ from the standalone autoencoder. Section IV-B
+uses the final classification loss; Section IV-C specifies ReLU hidden
+activations, Adam, no dropout and a weight constraint of one. We therefore
+declared joint training with repaired binary cross-entropy, without adding
+reconstruction pretraining or an extra reconstruction loss.
+
+The diagram and algorithm do not uniquely specify every tensor shape or the
+intermediate readout sent from the decoder to the GRUs. We recorded an initial
+scalar ReLU projection as a completion of those omissions. It was our
+executable interpretation, not an equation fully supplied by the paper.
+Native recurrent cells likewise leave source differences visible.
+
+The resulting full model has **9,240,802 parameters**. Before spending a
+research-data training budget, we required it to learn a deliberately easy
+constructed task: profiles whose mean reveals their label. We also reversed
+both training and test labels. The model should learn either convention from
+the same starting weights. This is a basic implementation check, not a
+poisoning experiment or a test of temporal reasoning.
+
+The [ensemble specification](SEQUENTIAL_ENSEMBLE_PILOT.md) records the
+architecture, completions, budgets and checks. This kept the standalone AEA
+bounds and score choices out of an unrelated classification experiment.
+
+## 27–28 September — Small checks exposed failures in our executable interpretation
+
+The first learning check used the full layer sequence with reduced widths
+and eight time steps. One label orientation reached 100% held-out accuracy;
+the reversed orientation stayed at 50%. A network can pass shape, gradient
+and file-reload tests while still failing to learn an easy task.
+
+We replayed the failed case's first 50 updates without changing its settings.
+Its last GRU and classifier hidden outputs shut off after update two. Earlier
+stages remained active. Local changes to saved biases helped identify the
+arithmetic responsible at that point, but were observations of fixed states,
+not successfully trained repairs. The same architecture could represent the
+reversed answer by complementing the successful model's predictions, so this
+was not a proof of representational impossibility.
+
+Could the reduced widths be misleading? We then ran the same eight-step
+learning task at the published widths. Both orientations stayed at 50%.
+This time the initial decoder features were active, but the scalar ReLU
+projection clipped all its negative inputs to zero. The downstream stages
+therefore received no useful profile differences from the start.
+
+These were two different failures. The initial small model shut off later
+layers during training; the full-width model began with an inactive interface.
+Neither established that the paper's intended network cannot work. Both
+prevented promotion to a research run and made the omitted interface a
+specific source question to revisit. Reporting and audit-helper failures were
+also retained; completing a report did not require repeating a completed fit.
+
+The [initial learning record](results/sequential_constructed_20260927/README.md),
+[unchanged collapse trace](results/sequential_trace_20260927/README.md), and
+[full-width check](results/sequential_full_width_20260928/README.md) preserve
+the sequence and its limits.
+
+## 1 October — A different interface learns the short task
+
+We returned to the source and declared a scalar Sigmoid interface from the
+component-output reading, alongside a separate linear-interface control.
+Sigmoid was selected for continuation before seeing these results; we did
+not run both and then promote whichever looked best. The source ambiguity
+remained explicit.
+
+At full width but still eight steps, all four learning cases—both label
+orientations for each interface—reached 100% held-out accuracy after 300
+updates. They began with the same weights as the failed ReLU-interface
+check. Saved-model verification passed. The old interface and failures
+remained available unchanged.
+
+This supplied evidence of basic learning on a short, easy task. A later
+48-step GPU preflight checked shapes, execution, timing and reloading. It
+did **not** establish successful learning on the full 48-step research task.
+That distinction became important in the next experiment.
+
+See the [interface decision](SEQUENTIAL_INTERFACE.md),
+[constructed learning results](results/sequential_interface_20261001/README.md)
+and [GPU preflight](results/sequential_preflight_20261001/README.md).
+
+## 1 October — The completed ensemble produces constant scores
+
+We trained the selected scalar-Sigmoid interpretation with ReLU recurrent
+cells on the same original classifier pilot: 20 customers, 28 days each,
+4,464 training rows and 2,232 test rows. Both cases began from identical
+weights and completed 50 epochs and 2,250 updates. Training took about
+35½ and 33½ minutes; the full pair with scoring and checks took 1 hour
+21 minutes 28 seconds on one V100-16GB.
+
+The outcome was not useful detection. Every unpoisoned test example received
+the same probability, about 0.504759; every poisoned test example received
+about 0.353959. At the declared 0.5 cutoff, the first model flags everything
+and the second flags nothing.
+
+| Ensemble measure | Paper, no poisoning | Pilot, no poisoning | Paper, 30% poisoning | Pilot, 30% poisoning |
+|---|---:|---:|---:|---:|
+| Detection | 95.20% | 100.00% | 92.20% | 0.00% |
+| False alarms | 2.90% | 100.00% | 5.80% | 0.00% |
+| Ranking AUC | 97.40% | 50.00% | 92.00% | 50.00% |
+
+Here 100% detection is unhelpful: it comes with 100% false alarms. AUC of
+50% reflects the absence of any ranking between examples. Moving or reversing
+the cutoff only switches between flagging everything and flagging nothing;
+it cannot recover either published detection/false-alarm point.
+
+The earlier baselines show that these exact test rows contain learnable
+signal. The forest's AUC is 98.55%/94.36%, feed-forward's is 96.35%/90.89%,
+and GRU's is 89.07%/79.89%. This comparison does not isolate the effect of
+adding the AEA: those models also differ in other architecture and training
+settings. A matched component removal is still needed to test that claim.
+
+We inspected the intermediate output too. It varies between profiles in the
+unpoisoned model despite identical final scores. In the poisoned model it is
+almost zero; its squared error merely matches a zero-output baseline.
+Lower copying error alone would have been a misleading sign of learning.
+
+All input, history, saved-weight, optimizer, metric and GPU reload checks
+passed. That verifies what ran and what was saved; it does not turn a failed
+learner into a successful one. This is **one declared interpretation on a
+small pilot**, with unresolved source choices, not a full-population or
+model-family impossibility result. We stopped the pair and inspected its
+saved states instead of trying another seed.
+
+The [complete ensemble record](results/sequential_pilot_20261001/README.md)
+includes all seven metrics, constant-score comparisons, runtime, intermediate
+outputs and audits. The paper's printed metric inconsistencies remain a
+separate source finding.
+
+## 2 October — Following the signal through the saved network
+
+Without retraining, we inspected the shared initial state and both final
+models on fixed batches of 100 training and 100 test profiles. We wanted to
+locate where differences between inputs stopped affecting the output.
+
+At initialization, tiny differences in the classifier's internal score
+survived, but became indistinguishable after conversion to the stored
+32-bit probabilities. In the trained unpoisoned model, the last GRU's largest
+state was only about **6 × 10⁻¹⁸**, and the classifier's hidden features were
+identical across profiles.
+
+The poisoned model failed differently. Recurrent values grew through the
+encoder and decoder to roughly **10¹⁵**. The Sigmoid interface then saturated
+at zero from the second time step. From the second GRU onward, the profiles
+were indistinguishable. Derivatives were tiny but not uniformly zero, so
+calling the entire computation disconnected would have been incorrect.
+
+Using greater numerical precision only at the final readout did not recover
+either trained model. All original weights and optimizer states were
+unchanged. These observations describe the saved endpoints and selected
+batches; they do not tell us when training created the problem. The
+[saved-state diagnostic](results/sequential_saved_state_20261002/README.md)
+records that distinction.
+
+## 2 October — Checking the recurrent arithmetic explains decay and growth
+
+A recurrent unit combines what it remembers with new information at each
+step. We replayed the actual gate and cell equations at the saved weights,
+on the same 100 test profiles, without updating any parameters. All 21 cell
+traces matched the native model calculations exactly.
+
+In the unpoisoned model's last GRU, every new candidate value becomes zero
+from step four onward. Its gates retain about half the old state each time.
+Repeatedly halving the remaining signal explains its extremely small final
+value. The unit with the largest final state has a **positive** bias: a
+negative input projection overwhelms it. The earlier small-model finding
+about negative biases was not a universal explanation.
+
+In the poisoned model, LSTM cells admit large positive recurrent contributions
+while retaining old memory. Values amplify through the encoder and decoder.
+The growth is not caused by the forget factor alone. These calculations
+explain the saved forward behavior; they do not establish the training event
+that caused it or show that a particular repair will work.
+
+[![At saved weights, the unpoisoned final GRU decays across 48 steps while poisoned LSTM states grow through the encoder and decoder.](../../site/papers/takiddin-2021-robust-poisoning/figures/gate-dynamics.png)](../../site/papers/takiddin-2021-robust-poisoning/figures/gate-dynamics.png)
+
+The horizontal axes follow positions within a profile, not training updates.
+The vertical axes are logarithmic: equal spacing represents multiplicative
+changes. Open the figure for its full resolution. The
+[gate record](results/sequential_gates_20261002/README.md) contains the
+selected witnesses, full traces and independent arithmetic checks.
+
+## 2 October — The equation-led tanh alternative learns all 48 steps
+
+The paper contains a consequential conflict. Algorithm 1 explicitly uses
+`tanh` in its recurrent formulas; Section IV-C selects ReLU hidden activation.
+ReLU can return arbitrarily large positive values, whereas tanh's output is
+bounded between −1 and 1. We declared a separate equation-led interpretation
+that changed the LSTM and GRU cell activations to tanh while keeping the
+Sigmoid gates and interface, ReLU classifier, widths, optimizer and initial
+weights fixed. Changing both recurrent families together does not isolate
+their individual contributions.
+
+This time the easy constructed task used the full **48 steps** and all
+9,240,802 parameters. There were 32 training and 32 fresh test profiles.
+We retained the same two label orientations and 300-update schedule, with
+matched ReLU reference cases and a predeclared stop on numerical failure.
+
+| Recurrent activation | Labels | Updates | Held-out accuracy | Outcome |
+|---|---|---:|---:|---|
+| tanh | Normal | 300 | 100% | Learning and reload checks pass |
+| tanh | Reversed | 300 | 100% | Learning and reload checks pass |
+| ReLU | Normal | 245 | Undefined | Nonfinite loss; stopped |
+| ReLU | Reversed | Not run | — | Held by the stop rule |
+
+Both completed tanh models have clipped test binary-cross-entropy about
+10⁻⁷ and reproduce their saved outputs exactly in a fresh GPU process.
+The ReLU reference briefly improved its loss to 0.489 before becoming
+nonfinite. We preserve that improvement and the numerical failure; calling
+it a converged flat plateau or reporting a valid final 50% accuracy would
+misstate what happened. The planned four-case comparison remains incomplete.
+
+[![Training loss falls rapidly for both tanh label orientations; the ReLU reference briefly improves before its numerical stop at update 245.](../../site/papers/takiddin-2021-robust-poisoning/figures/learning-curves.png)](../../site/papers/takiddin-2021-robust-poisoning/figures/learning-curves.png)
+
+This plot shows training loss on a logarithmic scale. The reported test loss
+uses a probability clip, so its approximately 10⁻⁷ floor differs from the
+smaller training losses. The vertical marker identifies where fitting stopped;
+it does not assign a finite loss to the failed update.
+
+An earlier launch failed before its first fitting update because the input
+pipeline was incorrectly placed on the GPU. We preserved that failure,
+fixed only placement, and verified identical starting arrays before the
+retry. Including the failed launch and read-only verification, the three
+allocations used 21 minutes 44 seconds within the 35-minute budget.
+
+The result establishes **basic learning on a deliberately simple synthetic
+task**. A rule based only on each profile's mean solves the task too. It does
+not establish temporal reasoning, reconstruction, theft detection or robustness
+to poisoned labels. No electricity-data fit has run for this tanh alternative.
+The [full learning record](results/sequential_cells_20261002/README.md) and
+[recurrent-control contract](SEQUENTIAL_RECURRENT_CONTROL.md) preserve the
+source conflict, completed cases and incomplete reference.
+
+## Where the model coverage stands
+
+Six detector pairs have completed at nominal 0% and 30% customer poisoning.
+The table summarizes their original classifier-pilot rankings on the same
+test rows; it does not combine those rows with the separate novelty-detector
+evaluation or the stricter preparation controls.
+
+| Detector | AUC, no poisoning | AUC, 30% poisoning | Main result and record |
+|---|---:|---:|---|
+| Random forest | 98.55% | 94.36% | [Useful ranking; strong detection at suitable diagnostic cutoffs](results/rf_pilot_20260920/README.md) |
+| AdaBoost | 90.71% | 83.74% | [Useful ranking; mixed agreement with the printed operating points](results/adaboost_pilot_20260920/README.md) |
+| Sigmoid SVM | 65.64% | 63.38% | [Large operating-point gaps; omitted settings remain open](results/svm_pilot_20260921/README.md) |
+| Feed-forward | 96.35% | 90.89% | [Repaired loss learns; favorable detection levels are attainable](results/feed_forward_pilot_20260922/README.md) |
+| GRU | 89.07% | 79.89% | [Useful ranking and a close poisoned AUC, but operating-point gaps remain](results/gru_completion_20260924/README.md) |
+| Sequential ensemble, Sigmoid interface and ReLU cells | 50.00% | 50.00% | [Constant scores after both completed 50-epoch fits](results/sequential_pilot_20261001/README.md) |
+
+Here AUC measures how well scores order attack and normal examples; 50%
+provides no ranking advantage. It does not specify a usable cutoff. The
+nominal poisoning level selects six of twenty customers and changes 675
+training labels, about 15.12% of all classifier training rows. It does not
+mean that 30% of all rows were relabeled.
+
+All results remain one-seed, small-population pilots with known dependencies.
+Cutoffs chosen using test labels are diagnostics, not independently validated
+calibration. The authors' exact customer identities remain unknown. Matching
+one AUC or attaining one detection level does not reproduce a whole table.
+
+ARIMA, a trained standalone AEA, ensemble averaging, the tanh ensemble on
+electricity data, broader poisoning levels, customer-specific model coverage
+and full-population reproduction remain unfinished. The preparation check
+included a customer-specific example, but that is not a fitted
+customer-specific detector. We also have not completed a matched ablation
+showing whether reconstruction or attention causes a robustness advantage.
 
 ## What we will do next
 
-Forest, AdaBoost and feed-forward now show a recurring pattern: poisoning
-reduces default detection and false alarms while useful ranking remains.
-The completed order-of-operations control did not supply a simple rescue and
-does not isolate class proportions as the cause. The next proposed coverage
-step is the GRU baseline: first resolve its sequence shape, activations, output,
-loss and omitted training settings from the source before specifying a small
-pilot. ARIMA, AEA and both ensembles also stay in scope. SVM parameter
-sensitivity remains open. No broader search or new model fit is automatic.
+Research is paused while the public account catches up with the saved work.
+The next proposed scientific step is a bounded electricity-data pair for
+the tanh interpretation, starting from fresh weights. It needs an explicit
+runner configuration and a new full-batch GPU runtime check; the existing
+research command still selects ReLU. Synthetic trained weights are not a
+starting point for that experiment.
 
-The paper specifies 50 epochs, batch size 100, and an RTX 2070, with roughly
-one to four hours of training depending on the model (pages 2680 and 2682).
-We will measure the actual cost on the cluster before scheduling the tables.
-Generalized results come first; customer-specific results remain in scope and
-will be costed separately.
+That comparison would ask whether the equation-led alternative can preserve
+useful information on the original pilot. It would not, by itself, identify
+the autoencoder's claimed causal benefit. A matched component-removal test
+remains a separate question. SVM settings and the unfinished model coverage
+also remain open; none justifies an automatic sweep or another seed.
 
-If measured results fall short, the next entries will explain which
-alternative could close the gap, what test we chose, and what happened.
-Repeated runs and uncertainty estimates will follow a declared budget and
-statistical procedure. An apparent plateau will need evidence across measured
-training or model sizes; a flat-looking curve alone will not establish a
-universal ceiling.
-
-Future entries will report successful matches, implementation mistakes, and
-changes of mind alongside negative results. We will add corrections
-and link back to the affected entry, so readers can follow how a conclusion
-changed.
+Any new run needs its own stated question, fixed setup, compute budget and
+stopping rule. Future entries will continue to preserve successful results,
+mistakes, partial attempts and changes of mind. This website update uses
+existing records and authorizes no new experiment.
 
 ## Inspect the record
 
 - [Current all-model plan](../../docs/plans/2026-09-20-robust-all-model-reproduction.md)
+- [Study overview and all completed research pairs](README.md)
+- [Competing explanations and what changed](EXPLANATION_REGISTER.md)
+- [Completed GRU pair](results/gru_completion_20260924/README.md)
+- [AEA bounds and corrections](results/aea_recheck_20260925/README.md)
+- [Completed sequential pair and same-row comparisons](results/sequential_pilot_20261001/README.md)
+- [Latest full-length constructed learning result](results/sequential_cells_20261002/README.md)
 - [Code-availability search](CODE_AVAILABILITY.md)
 - [Earlier source specification](METHOD.md), preserved with its original audit inputs; the fresh issues above supplement it
 - [Historical arithmetic finding](SOURCE_AUDIT_FINDING.md)
 - [This journal's editable source](RESEARCH_LOG.md)
 
-This journal contains source observations, an algebraic check, verified
-preparation, fitted forest/AdaBoost/SVM/feed-forward pilots, forest controls,
-and a read-only SVM follow-up.
-It does not yet contain a full-population reproduction of this paper.
+The linked records preserve exact settings, frozen code, failures, timings,
+metrics and artifact audits. Large arrays, fitted weights and restricted
+source files remain outside the public repository. This is an investigation
+in progress, not a completed full-population reproduction or final report.
 
 ## Current conclusion
 
-Several baseline detection levels are attainable in the declared pilot, and
-three ordinary model families learn useful rankings. The sigmoid SVM remains
-a substantial mismatch for the tested settings. Preparation and threshold
-choices change the interpretation of apparent success or failure.
+Several baseline detection levels are attainable in the declared pilot.
+Forest, AdaBoost, feed-forward and GRU learn useful rankings, although their
+complete results differ from the paper. The sigmoid SVM and GRU miss their
+reported detection/false-alarm points under every cutoff on the saved scores.
+Preparation and threshold choices change the interpretation of apparent
+success or failure.
+
+The proposed sequential ensemble has now been tested under one explicit
+interpretation: a scalar Sigmoid interface with ReLU recurrent cells. Both
+completed fits produce constant scores and AUC 50%. Saved-state checks locate
+severe signal attenuation in one model and recurrent growth and saturation
+in the other. This failure does not establish a limit on every executable
+reading of the paper.
+
+The equation-led tanh alternative passes full-length constructed learning
+and exact reload checks, but remains untested on electricity data. Its ReLU
+reference stopped numerically and the fourth planned case was not run.
+Synthetic success is evidence that this alternative can learn an easy task,
+not that it reproduces poisoning robustness.
 
 The printed classification loss is wrong as written. Some complete metric
 combinations are incompatible under a single-evaluation interpretation, but
@@ -1213,8 +1625,15 @@ customer-averaged metrics need different reasoning. These source issues are
 not erased by the working baselines, and they do not establish how the
 published values arose.
 
-No complete published result pattern has been reproduced, and the paper's
-main proposed sequential ensemble has not been tested. The next step is a
-separately specified continuation of model coverage, not a verdict that the
-whole paper is either correct or fabricated. No further experiment was run
-for this website update.
+The standalone AEA bounds exclude specific input/range/score combinations;
+our initial MAE repair recommendation was withdrawn after rechecking the
+cutoff. Those conditional bounds cannot be transferred to the ensemble or
+other preparations.
+
+**No complete published result pattern has been reproduced.** The working
+baselines weaken our initial expectation of widespread failure, while the
+ensemble result and source ambiguities leave its main claim unresolved.
+The next question is whether the separately specified tanh interpretation
+learns on the electricity pilot, followed by a fair test of the claimed
+architectural benefit. Neither authenticity nor fabrication is established
+by these experiments. No further experiment was run for this website update.

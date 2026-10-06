@@ -26,8 +26,8 @@ Section IV-C's ReLU selection; the alternative preserves that uncertainty
 and other declared native-cell completions. No tanh CER research pair has
 run, and the existing research CLI still selects ReLU by default.
 
-Research execution is paused while the code and writeups are synchronized to
-GitHub. The next scientific decision is to specify and wire a fresh-weight
+Research execution is paused while the public account is brought up to date.
+The next scientific decision is to specify and wire a fresh-weight
 p00/p30 tanh CER pilot and require a new full-batch runtime gate before any
 launch. Synthetic trained weights must not be reused. See the
 [current plan](../../docs/plans/2026-09-20-robust-all-model-reproduction.md)
@@ -79,7 +79,9 @@ failure of every implementation or an undocumented author procedure.
 
 The [source-only audit](SOURCE_AUDIT_FINDING.md) remains separate: three
 printed sequential rows cannot reconcile all their metrics within the
-rounding allowance at any class prevalence. That does not exclude achieving
+rounding allowance at any class prevalence under a single-confusion-matrix
+interpretation. Separately averaged metrics require different reasoning.
+That does not exclude achieving
 the detection/false-alarm pair alone and does not establish author intent.
 
 ARIMA, trained standalone AEA, ensemble averaging, broader poisoning levels,
@@ -93,7 +95,7 @@ older autoencoder and water-network work; no finding transfers between papers.
 - [`GRU_COMPLETION.md`](GRU_COMPLETION.md): same-seed completion budget and preservation requirements.
 - [`AEA_SPECIFICATION.md`](AEA_SPECIFICATION.md): source reconstruction and range/loss ambiguities.
 - [`SEQUENTIAL_ENSEMBLE_PILOT.md`](SEQUENTIAL_ENSEMBLE_PILOT.md), [`SEQUENTIAL_INTERFACE.md`](SEQUENTIAL_INTERFACE.md), and [`SEQUENTIAL_RECURRENT_CONTROL.md`](SEQUENTIAL_RECURRENT_CONTROL.md): the distinct sequential interpretations and controls.
-- [`RESEARCH_LOG.md`](RESEARCH_LOG.md): the earlier published journal checkpoint; use the records above for subsequent research.
+- [`RESEARCH_LOG.md`](RESEARCH_LOG.md): the continuing investigation through the latest constructed learning check, including corrections and remaining questions.
 - [`CODE_AVAILABILITY.md`](CODE_AVAILABILITY.md): reproducible code search and access limits.
 - [`PREPARATION.md`](PREPARATION.md): the initial executable data choices and
   bounded cluster check.
@@ -129,10 +131,12 @@ and finite execution budgets before training.
 
 ## Website journal
 
-The website journal remains at its earlier published checkpoint. Its editable
-source is [RESEARCH_LOG.md](RESEARCH_LOG.md); the research records above are
-current independently of website publication. Website regeneration and a final
-scientific report are outside this GitHub synchronization.
+The [website journal](https://fjoad.github.io/atk-evidence/papers/takiddin-2021-robust-poisoning/)
+is generated from [RESEARCH_LOG.md](RESEARCH_LOG.md). It follows the completed
+research pairs, AEA bounds and corrections, sequential diagnostics and latest
+constructed learning check. The linked result records preserve full technical
+details. This continuing account is not a final scientific report or a new
+validation of the existing experiments.
 
 ## Preparation commands
 

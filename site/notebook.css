@@ -25,6 +25,7 @@ h1 { font-size: clamp(1.75rem, 3.8vw, 2.25rem); margin: 8px 0 20px; }
 h2 { font-size: 1.48rem; margin: 45px 0 18px; padding-top: 25px; border-top: 1px solid var(--line); }
 h3 { font-size: 1.16rem; margin: 26px 0 12px; }
 p { margin: 0 0 1.1em; }
+.journal img { display: block; max-width: 100%; height: auto; margin: 26px auto 12px; }
 .meta { color: var(--muted); font-size: .8rem; line-height: 1.6; }
 .home > p { max-width: 620px; color: var(--muted); }
 .paper-list { list-style: none; margin: 38px 0 0; padding: 0; }
